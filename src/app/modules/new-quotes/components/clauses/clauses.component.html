@@ -1,0 +1,107 @@
+<h4>Clauses</h4>
+<mat-dialog-content class="mat-typography">
+<ng-container *ngIf="data.name ==='Edit';else add">
+  <nb-tabset fullWidth>
+    <nb-tab tabTitle="Clauses" *ngIf="Clauses.length >0">
+      <ul class="list-group">
+        <ng-container *ngFor="let item of Clauses">
+          <li class="list-group-item">
+            <div>
+              <mat-checkbox class="example-margin" [(ngModel)]="item.isCheck">
+              </mat-checkbox>
+            </div>
+            <div class="flex-fill">
+              <div class="input-control-container">
+                <div class="input-form-box">
+                  <textarea type="text" class="input-form-control without-icon" rows="3" [(ngModel)]="item.CodeDesc"></textarea>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </nb-tab>
+    <nb-tab tabTitle="Wars" *ngIf="Wars.length >0">
+      <ul class="list-group">
+        <ng-container *ngFor="let item of Wars">
+          <li class="list-group-item">
+            <div>
+              <mat-checkbox class="example-margin" [(ngModel)]="item.isCheck">
+              </mat-checkbox>
+            </div>
+            <div class="flex-fill">
+              <div class="input-control-container">
+                <div class="input-form-box">
+                  <textarea type="text" class="input-form-control without-icon" rows="3" [(ngModel)]="item.CodeDesc"></textarea>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </nb-tab>
+    <nb-tab tabTitle="Warranties" *ngIf="Warranties.length >0">
+      <ul class="list-group">
+        <ng-container *ngFor="let item of Warranties">
+          <li class="list-group-item">
+            <div>
+              <mat-checkbox class="example-margin" [(ngModel)]="item.isCheck">
+              </mat-checkbox>
+            </div>
+            <div class="flex-fill">
+              <div class="input-control-container">
+                <div class="input-form-box">
+                  <textarea type="text" class="input-form-control without-icon" rows="3" [(ngModel)]="item.CodeDesc"></textarea>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </nb-tab>
+    <nb-tab tabTitle="Exclusions" *ngIf="Exclusions.length >0">
+      <ul class="list-group">
+        <ng-container *ngFor="let item of Exclusions">
+          <li class="list-group-item">
+            <div>
+              <mat-checkbox class="example-margin" [(ngModel)]="item.isCheck">
+              </mat-checkbox>
+            </div>
+            <div class="flex-fill">
+              <div class="input-control-container">
+                <div class="input-form-box">
+                  <textarea type="text" class="input-form-control without-icon" rows="3" [(ngModel)]="item.CodeDesc"></textarea>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </nb-tab>
+  </nb-tabset>
+</ng-container>
+   <ng-template #add>
+  <ul class="list-group">
+    <ng-container *ngFor="let item of clausesList">
+      <li class="list-group-item">
+        <div>
+          <mat-checkbox class="example-margin" [(ngModel)]="item.isCheck">
+          </mat-checkbox>
+        </div>
+        <div class="flex-fill">
+          <div class="input-control-container">
+            <div class="input-form-box">
+              <textarea type="text" class="input-form-control without-icon" rows="3" [(ngModel)]="item.CodeDesc" disabled></textarea>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</ng-template>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onSubmit()">Submit</button>
+</mat-dialog-actions>

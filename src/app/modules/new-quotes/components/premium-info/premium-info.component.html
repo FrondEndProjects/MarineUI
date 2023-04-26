@@ -1,0 +1,531 @@
+<div class="maan-card">
+  <div class="maan-card-header">
+    <div class="form-heading">
+      <!-- <div class="form-heading-number">
+        4
+      </div> -->
+      <div class="form-heading-text">
+       Premium Information
+     </div>
+     </div>
+  </div>
+  <div class="maan-card-body">
+    <div class="header-details">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+            <div class="p-2">
+              Quote No
+            </div>
+            <div class="p-2">
+              {{premiumDetails?.QuoteDetails?.QuoteNo}}
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+            <div class="p-2">
+              Customer Name
+            </div>
+            <div class="p-2">
+              {{premiumDetails?.CustomerDetails?.Name}}
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+            <div class="p-2">
+              Policy Start Date
+            </div>
+            <div class="p-2">
+              {{premiumDetails?.QuoteDetails?.InceptionDate}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="premiumForm">
+      <div class="vision-grid vision-grid-column-2 premium-grid">
+        <div class="vision-grid-item">
+          <div class="vision-grid-item-body">
+            <nb-tabset fullWidth>
+              <nb-tab tabTitle="Quote Information">
+                <ul class="list-group list-group-flush customer-info">
+                  <li class="list-group-item">
+                    <div>Mode Of Tansport</div>
+                    <div>{{premiumDetails?.QuoteDetails?.TransportDetails?.ModeOfTransportName}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Coverage</div>
+                    <div>{{premiumDetails?.QuoteDetails?.TransportDetails?.CoverName}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Mode Of Carriage</div>
+                    <div>{{premiumDetails?.QuoteDetails?.TransportDetails?.ModeOfCarriageName}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Originating Country</div>
+                    <div>
+                      <ng-container *ngIf="premiumDetails?.QuoteDetails?.TransportDetails?.OriginCityName">{{premiumDetails?.QuoteDetails?.TransportDetails?.OriginCityName}},</ng-container>
+                      {{premiumDetails?.QuoteDetails?.TransportDetails?.OriginCountryName}}
+
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Destination Country</div>
+                    <div>
+                      <ng-container *ngIf="premiumDetails?.QuoteDetails?.TransportDetails?.DestinationCityName">
+                        {{premiumDetails?.QuoteDetails?.TransportDetails?.DestinationCityName}},
+                      </ng-container>
+                      {{premiumDetails?.QuoteDetails?.TransportDetails?.DestinationCountryName}}
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>WAR & SRCC Option</div>
+                    <div>{{premiumDetails?.QuoteDetails?.WarAndSrccYn}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Sale Term For Valuation</div>
+                    <div>{{premiumDetails?.QuoteDetails?.IncoTermsDescription}}</div>
+                  </li>
+
+                </ul>
+              </nb-tab>
+              <nb-tab tabTitle="Insured Goods Information">
+                <ul class="list-group list-group-flush customer-info">
+                  <li class="list-group-item">
+                    <div>Category Of Goods</div>
+                    <div>{{premiumDetails?.QuoteDetails?.CommodityDetails[0]?.GoodsCategoryName}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Insured Value ({{premiumDetails?.QuoteDetails?.CurrencyName}})</div>
+                    <div>{{premiumDetails?.TotalInsuredValue | commaseparator}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Exchange Rate</div>
+                    <div>{{premiumDetails?.QuoteDetails?.CurrencyValue}}</div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div>Insured Value ({{currencyName}})</div>
+                    <div>{{premiumDetails?.EquivalentInsuredValue | commaseparator}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Description</div>
+                    <div>{{premiumDetails?.QuoteDetails?.CommodityDetails[0]?.GoodsCategoryDescription}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Policy Excess</div>
+                    <div>
+                      <span>{{premiumDetails?.QuoteDetails?.CommodityDetails[0]?.PolicyExcessPercentage}}</span>
+                      <span>% / </span>
+                      <span>{{premiumDetails?.QuoteDetails?.CommodityDetails[0]?.PolicyExcess}}</span>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Excess Description</div>
+                    <div>{{premiumDetails?.QuoteDetails?.CommodityDetails[0]?.PolicyExcessDescription}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Package Description</div>
+                    <div>{{premiumDetails?.QuoteDetails?.PackageName}}</div>
+                  </li>
+                </ul>
+              </nb-tab>
+            </nb-tabset>
+            <ng-template #tabs>
+              <div class="p-2 clauses-list">
+                <ul class="list-group list-group-flush">
+                  <ng-container *ngFor="let item of viewClausesByClick">
+                    <li class="list-group-item">
+                      {{item?.CodeDesc}}
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+            </ng-template>
+            <div class="row my-2" *ngIf="isIssuer">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                  <label class="input-form-label">Do you want to edit the clauses?</label>
+                  <div class="input-form-radio-box">
+                    <div class="radio-toolbar">
+                      <input id="isEditClauses-y" type="radio" name="isEditClauses" value="Y" formControlName="isEditClauses">
+                      <label for="isEditClauses-y">Yes</label>
+                      <input type="radio" id="isEditClauses-n" name="isEditClauses" value="N" formControlName="isEditClauses">
+                      <label for="isEditClauses-n">No</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+            <ng-container *ngIf="userDetails?.UserType =='admin' || premiumF.isEditClauses.value =='Y'">
+              <div class="left-line">
+                Edit And Add Clauses
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-4 col-lg-4">
+                  <button nbButton status="primary" ghost (click)="onViewClausee('Edit',0)">
+                    Edit Clauses
+                  </button>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                  <button nbButton status="primary" ghost (click)="onViewClausee('Clauses',1)">
+                    Add Clauses
+                  </button>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4" *ngIf="quoteF.warSrcc.value =='YES'">
+                  <button nbButton status="primary" ghost (click)="onViewClausee('War',2)">
+                    Add War
+                  </button>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                  <button nbButton status="primary" ghost (click)="onViewClausee('Exclusions',3)">
+                    Add Exclusions
+                  </button>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                  <button nbButton status="primary" ghost (click)="onViewClausee('Warranties',4)">
+                    Add Warranties
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="userDetails?.UserType =='Broker' || userDetails?.UserType == 'User' || isIssuer">
+              <div class="left-line">
+                View Clauses
+              </div>
+              <div class="clausesinfo">
+                <div *ngIf="viewClausesInfo?.Clauses">
+                  <button nbButton status="primary" [nbPopover]="tabs" ghost
+                    (click)="viewClausesByClick = viewClausesInfo?.Clauses || [];">Clauses</button>
+                </div>
+                <div *ngIf="viewClausesInfo?.Exclusions">
+                  <button nbButton status="success" [nbPopover]="tabs" ghost
+                    (click)="viewClausesByClick = viewClausesInfo?.Exclusions || [];">Exclusions</button>
+                </div>
+                <div *ngIf="viewClausesInfo?.Warranties">
+                  <button nbButton status="info" [nbPopover]="tabs" ghost
+                    (click)="viewClausesByClick = viewClausesInfo?.Warranties || [];">Warranties</button>
+                </div>
+                <div *ngIf="viewClausesInfo?.Wars">
+                  <button nbButton status="warning" [nbPopover]="tabs" ghost
+                    (click)="viewClausesByClick = viewClausesInfo?.Wars || [];">War</button>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="userDetails?.UserType !='admin'">
+              <div class="left-line">
+                Referral Information
+              </div>
+              <div class="row my-2">
+                <div class="col-12">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Would you like to get in touch with under writer for getting better quote?</label>
+                    <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                        <input id="referralUpdateYn-y" type="radio" name="ReferralUpdateYn" value="Y" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
+                        <label for="referralUpdateYn-y">Yes</label>
+                        <input type="radio" id="referralUpdateYn-n" name="ReferralUpdateYn" value="N" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
+                        <label for="referralUpdateYn-n">No</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="userDetails?.UserType != 'Broker'">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Are You finalizing this Quote?</label>
+                    <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                        <input id="isFinalizeQuote-y" type="radio" name="isFinalizeQuote" value="Y" formControlName="isFinalizeQuote">
+                        <label for="isFinalizeQuote-y">Yes</label>
+                        <input type="radio" id="isFinalizeQuote-n" name="isFinalizeQuote" value="N" formControlName="isFinalizeQuote">
+                        <label for="isFinalizeQuote-n">No</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Comments<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                      <textarea type="text" class="input-form-control without-icon" row="3"   formControlName="comments"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="userDetails?.UserType == 'admin'">
+              <div class="row my-2">
+                <div class="col-12">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Would you like to give Commission for this quote?</label>
+                    <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                        <input id="commision-y" type="radio" name="commissionCheck" value="Y" formControlName="commissionCheck">
+                        <label for="commision-y">Yes</label>
+                        <input type="radio" id="commision-n" name="commissionCheck" value="N" formControlName="commissionCheck">
+                        <label for="commision-n">No</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Commission (%)<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon"  formControlName="commission">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Referral Status</label>
+                    <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                        <input id="referral-a" type="radio" name="referralStatus" value="A" formControlName="referralStatus">
+                        <label for="referral-a">Approved</label>
+                        <input type="radio" id="referral-r" name="referralStatus" value="R" formControlName="referralStatus">
+                        <label for="referral-r">Reject</label>
+                        <input type="radio" id="referral-n" name="referralStatus" value="N" formControlName="referralStatus">
+                        <label for="referral-n">None</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Admin Remarks<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon"  formControlName="adminRemarks">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="vision-grid-item">
+          <div class="vision-grid-item-body">
+            <ng-container *ngIf="premiumDetails?.Referral && premiumDetails?.Referral.length > 0;else showpremium">
+              <ul class="list-group referral-inform">
+                <li class="list-group-item">
+                  Referral Quote Information
+                </li>
+                <ng-container *ngFor="let item of premiumDetails?.Referral">
+                  <li class="list-group-item">
+                    <div>{{item?.ReferralName}}</div>
+                    <div></div>
+                  </li>
+                </ng-container>
+
+              </ul>
+            </ng-container>
+            <ng-template #showpremium>
+                <nb-tabset fullWidth>
+                  <nb-tab tabTitle="Premium Details">
+                    <ul class="list-group list-group-flush premium-inform">
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">Description</div>
+                          <div class="col-12 col-md-3">Rate</div>
+                          <div class="col-12 col-md-3">{{currencyName}}</div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            Sum insured
+                          </div>
+
+                          <div class="col-12 col-md-6 text-left text-right">
+                            <span class="px-1">{{premiumDetails?.EquivalentInsuredValue | commaseparator}}</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            Marine Premium
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="marineRate">
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="marinePremium">
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            War Premium
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="warRate">
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="warPremium">
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            War On Land Premium
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="warLandRate">
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="warLandPremium">
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            Additional Premium
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <select class="form-control form-control-sm" (change)="Minus(additionalSelect)" formControlName="additionalSelect">
+                              <option value="+">+</option>
+                              <option value="-">-</option>
+                            </select>
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="additionalPremium">
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            Policy Issuance Fee AED
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="switch1"
+                                formControlName="policyInsuAedEdit">
+                              <label class="custom-control-label" for="switch1">Edit</label>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-3">
+                            <input type="text" class="form-control form-control-sm" formControlName="policyInsuAedPremium">
+                          </div>
+                        </div>
+                      </li>
+                      <div class="left-line">
+                        Taxes
+                      </div>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            Premium Without VAT
+                          </div>
+                          <div class="col-12 col-md-3">
+                          </div>
+                          <div class="col-12 col-md-3 text-right">
+                            <span class="px-1">{{premiumF.premiumWithOutVat.value}}</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            VAT
+                          </div>
+                          <div class="col-12 col-md-3">
+                            {{premiumF.vatTaxPrecentage.value}}%
+                          </div>
+                          <div class="col-12 col-md-3 text-right">
+                            <span class="px-1">{{premiumF.vatTaxAmount.value}}</span>
+                          </div>
+                        </div>
+                      </li>
+
+                      <div class="left-line">
+                        Total
+                      </div>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 col-md-6">
+                            Total Premium Payable
+                          </div>
+                          <div class="col-12 col-md-3">
+                          </div>
+                          <div class="col-12 col-md-3 text-right">
+                            <span class="px-1">
+                              {{premiumF.totalPremium.value}}
+                              <ng-container *ngIf="quotesType =='With-Endo'">
+                                <button nbButton size="tiny" status="warning" [nbPopover]="premium" nbPopoverPlacement="left">
+                                  <i class="fas fa-question"></i>
+                                </button>
+                              </ng-container>
+
+                            </span>
+                          </div>
+                        </div>
+
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-12 text-right">
+                            <button nbButton status="success" size="small" (click)="onPremiumCalculate()">Calculate</button>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </nb-tab>
+                </nb-tabset>
+            </ng-template>
+
+          </div>
+        </div>
+      </div>
+
+    </form>
+    <ng-template #premium>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Endorsement</th>
+            <th>Marine Premium</th>
+            <th>War Premium</th>
+            <th>Additional Premium</th>
+            <th>Total Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Previous</td>
+             <td>{{beforeEndorsement?.MarinePremium}}</td>
+            <td>{{beforeEndorsement?.WarPremium}}</td>
+            <td>{{beforeEndorsement?.ExcessPremium}}</td>
+            <td>{{beforeEndorsement?.TotalPremium}}</td>
+          </tr>
+          <tr>
+            <td>Actual</td>
+             <td>{{afterEndorsement?.MarinePremium}}</td>
+            <td>{{afterEndorsement?.WarPremium}}</td>
+            <td>{{afterEndorsement?.ExcessPremium}}</td>
+            <td>{{afterEndorsement?.TotalPremium}}</td>
+          </tr>
+          <tr>
+            <td>Previous</td>
+            <td>{{difference?.MarinePremium}}</td>
+            <td>{{difference?.WarPremium}}</td>
+            <td>{{difference?.ExcessPremium}}</td>
+            <td>{{difference?.TotalPremium}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </div>
+  <div class="maan-card-footer">
+    <app-back-btn></app-back-btn>
+    <button nbButton (click)="onUpdatePremiumInformation()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+  </div>
+</div>

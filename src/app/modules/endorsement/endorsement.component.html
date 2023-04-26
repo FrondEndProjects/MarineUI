@@ -1,0 +1,25 @@
+<div class="maan-card">
+  <div class="row">
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="selectedBroker" [items]="brokerList" bindValue="LoginId"
+          bindLabel="UserName" (change)="onChangeBroker()">
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Search</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" [(ngModel)]="FilterValue">
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="isActionBtn($event)">
+  </app-material-table>
+  <!-- <div class="maan-card-footer">
+    <app-back-btn></app-back-btn>
+  </div> -->
+</div>

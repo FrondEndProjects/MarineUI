@@ -1,0 +1,10 @@
+.single-row{
+    display: flex;
+    flex-direction: row;
+  }
+ 
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

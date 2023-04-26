@@ -1,0 +1,30 @@
+.country-selection .vision-grid-item {
+  background-color: white;
+  border-radius: .5rem;
+  overflow: visible;
+}
+
+
+.country-selection.vision-grid {
+  gap: 1rem;
+}
+
+.country-selection .vision-grid-item-title {
+  padding: 1rem 1rem 0rem;
+  font-size: 15px;
+}
+
+.country-selection .vision-grid-item-body {
+  padding: .5rem;
+}
+.vision-grid-column-2{
+  grid-template-columns: 1fr 1fr;
+}
+.vision-grid-item:nth-child(3){
+ grid-column: span 2;
+}
+.height-auto{
+  height: auto;
+}
+
+

@@ -1,0 +1,31 @@
+
+<div class="login-grid">
+  <div class="login-grid-item">
+    <div class="login-grid-item-title">
+      <div class="logo-img">
+        <img src="../../../assets/images/OIC.jpg">
+      </div>
+      <div class="login-menu">
+        <div class="radio-toolbar">
+          <input id="verify" type="radio" name="menus" value="login-layout/login/verify" [(ngModel)]="menuActive" (change)="onLoginTap()">
+          <label for="verify">
+            Verify a Certificate
+          </label>
+          <input id="broker" type="radio" name="menus" value="login-layout/login/broker" [(ngModel)]="menuActive" (change)="onLoginTap()">
+          <label for="broker">
+            Broker | Customer
+          </label>
+          <input id="employee" type="radio" name="menus" value="login-layout/login/issuer" [(ngModel)]="menuActive" (change)="onLoginTap()">
+          <label for="employee">
+            Employee | UW Login
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="login-grid-item-body">
+      <div class="login-component">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

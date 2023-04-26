@@ -1,0 +1,17 @@
+<div class="info-card">
+    <div class="info-card-item">
+        <div class="my-2" *ngIf="policyInfo?.OpenCoverNo != null">
+          <div class="my-1">Policy Generated Successfully</div>
+          <div class="labeltext">{{policyInfo.OpenCoverNo}}</div>
+        </div>
+        <div class="my-2">
+          <div class="my-1">Proposal Number</div>
+          <div class="labeltext">{{policyInfo.ProposalNo}}</div>
+        </div>
+
+        <div class="my-2">
+          <button nbButton  (click)="onMove()" shape="round" size="small" status="warning" class="mx-2">Go</button>
+        </div>
+    </div>
+</div>
+

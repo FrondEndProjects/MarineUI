@@ -1,0 +1,154 @@
+<div [formGroup]="currencyForm" class="bg-white p-3">
+
+
+    <div class="row">
+      <!-- Currency Type -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Currency Type<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="currencyType" formControlName="currencyType">
+            </div>
+          </div>
+        </div>
+        <mat-error
+          *ngIf="currencyForm.controls['currencyType'].errors?.['required'] && (currencyForm.controls['currencyType'].dirty || currencyForm.controls['currencyType'].touched)">
+          Please Enter Currency Type</mat-error>
+      </div>
+      <!-- / Currency Type -->
+  
+      <!-- RFactor -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">RFactor<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="RFactor"
+                formControlName="RFactor">
+            </div>
+  
+          </div>
+          <mat-error
+            *ngIf="currencyForm.controls['RFactor'].errors?.['required'] && (currencyForm.controls['RFactor'].dirty || currencyForm.controls['RFactor'].touched)">
+            Please enter RFactor</mat-error>
+  
+        </div>
+      </div>
+      <!-- / RFactor -->
+    </div>
+  
+    <div class="row">
+      <!-- Sub Currency  -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Sub Currency <span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="subCurrency" formControlName="subCurrency">
+            </div>
+          </div>
+        </div>
+        <mat-error
+          *ngIf="currencyForm.controls['subCurrency'].errors?.['required'] && (currencyForm.controls['subCurrency'].dirty || currencyForm.controls['subCurrency'].touched)">
+          Please Enter Sub Currency </mat-error>
+      </div>
+      <!-- / Sub Currency  -->
+
+      <!-- Short Name -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Short Name<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="shortName" formControlName="shortName">
+            </div>
+          </div>
+        </div>
+        <mat-error
+          *ngIf="currencyForm.controls['shortName'].errors?.['required'] && (currencyForm.controls['shortName'].dirty || currencyForm.controls['shortName'].touched)">
+          Please choose Short Name</mat-error>
+  
+      </div>
+      <!-- Short Name -->
+  
+      
+    </div>
+  
+  
+    <div class="row">
+
+      <!-- Core Application Code -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Core Application Code <span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="coreApplicationCode" formControlName="coreApplicationCode">
+            </div>
+  
+          </div>
+          <mat-error
+            *ngIf="currencyForm.controls['coreApplicationCode'].errors?.['required'] && (currencyForm.controls['coreApplicationCode'].dirty || currencyForm.controls['coreApplicationCode'].touched)">
+            Please Enter Core Application Code</mat-error>
+  
+        </div>
+      </div>
+      <!-- / Core Application Code -->
+  
+      <!-- REMARKS -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Remarks</label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="remarks">
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- /REMARKS -->
+  
+      
+  
+  
+    </div>
+  
+    <div class="row">
+
+      <!-- effective date -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Effective Date*</mat-label>
+          <input matInput [matDatepicker]="picker" [min]="min" name="effectiveDate" formControlName="effectiveDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+       </mat-form-field>
+  </div>
+  <!-- effective date -->
+  
+      <!-- STATUS -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">Status<span class="text-required">*</span></label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+            <label for="fac-yes">Active</label>
+            <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+            <label for="fac-no">DeActive</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- STATUS -->
+      
+    </div>
+  
+    <div class="mt-3 btn-container" style="text-align: center;">
+      <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+      <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
+    </div>
+  
+  </div>

@@ -1,0 +1,26 @@
+<div class="maan-card">
+  <div class="maan-card-header">
+    <div class="form-heading">
+      <!-- <div class="form-heading-number">
+        3
+      </div> -->
+      <div class="form-heading-text">
+        Customer Information
+      </div>
+    </div>
+  </div>
+  <div class="maan-card-body">
+    <ng-container *ngIf="isIssuer && userDetails?.UserType !='admin'">
+      <app-broker-form></app-broker-form>
+    </ng-container>
+      <app-customer-form></app-customer-form>
+      <app-quote-form></app-quote-form>
+      <app-bank-form></app-bank-form>
+  </div>
+  <div class="maan-card-footer">
+    <ng-container *ngIf="userDetails?.UserType != 'RSAIssuer'">
+      <app-back-btn></app-back-btn>
+    </ng-container>
+    <button nbButton (click)="onSaveQuote()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+  </div>
+</div>

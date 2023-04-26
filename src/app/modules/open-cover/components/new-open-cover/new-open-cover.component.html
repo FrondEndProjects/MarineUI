@@ -1,0 +1,502 @@
+<form [formGroup]="newQuoteForm">
+<div class="row">
+  <div class="col-12">
+    <div class="middle-line">
+      Open Cover Information
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Business Type<span class="text-required">*</span></label>
+      <ng-select placeholder="Select" class="input-form-select" formControlName="businessType" [items]="bussinesTypeList" bindValue="Code" bindLabel="CodeDescription">
+      </ng-select>
+      <div class="input-form-error" *ngIf="(newQuoteF.businessType.errors && submitted) || (!newQuoteF.businessType.valid && newQuoteF.businessType.touched)">
+        <div *ngIf="newQuoteF.businessType.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Open Cover Type<span class="text-required">*</span></label>
+      <ng-select placeholder="Select" class="input-form-select" formControlName="openCoverType" [items]="openCoverTypeList" bindValue="Code" bindLabel="CodeDescription">
+      </ng-select>
+      <div class="input-form-error" *ngIf="(newQuoteF.openCoverType.errors && submitted) || (!newQuoteF.openCoverType.valid && newQuoteF.openCoverType.touched)">
+        <div *ngIf="newQuoteF.openCoverType.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
+      <ng-select placeholder="Select" class="input-form-select" formControlName="selectBroker" [items]="brokerList" bindValue="Code" bindLabel="CodeDescription" (change)="onChangeBroker()">
+      </ng-select>
+      <div class="input-form-error" *ngIf="(newQuoteF.selectBroker.errors && submitted) || (!newQuoteF.selectBroker.valid && newQuoteF.selectBroker.touched)">
+        <div *ngIf="newQuoteF.selectBroker.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Sales Executive<span class="text-required">*</span></label>
+      <ng-select placeholder="Select" class="input-form-select" formControlName="salesExective" [items]="excutiveList" bindValue="Code" bindLabel="CodeDescription">
+      </ng-select>
+      <div class="input-form-error" *ngIf="(newQuoteF.salesExective.errors && submitted) || (!newQuoteF.salesExective.valid && newQuoteF.salesExective.touched)">
+        <div *ngIf="newQuoteF.salesExective.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="customer-search-container">
+    <div class="input-control-container">
+      <label class="input-form-label">Customer<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" class="input-form-control without-icon" formControlName="customer">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.customer.errors && submitted) || (!newQuoteF.customer.valid && newQuoteF.customer.touched)">
+        <div *ngIf="newQuoteF.customer.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+      <div class="customer-search-box">
+        <ng-container *ngIf="tableData">
+          <app-material-table
+          [cols]="columnHeader"
+          [data]="tableData"
+          [filterValue]="newQuoteF.customer.value"
+          (onSelectCustomer)="onSelectCustomer($event)"
+          [btnConfig]="btnConfig"
+          >
+          </app-material-table>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Debit To<span class="text-required">*</span></label>
+      <div class="input-form-radio-box">
+        <div class="radio-toolbar">
+          <input id="debitTo-borker" type="radio" name="debitTo" value="Broker" formControlName="debitTo">
+          <label for="debitTo-borker">Broker</label>
+          <input type="radio" id="debitTo-Cust" name="debitTo" value="Customer" formControlName="debitTo">
+          <label for="debitTo-Cust">Customer</label>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.debitTo.errors && submitted) || (!newQuoteF.debitTo.valid && newQuoteF.debitTo.touched)">
+        <div *ngIf="newQuoteF.debitTo.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Open Cover Start Date<span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
+          formControlName="openCoverStartDate" (click)="d.toggle()" readonly [minDate]="minDate" (dateSelect)="onChangeStartDate($event)">
+        </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.openCoverStartDate.errors && submitted) || (!newQuoteF.openCoverStartDate.valid && newQuoteF.openCoverStartDate.touched)">
+        <div *ngIf="newQuoteF.openCoverStartDate.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Open Cover End Date<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="openCoverEndDate" (click)="d1.toggle()" readonly>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.openCoverEndDate.errors && submitted) || (!newQuoteF.openCoverEndDate.valid && newQuoteF.openCoverEndDate.touched)">
+        <div *ngIf="newQuoteF.openCoverEndDate.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="middle-line">
+      Extra Information
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Annual Estimated Turnover<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" digitOnly [value]="newQuoteF.annualEstimate.value | commaseparator" class="input-form-control without-icon" formControlName="annualEstimate">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.annualEstimate.errors && submitted) || (!newQuoteF.annualEstimate.valid && newQuoteF.annualEstimate.touched)">
+        <div *ngIf="newQuoteF.annualEstimate.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Utilized Amount</label>
+      <div class="input-form-box">
+        <input type="text" digitOnly [value]="newQuoteF.utilizedAmount.value | commaseparator" class="input-form-control without-icon" formControlName="utilizedAmount">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.utilizedAmount.errors && submitted) || (!newQuoteF.utilizedAmount.valid && newQuoteF.utilizedAmount.touched)">
+        <div *ngIf="newQuoteF.utilizedAmount.errors?.required" class="error-text">
+          This field is required
+        </div>
+        <div *ngIf="newQuoteF.utilizedAmount.errors?.message" class="error-text">
+          {{newQuoteF.utilizedAmount.errors?.message}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+
+    <div class="input-control-container">
+      <label class="input-form-label">Currency<span class="text-required">*</span></label>
+      <div class="currency-flex">
+        <div class="currrency-drop">
+          <ng-select placeholder="Select" class="input-form-select" formControlName="currency" [items]="currencyList" bindValue="Code" bindLabel="CodeDescription">
+          </ng-select>
+        </div>
+        <div class="currrency-dollar">
+          <div class="input-control-container">
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon"
+                [value]="newQuoteF.currency.value | currency: currencyList" >
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.currency.errors && submitted) || (!newQuoteF.currency.valid && newQuoteF.currency.touched)">
+        <div *ngIf="newQuoteF.currency.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Shared Percentage<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" [attr.disabled]="true" class="input-form-control without-icon" formControlName="sharedPercentage">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.sharedPercentage.errors && submitted) || (!newQuoteF.sharedPercentage.valid && newQuoteF.sharedPercentage.touched)">
+        <div *ngIf="newQuoteF.sharedPercentage.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">No.of Co-Insurance Company</label>
+      <div class="input-form-box">
+        <input type="text" [attr.disabled]="true" class="input-form-control without-icon" formControlName="noOfCoInsuComp">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.noOfCoInsuComp.errors && submitted) || (!newQuoteF.noOfCoInsuComp.valid && newQuoteF.noOfCoInsuComp.touched)">
+        <div *ngIf="newQuoteF.noOfCoInsuComp.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Free Text Allowed<span class="text-required">*</span></label>
+      <div class="input-form-radio-box">
+        <div class="radio-toolbar">
+          <input id="freetext-yes" type="radio" name="freeTextAllowed" value="Y" formControlName="freeTextAllowed">
+          <label for="freetext-yes">Yes</label>
+          <input type="radio" id="freetext-no" name="freeTextAllowed" value="N" formControlName="freeTextAllowed">
+          <label for="freetext-no">No</label>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.freeTextAllowed.errors && submitted) || (!newQuoteF.freeTextAllowed.valid && newQuoteF.freeTextAllowed.touched)">
+        <div *ngIf="newQuoteF.freeTextAllowed.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Cross Voyage<span class="text-required">*</span></label>
+      <div class="input-form-radio-box">
+        <div class="radio-toolbar">
+          <input id="crossvoyage-yes" type="radio" name="crossVoyage" value="Y" formControlName="crossVoyage" (change)="onCheckCrossVoyage()">
+          <label for="crossvoyage-yes">Yes</label>
+          <input type="radio" id="crossvoyage-no" name="crossVoyage" value="N" formControlName="crossVoyage" (change)="onCheckCrossVoyage()">
+          <label for="crossvoyage-no">No</label>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.crossVoyage.errors && submitted) || (!newQuoteF.crossVoyage.valid && newQuoteF.crossVoyage.touched)">
+        <div *ngIf="newQuoteF.crossVoyage.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Cross Voyage(%)<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" [attr.disabled]="newQuoteF.crossVoyage.value == 'Y'?null:true" class="input-form-control without-icon" formControlName="crossVoyagePrecnt">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.crossVoyagePrecnt.errors && submitted) || (!newQuoteF.crossVoyagePrecnt.valid && newQuoteF.crossVoyagePrecnt.touched)">
+        <div *ngIf="newQuoteF.crossVoyagePrecnt.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Existing Core Application Policy No</label>
+      <div class="currency-flex">
+        <div class="currrency-drop">
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="existingCore">
+          </div>
+        </div>
+        <div class="currrency-dollar">
+          <div class="input-control-container">
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon"
+                [value]="editData?.RefNo? editData?.RefNo:''" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.existingCore.errors && submitted) || (!newQuoteF.existingCore.valid && newQuoteF.existingCore.touched)">
+        <div *ngIf="newQuoteF.existingCore.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Certificate No Start From<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" digitOnly class="input-form-control without-icon" formControlName="certificateStartForm">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.certificateStartForm.errors && submitted) || (!newQuoteF.certificateStartForm.valid && newQuoteF.certificateStartForm.touched)">
+        <div *ngIf="newQuoteF.certificateStartForm.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Commission(%)<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" mask="percent" class="input-form-control without-icon" formControlName="commissiomPrecnt">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.commissiomPrecnt.errors && submitted) || (!newQuoteF.commissiomPrecnt.valid && newQuoteF.commissiomPrecnt.touched)">
+        <div *ngIf="newQuoteF.commissiomPrecnt.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Minimum Premium<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" digitOnly class="input-form-control without-icon" formControlName="minimumPremium">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.commissiomPrecnt.errors && submitted) || (!newQuoteF.commissiomPrecnt.valid && newQuoteF.commissiomPrecnt.touched)">
+        <div *ngIf="newQuoteF.commissiomPrecnt.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Endorsement fee<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" digitOnly class="input-form-control without-icon" formControlName="endorsementFee">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.endorsementFee.errors && submitted) || (!newQuoteF.endorsementFee.valid && newQuoteF.endorsementFee.touched)">
+        <div *ngIf="newQuoteF.endorsementFee.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Issuance Fee(%)<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" mask="percent" class="input-form-control without-icon" formControlName="issuanceFeePrecnt">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.issuanceFeePrecnt.errors && submitted) || (!newQuoteF.issuanceFeePrecnt.valid && newQuoteF.issuanceFeePrecnt.touched)">
+        <div *ngIf="newQuoteF.issuanceFeePrecnt.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Minimum Premium Issuance Fee<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" digitOnly class="input-form-control without-icon" formControlName="minimumPremIssuanceFee">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.minimumPremIssuanceFee.errors && submitted) || (!newQuoteF.minimumPremIssuanceFee.valid && newQuoteF.minimumPremIssuanceFee.touched)">
+        <div *ngIf="newQuoteF.minimumPremIssuanceFee.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">No of Back Days<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" digitOnly class="input-form-control without-icon" formControlName="noOfBackDays">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.noOfBackDays.errors && submitted) || (!newQuoteF.noOfBackDays.valid && newQuoteF.noOfBackDays.touched)">
+        <div *ngIf="newQuoteF.noOfBackDays.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Default Clauses<span class="text-required">*</span></label>
+      <div class="input-form-radio-box">
+        <div class="radio-toolbar">
+          <input id="defaultclause-yes" type="radio" name="defaultClauses" value="Y" formControlName="defaultClauses">
+          <label for="defaultclause-yes">Yes</label>
+          <input type="radio" id="defaultclause-no" name="defaultClauses" value="N" formControlName="defaultClauses">
+          <label for="defaultclause-no">No</label>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.defaultClauses.errors && submitted) || (!newQuoteF.defaultClauses.valid && newQuoteF.defaultClauses.touched)">
+        <div *ngIf="newQuoteF.defaultClauses.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Declaration Type<span class="text-required">*</span></label>
+      <ng-select placeholder="Select" class="input-form-select" formControlName="declarationType" [items]="DeclarationTypeList" bindValue="Code" bindLabel="CodeDescription">
+      </ng-select>
+      <div class="input-form-error" *ngIf="(newQuoteF.declarationType.errors && submitted) || (!newQuoteF.declarationType.valid && newQuoteF.declarationType.touched)">
+        <div *ngIf="newQuoteF.declarationType.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Hauliers Type<span class="text-required">*</span></label>
+      <div class="input-form-radio-box">
+        <div class="radio-toolbar">
+          <input id="hauliers-annual" type="radio" name="hauilerType" value="A" formControlName="hauilerType" >
+          <label for="hauliers-annual" [ngClass]="newQuoteF.openCoverType.value =='13' || newQuoteF.openCoverType.value =='14'?'enabled':'disabled'">Annual Type</label>
+          <input type="radio" id="hauliers-vehicle" name="hauilerType" value="V" formControlName="hauilerType" >
+          <label for="hauliers-vehicle" [ngClass]="newQuoteF.openCoverType.value =='13' || newQuoteF.openCoverType.value =='14'?'enabled':'disabled'">Vehicles Type</label>
+          <input type="radio" id="hauliers-none" name="hauilerType" value="N" formControlName="hauilerType" >
+          <label for="hauliers-none" [ngClass]="newQuoteF.openCoverType.value =='13' || newQuoteF.openCoverType.value =='14'?'enabled':'disabled'">None</label>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.hauilerType.errors && submitted) || (!newQuoteF.hauilerType.valid && newQuoteF.hauilerType.touched)">
+        <div *ngIf="newQuoteF.hauilerType.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">War YN<span class="text-required">*</span></label>
+      <div class="input-form-radio-box">
+        <div class="radio-toolbar">
+          <input id="war-yes" type="radio" name="war" value="Y" formControlName="war">
+          <label for="war-yes">Yes</label>
+          <input type="radio" id="war-no" name="war" value="N" formControlName="war">
+          <label for="war-no">No</label>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.war.errors && submitted) || (!newQuoteF.war.valid && newQuoteF.war.touched)">
+        <div *ngIf="newQuoteF.war.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Fac YN<span class="text-required">*</span></label>
+      <div class="input-form-radio-box">
+        <div class="radio-toolbar">
+          <input id="fac-yes" type="radio" name="fac" value="Y" formControlName="fac">
+          <label for="fac-yes">Yes</label>
+          <input type="radio" id="fac-no" name="fac" value="N" formControlName="fac">
+          <label for="fac-no">No</label>
+        </div>
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.fac.errors && submitted) || (!newQuoteF.fac.valid && newQuoteF.fac.touched)">
+        <div *ngIf="newQuoteF.fac.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Policy Fee<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <input type="text" class="input-form-control without-icon" formControlName="policyFee">
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Voyage Remarks</label>
+      <div class="input-form-box">
+        <input type="text" class="input-form-control without-icon" formControlName="voyageRemarks">
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Effective Date</label>
+      <div class="input-form-box">
+
+        <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="effectiveDate" (click)="d2.toggle()" readonly [minDate]="minDate">
+      </div>
+      <div class="input-form-error" *ngIf="(newQuoteF.effectiveDate.errors && submitted) || (!newQuoteF.effectiveDate.valid && newQuoteF.effectiveDate.touched)">
+        <div *ngIf="newQuoteF.effectiveDate.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 text-right">
+    <button nbButton (click)="onSubmitData()"  status="primary" class="mx-2">Next</button>
+  </div>
+</div>
+</form>

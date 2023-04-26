@@ -1,0 +1,53 @@
+@import './themes';
+
+@mixin nb-overrides() {
+  nb-select.size-medium button {
+    padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
+
+    nb-icon {
+      right: 0.41rem !important;
+    }
+  }
+
+  nb-card-body {
+    padding: 1rem 2.5rem;
+  }
+
+  .nb-theme-default nb-tabset .tab-link {
+    font-weight: 500;
+    line-height: 80%;
+  }
+
+  .card .header {
+    padding: 0 3rem !important;
+  }
+
+  nb-tabset nb-tab {
+    padding: 1rem .6rem;
+  }
+
+  nb-sidebar .scrollable::-webkit-scrollbar,
+  nb-layout .scrollable-container::-webkit-scrollbar {
+    width: 0.7125rem;
+    height: 0.5125rem;
+  }
+
+  nb-sidebar .scrollable::-webkit-scrollbar-thumb,
+  nb-layout .scrollable-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+  }
+// nb-layout-header.fixed ~ .layout-container {
+//     padding-top: 0;
+//     min-height: calc(100vh - 4.75rem);
+// }
+
+nb-accordion {
+  box-shadow: none;
+}
+.main-container{
+  padding-bottom: 7rem;
+
+}
+
+
+}

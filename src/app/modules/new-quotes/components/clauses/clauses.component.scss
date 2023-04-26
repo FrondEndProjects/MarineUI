@@ -1,0 +1,9 @@
+.list-group-item{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+.list-group-item textarea{
+  height: auto;
+}

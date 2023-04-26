@@ -1,0 +1,128 @@
+<div [formGroup]="warRateForm" class="bg-white p-3">
+
+
+    <div class="row">
+      <!-- Mode of  Transport -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Mode of  Transport<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <ng-select class="input-form-select" name="ModeOfTransportId" formControlName="ModeOfTransportId" [items]="transportList" bindValue="Code" bindLabel="CodeDescription">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <mat-error
+          *ngIf="warRateForm.controls['ModeOfTransportId'].errors?.['required'] && (warRateForm.controls['ModeOfTransportId'].dirty || warRateForm.controls['ModeOfTransportId'].touched)">
+          Please choose Mode of  Transport</mat-error>
+  
+      </div>
+      <!-- / Mode of  Transport -->
+  
+      <!-- War Description -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">War Description</label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="warDescription" formControlName="warDescription">
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      <!-- / War Description -->
+    </div>
+  
+    <div class="row">
+      <!-- War Rate (Rating) -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">War Rate (Rating)<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="warRate" formControlName="warRate">
+            </div>
+          </div>
+        </div>
+        <mat-error
+          *ngIf="warRateForm.controls['warRate'].errors?.['required'] && (warRateForm.controls['warRate'].dirty || warRateForm.controls['warRate'].touched)">
+          Please Enter War Rate (Rating)</mat-error>
+      </div>
+      <!-- / War Rate (Rating) -->
+  
+      <!-- Core Application Code -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Core Application Code <span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="coreApplicationCode" formControlName="coreApplicationCode">
+            </div>
+  
+          </div>
+          <mat-error
+            *ngIf="warRateForm.controls['coreApplicationCode'].errors?.['required'] && (warRateForm.controls['coreApplicationCode'].dirty || warRateForm.controls['coreApplicationCode'].touched)">
+            Please Enter Core Application Code</mat-error>
+  
+        </div>
+      </div>
+      <!-- / Core Application Code -->
+    </div>
+  
+  
+    <div class="row">
+  
+      <!-- REMARKS -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Remarks</label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="remarks">
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- /REMARKS -->
+  
+      <!-- effective date -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Effective Date*</mat-label>
+        <input matInput [matDatepicker]="picker" [min]="min" name="effectiveDate" formControlName="effectiveDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- effective date -->
+  
+  
+    </div>
+  
+    <div class="row">
+  
+      <!-- STATUS -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+          <label class="input-form-label">Status<span class="text-required">*</span></label>
+          <div class="input-form-radio-box">
+            <div class="radio-toolbar">
+              <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+              <label for="fac-yes">Active</label>
+              <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+              <label for="fac-no">DeActive</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="mt-3 text-center">
+      <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+      <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
+    </div>
+  
+  </div>

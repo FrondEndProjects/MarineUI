@@ -1,0 +1,28 @@
+
+.input-edit .input-form-control{
+  margin: 0;
+  border-radius: 0;
+}
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  border-bottom-color: #ccc;
+}
+th.mat-header-cell {
+  color: lightslategrey;
+  font-size: 100%;
+  font-weight: 500;
+}
+.example-container{
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+}
+
+table {
+  width: 100%;
+}
+.inner-table th,
+.inner-table td {
+    white-space: nowrap !important;
+    padding: 0px 10px !important;
+
+}

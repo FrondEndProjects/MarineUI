@@ -1,0 +1,150 @@
+<div [formGroup]="exchangeForm" class="bg-white p-4">
+
+
+  <div class="row">
+    <!-- Cover  -->
+    <!--<div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">Cover<span class="text-required">*</span></label>
+        <ng-select class="input-form-select" name="cover" formControlName="cover" [items]="CoverList" bindValue="Code"
+          bindLabel="CodeDescription">
+        </ng-select>
+      </div>
+      <mat-error
+        *ngIf="exchangeForm.controls['cover'].errors?.['required'] && (exchangeForm.controls['cover'].dirty || exchangeForm.controls['cover'].touched)">
+        Please choose Cover</mat-error>
+    </div>-->
+    <!-- Cover  -->
+
+    <!-- Starting Amount  -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Starting Amount <span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="startingAmount"
+              formControlName="startingAmount">
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="exchangeForm.controls['startingAmount'].errors?.['required'] && (exchangeForm.controls['startingAmount'].dirty || exchangeForm.controls['startingAmount'].touched)">
+        Please enter Starting Amount</mat-error>
+    </div>
+    <!-- Starting Amount  -->
+     <!-- Ending Amount -->
+     <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Ending Amount<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="endingAmount"
+              formControlName="endingAmount">
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="exchangeForm.controls['endingAmount'].errors?.['required'] && (exchangeForm.controls['endingAmount'].dirty || exchangeForm.controls['endingAmount'].touched)">
+        Please enter Ending Amount</mat-error>
+    </div>
+    <!-- Ending Amount  -->
+
+  </div>
+
+  <div class="row mt-2">
+    <!-- Ending Amount -->
+    
+    <!-- Ending Amount  -->
+
+    <!-- Deductible -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="deductible" formControlName="deductible">
+          </div>
+
+        </div>
+        <mat-error
+          *ngIf="exchangeForm.controls['deductible'].errors?.['required'] && (exchangeForm.controls['deductible'].dirty || exchangeForm.controls['deductible'].touched)">
+          Please enter Deductible</mat-error>
+
+      </div>
+    </div>
+    <!-- /Deductible -->
+     <!-- Commodity Excess Rate -->
+     <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Commodity Excess Rate<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="commodityExcessRate"
+              formControlName="commodityExcessRate">
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="exchangeForm.controls['commodityExcessRate'].errors?.['required'] && (exchangeForm.controls['commodityExcessRate'].dirty || exchangeForm.controls['commodityExcessRate'].touched)">
+        Please Enter Commodity Excess Rate</mat-error>
+
+    </div>
+    <!-- /Commodity Excess Rate -->
+  </div>
+
+  <div class="row mt-2">
+  
+    <!-- effective date -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Effective Date*</mat-label>
+        <input matInput [matDatepicker]="picker" [min]="min" name="effectiveDate" formControlName="effectiveDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- effective date -->
+
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">CoreApplicationCode<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="CoreApplicationCode" formControlName="CoreApplicationCode">
+          </div>
+
+        </div>
+        <mat-error
+          *ngIf="exchangeForm.controls['CoreApplicationCode'].errors?.['required'] && (exchangeForm.controls['CoreApplicationCode'].dirty || exchangeForm.controls['CoreApplicationCode'].touched)">
+          Please Enter Core Application Code</mat-error>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row mt-2">
+
+    <!-- STATUS -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">Status<span class="text-required">*</span></label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+            <label for="fac-yes">Active</label>
+            <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+            <label for="fac-no">DeActive</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3 btn-container" style="text-align:center ;">
+    <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+    <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
+  </div>
+
+
+</div>

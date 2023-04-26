@@ -1,0 +1,41 @@
+
+
+<div class="maan-card">
+  <form [formGroup]="searchForm">
+  <div class="row">
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Search By<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select"
+         formControlName="searchBy" [items]="searchByList" bindValue="code" bindLabel="codeDescription">
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4" *ngIf="userDetails.UserType != 'Broker' && userDetails.UserType != 'User'">
+      <div class="input-control-container">
+        <label class="input-form-label">Select User/Broker<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select"
+         formControlName="broker" [items]="brokerList" bindValue="LoginId" bindLabel="UserName" (change)="onChangeBroker()">
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Enter Data<span class="text-required">*</span></label>
+        <div class="input-form-box">
+          <input type="text"  class="input-form-control without-icon" formControlName="enterData">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-3 d-sm-flex flex-sm-row align-items-sm-center">
+      <button nbButton size="small" status="primary" class="mx-1" (click)="onLoadGrid()">Submit</button>
+    </div>
+  </div>
+
+  </form>
+  <ng-container *ngIf="tableData?.length !=0">
+    <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="isActionBtn($event)">
+    </app-material-table>
+  </ng-container>
+
+</div>

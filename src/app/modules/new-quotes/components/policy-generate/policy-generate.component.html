@@ -1,0 +1,335 @@
+
+
+
+
+<div class="maan-card" *ngIf="!draftSection && !policySection">
+  <div class="maan-card-header">
+    <div class="form-heading">
+      <!-- <div class="form-heading-number">
+        5
+      </div> -->
+      <div class="form-heading-text">
+       Policy Generation
+     </div>
+     </div>
+  </div>
+  <div class="maan-card-body">
+      <div class="vision-grid vision-grid-column-2 policy-grid">
+        <div class="vision-grid-item">
+          <div class="vision-grid-item-title">
+            Document Upload
+          </div>
+          <div class="vision-grid-item-body">
+            <div>
+              <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
+              <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
+                (click)="doc.click()">
+                <div>
+                  <div class="center">
+                    <b class="text-dark">
+                      <i class="far fa-images"></i> Drag or Click</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="vision-grid-item-body" *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
+                <div class="row">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Filename</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container>
+                        <tr *ngFor="let UPdocuments of uploadedDocumentsList;let i=index">
+                          <td>{{UPdocuments.OriginalFileName}}</td>
+                          <td>
+                            <button class="circle btn btn-yellow btn-sm" (click)="onDeleteUploadDoc(i)">
+                              <i class="fas fa-eye"></i>
+                            </button>&nbsp; 
+                            <button class="circle btn btn-danger btn-sm" (click)="onDownloadfile(i)">
+                              <i class="fas fa-download"></i>
+                            </button>&nbsp; 
+                            <button class="circle btn btn-success btn-sm" (click)="onDeleteUploadedDoc(i)">
+                              <i class="fas fa-trash"></i>
+                            </button>&nbsp; 
+                          </td>
+                        </tr>
+                      </ng-container>
+                          <ng-container  *ngIf="uploadDocuments?.length!=0">
+                            <tr *ngFor="let doc of uploadDocuments;let i=index">
+                              <td>{{doc.fileName}}</td>
+                              <td>
+                                <button class="circle btn btn-danger btn-sm" (click)="onDeleteUploadDoc(i)">
+                                  <i class="fas fa-trash"></i>
+                                </button>&nbsp; 
+                              </td>
+                            </tr>
+                          </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="vision-grid-item">
+          <div class="vision-grid-item-title">
+            Policy Generation
+          </div>
+
+          <div class="vision-grid-item-body">
+            <div class="left-line font-size-95">
+              Generate Certificate
+            </div>
+            <div class="input-control-container">
+              <div class="input-form-radio-box">
+                <div class="radio-toolbar">
+                  <input id="generateCerti_quote" type="radio" name="generateCerti" [(ngModel)]="generateCerti" value="Q">
+                  <label for="generateCerti_quote">QUOTE</label>
+                  <input type="radio" id="generateCerti_draft" name="generateCerti" [(ngModel)]="generateCerti" value="N">
+                  <label for="generateCerti_draft">DRAFT</label>
+                  <input type="radio" id="generateCerti_schedule" name="generateCerti" [(ngModel)]="generateCerti" value="Y">
+                  <label for="generateCerti_schedule">SCHEDULE</label>
+                </div>
+              </div>
+            </div>
+            <div class="left-line font-size-95">
+              Print In Schedule
+            </div>
+            <div class="print-check">
+              <label class="custom-checkbox-container">
+                <input type="checkbox" [(ngModel)]="premium">
+                <span class="checkmark">
+                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                </span>
+                <div class="description">
+                  <div class="description-name">
+                    <span>
+                      Premium
+                    </span>
+                  </div>
+                </div>
+              </label>
+              <label class="custom-checkbox-container">
+                <input type="checkbox" [(ngModel)]="nameOfBroker">
+                <span class="checkmark">
+                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                </span>
+                <div class="description">
+                  <div class="description-name">
+                    <span>
+                      Name Of Banker
+                    </span>
+                  </div>
+                </div>
+              </label>
+              <label class="custom-checkbox-container">
+                <input type="checkbox" [(ngModel)]="foreignCurrency">
+                <span class="checkmark">
+                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                </span>
+                <div class="description">
+                  <div class="description-name">
+                    <span>
+                      Foreign Currency
+                    </span>
+                  </div>
+                </div>
+              </label>
+              <label class="custom-checkbox-container">
+                <input type="checkbox" [(ngModel)]="darft">
+                <span class="checkmark">
+                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                </span>
+                <div class="description">
+                  <div class="description-name">
+                    <span>DRAFT</span>
+                  </div>
+                </div>
+              </label>
+              <label class="custom-checkbox-container">
+                <input type="checkbox" [(ngModel)]="bankerAssured">
+                <span class="checkmark">
+                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                </span>
+                <div class="description">
+                  <div class="description-name">
+                    <span>Both Banker and Assured</span>
+                  </div>
+                </div>
+              </label>
+              <label class="custom-checkbox-container">
+                <input type="checkbox" [(ngModel)]="excess">
+                <span class="checkmark">
+                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                </span>
+                <div class="description">
+                  <div class="description-name">
+                    <span>Excess</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  <div class="maan-card-footer my-2">
+    <app-back-btn></app-back-btn>
+    <button nbButton shape="round" size="small" status="primary" class="mx-2" (click)="onSubmit()">Submit</button>
+  </div>
+</div>
+<div class="maan-card" *ngIf="draftSection || policySection">
+  <div class="maan-card-header">
+    <div class="form-heading">
+        <div class="form-heading-text">
+          <ng-container *ngIf="policySection">Policy Information</ng-container>
+          <ng-container *ngIf="draftSection">Draft Information</ng-container>
+      </div>
+     </div>
+  </div>
+  <div class="maan-card-body">
+    <div class="col-12 col-md-12 col-lg-12">
+      <div class="middle-line">
+        Quote Information
+      </div>
+    </div>
+    <div class="row header-details">
+      <div class="col-md-6 col-lg-6 offset-3 ">
+        
+        <div class="vision-grid-item-body">
+            <div class="row">
+              <div class="col-12 col-md-12 col-lg-12"> 
+                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                  <div class="p-2">
+                    Quote No
+                  </div>
+                  <div class="p-2">
+                    <b>{{premiumDetails?.QuoteDetails?.QuoteNo}}</b> 
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                  <div class="p-2">
+                    Customer Name
+                  </div>
+                  <div class="p-2">
+                    <b>{{premiumDetails?.CustomerDetails?.Name}}</b>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-12 col-lg-12">
+                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                  <div class="p-2">
+                    Policy Start Date
+                  </div>
+                  <div class="p-2">
+                    <b>{{premiumDetails?.QuoteDetails?.InceptionDate}}</b> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+        </div>    
+      </div>
+    </div>
+    <!-- <div class="header-details">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+            <div class="p-2">
+              Quote No
+            </div>
+            <div class="p-2">
+              {{premiumDetails?.QuoteDetails?.QuoteNo}}
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+            <div class="p-2">
+              Customer Name
+            </div>
+            <div class="p-2">
+              {{premiumDetails?.CustomerDetails?.Name}}
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+            <div class="p-2">
+              Policy Start Date
+            </div>
+            <div class="p-2">
+              {{premiumDetails?.QuoteDetails?.InceptionDate}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="middle-line">
+          Premium Information
+        </div>
+      </div>
+      <div class="row header-details">
+        <div class="col-md-6 col-lg-6 offset-3 ">
+          
+          <div class="vision-grid-item-body">
+              <div class="row">
+                <div class="col-12 col-md-12 col-lg-12" *ngIf="policySection"> 
+                  <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                    <div class="p-2">
+                      Policy No
+                    </div>
+                    <div class="p-2">
+                      <b>{{policyNo}}</b> 
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12">
+                  <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                    <div class="p-2">
+                      Total SumInsured
+                    </div>
+                    <div class="p-2">
+                      <b>{{premiumDetails?.TotalInsuredValue  | commaseparator}}</b> &nbsp;({{premiumDetails?.QuoteDetails?.CurrencyName}})
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12">
+                  <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                    <div class="p-2">
+                      Premium
+                    </div>
+                    <div class="p-2">
+                      <b>{{premiumDetails?.PremiumDetails?.TotalPremium | commaseparator}}</b> &nbsp;({{premiumDetails?.QuoteDetails?.CurrencyName}})
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+          </div>    
+        </div>
+      </div>
+      <div class="text-center mx-1">
+        <button nbButton shape="round" size="small" status="danger" class="mx-2" (click)="getBack()">Back</button>
+        <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Schedule Pdf</button>
+        <button nbButton shape="round" size="small" status="success" class="mx-2"  *ngIf="draftSection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
+        <button nbButton shape="round" size="small" status="primary" class="mx-2"   (click)="onNavigate()">Proceed</button>
+      </div>
+  </div>
+</div>

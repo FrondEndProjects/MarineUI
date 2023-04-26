@@ -1,0 +1,129 @@
+
+<div class="vision-grid vision-grid-column-3 country-selection my-3">
+  <div class="vision-grid-item">
+    <div class="vision-grid-item-title">
+      Country Of Destination <small class="text-dark"><i>(Excluded Destination Country)</i></small>
+    </div>
+    <div class="vision-grid-item-body">
+      <div class="input-control-container">
+        <div class="input-form-box">
+          <span class="input-form-icon">
+            <i class="fas fa-search"></i>
+          </span>
+          <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="excludedCountrySearch" placeholder="search...">
+        </div>
+      </div>
+      <ul class="list-group checklist list-group-flush">
+        <ng-container *ngFor="let item of excludedCountry | countryFilter:excludedCountrySearch : excludedCountry">
+          <label class="custom-checkbox-container">
+            <input type="checkbox" [(ngModel)]="item.isDesti" [value]="item.CodeValue">
+            <div class="description">
+              <div class="description-name">
+                <span>
+                  {{item?.CodeDescription}}
+                </span>
+              </div>
+            </div>
+          </label>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+  <div class="vision-grid-item">
+    <div class="vision-grid-item-title">
+      Actions
+    </div>
+    <div class="vision-grid-item-body">
+      <div class="exchange-icon">
+
+      </div>
+      <div class="action-btns">
+        <div class="action-btn-item" (click)="onSelected('left')">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="action-btn-item">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <div class="action-btn-item" (click)="onSelected('right')">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+      <div class="action-btns">
+        <div class="action-btn-item" (click)="onMoveAll('left')">
+          <i class="fas fa-angle-double-left"></i>
+        </div>
+        <div class="action-btn-item">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <div class="action-btn-item" (click)="onMoveAll('right')">
+          <i class="fas fa-angle-double-right"></i>
+        </div>
+      </div>
+      <div class="action-btns">
+        <div class="action-btn-item" (click)="onMoveGroupWise('africanCode','left',africanCode)">
+          <i class="fas fa-angle-double-left"></i>
+        </div>
+        <div class="action-btn-item">
+          African
+        </div>
+        <div class="action-btn-item" (click)="onMoveGroupWise('africanCode','right',africanCode)">
+          <i class="fas fa-angle-double-right"></i>
+        </div>
+      </div>
+      <div class="action-btns">
+        <div class="action-btn-item" (click)="onMoveGroupWise('gccCode','left',gccCode)">
+          <i class="fas fa-angle-double-left"></i>
+        </div>
+        <div class="action-btn-item">
+          GCC
+        </div>
+        <div class="action-btn-item" (click)="onMoveGroupWise('gccCode','right',gccCode)">
+          <i class="fas fa-angle-double-right"></i>
+        </div>
+      </div>
+      <div class="action-btns">
+        <div class="action-btn-item" (click)="onMoveGroupWise('cisCode','left',cisCode)">
+          <i class="fas fa-angle-double-left"></i>
+        </div>
+        <div class="action-btn-item">
+          CIS
+        </div>
+        <div class="action-btn-item" (click)="onMoveGroupWise('cisCode','right',cisCode)">
+          <i class="fas fa-angle-double-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="vision-grid-item">
+    <div class="vision-grid-item-title">
+      Country Of Destination <small class="text-dark"><i>(Included Destination Country)</i></small>
+    </div>
+    <div class="vision-grid-item-body">
+      <div class="input-control-container">
+        <div class="input-form-box">
+          <span class="input-form-icon">
+            <i class="fas fa-search"></i>
+          </span>
+          <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="includedCountrySearch" placeholder="search...">
+        </div>
+      </div>
+      <ul class="list-group checklist list-group-flush">
+        <ng-container *ngFor="let item of includedCountry | countryFilter:includedCountrySearch : includedCountry">
+          <label class="custom-checkbox-container">
+            <input type="checkbox" [(ngModel)]="item.isDesti" [value]="item.CodeValue">
+            <div class="description">
+              <div class="description-name">
+                <span>
+                  {{item?.CodeDescription}}
+                </span>
+              </div>
+            </div>
+          </label>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="text-right">
+  <button nbButton (click)="onSubmit()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+</div>

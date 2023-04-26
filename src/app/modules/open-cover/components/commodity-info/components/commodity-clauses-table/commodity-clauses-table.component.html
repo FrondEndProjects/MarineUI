@@ -1,0 +1,16 @@
+
+<div class="vision-card">
+  <div class="vision-card-header">
+    Commodity Clauses Info
+  </div>
+  <div class="vision-card-body">
+    <ng-container *ngIf="tableData">
+      <app-commodity-clauses
+      [cols]="columnHeader"
+      [data]="tableData"
+      >
+      </app-commodity-clauses>
+    </ng-container>
+
+  </div>
+</div>

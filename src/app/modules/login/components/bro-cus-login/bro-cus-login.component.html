@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]="loginForm">
+      <div class="input-control-container">
+        <label class="input-form-label">Username</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="username" placeholder="Enter username">
+        </div>
+        <div class="input-form-error" *ngIf="(f.username.errors && submitted) || (!f.username.valid && f.username.touched)">
+          <div *ngIf="f.username.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+      </div>
+      <div class="input-control-container">
+        <label class="input-form-label">Password</label>
+        <div class="input-form-box">
+          <input type="password" class="input-form-control without-icon" formControlName="password" placeholder="Enter password">
+        </div>
+        <div class="input-form-error" *ngIf="(f.password.errors && submitted) || (!f.password.valid && f.password.touched)">
+          <div *ngIf="f.password.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+      </div>
+      <div class="input-control-container">
+        <label class="input-form-label">Select Region<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select" placeholder="Select" [items]="regionList" bindValue="RegionId" bindLabel="RegionName"
+          formControlName="region" (change)="onGetBranchList()">
+        </ng-select>
+        <div class="input-form-error" *ngIf="(f.region.errors && submitted) || (!f.region.valid && f.region.touched)">
+          <div *ngIf="f.region.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+      </div>
+      <div class="input-control-container">
+        <label class="input-form-label">Select Branch<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select"  placeholder="Select" [items]="branchList" bindValue="BranchCode" bindLabel="BranchName"
+          formControlName="branch">
+        </ng-select>
+        <div class="input-form-error" *ngIf="(f.branch.errors && submitted) || (!f.branch.valid && f.branch.touched)">
+          <div *ngIf="f.branch.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="button-34" role="button" (click)="onLogin()">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- HTML !-->

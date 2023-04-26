@@ -1,0 +1,149 @@
+<div [formGroup]="countryForm" class="bg-white p-3">
+
+
+  <div class="single-row">
+    <!-- Country Name -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">Country Name<span class="text-required">*</span></label>
+
+        <!-- <ng-select class="input-form-select" formControlName="BelongingCountryId" [items]="countryList" bindValue="Code" bindLabel="CodeDescription"> </ng-select> -->
+
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" name="countryName" formControlName="countryName">
+        </div>
+
+      </div>
+      <mat-error
+        *ngIf="countryForm.controls['countryName'].errors?.['required'] && (countryForm.controls['countryName'].dirty || countryForm.controls['countryName'].touched)">
+        Please choose Country Name</mat-error>
+    </div>
+    <!-- Country Name -->
+
+    <!-- Country short NAME -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Country short name</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="countryShortName">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Country short NAME -->
+  </div>
+
+  <div class="single-row">
+    <!-- Nationality Name -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Nationality Name<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="nationalityName">
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="countryForm.controls['nationalityName'].errors?.['required'] && (countryForm.controls['nationalityName'].dirty || countryForm.controls['nationalityName'].touched)">
+        Please Enter Nationality Name</mat-error>
+    </div>
+    <!-- Nationality Name -->
+
+    <!-- Geo Rate (Rating) -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Geo Rate (Rating)<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="geoRate">
+          </div>
+
+        </div>
+        <mat-error
+          *ngIf="countryForm.controls['geoRate'].errors?.['required'] && (countryForm.controls['geoRate'].dirty || countryForm.controls['geoRate'].touched)">
+          Please choose Geo Rate (Rating)</mat-error>
+
+      </div>
+    </div>
+    <!-- Geo Rate (Rating) -->
+  </div>
+
+
+  <div class="single-row">
+
+    <!-- CORE APPLICATION CODE -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Core application code<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="coreApplicationCode">
+          </div>
+
+        </div>
+        <mat-error
+          *ngIf="countryForm.controls['coreApplicationCode'].errors?.['required'] && (countryForm.controls['coreApplicationCode'].dirty || countryForm.controls['coreApplicationCode'].touched)">
+          Please choose core application code</mat-error>
+
+      </div>
+    </div>
+    <!-- /CORE APPLICATION CODE -->
+
+    <!-- effective date -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Effective Date*</mat-label>
+        <input matInput [matDatepicker]="picker" [min]="min" formControlName="effectiveDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- effective date -->
+
+
+  </div>
+
+  <div class="single-row">
+
+    <!-- REMARKS -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Remarks</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="remarks">
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /REMARKS -->
+
+
+    <!-- STATUS -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">Status<span class="text-required">*</span></label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+            <label for="fac-yes">Active</label>
+            <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+            <label for="fac-no">DeActive</label>
+            <input type="radio" id="fac-re" name="status" value="R" formControlName="status">
+            <label for="fac-re">Refferal</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3 text-center">
+    <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+    <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
+  </div>
+
+</div>

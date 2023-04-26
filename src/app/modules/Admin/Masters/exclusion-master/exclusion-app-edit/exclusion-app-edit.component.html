@@ -1,0 +1,93 @@
+<div [formGroup]="exclusionForm" class="bg-white p-3">
+
+
+    <div class="row">
+
+        <!-- Exclusion Name -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Exclusion Name<span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <textarea class="form-control without-icon" name="exclusionName" formControlName="exclusionName" cols="30" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+        <mat-error
+          *ngIf="exclusionForm.controls['exclusionName'].errors?.['required'] && (exclusionForm.controls['exclusionName'].dirty || exclusionForm.controls['exclusionName'].touched)">
+          Please Enter Exclusion Name</mat-error>
+  
+      </div>
+      <!-- Exclusion Name -->
+
+      <!-- Remarks -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Remarks</label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="remarks" formControlName="remarks">
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- Remarks -->
+      
+      
+    </div>
+  
+    <div class="row">
+      <!-- Core Application Code -->
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+          <div class="input-control-container">
+            <label class="input-form-label">Core Application Code<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="coreApplicationCode" formControlName="coreApplicationCode">
+            </div>
+          </div>
+        </div>
+        <mat-error
+          *ngIf="exclusionForm.controls['coreApplicationCode'].errors?.['required'] && (exclusionForm.controls['coreApplicationCode'].dirty || exclusionForm.controls['coreApplicationCode'].touched)">
+          Please enter Core Application Code</mat-error>
+      </div>
+      <!-- Core Application Code -->
+  
+      <!-- effective date -->
+      <div class="col-12 col-md-6 col-lg-6">
+            <mat-form-field appearance="fill">
+              <mat-label>Effective Date*</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="min" formControlName="effectiveDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+           </mat-form-field>
+      </div>
+      <!-- effective date -->
+  
+       <!-- STATUS -->
+       <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+          <label class="input-form-label">Status<span class="text-required">*</span></label>
+          <div class="input-form-radio-box">
+            <div class="radio-toolbar">
+              <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+              <label for="fac-yes">Active</label>
+              <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+              <label for="fac-no">DeActive</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- STATUS -->
+      
+    </div>
+
+
+    <div class="mt-3 text-center">
+        <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+        <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
+    </div>
+    
+  
+  </div>

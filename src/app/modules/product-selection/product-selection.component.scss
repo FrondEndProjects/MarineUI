@@ -1,0 +1,154 @@
+.product-menubar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.product-menubar .logo-img img{
+  width: 280px;
+}
+
+.login-details .title{
+  font-size: large;
+  font-weight: bold;
+}
+// .login-details .user-name
+// .login-details .sign-btn
+
+
+
+.product-grid{
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.product-grid-item{
+  width: 80%;
+  border-radius: 1rem;
+}
+.product-grid-item-title{
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+}
+.product-grid-item-body{
+  padding: 1rem;
+}
+
+
+.product-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a
+{
+    text-decoration: none;
+}
+.product-card {
+    width: 380px;
+    position: relative;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: 1rem;
+    background: #fafafa;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.badge {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    background: red;
+    color: #fff;
+    padding: 3px 10px;
+}
+
+.product-tumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 240px;
+    padding: 50px;
+    background: #f0f0f0;
+}
+
+.product-tumb img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.product-details {
+    padding: 30px;
+}
+
+.product-catagory {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.product-details h4 a {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #363636;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.product-details h4 a:hover {
+    color: #fbb72c;
+}
+
+.product-details p {
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 15px;
+    color: #999;
+}
+
+.product-bottom-details {
+    border-top: 1px solid #eee;
+    padding-top: 18px;
+}
+
+
+
+.product-price {
+    font-size: 18px;
+    color: #fbb72c;
+    font-weight: 600;
+}
+
+.product-price small {
+    font-size: 80%;
+    font-weight: 400;
+    text-decoration: line-through;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.product-links {
+    text-align: right;
+}
+
+.product-links a {
+    display: inline-block;
+    margin-left: 5px;
+    color: #e1e1e1;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+.product-links a:hover {
+    color: #fbb72c;
+}

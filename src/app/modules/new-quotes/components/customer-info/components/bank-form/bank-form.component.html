@@ -1,0 +1,69 @@
+<form [formGroup]="bankForm" #formDirective="ngForm">
+  <div class="row">
+    <div class="col-12">
+      <div class="middle-line">
+        Bank Details
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">LC Bank</label>
+        <ng-select placeholder="Select" class="input-form-select" formControlName="lCBank" [items]="dropBankList"
+          bindValue="Code" bindLabel="CodeDescription">
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">LC Number</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="lcNumber">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">LC Date</label>
+        <div class="input-form-box">
+          <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="lcDate" (click)="d.toggle()" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">LC Bank description</label>
+        <div class="input-form-box">
+          <textarea type="text" class="input-form-control without-icon" formControlName="lcBankDesc"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">BL | AWB | LR | RR Number</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="blAwbLrRrNumber">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">BL | AWB | LR | RR Date</label>
+        <div class="input-form-box">
+
+          <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="blAwbLrRrDate" (click)="d1.toggle()" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Sailing date</label>
+        <div class="input-form-box">
+          <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="sailingDate" (click)="d2.toggle()" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

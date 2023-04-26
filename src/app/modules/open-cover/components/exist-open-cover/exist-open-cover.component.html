@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Login Type<span class="text-required">*</span></label>
+      <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="loginType" (change)="onChangeLoginType()" [items]="loginTypeList" bindValue="Code" bindLabel="CodeDescription">
+      </ng-select>
+    </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+      <label class="input-form-label">Search</label>
+      <div class="input-form-box">
+        <input type="text" class="input-form-control without-icon" [(ngModel)]="FilterValue">
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="onEdit($event)">
+</app-material-table>

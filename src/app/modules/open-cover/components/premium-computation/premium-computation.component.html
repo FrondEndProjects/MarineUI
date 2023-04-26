@@ -1,0 +1,92 @@
+<div class="vision-grid">
+  <div class="vision-grid-item">
+     <div class="row">
+        <div class="col-12 col-md-3 col-lg-3">
+           <div class="premium-lable">Total Suminsured</div>
+           <div class="premium-val">{{premiumDetails?.SumInsured}}</div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-3">
+          <div class="premium-lable">Marine Rate</div>
+          <div class="premium-val">{{premiumDetails?.MarineRate}}</div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-3">
+          <div class="premium-lable">War Rate</div>
+          <div class="premium-val">{{premiumDetails?.WarRate}}</div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-3">
+          <div class="premium-lable">Received Deposit Premium</div>
+          <div class="premium-val">{{premiumDetails?.ReceivedTilDate}}</div>
+        </div>
+     </div>
+  </div>
+  <div class="vision-grid-item">
+    <div class="vision-grid-item-title">
+      Premium Computation
+    </div>
+    <div class="vision-grid-item-body">
+      <form [formGroup]="premiumForm">
+       <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Premium</th>
+          <th>Policy Fee</th>
+          <th>Inspection Fee</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Actual</td>
+          <td><input type="text" formControlName="TotalPremium" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PolicyFee" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="InspectionFee" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="FinalPremium" class="form-control form-control-sm" disabled></td>
+        </tr>
+        <tr>
+          <td>Received Payment</td>
+          <td><input type="text" formControlName="ReceivedTilDate" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PolicyFeeReceived" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="InspectionFeeReceived" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PremiumReceived" class="form-control form-control-sm" disabled></td>
+        </tr>
+        <tr>
+          <td>Balance</td>
+          <td><input type="text" formControlName="BalanceAmount" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PolicyFeeBalance" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="InsceptionFeeBalance" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="ReceivedTotal" class="form-control form-control-sm" disabled></td>
+        </tr>
+        <tr>
+          <td>Are You Want?</td>
+          <td colspan="4">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="chargeOrRefund" [ngModelOptions]="{standalone: true}">
+              <mat-radio-button value="C">Chargeable</mat-radio-button>
+              <mat-radio-button value="R">Refund</mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </tr>
+        <tr>
+          <td>Received/Refund</td>
+          <td><input type="text" formControlName="PayableMarinePremium" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="PolicyFeePaid" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="InspectionFeePaid" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="Total" class="form-control form-control-sm" disabled></td>
+        </tr>
+
+      </tbody>
+       </table>
+     </form>
+
+    </div>
+    <div class="col-12 text-right">
+      <button nbButton (click)="onMoveBack()" status="danger" class="mx-2">Back</button>
+      <button nbButton (click)="onCalculate()" status="warning" class="mx-2">Calculate</button>
+      <button nbButton (click)="onSubmit()" status="primary" class="mx-2">Next</button>
+    </div>
+  </div>
+</div>
+
+
+
+

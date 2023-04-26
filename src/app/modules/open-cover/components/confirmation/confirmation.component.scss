@@ -1,0 +1,26 @@
+.info-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.info-card-item{
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  height: 400px;
+    width: 37%;
+    overflow: hidden;
+    border-radius: 1rem;
+    background-color: white;
+    text-align: center;
+    font-size: 20px;
+    padding: 1rem;
+    font-weight: 600;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.labeltext{
+  font-weight: lighter;
+    font-size: 17px;
+}

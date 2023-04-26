@@ -1,0 +1,17 @@
+<h3 mat-dialog-title>Reject confirmation</h3>
+<div mat-dialog-content>
+  <p>Are you sure?</p>
+  <div>
+
+  </div>
+  <div class="input-control-container">
+    <label class="input-form-label">Select Reason<span class="text-required">*</span></label>
+    <ng-select [appendTo]="'body'" placeholder="Select Reason" class="input-form-select" [(ngModel)]="selectedReason" [items]="reasonList" bindValue="LapsedReason"
+      bindLabel="LapsedReason">
+    </ng-select>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Cancle</button>
+  <button mat-button cdkFocusInitial (click)="onSubmit()">Reject</button>
+</div>

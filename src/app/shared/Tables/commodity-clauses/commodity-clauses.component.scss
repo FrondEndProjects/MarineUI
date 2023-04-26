@@ -1,0 +1,40 @@
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  border-bottom-color: #ccc;
+}
+th.mat-header-cell {
+  color: lightslategrey;
+  font-size: 100%;
+  font-weight: 500;
+}
+.example-container{
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+    padding: 0.5rem;
+}
+
+table {
+  width: 100%;
+}
+.mat-table th,
+.mat-table td {
+    white-space: nowrap !important;
+    padding: 0px 10px !important;
+
+}
+tr.example-detail-row {
+  height: 0;
+}
+.example-element-detail {
+  overflow: hidden;
+}
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+.static-clauses{
+  color: dodgerblue;
+}

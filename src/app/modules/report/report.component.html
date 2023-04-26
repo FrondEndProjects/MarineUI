@@ -1,0 +1,47 @@
+
+
+<div class="maan-card">
+  <form [formGroup]="searchForm">
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-3">
+      <div class="input-control-container">
+        <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select" formControlName="userId" [items]="brokerList" bindValue="LoginId"
+          bindLabel="UserName">
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-3">
+      <div class="input-control-container">
+        <label class="input-form-label">Start Date<span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="startDate" (click)="d.toggle()" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-3">
+      <div class="input-control-container">
+        <label class="input-form-label">End Date<span class="text-required">*</span></label>
+        <div class="input-form-box">
+          <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="endDate" (click)="d1.toggle()" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-3 d-sm-flex flex-sm-row align-items-sm-center">
+      <button nbButton size="small" status="primary" class="mx-1" (click)="onLoadGrid()">Submit</button>
+      <ng-container *ngIf="tableData.length !=0">
+         <button nbButton size="small" status="success" class="mx-1" (click)="onDocument('pdf')">PDF</button>
+         <button nbButton size="small" status="info" class="mx-1" (click)="onDocument('excel')">EXCEL</button>
+      </ng-container>
+    </div>
+  </div>
+
+  </form>
+  <ng-container *ngIf="tableData.length !=0">
+    <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue">
+    </app-material-table>
+  </ng-container>
+
+</div>

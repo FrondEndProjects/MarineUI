@@ -1,0 +1,15 @@
+<ul class="mynav">
+  <ng-container *ngFor="let item of stepperList;let i = index;let lastitem = last;">
+    <li class="mynav-item"
+    [style.width]="i !== stepperList.length - 1 ? '14%' : '0'"
+    [ngClass]="[i !== stepperList.length - 1 ? 'progress-line' : '', item.isActive ? 'menuactive' : '']"
+    >
+      <a class="mynav-link">
+        {{item?.name}}
+      </a>
+    </li>
+  </ng-container>
+</ul>
+<div class="stepper-components">
+  <router-outlet></router-outlet>
+</div>

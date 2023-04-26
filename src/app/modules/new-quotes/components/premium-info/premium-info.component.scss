@@ -1,0 +1,144 @@
+.vision-grid-column-2 {
+  grid-template-columns: 55% 45%;
+}
+
+.opencover-info-column {
+  grid-column: span 2;
+}
+
+.opencover-info-column .vision-grid-item-title {
+  font-size: 17px;
+  font-weight: 600;
+  font-family: sans-serif;
+  padding: .4rem;
+}
+
+.opencover-info {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.opencover-info-item {
+  font-size: 90%;
+  padding: .3rem;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+}
+
+@media (max-width: 800px) {
+  .vision-grid-column-2 {
+    grid-template-columns: 1fr;
+
+  }
+}
+
+.premium-grid .vision-grid-item:nth-child(1) {
+  background-color: #eee;
+}
+
+.premium-grid .vision-grid-item:nth-child(2) {
+  background-color: white;
+}
+
+.premium-grid .vision-grid-item:nth-child(3) {
+  background-color: ghostwhite;
+}
+
+.premium-grid .vision-grid-item {
+  // box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  padding: 1rem;
+}
+
+.opencover-info .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  padding: .3rem;
+  font-size: 90%;
+}
+
+.customer-info .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+  padding: .4rem;
+  font-size: small;
+  border: 0;
+}
+
+.premium-inform .list-group-item {
+  background-color: transparent;
+  padding: .4rem;
+  font-size: small;
+  border: 0;
+}
+
+.referral-inform .list-group-item:first-child {
+  font-weight: 600;
+  padding: .8rem;
+  font-size: 100%;
+  color: red;
+}
+
+.premium-inform .list-group-item:first-child {
+  font-weight: 600;
+}
+
+.customer-info .list-group-item .premium-amount {
+  text-align: end;
+  width: 40%;
+}
+
+.customer-info .list-group-item .premium-label {
+  width: calc(100% - 40%);
+}
+
+.left-line {
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  color: var(--logo-color-2);
+  margin: 1rem 0;
+}
+
+.left-line:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid #ccc;
+  margin: auto 5px;
+}
+
+.clausesinfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 800px) {
+  .clausesinfo {
+    flex-direction: column;
+  }
+
+}
+
+.clauses-list {
+  width: 500px;
+  min-height: 150px;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.clauses-list .list-group-item {
+  font-size: 95%;
+  padding: .3rem;
+}
+
+.premium-inform input {
+  text-align: end;
+}
+
+.header-details {
+  background-color: #eee;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: .5rem 0;
+}

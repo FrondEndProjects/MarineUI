@@ -1,0 +1,109 @@
+#progress {
+  position: relative;
+  margin-bottom: 30px;
+}
+#progress-bar {
+  position: absolute;
+  background: dodgerblue;
+  height: 5px;
+  width: 0%;
+  top: 42%;
+  left: 0;
+  z-index: 2;
+  transition: all;
+}
+#progress-num {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+#progress-num::before {
+  content: "";
+  background-color: lightgray;
+  position: absolute;
+  top: 42%;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  z-index: 1;
+}
+#progress-num .step {
+  border: 3px solid lightgray;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  line-height: 20px;
+  text-align: center;
+  background-color: #fff;
+  font-family: sans-serif;
+  font-size: 14px;
+  position: relative;
+  z-index: 3;
+}
+#progress-num .step.active {
+  border-color: dodgerblue;
+  background-color: dodgerblue;
+  color: #fff;
+}
+.btn {
+    background: lightgray;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 12px;
+}
+
+.mynav{
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  justify-content: center;
+  padding: 1rem 0;
+}
+.mynav-link {
+  display: flex;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  background-color: #dbd5d5;
+  text-decoration: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+
+}
+
+.mynav-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: default;
+}
+
+.progress-line {
+  display: flex;
+  flex-direction: row;
+  color: var(--logo-color-2);
+  width: 25%;
+}
+
+.progress-line:after {
+  content: "";
+  flex: 1 1;
+  margin: auto 5px;
+  border-bottom: 2px solid #ccc;
+
+}
+.progress-line.menuactive:after{
+  border-bottom: 2px solid darkblue;
+
+}
+
+.proposal-card{
+  margin: 10px 10px;
+  text-align: end;
+  font-weight: 500;
+}

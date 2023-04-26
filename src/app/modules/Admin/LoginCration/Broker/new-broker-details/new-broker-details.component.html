@@ -1,0 +1,1199 @@
+<div class="bg-white p-3">
+    <div class="d-flex justify-content-between ml-3" style="text-align:center;">
+        <div>
+
+            <div class="d-flex justify-content-between ml-2" style="text-align:center;">
+                <button mat-raised-button value="View" (click)="onRedirect('View')">BrokerDetails</button><br>
+                <button mat-raised-button value="ChangePassword" class="ml-2" (click)="onRedirect('ChangePassword')">Change Password</button><br>
+                <button mat-raised-button class="ml-2" value="UserDetails" (click)="onRedirect('UserDetails')">User Details</button><br>
+                <button mat-raised-button class="ml-2" value="Product" (click)="onRedirect('Product')">Product Details</button><br>
+                <button mat-raised-button class="ml-2" value="OpenCover" (click)="onRedirect('OpenCover')">OpenCover</button><br>
+                <button mat-raised-button class="ml-2" value="Referral" (click)="onRedirect('Referral')">Referral</button><br>
+            </div>
+        </div>
+        </div>
+
+         <div class="col-12 col-md-12 col-lg-12 mt-3">
+            <div >
+                <div *ngIf="value=='View'">
+                    <div class="title-container bg-white p-4" *ngIf="value=='View'">
+                        <b>Company Information</b>
+                    </div>
+                    <div class="bg-white p-3" *ngIf="value=='View'">
+                        <div class="row">
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Approved / Prepared By<span
+                                                class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon"
+                                               [(ngModel)]="ApproverBy" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                              <div class="input-control-container">
+                                <label class="input-form-label">BrokerCode<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon"
+                                    [(ngModel)]="brokerCode">
+                                </div>
+                            </div>
+                                <!--<div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">BrokerCode<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon"
+                                            [(ngModel)]="brokerCode">
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Broker Organization<span
+                                                class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon"
+                                            [(ngModel)]="CompanyName">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Address1</label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon"
+                                            [(ngModel)]="Address1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Address2</label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon"
+                                            [(ngModel)]="Address2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                              <div class="input-control-container">
+                                  <label class="input-form-label">Country<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select"  [items]="countryList"
+                                      bindValue="CountryCode" bindLabel="CountryName"  [(ngModel)]="Country"> </ng-select>
+                              </div>
+                          </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">City<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" [items]="CityList"
+                                        bindValue="CityCode" bindLabel="CityName"  [(ngModel)]="City">  </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Other City</label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon"
+            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">P.O.Box<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" name="bankName"
+                                            [(ngModel)]="Pobox" maxlength="6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Phone No
+                                           </label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" name="bankName"
+                                            [(ngModel)]="TelephoneNo" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Fax No</label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" name="bankName"
+                                            [(ngModel)]="Fax">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">
+                                            Core Customer Code<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" name="bankName">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Region <span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select"  [items]="regionList"  [(ngModel)]="RegionNo" (change)="onGetBranchList('change')"
+                                        bindValue="Code" bindLabel="CodeDescription"  bindValue="RegionId" bindLabel="RegionName"> </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                  <ng-select class="input-form-select"  [items]="branchList"   [(ngModel)]="branchValue"
+                                        bindValue="BranchCode" bindLabel="BranchName"> </ng-select>
+                                </div>
+                            </div>
+            
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Attached Region<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" [multiple]="true" [items]="regionList" (change)="changeRegion('change')" [(ngModel)]="AttachedRegionNo"
+                                        bindValue="RegionId" bindLabel="RegionName"> </ng-select>
+                                </div>
+                            </div>
+            
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">
+                                            Attached Branch<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <ng-select class="input-form-select" [multiple]="true" [items]="AttachedBranchList" [(ngModel)]="AttachedBranch"
+                                            bindValue="BranchCode" bindLabel="BranchName"> </ng-select>
+                                            <!--<textarea type="text" class="input-form-control without-icon" name="bankName"
+                                            [(ngModel)]="AttachedBranch" maxlength="100"></textarea>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="title-container bg-white p-4">
+                            <b>Contact Person Information</b>
+                        </div>
+            
+                        <div class="bg-white p-3">
+                            <div class="row">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Title</label>
+                                        <ng-select class="input-form-select"  [items]="TitleList"   [(ngModel)]="Title"
+                                            bindValue="TitleId" bindLabel="TitleName"> </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                First Name<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <textarea type="text" class="input-form-control without-icon"
+                                                [(ngModel)]="FirstName" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                Last Name</label>
+                                            <div class="input-form-box">
+                                                <textarea type="text" class="input-form-control without-icon" name="bankName"
+                                                [(ngModel)]="LastName"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Gender<span class="text-required">*</span></label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="fac-yes" type="radio" name="status" value="Y" [(ngModel)]="Gender">
+                                                <label for="fac-yes">Male</label>
+                                                <input type="radio" id="fac-no" name="status" value="N" [(ngModel)]="Gender">
+                                                <label for="fac-no">Female</label>
+            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>DOB</mat-label>
+                                        <input matInput [matDatepicker]="picker1" name="effectiveDate"
+                                         [(ngModel)]="DateOfBirth">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+            
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">
+                                            Nationality<span class="text-required">*</span></label>
+                                        <ng-select class="input-form-select" [items]="NationalityList"  [(ngModel)]="nation"
+                                            bindValue="NationalityCode" bindLabel="NationalityName"> </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                Occupation
+                                                <span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <textarea type="text" class="input-form-control without-icon" name="bankName"
+                                                    [(ngModel)]="Occupation"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                Mobile</label>
+                                            <div class="input-form-box">
+                                                <textarea type="text" class="input-form-control without-icon" name="bankName"
+                                                    [(ngModel)]="MobileNo"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                Email<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <textarea type="text" class="input-form-control without-icon"
+                                                [(ngModel)]="Email"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">
+                                            Executive BDM<span class="text-required">*</span></label>
+                                        <ng-select class="input-form-select" [(ngModel)]="Executives" [items]="ExcecutiveLists"
+                                            bindValue="Code" bindLabel="CodeDescription"> </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="title-container bg-white p-4" *ngIf="Passwords">
+                            <b>Login Details
+                            </b>
+                        </div>
+            
+                        <div  class="bg-white p-3" *ngIf="Passwords">
+                            <div class="row">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                Broker LoginId
+                                                <span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon"
+                                                [(ngModel)]="LoginId">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4" *ngIf="Passwords">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                Password</label>
+                                            <div class="input-form-box">
+                                                <input type="password" class="input-form-control without-icon" name="bankName"
+                                                [(ngModel)]="Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4" *ngIf="Passwords">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                Retype Password <span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="password"  class="input-form-control without-icon" name="bankName"
+                                                [(ngModel)]="RePassword">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+            
+            
+                        <div class="title-container bg-white p-4">
+                            <b>LTax Information
+                            </b>
+                        </div>
+            
+                       <div  class="bg-white p-3">
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <span>Would you like to give Policy Fee for this Broker?</span>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="fac-yesa" type="radio" name="status1" value="Y"   [(ngModel)]="PolicyFeeStatus">
+                                                <label for="fac-yesa">Yes</label>
+                                                <input type="radio" id="fac-noa" name="status1" value="N" [(ngModel)]="PolicyFeeStatus">
+                                                <label for="fac-noa">No</label>
+            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <span>Enter Policy Fee in SAR</span>
+                                </div>
+            
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+            
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" name="bankName"
+                                                [(ngModel)]="PolicyFees">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <span>Is Applicable For?</span>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="fac-operation" type="radio" name="Operation" value="I"
+                                                [(ngModel)]="TaxApplicable">
+                                                <label for="fac-operation" name="Operation" value="operation">Operation</label>
+                                                <input type="radio" id="fac-broker" name="Borker" value="broker" [(ngModel)]="TaxApplicable">
+                                                <label for="fac-broker">Broker</label>
+                                                <input type="radio" id="fac-both" name="Both" value="both"   [(ngModel)]="TaxApplicable">
+                                                <label for="fac-both">Both</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <span>Commission for Issuer Quotes</span>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                For One Off Policy <span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" name="bankName"
+                                                [(ngModel)]="OneOffCommission">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6"></div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">
+                                                For Open Cover Policy <span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" name="bankName"
+                                                [(ngModel)]="OpenCoverCommission">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <span>Effective Date</span>
+                                </div>
+                                <!--<div class="col-12 col-md-6 col-lg-6">
+                                    <mat-form-field appearance="fill">
+            
+                                        <input matInput [matDatepicker]="picker1" [min]="min" name="effectiveDate"
+                                        [(ngModel)]="EffectiveDate">
+                                        <mat-datepicker-toggle matSuffixs [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </div>-->
+                                <div class="col-12 col-md-4 col-lg-4">
+                                  <mat-form-field appearance="fill">
+                                      <mat-label>EffectiveDate</mat-label>
+                                      <input matInput [matDatepicker]="picker" [min]="min" name="effectiveDate"
+                                       [(ngModel)]="EffectiveDate">
+                                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                      <mat-datepicker #picker></mat-datepicker>
+                                  </mat-form-field>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <button mat-raised-button *ngIf="value=='View'" style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+                        <button mat-raised-button *ngIf="value=='View'" style="margin-left: 20px" color="primary" (click)="region()">Save</button>
+                    </div>
+                </div>
+
+                <div *ngIf="productin || value=='Product'">
+
+                    <div class="d-flex justify-content-between">
+                    <div class="title-container bg-white p-4">
+                        <b>Product Selection</b>
+                    </div>
+                    <div>
+                        <button mat-raised-button  color="accent" (click)="Addnew()">AddNew</button>
+                    </div>
+                 
+<!--<button class="btn btn-success p-1" > AddNew</button>-->
+                </div>
+
+
+                    <div class="row ml-2" *ngIf="AgencyCode" style="overflow-x: scroll !important;" >
+                        <ng-container *ngIf="BrokerCommissionDetails.length!=0">
+                            <app-grid-table [cols]="columnBrokerCommison" [data]="BrokerCommissionDetails" [filterValue]="filterValue" (onEdit)="editProduct($event)">
+                            </app-grid-table>
+                           
+                        </ng-container>
+                        <ng-container *ngIf="BrokerCommissionDetails.length==0 && !Add">
+                            <div class="ml-2"> No Data Available</div>
+                        </ng-container>
+                    </div>
+                  
+                    <div>
+                        <div class="col-lg-12 ml-2" *ngIf="pro"> 
+                            <div class="panel p-4">
+                                <div class="ti">
+                                    <div class="ml-3">Existing Product Modification</div>
+                                </div>
+                                <div class="text-center mt-2">ProductName:{{displayProduct}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 ml-2 mt-3" *ngIf="pro"> 
+                            <div class="panel p-4">
+                                <div class="ti">
+                                    <div style="font-size:14px;"> Premium Details</div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                        <div class="customer-search-container">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Commission [%]<span
+                                                        class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon"
+                                                       [(ngModel)]="Commission" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                        <div class="customer-search-container">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">SumInsured<span
+                                                        class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon"
+                                                       [(ngModel)]="InsuranceEndLimit" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                        <div class="customer-search-container">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Minimum Premium [AED]<span
+                                                        class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon"
+                                                       [(ngModel)]="MinPremiumAmount" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                        <div class="customer-search-container">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Back Days Allowed<span
+                                                        class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon"
+                                                       [(ngModel)]="BackDateAllowed" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                               
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-lg-12 ml-2 mt-3" *ngIf="pro"> 
+                            <div class="panel p-4">
+                                <div class="ti">
+                                    <div style="font-size:14px;"> Provision For Loading/Discount </div>
+                                  </div>
+                                  <div class="row">
+
+                                    <div class="col-12 col-md-6 col-lg-6 mt-2">
+                                        <div class="input-control-container">
+                                          <label class="input-form-label">Provision for Loading/Discount<span class="text-required">*</span></label>
+                                          <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                              <input id="fac-yes" type="radio" name="status" value="Y"  [(ngModel)]="Freight">
+                                              <label for="fac-yes">Yes</label>
+                                              <input type="radio" id="fac-no" name="status" value="N"  [(ngModel)]="Freight">
+                                              <label for="fac-no">No</label>
+                                            
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+                                      <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Freight == 'Y'">
+                                        <div class="customer-search-container">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Loading % Max<span
+                                                        class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon"
+                                                       [(ngModel)]="LoadingPremium" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                          
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Freight == 'Y'">
+                                        <div class="customer-search-container">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Discount % Max<span
+                                                        class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon"
+                                                       [(ngModel)]="DiscountPremium">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                  
+                                  </div>
+                               
+                            </div>
+                        </div>
+                                           
+                        <div class="col-lg-12 ml-2 mt-3" *ngIf="pro"> 
+                            <div class="panel p-4">
+                                <div class="ti">
+                                    <div style="font-size:14px;"> Provision Details</div>
+                                  </div>
+                                  <div class="row">
+
+                                    <div class="col-12 col-md-6 col-lg-6 mt-2">
+                                        <div class="input-control-container">
+                                          <label class="input-form-label">Provision For Creation<span class="text-required">*</span></label>
+                                          <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                              <input id="fac-b" type="radio" name="Pro" value="Y" [(ngModel)]="Provision">
+                                              <label for="fac-b">Yes</label>
+                                              <input type="radio" id="fac-c" name="Pro" value="N"  [(ngModel)]="Provision">
+                                              <label for="fac-c">No</label>
+                                            
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  
+                                  </div>
+                                  
+                                  <div class="text-center" *ngIf="pro">
+                                    <button class="btn btn-success mr-2" (click)="productInsert()">Submit</button>
+                                    <button class="btn btn-danger" (click)="proDelete()">Delete</button>
+                                  </div>
+                            </div>
+                        </div>
+                                     
+                      
+                    </div>
+
+                    <div *ngIf="Add">
+                        <div class="col-lg-12 ml-2" *ngIf="Add"> 
+                            <div class="panel p-4">
+                                <div class="ti">
+                                    <div style="font-size:14px;">Product Insert</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="customer-search-container">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Products <span class="text-required">*</span></label>
+                                      
+                                    <ng-select class="input-form-select" appendTo="body" [items]="productNameList"  [(ngModel)]="ProId"  bindValue="ProductId" bindLabel="ProductName">
+                                     </ng-select>
+                                      
+                                        </div>
+                                        </div>
+                                      </div>
+                                </div>
+
+                                <div class="col-lg-12 ml-2 mt-3" *ngIf="ProId == '3'"> 
+                                    <div class="panel p-4">
+                                        <div class="ti">
+                                            <div style="font-size:14px;"> Premium Details</div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                                <div class="customer-search-container">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label">Commission [%]<span
+                                                                class="text-required">*</span></label>
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon"
+                                                               [(ngModel)]="Commission" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                                <div class="customer-search-container">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label">SumInsured<span
+                                                                class="text-required">*</span></label>
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon"
+                                                               [(ngModel)]="InsuranceEndLimit" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                                <div class="customer-search-container">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label">Minimum Premium<span
+                                                                class="text-required">*</span></label>
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon"
+                                                               [(ngModel)]="MinPremiumAmount" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                                <div class="customer-search-container">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label">Back Days Allowed<span
+                                                                class="text-required">*</span></label>
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon"
+                                                               [(ngModel)]="BackDateAllowed" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                       
+                                    </div>
+                                </div>
+                                
+        
+                                <div class="col-lg-12 ml-2 mt-3" *ngIf="ProId == '3'"> 
+                                    <div class="panel p-4">
+                                        <div class="ti">
+                                            <div style="font-size:14px;"> Provision For Loading/Discount </div>
+                                          </div>
+                                          <div class="row">
+        
+                                            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                                <div class="input-control-container">
+                                                  <label class="input-form-label">Provision for Loading/Discount<span class="text-required">*</span></label>
+                                                  <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                      <input id="fac-yes" type="radio" name="status" value="Y"  [(ngModel)]="Freight">
+                                                      <label for="fac-yes">Yes</label>
+                                                      <input type="radio" id="fac-no" name="status" value="N"  [(ngModel)]="Freight">
+                                                      <label for="fac-no">No</label>
+                                                    
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+        
+        
+                                              <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Freight == 'Y'">
+                                                <div class="customer-search-container">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label">Loading % Max<span
+                                                                class="text-required">*</span></label>
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon"
+                                                               [(ngModel)]="LoadingPremium" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                  
+                                            <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Freight == 'Y'">
+                                                <div class="customer-search-container">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label">Discount % Max<span
+                                                                class="text-required">*</span></label>
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon"
+                                                               [(ngModel)]="DiscountPremium">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                          
+                                          </div>
+                                       
+                                    </div>
+                                </div>
+                                                   
+                                <div class="col-lg-12 ml-2 mt-3" *ngIf="ProId == '3'"> 
+                                    <div class="panel p-4">
+                                        <div class="ti">
+                                            <div style="font-size:14px;"> Provision Details</div>
+                                          </div>
+                                          <div class="row">
+        
+                                            <div class="col-12 col-md-6 col-lg-6 mt-2">
+                                                <div class="input-control-container">
+                                                  <label class="input-form-label">Provision For Creation<span class="text-required">*</span></label>
+                                                  <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                      <input id="fac-b" type="radio" name="Pro" value="Y" [(ngModel)]="Provision">
+                                                      <label for="fac-b">Yes</label>
+                                                      <input type="radio" id="fac-c" name="Pro" value="N"  [(ngModel)]="Provision">
+                                                      <label for="fac-c">No</label>
+                                                    
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                          
+                                          </div>
+                                          <!--<div class="text-center" *ngIf="Add">
+                                            <button class="btn btn-success mr-2"  (click)="productInsert()">Submit</button>
+                                          
+                                          </div>-->
+                                        
+                                    </div>
+                                </div>
+                                             
+                            </div>
+                            <!--<div class="text-center" *ngIf="Add">
+                                <button class="btn btn-success mr-2"  (click)="productInsert()">Submit</button>
+                              
+                              </div>-->
+                        </div>
+
+
+                        <!--<div class="text-center" *ngIf="Add">
+                            <button class="btn btn-success mr-2"  (click)="productInsert()">Submit</button>
+                          
+                          </div>-->
+                    </div>
+        
+                    <div style="text-align:center;" class="mt-2" *ngIf="Add && !pro">
+                        
+                        <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+                        <button class="btn btn-success ml-2"  (click)="productInsert()">Submit</button>
+
+                    </div>
+                    <!--<div class="text-center" *ngIf="Add">
+                        <button class="btn btn-success mr-2"  (click)="productInsert()">Submit</button>
+                      
+                      </div>-->
+
+
+                </div>
+
+                <div *ngIf="value=='ChangePassword'">
+                    <div class="title-container bg-white p-4" *ngIf="value=='ChangePassword'">
+                        <b>Change Password</b>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+                      <div class="input-control-container">
+                          <label class="input-form-label">Enter New Password<span class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <input type="password" [(ngModel)]="EPassword" class="input-form-control without-icon" maxlength="100">
+                          </div>
+                      </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+                        <div class="input-control-container">
+                            <label class="input-form-label"> Re enter New Password <span class="text-required">*</span>
+                            <div class="input-form-box" >
+                                <input type="password" [(ngModel)]="NPassword" class="input-form-control without-icon" maxlength="100">
+                            </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div label="Referral" *ngIf="value =='Referral'">
+                    <div class="card-body" *ngIf="value =='Referral'">
+                        <div class="title-container bg-white p-4">
+                            <b>Search Referral Quote No</b>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Quote No<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" name="bankName"
+                                           [(ngModel)]="QuoteNo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="text-center">
+                            <button mat-raised-button class="ml-2" color="accent" (click)="onsearch(QuoteNo)">Search</button>
+                        </div> 
+                    
+                        <ng-container *ngIf="QuoteData && QuoteNo">
+                            <app-grid-table [cols]="columnHeaders" [data]="QuoteData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                            </app-grid-table>
+                           
+                        </ng-container>
+                    
+                        <div class="title-container bg-white p-4">
+                            <b>Referral Cases</b>
+                        </div>
+                    
+                        <div class="row">
+                            <button mat-raised-button value="Pending" class="ml-4" (click)="onRedirects('Pending')">Pending Quotes</button><br>
+                            <button mat-raised-button value="Approved" class="ml-4" (click)="onRedirects('Approved')">Approved Quotes</button><br>
+                            <button mat-raised-button value="RejectedQuotes" class="ml-4" (click)="onRedirects('RejectedQuotes')">Rejected Quotes</button><br>
+                        </div>
+                      
+                        
+                    
+                        <div class="row" *ngIf="pendingvalue=='Pending' || pendingvalue=='Approved' || pendingvalue=='RejectedQuotes'">
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Products <span class="text-required">*</span></label>
+                              
+                              
+                                        <ng-select class="input-form-select" appendTo="body" [items]="productNameList" (change)="onGetRegionList()" [(ngModel)]="ProductId"  bindValue="ProductId" bindLabel="ProductName">
+                                        </ng-select>
+                              
+                                </div>
+                              </div>
+                              <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Region <span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select"  [items]="regionList"  [(ngModel)]="RegionNo" (change)="onGetBranchList()"
+                                        bindValue="Code" bindLabel="CodeDescription"  bindValue="RegionId" bindLabel="RegionName"> </ng-select>
+                                </div>
+                            </div>
+                    
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select"  [items]="branchList"   [(ngModel)]="BranchValue"
+                                        bindValue="BranchCode" bindLabel="BranchName"> </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="row" *ngIf="pendingvalue=='Pending' && BranchValue">
+                            <div class="text-center" *ngIf="pendingvalue=='Pending'">
+                                <button mat-raised-button class="ml-2" color="accent" (click)="Search()">Search</button>
+                            </div> 
+                        </div>
+                    
+                        <div class="row" *ngIf="PTrue">
+                            <ng-container *ngIf="PendingreferralData.length!=0">
+                                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnReferral" [data]="PendingreferralData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                </app-grid-table>
+                               
+                            </ng-container>
+                            <ng-container *ngIf="PendingreferralData.length==0">
+                                <div class="text-center"> No Data Available</div>
+                            </ng-container>
+                           
+                        </div>
+                    
+                    
+                        <div class="row" *ngIf="pendingvalue=='Approved' && BranchValue">
+                            
+                            <div class="text-center" *ngIf="pendingvalue=='Approved'">
+                                <button mat-raised-button class="ml-2" color="accent" (click)="SearchApprover()">Search</button>
+                            </div> 
+                        </div>
+                    
+                        <div class="row" *ngIf="ATrue">
+                            <ng-container *ngIf="ApprovedreferralData.length!=0">
+                                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnApprover" [data]="ApprovedreferralData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                </app-grid-table>
+                               
+                            </ng-container>
+                            <ng-container *ngIf="ApprovedreferralData.length==0">
+                                <div> No Data Available</div>
+                            </ng-container>
+                        </div>
+                    
+                       
+                        <div class="row" *ngIf="pendingvalue=='RejectedQuotes' && BranchValue">
+                            <div class="text-center" *ngIf="pendingvalue=='RejectedQuotes'">
+                                <button mat-raised-button class="ml-2" color="accent" (click)="SearchReject()">Search</button>
+                            </div>
+                           
+                        </div>
+                        <div class="row" *ngIf="rTrue">
+                            <ng-container *ngIf="RejectreferralData.length!=0">
+                                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnReject" [data]="RejectreferralData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                </app-grid-table>
+                               
+                            </ng-container>
+                            <ng-container *ngIf="RejectreferralData.length==0">
+                                <div> No Data Available</div>
+                            </ng-container>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div label="OpenCover" *ngIf="value=='OpenCover'">
+                      
+    <div *ngIf="value=='OpenCover'">
+        <div class="title-container bg-white p-4" *ngIf="value=='OpenCover'">
+            <b>{{CompanyName}}</b>
+        </div>
+    
+        <ng-container *ngIf="tableData.length!=0">
+            <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+            </app-grid-table>
+        </ng-container>
+        <ng-container *ngIf="tableData.length == 0">
+           <div class="text-center"> No Records Found</div>
+       </ng-container>
+    </div>
+</div>
+
+                
+</div>
+        </div>
+     
+        <!-- </div> -->
+    <!-- </div> -->
+    <!--<div class="title-container bg-white p-4" *ngIf="value=='ChangePassword'">
+        <b>Change Password</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+      <div class="input-control-container">
+          <label class="input-form-label">Enter New Password<span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <input type="password" [(ngModel)]="EPassword" class="input-form-control without-icon" maxlength="100">
+          </div>
+      </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+        <div class="input-control-container">
+            <label class="input-form-label"> Re enter New Password <span class="text-required">*</span>
+            <div class="input-form-box" >
+                <input type="password" [(ngModel)]="NPassword" class="input-form-control without-icon" maxlength="100">
+            </div>
+            </label>
+        </div>
+    </div>-->
+
+    <!--<div *ngIf="value=='OpenCover'">
+        <div class="title-container bg-white p-4" *ngIf="value=='OpenCover'">
+            <b>{{CompanyName}}</b>
+        </div>
+    
+        <ng-container *ngIf="tableData.length!=0">
+            <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+            </app-grid-table>
+        </ng-container>
+        <ng-container *ngIf="tableData.length==0">
+           <div class="text-center"> No Records Found</div>
+       </ng-container>
+    </div>-->
+
+ 
+   <!--<div class="card-body" *ngIf="value =='Referral'">
+    <div class="title-container bg-white p-4">
+        <b>Search Referral Quote No</b>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-4 col-lg-4 col-xl-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Quote No<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" name="bankName"
+                       [(ngModel)]="QuoteNo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button mat-raised-button class="ml-2" color="accent" (click)="onsearch(QuoteNo)">Search</button>
+    </div> 
+
+    <ng-container *ngIf="QuoteData && QuoteNo">
+        <app-grid-table [cols]="columnHeaders" [data]="QuoteData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+        </app-grid-table>
+       
+    </ng-container>
+
+    <div class="title-container bg-white p-4">
+        <b>Referral Cases</b>
+    </div>
+
+    <div class="row">
+        <button mat-raised-button value="Pending" class="ml-4" (click)="onRedirects('Pending')">Pending Quotes</button><br>
+        <button mat-raised-button value="Approved" class="ml-4" (click)="onRedirects('Approved')">Approved Quotes</button><br>
+        <button mat-raised-button value="RejectedQuotes" class="ml-4" (click)="onRedirects('RejectedQuotes')">Rejected Quotes</button><br>
+    </div>
+  
+    
+
+    <div class="row" *ngIf="pendingvalue=='Pending' || pendingvalue=='Approved' || pendingvalue=='RejectedQuotes'">
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Products <span class="text-required">*</span></label>
+          
+          
+                    <ng-select class="input-form-select" appendTo="body" [items]="productNameList" (change)="onGetRegionList()" [(ngModel)]="ProductId"  bindValue="ProductId" bindLabel="ProductName">
+                    </ng-select>
+          
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Region <span class="text-required">*</span></label>
+                <ng-select class="input-form-select"  [items]="regionList"  [(ngModel)]="RegionNo" (change)="onGetBranchList()"
+                    bindValue="Code" bindLabel="CodeDescription"  bindValue="RegionId" bindLabel="RegionName"> </ng-select>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Branch<span class="text-required">*</span></label>
+<ng-select class="input-form-select"  [items]="branchList"   [(ngModel)]="BranchValue"
+                    bindValue="BranchCode" bindLabel="BranchName"> </ng-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="pendingvalue=='Pending' && BranchValue">
+        <div class="text-center" *ngIf="pendingvalue=='Pending'">
+            <button mat-raised-button class="ml-2" color="accent" (click)="Search()">Search</button>
+        </div> 
+    </div>
+
+    <div class="row" *ngIf="PTrue">
+        <ng-container *ngIf="PendingreferralData.length!=0">
+            <app-grid-table style="overflow-x: scroll !important;" [cols]="columnReferral" [data]="PendingreferralData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+            </app-grid-table>
+           
+        </ng-container>
+        <ng-container *ngIf="PendingreferralData.length==0">
+            <div class="text-center"> No Data Available</div>
+        </ng-container>
+       
+    </div>
+
+
+    <div class="row" *ngIf="pendingvalue=='Approved' && BranchValue">
+        
+        <div class="text-center" *ngIf="pendingvalue=='Approved'">
+            <button mat-raised-button class="ml-2" color="accent" (click)="SearchApprover()">Search</button>
+        </div> 
+    </div>
+
+    <div class="row" *ngIf="ATrue">
+        <ng-container *ngIf="ApprovedreferralData.length!=0">
+            <app-grid-table style="overflow-x: scroll !important;" [cols]="columnApprover" [data]="ApprovedreferralData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+            </app-grid-table>
+           
+        </ng-container>
+        <ng-container *ngIf="ApprovedreferralData.length==0">
+            <div> No Data Available</div>
+        </ng-container>
+    </div>
+
+   
+    <div class="row" *ngIf="pendingvalue=='RejectedQuotes' && BranchValue">
+        <div class="text-center" *ngIf="pendingvalue=='RejectedQuotes'">
+            <button mat-raised-button class="ml-2" color="accent" (click)="SearchReject()">Search</button>
+        </div>
+       
+    </div>
+    <div class="row" *ngIf="rTrue">
+        <ng-container *ngIf="RejectreferralData.length!=0">
+            <app-grid-table style="overflow-x: scroll !important;" [cols]="columnReject" [data]="RejectreferralData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+            </app-grid-table>
+           
+        </ng-container>
+        <ng-container *ngIf="RejectreferralData.length==0">
+            <div> No Data Available</div>
+        </ng-container>
+    </div>
+    
+</div>-->
+
+
+
+    <div class="mt-3 text-center" *ngIf="value=='ChangePassword'">
+        <button mat-raised-button class="ml-2" color="accent" (click)="goBack()">Back</button>
+        <button mat-raised-button class="ml-2" color="primary" (click)="ChangePassword()">Save</button>
+    </div>
+    

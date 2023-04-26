@@ -1,0 +1,139 @@
+<div class="example-container">
+  <!-- <div>
+    <ng-container *ngIf="btnConfig.btnShow">
+
+    </ng-container>
+  </div> -->
+  <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection"
+    matSortDisableClear>
+    <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">{{ columnHeader[i]["display"] }}</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="!col.config; else hasConfig">
+          {{ element[col.key] }}
+        </ng-container>
+        <ng-template #hasConfig>
+          <ng-container *ngIf="col.config.select">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
+                [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+              <label class="custom-control-label" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="col.config.isCheck">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
+                [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+              <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="col.config.isBsCheckBox">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
+              [(ngModel)]="element[col.config.model]"  (change)="onSelectCustomer.emit(element)">
+              <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="col.config.isInputDes">
+            <div class="input-control-container input-edit">
+              <div class="input-form-box">
+                <span class="input-form-icon">
+                  <i class="fas fa-pen-alt"></i>
+                </span>
+                <input type="text" class="input-form-control with-icon" [(ngModel)]="element.CommodityDescription"
+                  placeholder="search...">
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="col.config.isFragiCheck">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="switch{{element[col.key]}}"
+                [(ngModel)]="element.Fragile">
+              <label class="custom-control-label"
+                for="switch{{element[col.key]}}">{{element.Fragile?'on':'off'}}</label>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="col.config.isToleranceList">
+            <select class="form-control form-control-sm" [(ngModel)]="element.toleranceVal">
+              <option value="">select</option>
+              <ng-container *ngFor="let item of element[col.key]">
+                <option [value]="item.ToleranceId">{{item.ToleranceName}}</option>
+              </ng-container>
+            </select>
+          </ng-container>
+          <ng-container *ngIf="col.config.isRadio">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="choosedRowData">
+              <mat-radio-button [value]="element" (change)="choosedRow.emit(element)"></mat-radio-button>
+            </mat-radio-group>
+          </ng-container>
+          <ng-container *ngIf="col.config.isdropdownLis">
+            <select class="form-control form-control-sm" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+              <option value="">select</option>
+              <ng-container *ngFor="let item of element[col.key]">
+                <option [value]="item[col.config.KeyCode]">{{item[col.config.keyName]}}</option>
+              </ng-container>
+            </select>
+          </ng-container>
+          <ng-container *ngIf="col.config.isTextBox">
+            <div class="input-control-container input-edit">
+              <div class="input-form-box">
+                <ng-container *ngIf="col.config.isDecimal;else nodecimal">
+                  <input type="text" decimal="true" digitOnly class="input-form-control without-icon" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+                </ng-container>
+                <ng-template #nodecimal>
+                  <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+                </ng-template>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="col.config.isTextBoxLetter">
+            <div class="input-control-container input-edit">
+              <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="col.config.isActions">
+            <button  nbButton shape="round" size="tiny" (click)="onRemoveDta(element)">
+              Remove
+            </button>
+          </ng-container>
+          <ng-container *ngIf="col.config.isActionBtn">
+            <button  nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
+              <i [class]="col.config.isNgxIcon"></i>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="col.config.isMenuAction">
+            <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <mat-menu #menus="matMenu">
+              <ng-container *ngFor="let item of col.config.menuList">
+              <button mat-menu-item>
+                <span>{{item.name}}</span>
+              </button>
+              </ng-container>
+            </mat-menu>
+          </ng-container>
+
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="keys"></tr>
+    <tr mat-row *matRowDef="let row; columns: keys"></tr>
+  </table>
+  <ng-container *ngIf="!dataSource?.data?.length">
+    <table>
+      <tr>
+        <td class="p-3" style="text-align: center" [attr.colspan]="columnHeader?.length">
+          No Records Found!
+        </td>
+      </tr>
+    </table>
+  </ng-container>
+</div>
+<mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons
+  aria-label="Select page of periodic elements">
+</mat-paginator>

@@ -1,0 +1,5 @@
+<ngx-one-column-layout>
+  <nb-menu [items]="menu"></nb-menu>
+    <app-opencover-header-info *ngIf="productId != '3'" [headerDetails]="headerDetails" class="m-2"></app-opencover-header-info>
+  <router-outlet></router-outlet>
+</ngx-one-column-layout>

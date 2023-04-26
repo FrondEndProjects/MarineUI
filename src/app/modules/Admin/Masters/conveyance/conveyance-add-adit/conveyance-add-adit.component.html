@@ -1,0 +1,154 @@
+<div [formGroup]="conveyanceForm" class="bg-white p-3">
+  <div class="single-row">
+    <!-- MODE OF TRANSPORT -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">
+          Mode of transport
+          <span class="text-required">*</span>
+        </label>
+        <ng-select class="input-form-select" name="ModeOfTransportId" formControlName="ModeOfTransportId"
+          [items]="transportList" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+      </div>
+      <mat-error
+        *ngIf="conveyanceForm.controls['ModeOfTransportId'].errors?.['required'] && (conveyanceForm.controls['ModeOfTransportId'].dirty || conveyanceForm.controls['ModeOfTransportId'].touched)">
+        Please choose mode of transport
+      </mat-error>
+    </div>
+    <!-- MODE OF TRANSPORT -->
+
+    <!-- CONVEYANCE NAME -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            Conveyance name
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="conveyanceName"
+              formControlName="conveyanceName" />
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="conveyanceForm.controls['conveyanceName'].errors?.['required'] && (conveyanceForm.controls['conveyanceName'].dirty || conveyanceForm.controls['conveyanceName'].touched)">
+        Please choose conveyance name
+      </mat-error>
+    </div>
+    <!-- CONVEYANCE NAME -->
+  </div>
+
+  <div class="single-row">
+    <!-- CONVEYANCE Rate -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            Conveyance rate (rating)
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="conveyanceRate"
+              formControlName="conveyanceRate" />
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="conveyanceForm.controls['conveyanceRate'].errors?.['required'] && (conveyanceForm.controls['conveyanceRate'].dirty || conveyanceForm.controls['conveyanceRate'].touched)">
+        Please choose conveyance rate
+      </mat-error>
+    </div>
+    <!-- CONVEYANCE Rate -->
+
+    <!-- CORE APPLICATION CODE -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            Core application code
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="coreApplicationCode"
+              formControlName="coreApplicationCode" />
+          </div>
+        </div>
+        <mat-error
+          *ngIf="conveyanceForm.controls['coreApplicationCode'].errors?.['required'] && (conveyanceForm.controls['coreApplicationCode'].dirty || conveyanceForm.controls['coreApplicationCode'].touched)">
+          Please choose core application code
+        </mat-error>
+      </div>
+    </div>
+    <!-- /CORE APPLICATION CODE -->
+  </div>
+
+  <div class="single-row">
+    <!--<div class="col-12 col-md-6 col-lg-6">
+
+     <div class="input-control-container">
+      <label class="input-form-label">Policy End Date</label>
+      <div class="input-form-box">
+        <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
+          name="effectiveDate" formControlName="effectiveDate" (click)="d3.toggle()" [minDate]="minDate"
+          autocomplete="off" />
+      </div>
+    </div>
+    </div>-->
+    <!-- effective date -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+          <mat-form-field appearance="fill">
+              <mat-label>EffectiveDate<span class="text-danger">*</span></mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="effectiveDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+  </div>
+    <!-- REMARKS -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Remarks</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="remarks" formControlName="remarks" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /REMARKS -->
+  </div>
+
+
+  <div class="single-row">
+    <!-- STATUS -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">
+          Status
+          <span class="text-required">*</span>
+        </label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status" />
+            <label for="fac-yes">Active</label>
+            <input type="radio" id="fac-no" name="status" value="N" formControlName="status" />
+            <label for="fac-no">DeActive</label>
+            <input type="radio" id="fac-Referral" name="status" value="R" formControlName="status" />
+            <label for="fac-Referral">Referral</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3 text-center">
+    <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">
+      Back
+    </button>
+    <button mat-raised-button style="margin-left: 20px;" color="primary" (click)="onSave()">
+      Save
+    </button>
+  </div>
+</div>

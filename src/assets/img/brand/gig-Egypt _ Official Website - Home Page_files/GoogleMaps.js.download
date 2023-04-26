@@ -1,0 +1,26 @@
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(30.096086,31.31909);
+        var myOptions = {
+            zoom: 17,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true,
+            width: 300,
+            height: 200,
+            isStreetView: true,
+            showMapTypeControl: false,
+            streetViewMode: "Overlay"
+        }
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: "AMIG",
+            text: "AMIG",
+            address: "AMIG"
+        });
+
+        
+    }
+

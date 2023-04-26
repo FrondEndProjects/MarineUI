@@ -1,0 +1,174 @@
+<form [formGroup]="policyGenerateForm">
+<div class="vision-card">
+  <div class="vision-card-header">
+    New OpenCover Information
+  </div>
+  <div class="vision-card-body">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Do You want to Generate Open Cover<span class="text-required">*</span></label>
+            <div class="input-form-radio-box">
+              <div class="radio-toolbar">
+                <input id="generatecover-yes" type="radio" name="generateCover" value="Y" formControlName="generateCover">
+                <label for="generatecover-yes">Yes</label>
+                <input type="radio" id="generatecover-no" name="generateCover" value="N" formControlName="generateCover">
+                <label for="generatecover-no">No</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Policy Effective Date</label>
+            <div class="input-form-box">
+
+              <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="policyEffectiveDate" (click)="d.toggle()" readonly>
+            </div>
+            <div class="input-form-error" *ngIf="(pG.policyEffectiveDate.errors && submitted) || (!pG.policyEffectiveDate.valid && pG.policyEffectiveDate.touched)">
+              <div *ngIf="pG.policyEffectiveDate.errors?.required" class="error-text">
+                This field is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="coverTypeId == '12' || coverTypeId == '13'">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Installment<span class="text-required">*</span></label>
+            <ng-select placeholder="Select" class="input-form-select" [items]="installmentList" bindValue="CategoryDetailId" bindLabel="DetailName"  formControlName="installment">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Premium<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="premium">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Policy Fee<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="policyFee">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Vat Tax<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="vatTax">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Total Premium<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="totalPremium">
+            </div>
+          </div>
+        </div>
+        </ng-container>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="remarks">
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="vision-card">
+  <div class="vision-card-header">
+    Conveyance
+  </div>
+  <div class="vision-card-body">
+      <div class="row">
+        <ng-container *ngFor="let item of conveyance">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">{{item.TransportDescription}}</label>
+            <div class="input-form-box">
+              <textarea type="text" class="input-form-control without-icon" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.Conveyance"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      </div>
+  </div>
+</div>
+<div class="vision-card">
+  <div class="vision-card-header">
+    Print in Schedule
+  </div>
+  <div class="vision-card-body">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Cancellation Clauses<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" digitOnly class="input-form-control without-icon" formControlName="cancelClauses" >
+            </div>
+            <div class="input-form-error" *ngIf="(pG.cancelClauses.errors && submitted) || (!pG.cancelClauses.valid && pG.cancelClauses.touched)">
+              <div *ngIf="pG.cancelClauses.errors?.required" class="error-text">
+                This field is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Schedule<span class="text-required">*</span></label>
+            <div class="input-form-radio-box">
+              <div class="radio-toolbar">
+                <input id="schedule-yes" type="radio" name="schedule" value="Y" formControlName="schedule">
+                <label for="schedule-yes">Rate</label>
+                <input type="radio" id="schedule-no" name="schedule" value="N" formControlName="schedule">
+                <label for="schedule-no">As Agreed</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Do You want to print Amended Insolvency Exclusion Clause</label>
+            <div class="input-form-radio-box">
+              <div class="radio-toolbar">
+                <input id="printclause-yes" type="radio" name="exclusionClauses" value="Y" formControlName="exclusionClauses">
+                <label for="printclause-yes">Yes</label>
+                <input type="radio" id="printclause-no" name="exclusionClauses" value="N" formControlName="exclusionClauses">
+                <label for="printclause-no">No</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">PPW days<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="pwwDays">
+            </div>
+            <div class="input-form-error" *ngIf="(pG.pwwDays.errors && submitted) || (!pG.pwwDays.valid && pG.pwwDays.touched)">
+              <div *ngIf="pG.pwwDays.errors?.required" class="error-text">
+                This field is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+  </div>
+</div>
+<div class="col-12 text-right">
+  <button nbButton (click)="onMoveBack()" status="danger" class="mx-2">Back</button>
+  <button nbButton (click)="onSubmit()" status="primary" class="mx-2">Next</button>
+</div>
+</form>

@@ -1,0 +1,77 @@
+
+<div [formGroup]="ErrorForm" class="bg-white p-3">
+
+
+  <div class="single-row">
+    <!-- Country Name -->
+
+    <!-- Country Name -->
+
+    <!-- Country short NAME -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">StageId</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="StageId">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">ErrorDescription<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="ErrorDescription">
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="ErrorForm.controls['ErrorDescription'].errors?.['required'] && (ErrorForm.controls['ErrorDescription'].dirty || ErrorForm.controls['ErrorDescription'].touched)">
+        Please Enter ErrorDescription Name</mat-error>
+    </div>
+    <!-- Country short NAME -->
+  </div>
+
+  <div class="single-row">
+    <!-- Nationality Name -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Remarks</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="remarks">
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Nationality Name -->
+
+    <!-- Geo Rate (Rating) -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">Status<span class="text-required">*</span></label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+            <label for="fac-yes">Active</label>
+            <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+            <label for="fac-no">DeActive</label>
+            <!--<input type="radio" id="fac-re" name="status" value="R" formControlName="status">
+            <label for="fac-re">Refferal</label>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Geo Rate (Rating) -->
+  </div>
+
+  <div class="mt-3 text-center">
+    <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+    <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
+  </div>
+
+</div>

@@ -1,0 +1,21 @@
+<!--p>error-table works!</!->
+
+<button mat-raised-button (click)="openDialog()">Open dialog</button>-->
+
+
+<div class="bg-white">
+  <!-- SEARCH FIELD -->
+  <mat-form-field class="search-box  px-4" appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+  <!-- /SEARCH FIELD -->
+  <ng-container *ngIf="tableData">
+      <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+      </app-grid-table>
+  </ng-container>
+
+  <!-- PAGINATOR -->
+  <!-- <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
+  <!-- /PAGINATOR -->
+</div>

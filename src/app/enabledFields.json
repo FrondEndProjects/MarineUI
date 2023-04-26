@@ -1,0 +1,169 @@
+{
+  "EnabledList":[
+    {
+        "EndtType": "Customer Information Update",
+        "EndtTypeId": "1",
+        "EndtTypeCategory": "Non Financial",
+        "EnabledIds":[
+          "title",
+          "name",
+          "coreAppcode",
+          "city",
+          "poBox",
+          "mobileNo",
+          "email",
+          "customerVat",
+          "Address1",
+          "Address2"
+        ]
+    },
+    {
+        "EndtType": "L/C Information",
+        "EndtTypeId": "2",
+        "EndtTypeCategory": "Non Financial",
+        "EnabledIds":[
+          "lCBank",
+          "lcNumber",
+          "lcDate",
+          "lcBankDesc"
+        ]
+    },
+    {
+        "EndtType": "Bill of Lading/Airway Bill",
+        "EndtTypeId": "3",
+        "EndtTypeDesc": "Bill of Lading/Airway Bill",
+        "EndtTypeCategory": "Non Financial",
+        "EndtTypeCategoryId": "1",
+        "EnabledIds":[
+          "blAwbLrRrNumber",
+          "blAwbLrRrDate",
+          "sailingDate"
+        ]
+    },
+    {
+        "EndtType": "Settling Agent",
+        "EndtTypeId": "4",
+        "EndtTypeDesc": "Settling Agent",
+        "EndtTypeCategory": "Non Financial",
+        "EndtTypeCategoryId": "1",
+        "EnabledIds":[
+           "settlingAgent"
+        ]
+    },
+    {
+        "EndtType": "Mode of Transport",
+        "EndtTypeId": "5",
+        "EndtTypeDesc": "Mode of Transport",
+        "EndtTypeCategory": "Financial",
+        "EndtTypeCategoryId": "2",
+        "EnabledIds":[
+          "modeOfTransport",
+          "cover",
+          "modeOfCarriage"
+        ]
+    },
+    {
+        "EndtType": "Country Endorsement",
+        "EndtTypeId": "6",
+        "EndtTypeDesc": "Country Endorsement",
+        "EndtTypeCategory": "Financial",
+        "EndtTypeCategoryId": "2",
+        "EnabledIds":[
+          "originatingCountry",
+          "originatingCity",
+          "orginatingCityOtherYN",
+          "orginatingCityOther",
+          "originatingWarehouse",
+          "destinationCountry",
+          "destinationCity",
+          "destinationOtherYN",
+          "destinationCityOther",
+          "destinationWarehouse",
+          "via"
+        ]
+    },
+    {
+        "EndtType": "Currency",
+        "EndtTypeId": "8",
+        "EndtTypeDesc": "Currency",
+        "EndtTypeCategory": "Financial",
+        "EndtTypeCategoryId": "2",
+        "EnabledIds":[
+          "currency"
+        ]
+    },
+    {
+        "EndtType": "War & SRCC",
+        "EndtTypeId": "9",
+        "EndtTypeDesc": "War & SRCC",
+        "EndtTypeCategory": "Financial",
+        "EndtTypeCategoryId": "2",
+        "EnabledIds":[
+          "warSrcc"
+        ]
+    },
+    {
+        "EndtType": "Sale Term",
+        "EndtTypeId": "11",
+        "EndtTypeDesc": "Sale Term",
+        "EndtTypeCategory": "Financial",
+        "EndtTypeCategoryId": "2",
+        "EnabledIds":[
+          "incoterms",
+          "incotermsPercentage",
+          "tolerance"
+        ]
+    },
+    {
+        "EndtType": "Sum Insured",
+        "EndtTypeId": "14",
+        "EndtTypeDesc": "Sum Insured",
+        "EndtTypeCategory": "Financial",
+        "EndtTypeCategoryId": "2",
+        "EnabledIds":["insuredValue"]
+    },
+    {
+        "EndtType": "Vessel Name",
+        "EndtTypeId": "16",
+        "EndtTypeDesc": "Vessel Name",
+        "EndtTypeCategory": "Non Financial",
+        "EndtTypeCategoryId": "1",
+        "EnabledIds":[
+          "conveyanceVesselName"
+        ]
+    },
+    {
+        "EndtType": "PartialShipment",
+        "EndtTypeId": "20",
+        "EndtTypeDesc": "PartialShipment",
+        "EndtTypeCategory": "Non Financial",
+        "EndtTypeCategoryId": "1",
+        "EnabledIds":[
+          "partialShipment",
+          "exposureOfShipment",
+          "currencyOfExposure"
+        ]
+    },
+    {
+        "EndtType": "GoodsDescription",
+        "EndtTypeId": "21",
+        "EndtTypeDesc": "GoodsDescription",
+        "EndtTypeCategory": "Non Financial",
+        "EndtTypeCategoryId": "1",
+        "EnabledIds":[
+          "goodsDescript"
+        ]
+    },
+    {
+        "EndtType": "Cancellation of Certificate/Individual Policy",
+        "EndtTypeId": "41",
+        "EndtTypeDesc": "Cancellation of Certificate",
+        "EndtTypeCategory": "Financial",
+        "EndtTypeCategoryId": "2",
+        "EnabledIds":[]
+    }
+]
+
+
+
+}

@@ -1,0 +1,162 @@
+<!--<div class="animated fadeIn" style="margin-top:10px;">
+  <div class="row" style="margin-top:5px;">
+      <div class="col-sm-12 col-md-12">
+          <div class="card border-primary w3-animate-left">
+              <div class="card-header">
+                  <div class="row w3-animate-top">
+                      <div class="col-md-4 border border-0">
+                          <h2 class="mb-0">USER MANAGEMENT</h2>
+                      </div>
+                      <div class="col-md-2 offset-md-6">
+                          <button class="btn btn-outline-dark" routerLink="/newUserManagement">Add New User</button>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-body w3-animate-left">
+                      <div class="row w3-animate-top" *ngIf="userSection">
+                      <div class="col-md-12">
+                          <div class="girdbox mt-4">
+                              <div class="row headerStyle">
+                                <div class="col-md-3 hidemobileview">
+                                  UserName
+                                </div>
+                                <div class="col-md-1 hidemobileview">
+                                  User Code
+                                </div>
+                                <div class="col-md-2 hidemobileview">
+                                  LoginId
+                                </div>
+                                <div class="col-md-2 hidemobileview">
+                                 BrokerName
+                                </div>
+                                <div class="col-md-2 hidemobileview">
+                                  Created Date
+                                </div>
+                                <div class="col-md-1 hidemobileview">
+                                  More
+                                </div>
+                                <div class="col-md-1 hidemobileview">
+                                  Status
+                                </div>
+                              </div>
+                              <div class="row tablecellpadding" *ngFor="let data of rowData|searchFilter:searchValue | paginate: { itemsPerPage: 10, currentPage: p },let i=index">
+                                <div class="col-md-3">
+                                  <span class="hidemobileview">{{data.CompanyName}}</span>
+                                  <ul class="list-group hidebutton">
+                                    <li class="list-group-item list-group-item-primary">
+                                    <div class="row hidebutton">
+                                      <div class="col-sm-1 col-1">
+                                        <span  id="open{{i}}" (click)="collapseone('minus',i)" data-toggle="collapse"
+                                        [attr.data-target]="'#test' + i">
+                                          <i  class="fa fa-plus-circle"></i>
+                                        </span>
+                                        <span id="close{{i}}" style="display: none;" (click)="collapseone('plus',i)" data-toggle="collapse"
+                                        [attr.data-target]="'#test' + i">
+                                          <i  class="fa fa-minus-circle"></i>
+                                        </span>
+                                      </div>
+                                      <div class="col-sm-7 col-7">
+                                        UserName
+                                      </div>
+                                      <div class="col-sm-4 col-4">
+                                       {{data.CompanyName}}
+                                      </div>
+                                    </div>
+                                  </li>
+                                  </ul>
+                                  <div id="test{{i}}" class="collapse">
+                                    <table class="table  table-bordered">
+                                      <tbody>
+                                        <tr>
+                                          <td>UserCode</td>
+                                          <td>{{data.AgencyCode}}</td>
+                                        </tr>
+                                        <tr>
+                                          <td>Login Id</td>
+                                          <td>{{data.LoginId}}</td>
+                                        </tr>
+                                        <tr>
+                                          <td>BrokerName</td>
+                                          <td>{{data.BrokerName}}</td>
+                                        </tr>
+                                        <tr>
+                                          <td>Created Date</td>
+                                          <td>{{data.CreateDate}}</td>
+                                        </tr>
+                                        <tr>
+                                          <td>Edit</td>
+                                          <td><button class="btn btn-outline-primary" (click)="editUserMgm(data.AgencyCode,data.LoginId)">Edit</button></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Status</td>
+                                          <td>{{data.Status}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div class="col-md-1 hidemobileview">
+                                  {{data.AgencyCode}}
+                                </div>
+                                <div class="col-md-2 hidemobileview">
+                                  {{data.LoginId}}
+                                </div>
+                                <div class="col-md-2 hidemobileview" style="padding: 5px;">
+                                  {{data.BrokerName}}
+                                </div>
+                                <div class="col-md-2 hidemobileview">
+                                  {{data.CreateDate}}
+                                </div>
+                                <div class="col-md-1 hidemobileview">
+                                 <button class="btn btn-outline-primary" (click)="editUserMgm(data.AgencyCode,data.LoginId)">More</button>
+                                </div>
+                                <div class="col-md-1 hidemobileview">
+                                  {{data.Status}}
+                                </div>
+                              </div>
+                            </div>
+                            <pagination-controls style="float: right !important;" class="mt-3" (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                      </div>
+                      <div class="my-1 w3-animate-top text-center" *ngIf="!userSection">
+                        <h2 class="text-primary">No User Available</h2>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>-->
+
+
+<div class="title-container bg-white p-4">
+  <span>User Managemant</span>
+
+  <button mat-raised-button color="primary"  *ngIf="branchValue" (click)="goToAddNewPage()" style="float:right;">Add new</button>
+
+
+</div>
+<div class="bg-white">
+
+  <!-- SEARCH FIELD -->
+  <mat-form-field class="search-box  px-4" appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+  <!-- /SEARCH FIELD -->
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="input-control-container">
+        <label class="input-form-label">Branch <span class="text-required">*</span></label>
+
+        <ng-select class="input-form-select" appendTo="body" [items]="branchList"  [(ngModel)]="branchValue" (change)="getExistingAdmin()"  bindValue="BranchCode" bindLabel="BranchName">
+        </ng-select>
+    </div>
+  </div>
+  <ng-container *ngIf="adminData">
+      <app-grid-table [cols]="columnHeader" [data]="adminData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+      </app-grid-table>
+  </ng-container>
+
+  <!-- PAGINATOR -->
+  <!-- <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
+  <!-- /PAGINATOR -->
+</div>

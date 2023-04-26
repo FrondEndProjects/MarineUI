@@ -1,0 +1,49 @@
+
+<div class="maan-card">
+  <ul class="nav nav-pills nav-justified" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: tabActive ===2}" data-toggle="pill"  (click)="onTabActive(2)">Pending</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: tabActive ===1}" data-toggle="pill" (click)="onTabActive(1)">Approved</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: tabActive ===3}" data-toggle="pill" (click)="onTabActive(3)">Rejected</a>
+    </li>
+  </ul>
+  <div class="maan-card-body">
+    <form [formGroup]="searchForm">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Select Product<span class="text-required">*</span></label>
+            <ng-select placeholder="Select" class="input-form-select" formControlName="productName" [items]="productNameList" bindValue="ProductId"
+              bindLabel="ProductName" (change)="onChangeProduct()">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Regions<span class="text-required">*</span></label>
+            <ng-select placeholder="Select" class="input-form-select" formControlName="regions" [items]="regionList" bindValue="RegionId"
+              bindLabel="RegionName">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+            <label class="input-form-label">Branch<span class="text-required">*</span></label>
+            <ng-select placeholder="Select" class="input-form-select" formControlName="branch" [items]="branchList" bindValue="BranchCode"
+              bindLabel="BranchName">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-12 text-right">
+          <button nbButton size="small" status="primary" class="mx-1" (click)="onLoadGrid()">Submit</button>
+        </div>
+      </div>
+
+      </form>
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.single-row{
+  display: flex;
+  flex-direction: row;
+}
+
+.form-control {
+  border-radius: 0.7rem;
+}
+.list-group-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+}
+
+
+.checklist {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+/*.checklist .list-group-item {
+  border-top: 1px solid ghostwhite;
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+}*/

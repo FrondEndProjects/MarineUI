@@ -1,0 +1,30 @@
+
+.vision-grid{
+  margin: 1rem 0 ;
+}
+.vision-grid .vision-grid-item {
+ background-color: white;
+ padding: 1rem;
+ border-radius: .5rem;
+ margin: .5rem 0;
+}
+.vision-grid-item-title{
+  padding: 0.5rem;
+  font-weight: 600;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.vision-grid-item:first-child{
+  background-color: #f1f1f1 !important;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.vision-grid-item:first-child .premium-lable,
+.vision-grid-item:first-child .premium-val{
+ padding: .5rem 0;
+}
+.vision-grid-item:first-child .premium-lable{
+font-weight: 500;
+}
+

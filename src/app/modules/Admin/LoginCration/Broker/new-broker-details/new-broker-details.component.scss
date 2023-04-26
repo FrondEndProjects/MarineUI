@@ -1,0 +1,36 @@
+.title-container{
+    background-color: rgb(223, 253, 253);
+}
+.menu button{
+    width: 250px;
+    margin-top: 10px;
+}
+.title-container{
+    // height: 30px;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 15px;
+    color: black;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .panel > .ti{
+    color: #194d8b;
+    //background-color: #194d8b;
+    border-color: #194d8b;
+    font-weight: bold;
+    font-size: 18px;
+    border:0;
+    //border-radius: 20px 20px 0px 0px;
+  }
+
+
+  .panel{
+    border-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    border-radius: 20px;
+    color:black;
+  }

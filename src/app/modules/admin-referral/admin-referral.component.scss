@@ -1,0 +1,28 @@
+a{
+  text-decoration: none;
+}
+.nav{
+  padding-top: 0.7rem;
+  border-bottom: 1px solid #ccc;
+}
+.maan-card{
+  padding: 0;
+  // overflow: hidden;
+}
+.maan-card-body{
+  padding: 1rem;
+}
+.nav-pills .nav-link {
+  color: #a09797;
+
+
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #007bff;
+  border-bottom: 3px solid #007bff;
+  background-color: white;
+}
+
+.nav-pills .nav-link {
+  border-radius: 0;
+}

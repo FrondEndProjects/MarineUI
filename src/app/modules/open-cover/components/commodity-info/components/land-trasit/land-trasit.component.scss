@@ -1,0 +1,15 @@
+.vision-grid{
+  margin: 1rem 0 ;
+}
+.vision-grid .vision-grid-item {
+ background-color: white;
+ padding: .5rem;
+}
+.vision-grid-item-title{
+  padding: 0.5rem;
+  font-weight: 600;
+}
+.vision-grid-item-title{
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,314 @@
+<div [formGroup]="settlingForm" class="bg-white p-3">
+  <div class="single-row">
+    <!-- MODE OF TRANSPORT -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">
+        Country Name
+          <span class="text-required">*</span>
+        </label>
+        <ng-select class="input-form-select" name="CountryId" formControlName="CountryId"
+          [items]="countryList" bindValue="Code" bindLabel="CodeDescription" (change)="city()"></ng-select>
+      </div>
+      <mat-error
+        *ngIf="settlingForm.controls['CountryId'].errors?.['required'] && (settlingForm.controls['CountryId'].dirty || settlingForm.controls['CountryId'].touched)">
+        Please choose Country
+      </mat-error>
+    </div>
+    <!-- MODE OF TRANSPORT -->
+
+    <!-- CONVEYANCE NAME -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            City name
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="CityName"
+              formControlName="CityName" />
+          </div>
+          <!--<ng-select class="input-form-select" name="CityName" formControlName="CityName"
+          [items]="CityList" bindValue="Code" bindLabel="CodeDescription"></ng-select>-->
+        </div>
+      </div>
+      <mat-error
+        *ngIf="settlingForm.controls['CityName'].errors?.['required'] && (settlingForm.controls['CityName'].dirty || settlingForm.controls['CityName'].touched)">
+        Please choose City name
+      </mat-error>
+    </div>
+    <!-- CONVEYANCE NAME -->
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            Email
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="Email"
+              formControlName="Email" />
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="settlingForm.controls['Email'].errors?.['required'] && (settlingForm.controls['Email'].dirty || settlingForm.controls['Email'].touched)">
+        Please write Email
+      </mat-error>
+    </div>
+  </div>
+
+  <div class="single-row">
+    <!-- CONVEYANCE Rate -->
+    <!--<div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            Email
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="Email"
+              formControlName="Email" />
+          </div>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="settlingForm.controls['Email'].errors?.['required'] && (settlingForm.controls['Email'].dirty || settlingForm.controls['Email'].touched)">
+        Please write Email
+      </mat-error>
+    </div>-->
+    <!-- CONVEYANCE Rate -->
+
+    <!-- CORE APPLICATION CODE -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            Core application code
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="coreApplicationCode"
+              formControlName="coreApplicationCode" />
+          </div>
+        </div>
+        <mat-error
+          *ngIf="settlingForm.controls['coreApplicationCode'].errors?.['required'] && (settlingForm.controls['coreApplicationCode'].dirty || settlingForm.controls['coreApplicationCode'].touched)">
+          Please choose core application code
+        </mat-error>
+      </div>
+    </div>
+
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">TelephoneNo</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="remarks" formControlName="TelephoneNo" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">SettlingAgentName</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="SettlingName" formControlName="SettlingName" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /CORE APPLICATION CODE -->
+  </div>
+
+  <div class="single-row">
+    <!--<div class="col-12 col-md-6 col-lg-6">
+
+     <div class="input-control-container">
+      <label class="input-form-label">Policy End Date</label>
+      <div class="input-form-box">
+        <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
+          name="effectiveDate" formControlName="effectiveDate" (click)="d3.toggle()" [minDate]="minDate"
+          autocomplete="off" />
+      </div>
+    </div>
+    </div>-->
+    <!-- effective date -->
+    <!--<div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+          <mat-form-field appearance="fill">
+              <mat-label>EffectiveDate<span class="text-danger">*</span></mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="effectiveDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+  </div>-->
+    <!-- REMARKS -->
+
+    
+    <!--<div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Remarks</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="remarks" formControlName="remarks" />
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+   
+    <!-- /REMARKS -->
+  </div>
+
+
+  <div class="single-row">
+    <!-- STATUS -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">
+          Status
+          <span class="text-required">*</span>
+        </label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status" />
+            <label for="fac-yes">Active</label>
+            <input type="radio" id="fac-no" name="status" value="N" formControlName="status" />
+            <label for="fac-no">DeActive</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Address1</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="Address1" formControlName="Address1" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Address2</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="Address2" formControlName="Address2" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-row">
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Address3</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="Address3" formControlName="Address3" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Mobile No</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="MobileNo" formControlName="MobileNo" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">ZipCode </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="ZipCode" formControlName="ZipCode" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-row">
+    <!--<div class="col-12 col-md-3 col-lg-3">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">ZipCode </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="ZipCode" formControlName="ZipCode" />
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">FaxNo</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="FaxNo" formControlName="FaxNo" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">ShortName</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="ShortName" formControlName="ShortName" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Remarks</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="remarks" formControlName="remarks" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="col-12 col-md-3 col-lg-3">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">SettlingAgentName</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="SettlingName" formControlName="SettlingName" />
+          </div>
+        </div>
+      </div>
+    </div>-->
+  </div>
+
+  <div class="mt-3 text-center">
+    <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">
+      Back
+    </button>
+    <button mat-raised-button style="margin-left: 20px;" color="primary" (click)="onSave()">
+      Save
+    </button>
+  </div>
+</div>

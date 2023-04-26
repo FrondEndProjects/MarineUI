@@ -1,0 +1,358 @@
+<!--<div [formGroup]="cityForm" class="bg-white p-3">-->
+  <div class="title-container bg-white p-4">
+    <nb-card>
+      <div class="d-flex justify-content-between">
+        <nb-card-header value="View" (click)="onRedirect('View')">Admin-Details </nb-card-header>
+        <div>
+
+       <button class="ml-2 p-1 btn btn-primary" value="ChangePassword" (click)="onRedirect('ChangePassword')">Change Password
+        </button>
+       </div>
+        <!--<div class="card-header" value="ChangePassword" (click)="onRedirect('ChangePassword')">ChangePassword</div>-->
+      </div>
+      
+          
+        <div class="card-body">
+  <div class="row bg-white" *ngIf="value=='View'">
+
+      <!-- Country Name -->
+      <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+              <label class="input-form-label">User Type <span class="text-required">*</span></label>
+
+              <!--<ng-select class="input-form-select"
+                  bindValue="Code" bindLabel="CodeDescription"> </ng-select>-->
+                  <ng-select class="input-form-select" appendTo="body" [items]="userType"  [(ngModel)]="AdminDetails.UserType"  bindValue="CodeDescription" bindLabel="CodeDescription">
+                  </ng-select>
+
+          </div>
+          <!--<mat-error
+              *ngIf="cityForm.controls['BelongingCountryId'].errors?.['required'] && (cityForm.controls['BelongingCountryId'].dirty || cityForm.controls['BelongingCountryId'].touched)">
+              Please choose User Type</mat-error>-->
+      </div>
+      <!-- Country Name -->
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+            <label class="input-form-label">User Name <span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" [(ngModel)]="AdminDetails.UserName" maxlength="100">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+          <label class="input-form-label">Login Id <span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon"  [(ngModel)]="AdminDetails.LoginId" maxlength="100">
+          </div>
+      </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4" *ngIf="editSection">
+    <div class="input-control-container">
+        <label class="input-form-label">Password <span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="password" [(ngModel)]="password" class="input-form-control without-icon" maxlength="100">
+        </div>
+    </div>
+</div>
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Region</label>
+      <ng-select class="input-form-select" appendTo="body" [items]="regionList"  [(ngModel)]="AdminDetails.RegionCode"  bindValue="RegionId" bindLabel="RegionName" (change)="onGetBranchList('change')">
+      </ng-select>
+  </div>
+</div>
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Branch</label>
+
+      <ng-select class="input-form-select" appendTo="body" [items]="branchList"  [(ngModel)]="BranchCode"  bindValue="BranchCode" bindLabel="BranchName">
+      </ng-select>
+  </div>
+</div>
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Products <span class="text-required">*</span></label>
+
+
+          <ng-select class="input-form-select" appendTo="body" [multiple]="true" [items]="productNameList"  [(ngModel)]="AdminDetails.ProductId" (change)="changeMenu('change')" bindValue="ProductId" bindLabel="ProductName">
+          </ng-select>
+
+  </div>
+</div>
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">UnderWriter Grade <span class="text-required">*</span></label>
+
+        <ng-select class="input-form-select" appendTo="body" [items]="userList"  [(ngModel)]="AdminDetails.AttachedUnderWriter"  [multiple]="true" bindValue="Code" bindLabel="CodeDescription">
+        </ng-select>
+
+
+  </div>
+</div>
+
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Email Id <span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <input type="text" [(ngModel)]="AdminDetails.UserMail" class="input-form-control without-icon" maxlength="100">
+      </div>
+  </div>
+</div>
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Status <span class="text-required">*</span></label>
+
+      <ng-select class="input-form-select" appendTo="body" [items]="StatusList"  [(ngModel)]="Status"  bindValue="Code" bindLabel="CodeDesc">
+      </ng-select>
+  </div>
+</div>
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Atached Region <span class="text-required">*</span></label>
+
+      <ng-select class="input-form-select"  [multiple]="true"  appendTo="body" [items]="regionList" (change)="changeRegion('change')" [(ngModel)]="AdminDetails.AttachedRegion"  bindValue="RegionId" bindLabel="RegionName">
+      </ng-select>
+  </div>
+</div>
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Attached Branch<span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <ng-select class="input-form-select"  [multiple]="true"  appendTo="body" [items]="AttachedBranchList"  [(ngModel)]="AdminDetails.AttachedBranch"  bindValue="BranchCode" bindLabel="BranchName">
+        </ng-select>
+          <!--<textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="AdminDetails.AttachedBranchId"  maxlength="200"></textarea>-->
+
+      </div>
+  </div>
+</div>
+<!--<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Excluded Menus<span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <textarea cols="120" rows="2" class="input-form-control without-icon"  [(ngModel)]="AdminDetails.MenuId"  maxlength="200"></textarea>
+      </div>
+  </div>
+</div>-->
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="customer-search-container">
+    <div class="input-control-container">
+      <label class="input-form-label">Excluded Menus<span class="text-required">*</span></label>
+      <div class="input-group mb-3 mt-1">
+        <input type="text" class="form-control" [(ngModel)]="AdminDetails.MenuId" disabled>
+        <div class="input-group-append">
+          <button class="btn btn-primary border bg-primary text-white" type="button" mat-button
+            (click)="openDialog()">...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12 col-md-4 col-lg-4">
+  <div class="customer-search-container">
+    <div class="input-control-container">
+      <label class="input-form-label">Brokers<span class="text-required">*</span></label>
+      <div class="input-group mb-3 mt-1">
+        <input type="text" class="form-control" [(ngModel)]="AdminDetails.MenuId" disabled>
+        <div class="input-group-append">
+          <button class="btn btn-primary border bg-primary text-white" type="button" mat-button
+            (click)="openDialogWithoutRef('import')">...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div class="col-12 col-md-4 col-lg-4">
+  <div class="input-control-container">
+      <label class="input-form-label">Brokers<span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <textarea cols="120" rows="2" class="input-form-control without-icon"  [(ngModel)]="Brok" maxlength="200"></textarea>
+      </div>
+  </div>
+</div>-->
+
+  </div> <!--first row-->
+
+  <div class="title-container bg-white p-4" *ngIf="value=='ChangePassword' ">
+    <b>Change Password</b>
+  </div>
+  <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+  <div class="input-control-container">
+      <label class="input-form-label">Enter New Password<span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <input type="password" [(ngModel)]="EPassword"  class="input-form-control without-icon" maxlength="100">
+      </div>
+  </div>
+  </div>
+  <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+    <div class="input-control-container">
+        <label class="input-form-label"> Re enter New Password <span class="text-required">*</span>
+        <div class="input-form-box" >
+            <input type="password" [(ngModel)]="NPassword" class="input-form-control without-icon" maxlength="100">
+        </div>
+        </label>
+    </div>
+  </div>
+
+  <div class="text-center mt-2" *ngIf="value=='View'">
+    <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+    <button class="btn btn-success ml-2" (click)="onSaveAdmin()">Submit</button>
+  </div>
+  <div class="mt-3 text-center" *ngIf="value=='ChangePassword'">
+    <button mat-raised-button class="ml-2" color="accent" (click)="Back()">Back</button>
+    <button mat-raised-button class="ml-2" color="primary" (click)="ChangePassword()">Save</button>
+</div>
+
+  </div><!-- for card-->
+</nb-card>
+ </div>  <!--second row-->
+
+
+
+ <!--<ng-template #secondDialog>
+  <h5 matDialogTitle>Selection</h5>
+  <mat-dialog-content>
+    <ul class="list-group">
+      <ng-container *ngFor="let item of warrantyData">
+      <li class="list-group-item">
+        <div><mat-checkbox color="primary" [(ngModel)]="item.isChecked"> <span class="text-primary mx-1"></span></mat-checkbox></div>
+        <div>{{item?.MenuName}}</div>
+      </li>
+    </ng-container>
+    </ul>
+    <div class="vision-grid vision-grid-column-3 country-selection my-3">
+    <div class="vision-grid-item">
+      <div class="vision-grid-item-title">
+        Country Of Origin <small class="text-dark"><i>(Excluded Orgin Country)</i></small>
+      </div>
+      <div class="vision-grid-item-body">
+        <div class="input-control-container">
+          <div class="input-form-box">
+            <span class="input-form-icon">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="excludedCountrySearch" placeholder="search...">
+          </div>
+        </div>
+        <ul class="list-group checklist list-group-flush">
+          <ng-container>
+            <label class="custom-checkbox-container">
+              <input type="checkbox">
+              <div class="description">
+                <div class="description-name">
+                  <span>
+                  
+                  </span>
+                </div>
+              </div>
+            </label>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+    <div class="vision-grid-item">
+      <div class="vision-grid-item-title">
+        Actions
+      </div>
+      <div class="vision-grid-item-body">
+        <div class="exchange-icon">
+  
+        </div>
+        <div class="action-btns">
+          <div class="action-btn-item" (click)="onSelected('left')">
+            <i class="fas fa-chevron-left"></i>
+          </div>
+          <div class="action-btn-item">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <div class="action-btn-item" (click)="onSelected('right')">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+        <div class="action-btns">
+          <div class="action-btn-item" (click)="onMoveAll('left')">
+            <i class="fas fa-angle-double-left"></i>
+          </div>
+          <div class="action-btn-item">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <div class="action-btn-item" (click)="onMoveAll('right')">
+            <i class="fas fa-angle-double-right"></i>
+          </div>
+        </div>
+        <div class="action-btns">
+          <div class="action-btn-item" (click)="onMoveGroupWise('africanCode','left',africanCode)">
+            <i class="fas fa-angle-double-left"></i>
+          </div>
+          <div class="action-btn-item">
+            African
+          </div>
+          <div class="action-btn-item" (click)="onMoveGroupWise('africanCode','right',africanCode)">
+            <i class="fas fa-angle-double-right"></i>
+          </div>
+        </div>
+        <div class="action-btns">
+          <div class="action-btn-item" (click)="onMoveGroupWise('gccCode','left',gccCode)">
+            <i class="fas fa-angle-double-left"></i>
+          </div>
+          <div class="action-btn-item">
+            GCC
+          </div>
+          <div class="action-btn-item" (click)="onMoveGroupWise('gccCode','right',gccCode)">
+            <i class="fas fa-angle-double-right"></i>
+          </div>
+        </div>
+        <div class="action-btns">
+          <div class="action-btn-item" (click)="onMoveGroupWise('cisCode','left',cisCode)">
+            <i class="fas fa-angle-double-left"></i>
+          </div>
+          <div class="action-btn-item">
+            CIS
+          </div>
+          <div class="action-btn-item" (click)="onMoveGroupWise('cisCode','right',cisCode)">
+            <i class="fas fa-angle-double-right"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vision-grid-item">
+      <div class="vision-grid-item-title">
+        Country Of Orgin <small class="text-dark"><i>(Included Orgin Country)</i></small>
+      </div>
+      <div class="vision-grid-item-body">
+        <div class="input-control-container">
+          <div class="input-form-box">
+            <span class="input-form-icon">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="input-form-control with-icon search-input"  placeholder="search...">
+          </div>
+        </div>
+        <ul class="list-group checklist list-group-flush">
+          <ng-container>
+            <label class="custom-checkbox-container">
+              <input type="checkbox">
+              <div class="description">
+                <div class="description-name">
+                  <span>
+                  
+                  </span>
+                </div>
+              </div>
+            </label>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button matDialogClose color="primary">Cancel</button>
+    <button mat-button color="primary" (click)="onsubmit()">Proceed</button>
+  </mat-dialog-actions>
+</ng-template>-->
+
+
+

@@ -1,0 +1,121 @@
+.vision-grid-column-2 {
+  grid-template-columns: 60% 40%;
+
+}
+@media (max-width: 800px) {
+  .vision-grid-column-2 {
+    grid-template-columns: 100%;
+
+  }
+
+}
+
+.policy-grid .vision-grid-item:nth-child(2) {
+  background-color: #c1c1c14d;
+}
+
+.policy-grid .vision-grid-item-body {
+  padding: 1rem;
+}
+
+.policy-grid .vision-grid-item-title {
+  padding: 1rem 1.5rem;
+  font-size: 100%;
+  font-weight: 600;
+
+}
+
+.list-group .list-group-item {
+  border: 0;
+  padding: .5rem;
+  background-color: transparent;
+  font-size: small;
+}
+
+.list-display-flex .list-group-item {
+  display: flex;
+}
+
+.list-flex-justify-between .list-group-item {
+  justify-content: space-between;
+}
+
+.print-check .custom-checkbox-container {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  background: #fff;
+  margin: 0.3rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+/* The container */
+.custom-checkbox-container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all .2s;
+  font-size: 90%;
+}
+
+/* Hide the browser's default checkbox */
+.custom-checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox-container .checkmark{
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.custom-checkbox-container input~.checkmark .fa-check-circle {
+  display: none;
+}
+.custom-checkbox-container input~.checkmark .fa-minus-circle{
+  display: block;
+}
+.custom-checkbox-container input:checked~.checkmark .fa-minus-circle{
+  display: none;
+}
+.custom-checkbox-container input:checked~.checkmark .fa-check-circle {
+  display: inline-block;
+}
+
+
+.custom-checkbox-container .description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+}
+
+.custom-checkbox-container input:checked~.description {
+  background-color: #2196F3;
+  color: #fff;
+}
+
+.header-details {
+  background-color: #eee;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: .5rem 0;
+}
+.btn-yellow {
+  color: #fff;
+  background-color: #d9c325;
+  border-color: #d9c325;
+}
+.btn-success{
+  color: #fff;
+  background-color: green;
+  border-color: green;
+}

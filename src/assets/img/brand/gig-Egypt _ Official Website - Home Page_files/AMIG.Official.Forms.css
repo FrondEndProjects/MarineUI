@@ -1,0 +1,100 @@
+#ProductsQuot_Container , #SendCV_Container ,#BrokerJoinUs_Container,#EmailSubscribe_Container,#PostClaim_Container
+{
+  text-align: left; vertical-align: top
+}
+
+#ProductsQuot_ValidationSummary ,#SendCV_ValidationSummary ,#BrokerJoinUs_ValidationSummary,#EmailSubscribe_ValidationSummary,#PostClaim_ValidationSummary
+{
+  text-align: left; vertical-align: top
+}
+
+#ProductsQuot_form , #SendCV_form ,#BrokerJoinUs_form,#EmailSubscribe_form,#PostClaim_form
+{
+}
+
+#ProductsQuot_FormTable ,#SendCV_FormTable ,#BrokerJoinUs_FormTable,#EmailSubscribe_FormTable,#PostClaim_FormTable
+{
+  
+}
+
+#ProductsQuot_Controls ,#SendCV_Controls ,#BrokerJoinUs_Controls,#EmailSubscribe_Controls,#PostClaim_Controls
+{
+}
+
+#ProductsQuot_InfoBar ,#SendCV_InfoBar ,#BrokerJoinUs_InfoBar,#EmailSubscribe_InfoBar,#PostClaim_InfoBar
+{
+}
+
+#ProductsQuot_ThankYouMessage ,#SendCV_ThankYouMessage ,#BrokerJoinUs_ThankYouMessage,#EmailSubscribe_ThankYouMessage,#PostClaim_ThankYouMessage
+{
+}
+
+.productsQuot_LablesCell , .SendCV_LablesCell ,.BrokerJoinUs_LablesCell,.EmailSubscribe_LablesCell,.PostClaim_LablesCell
+{
+  text-align: left; vertical-align: top
+  
+}
+
+.productsQuot_DataCell , .SendCV_DataCell ,.BrokerJoinUs_DataCell,.EmailSubscribe_DataCell,.PostClaim_DataCell
+{
+  text-align: left; vertical-align: top
+}
+
+
+.formText
+{
+}
+
+.formLabel
+{
+}
+
+.fileupload
+{
+}
+
+.formDropDownList
+{
+}
+.formTextAria
+{
+}
+
+
+.txt-box, input[type="text"], input[type="password"], input.txt-box-default, textarea {
+background: url('/GetImage.ashx?id=2059') repeat-x;
+border: 1px solid #D1D0D0;
+color: #060606;
+height: 20px;
+line-height: 20px;
+padding-right: 10px;
+/*width: 208px;*/
+}
+
+
+#OfferSubscription_ThankYouMessage
+{
+     font-weight: bold;
+     color: red;
+      font-family: tahoma;
+      font-size: 11px;
+      color: #276094;
+}
+
+
+#lbl_Message
+{
+     font-weight: bold;
+     color: red;
+      font-family: tahoma;
+      font-size: 11px;
+}
+
+
+
+
+
+
+
+
+/* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

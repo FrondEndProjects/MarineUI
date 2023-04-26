@@ -1,0 +1,56 @@
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  border-bottom-color: #ccc;
+}
+th.mat-header-cell {
+  color: lightslategrey;
+  font-size: 100%;
+  font-weight: 500;
+}
+.example-container{
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+.mat-table th,
+.mat-table td {
+    white-space: nowrap !important;
+    padding: 8px 10px !important;
+}
+.input-edit .input-form-control{
+  margin: 0;
+  border-radius: 0;
+}
+.input-edit .input-form-box .input-form-icon {
+  left: 8px;
+  top: 0px;
+  padding: 7px 8px;
+}
+
+.covers-list{
+  display: grid;
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+}
+.input-edit .input-form-control{
+  margin: 0;
+  border-radius: 0;
+}
+.covers-list-item{
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.conveyance-list{
+  margin: .5rem 0;
+}
+.conveyance-list .list-group-item{
+  padding: 5px;
+}
+.mat-checkbox {
+  font-family: var(--our-font-family);
+  font-size: 90%;
+}

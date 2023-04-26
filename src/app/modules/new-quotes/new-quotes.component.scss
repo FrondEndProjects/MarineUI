@@ -1,0 +1,48 @@
+.mynav{
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  justify-content: center;
+  padding: 1rem 0;
+}
+.mynav-link {
+  display: flex;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  background-color: #dbd5d5;
+  text-decoration: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+
+}
+
+.mynav-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: default;
+}
+
+.progress-line {
+  display: flex;
+  flex-direction: row;
+  color: var(--logo-color-2);
+  width: 25%;
+}
+
+.progress-line:after {
+  content: "";
+  flex: 1 1;
+  margin: auto 5px;
+  border-bottom: 2px solid #ccc;
+
+}
+.progress-line.menuactive:after{
+  border-bottom: 2px solid darkblue;
+
+}
+

@@ -1,0 +1,336 @@
+<!--<nb-card>
+  <nb-card-body>
+    <div class="card p-1">
+
+      <div class="vision-grid vision-grid-column-2">
+        <div class="vision-grid-item">
+            <div class="radio-toolbar menu-bar">
+                <input id="menu" type="radio" name="menu" value="Country" (click)="onRedirect('Country')" [(ngModel)]="activeMenu">
+                <label for="menu">UnderWriter Details</label>
+                <input type="radio" id="menu4" name="menu" value="Region" (click)="onRedirect('Region')" [(ngModel)]="activeMenu">
+                <label for="menu4">Change Password</label>
+                <input type="radio" id="menu1" name="menu" value="State" (click)="onRedirect('State')" [(ngModel)]="activeMenu">
+                <label for="menu1">Included Browsers</label>
+                <input type="radio" id="menu2" name="menu" value="City" (click)="onRedirect('City')" [(ngModel)]="activeMenu">
+                <label for="menu2">Excluded Browsers</label>
+
+                <input type="radio" id="menu3" name="menu" value="Currency" (click)="onRedirect('Currency')" [(ngModel)]="activeMenu">
+                <label for="menu3">Currency</label>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-3">
+
+          <div class="menu mt-3 text-center">
+              <button mat-raised-button>View</button><br>
+              <button mat-raised-button>Change Password</button><br>
+              <button mat-raised-button>User Details</button><br>
+              <button mat-raised-button>Costomer Details</button><br>
+              <button mat-raised-button>OpenCover</button><br>
+              <button mat-raised-button>Referral</button><br>
+          </div>
+      </div>
+
+      <div class="card-body">
+<div class="row bg-white col-12 col-md-9 col-lg-9">
+
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+          <label class="input-form-label">User Name <span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" maxlength="100">
+          </div>
+      </div>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-6">
+    <div class="input-control-container">
+        <label class="input-form-label">Email Id <span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="text"  class="input-form-control without-icon" maxlength="100">
+        </div>
+    </div>
+    </div>
+  <div class="col-12 col-md-6 col-lg-6">
+    <div class="input-control-container">
+        <label class="input-form-label">Login Id <span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" maxlength="100">
+        </div>
+    </div>
+</div>
+<div class="col-12 col-md-6 col-lg-6">
+  <div class="input-control-container">
+      <label class="input-form-label">Core Login Id <span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <input type="text"  class="input-form-control without-icon" maxlength="100">
+      </div>
+  </div>
+</div>
+
+<div class="col-12 col-md-6 col-lg-6">
+  <div class="input-control-container">
+      <label class="input-form-label">Password <span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <input type="text"  class="input-form-control without-icon" maxlength="100">
+      </div>
+  </div>
+</div>
+<div class="col-12 col-md-6 col-lg-6">
+<div class="input-control-container">
+    <label class="input-form-label">Region <span class="text-required">*</span></label>
+    <ng-select class="input-form-select" appendTo="body" [items]="RegionList"  [(ngModel)]="regionId"  bindValue="Code" bindLabel="CodeDesc">
+    </ng-select>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-6">
+<div class="input-control-container">
+    <label class="input-form-label">Branch <span class="text-required">*</span></label>
+
+    <ng-select class="input-form-select" appendTo="body" [items]="BranchList"  [(ngModel)]="branchId"  bindValue="Code" bindLabel="CodeDesc">
+    </ng-select>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-6">
+<div class="input-control-container">
+    <label class="input-form-label">Choose Products <span class="text-required">*</span></label>
+
+
+        <ng-select class="input-form-select" appendTo="body" [items]="userList"  [(ngModel)]="userType"  bindValue="Code" bindLabel="CodeDesc">
+        </ng-select>
+
+</div>
+</div>
+
+<div class="col-12 col-md-6 col-lg-6">
+<div class="input-control-container">
+    <label class="input-form-label">Attached Branch<span class="text-required">*</span></label>
+    <div class="input-form-box">
+        <textarea cols="120" rows="2" class="input-form-control without-icon" maxlength="200"></textarea>
+    </div>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-6">
+<div class="input-control-container">
+    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+    <div class="input-form-box">
+        <textarea cols="120" rows="2" class="input-form-control without-icon"  maxlength="200"></textarea>
+    </div>
+</div>
+</div>
+
+
+</div>first row
+<div class="text-center mt-2">
+  <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+  <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+</div>
+</div> for card
+</div> Vission Grid main
+</div>--><!-- main Card
+</nb-card-body>
+</nb-card>-->
+
+<div class="bg-white p-3">
+  <div class="row">
+      <div class="col-12 col-md-3 col-lg-3">
+
+          <div class="menu mt-3 text-center">
+              <button mat-raised-button value="View" (click)="onRedirect('View')">View</button><br>
+              <button mat-raised-button value="ChangePassword" (click)="onRedirect('ChangePassword')">Change Password</button><br>
+<!--<button mat-raised-button>User Details</button><br>
+              <button mat-raised-button>Costomer Details</button><br>
+              <button mat-raised-button>OpenCover</button><br>
+              <button mat-raised-button>Referral</button><br>-->
+              <button mat-raised-button value="Included" (click)="onRedirect('Included')">Included Brokers</button><br>
+              <button mat-raised-button value="Excluded" (click)="onRedirect('Excluded')">Excluded Brokers</button><br>
+          </div>
+      </div>
+       <div class="col-12 col-md-9 col-lg-9">
+      <div class="title-container bg-white p-4" *ngIf="value=='View'">
+          <b>Issuer Information</b>
+      </div>
+      <div  class="bg-white p-3" *ngIf="value=='View'">
+          <div class="row">
+
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                  <label class="input-form-label">User Name <span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" [(ngModel)]="IssuerDetails.UserName"  maxlength="100">
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Email Id <span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text"  class="input-form-control without-icon" [(ngModel)]="IssuerDetails.UserMail"  maxlength="100">
+                </div>
+            </div>
+            </div>
+          <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Login Id <span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon"  [(ngModel)]="IssuerDetails.LoginId"  maxlength="100">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="input-control-container">
+              <label class="input-form-label">Core Login Id <span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="text"  class="input-form-control without-icon" [(ngModel)]="IssuerDetails.CoreLoginId"  maxlength="100">
+              </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-6" *ngIf="editdata">
+          <div class="input-control-container">
+              <label class="input-form-label">Password <span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="password" [(ngModel)]="password" class="input-form-control without-icon" maxlength="100">
+              </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+            <label class="input-form-label">Region <span class="text-required">*</span></label>
+            <ng-select class="input-form-select" appendTo="body" [items]="regionList"  [(ngModel)]="IssuerDetails.RegionCode"  bindValue="RegionId" bindLabel="RegionName" (change)="onGetBranchList()">
+            </ng-select>
+        </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+            <label class="input-form-label">Branch <span class="text-required">*</span></label>
+
+            <ng-select class="input-form-select" appendTo="body" [items]="branchList"  [(ngModel)]="BranchCode" (change)="onGetProductList()" bindValue="BranchCode" bindLabel="BranchName">
+            </ng-select>
+        </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+            <label class="input-form-label">Choose Products <span class="text-required">*</span></label>
+
+
+                <ng-select class="input-form-select" [multiple]="true" appendTo="body" [items]="productNameList"  [(ngModel)]="IssuerDetails.ProductId"  bindValue="ProductId" bindLabel="ProductName">
+                </ng-select>
+
+        </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Atached Region <span class="text-required">*</span></label>
+          
+                <ng-select class="input-form-select"  [multiple]="true"  appendTo="body" [items]="regionList" (change)="changeRegion('change')" [(ngModel)]="IssuerDetails.AttachedRegion"  bindValue="RegionId" bindLabel="RegionName">
+                </ng-select>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Attached Branch<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                  <ng-select class="input-form-select"  [multiple]="true"  appendTo="body" [items]="AttachedBranchList"  [(ngModel)]="IssuerDetails.AttachedBranch"  bindValue="BranchCode" bindLabel="BranchName">
+                  </ng-select>
+                    <!--<textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="AdminDetails.AttachedBranchId"  maxlength="200"></textarea>-->
+          
+                </div>
+            </div>
+          </div>
+
+        <!--<div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+            <label class="input-form-label">Attached Branch<span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <ng-select class="input-form-select"  [multiple]="true"  appendTo="body" [items]="regionList" (change)="changeRegion()" [(ngModel)]="IssuerDetails.AttachedRegion"  bindValue="RegionId" bindLabel="RegionName">
+                </ng-select>
+                <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="IssuerDetails.AttachedBranch" maxlength="200"></textarea>
+            </div>
+        </div>
+        </div>-->
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="input-control-container">
+              <mat-form-field appearance="fill">
+                  <mat-label>Effective Date</mat-label>
+                  <input matInput required [matDatepicker]="picker" [min]="minDate" [(ngModel)]="IssuerDetails.InceptionDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+          </div>
+      </div>
+        <!--<div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+            <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <textarea cols="120" rows="2" class="input-form-control without-icon"  maxlength="200"></textarea>
+            </div>
+
+        </div>
+        </div>-->
+        <!--<div class="col-12 col-md-6 col-lg-6">
+          <mat-form-field appearance="fill"> EffectiveDate
+
+              <input matInput [matDatepicker]="picker1" [min]="min" name="effectiveDateEnd"
+                  formControlName="">
+              <mat-datepicker-toggle matSuffixs [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+      </div>-->
+
+
+
+
+
+
+          </div>
+      </div>
+      <div class="title-container bg-white p-4" *ngIf="value=='ChangePassword' ">
+        <b>Change Password</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+      <div class="input-control-container">
+          <label class="input-form-label">Enter New Password<span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <input  type="password"  [(ngModel)]="EPassword"  class="input-form-control without-icon" maxlength="100">
+          </div>
+      </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
+        <div class="input-control-container">
+            <label class="input-form-label"> Re enter New Password <span class="text-required">*</span>
+            <div class="input-form-box" >
+                <input type="password"  [(ngModel)]="NPassword" class="input-form-control without-icon" maxlength="100">
+            </div>
+            </label>
+        </div>
+    </div>
+
+
+    <div *ngIf="value == 'Included' ">
+        <div class="row">
+            <ng-container *ngIf="IncludedData.length!=0">
+                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                </app-grid-table>
+               
+            </ng-container>
+            <ng-container *ngIf="IncludedData.length==0">
+                <div class="text-center"> No Data Available</div>
+            </ng-container>
+           
+        </div>
+    </div>
+
+
+      <!-- </div> -->
+  <!-- </div> -->
+  <div class="mt-3 text-center" *ngIf="value=='View'">
+      <button mat-raised-button class="ml-2" color="accent" (click)="ongetBack()">Back</button>
+      <button mat-raised-button class="ml-2" color="primary" (click)="region()">Save</button>
+  </div>
+  <div class="mt-3 text-center" *ngIf="value=='ChangePassword'">
+    <button mat-raised-button class="ml-2" color="accent" (click)="ongetBack()">Back</button>
+    <button mat-raised-button class="ml-2" color="primary" (click)="ChangePassword()">Save</button>
+</div>

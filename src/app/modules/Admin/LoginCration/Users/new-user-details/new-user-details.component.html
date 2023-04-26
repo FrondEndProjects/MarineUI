@@ -1,0 +1,634 @@
+<div class="bg-white p-3">
+  <div class="row">
+      <div>
+
+          <div class="d-flex justify-content-between ml-4">
+              <button mat-raised-button class="ml-2" value="View" (click)="onRedirect('View')">Edit</button><br>
+              <button mat-raised-button class="ml-2" value="ChangePassword" (click)="onRedirect('ChangePassword')">Change Password</button><br>
+              <button mat-raised-button class="ml-2" value="Product" (click)="onRedirect('Product')">Product Details</button><br>
+           
+              <!--<button mat-raised-button>User Details</button><br>
+              <button mat-raised-button>Costomer Details</button><br>
+              <button mat-raised-button>OpenCover</button><br>
+              <button mat-raised-button>Referral</button><br>-->
+          </div>
+      </div>
+      </div>
+       <div class="col-12 col-md-12 col-lg-12 mt-3">
+        <div>
+
+
+          <div label="View"  class="p-1" *ngIf="value=='View'">
+
+              <!--<div class="title-container bg-white p-4">
+                  <b>Status</b>
+
+              </div>-->
+              <!--<div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Status <span class="text-required">*</span></label>
+
+                    <ng-select class="input-form-select" appendTo="body" [items]="StatusList"  [(ngModel)]="Status"  bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+              </div>-->
+
+              <div class="title-container bg-white p-4">
+                <b>Contact Information</b>
+            </div>
+            <div class="bg-white p-3">
+              <div class="row">
+                <div class="col-12 col-md-4 col-lg-4">
+                  <div class="customer-search-container">
+                      <div class="input-control-container">
+                          <label class="input-form-label">BrokerName<span
+                                  class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <!--<input type="text" class="input-form-control without-icon"
+                                 [(ngModel)]="UserDetails.UserType" >-->
+                                 <ng-select class="input-form-select" appendTo="body" [items]="brokerType" [(ngModel)]="AgencyCode" bindValue="AgencyCode" bindLabel="CompanyName">
+                                </ng-select>
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">User Type <span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon"
+                    [(ngModel)]="UserDetails.UserType">
+                </div>
+                  <!--<ng-select class="input-form-select"
+                      bindValue="Code" bindLabel="CodeDescription"> </ng-select>-->
+                      <!--<ng-select class="input-form-select" appendTo="body" [items]="userType" [(ngModel)]="UserDetails.UserId" bindValue="Code" bindLabel="CodeDescription">
+                      </ng-select>-->
+
+              </div>
+
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="customer-search-container">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Title<span class="text-required">*</span></label>
+                      <ng-select class="input-form-select"  [items]="TitleList"   [(ngModel)]="UserDetails.Title"
+                          bindValue="TitleId" bindLabel="TitleName"> </ng-select>
+                  </div>
+              </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="customer-search-container">
+                    <div class="input-control-container">
+                        <label class="input-form-label">
+                            First Name<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea type="text" class="input-form-control without-icon"
+                            [(ngModel)]="UserDetails.FirstName" ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="customer-search-container">
+                    <div class="input-control-container">
+                        <label class="input-form-label">
+                            Last Name</label>
+                        <div class="input-form-box">
+                            <textarea type="text" class="input-form-control without-icon" name="bankName"
+                            [(ngModel)]="UserDetails.LastName"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Gender</label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="fac-yes" type="radio" name="status" value="M" [(ngModel)]="UserDetails.Gender">
+                            <label for="fac-yes">Male</label>
+                            <input type="radio" id="fac-no" name="status" value="F" [(ngModel)]="UserDetails.Gender">
+                            <label for="fac-no">Female</label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>DOB</mat-label>
+                    <input matInput [matDatepicker]="picker1" name="effectiveDate"
+                     [(ngModel)]="UserDetails.DateOfBirth">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">
+                        Nationality<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" [items]="NationalityList" [(ngModel)]="UserDetails.Nationality"
+                        bindValue="NationalityCode" bindLabel="NationalityName"> </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="customer-search-container">
+                    <div class="input-control-container">
+                        <label class="input-form-label">
+                            Occupation
+                           </label>
+                        <div class="input-form-box">
+                            <textarea type="text" class="input-form-control without-icon" name="bankName"
+                                [(ngModel)]="UserDetails.Occupation"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                  <div class="customer-search-container">
+                      <div class="input-control-container">
+                          <label class="input-form-label">Address1</label>
+                          <div class="input-form-box">
+                              <input type="text" class="input-form-control without-icon"
+                              [(ngModel)]="UserDetails.Address1">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="customer-search-container">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Address2</label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon"
+                            [(ngModel)]="UserDetails.Address2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Country<span class="text-required">*</span></label>
+    <ng-select class="input-form-select"  [items]="countryList"
+                      bindValue="CountryCode" bindLabel="CountryName" [(ngModel)]="UserDetails.Country"> </ng-select>
+              </div>
+          </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">City<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" [items]="CityList"
+                        bindValue="CityCode" bindLabel="CityName"  [(ngModel)]="UserDetails.City">  </ng-select>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+              <div class="customer-search-container">
+                  <div class="input-control-container">
+                      <label class="input-form-label">P.O.Box<span class="text-required">*</span></label>
+                      <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" name="bankName"
+                          [(ngModel)]="UserDetails.Pobox">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+              <div class="customer-search-container">
+                  <div class="input-control-container">
+                      <label class="input-form-label">TelephoneNo
+                         </label>
+                      <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" name="bankName"
+                          [(ngModel)]="UserDetails.TelephoneNo">
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="customer-search-container">
+                <div class="input-control-container">
+                    <label class="input-form-label">Mobile
+                       </label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" name="bankName"
+                        [(ngModel)]="UserDetails.MobileNo">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="customer-search-container">
+              <div class="input-control-container">
+                  <label class="input-form-label">Fax No</label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" name="bankName"
+                      [(ngModel)]="UserDetails.Fax">
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="customer-search-container">
+            <div class="input-control-container">
+                <label class="input-form-label">
+                    Email<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <textarea type="text" class="input-form-control without-icon"
+                    [(ngModel)]="UserDetails.Email"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+          <label class="input-form-label">Attached Region<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                <ng-select class="input-form-select" [multiple]="true" [items]="regionList" (change)="regions('change')" [(ngModel)]="UserDetails.AttachedRegion"
+                bindValue="RegionId" bindLabel="RegionName"> </ng-select>
+<!--<textarea type="text" class="input-form-control without-icon" name="bankName"
+                [(ngModel)]="UserDetails.AttachedRegion" maxlength="100"></textarea>-->
+            </div>
+      </div>
+  </div>
+
+  <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+          <div class="input-control-container">
+              <label class="input-form-label">
+                  Attached Branch<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                <ng-select class="input-form-select" [multiple]="true" [items]="AttachedBranchList" [(ngModel)]="UserDetails.AttachedBranch"
+                bindValue="BranchCode" bindLabel="BranchName"> </ng-select>
+                  <!--<textarea type="text" class="input-form-control without-icon" name="bankName"
+                  [(ngModel)]="UserDetails.AttachedBranch" maxlength="100"></textarea>-->
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
+    <div class="customer-search-container">
+    <div class="input-control-container">
+        <label class="input-form-label">Status <span class="text-required">*</span></label>
+
+        <ng-select class="input-form-select" appendTo="body" [items]="StatusList"  [(ngModel)]="Status"  bindValue="Code" bindLabel="CodeDesc">
+        </ng-select>
+    </div>
+    </div>
+</div>
+        </div>
+        </div>
+
+
+        <div class="title-container bg-white p-4" *ngIf="pass">
+          <b>Login Details
+          </b>
+      </div>
+
+      <div  class="bg-white p-3"  *ngIf="pass">
+          <div class="row">
+              <div class="col-12 col-md-4 col-lg-4">
+                  <div class="customer-search-container">
+                      <div class="input-control-container">
+                          <label class="input-form-label">
+                              Broker LoginId
+                              <span class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <input type="text" class="input-form-control without-icon"
+                              [(ngModel)]="UserDetails.LoginId">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4" *ngIf="pass">
+                  <div class="customer-search-container">
+                      <div class="input-control-container">
+                          <label class="input-form-label">
+                              Password<span class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <input type="password" class="input-form-control without-icon" name="bankName"
+                              [(ngModel)]="UserDetails.Password">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4" *ngIf="pass">
+                  <div class="customer-search-container">
+                      <div class="input-control-container">
+                          <label class="input-form-label">
+                              Retype Password <span class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <input type="password" class="input-form-control without-icon" name="bankName"
+                              [(ngModel)]="UserDetails.RePassword">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="mt-3 text-center" *ngIf="value=='View'">
+        <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+        <button mat-raised-button style="margin-left: 20px" color="primary" (click)="Atregion()">Save</button> 
+    </div>
+</div>
+        <div label="ChangePassword" class="p-1" *ngIf="value=='ChangePassword'">
+            <div class="title-container bg-white p-4" *ngIf="value=='ChangePassword' ">
+                <b>Change Password</b>
+            </div>
+           
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                  <label class="input-form-label">Enter New Password<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input type="text" [(ngModel)]="EPassword"  class="input-form-control without-icon" maxlength="100">
+                  </div>
+              </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label"> Re enter New Password <span class="text-required">*</span>
+                    <div class="input-form-box" >
+                        <input type="text" [(ngModel)]="NPassword" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                    </label>
+                </div>
+            </div>
+        
+        </div>
+
+
+
+        <div label="Product Insert"  class="p-1" *ngIf="value=='Product'">
+            <div>
+                <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                    <div class="headcommon">
+                        <span class="spancommon span_font_size" style="font-weight:600">User Products</span>
+                    </div>
+
+                    <!--<div class="headcommon"> <button class="btn btn-success mt-1"(click)="onAddRow()">Add New </button></div>-->
+                </div>
+                <!-- <div class="row mt-1">
+
+                </div> table_expand-->
+                <div class="row mt-1 table table_expand">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <table class="table">
+                            <thead style="background-color: #333b85;">
+                                <tr class="table_row">
+                                    <th class="tbl-header spancommon span_font_size"></th>
+                                    <th class="tbl-header spancommon span_font_size">Products</th>
+                                    <th class="tbl-header spancommon span_font_size">Special Discount</th>
+                                    <th class="tbl-header spancommon span_font_size">Sum Insured</th>
+                                    <th class="tbl-header spancommon span_font_size">Provision for Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--*ngFor="let row of building|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'} ;let i = index"-->
+                                <tr  *ngFor="let row of ProductInfo;let i = index">
+                                    <td>
+                                        <div class="input-form-box input-data-hover">
+                                        <input type="checkbox" class="input-form-control without-icon" [checked]="checkUWValues(row,'Y')" (change)="handleSelected($event,row,i)"> <!--(change)="onActiveDetails(row)">-->
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-box input-data-hover">
+                                            <!--<ng-select class="input-form-select" appendTo="body"[(ngModel)]="row.ProductId" [items]="productNameList" bindValue="ProductId" bindLabel="ProductName">
+                                            </ng-select>-->
+<input type="text" class="input-form-control without-icon" [(ngModel)]="row.ProductName" maxlength="50">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content" *ngIf="row.ProductId=='3'">
+                                        <div class="input-form-box input-data-hover">
+                                            <input type="text" [(ngModel)]="row.SpecialDiscount" (change)="special(row,row.SpecialDiscount,i)" class="input-form-control without-icon" maxlength="50">
+                                        </div>
+                                    <td class="tbl-content" *ngIf="row.ProductId=='3'">
+                                        <div class="input-form-box input-data-hover" >
+                                            <input type="text" [(ngModel)]="row.InsuranceEndLimit" (change)="Insurance(row,row.InsuranceEndLimit,i)" class="input-form-control without-icon" maxlength="50" style="text-align: end;">
+                                        </div>
+                                        
+                                    </td>
+
+                                    <td class="tbl-content" colspan="2" style="text-align:center ;" *ngIf="row.ProductId=='11'">
+                                        <div class="input-form-box input-data-hover">
+                                            <button mat-raised-button style="margin-left: 20px" color="primary" (click)="Open()">OpenCover</button>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content table-data-center">
+                                          
+                                        
+                                              <div>
+                                                <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [checked]="checkUWValue(row,'Y')" (change)="freight(row,row.Freightrow,i)" [(ngModel)]="row.Freight" value="Y">
+                                                <label [for]="'orginwarehouse_Yes'+i" class="yes">Yes</label>
+                                                <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [checked]="checkUWValue(row,'N')" (change)="freight(row,row.Freightrow,i)" [(ngModel)]="row.Freight" value="N">
+                                                <label [for]="'orginwarehouse_No'+i" class="no">No</label>
+                                                <!--<input [id]="'orginwarehouse_Yes'+i" type="radio" [attr.name]="'orginwarehouse_Yes'+i" [checked]="checkUWValue('Y')" [(ngModel)]="row.Freight" value="Y">
+                                                <label [for]="'orginwarehouse_Yes'+i" class="yes">Yes</label>
+                                                <input [id]="'orginwarehouse_No'+i" type="radio" [attr.name]="'orginwarehouse_No'+i" [checked]="checkUWValue('N')"  [(ngModel)]="row.Freight" value="N">
+                                                <label [for]="'orginwarehouse_No'+i" class="no">No</label>-->
+                                                <!--<input id="fac-yes" type="radio" name="status" value="Y" [(ngModel)]="row.UserFreight"> 
+                                                <label for="fac-yes">Active</label>
+                                                <input type="radio" id="fac-no" name="status" value="N" [(ngModel)]="row.UserFreight">
+                                                <label for="fac-no">DeActive</label>-->
+                                              </div>      
+                                             
+                                         
+                                         
+                                    </td>
+                                </tr>
+                                 
+                                <!--<tr  *ngFor="let row of ProductInfos;let i = index">
+                                    <td>
+                                        <div class="input-form-box input-data-hover">
+                                        <input type="checkbox" class="input-form-control without-icon">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-box input-data-hover">
+                                         
+<input type="text" class="input-form-control without-icon" [(ngModel)]="row.ProductName" maxlength="50">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content" colspan="2" style="text-align: center;">
+                                        <div class="input-form-box input-data-hover">
+                                            <button mat-raised-button style="margin-left: 20px" color="primary" (click)="Open()">OpenCover</button>
+                                        </div>
+                                    </td>
+                                 
+                                    <td class="tbl-content table-data-center">
+                                          
+                                        
+                                              <div>
+                                                <input id="fac-y" type="radio" name="s" value="Y" [(ngModel)]="row.UserFreight"> 
+                                                <label for="fac-y">Active</label>
+                                                <input type="radio" id="fac-n" name="s" value="N" [(ngModel)]="row.UserFreight">
+                                                <label for="fac-n">DeActive</label>
+                                              </div>      
+                                         
+                                         
+                                </tr>-->
+
+                            </tbody>
+                          
+                        </table>
+                            <div class="row text-center justify-content-center" >
+
+                                      
+                                    <button mat-raised-button class="ml-2" style="text-align:center" color="accent" value="View" (click)="goBack()">Back</button>
+                                    <button mat-raised-button class="ml-2" style="text-align:center" color="primary" (click)="productInsert($event,row)">save</button>
+                                
+                            </div>
+                       
+                       
+                    </div>
+                </div>
+
+            </div>
+
+
+<!--<div class="card-body">
+                <table style="border:1px solid black">
+                    <thead style="border:1px solid black;">
+                        <tr>
+                            <th></th>
+                            <th>Products</th>
+                            <th>Special Discount</th>
+                            <th>Sum Insured (SAR)</th>
+                            <th>Provision for Credit</th>
+                        </tr>
+    
+                    </thead>
+                   
+                    <tbody>
+                        <tr>
+                            <td style="padding-right:20px;"> 
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"> 
+                            </td>
+                            <td>   
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon" name="bankName"
+                                    [(ngModel)]="UserDetails.Fax">
+                                </div>  
+                             </td>
+                        </tr>
+                      
+                    </tbody>
+                </table>
+            </div>-->
+
+        </div>
+
+   
+
+    </div>
+</div>
+
+
+      <!-- </div> -->
+  <!-- </div> -->
+ 
+
+  <div class="mt-3 text-center" *ngIf="value=='ChangePassword'">
+    <button mat-raised-button class="ml-2" color="accent" (click)="goBack()">Back</button>
+    <button mat-raised-button class="ml-2" color="primary" (click)="ChangePassword()">Save</button>
+</div>
+
+
+
+
+
+  <!--
+        <div class="row mt-3" style="overflow-x: scroll;">
+              <div class="col-md-12 col-lg-12 col-xl-12 customRow">
+                  <table class="table table-headerRow">
+                      <tr>
+                        
+                          <th class="tbl-header">Rating FieldName</th>
+                          <th class="tbl-header">RangeYN</th>
+                          <th class="tbl-header">Parameter</th>
+                          <th class="tbl-header">Parameter Name</th>
+                          <th class="tbl-header">Parameter Name</th>
+
+
+
+
+
+
+                          <th class="tbl-header">Status</th>
+                      </tr>
+                      <tr *ngFor="let row of factorTypeList| paginate:{itemsPerPage: 10, currentPage:p} ;let i = index">
+
+                         
+                          <td class="tbl-content">
+                              <ng-select class="custom" name="RatingFiledId" [(ngModel)]="row.RatingFiledId" placeholder="Select Rating Field" appendTo="body" (change)="onRatingFieldChange(i)" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                  <ng-option *ngFor="let opt of fieldList" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                              </ng-select>
+                          </td>
+                          <td class="tbl-content">
+                              <div class="input-form-radio-box">
+                                  <div class="radio-toolbar" style="width: 120px !important;">
+                                      <input [id]="'range_Yes'+i" type="radio" [name]="'rangeYN'+i" [(ngModel)]="row.RangeYn" value="Y">
+                                      <label [for]="'range_Yes'+i" class="customLabel">Yes</label>
+                                      <input type="radio" [id]="'range_No'+i" [name]="'rangeYN'+i" [(ngModel)]="row.RangeYn" value="N">
+                                      <label [for]="'range_No'+i" class="customLabel">No</label>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="tbl-content">
+                              <ng-container *ngIf="row.RangeYn!='Y'">
+                                  <ng-select class="custom" name="ColumnsId" [(ngModel)]="row.ColumnsId" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                      <ng-option *ngFor="let opt of param2List" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                                  </ng-select>
+                              </ng-container>
+                              <ng-container *ngIf="row.RangeYn=='Y'">
+                                  <ng-select class="custom" name="ColumnsId" [(ngModel)]="row.ColumnsId" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                      <ng-option *ngFor="let opt of param1List" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                                  </ng-select>
+                              </ng-container>
+                          </td>
+                          <td class="tbl-content">
+                              <div class="input-control-container">
+                                  <div class="input-form-box">
+                                      <ng-container *ngIf="row.RangeYn=='Y'">
+                                          <input type="text" name="FromDisplayName" style="max-width: 150px;" [(ngModel)]="row.FromDisplayName">
+                                      </ng-container>
+                                      <ng-container *ngIf="row.RangeYn!='Y'">
+                                          <input type="text" name="DiscreteDisplayName" style="max-width: 150px;" [(ngModel)]="row.DiscreteDisplayName">
+                                      </ng-container>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="tbl-content">
+                              <ng-container *ngIf="row.RangeYn=='Y'">
+                                  <div class="input-control-container">
+                                      <input type="text" name="ToDisplayName" style="max-width: 150px;" [(ngModel)]="row.ToDisplayName">
+                                  </div>
+                              </ng-container>
+                              <ng-container *ngIf="row.RangeYn!='Y'">
+                                  N/A
+                              </ng-container>
+                          </td>
+                          <td class="tbl-content">
+                              <div class="input-form-radio-box">
+                                  <div class="radio-toolbar" style="width: 300px;">
+                                      <input [id]="'orginwarehouse_Pending'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="P">
+                                      <label [for]="'orginwarehouse_Pending'+i" class="customLabel">Pending</label>
+                                      <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="Y">
+                                      <label [for]="'orginwarehouse_Yes'+i" class="customLabel">Active</label>
+                                      <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="N">
+                                      <label [for]="'orginwarehouse_No'+i" class="customLabel">DeActive</label>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+             </div>
+  -->

@@ -1,0 +1,236 @@
+<div [formGroup]="wsrccForm" class="bg-white p-3">
+  <div class="row">
+      <!-- MODE OF TRANSPORT -->
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="input-control-container">
+              <label class="input-form-label">
+                  Mode of transport
+                  <span class="text-required">*</span>
+              </label>
+              <ng-select class="input-form-select" name="ModeOfTransportId" formControlName="ModeOfTransportId"
+                  [items]="transportList" (change)="getCoverName()" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+          </div>
+          <mat-error
+              *ngIf="wsrccForm.controls['ModeOfTransportId'].errors?.['required'] && (wsrccForm.controls['ModeOfTransportId'].dirty || wsrccForm.controls['ModeOfTransportId'].touched)">
+              Please choose mode of transport
+          </mat-error>
+      </div>
+      <!-- MODE OF TRANSPORT -->
+
+      <!-- Cover Name -->
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="customer-search-container">
+              <div class="input-control-container">
+                  <label class="input-form-label">
+                      Clauses Description
+                      <span class="text-required">*</span>
+                  </label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" name="ClausesDescription"
+                          formControlName="ClausesDescription" />
+                  </div>
+              </div>
+          </div>
+          <mat-error
+              *ngIf="wsrccForm.controls['ClausesDescription'].errors?.['required'] && (wsrccForm.controls['ClausesDescription'].dirty || wsrccForm.controls['ClausesDescription'].touched)">
+              Please choose Clauses Description
+          </mat-error>
+      </div>
+      <!-- Cover Name -->
+  </div>
+
+  <div class="row">
+      <!-- Cover Description -->
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="customer-search-container">
+              <div class="input-control-container">
+                  <label class="input-form-label">
+                    IntegrationCode
+                      <span class="text-required">*</span>
+                  </label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" name="IntegrationCode"
+                          formControlName="IntegrationCode" />
+                  </div>
+              </div>
+          </div>
+          <mat-error
+              *ngIf="wsrccForm.controls['IntegrationCode'].errors?.['required'] && (wsrccForm.controls['IntegrationCode'].dirty || wsrccForm.controls['IntegrationCode'].touched)">
+              Please choose IntegrationCode
+          </mat-error>
+      </div>
+      <!-- Cover Description -->
+
+      <!-- Cover Rate -->
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="customer-search-container">
+              <div class="input-control-container">
+                  <label class="input-form-label">
+                    ExtraCoverId
+                      <span class="text-required">*</span>
+                  </label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" name="ExtraCoverId"
+                          formControlName="ExtraCoverId" />
+                  </div>
+              </div>
+          </div>
+          <mat-error
+              *ngIf="wsrccForm.controls['ExtraCoverId'].errors?.['required'] && (wsrccForm.controls['ExtraCoverId'].dirty || wsrccForm.controls['ExtraCoverId'].touched)">
+              Please choose ExtraCoverId
+          </mat-error>
+      </div>
+      <!-- Cover Rate -->
+
+
+  </div>
+
+  <div class="row">
+
+      <!-- CORE APPLICATION CODE -->
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="customer-search-container">
+              <div class="input-control-container">
+                  <label class="input-form-label">
+                      Core application code
+                      <span class="text-required">*</span>
+                  </label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" name="coreApplicationCode"
+                          formControlName="coreApplicationCode" />
+                  </div>
+              </div>
+              <mat-error
+                  *ngIf="wsrccForm.controls['coreApplicationCode'].errors?.['required'] && (wsrccForm.controls['coreApplicationCode'].dirty || wsrccForm.controls['coreApplicationCode'].touched)">
+                  Please choose core application code
+              </mat-error>
+          </div>
+      </div>
+      <!-- /CORE APPLICATION CODE -->
+
+      <!-- REMARKS -->
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="customer-search-container">
+              <div class="input-control-container">
+                  <label class="input-form-label">Remarks</label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" name="remarks"
+                          formControlName="remarks" />
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- /REMARKS -->
+
+
+
+  </div>
+
+
+  <div class="row">
+
+      <!-- effective date -->
+
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+            <mat-form-field appearance="fill">
+                <mat-label>EffectiveDate<span class="text-danger">*</span></mat-label>
+                <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="effectiveDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+      <!-- effective date -->
+
+      <!-- Referral Status -->
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="input-control-container">
+              <label class="input-form-label">
+                DisplayOrder
+                  <span class="text-required">*</span>
+              </label>
+              <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" name="DisplayOrder"
+                    formControlName="DisplayOrder" />
+            </div>
+          </div>
+      </div>
+      <!-- Referral Status -->
+
+
+
+
+  </div>
+
+  <div class="row">
+      <!-- STATUS -->
+      <!--<div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+            <label class="input-form-label">
+              Cover Id
+                <span class="text-required">*</span>
+            </label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" name="CoverId"
+                  formControlName="CoverId" />
+          </div>
+        </div>
+    </div>-->
+
+
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+          <label class="input-form-label">
+           Cover Name
+            <span class="text-required">*</span>
+          </label>
+          <ng-select class="input-form-select" name="CoverId" formControlName="CoverId"
+            [items]="CoverList" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+        </div>
+        <!--<mat-error
+          *ngIf="wsrccForm.controls.controls['CoverId'].errors?.['required'] && (wsrccForm.controls.controls['CoverId'].dirty || wsrccForm.controls.controls['CoverId'].touched)">
+          Please Choose CoverId
+        </mat-error>-->
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+          <div class="input-control-container">
+              <label class="input-form-label">
+                  Status
+                  <span class="text-required">*</span>
+              </label>
+              <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                      <input id="fac-yes" type="radio" name="status" value="Active" formControlName="status" />
+                      <label for="fac-yes">Active</label>
+                      <input type="radio" id="fac-no" name="status" value="DeActive" formControlName="status" />
+                      <label for="fac-no">DeActive</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- STATUS -->
+
+
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="customer-search-container">
+            <div class="input-control-container">
+                <label class="input-form-label">PdfLocation</label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" name="PdfLocation"
+                        formControlName="PdfLocation" />
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="mt-3 text-center">
+      <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">
+          Back
+      </button>
+      <button mat-raised-button style="margin-left: 20px;" color="primary" (click)="onSave()">
+          Save
+      </button>
+  </div>
+</div>

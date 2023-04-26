@@ -1,0 +1,106 @@
+<div [formGroup]="cityForm" class="bg-white p-3">
+
+
+    <div class="row">
+
+        <!-- Country Name -->
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Country Name<span class="text-required">*</span></label>
+
+                <ng-select class="input-form-select" formControlName="BelongingCountryId" [items]="countryList"
+                    bindValue="Code" bindLabel="CodeDescription"> </ng-select>
+
+            </div>
+            <mat-error
+                *ngIf="cityForm.controls['BelongingCountryId'].errors?.['required'] && (cityForm.controls['BelongingCountryId'].dirty || cityForm.controls['BelongingCountryId'].touched)">
+                Please choose Country Name</mat-error>
+        </div>
+        <!-- Country Name -->
+
+        <!-- City Name -->
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="customer-search-container">
+                <div class="input-control-container">
+                    <label class="input-form-label">City Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" name="cityName"
+                            formControlName="cityName">
+                    </div>
+                </div>
+            </div>
+            <mat-error
+                *ngIf="cityForm.controls['cityName'].errors?.['required'] && (cityForm.controls['cityName'].dirty || cityForm.controls['cityName'].touched)">
+                Please choose City Name</mat-error>
+
+        </div>
+        <!-- City Name -->
+
+    </div>
+
+    <div class="row">
+        
+        <!-- Remarks -->
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="customer-search-container">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" name="remarks"
+                            formControlName="remarks">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Remarks -->
+
+
+        <!-- Core Application Code -->
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="customer-search-container">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core Application Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" name="coreApplicationCode"
+                            formControlName="coreApplicationCode">
+                    </div>
+                </div>
+            </div>
+            <mat-error
+                *ngIf="cityForm.controls['coreApplicationCode'].errors?.['required'] && (cityForm.controls['coreApplicationCode'].dirty || cityForm.controls['coreApplicationCode'].touched)">
+                Please enter Core Application Code</mat-error>
+        </div>
+        <!-- Core Application Code -->
+
+    </div>
+
+    <div class="row">
+
+
+        <!-- STATUS -->
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Status<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                    <div class="radio-toolbar">
+                        <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+                        <label for="fac-yes">Active</label>
+                        <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+                        <label for="fac-no">DeActive</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="mt-3 text-center">
+        <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+        <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
+    </div>
+
+
+</div>

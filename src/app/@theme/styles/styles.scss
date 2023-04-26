@@ -1,0 +1,460 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+// themes - our custom or/and out of the box themes
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import 'themes';
+// framework component themes (styles tied to theme variables)
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/globals';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/grid';
+// loading progress bar theme
+@import './pace.theme';
+@import './layout';
+@import './overrides';
+
+// install the framework and custom global styles
+@include nb-install() {
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+  @include ngx-layout();
+  // loading progress bar
+  @include ngx-pace-theme();
+  @include nb-overrides();
+};
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.nb-theme-default [nbInput].status-basic {
+  background-color: #fff !important;
+  border-color: #e4e9f2;
+  color: #222b45;
+}
+button:focus {
+  outline:none !important;
+  border:0 !important;
+}
+:root {
+  --logo-color-1: #00a9ed;
+  --logo-color-2: #530d58;
+  --font-size-95: 95%;
+
+  --our-font-family: 'Poppins', sans-serif;
+}
+*{
+  font-family: var(--our-font-family);
+}
+.table thead th {
+  font-weight: 500;
+}
+.text-required{
+  padding: 3px;
+}
+.logo-bg-1{
+ background-color: var(--logo-color-1) !important;
+}
+.logo-bg-2{
+  background-color: var(--logo-color-2) !important;
+ }
+body,li {
+  font-family: var(--our-font-family) !important;
+  font-size: 80%;
+
+}
+.font-size-95{
+  font-size:95%;
+}
+label {
+  margin: 0;
+}
+.vision-card{
+  background-color: white;
+  margin: .5rem 0;
+}
+.vision-card-header{
+  background-color: ghostwhite;
+  color: darkblue;
+  padding: .5rem 1rem;
+}
+.vision-card-body{
+  background-color: white;
+  padding: 1rem;
+}
+
+/* CSS */
+.button-34 {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: var(--our-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}
+mat-form-field{
+  width: 100%;
+}
+
+/* Custom Formcontrol */
+.input-control-container .input-form-label {
+  font-weight: 400;
+  font-family: var(--our-font-family);
+  font-size: 90%;
+
+}
+
+.input-form-box .input-form-control {
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: .7rem;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all .3s;
+  height: 35px;
+}
+
+.input-form-box .input-form-control:hover {
+  border-color: var(--logo-color-1);
+  transition: 1s;
+}
+
+.input-form-box .input-form-control.without-icon {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box .input-form-control.with-icon {
+  padding-left: 60px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box {
+  position: relative;
+}
+
+.input-form-box .input-form-icon {
+  position: absolute;
+  left: 11px;
+  top: 11px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.input-control-container .input-form-error {
+  font-size: 90%;
+  color: red;
+  font-weight: 100;
+}
+.input-control-container .input-form-radio-box {
+  margin: 7px 0;
+}
+
+ng-select input {
+  border: none !important;
+}
+.input-control-container .ng-select.ng-select-single .ng-select-container {
+  height: 35px;
+  border: 1px solid #d9d9d9 !important;
+  margin: 8px 0;
+  border-radius: .7rem;
+  padding: 0 15px;
+  transition: all .3s
+}
+
+.input-control-container .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 0 25px;
+}
+
+.input-control-container .ng-select.ng-select-single .ng-select-container:hover {
+  border: 1px solid dodgerBlue !important;
+}
+
+.input-control-container .ng-select.ng-select-single .ng-select-container:focus-within {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.input-form-box .input-form-select {
+  width: 100%;
+  border-radius: .7rem;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.input-control-container .ng-select .ng-clear-wrapper {
+  display: none;
+}
+.ng-dropdown-panel.ng-select-top,
+.ng-dropdown-panel.ng-select-bottom {
+  border-radius: 0.7rem !important;
+  padding: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+}
+.input-form-box .search-control{
+  border: 0;
+}
+.input-control-container .search-input {
+  height: 41px;
+  border: 0;
+  background-color: ghostwhite;
+}
+.radio-toolbar input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+.radio-toolbar label {
+  margin-left: 0px;
+  display: inline-block;
+  background-color: white;
+  padding: 10px 15px;
+  border: 1px solid lightgrey;
+  cursor: pointer;
+}
+
+.radio-toolbar input[type="radio"]:checked+label {
+  background-color: var(--logo-color-2);
+  color: white;
+}
+
+.vision-grid{
+  grid-area: main;
+  display: grid;
+  grid-auto-rows: auto;
+}
+.vision-grid .vision-grid-item{
+  overflow: hidden;
+}
+
+.product-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  right: 0;
+  opacity: 1;
+  background-color: #05050c59;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+}
+
+.product-container:hover .product-overlay {
+  width: 100%;
+  left: 0;
+}
+
+.product-text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.product-gridBorderStyle {
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px darkorange;
+}
+
+.product-gridBorderStyle:hover {
+  transform: scale(1.0);
+}
+
+.left-line{
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  color: var(--logo-color-2);
+  margin: 1rem 0;
+}
+
+.left-line:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid #ccc;
+  margin: auto 5px;
+}
+
+.middle-line {
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  color: var(--logo-color-2);
+  margin: 1rem 0;
+}
+
+.middle-line:before,
+.middle-line:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 2px solid #eee;
+  margin: auto 5px;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.imag-card {
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  padding: 1rem;
+  background-color: #f1f1f1;
+  position: relative;
+  height: 120px;
+  text-align: center;
+  border: 3px dotted #ccc;
+}
+
+.visionloading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1px);
+  height: 100vh;
+  width: 100%;
+}
+
+.loader-box .spinner-loader-gif img {
+  position: absolute;
+  width: 240px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.loader-box .spinner-loader-img .img-tag {
+  width: 100px;
+  height: 100px;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.currency-flex{
+  display: flex;
+}
+.currrency-dollar{
+width: 30%;
+}
+.currrency-drop{
+  width: calc(100% - 30%);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance:none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance:none;
+
+}
+.example-container::-webkit-scrollbar
+{
+  width: 10px;  /* for vertical scrollbars */
+  height: 10px; /* for horizontal scrollbars */
+}
+.example-container::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+.example-container::-webkit-scrollbar-thumb
+{
+  background: rgba(56, 51, 51, 0.5);
+}
+
+.maan-card{
+  background-color: white;
+    padding: 1rem;
+    border-radius: 0.6rem;
+}
+.maan-card-footer{
+ text-align: end;
+}
+
+.maan-card-header{
+  padding: 0.8rem 0;
+    font-weight: 600;
+}
+.form-heading{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  text-transform: uppercase;
+}
+.form-heading-number{
+  display: flex;
+  background-color: powderblue;
+  color: #000;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    padding: 3px 0px;
+    border-radius: 50% !important;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}

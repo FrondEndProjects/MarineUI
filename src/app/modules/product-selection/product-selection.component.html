@@ -1,0 +1,28 @@
+
+
+<div class="product-grid">
+  <div class="product-grid-item">
+    <div class="product-grid-item-body">
+        <div class="product-container">
+          <ng-container *ngFor="let item of productDetails">
+            <div class="product-card">
+              <div class="product-tumb">
+                <img src="../../../assets/images/ship-1.svg" alt="">
+              </div>
+              <div class="product-details">
+                <span class="product-catagory">Product</span>
+                <h4><a >{{item?.ProductName}}</a></h4>
+                <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!</p> -->
+                <div class="product-bottom-details">
+                     <button class="button-34 w-100 logo-bg-2" role="button" (click)="onSelectProduct(item)">Get Quote</button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+    </div>
+  </div>
+</div>
+
+

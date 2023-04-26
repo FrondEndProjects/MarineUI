@@ -1,0 +1,216 @@
+<div [formGroup]="ClausesIdForm" class="bg-white p-3">
+  <div class="single-row">
+    <!-- MODE OF TRANSPORT -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">
+          Mode of transport
+          <span class="text-required">*</span>
+        </label>
+        <ng-select class="input-form-select" name="ModeOfTransportId" formControlName="ModeOfTransportId"
+          [items]="transportList" (change)="getCoverName()" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+      </div>
+      <mat-error
+        *ngIf="ClausesIdForm.controls['ModeOfTransportId'].errors?.['required'] && (ClausesIdForm.controls['ModeOfTransportId'].dirty || ClausesIdForm.controls['ModeOfTransportId'].touched)">
+        Please choose mode of transport
+      </mat-error>
+    </div>
+    <!-- MODE OF TRANSPORT -->
+
+    <!-- CONVEYANCE NAME -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">
+         Cover Name
+          <span class="text-required">*</span>
+        </label>
+        <ng-select class="input-form-select" name="CoverId" formControlName="CoverId"
+          [items]="CoverList" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+      </div>
+      <mat-error
+        *ngIf="ClausesIdForm.controls['CoverId'].errors?.['required'] && (ClausesIdForm.controls['CoverId'].dirty || ClausesIdForm.controls['CoverId'].touched)">
+        Please Choose CoverId
+      </mat-error>
+    </div>
+    <!-- CONVEYANCE NAME -->
+  </div>
+
+  <div class="single-row">
+    <!-- CONVEYANCE Rate -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            ClausesDescription
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <!--<input type="text" class="input-form-control without-icon" name="ClausesDescription"
+              formControlName="ClausesDescription" />-->
+              <textarea class="form-control without-icon" name="ClausesDescription" formControlName="ClausesDescription"
+              cols="30" rows="2"></textarea>
+          </div>
+
+          <mat-error
+          *ngIf="ClausesIdForm.controls['ClausesDescription'].errors?.['required'] && (ClausesIdForm.controls['ClausesDescription'].dirty || ClausesIdForm.controls['ClausesDescription'].touched)">
+          Please Enter Clauses Description
+        </mat-error>
+        </div>
+      </div>
+      <!--<mat-error
+        *ngIf="conveyanceForm.controls['conveyanceRate'].errors?.['required'] && (conveyanceForm.controls['conveyanceRate'].dirty || conveyanceForm.controls['conveyanceRate'].touched)">
+        Please choose conveyance rate
+      </mat-error>-->
+    </div>
+    <!-- CONVEYANCE Rate -->
+
+    <!-- CORE APPLICATION CODE -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            Core application code
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="coreApplicationCode"
+              formControlName="coreApplicationCode" />
+          </div>
+          <mat-error
+          *ngIf="ClausesIdForm.controls['coreApplicationCode'].errors?.['required'] && (ClausesIdForm.controls['coreApplicationCode'].dirty || ClausesIdForm.controls['coreApplicationCode'].touched)">
+          Please Enter Core Application Code
+        </mat-error>
+        </div>
+        <!--<mat-error
+          *ngIf="conveyanceForm.controls['coreApplicationCode'].errors?.['required'] && (conveyanceForm.controls['coreApplicationCode'].dirty || conveyanceForm.controls['coreApplicationCode'].touched)">
+          Please choose core application code
+        </mat-error>-->
+      </div>
+    </div>
+
+    
+    <!-- /CORE APPLICATION CODE -->
+  </div>
+
+  <div class="single-row mt-2">
+
+    
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">ExtraCoverId</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="ExtraCoverId" formControlName="ExtraCoverId" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div class="col-12 col-md-6 col-lg-6">
+
+     <div class="input-control-container">
+      <label class="input-form-label">Policy End Date</label>
+      <div class="input-form-box">
+        <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
+          name="effectiveDate" formControlName="effectiveDate" (click)="d3.toggle()" [minDate]="minDate"
+          autocomplete="off" />
+      </div>
+    </div>
+    </div>-->
+    <!-- effective date -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+          <mat-form-field appearance="fill">
+              <mat-label>EffectiveDate<span class="text-danger">*</span></mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="effectiveDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+  </div>
+    <!-- REMARKS -->
+   </div>
+   <div class="single-row">
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">
+            DisplayOrder
+            <span class="text-required">*</span>
+          </label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="DisplayOrder"
+              formControlName="DisplayOrder" />
+          </div>
+        </div>
+        <mat-error
+          *ngIf="ClausesIdForm.controls['DisplayOrder'].errors?.['required'] && (ClausesIdForm.controls['DisplayOrder'].dirty || ClausesIdForm.controls['DisplayOrder'].touched)">
+          Please Enter Display order Number
+        </mat-error>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Remarks</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="remarks" formControlName="remarks" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /REMARKS -->
+  </div>
+
+
+   
+    <div class="single-row">
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">IntegrationCode</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="IntegrationCode" formControlName="IntegrationCode" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">PdfLocation</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="PdfLocation" formControlName="PdfLocation" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="single-row">
+    <!-- STATUS -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">
+          Status
+          <span class="text-required">*</span>
+        </label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="Active" formControlName="status" />
+            <label for="fac-yes">Active</label>
+            <input type="radio" id="fac-no" name="status" value="DeActive" formControlName="status" />
+            <label for="fac-no">DeActive</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  <div class="mt-3 text-center">
+    <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">
+      Back
+    </button>
+    <button mat-raised-button style="margin-left: 20px;" color="primary" (click)="onSave()">
+      Save
+    </button>
+  </div>
+</div>

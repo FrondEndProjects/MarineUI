@@ -1,0 +1,34 @@
+
+
+
+
+<div class="vision-card">
+   <div class="vision-card-header">
+    Commodity Rate Info
+   </div>
+   <div class="vision-card-body">
+    <ng-container>
+      <app-commodity-table
+      [cols]="columnHeader"
+      [data]="tableData"
+      [innerCols]="innerColumnHeader"
+      [innerData]="innerTableData"
+      (onAdd)="onGetSelectedCommodityList($event)"
+      >
+      </app-commodity-table>
+    </ng-container>
+   </div>
+</div>
+<app-commodity-clauses-table></app-commodity-clauses-table>
+<ng-container *ngIf="coverTransitId =='V'">
+<app-land-trasit></app-land-trasit>
+</ng-container>
+<ng-container *ngIf="isWarType == 'Y'">
+<app-war></app-war>
+</ng-container>
+<app-share-percentage></app-share-percentage>
+
+<div class="col-12 text-right">
+  <button nbButton (click)="onMoveBack()" status="danger" class="mx-2">Back</button>
+  <button nbButton (click)="onCheckPageValidation()" status="primary" class="mx-2">Next</button>
+</div>
