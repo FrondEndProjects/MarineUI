@@ -1,0 +1,309 @@
+<div class="title-container bg-white p-4">
+    <span style="color:forestgreen">Search</span>
+    <!--<button  mat-raised-button color="primary" *ngIf="branchValue" (click)="goToAddNewPage()">Add new</button>-->
+  </div>
+<div class="bg-white">
+    <div class="card-body">
+        <div class="row ml-3">
+            <div class="col-12 col-md-4">
+                <div class="input-control-container">
+                    <ng-select class="input-form-select" appendTo="body" [items]="SearchList" [(ngModel)]="search" bindValue="Code" placeholder="SearchBy" bindLabel="CodeDesc">
+                    </ng-select>
+                  
+                </div>
+            </div>
+            <div class="col-12 col-md-4 ml-3">
+                <div class="input-control-container">
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Enter Data for Search">
+                        <span class="input-form-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+          
+            <!--<div class="col-12 col-md-2">
+                <button class="custom-btn btn-6" matRipple style="margin: 0.7rem 0;"><i class="fas fa-search"></i>&nbsp;Search </button>
+            </div>-->
+            <div class="col-12 col-md-2">
+                 <button class="btn btn-primary" style="width:100px"(click)="getExistingAdmin()">Search</button>
+            </div>
+        </div>
+
+       
+        <div>
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <ng-container *ngIf="tableData">
+                        <app-commodity-table [cols]="columnHeader" [data]="tableData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)" (onView)="onDownloadSchedule($event)"  (onViews)="openDialog(template,$event)">
+                        </app-commodity-table>
+                    </ng-container>
+                    <!--<ng-container *ngIf="tableData">
+                        <div class="text-center spancommon span_font_size">
+                            No Quote Available
+                        </div>
+
+                    </ng-container-->
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <div class="title-container bg-white p-4" style="color: #194d8b;">
+        <span style="color: #194d8b;">Portfoilo</span>
+        <!--<button  mat-raised-button color="primary" *ngIf="branchValue" (click)="goToAddNewPage()">Add new</button>-->
+      </div>
+    <div class="bg-white container">
+        <div class="card-body">
+           <div class="row">
+            <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">From Date<span class="text-required">*</span></label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="effectiveDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">To Date<span class="text-required">*</span></label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="endeffectiveDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Region <span class="text-required">*</span></label>
+                <ng-select class="input-form-select"  [items]="regionList"  [(ngModel)]="RegionNo" (change)="onGetBranchList()"
+                   bindValue="RegionId" bindLabel="RegionName"> </ng-select>
+            </div>
+        </div>
+           </div>
+           <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Branch <span class="text-required">*</span></label>
+                <ng-select class="input-form-select"  [items]="branchList"  [(ngModel)]="branchValue" 
+                   bindValue="BranchCode" bindLabel="BranchName"> </ng-select>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Type <span class="text-required">*</span></label>
+                <ng-select class="input-form-select"  [items]="TypeList" [(ngModel)]="TypeValue" 
+                   bindValue="Code" bindLabel="CodeDesc"> </ng-select>
+            </div>
+        </div>
+           </div>
+
+           <div style="text-align: center;" class="mt-2">
+            <button class="btn btn-success" style="width:100px" (click)="getsearch()">Search</button>
+          
+           </div>
+
+
+           <div *ngIf="show">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <ng-container *ngIf="PortData">
+                        <app-grid-table [cols]="QuoteHeader" [data]="PortData" (onView)="onDownloadSchedule($event)" (onViews)="openDialog(template,$event)">
+                        </app-grid-table>
+                    </ng-container>
+                    <!--<ng-container *ngIf="tableData">
+                        <div class="text-center spancommon span_font_size">
+                            No Quote Available
+                        </div>
+
+                    </ng-container-->
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<ng-template #template>
+    
+    <div>
+        <div style="text-align: center">
+          <div>
+            Document Upload
+          </div>
+          <div>
+            <div>
+              <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
+              <div  class="imag-card my-3"  appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
+                (click)="doc.click()">
+                <div>
+                  <div class="center">
+                    <b class="text-dark">
+                      <i class="far fa-images"></i> Drag or Click</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
+                <div class="row">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Filename</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container>
+                        <tr *ngFor="let UPdocuments of uploadedDocumentsList;let i=index">
+                          <td>{{UPdocuments.OriginalFileName}}</td>
+                          <td>
+                            <!--<button class="circle btn btn-yellow btn-sm" (click)="onDeleteUploadDoc(i)">
+                              <i class="fas fa-eye"></i>
+                            </button>&nbsp; 
+                            <button class="circle btn btn-danger btn-sm" (click)="onDownloadfile(i)">
+                              <i class="fas fa-download"></i>
+                            </button>&nbsp; -->
+                            <button class="circle btn btn-success btn-sm" (click)="onDeleteUploadedDoc(i)">
+                              <i class="fas fa-trash"></i>
+                            </button>&nbsp;
+                          </td>
+                        </tr>
+                      </ng-container>
+                          <ng-container  *ngIf="uploadDocuments?.length!=0">
+                            <tr *ngFor="let doc of uploadDocuments;let i=index">
+                              <td>{{doc.fileName}}</td>
+                              <td>
+                                <button class="circle btn btn-danger btn-sm" (click)="onDeleteUploadDoc(i)">
+                                  <i class="fas fa-trash"></i>
+                                </button>&nbsp; 
+                              </td>
+                            </tr>
+                          </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div style="text-align:center;" class="mt-4">
+                <button class="btn btn-danger" (click)="close()">Close</button>
+                <button class="btn btn-success ml-2" (click)="submit()">Submit</button>
+            </div>
+          </div>
+        </div>
+       
+        
+        
+      </div>
+    <!--<div>
+        <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+            <div class="headcommon">
+                <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                <span class="spancommon span_font_size" style="font-weight:600">Policy Details</span>
+            </div>
+
+            <div class="headcommon mr-3"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AddNew()">Add New </button></div>
+        </div>
+      
+        <div class="row mt-1 table table_expand">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <table class="table">
+                    <thead style="background-color: #333b85;">
+                        <tr class="table_row">
+                            <th class="tbl-header spancommon span_font_size">Upload File</th>
+                            <th class="tbl-header spancommon span_font_size">Remarks</th>
+                            <th class="tbl-header spancommon span_font_size">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                           
+                            <td class="tbl-content">
+                                <div class="input-form-box input-data-hover">
+                            <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
+                            <div class="input-form-control without-icon"  appDragDropFileUpload (fileDropped)="onUploadDocument($event,'click')" (click)="doc.click()">
+                                <b><i class="far fa-images"></i>ChooseFile</b>
+                               
+                            </div>
+                                </div>
+                            </td>
+                            <td class="tbl-content">
+                                <div class="input-form-box input-data-hover">
+                                    <input type="text" class="input-form-control without-icon" maxlength="50">
+                                </div>
+                            </td>
+                            <td class="tbl-content table-data-center" style="text-align: center!important;position: relative!important;top: 0.8rem!important;">
+                               
+                                <button class="btn btn-primary" (click)="delete(row)"> <i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                      
+                   
+                </table>
+               
+            </div>
+        </div>
+        <div>
+            <div class="vision-grid-item-body" *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
+              <div class="row">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Filename</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container>
+                      <tr *ngFor="let UPdocuments of uploadDocumentsList;let i=index">
+                        <td>{{UPdocuments.OriginalFileName}}</td>
+                        <td>
+                          <button class="circle btn btn-yellow btn-sm" (click)="onDeleteUploadDoc(i)">
+                            <i class="fas fa-eye"></i>
+                          </button>&nbsp; 
+                          <button class="circle btn btn-danger btn-sm" (click)="onDownloadfile(i)">
+                            <i class="fas fa-download"></i>
+                          </button>&nbsp; 
+                          <button class="circle btn btn-success btn-sm" (click)="onDeleteUploadedDoc(i)">
+                            <i class="fas fa-trash"></i>
+                          </button>&nbsp; 
+                        </td>
+                      </tr>
+                    </ng-container>
+                        <ng-container  *ngIf="uploadDocuments?.length!=0">
+                          <tr *ngFor="let doc of uploadDocuments;let i=index">
+                            <td>{{doc.fileName}}</td>
+                            <td>
+                              <button class="circle btn btn-danger btn-sm" (click)="onDeleteUploadDoc(i)">
+                                <i class="fas fa-trash"></i>
+                              </button>&nbsp; 
+                            </td>
+                          </tr>
+                        </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+    </div>-->
+
+    <!--<div style="text-align:center">
+        <button class="btn btn-danger" (click)="close()">Close</button>
+        <button class="btn btn-success ml-2" (click)="submit()">Submit</button>
+    </div>-->
+   
+   </ng-template>

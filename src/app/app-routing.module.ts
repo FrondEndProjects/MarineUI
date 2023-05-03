@@ -112,12 +112,56 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/open-cover/open-cover.module').then(m => m.OpenCoverModule),
       },
       {
+        path: 'dashboard',
+        loadChildren: () => import('./modules/Admin/dashboard/dashboard.module').then(m => m.DashboardModule),
+      },
+      {
         path: 'admin-referral',
         loadChildren: () => import('./modules/admin-referral/admin-referral.module').then(m => m.AdminReferralModule),
       },
       {
+        path: 'pendingtoaccept',
+        loadChildren: () => import('./modules/Admin/pendingtoaccept/pending.module').then(m => m.PendingModule)
+      },
+      {
+        path: 'expired',
+        loadChildren: () => import('./modules/Admin/Expiredopencover/expiredopencover.module').then(m => m.ExpiredModule)
+      },
+      {
+        path: 'renewalpending',
+        loadChildren: () => import('./modules/Admin/RenewalBuilding/renewalpending.module').then(m => m.RenewalPendingModule)
+      },
+      {
+        path: 'lappsedpolicy',
+        loadChildren: () => import('./modules/Admin/LapsedPolicy/lapsedpolicy.module').then(m => m.LappsedModule)
+      },
+      {
+        path: 'copyquoteadmin',
+        loadChildren: () => import('./modules/Admin/copyquoteadmin/copyquoteadmin.module').then(m => m.CopyQuoteAdmin)
+      },
+      {
+        path: 'adminportfolio',
+        loadChildren: () => import('./modules/Admin/AdminPortfolio/adminportfolio.module').then(m => m.AdminPortfolioModule)
+      },
+      {
+        path: 'branchreport',
+        loadChildren: () => import('./modules/Admin/BranchReports/branchreports.module').then(m => m.BranchCoverModule)
+      },
+      {
+        path: 'adminreport',
+        loadChildren: () => import('./modules/Admin/adminreport/adminreport.module').then(m => m.AdminReportModule)
+      },
+      {
+        path: 'opencoverreport',
+        loadChildren: () => import('./modules/Admin/opencoverreport/opencoverreport.module').then(m => m.opencoverReportModule)
+      },
+      {
         path: 'portfolio',
         component: PortfolioComponent,
+      },
+      {
+        path: 'viewportfolio',
+        loadChildren: () => import('./modules/Admin/viewportfolio/viewportfolio.module').then(m => m.ViewPortfolioComponentRoutingModuleModule)
       },
       {
         path: 'new-quotes',

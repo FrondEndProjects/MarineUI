@@ -21,6 +21,32 @@ export const adminNavItems: NbMenuItem[] = [
         link: '/Marine/portfolio',
         icon: 'icon-cursor',
       },
+      {
+        title: 'Pending To Accept',
+        link: '/Marine/pendingtoaccept',
+        icon: 'icon-cursor',
+      },
+      {
+        title: 'Copy Open Cover',
+        link: '/Marine/copyquoteadmin',
+        icon: 'icon-cursor',
+      },
+      {
+        title: 'Expired Open Cover',
+        link: '/Marine/expired',
+        icon: 'icon-cursor',
+      },
+      {
+        title: 'Renewal Pending',
+        link: '/Marine/renewalpending',
+        icon: 'icon-cursor',
+      },
+      {
+        title: 'Lapsed Policies',
+        link: '/Marine/lappsedpolicy',
+        icon: 'icon-cursor',
+      },
+      
     ],
   },
   {
@@ -190,5 +216,37 @@ export const adminNavItems: NbMenuItem[] = [
       },
     ],
   },
+  {
+    title: 'Portfolio',
+    link: '/Marine/adminportfolio',
+    icon: 'icon-cursor',
+  },
+
+  {
+    title: 'Reports',
+    icon: 'icon-cursor',
+    children: [
+      {
+
+        title: 'Branch Reports',
+        link: '/Marine/branchreport',
+        icon: 'icon-cursor',
+      },
+        {
+
+          title: 'Reports',
+          link: '/Marine/adminreport',
+          icon: 'icon-cursor',
+        },
+        {
+
+          title: 'Open Cover Reports',
+          link: '/Marine/opencoverreport',
+          icon: 'icon-cursor',
+        },
+
+    ]
+  },
+
 
 ];

@@ -71,8 +71,10 @@ export class ProductSelectionComponent implements OnInit {
     
     if (item.ProductId === '11') {
        if(this.userDetails.UserType == 'admin'){
-        
-        this.router.navigate([`${this.routerBaseLink}/new-open-cover/exist-opencover`]);
+        this.router.navigate([`${this.routerBaseLink}/dashboard`]);
+
+        console.log('jjjjjjjjjjj',`${this.routerBaseLink}`)
+        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/exist-opencover`]);
 
        }else{
         this.router.navigate(['product-layout/opencover']);

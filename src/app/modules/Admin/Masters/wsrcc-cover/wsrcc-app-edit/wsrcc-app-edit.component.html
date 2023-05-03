@@ -8,7 +8,7 @@
                   <span class="text-required">*</span>
               </label>
               <ng-select class="input-form-select" name="ModeOfTransportId" formControlName="ModeOfTransportId"
-                  [items]="transportList" (change)="getCoverName()" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+                  [items]="transportList" bindValue="Code" bindLabel="CodeDescription"></ng-select>
           </div>
           <mat-error
               *ngIf="wsrccForm.controls['ModeOfTransportId'].errors?.['required'] && (wsrccForm.controls['ModeOfTransportId'].dirty || wsrccForm.controls['ModeOfTransportId'].touched)">
@@ -165,7 +165,7 @@
 
   <div class="row">
       <!-- STATUS -->
-      <!--<div class="col-12 col-md-6 col-lg-6">
+      <div class="col-12 col-md-6 col-lg-6">
         <div class="input-control-container">
             <label class="input-form-label">
               Cover Id
@@ -176,23 +176,7 @@
                   formControlName="CoverId" />
           </div>
         </div>
-    </div>-->
-
-
-    <div class="col-12 col-md-6 col-lg-6">
-        <div class="input-control-container">
-          <label class="input-form-label">
-           Cover Name
-            <span class="text-required">*</span>
-          </label>
-          <ng-select class="input-form-select" name="CoverId" formControlName="CoverId"
-            [items]="CoverList" bindValue="Code" bindLabel="CodeDescription"></ng-select>
-        </div>
-        <!--<mat-error
-          *ngIf="wsrccForm.controls.controls['CoverId'].errors?.['required'] && (wsrccForm.controls.controls['CoverId'].dirty || wsrccForm.controls.controls['CoverId'].touched)">
-          Please Choose CoverId
-        </mat-error>-->
-      </div>
+    </div>
       <div class="col-12 col-md-6 col-lg-6">
           <div class="input-control-container">
               <label class="input-form-label">

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProtfolioGridComponent } from './components/protfolio-grid/protfolio-grid.component';
 import { PortfolioComponent } from './portfolio.component';
+//import { ViewPortfolioComponent } from './components/viewportfolio/viewportfolio.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
     path: 'failed-policies',
     component: FailedPoliciesComponent,
   },
+  /*{
+    path: 'viewportfolio',
+    component: ViewPortfolioComponent,
+  },*/
 
 ];
 

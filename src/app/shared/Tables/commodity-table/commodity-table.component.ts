@@ -24,6 +24,7 @@ export class CommodityTableComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
 
   @Input('data') tableData: any[] = [];
+  @Input('no') Nan:any;
   @Input('cols') columnHeader: any[] = [];
   @Input("innerData") innerTableData: any = [];
   @Input("innerCols") innerColumnHeader:any=[];
@@ -31,6 +32,10 @@ export class CommodityTableComponent implements OnInit {
   @Input('show') show:any;
   @Output('onAdd') onAdd = new EventEmitter();
   @Output('isActionBtn') isActionBtn = new EventEmitter();
+  @Output('onDelete') onDelete = new EventEmitter();
+  @Output('onView') onView = new EventEmitter();
+  @Output('onViews') onViews = new EventEmitter();
+  //@Output('title') nan: any;
 
 
   public dataSource: any;
@@ -39,6 +44,8 @@ export class CommodityTableComponent implements OnInit {
   sortProperty: any = 'AllotedYN';
   sortDirection: any = 'desc';
   public selectedData:any;
+  nan:any;
+ 
 
   constructor(
     private router: Router,
@@ -59,6 +66,8 @@ export class CommodityTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
+
+    console.log('kkkkkkkkkkk',this.dataSource)
 
   }
 
@@ -91,6 +100,9 @@ export class CommodityTableComponent implements OnInit {
     if(element.isClicked){
       this.onAdd.emit(element);
       this.selectedData = element;
+      console.log('lllllllllllll',this.selectedData)
+        this.nan=this.selectedData.innerTableData[0].ismore
+        console.log('kkkkkkkkkk',this.nan)
     }
 
   }

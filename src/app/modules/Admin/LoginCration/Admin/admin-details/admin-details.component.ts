@@ -256,10 +256,16 @@ onGetRegionList() {
 }
 
 onGetProductList() {
-  
+    let login
+  if(this.LoginId==null){
+    login=this.userDetails.LoginId
+  }
+  else{
+    login=this.LoginId;
+  }
   const urlLink = `${this.ApiUrl1}opencover/dropdown/referral/quoteproduct`;
   const reqData = {
-    "LoginId": this.LoginId,
+    "LoginId":login,
     "BranchCode": this.BranchCode
   };
   this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -703,6 +709,9 @@ brokert(){
   )
 
 }
+
+
+
 
 
 onsubmit(){

@@ -5,6 +5,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header >
         {{ columnHeader[i]["display"] }}
       </th>
+      
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="!col.config; else hasConfig">
           {{ element[col.key]}}
@@ -30,9 +31,36 @@
               </ng-container>
             </mat-menu>
           </ng-container>
+          <ng-container *ngIf="col.config.isView">
+            <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+                <!--<i class="fas fa-eye" style='color: blue'></i>-->
+                <i class="fa fa-file" aria-hidden="true"></i>
+            </button>&nbsp;
+        </ng-container>
+        <ng-container *ngIf="col.config.isViews">
+          <button class="circle btn btn-warning btn-sm" (click)="onViews.emit(element)">
+              <i class="fas fa-eye" style='color: blue'></i>
+          </button>&nbsp;
+      </ng-container>
+
+          <ng-container *ngIf="col.config.isDelete">
+            <button class="circle btn btn-primary btn-sm" (click)="onDelete.emit(element)" style="background-color:grey">
+              <!--<i class="fa-solid fa-user"></i>-->
+              <i class="fa fa-trash"></i>
+            </button>&nbsp;
+        </ng-container>
+          <ng-container *ngIf="col.config.isMoreView">
+            <button mat-icon-button (click)="element.isClicked = !element.isClicked;onPassData(element);expandedElement = expandedElement === element ? null : element;">
+            <!--<mat-icon>keyboard_arrow_down</mat-icon> -->
+            <i class="fas fa-plus-circle mx-1"></i>
+            </button>  
+      </ng-container>
         </ng-template>
+       
       </td>
     </ng-container>
+
+   
 
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
@@ -41,7 +69,7 @@
               <app-inner-table
               [cols]="innerColumnHeader"
               [data]="innerTableData"
-              (isActionBtn)="isActionBtn.emit($event)"
+              (isActionBtn)="isActionBtn.emit($event)" [no]="nan"
               >
               </app-inner-table>
             </ng-container>

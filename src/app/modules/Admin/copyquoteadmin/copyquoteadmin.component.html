@@ -1,0 +1,118 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="spancommon span_font_size">
+                Copy Quotes
+            </div>
+        </div>
+
+    </div>
+    <!--<div class="card-body">
+        <div class="row ml-3">
+            <div class="col-12 col-md-4">
+                <div class="input-control-container">
+                    <ng-select class="input-form-select" appendTo="body" [items]="SearchList" [(ngModel)]="search" bindValue="Code" placeholder="Select" bindLabel="CodeDesc">
+                    </ng-select>
+                  
+                </div>
+            </div>
+            <div class="col-12 col-md-4 ml-5" *ngIf="search!='EntryDate'">
+                <div class="input-control-container">
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Search">
+                        <span class="input-form-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="search=='EntryDate'">
+                <mat-form-field appearance="fill">
+                    <mat-label>EntryDate<span class="text-danger">*</span></mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-2" *ngIf="searchValue.length > 2 ? '...' : '' || dob">
+                <button class="custom-btn btn-6" matRipple style="margin: 0.7rem 0;" (click)="onCustomerSearch()"><i class="fas fa-search"></i>&nbsp;Search </button>
+            </div>
+            <div class="col-12 col-md-2">
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-12 col-md-11 col-lg-11 ml-5">
+                    <ng-container *ngIf="customerData.length!=0">
+                        <app-grid-table [cols]="columnHeader" [data]="customerData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onSelectCustomer)="onSelect($event)" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
+                        </app-grid-table>
+                    </ng-container>
+                    <ng-container *ngIf="customerData.length==0">
+                        <div class="text-center spancommon span_font_size">
+                            No Quote Available
+                        </div>
+
+                    </ng-container>
+                    <div class="text-center" *ngIf="selectedData">
+                        <button class="custom-btn btn-6 mx-2" (click)="onCopyQuote()">Copy Quote</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <div class="card-body">
+        <div class="row ml-3">
+            <div class="col-12 col-md-4">
+                <div class="input-control-container">
+                    <ng-select class="input-form-select" appendTo="body" [items]="SearchList" [(ngModel)]="search" bindValue="Code" placeholder="SearchBy" bindLabel="CodeDesc">
+                    </ng-select>
+                  
+                </div>
+            </div>
+            <div class="col-12 col-md-4 ml-5" *ngIf="search!='EntryDate'">
+                <div class="input-control-container">
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Enter Data for Search">
+                        <span class="input-form-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="search=='EntryDate'">
+                <mat-form-field appearance="fill">
+                    <mat-label>EntryDate<span class="text-danger">*</span></mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!--<div class="col-12 col-md-2">
+                <button class="custom-btn btn-6" matRipple style="margin: 0.7rem 0;"><i class="fas fa-search"></i>&nbsp;Search </button>
+            </div>-->
+            <div class="col-12 col-md-2" *ngIf="search">
+                 <button class="btn btn-success" (click)="onGetBranchList()">Go</button>
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-12 col-md-11 col-lg-11 ml-5">
+                    <ng-container *ngIf="tableData">
+                        <app-grid-table [cols]="columnHeader" [data]="tableData" (onSelectCopy)="onSelectCustomer($event)">
+                        </app-grid-table>
+                    </ng-container>
+                    <!--<ng-container *ngIf="tableData">
+                        <div class="text-center spancommon span_font_size">
+                            No Quote Available
+                        </div>
+
+                    </ng-container-->
+                    <div class="text-center" *ngIf="tableData">
+                        <button class="btn btn-primary mx-2" (click)="submit()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

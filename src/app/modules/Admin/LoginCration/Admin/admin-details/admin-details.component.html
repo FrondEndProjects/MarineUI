@@ -210,6 +210,44 @@
  </div>  <!--second row-->
 
 
+ <!--<ng-template #secondDialog>
+  <h5 matDialogTitle>Broker Include</h5>
+ 
+<mat-dialog-content>
+    <ul class="checklist">
+      <ng-container *ngFor="let item of warrantyData">
+      <li class="list-group-item" *ngIf="first">
+        <div>
+          <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
+            <span class="text-primary mx-1">({{item?.ClausesId}})</span></mat-checkbox></div>
+        <div>{{item?.ClausesDescription}}</div>
+      </li>
+      <li class="list-group-item" *ngIf="second">
+        <div>
+          <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
+            <span class="text-primary mx-1">({{item?.ExclusionId}})</span></mat-checkbox></div>
+        <div>{{item?.ExclusionDescription}}</div>
+      </li>
+      <li class="list-group-item" *ngIf="third">
+        <div>
+          <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
+            <span class="text-primary mx-1">({{item?.WarrantyId}})</span></mat-checkbox></div>
+        <div>{{item?.WarrantyDescription}}</div>
+      </li>
+      <li class="list-group-item" *ngIf="four">
+        <div>
+          <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
+            <span class="text-primary mx-1">({{item?.WarId}})</span></mat-checkbox></div>
+        <div>{{item?.WarDescription}}</div>
+      </li>
+    </ng-container>
+    </ul>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button matDialogClose color="primary" (click)="close()">Cancel</button>
+    <button mat-button color="primary" (click)="onSubmit()">Proceed</button>
+  </mat-dialog-actions>
+</ng-template>-->
 
  <!--<ng-template #secondDialog>
   <h5 matDialogTitle>Selection</h5>

@@ -26,7 +26,6 @@ export class WsrccAppEditComponent implements OnInit {
   public userDetails: any;
   public branchCode: any;
   clausesId: any;
-  public CoverList=[];
 
   constructor(
     private router: Router,
@@ -54,23 +53,6 @@ export class WsrccAppEditComponent implements OnInit {
     this.createForm();
   }
 
-
-  public getCoverName() {
-    const ReqObj = {
-      'BranchCode': this.branchCode,
-      'ProductId' : '3',
-    };
-
-    this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/covername`, ReqObj).subscribe(
-      (data: any) => {
-        if (data?.Message === 'Success') {
-          this.CoverList = data.Result;
-        }
-      },
-      (err) => { },
-    );
-  }
-
   public createForm() {
     this.wsrccForm = new FormGroup({
       ModeOfTransportId: new FormControl('', Validators.required),
@@ -81,7 +63,7 @@ export class WsrccAppEditComponent implements OnInit {
       effectiveDate: new FormControl('', Validators.required),
       remarks: new FormControl(''),
       DisplayOrder:new FormControl(''),
-      CoverId:new FormControl('',Validators.required),
+      CoverId:new FormControl(''),
       //refStatus: new FormControl('Y', Validators.required),
       status: new FormControl('Active', Validators.required),
       PdfLocation:new FormControl('')
@@ -117,11 +99,10 @@ export class WsrccAppEditComponent implements OnInit {
       (data: any) => {
         console.log(data);
         console.log(data.Result.EffectiveDate);
-        this.getCoverName();
 
 
         this.coverDetails = data.Result;
-        //this.CoverId = this.coverDetails.CoverId;
+        this.CoverId = this.coverDetails.CoverId;
         this.ReferralValue = this.coverDetails.ReferralValue;
         this.wsrccForm.controls['ModeOfTransportId'].setValue(this.coverDetails.ModeOfTransportId);
         this.wsrccForm.controls['CoverId'].setValue(this.coverDetails.CoverId);

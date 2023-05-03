@@ -1,0 +1,37 @@
+<div class="title-container bg-white p-4">
+    <span>Lapsed Policy</span>
+    <!--<button  mat-raised-button color="primary" *ngIf="branchValue" (click)="goToAddNewPage()">Add new</button>-->
+  </div>
+<div class="bg-white">
+
+    <!-- SEARCH FIELD -->
+    <mat-form-field class="search-box  px-4" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)">
+    </mat-form-field>
+    <!--<div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+          <label class="input-form-label">Select Branch<span class="text-required">*</span></label>
+
+          <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" (change)="getExistingAdmin()" bindValue="BranchCode" bindLabel="BranchName">
+          </ng-select>
+      </div>
+    </div>-->
+    <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Login Type<span class="text-required">*</span></label>
+          <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="loginType" (change)="getExistingAdmin()" [items]="loginTypeList" bindValue="Code" bindLabel="CodeDescription">
+          </ng-select>
+        </div>
+      </div>
+    <!-- /SEARCH FIELD -->
+    <ng-container>
+        <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+        </app-grid-table>
+    </ng-container>
+   
+
+    <!-- PAGINATOR -->
+    <!-- <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
+    <!-- /PAGINATOR -->
+</div>

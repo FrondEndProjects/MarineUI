@@ -21,6 +21,8 @@ import { ProtfolioGridComponent } from './components/protfolio-grid/protfolio-gr
 import { PortfolioService } from './portfolio.service';
 import { CanceledPoliciesComponent } from './components/canceled-policies/canceled-policies.component';
 import { FailedPoliciesComponent } from './components/failed-policies/failed-policies.component';
+//import { ViewPortfolioComponent } from './components/viewportfolio/viewportfolio.component';
+
 
 
 
@@ -31,7 +33,8 @@ import { FailedPoliciesComponent } from './components/failed-policies/failed-pol
     PortfolioComponent,
     ProtfolioGridComponent,
     CanceledPoliciesComponent,
-    FailedPoliciesComponent
+    FailedPoliciesComponent,
+    //ViewPortfolioComponent
   ],
   imports: [
     CommonModule,

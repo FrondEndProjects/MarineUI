@@ -309,7 +309,21 @@
     </div>
 
 
-    <div *ngIf="value == 'Included' ">
+    <div *ngIf="value == 'Included'">
+        <div class="row">
+            <ng-container *ngIf="IncludedData.length!=0">
+                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                </app-grid-table>
+               
+            </ng-container>
+            <ng-container *ngIf="IncludedData.length==0">
+                <div class="text-center"> No Data Available</div>
+            </ng-container>
+           
+        </div>
+    </div>
+
+    <div *ngIf="value == 'Excluded'">
         <div class="row">
             <ng-container *ngIf="IncludedData.length!=0">
                 <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onEdit)="onEdit($event)">

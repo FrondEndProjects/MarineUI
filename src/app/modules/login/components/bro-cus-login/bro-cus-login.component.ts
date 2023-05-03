@@ -83,6 +83,8 @@ export class BroCusLoginComponent implements OnInit {
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
         if (data.LoginResponse) {
+
+          console.log('jjjjjjjjjjjj')
           if(data.LoginResponse?.UserType == 'admin'){
             data.LoginResponse['routerBaseLink'] = 'Marine';
           }else{

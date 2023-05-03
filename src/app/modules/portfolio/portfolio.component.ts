@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import * as Mydatas from '../../app-config.json';
 import { SharedService } from '../../shared/shared.service';
 import { SessionStorageService } from '../../shared/storage/session-storage.service';
+import { AdminReferralService } from '../admin-referral/admin-referral.service';
 
 @Component({
   selector: 'app-portfolio',
@@ -32,7 +33,8 @@ export class PortfolioComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     private router: Router,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
+    private adminReferralService: AdminReferralService,
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
@@ -122,6 +124,128 @@ export class PortfolioComponent implements OnInit {
       },
       (err) => { },
     );
+  }
+
+  scheduled(row,rowData){
+    console.log('rrrrrrr',row.data.OriginalPolicyNo)
+    const urlLink = `${this.ApiUrl1}pdf/opencover`;
+    const reqData = {
+      "BranchCode":this.userDetails.BranchCode,
+      //"PolicyNo":row.data.OriginalPolicyNo,
+  "EndtStatus":row.data.EndtStatus,
+  "ImageStatus": "Y",
+  "OpenCoverNo": row.data.OpenCoverNo,
+  "ProposalNo": row.data.ProposalNo,
+  "Status":row.data.Status
+
+    };
+    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        //sessionStorage.setItem('ProposalNo',data.ProposalNo);
+        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+
+      },
+      (err) => { },
+    );
+  }
+
+  policyword(row,rowData){
+    console.log('rrrrrrr',row.data.OriginalPolicyNo)
+    const urlLink = `${this.ApiUrl1}pdf/opencover/policywording`;
+    const reqData = {
+      "BranchCode":this.userDetails.BranchCode,
+      //"PolicyNo":row.data.OriginalPolicyNo,
+  "EndtStatus":row.data.EndtStatus,
+  "ImageStatus": "Y",
+  "OpenCoverNo": row.data.OpenCoverNo,
+  "ProposalNo": row.data.ProposalNo,
+  "Status":row.data.Status
+
+    };
+    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        //sessionStorage.setItem('ProposalNo',data.ProposalNo);
+        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+
+      },
+      (err) => { },
+    );
+  }
+
+
+  viewDocument(){
+
+  }
+
+  EndtSchedule(row,rowData){
+    const urlLink = `${this.ApiUrl1}pdf/endtcertificate`;
+    const reqData = { 
+    "BranchCode": this.userDetails.BranchCode,
+    "ApplicationNo":"",
+    "BelongingBranchCode":"",
+    "PolicyNo": row.data.OriginalPolicyNo
+   
+    };
+    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Result) {
+          
+        }
+        //this.branchList = data || [];
+        //this.getExistingAdmin();
+      },
+      (err) => { },
+    );
+  }
+
+  deactive(row,rowData){
+    const urlLink = `${this.ApiUrl1}OpenCover/deactivate`;
+    const reqData = { 
+    "BranchCode": this.userDetails.BranchCode,
+    "ProposalNo": row.data.ProposalNo
+    };
+    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Result) {
+          this.onChangeBroker(); 
+          //this.onLoadGrid();
+        }
+        //this.branchList = data || [];
+        //this.getExistingAdmin();
+      },
+      (err) => { },
+    );
+  }
+  onmenu(row,rowData){
+    console.log('jjjjjjjjjjj',row)
+    console.log('kkkkkkkk',rowData)
+
+    if(rowData=='Schedule'){
+      this.scheduled(row,rowData);
+    }
+    else if(rowData=='Policy Wordings'){
+      this.policyword(row,rowData)
+    }
+    else if(rowData=='Documents'){
+      this.viewDocument()
+    }
+    else if(rowData=='EndtSchedule'){
+     this.EndtSchedule(row,rowData)
+    }
+    else if(rowData=='DeActivate'){
+       this.deactive(row,rowData)
+    }
+    else if(rowData == 'View'){
+        this.router.navigate(['/Marine/viewportfolio'])
+    }
+  }
+
+  onschedule(){
+
   }
 
   onEdit(event: any) {

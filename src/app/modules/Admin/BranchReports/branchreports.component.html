@@ -1,0 +1,103 @@
+<div>
+    <div class="title-container bg-white p-4" style="color: #194d8b;">
+        <span style="color: #194d8b;">Branch Report</span>
+        <!--<button  mat-raised-button color="primary" *ngIf="branchValue" (click)="goToAddNewPage()">Add new</button>-->
+      </div>
+    <div class="bg-white container">
+        <div class="card-body">
+           <div class="row" *ngIf="!show">
+            <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Start Date<span class="text-required">*</span></label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="effectiveDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">End Date<span class="text-required">*</span></label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="endeffectiveDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Product<span class="text-required">*</span></label>
+                <ng-select class="input-form-select"  [items]="productNameList"  [(ngModel)]="product" 
+                   bindValue="ProductId" bindLabel="ProductName"> </ng-select>
+            </div>
+        </div>
+           </div>
+           <div class="row" *ngIf="!show">
+        <!--<div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Branch <span class="text-required">*</span></label>
+                <ng-select class="input-form-select"  [items]="regionList"  [(ngModel)]="RegionNo" 
+                   bindValue="RegionId" bindLabel="RegionName"> </ng-select>
+            </div>
+        </div>-->
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+              <label class="input-form-label">Status<span class="text-required">*</span></label>
+              <div class="input-form-radio-box">
+                <div class="radio-toolbar">
+                  <input id="fac-yes" type="radio" name="status" value="P" [(ngModel)]="status">
+                  <label for="fac-yes">Policy Status</label>
+                  <input type="radio" id="fac-no" name="status" value="Y" [(ngModel)]="status">
+                  <label for="fac-no">Quote Status</label>
+                  <input type="radio" id="fac-Ca" name="status" value="D" [(ngModel)]="status">
+                  <label for="fac-Ca">Cancelled Policy Status</label>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                <ng-select class="input-form-select"  [items]="branchList"  [(ngModel)]="branchValue" 
+                   bindValue="BranchCode" bindLabel="BranchName"> </ng-select>
+            </div>
+        </div>
+           </div>
+
+           <div style="text-align: center;" class="mt-2" *ngIf="!show">
+            <button class="btn btn-success" style="width:100px" (click)="getAdmin()">Search</button>
+          
+           </div>
+
+
+           <div *ngIf="show">
+
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <ng-container *ngIf="tableData">
+                            <app-commodity-table [cols]="columnHeader" [data]="tableData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)">
+                            </app-commodity-table>
+                        </ng-container>
+                        <!--<ng-container *ngIf="tableData">
+                            <div class="text-center spancommon span_font_size">
+                                No Quote Available
+                            </div>
+    
+                        </ng-container-->
+                       
+                    </div>
+                </div>
+
+                <div style="text-align: center;" class="mt-2">
+                    <button class="btn btn-success" style="width:100px" *ngIf="show && tableData.length!=0" (click)="pdf('excel')">Excel</button>
+                    <button class="btn btn-primary ml-2" style="width:100px" *ngIf="show && tableData.length!=0" (click)="pdf('pdf')">PDF</button>
+                    <button class="btn btn-danger ml-2"  (click)="goback()" style="width:100px">Back</button>   
+              </div>
+           
+        </div>
+    </div>
+    </div>
+</div>

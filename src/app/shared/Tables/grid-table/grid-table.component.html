@@ -19,6 +19,20 @@
                 <i class="fas fa-marker"></i>
               </button>
             </ng-container>
+            <ng-container *ngIf="col.config.isView">
+              <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+                  <!--<i class="fas fa-eye" style='color: blue'></i>-->
+                  <i class="fa fa-file" aria-hidden="true"></i>
+              </button>&nbsp;
+          </ng-container>
+          <ng-container *ngIf="col.config.isViews">
+            <button class="circle btn btn-warning btn-sm" (click)="onViews.emit(element)">
+                <i class="fas fa-eye" style='color: blue'></i>
+            </button>&nbsp;
+        </ng-container>
+        <ng-container *ngIf="col.config.isChecked">
+          <mat-checkbox class="example-margin" [(ngModel)]="element[col.config.model]" (change)="onSelectCopy.emit(element)"></mat-checkbox>
+      </ng-container>
             <ng-container *ngIf="col.config.isOpenGridAction">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <i class="fas fa-ellipsis-v"></i>
@@ -44,7 +58,7 @@
               </button>
               <mat-menu #menus="matMenu">
                 <ng-container *ngFor="let item of col.config.menuList">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
                   <span>{{item.name}}</span>
                 </button>
                 </ng-container>

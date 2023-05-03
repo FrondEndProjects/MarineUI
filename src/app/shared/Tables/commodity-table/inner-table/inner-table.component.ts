@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import * as Mydatas from '../../../../app-config.json';
 import { OpenCoverService } from '../../../../modules/open-cover/open-cover.service';
 import { CommodityTableComponent } from '../commodity-table.component';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-inner-table',
@@ -21,6 +22,8 @@ export class InnerTableComponent implements OnInit {
   public proposalNo = '';
   public userDetails: any;
   @Input('data') tableData: any[] = [];
+  @Input('no') Nan:any;
+  @Input('title') nan:any;
   @Input('cols') columnHeader: any[] = [];
   @Input('filterValue') filterValue: any = '';
   @Output('onEdit') onEdit = new EventEmitter();
@@ -32,6 +35,7 @@ export class InnerTableComponent implements OnInit {
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
   sortProperty: any = 'AllotedYN';
   sortDirection: any = 'desc';
+
 
 
   constructor(
@@ -56,6 +60,10 @@ export class InnerTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
+   //this.nan=tabledata.title
+    //this.nan=this.dataSource.ismore
+
+    console.log('IIIIIIIIII',)
 
   }
 

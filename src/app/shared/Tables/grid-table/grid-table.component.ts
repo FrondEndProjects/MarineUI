@@ -20,7 +20,12 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('cols') columnHeader: any[] = [];
   @Input('filterValue') filterValue: any = '';
   @Output('onEdit') onEdit = new EventEmitter();
+  @Output('onView') onView = new EventEmitter();
+  @Output('onViews') onViews = new EventEmitter();
+  @Output('onSelectCopy') onSelectCopy = new EventEmitter();
+
   @Output('onOpenCoverAction') onOpenCoverAction = new EventEmitter();
+  @Output('onMenu') onMenu = new EventEmitter();
 
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;

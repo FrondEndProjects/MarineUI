@@ -20,6 +20,7 @@ import { SharedService } from '../shared.service';
 import { NgxMaskModule } from 'ngx-mask';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     MaterialTableComponent,
@@ -44,7 +45,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     DigitOnlyModule,
     NgScrollbarModule,
     NbIconModule,
-    PipesModule
+    PipesModule,
+    MatIconModule
 
 
   ],
