@@ -67,7 +67,7 @@
   <div class="input-control-container">
       <label class="input-form-label">Branch</label>
 
-      <ng-select class="input-form-select" appendTo="body" [items]="branchList"  [(ngModel)]="BranchCode"  bindValue="BranchCode" bindLabel="BranchName">
+      <ng-select class="input-form-select" appendTo="body" [items]="branchList"  [(ngModel)]="BranchCode" (change)="onGetProductList()" bindValue="BranchCode" bindLabel="BranchName">
       </ng-select>
   </div>
 </div>
@@ -143,7 +143,7 @@
         <input type="text" class="form-control" [(ngModel)]="AdminDetails.MenuId" disabled>
         <div class="input-group-append">
           <button class="btn btn-primary border bg-primary text-white" type="button" mat-button
-            (click)="openDialog()">...</button>
+            (click)="openDialogWithoutRef('export',MenuList)">...</button>
         </div>
       </div>
     </div>
@@ -155,10 +155,10 @@
     <div class="input-control-container">
       <label class="input-form-label">Brokers<span class="text-required">*</span></label>
       <div class="input-group mb-3 mt-1">
-        <input type="text" class="form-control" [(ngModel)]="AdminDetails.MenuId" disabled>
+        <input type="text" class="form-control" [(ngModel)]="Brok" disabled>
         <div class="input-group-append">
           <button class="btn btn-primary border bg-primary text-white" type="button" mat-button
-            (click)="openDialogWithoutRef('import')">...</button>
+            (click)="brokert()">...</button>
         </div>
       </div>
     </div>
@@ -210,25 +210,25 @@
  </div>  <!--second row-->
 
 
- <!--<ng-template #secondDialog>
-  <h5 matDialogTitle>Broker Include</h5>
- 
+ <ng-template #secondDialog>
+  <h5 matDialogTitle *ngIf="first">Menu Include</h5>
+  <h5 matDialogTitle *ngIf="second">Broker Include</h5>
 <mat-dialog-content>
     <ul class="checklist">
       <ng-container *ngFor="let item of warrantyData">
       <li class="list-group-item" *ngIf="first">
         <div>
           <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
-            <span class="text-primary mx-1">({{item?.ClausesId}})</span></mat-checkbox></div>
-        <div>{{item?.ClausesDescription}}</div>
+            <span class="text-primary mx-1">({{item?.MenuId}})</span></mat-checkbox></div>
+        <div>{{item?.MenuName}}</div>
       </li>
       <li class="list-group-item" *ngIf="second">
         <div>
           <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
-            <span class="text-primary mx-1">({{item?.ExclusionId}})</span></mat-checkbox></div>
-        <div>{{item?.ExclusionDescription}}</div>
+            <span class="text-primary mx-1">({{item?.CustomerId}})</span></mat-checkbox></div>
+        <div>{{item?.CompanyName}}</div>
       </li>
-      <li class="list-group-item" *ngIf="third">
+      <!--<li class="list-group-item" *ngIf="third">
         <div>
           <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
             <span class="text-primary mx-1">({{item?.WarrantyId}})</span></mat-checkbox></div>
@@ -239,15 +239,15 @@
           <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
             <span class="text-primary mx-1">({{item?.WarId}})</span></mat-checkbox></div>
         <div>{{item?.WarDescription}}</div>
-      </li>
+      </li>-->
     </ng-container>
     </ul>
   </mat-dialog-content>
   <mat-dialog-actions align="center">
     <button mat-button matDialogClose color="primary" (click)="close()">Cancel</button>
-    <button mat-button color="primary" (click)="onSubmit()">Proceed</button>
+    <button mat-button color="primary" (click)="onsubmit()">Proceed</button>
   </mat-dialog-actions>
-</ng-template>-->
+</ng-template>
 
  <!--<ng-template #secondDialog>
   <h5 matDialogTitle>Selection</h5>

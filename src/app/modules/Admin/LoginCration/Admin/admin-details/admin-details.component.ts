@@ -63,6 +63,8 @@ export class AdmindetailsComponent implements OnInit {
   importWarrantyList:any[]=[];
   BranchBrokerList:any[]=[];
   menuId: any;
+  first: boolean=false;
+  second: boolean=false;
 
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
@@ -82,6 +84,7 @@ export class AdmindetailsComponent implements OnInit {
 this.exportWarrantyList=[{
   "Export":"Export List"
 }];
+this.onGetProductList()
 
 //this.brokert();
 /*this.userList=[{"Code":"6","CodeDesc":"6"},
@@ -97,6 +100,7 @@ this.exportWarrantyList=[{
     //let password =sessionStorage.removeItem("password");
     //let password=sessionStorage.getItem('password');
      this.BranchCode = AdminObj?.BranchCode;
+     console.log('kkkkkkkkk',this.BranchCode)
      this.LoginId = AdminObj.LoginId;
 
     if(this.LoginId!=null && this.LoginId!=undefined){
@@ -114,7 +118,7 @@ this.exportWarrantyList=[{
       //if(this.CityDetails?.Status==null)  this.CityDetails.Status = 'Y';
     }
     this.onUserType();
-    this.brokert();
+    //this.brokert();
     
 
   }
@@ -172,7 +176,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
     if(res.Result){
       this.AdminDetails = res.Result[0];
            this.Status= res.Result[0].Status;
-           this.Brok=this.AdminDetails.BrokerCode;
+           //this.Brok=this.AdminDetails.BrokerCode;
 
       this.onGetBranchList('direct');
       this.CommaFormatted();
@@ -223,7 +227,7 @@ onDateFormatInEdit(date) {
 }
 onGetBranchList(para:any) {
   if(para=='change'){
-    this.BranchCode="";
+    this.BranchCode=null;
   }
   const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
   const reqData = {
@@ -232,8 +236,9 @@ onGetBranchList(para:any) {
   this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
     (data: any) => {
       console.log(data);
-      this.branchList = data || [];
-      this.onGetRegionList();
+      this.branchList = data|| [];
+      //this.onGetProductList();
+      //this.onGetRegionList();
     },
     (err) => { },
   );
@@ -248,7 +253,7 @@ onGetRegionList() {
       console.log('yyyyyyyy',data.Result);
       this.regionList = data?.Result || [];
      
-      this.onGetProductList();
+      //this.onGetProductList();
       this.onGetUnderwriter();
     },
     (err) => { },
@@ -257,15 +262,15 @@ onGetRegionList() {
 
 onGetProductList() {
     let login
-  if(this.LoginId==null){
-    login=this.userDetails.LoginId
+  /*if(this.LoginId==null){
+    login=null
   }
   else{
     login=this.LoginId;
-  }
+  }*/
   const urlLink = `${this.ApiUrl1}opencover/dropdown/referral/quoteproduct`;
   const reqData = {
-    "LoginId":login,
+    "LoginId":this.LoginId,
     "BranchCode": this.BranchCode
   };
   this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -428,13 +433,46 @@ AttachedBranchFinal(uwList,RegionList,ProductList){
       let entryRegion={"AttachedBranchId":u}    
       BranchList.push(entryRegion);
       i++;
-      if(i==this.AdminDetails.AttachedBranch.length) this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
+      if(i==this.AdminDetails.AttachedBranch.length) this.AttachedMenu(uwList,RegionList,BranchList,ProductList) 
+      //this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
     }
   
   }
-  else this.onFinalSubmit(uwList,RegionList,BranchList,ProductList)
+  else this.AttachedMenu(uwList,RegionList,BranchList,ProductList) 
+  //else this.onFinalSubmit(uwList,RegionList,BranchList,ProductList)
 }
 
+AttachedMenu(uwList,RegionList,BranchList,ProductList){
+  let MenuList= [];
+  if(this.AdminDetails.MenuId.length!=0){
+    let i=0;
+      for(let u of this.AdminDetails.MenuId){      
+      let entryRegion={"MenuId":u}    
+      MenuList.push(entryRegion);
+      i++;
+      if(i==this.AdminDetails.AttachedBranch.length) this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
+      //this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
+    }
+  
+  }
+  else this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
+}
+
+AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList){
+  let BrokerList= [];
+  if(this.Brok.length!=0){
+    let i=0;
+      for(let u of this.Brok){      
+      let entryRegion={"BrokerCode":u}    
+      BrokerList.push(entryRegion);
+      console.log('lllllllllll',BrokerList)
+      i++;
+      if(i==this.AdminDetails.AttachedBranch.length) this.onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList);
+    }
+  
+  }
+  else this.onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList)
+}
 AttachedBranches(region,para){
   if(para =='change'){
     this.AdminDetails.AttachedBranch=null;
@@ -512,7 +550,7 @@ UnderWriters(){
 
     console.log('BBB',this.AdminDetails.AttachedUnderWriter)
 }
-onFinalSubmit(uwList,RegionList,BranchList,ProductList){
+onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList){
 
   
   let ReqObj = {
@@ -520,19 +558,10 @@ onFinalSubmit(uwList,RegionList,BranchList,ProductList){
     "AttachedBranchInfo": BranchList,
     "AttachedRegionInfo": RegionList,
     "BranchCode": this.BranchCode,
-    "BrokerInfo": [
-      {
-        "BrokerCode":this.Brok
-      }
-      
-    ],
+    "BrokerInfo":BrokerList,
     "Email":  this.AdminDetails.UserMail,
     "LoginId":  this.AdminDetails.LoginId,
-    "MenuInfo": [
-      {
-        "MenuId":  this.AdminDetails.MenuId,
-      }
-    ],
+    "MenuInfo":MenuList,
     "Mode":  this.AdminDetails.Mode,
     "Password":  this.password,
     /*"ProductInfo": [
@@ -653,22 +682,7 @@ Back(){
   this.value="View"
 }
 
-@ViewChild('secondDialog', { static: true }) secondDialog: TemplateRef<any>;
-openDialogWithoutRef(war: string) {
 
-
-  if (war === 'export') {
-    this.clickedModal = war;
-    this.warrantyData = this.Menulist;
-  }
-  if (war === 'import') {
-    this.clickedModal = war;
-    this.warrantyData = this.BranchBrokerList;
-
-  }
-  this.dialog.open(this.secondDialog);
-
-}
 Menu(menuList,para){
 
   console.log('jjjjjjjj',menuList)
@@ -692,18 +706,41 @@ Menu(menuList,para){
 
 }
 
+
+@ViewChild('secondDialog', { static: true }) secondDialog: TemplateRef<any>;
+openDialogWithoutRef(war: string,menulist) {
+
+console.log('kkkkkkkkkkkk',menulist)
+  if (war === 'export') {
+    this.first=true;
+    this.second=false;
+    this.clickedModal = war;
+    this.warrantyData = menulist;
+  }
+  if (war === 'import') {
+    this.second=true;
+    this.first=false;
+    this.clickedModal = war;
+    this.warrantyData = this.BranchBrokerList;
+
+  }
+  this.dialog.open(this.secondDialog);
+
+}
+
 brokert(){
 
 
   let ReqObj = 
   {
     "BranchCode": this.BranchCode,
-     "ApplicationId":"1"
+     "ApplicationId":"2"
 }
   this.masterSer.onPostMethodSync(`${this.ApiUrl1}admin/getAdminBrokerList`, ReqObj).subscribe(
     (data: any) => {
       console.log('ssssssss',data);
-      this.BranchBrokerList= data || [];
+      this.BranchBrokerList= data.Result || [];
+      this.openDialogWithoutRef('import', this.BranchBrokerList)
       console.log('NNNNNNNNNNNNN',this.BranchBrokerList)
     }
   )
@@ -717,12 +754,36 @@ brokert(){
 onsubmit(){
   const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
   let selectedListId: any = '';
+
+  if(this.clickedModal === 'export'){
   for (let index = 0; index < selectedList.length; index++) {
+    //const element = selectedList[index];
     const element = selectedList[index];
-    selectedListId += element.MenuId + ',';
+        if(index === 0){
+          selectedListId += element.MenuId;
+        }
+        else if(index !== 0){
+          selectedListId += ',' + element.MenuId;
+         }
     this.dialog.closeAll();
   }
+}
+
+if(this.clickedModal === 'import'){
+for (let index = 0; index < selectedList.length; index++) {
+  //const element = selectedList[index];
+  const element = selectedList[index];
+      if(index === 0){
+        selectedListId += element.CustomerId;
+      }
+      else if(index !== 0){
+        selectedListId += ',' + element.CustomerId;
+       }
+  this.dialog.closeAll();
+}
+}
   if (this.clickedModal === 'import') {
+    this.second=true;
     this.Brok=selectedListId;
 
   }
