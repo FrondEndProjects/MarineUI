@@ -1,8 +1,6 @@
 import { Component, OnInit, TemplateRef,ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NbDialogService } from '@nebular/theme';
-import { DialogNamePromptComponent } from '../../../../../pages/modal-overlays/dialog/dialog-name-prompt/dialog-name-prompt.component';
-import { ShowcaseDialogComponent } from '../../../../../pages/modal-overlays/dialog/showcase-dialog/showcase-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';

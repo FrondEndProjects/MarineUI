@@ -6,7 +6,6 @@ import { MastersService } from '../../../Masters/masters.service';
 import { AdminReferralService } from '../../../../admin-referral/admin-referral.service';
 import { LoginService } from '../../../../login/login.service';
 import { DatePipe } from '@angular/common';
-import { Quote } from '@angular/compiler';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 
 @Component({
