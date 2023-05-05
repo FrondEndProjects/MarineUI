@@ -120,7 +120,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>DOB</mat-label>
                     <input matInput [matDatepicker]="picker1" name="effectiveDate"
-                     [(ngModel)]="UserDetails.DateOfBirth">
+                     [(ngModel)]="UserDetails.DateOfBirth" [max]="minDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
@@ -202,7 +202,7 @@
                          </label>
                       <div class="input-form-box">
                           <input type="text" class="input-form-control without-icon" name="bankName"
-                          [(ngModel)]="UserDetails.TelephoneNo">
+                          [(ngModel)]="UserDetails.TelephoneNo" maxlength="10">
                       </div>
                   </div>
               </div>
@@ -215,7 +215,7 @@
                        </label>
                     <div class="input-form-box">
                         <input type="text" class="input-form-control without-icon" name="bankName"
-                        [(ngModel)]="UserDetails.MobileNo">
+                        [(ngModel)]="UserDetails.MobileNo" maxlength="10">
                     </div>
                 </div>
             </div>
@@ -298,7 +298,7 @@
                   <div class="customer-search-container">
                       <div class="input-control-container">
                           <label class="input-form-label">
-                              Broker LoginId
+                              User LoginId
                               <span class="text-required">*</span></label>
                           <div class="input-form-box">
                               <input type="text" class="input-form-control without-icon"
@@ -343,8 +343,9 @@
             <div class="title-container bg-white p-4" *ngIf="value=='ChangePassword' ">
                 <b>Change Password</b>
             </div>
-           
-            <div class="col-12 col-md-6 col-lg-6">
+             
+            
+            <div class="col-12 col-md-6 col-lg-4">
               <div class="input-control-container">
                   <label class="input-form-label">Enter New Password<span class="text-required">*</span></label>
                   <div class="input-form-box">
@@ -352,15 +353,16 @@
                   </div>
               </div>
               </div>
-              <div class="col-12 col-md-6 col-lg-6">
+              <div class="col-12 col-md-6 col-lg-4">
                 <div class="input-control-container">
-                    <label class="input-form-label"> Re enter New Password <span class="text-required">*</span>
+                    <label class="input-form-label"> Re enter New Password <span class="text-required">*</span></label>
                     <div class="input-form-box" >
                         <input type="text" [(ngModel)]="NPassword" class="input-form-control without-icon" maxlength="100">
                     </div>
-                    </label>
+                   
                 </div>
             </div>
+           
         
         </div>
 
@@ -478,11 +480,9 @@
                             </tbody>
                           
                         </table>
-                            <div class="row text-center justify-content-center" >
-
-                                      
-                                    <button mat-raised-button class="ml-2" style="text-align:center" color="accent" value="View" (click)="goBack()">Back</button>
-                                    <button mat-raised-button class="ml-2" style="text-align:center" color="primary" (click)="productInsert($event,row)">save</button>
+                            <div class="row d-flex justify-content-between mt-3">
+                                    <button mat-raised-button class="ml-2 col-3" style="width:10%;" color="accent" value="View" (click)="goBack()">Back</button>
+                                    <button mat-raised-button class="ml-2 col-3"  style="width:10%;" color="primary" (click)="productInsert($event,row)">Save</button>
                                 
                             </div>
                        

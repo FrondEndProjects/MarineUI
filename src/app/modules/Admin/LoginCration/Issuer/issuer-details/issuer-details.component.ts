@@ -18,6 +18,7 @@ import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@n
 })
 export class IssuerDetailsComponent implements OnInit {
   public userList:any[]=[];
+  
   activeMenu:any;
   public IssuerForm: FormGroup;
   public min: Date = new Date();picker1
@@ -54,12 +55,18 @@ export class IssuerDetailsComponent implements OnInit {
   IncludedData:any[]=[];
   ExcludedData:any[]=[];
   columnExcluded:any[]=[];
+  
 
   constructor(private router: Router,private masterSer: MastersService,private adminReferralService: AdminReferralService,private datePipe:DatePipe,
     private toastrService:NbToastrService) {
     this.activeMenu = "Issuer";
     this.IssuerDetails=new Issuer();
     this.minDate=new Date();
+    this.StatusList=[{"Code":"Y","CodeDesc":"Active"},
+    {"Code":"N","CodeDesc":"DeActive"},
+    {"Code":"D","CodeDesc":"Delete"},
+    {"Code":"T","CodeDesc":"Lock"},
+];
   }
   ngOnInit(): void {
     let IssuerObj= JSON.parse(sessionStorage.getItem('editIssuerId'));
@@ -80,6 +87,11 @@ export class IssuerDetailsComponent implements OnInit {
       this.IssuerDetails.LoginId = IssuerObj.LoginId;
       this.editdata=true;
       this.OptionMode="";
+      this.Status="Y";
+      this.IssuerDetails.LoginId=""
+      this.IssuerDetails.AttachedRegion=[];
+      this.IssuerDetails.AttachedBranch=[];
+      this.IssuerDetails.ProductId=[];
       //if(this.CityDetails?.Status==null)  this.CityDetails.Status = 'Y';
     }
 

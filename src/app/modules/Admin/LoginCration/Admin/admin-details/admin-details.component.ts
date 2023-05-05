@@ -62,9 +62,13 @@ export class AdmindetailsComponent implements OnInit {
   exportWarrantyList:any[]=[];
   importWarrantyList:any[]=[];
   BranchBrokerList:any[]=[];
+  
+  Check:any;
   menuId: any;
   first: boolean=false;
   second: boolean=false;
+  mode: string;
+  isChecked:any[]=[];
 
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
@@ -106,6 +110,7 @@ this.onGetProductList()
     if(this.LoginId!=null && this.LoginId!=undefined){
       this.getEditAdminDetails();
       this.editSection=false;
+      this.mode="edit"
 
 
     }
@@ -115,6 +120,13 @@ this.onGetProductList()
       this.BranchCode = AdminObj.BranchCode;
       this.AdminDetails.LoginId = AdminObj.LoginId;
       this.editSection=true;
+      this.AdminDetails.AttachedUnderWriter=[];
+      this.AdminDetails.ProductId=[];
+      this.AdminDetails.AttachedRegion=[];
+      this.AdminDetails.AttachedBranch=[];
+      this.AdminDetails.MenuId=[];
+      this.Brok=[];
+      this.mode="new"
       //if(this.CityDetails?.Status==null)  this.CityDetails.Status = 'Y';
     }
     this.onUserType();
@@ -176,7 +188,16 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
     if(res.Result){
       this.AdminDetails = res.Result[0];
            this.Status= res.Result[0].Status;
-           //this.Brok=this.AdminDetails.BrokerCode;
+           this.isChecked=res.Result[0].MenuId;
+
+           let check:any=this.isChecked;
+           let att= check.split(',');
+           this.isChecked =att.filter(item => item);
+
+
+           let Brok=this.AdminDetails.BrokerCode;
+           let attached= Brok.split(',');
+           this.Brok =attached.filter(item => item);
 
       this.onGetBranchList('direct');
       this.CommaFormatted();
@@ -184,6 +205,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
       this.UnderWriters();
       this.ProductComma();
       this.changeMenu('direct');
+      this.onGetProductList();
       //this.AttachedBranches(this.AdminDetails.AttachedRegion);
       if(this.AdminDetails){
         if(this.AdminDetails?.EffectiveDate!=null){
@@ -446,11 +468,17 @@ AttachedMenu(uwList,RegionList,BranchList,ProductList){
   let MenuList= [];
   if(this.AdminDetails.MenuId.length!=0){
     let i=0;
+    let brok= this.AdminDetails.MenuId;
+    this.AdminDetails.MenuId=brok.split(",");
+    /*for(let i=0;i<=brok.length;i++){
+      this.AdminDetails.MenuId=brok.split(",");
+      console.log('BBBBBBBBBBBBBBB',this.Brok)
+    }*/
       for(let u of this.AdminDetails.MenuId){      
       let entryRegion={"MenuId":u}    
       MenuList.push(entryRegion);
       i++;
-      if(i==this.AdminDetails.AttachedBranch.length) this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
+      if(i==this.AdminDetails.MenuId.length) this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
       //this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
     }
   
@@ -462,12 +490,19 @@ AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList){
   let BrokerList= [];
   if(this.Brok.length!=0){
     let i=0;
+    let brok= this.Brok
+    this.Brok=brok.split(",");
+    /*for(let i=0;i<=brok.length;i++){
+      console.log('jjjjjjjjj',brok)
+      this.Brok=brok.split(",");
+      console.log('BBBBBBBBBBBBBBB',this.Brok)
+    }*/
       for(let u of this.Brok){      
       let entryRegion={"BrokerCode":u}    
       BrokerList.push(entryRegion);
       console.log('lllllllllll',BrokerList)
       i++;
-      if(i==this.AdminDetails.AttachedBranch.length) this.onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList);
+      if(i==this.Brok.length) this.onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList);
     }
   
   }
@@ -562,7 +597,7 @@ onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList){
     "Email":  this.AdminDetails.UserMail,
     "LoginId":  this.AdminDetails.LoginId,
     "MenuInfo":MenuList,
-    "Mode":  this.AdminDetails.Mode,
+    "Mode":this.mode,
     "Password":  this.password,
     /*"ProductInfo": [
       {
@@ -590,7 +625,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
   (data: any) => {
       console.log(data);
       let res:any=data;
-      if(data.Result){
+      if(data.Message=="Success"){
         let type: NbComponentStatus = 'success';
               const config = {
                 status: type,
@@ -610,7 +645,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
       }
       else if(data.ErrorMessage){
           if(res.ErrorMessage){
-            for(let entry of res.ErrorMessage){
+            /*for(let entry of res.ErrorMessage){
               let type: NbComponentStatus = 'danger';
               const config = {
                 status: type,
@@ -624,7 +659,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
                 entry.Field,
                 entry.Message,
                 config);
-            }
+            }*/
             console.log("Error Iterate",data.ErrorMessage)
             //this.loginService.errorService(data.ErrorMessage);
           }
@@ -643,6 +678,66 @@ onRedirect(value){
   }
 
 }
+
+changemenu(rowData,value){
+    let item =rowData  
+    /*let entry={
+      "MenuId":item,
+      "isChecked":true
+    } */    
+    this.isChecked.push(item);
+
+    /*this.isChecked.map(x => ({
+      isChecked:true,
+      ...x
+    })); */ 
+ console.log('kkkkkkkkk',this.isChecked)
+}
+
+checkUWValues(rowData,value){
+  let exist = this.isChecked;
+  let menus= exist.toString();
+  if(menus){
+    let idList = menus.split(',');
+    let exist = idList.some(ele=>ele == rowData.MenuId);
+    if(exist) return true;
+    else false
+  }
+  else return false;
+  //return this.AdminDetails.some(ele=>ele.MenuId==rowData.MenuId);
+  //this.handleSelected(rowData);
+   /*if(this.AdminDetails.MenuId){
+    this.AdminDetails.MenuId = this.AdminDetails.MenuId.map(x => ({
+      isChecked: true,
+      ...x
+    }));  
+   }*/
+//    if(rowData.MenuId==this.AdminDetails.MenuId){
+//     rowData.MenuId.map(x => ({
+//       isChecked: true,
+//       ...x
+//     }));    
+//    }
+// return rowData.MenuId
+}
+
+
+checkValues(rowData,value){
+  let menus = this.Brok;
+  if(menus){
+    let idList = menus.split(',');
+    let exist = idList.some(ele=>ele == rowData.AgencyCode);
+    if(exist) return true;
+    else false
+  }
+  else return false;
+}
+changemenus(rowData,value){
+  let item =rowData  
+  this.Brok.push(item);
+console.log('kkkkkkkkk',this.Brok)
+}
+
 
 
 ChangePassword(){
@@ -752,11 +847,16 @@ brokert(){
 
 
 onsubmit(){
-  const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
+  //const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
+  //const selectedList: any[] = this.isChecked.filter((ele: any) => ele.isChecked === true);
+  //const selectedList: any[]= this.isChecked;
+  const selectedList: any[] = this.isChecked;
+  let exist
+  console.log('llllllllllll',selectedList)
   let selectedListId: any = '';
 
   if(this.clickedModal === 'export'){
-  for (let index = 0; index < selectedList.length; index++) {
+  /*for (let index = 0; index < selectedList.length; index++) {
     //const element = selectedList[index];
     const element = selectedList[index];
         if(index === 0){
@@ -766,21 +866,43 @@ onsubmit(){
           selectedListId += ',' + element.MenuId;
          }
     this.dialog.closeAll();
-  }
+  }*/
+  //exist = selectedList.some(ele=>ele == this.isChecked);
+  //console.log('jjjjjjjjjjj',exist)
+  /*for(let i=0;i<selectedList.length;i++){
+    const element = selectedList;
+    if(i === 0){
+      selectedListId += element;
+    }
+    else if(i !== 0){
+      selectedListId += ',' + element;
+     }
+  }*/
+
+  /*let check=this.isChecked;
+  let att= isChecked.split(',');
+  exist=att.filter(item => item);*/
+  //exist = selectedList.some(ele=>ele == this.isChecked);
+   exist = selectedList.toString();
+  console.log('llllllllllllllll',exist)
+  this.dialog.closeAll();
 }
 
 if(this.clickedModal === 'import'){
-for (let index = 0; index < selectedList.length; index++) {
+/*for (let index = 0; index < selectedList.length; index++) {
   //const element = selectedList[index];
   const element = selectedList[index];
       if(index === 0){
-        selectedListId += element.CustomerId;
+        selectedListId += element.AgencyCode;
       }
       else if(index !== 0){
-        selectedListId += ',' + element.CustomerId;
+        selectedListId += ',' + element.AgencyCode;
        }
   this.dialog.closeAll();
-}
+}*/
+exist = selectedList.toString();
+console.log('llllllllllllllll',exist)
+this.dialog.closeAll();
 }
   if (this.clickedModal === 'import') {
     this.second=true;
@@ -788,8 +910,8 @@ for (let index = 0; index < selectedList.length; index++) {
 
   }
   if (this.clickedModal === 'export') {
-   this.AdminDetails.MenuId=selectedListId;
-   console.log('oooooooooo',this.AdminDetails.MenuId);
+   this.isChecked=exist;
+   console.log('oooooooooo',this.isChecked);
 
   }
 }

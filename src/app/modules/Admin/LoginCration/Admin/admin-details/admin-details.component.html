@@ -140,7 +140,7 @@
     <div class="input-control-container">
       <label class="input-form-label">Excluded Menus<span class="text-required">*</span></label>
       <div class="input-group mb-3 mt-1">
-        <input type="text" class="form-control" [(ngModel)]="AdminDetails.MenuId" disabled>
+        <input type="text" class="form-control" [(ngModel)]="isChecked" disabled>
         <div class="input-group-append">
           <button class="btn btn-primary border bg-primary text-white" type="button" mat-button
             (click)="openDialogWithoutRef('export',MenuList)">...</button>
@@ -218,14 +218,14 @@
       <ng-container *ngFor="let item of warrantyData">
       <li class="list-group-item" *ngIf="first">
         <div>
-          <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
+          <mat-checkbox color="primary" [checked]="checkUWValues(item,'true')" (change)="changemenu(item.MenuId,true)"> 
             <span class="text-primary mx-1">({{item?.MenuId}})</span></mat-checkbox></div>
         <div>{{item?.MenuName}}</div>
       </li>
       <li class="list-group-item" *ngIf="second">
         <div>
-          <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
-            <span class="text-primary mx-1">({{item?.CustomerId}})</span></mat-checkbox></div>
+          <mat-checkbox color="primary" [checked]="checkValues(item,'true')" (change)="changemenus(item.AgencyCode,true)"> 
+            <span class="text-primary mx-1">({{item?.AgencyCode}})</span></mat-checkbox></div>
         <div>{{item?.CompanyName}}</div>
       </li>
       <!--<li class="list-group-item" *ngIf="third">

@@ -67,7 +67,7 @@ export const adminNavItems: NbMenuItem[] = [
         },
         {
 
-          title: 'issuer',
+          title: 'Issuer Management',
           link: '/Marine/loginCreation/issuer',
           icon: 'icon-cursor',
         },
