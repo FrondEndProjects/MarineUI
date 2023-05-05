@@ -102,6 +102,18 @@
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="customer-search-container">
                                     <div class="input-control-container">
+                                        <label class="input-form-label">Phone No
+                                           </label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" name="bankName"
+                                            [(ngModel)]="TelephoneNo" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                    <div class="input-control-container">
                                         <label class="input-form-label">Other City</label>
                                         <div class="input-form-box">
                                             <input type="text" class="input-form-control without-icon"
@@ -109,12 +121,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
             
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="customer-search-container">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">P.O.Box<span class="text-required">*</span></label>
+                                        <label class="input-form-label">P.O.Box</label>
                                         <div class="input-form-box">
                                             <input type="text" class="input-form-control without-icon" name="bankName"
                                             [(ngModel)]="Pobox" maxlength="6">
@@ -122,7 +134,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4">
+                            <!--<div class="col-12 col-md-4 col-lg-4">
                                 <div class="customer-search-container">
                                     <div class="input-control-container">
                                         <label class="input-form-label">Phone No
@@ -133,7 +145,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="customer-search-container">
                                     <div class="input-control-container">
@@ -193,6 +205,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="customer-search-container">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status <span class="text-required">*</span></label>
+                            
+                                    <ng-select class="input-form-select" appendTo="body" [items]="StatusList"  [(ngModel)]="Status"  bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="title-container bg-white p-4">
                             <b>Contact Person Information</b>
@@ -249,7 +272,7 @@
                                 <div class="col-12 col-md-4 col-lg-4">
                                     <mat-form-field appearance="fill">
                                         <mat-label>DOB</mat-label>
-                                        <input matInput [matDatepicker]="picker1" name="effectiveDate"
+                                        <input matInput [matDatepicker]="picker1" name="effectivesDate" [max]="minDate"
                                          [(ngModel)]="DateOfBirth">
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
@@ -268,8 +291,7 @@
                                     <div class="customer-search-container">
                                         <div class="input-control-container">
                                             <label class="input-form-label">
-                                                Occupation
-                                                <span class="text-required">*</span></label>
+                                                Occupation</label>
                                             <div class="input-form-box">
                                                 <textarea type="text" class="input-form-control without-icon" name="bankName"
                                                     [(ngModel)]="Occupation"></textarea>
@@ -284,7 +306,7 @@
                                                 Mobile</label>
                                             <div class="input-form-box">
                                                 <textarea type="text" class="input-form-control without-icon" name="bankName"
-                                                    [(ngModel)]="MobileNo"></textarea>
+                                                maxlength="10" [(ngModel)]="MobileNo"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -388,7 +410,7 @@
                                 </div>
             
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <span>Enter Policy Fee in SAR</span>
+                                    <span>Enter Policy Fee in AED</span>
                                 </div>
             
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -665,7 +687,7 @@
                     </div>
 
                     <div *ngIf="Add">
-                        <div class="col-lg-12 ml-2" *ngIf="Add"> 
+                        <div class="col-lg-12 ml-2" *ngIf="Add && !pro"> 
                             <div class="panel p-4">
                                 <div class="ti">
                                     <div style="font-size:14px;">Product Insert</div>
@@ -846,10 +868,10 @@
                           </div>-->
                     </div>
         
-                    <div style="text-align:center;" class="mt-2" *ngIf="Add && !pro">
+                    <div style="text-align:center;" class="mt-2" *ngIf="Add && !pro && ProId">
                         
                         <button mat-raised-button color="primary" (click)="goBack()">Back</button>
-                        <button class="btn btn-success ml-2"  (click)="productInsert()">Submit</button>
+                        <button class="btn btn-success ml-2"  (click)="prof()">Submit</button>
 
                     </div>
                     <!--<div class="text-center" *ngIf="Add">

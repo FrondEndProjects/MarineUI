@@ -67,7 +67,8 @@ export class ExistingUserListComponent implements OnInit {
     let entry = {
       "BranchCode": this.branchValue,
       "LoginId":null, 
-      "AgencyCode":null
+      "AgencyCode":null,
+      "Edit":"N"
     }
     sessionStorage.setItem('editUserId',JSON.stringify(entry));
 
@@ -112,7 +113,8 @@ onEdit(rowdata:any){
   let entry = {
     "BranchCode": this.branchValue,
     "LoginId": rowdata.LoginId,
-    "AgencyCode":rowdata.AgencyCode
+    "AgencyCode":rowdata.AgencyCode,
+    "Edit":"Y"
 
   }
   sessionStorage.setItem('editUserId',JSON.stringify(entry));

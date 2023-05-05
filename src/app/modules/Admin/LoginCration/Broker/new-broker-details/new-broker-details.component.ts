@@ -23,6 +23,7 @@ export class NewBrokerDetailsComponent implements OnInit {
     next: false,
     index: 0
   }
+  StatusList:any[]=[];
   displayProduct:any;
   PTrue:boolean=false;
   productin:boolean=false;
@@ -45,7 +46,7 @@ export class NewBrokerDetailsComponent implements OnInit {
   Country: any;
   CityList:any[]=[];
   CompanyName:any;
-  AttachedBranch:any;
+  AttachedBranch:any[]=[];
   value:any="View";
 tableData:any[]=[];
   TypeList:any[]=[];
@@ -66,7 +67,8 @@ tableData:any[]=[];
   LoginId: any;
   BrokerTaxDetails:any
   PolicyFees: any;
-  PolicyFeeStatus: any;
+  PolicyFeeStatus: any="N";
+  TaxApplicable:any="both"
   BrokerEffectiveDate:any;
   EffectiveDate:any;
   Address1:any;
@@ -78,7 +80,7 @@ tableData:any[]=[];
   RsaBrokerCode:any;
   RePassword:any;
   Password:any;
-  AttachedRegionNo:any;
+  AttachedRegionNo:any[]=[];
   AttachedBranchList:any[]=[];
   pendingvalue:any;
   public columnRefferal: any[] = [];
@@ -101,11 +103,30 @@ tableData:any[]=[];
   CustomerId:any;
   Freight:any="N";
   Provision:any="N";
+  minDate;
+  Status:any;
+  mode:any;
 
   constructor(private router:Router,private masterSer: MastersService,private adminReferralService: AdminReferralService,  private loginService: LoginService,private datePipe:DatePipe,
     private toastrService: NbToastrService,) {
+      this.StatusList=[{"Code":"Y","CodeDesc":"Active"},
+      {"Code":"N","CodeDesc":"DeActive"},
+      {"Code":"D","CodeDesc":"Delete"},
+      {"Code":"T","CodeDesc":"Lock"},
+  ];
+
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log(this.userDetails);
+     //let minsDate=new Date().getTime();
+     //var yearMS = 365 * (1000 * 60 * 60 * 24);
+     //this.minDate= minsDate- (18 * yearMS);
+     var d = new Date();
+     var year = d.getFullYear();
+     var month = d.getMonth();
+     var day = d.getDate();
+   this.minDate= new Date(year - 18,month, day );
+
+     console.log('kkkkkkkkkk',this.minDate)
 
     if (this.userDetails) this.AdminLogin = this.userDetails?.LoginResponse.LoginId;
     
@@ -148,6 +169,7 @@ tableData:any[]=[];
     // }
   ];
 
+
   }
 
   ngOnInit(): void {
@@ -163,9 +185,18 @@ console.log('jjjjjjjj',this.CustomerId)
    if(this.AgencyCode){
     this.getEditIssuerDetails();
     this.Passwords=false;
+    this.mode='edit';
    }
 else{
   this.Passwords=true;
+  this.Pobox="";
+  this.Status="Y";
+  this.Gender="N";
+  this.Occupation="";
+  this.LoginId="";
+  this.Password="";
+  this.RePassword="";
+  this.mode='new'
 
 }
 
@@ -233,7 +264,7 @@ let ReqObj={
     "LoginId": this.LoginId,
     "MissippiId": "",
     "MobileNo":this.MobileNo,
-    "Mode": "",
+    "Mode":this.mode,
     "Nationality": this.nation,
     "Occupation": this.Occupation,
     "OneOffCommission":this.OneOffCommission,
@@ -244,7 +275,7 @@ let ReqObj={
     "PolicyFeeStatus": this.PolicyFeeStatus,
     "RePassword":this.RePassword,
     "RegionCode":this.RegionNo,
-    "Status": "Y",
+    "Status":this.Status,
     "SubBranchCode": "02",
     "TaxApplicable": this.TaxApplicable,
     "TelephoneNo": this.TelephoneNo,
@@ -362,7 +393,7 @@ changeRegion(para){
       i++;
       if(i==this.AttachedRegionNo.length) 
       if(para == 'change'){
-        this.AttachedBranches(uwList,'change')
+        this.AttachedBranches(uwList,'change');
       }
       else{
         this.AttachedBranches(uwList,'direct');
@@ -512,7 +543,6 @@ region(){
       i++;
       if(i==this.AttachedRegionNo.length) this.AttachedBranchFinal(RegionList);
     }
-  
   }
   else this.AttachedBranchFinal(RegionList)
 }
@@ -533,23 +563,24 @@ AttachedBranchFinal(RegionList){
 
 
 
-ProductComma(){
-  var str = this.AttachedRegionNo;
+/*ProductComma(){
+  var str:any[]=[] 
+  str= this.AttachedRegionNo;
 this.AttachedRegionNo= str.split(',');
 this.AttachedRegionNo = this.AttachedRegionNo.filter(item => item);
   console.log('BBB',this.AttachedRegionNo);
   this.AttachedBranches(this.AttachedRegionNo,'direct');
-}
+}*/
 
 
-Branchf(){
+/*Branchf(){
   var str = this.AttachedBranch;
 this.AttachedBranch= str.split(',');
 this.AttachedBranch = this.AttachedBranch.filter(item => item);
   console.log('ccccccccc',this.AttachedBranch);
   //this.AttachedBranches(this.AttachedBranch);
   
-}
+}*/
   getEditIssuerDetails(){
 
     let ReqObj =  {
@@ -573,56 +604,74 @@ this.AttachedBranch = this.AttachedBranch.filter(item => item);
            this.BrokerCommissionDetails=res?.Result.BrokerCommissionDetails;
 
 
-           this.PolicyFees=this.BrokerTaxDetails[0].PolicyFees;
+           this.PolicyFees=this.BrokerTaxDetails[0]?.PolicyFees;
            console.log('ppp',this.PolicyFeeStatus);
            console.log('ppp',this.PolicyFees);
-           this.PolicyFeeStatus=this.BrokerTaxDetails[0].PolicyFeeStatus;
-             this.TaxApplicable=this.BrokerTaxDetails[0].TaxApplicable;
-              this.EffectiveDate=this.BrokerTaxDetails[0].effectiveDate;
+           this.PolicyFeeStatus=this.BrokerTaxDetails[0]?.PolicyFeeStatus;
+             this.TaxApplicable=this.BrokerTaxDetails[0]?.TaxApplicable;
+              this.EffectiveDate=this.BrokerTaxDetails[0]?.effectiveDate;
 
               console.log('hhhhhhhhhhh', this.EffectiveDate)
            console.log('hhhhhhhhhhh', this.brokerCode)
-           this.brokerCode=this.IssuerDetails[0].BrokerCode;
-           this.Country=this.IssuerDetails[0].Country
-           this.Title=this.IssuerDetails[0].Title
+           this.brokerCode=this.IssuerDetails[0]?.BrokerCode;
+           this.Country=this.IssuerDetails[0]?.Country
+           this.Title=this.IssuerDetails[0]?.Title
 
-           this.FirstName= this.IssuerDetails[0].FirstName,
-           this.CompanyName=this.IssuerDetails[0].CompanyName,
+           this.FirstName= this.IssuerDetails[0]?.FirstName,
+           this.CompanyName=this.IssuerDetails[0]?.CompanyName,
 
-           this.Gender=this.IssuerDetails[0].Gender;
-           this.City=this.IssuerDetails[0].City
-           this.LastName=this.IssuerDetails[0].LastName
+           this.Gender=this.IssuerDetails[0]?.Gender;
+           this.City=this.IssuerDetails[0]?.City
+           this.LastName=this.IssuerDetails[0]?.LastName;
+           this.Status=this.IssuerDetails[0]?.Status;
            this.DateOfBirth=this.IssuerDetails[0]?.DateOfBirth
-            this.Email=this.IssuerDetails[0].Email;
-            this.LoginId=this.IssuerDetails[0].LoginId;
-              this.MobileNo=this.IssuerDetails[0].MobileNo;
-              this.nation=this.IssuerDetails[0].Nationality;
-              this.Occupation=this.IssuerDetails[0].Occupation;
-              this.ApproverBy=this.IssuerDetails[0].ApprovedPreparedBy;
-              this.AttachedBranch=this.IssuerDetails[0].AttachedBranch;
-              this.Country=this.IssuerDetails[0].Country;
-              this.Address1=this.IssuerDetails[0].Address1;
-              this.Address2=this.IssuerDetails[0].Address2;
-              this.City=this.IssuerDetails[0].City;
-              this.Pobox=this.IssuerDetails[0].Pobox;
-              this.Fax=this.IssuerDetails[0].Fax;
-              this.TelephoneNo=this.IssuerDetails[0].TelephoneNo;
-              this.RegionNo=this.IssuerDetails[0].RegionCode;
-              this.Executives=this.IssuerDetails[0].AcExecutiveId;
-              this.OneOffCommission=this.IssuerDetails[0].IssuerCommissionOneOff;
-              this.OpenCoverCommission=this.IssuerDetails[0].IssuerCommissionOpenCover;
+            this.Email=this.IssuerDetails[0]?.Email;
+            this.LoginId=this.IssuerDetails[0]?.LoginId;
+              this.MobileNo=this.IssuerDetails[0]?.MobileNo;
+              this.nation=this.IssuerDetails[0]?.Nationality;
+              this.Occupation=this.IssuerDetails[0]?.Occupation;
+              this.ApproverBy=this.IssuerDetails[0]?.ApprovedPreparedBy;
+              this.AttachedBranch=this.IssuerDetails[0]?.AttachedBranch;
+              this.Country=this.IssuerDetails[0]?.Country;
+              this.Address1=this.IssuerDetails[0]?.Address1;
+              this.Address2=this.IssuerDetails[0]?.Address2;
+              this.City=this.IssuerDetails[0]?.City;
+              this.Pobox=this.IssuerDetails[0]?.Pobox;
+              this.Fax=this.IssuerDetails[0]?.Fax;
+              this.TelephoneNo=this.IssuerDetails[0]?.TelephoneNo;
+              this.RegionNo=this.IssuerDetails[0]?.RegionCode;
+              this.Executives=this.IssuerDetails[0]?.AcExecutiveId;
+              this.OneOffCommission=this.IssuerDetails[0]?.IssuerCommissionOneOff;
+              this.OpenCoverCommission=this.IssuerDetails[0]?.IssuerCommissionOpenCover;
 
 
 
             
-              this.AttachedRegionNo=this.IssuerDetails[0].AttachedRegion;
-              this.AttachedBranch=this.IssuerDetails[0].AttachedBranch;
+              let AttachedRegions=this.IssuerDetails[0]?.AttachedRegion;
+              /*if(AttachedRegions){
+                for(let i=0;i<=AttachedRegions?.length;i++){
+                  this.AttachedRegionNo=AttachedRegions.split(',')
+                }
+              }*/
+              console.log('nnnnnnnn',this.AttachedRegios);
+              let attached= AttachedRegions.split(',');
+              this.AttachedRegionNo =attached.filter(item => item);
+              this.AttachedBranches(this.AttachedRegionNo,'direct');
+              let AttachedBranch=this.IssuerDetails[0]?.AttachedBranch;
+              /*if(AttachedBranch){
+                for(let i=0;i<=AttachedBranch?.length;i++){
+                  this.AttachedBranch=AttachedBranch.split(',')
+                }
+              }*/
+              console.log('sssssss',this.AttachedBranch);
+              let branch= AttachedBranch.split(',');
+              this.AttachedBranch =branch.filter(item => item);
             
               //this.getCountryList();
               this.onGetBranchList('direct');
               this.onGetRegionList();
-              this.ProductComma();
-              this.Branchf();
+              //this.ProductComma();
+              //this.Branchf();
               this.getUserAll();
               //this.AttachedBranches(this.IssuerDetails.AttachedRegion);
               this.Executive();
@@ -943,7 +992,18 @@ onsearch(QuoteNo){
     this.pro=false;
     this.onGetProductList() 
   }
+
+  prof(){
+    console.log('NNNNNNNNN',this.ProId)
+    if(this.ProId!=null || this.ProId!="" || this.ProId!=undefined){
+       this.productInsert();
+    }
+    else{
+      this.toastrService.danger("Please enter Product Id");
+    }
+  }
   productInsert(){
+     
 let agent;let CustomerId
     if(this.AgencyCode){
 agent=this.AgencyCode
@@ -1023,7 +1083,7 @@ this.router.navigate(['/Marine/loginCreation/existingBrokers'])
       }
       else if(data.ErrorMessage){
           if(res.ErrorMessage){
-            /*for(let entry of res.ErrorMessage){
+            for(let entry of res.ErrorMessage){
               let type: NbComponentStatus = 'danger';
               const config = {
                 status: type,
@@ -1037,7 +1097,7 @@ this.router.navigate(['/Marine/loginCreation/existingBrokers'])
                 entry.Field,
                 entry.Message,
                 config);
-            }*/
+            }
             console.log("Error Iterate",data.ErrorMessage)
             //this.loginService.errorService(data.ErrorMessage);
           }
@@ -1060,6 +1120,7 @@ this.adminReferralService.onPostMethodSync(urlLink, ReqObj).subscribe(
     
     console.log(data);
     this.pro=true;
+    this.ProId=""
     this.ProductEdit = data?.Result[0];
      
     //this.pro=true;

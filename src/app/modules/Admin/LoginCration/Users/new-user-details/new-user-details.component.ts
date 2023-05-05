@@ -88,6 +88,9 @@ export class NewUserDetailsComponent implements OnInit {
   speciAmount: any;
   InsuAmount: any;
   freig: any;
+  minDate;
+  edit: any;
+  mode: string;
   
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
@@ -97,8 +100,14 @@ export class NewUserDetailsComponent implements OnInit {
       {"Code":"D","CodeDesc":"Delete"},
       {"Code":"T","CodeDesc":"Lock"},
   ];
+  var d = new Date();
+  var year = d.getFullYear();
+  var month = d.getMonth();
+  var day = d.getDate();
+this.minDate= new Date(year - 18,month, day );
  
   this.UserDetails=new User();
+ 
 
 
 /*this.ProductInfo= [{
@@ -147,8 +156,11 @@ export class NewUserDetailsComponent implements OnInit {
      this.LoginId = AdminObj.LoginId;
      this.AgencyCode=AdminObj.AgencyCode;
 
+     this.edit=AdminObj.Edit
+
      if(this.AgencyCode!=null && this.AgencyCode!=undefined){
       this.getEditAdminDetails();
+      this.mode="edit"
       //this.editSection=false;
 
 
@@ -156,6 +168,13 @@ export class NewUserDetailsComponent implements OnInit {
     else{
       this.UserDetails = new User();
       this.pass=true;
+      this.UserDetails.AttachedRegion=[];
+      this.UserDetails.AttachedBranch=[];
+      this.UserDetails.LoginId="";
+      this.UserDetails.Password="";
+      this.UserDetails.RePassword="";
+      this.mode="new";
+      this.Status="Y";
       // this.BranchCode = IssuerObj.BranchCode;
       // this.IssuerDetails.LoginId = IssuerObj.LoginId;
       // this.editdata=true;
@@ -307,6 +326,7 @@ Open(){
       //"UAgencyCode": this.AgencyCode
 
   }
+
     let urlLink = `${this.ApiUrl1}admin/getUserMgtEditList`;
   this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
@@ -317,7 +337,7 @@ Open(){
         this.Status=res.Result[0].Status;
         this.CustomerIds=res.Result[0].CustomerId
 
-
+           
                 //this.Iss=true;
                 this.getBroker();
                 this.onUserType();
@@ -538,7 +558,7 @@ let ReqObj={
     "Gender": this.UserDetails.Gender,
     "LoginId": this.UserDetails.LoginId,
     "MobileNo": this.UserDetails.MobileNo,
-    "Mode": this.UserDetails.Mode,
+    "Mode":this.mode,
     "Nationality":this.UserDetails.Nationality,
     "Occupation": this.UserDetails.Occupation,
     "Password": this.UserDetails.Password,
@@ -584,8 +604,11 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
 
       this.Uacode=data.Result.UserAgencyCode;
       this.agentCode=data.Result.AgencyCode;
-
-      this.productedit();
+          
+      if(this.edit=='N'){
+        this.productedit();
+      }
+      //this.productedit();
       
       //this.productInsert()
 let type: NbComponentStatus = 'success';
@@ -607,7 +630,7 @@ let type: NbComponentStatus = 'success';
     }
     else if(data.ErrorMessage){
         if(res.ErrorMessage){
-          for(let entry of res.ErrorMessage){
+          /*for(let entry of res.ErrorMessage){
             let type: NbComponentStatus = 'danger';
             const config = {
               status: type,
@@ -621,7 +644,7 @@ let type: NbComponentStatus = 'success';
               entry.Field,
               entry.Message,
               config);
-          }
+          }*/
           console.log("Error Iterate",data.ErrorMessage)
           //this.loginService.errorService(data.ErrorMessage);
         }
@@ -842,6 +865,7 @@ console.log('jjjjjjjj',row);
   }
 
   checkUWValue(rowData,value) {
+    //console.log('FFFFFFFFFFFFFFF',rowData)
     return rowData.Freight == value;
    
   }
