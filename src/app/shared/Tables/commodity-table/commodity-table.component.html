@@ -8,11 +8,18 @@
       
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="!col.config; else hasConfig">
-          {{ element[col.key]}}
+          <ng-container *ngIf="columnHeader[i]['display']=='Commodity Name'">
+              <div style="max-width: 400px;word-wrap: break-word;">
+                  {{ element[col.key]}} 
+              </div>
+          </ng-container>
+          <ng-container *ngIf="columnHeader[i]['display']!='Commodity Name'">
+            {{ element[col.key]}} 
+          </ng-container>
         </ng-container>
         <ng-template #hasConfig>
           <ng-container *ngIf="col.config.isCollapse">
-            <button  nbButton shape="round" size="tiny" (click)="element.isClicked = !element.isClicked;onPassData(element);expandedElement = expandedElement === element ? null : element;">
+            <button  nbButton shape="round" size="tiny" (click)="element.isClicked = !element.isClicked;onPassData(element,i);expandedElement = expandedElement === element ? null : element;">
              <ng-container *ngIf="element.CommodityNotInResponse">
               New
             </ng-container>
@@ -25,9 +32,9 @@
             </button>
             <mat-menu #menus="matMenu">
               <ng-container *ngFor="let item of col.config.menuList">
-              <button mat-menu-item>
-                <span>{{item.name}}</span>
-              </button>
+                <button mat-menu-item>
+                  <span>{{item.name}}</span>
+                </button>
               </ng-container>
             </mat-menu>
           </ng-container>

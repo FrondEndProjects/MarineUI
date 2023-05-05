@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import * as Mydatas from '../../../../app-config.json';
 import { OpenCoverService } from '../../../../modules/open-cover/open-cover.service';
 import { CommodityTableComponent } from '../commodity-table.component';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-inner-table',

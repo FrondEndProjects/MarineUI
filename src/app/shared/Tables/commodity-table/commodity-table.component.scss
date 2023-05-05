@@ -33,4 +33,10 @@ tr.example-detail-row {
 
 .example-element-row td {
   border-bottom-width: 0;
+  left: auto !important;
+  max-width: 256px !important;
+  word-wrap: break-word !important;
+  position: relative !important;
+  // right: 3rem !important;
+  z-index: 9999999 !important;
 }
