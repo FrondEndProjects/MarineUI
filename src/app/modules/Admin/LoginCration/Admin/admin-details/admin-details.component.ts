@@ -113,8 +113,6 @@ this.onGetProductList()
       this.getEditAdminDetails();
       this.editSection=false;
       this.mode="edit"
-
-
     }
 
     else{
@@ -190,17 +188,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
     if(res.Result){
       this.AdminDetails = res.Result[0];
            this.Status= res.Result[0].Status;
-           
-           let MenuIds=this.AdminDetails.MenuId;
-           let attach= MenuIds.split(',');
-           this.MenuIds = attach;
-           this.isChecked = attach.filter(item => item!='');
-
-           let Brok=this.AdminDetails.BrokerCode;
-           let attached= Brok.split(',');
-           this.Brok = Brok;
-           this.selectedBrokerList = attached.filter(item => item!='');
-           
+           console.log('kkkkkkkkkkkkk',this.AdminDetails.UnderWriter)
 
       this.onGetBranchList('direct');
       this.CommaFormatted();
@@ -215,6 +203,15 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
 
          this.AdminDetails.EffectiveDate = this.onDateFormatInEdit(this.AdminDetails?.EffectiveDate)
         }
+        let MenuIds=this.AdminDetails.MenuId;
+        let attach= MenuIds.split(',');
+        this.MenuIds = MenuIds;
+        this.isChecked = attach.filter(item => item!='');
+
+        let Brok=this.AdminDetails.BrokerCode;
+        let attached= Brok.split(',');
+        this.Brok = Brok;
+        this.selectedBrokerList = attached.filter(item => item!='');
 
         /*if(this.AdminDetails?.EffectiveDateEnd!=null){
           this.AdminDetails.EffectiveDateEnd = this.onDateFormatInEdit(this.AdminDetails?.EffectiveDateEnd)
@@ -339,14 +336,16 @@ onGetUnderwriter() {
 }
 onSaveAdmin() {
 
-  console.log('UnderWriter', this.AdminDetails.UnderWriter)
+  console.log('UnderWriter',this.AdminDetails.AttachedUnderWriter)
 
   let uwList= []; 
+  console.log('UnderWriter',this.AdminDetails.AttachedUnderWriter.length)
   if(this.AdminDetails.AttachedUnderWriter.length!=0){
     let i=0
     for(let uw of this.AdminDetails.AttachedUnderWriter){
       let entry = {"UnderWriter":uw}
       uwList.push(entry);
+      console.log('kkkkkkkkkkkkk',uwList)
       i++;
       if(i==this.AdminDetails.AttachedUnderWriter.length) this.Product(uwList);
     }
@@ -457,6 +456,7 @@ AttachedBranchFinal(uwList,RegionList,ProductList){
       for(let u of this.AdminDetails.AttachedBranch){      
       let entryRegion={"AttachedBranchId":u}    
       BranchList.push(entryRegion);
+      console.log('jjjjjjjjjjjjj',BranchList)
       i++;
       if(i==this.AdminDetails.AttachedBranch.length) this.AttachedMenu(uwList,RegionList,BranchList,ProductList) 
       //this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
@@ -469,20 +469,22 @@ AttachedBranchFinal(uwList,RegionList,ProductList){
 
 AttachedMenu(uwList,RegionList,BranchList,ProductList){
   let MenuList= [];
-  if(this.AdminDetails.MenuId.length!=0){
+  if(this.MenuIds.length!=0){
     let i=0;
-    let brok= this.AdminDetails.MenuId;
-    this.AdminDetails.MenuId= brok.toString();
+    //let brok= this.AdminDetails.MenuId;
+    //this.AdminDetails.MenuId= brok.toString();
     //this.AdminDetails.MenuId=brok.split(",");
     /*for(let i=0;i<=brok.length;i++){
       this.AdminDetails.MenuId=brok.split(",");
       console.log('BBBBBBBBBBBBBBB',this.Brok)
     }*/
-      for(let u of this.AdminDetails.MenuId){      
+      for(let u of this.isChecked){      
       let entryRegion={"MenuId":u}    
       MenuList.push(entryRegion);
       i++;
-      if(i==this.AdminDetails.MenuId.length) this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
+
+      console.log('kkkkkkkkkkkkk',MenuList)
+      if(i==this.isChecked.length) this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
       //this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
     }
   
@@ -582,14 +584,7 @@ this.AdminDetails.AttachedBranch = this.AdminDetails.AttachedBranch.filter(item 
 UnderWriters(){
   var str = this.AdminDetails.AttachedUnderWriter;
   this.AdminDetails.AttachedUnderWriter= str.split(',');
-  
-  /*for(var i = 0; i < this.AdminDetails.AttachedUnderWriter.length; i++)
-  {
-     //console.log(this.AdminDetails.AttachedRegion[i]);
-  }*/
   this.AdminDetails.AttachedUnderWriter = this.AdminDetails.AttachedUnderWriter.filter(item => item);
-  //var sparseArray = this.AdminDetails.AttachedUnderWriter;
-  //this.AdminDetails.AttachedUnderWriter= sparseArray.filter(function () { return true });
 
     console.log('BBB',this.AdminDetails.AttachedUnderWriter)
 }
@@ -687,40 +682,46 @@ onRedirect(value){
 
 }
 
-changemenu(event,rowData,value){
+changemenu(type,event,rowData,value){
   console.log('kkkkkkk',event.checked)
 
-  if(event.checked){
+  /*if(event.checked){
 
   
     let item =rowData  
-    /*let entry={
-      "MenuId":item,
-      "isChecked":true
-    } */    
+      
     this.isChecked.push(item);
-  }
+  }*/
+  if(event.checked ==true){
+    if(type=='menu'){
+      let entry = this.isChecked.find(ele=>ele==rowData);
+      if(!entry){
+        this.isChecked.push(rowData);
+        this.MenuIds= this.MenuIds.concat(","+rowData);
+      }
+    }
+      // let item =rowData  
+      // this.Brok.push(item);
+      // console.log('kkkkkkkkk',this.Brok)
+    }
+    else if(event.checked==false){
+    
+      let index = this.MenuIds.find(ele=>ele==rowData);
+      this.isChecked.splice(index,1);
+      //let brok:any[]=[];
+      //brok.push(this.Brok);
+       //this.Brok= brok.splice(index,1);
+      //this.Brok.splice(index);
+      console.log('sssssssss',this.isChecked)
+    }
 
-    /*this.isChecked.map(x => ({
-      isChecked:true,
-      ...x
-    })); */ 
+   
  console.log('kkkkkkkkk',this.isChecked)
 }
 
 checkUWValues(rowData,value){
-  // let exist = this.isChecked;
-  // let menus= exist.toString();
-  // if(menus){
-  //   let idList = menus.split(',');
-  //   let exist = idList.some(ele=>ele == rowData.MenuId);
-  //   if(exist) return true;
-  //   else false
-  // }
-  // else return false;
-      this.MenuIds=this.isChecked; 
       console.log('kkkkkkk',this.MenuIds)
-      if(this.isChecked.length!=0){
+      if(this.MenuIds.length!=0){
   this.isChecked= this.MenuIds.split(',');
       }
   let exist = this.isChecked;
@@ -731,21 +732,6 @@ checkUWValues(rowData,value){
   else false
    }
   else return false;
-  //return this.AdminDetails.some(ele=>ele.MenuId==rowData.MenuId);
-  //this.handleSelected(rowData);
-   /*if(this.AdminDetails.MenuId){
-    this.AdminDetails.MenuId = this.AdminDetails.MenuId.map(x => ({
-      isChecked: true,
-      ...x
-    }));  
-   }*/
-//    if(rowData.MenuId==this.AdminDetails.MenuId){
-//     rowData.MenuId.map(x => ({
-//       isChecked: true,
-//       ...x
-//     }));    
-//    }
-// return rowData.MenuId
 }
 
 
@@ -935,7 +921,7 @@ onsubmit(){
   let att= isChecked.split(',');
   exist=att.filter(item => item);*/
   //exist = selectedList.some(ele=>ele == this.isChecked);
-  selectedList = this.isChecked;
+  selectedList = this.MenuIds;
    exist = selectedList.toString();
   console.log('llllllllllllllll',exist)
   this.dialog.closeAll();
@@ -965,7 +951,7 @@ this.dialog.closeAll();
   }
   if (this.clickedModal === 'export') {
    this.isChecked=exist;
-   console.log('oooooooooo',this.isChecked);
+   console.log('oooooooooo',this.MenuIds);
 
   }
 }
