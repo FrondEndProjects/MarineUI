@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NewQuotesComponent } from '../../new-quotes.component';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+//import { ViewDocumentComponent } from '../viewDocument/viewDocument.component';
 @Component({
   selector: 'app-policy-generate',
   templateUrl: './policy-generate.component.html',
@@ -47,7 +49,7 @@ export class PolicyGenerateComponent implements OnInit {
     private newQuotesService: NewQuotesService,
     private _formBuilder:FormBuilder,
     private router:Router,private sessionStorageService: SessionStorageService,
-    private newQuotesComponent:NewQuotesComponent
+    private newQuotesComponent:NewQuotesComponent,public dialogService: MatDialog,
 
   ) {
     this.policyForm = this.newQuotesService.premiumForm;
@@ -116,8 +118,9 @@ export class PolicyGenerateComponent implements OnInit {
       this.uploadedDocumentsList=data.Result;
     })
   }
-  onDownloadfile(index:any){
+  /*onDownloadfile(index:any){
     console.log("this.premiumDetails",this.premiumDetails);
+    let Results:any;
     const urlLink = `${this.ApiUrl1}file/download`;
     const reqData = {
       "LoginId": this.userDetails?.LoginId,
@@ -126,11 +129,46 @@ export class PolicyGenerateComponent implements OnInit {
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data:any)=>{
       console.log("data",data);
-      var a = document.createElement("a");
-      a.href = data;
-      a.download = data;
+          Results=data;
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', Results);
+      link.setAttribute('download',Results);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      //var a = document.createElement("a");
+      //a.href = data;
+      //a.download = data;
       // start download
-      a.click();
+      //a.click();
+    })
+  }*/
+
+
+  onDownloadfile(i){
+    const urlLink = `${this.ApiUrl1}file/download`;
+    const reqData = {
+      /*"BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
+       "LoginId": this.userDetails?.LoginId,
+      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
+      "UploadId": this.uploadedDocumentsList[i].UploadId
+    }
+    
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      if(data?.Result){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result);
+        link.setAttribute('download', this.premiumDetails?.QuoteDetails?.QuoteNo);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
     })
   }
    onPolicyIntegrate() {
@@ -301,11 +339,7 @@ export class PolicyGenerateComponent implements OnInit {
   onDeleteUploadDoc(index){
     this.uploadDocuments.splice(index,1);
   }
-  onViewUploadedDocument(){
-    let UrlLink = `${this.ApiUrl1}api/getcompressedimage`;
-
-  }
-
+ 
   onDownloadSchedule(){
     const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
     const reqData = {

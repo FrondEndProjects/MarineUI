@@ -119,6 +119,48 @@ export class SearchComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
+        /*this.columnHeader = [
+          { key: 'QuoteNo', display: 'Quote No' },
+          { key: 'CustomerName', display: 'Name' },
+          { key: 'QuotationDate', display: 'Quote Date' },
+          { key: 'PolicyStartDate', display: 'Policy Start Date' },
+          { key: 'PolicyNo', display: 'Policy No' },
+          { key: 'StatusTypeName', display: 'Status' },
+          {
+            key: "edit",
+            display: "Edit",
+            // sticky: true,
+            config: {
+              isActionBtn: true,
+              isActionBtnName: "Edit",
+              isNgxIcon: "fas fa-pen-alt",
+              bg: "primary",
+            },
+          },
+        ];*/
+        this.tableData = data?.Result || [];
+        if(data?.Result[0].StatusType=='P'){
+        this.columnHeader = [
+          { key: 'QuoteNo', display: 'Quote No' },
+          { key: 'CustomerName', display: 'Name' },
+          { key: 'QuotationDate', display: 'Quote Date' },
+          { key: 'PolicyStartDate', display: 'Policy Start Date' },
+          { key: 'PolicyNo', display: 'Policy No' },
+          { key: 'StatusTypeName', display: 'Status' },
+          /*{
+            key: "edit",
+            display: "Edit",
+            // sticky: true,
+            config: {
+              isActionBtn: true,
+              isActionBtnName: "Edit",
+              isNgxIcon: "fas fa-pen-alt",
+              bg: "primary",
+            },
+          },*/
+        ];
+      }
+      else{
         this.columnHeader = [
           { key: 'QuoteNo', display: 'Quote No' },
           { key: 'CustomerName', display: 'Name' },
@@ -138,7 +180,7 @@ export class SearchComponent implements OnInit {
             },
           },
         ];
-        this.tableData = data?.Result || [];
+      }
       },
       (err) => { },
     );
