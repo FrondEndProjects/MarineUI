@@ -87,10 +87,15 @@ export class BrokerFormComponent implements OnInit {
               if(this.headerDetails){
                   let entry = this.dropBrokerList.find(ele=>ele.CodeDescription==this.headerDetails?.BrokerName)
                   console.log("Entry",entry);
+                  if(this.productId=='11'){
                   this.brokerForm.controls['borker'].setValue(entry.Code);
                   this.brokerForm.controls['channel'].setValue('broker');
                   this.brokerForm.controls['channel'].disable();
                   this.brokerForm.controls['borker'].disable();
+                  }
+                  else{
+                    this.brokerForm.controls['borker'].setValue(entry.Code);
+                  }
               }
           }
         }
