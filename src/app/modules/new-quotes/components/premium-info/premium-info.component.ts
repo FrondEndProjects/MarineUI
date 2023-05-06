@@ -69,6 +69,11 @@ export class PremiumInfoComponent implements OnInit {
     this.onGetViewClausesInformation();
     this.onGetPremiumInformation();
     this.onChangeBetterQuote();
+    if( this.sessionStorageService.sessionStorgaeModel.referral =='Approved'){
+      for (var control in this.premiumForm.controls) {
+        this.premiumForm.controls[control].disable();
+      }
+    }
   }
 
 
