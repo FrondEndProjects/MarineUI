@@ -126,6 +126,7 @@ this.onGetProductList()
       this.AdminDetails.AttachedBranch=[];
       this.AdminDetails.MenuId=[];
       this.Brok=[];
+      this.MenuIds=[];
       this.mode="new"
       //if(this.CityDetails?.Status==null)  this.CityDetails.Status = 'Y';
     }
