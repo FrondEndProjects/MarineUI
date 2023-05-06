@@ -172,6 +172,7 @@ export class ExistQuoteComponent implements OnInit {
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item.ApplicationNo);
     sessionStorage.setItem('QuoteStatus', 'QE');
+    sessionStorage.setItem('Exist','No');
 
 
     // const data = {

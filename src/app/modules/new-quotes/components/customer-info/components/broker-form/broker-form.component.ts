@@ -27,6 +27,8 @@ export class BrokerFormComponent implements OnInit {
   public OpenCover:any;
   @ViewChild('formDirective') public brokerFormDirective: NgForm;
   headerDetails: any;
+  el: boolean;
+  item:any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -45,6 +47,8 @@ export class BrokerFormComponent implements OnInit {
       {name:'Cash',id:'cash'},
     ]
 
+    this.item=sessionStorage.getItem('Exist');
+    
   }
 
   ngOnInit(): void {

@@ -17,6 +17,17 @@
           </div>
         </div>
       </div>
+      <div class="input-control-container" *ngIf="item =='No' ">
+        <label class="input-form-label">Channel<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" disabled class="input-form-select" [items]="dropChannelList" bindValue="id" bindLabel="name"
+        formControlName="channel" (change)="onChangeChannel('change')">
+      </ng-select>
+        <div class="input-form-error" *ngIf="(brokerF.channel.errors && submitted) || (!brokerF.channel.valid && brokerF.channel.touched)">
+          <div *ngIf="brokerF.channel.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">

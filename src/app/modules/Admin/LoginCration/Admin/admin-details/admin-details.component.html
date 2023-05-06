@@ -218,13 +218,13 @@
       <ng-container *ngFor="let item of warrantyData">
       <li class="list-group-item" *ngIf="first">
         <div>
-          <mat-checkbox color="primary" [checked]="checkUWValues(item,'true')" (change)="changemenu(item.MenuId,true)"> 
+          <mat-checkbox color="primary" [checked]="checkUWValues(item,'true')" (change)="changemenu('menu',$event,item.MenuId,true)"> 
             <span class="text-primary mx-1">({{item?.MenuId}})</span></mat-checkbox></div>
         <div>{{item?.MenuName}}</div>
       </li>
       <li class="list-group-item" *ngIf="second">
         <div>
-          <mat-checkbox color="primary" [checked]="checkValues(item,'true')" (change)="changemenus(item.AgencyCode,true)"> 
+          <mat-checkbox color="primary" [checked]="checkValues(item,'true')" (change)="changemenus('broker',$event,item.AgencyCode,true)"> 
             <span class="text-primary mx-1">({{item?.AgencyCode}})</span></mat-checkbox></div>
         <div>{{item?.CompanyName}}</div>
       </li>

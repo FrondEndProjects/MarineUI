@@ -1,3 +1,4 @@
+declare var $:any;
 import { CustomerInfoComponent } from './../../customer-info.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
@@ -28,6 +29,7 @@ export class CustomerFormComponent implements OnInit {
 
   public tableData: any[] = [];
   public columnHeader: any[] = [];
+  broCode: any;
 
 
   constructor(
@@ -40,6 +42,10 @@ export class CustomerFormComponent implements OnInit {
     this.openCoverNo = this.customerInfoComponent.OpenCover?.value;
     this.customerForm = this.customerInfoComponent.customerForm;
     this.loginId = this.customerInfoComponent?.loginId;
+
+    this.broCode=this.customerInfoComponent?.broCode
+
+    console.log('llllllllllllllll',this.loginId)
     this.applicationId = this.customerInfoComponent?.applicationId;
     if(sessionStorage.getItem('loginId')){
       this.loginId = sessionStorage.getItem('loginId');
@@ -72,6 +78,15 @@ export class CustomerFormComponent implements OnInit {
     ];
     this.onGetTitleDropdownList();
     this.onGetCityDropdownList();
+    console.log('FFFFFFFFFFFF',this.brokerCode)
+
+    /*if(this.broCode){
+      this.onGetCustomerList(this.broCode);
+      console.log('jjjjjjjjjjjj',this.broCode)
+    }
+    else{
+      this.onGetCustomerList(this.brokerCode);
+    }*/
     this.onGetCustomerList(this.brokerCode);
   }
 
@@ -117,6 +132,8 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onGetCustomerList(code) {
+
+    console.log('hhhhhhhh',code)
     this.tableData = [];
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if(this.productId=='3') this.openCoverNo = null;
@@ -132,13 +149,15 @@ export class CustomerFormComponent implements OnInit {
         if (data?.Message === 'Success') {
           // if (this.customerF.name.status == "DISABLED" || data?.Result == null) {
             if( this.productId == '3' ||  this.productId == '11'){
-              
+              $('.customersearch').css("display", "block");
               this.isCustomerTable = true;
           } 
           // else {
           //   this.isCustomerTable = true;
           // }
           this.tableData = data?.Result;
+
+          console.log('kkkkkkkkkkkkkkkkkkkkkkk',this.tableData, this.isCustomerTable)
 
         }
       },
@@ -147,6 +166,8 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onSelectCustomer(event: any) {
+
+    console.log('kkkkkkkkkk',event?.Title)
     this.customerF.title.setValue(event?.Title);
     this.customerF.name.setValue(event?.CustomerName);
     this.customerF.coreAppcode.setValue(event?.MissippiCustomerCode);
@@ -157,5 +178,6 @@ export class CustomerFormComponent implements OnInit {
     this.customerF.customerVat.setValue(event?.VatRegNo);
     this.customerF.Address1.setValue(event?.Address1);
     this.customerF.Address2.setValue(event?.Address2);
+    this.customerF.Code.setValue(event.CustomerId);
   }
 }

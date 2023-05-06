@@ -33,8 +33,9 @@
             This field is required
           </div>
         </div>
-        <div class="customer-search-box" *ngIf="isCustomerTable">
-          <ng-container >
+        <!-- <div class="customer-search-box" *ngIf="isCustomerTable"> -->
+          <div class="customersearch" *ngIf="isCustomerTable">
+          <ng-container>
             <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)">
             </app-material-table>
           </ng-container>

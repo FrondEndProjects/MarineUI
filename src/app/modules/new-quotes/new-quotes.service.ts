@@ -204,6 +204,7 @@ export class NewQuotesService {
       customerVat: [''],
       Address1: [''],
       Address2: [''],
+      Code:[''],
     });
     this.quoteForm = this._formBuilder.group({
       modeOfTransport: [null, Validators.required],

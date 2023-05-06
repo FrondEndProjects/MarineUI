@@ -1125,7 +1125,7 @@ this.adminReferralService.onPostMethodSync(urlLink, ReqObj).subscribe(
      
     //this.pro=true;
     this.displayProduct=data?.Result[0].ProductName;
-    this.pros=data?.Result[0].ProductId;
+    this.ProId=data?.Result[0].ProductId;
     this.Commission=data?.Result[0].Commission;
     this.InsuranceEndLimit=data?.Result[0].InsuranceEndLimit;
     this.MinPremiumAmount=data?.Result[0].MinPremiumAmount;

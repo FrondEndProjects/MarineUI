@@ -76,6 +76,7 @@ export class CustomerInfoComponent implements OnInit {
   public WithCertifi:any='';
   public routerBaseLink:any;
   QuoteStatus: string ="QE";
+  broCode: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -213,6 +214,7 @@ export class CustomerInfoComponent implements OnInit {
 
   checkCustomerList(brokerCode){
     this.loginId = brokerCode;
+    console.log('mmmmmmmmmmmmm',brokerCode)
       this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {
@@ -240,9 +242,16 @@ export class CustomerInfoComponent implements OnInit {
           const lcBankDetails = this.editQuoteData?.LcBankDetails;
 
           this.brokerF.channel.setValue(this.editQuoteData?.ChannelType);
+          
           this.brokerFormComponent?.onChangeChannel('direct');
+          //this.broCode=this.editQuoteData?.BrokerCode;
+          //console.log('kkkkkkkkkkkkkk',this.broCode)
           this.brokerF.borker.setValue(this.editQuoteData?.BrokerCode);
+          if(this.userDetails.UserType !='Broker'){
+            this.brokerFormComponent.onChangeBroker();
+          }
           this.customerFormComponent.brokerCode = this.editQuoteData?.BrokerCode;
+          //this.customerFormComponent.onGetCustomerList(this.broCode);
           this.customerF.title.setValue(customerDetails?.Title);
           this.customerF.name.setValue(customerDetails?.Name);
           this.customerF.coreAppcode.setValue(customerDetails?.CoreAppCode);
@@ -253,6 +262,7 @@ export class CustomerInfoComponent implements OnInit {
           this.customerF.customerVat.setValue(customerDetails?.VatRegNo);
           this.customerF.Address1.setValue(customerDetails?.Address1);
           this.customerF.Address2.setValue(customerDetails?.Address2);
+          this.customerF.Code.setValue(customerDetails?.Code);
 
 
           this.bankF.lCBank.setValue(lcBankDetails?.BankCode);
@@ -392,6 +402,7 @@ export class CustomerInfoComponent implements OnInit {
         'PoBox': this.customerF.poBox.value,
         'Title': this.customerF.title.value,
         'VatApplicable': null,
+        'Code':this.customerF.Code.value,
         'VatRegNo': this.customerF.customerVat.value,
       },
       'Executive': '5',
@@ -483,7 +494,8 @@ export class CustomerInfoComponent implements OnInit {
           'exshipsCategory': '',
           'ihslrorimo': '',
         },
-        'VoyageNo': '',
+        'VoyageNo':this.quoteF.voyageNumber.value,
+        //'VoyageNo':"",
         'WarAndSrccYn': this.quoteF.warSrcc.value,
         'WarOnLandYn': this.quoteF.warOnLand.value,
       },

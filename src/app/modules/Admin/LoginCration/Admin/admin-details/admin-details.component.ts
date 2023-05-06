@@ -69,6 +69,8 @@ export class AdmindetailsComponent implements OnInit {
   second: boolean=false;
   mode: string;
   isChecked:any[]=[];
+  selectedBrokerList: any[]=[];
+  MenuIds:any;
 
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
@@ -188,16 +190,17 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
     if(res.Result){
       this.AdminDetails = res.Result[0];
            this.Status= res.Result[0].Status;
-           this.isChecked=res.Result[0].MenuId;
-
-           let check:any=this.isChecked;
-           let att= check.split(',');
-           this.isChecked =att.filter(item => item);
-
+           
+           let MenuIds=this.AdminDetails.MenuId;
+           let attach= MenuIds.split(',');
+           this.MenuIds = attach;
+           this.isChecked = attach.filter(item => item!='');
 
            let Brok=this.AdminDetails.BrokerCode;
            let attached= Brok.split(',');
-           this.Brok =attached.filter(item => item);
+           this.Brok = Brok;
+           this.selectedBrokerList = attached.filter(item => item!='');
+           
 
       this.onGetBranchList('direct');
       this.CommaFormatted();
@@ -469,7 +472,8 @@ AttachedMenu(uwList,RegionList,BranchList,ProductList){
   if(this.AdminDetails.MenuId.length!=0){
     let i=0;
     let brok= this.AdminDetails.MenuId;
-    this.AdminDetails.MenuId=brok.split(",");
+    this.AdminDetails.MenuId= brok.toString();
+    //this.AdminDetails.MenuId=brok.split(",");
     /*for(let i=0;i<=brok.length;i++){
       this.AdminDetails.MenuId=brok.split(",");
       console.log('BBBBBBBBBBBBBBB',this.Brok)
@@ -488,22 +492,26 @@ AttachedMenu(uwList,RegionList,BranchList,ProductList){
 
 AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList){
   let BrokerList= [];
+  //console.log("Broker List",this.Brok)
+
   if(this.Brok.length!=0){
     let i=0;
     let brok= this.Brok
-    this.Brok=brok.split(",");
-    /*for(let i=0;i<=brok.length;i++){
-      console.log('jjjjjjjjj',brok)
-      this.Brok=brok.split(",");
-      console.log('BBBBBBBBBBBBBBB',this.Brok)
-    }*/
-      for(let u of this.Brok){      
-      let entryRegion={"BrokerCode":u}    
-      BrokerList.push(entryRegion);
-      console.log('lllllllllll',BrokerList)
-      i++;
-      if(i==this.Brok.length) this.onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList);
-    }
+    // this.Brok=brok.split(",");
+    // this.Brok= brok.toString();
+    // for(let i=0;i<brok.length;i++){
+    //   console.log('jjjjjjjjj',brok)
+    //   this.Brok=brok.split(",");
+    //   console.log('BBBBBBBBBBBBBBB',this.Brok)
+    // }let arrayStored.concat(this.Brok.spilt(“,”))
+      for(let u of this.selectedBrokerList){  
+        console.log("Broker List",u)    
+        let entryRegion={"BrokerCode":u}    
+        BrokerList.push(entryRegion);
+        console.log('lllllllllll',BrokerList)
+        i++;
+        if(i==this.selectedBrokerList.length) this.onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList);
+      }
   
   }
   else this.onFinalSubmit(uwList,RegionList,BranchList,ProductList,MenuList,BrokerList)
@@ -679,13 +687,19 @@ onRedirect(value){
 
 }
 
-changemenu(rowData,value){
+changemenu(event,rowData,value){
+  console.log('kkkkkkk',event.checked)
+
+  if(event.checked){
+
+  
     let item =rowData  
     /*let entry={
       "MenuId":item,
       "isChecked":true
     } */    
     this.isChecked.push(item);
+  }
 
     /*this.isChecked.map(x => ({
       isChecked:true,
@@ -695,14 +709,27 @@ changemenu(rowData,value){
 }
 
 checkUWValues(rowData,value){
+  // let exist = this.isChecked;
+  // let menus= exist.toString();
+  // if(menus){
+  //   let idList = menus.split(',');
+  //   let exist = idList.some(ele=>ele == rowData.MenuId);
+  //   if(exist) return true;
+  //   else false
+  // }
+  // else return false;
+      this.MenuIds=this.isChecked; 
+      console.log('kkkkkkk',this.MenuIds)
+      if(this.isChecked.length!=0){
+  this.isChecked= this.MenuIds.split(',');
+      }
   let exist = this.isChecked;
-  let menus= exist.toString();
-  if(menus){
-    let idList = menus.split(',');
-    let exist = idList.some(ele=>ele == rowData.MenuId);
-    if(exist) return true;
-    else false
-  }
+  //let menus= exist.toString();
+  if(this.isChecked.length!=0){
+  let exist = this.isChecked.some(ele=>ele == rowData.MenuId);
+   if(exist) return true;
+  else false
+   }
   else return false;
   //return this.AdminDetails.some(ele=>ele.MenuId==rowData.MenuId);
   //this.handleSelected(rowData);
@@ -722,20 +749,45 @@ checkUWValues(rowData,value){
 }
 
 
-checkValues(rowData,value){
-  let menus = this.Brok;
-  if(menus){
-    let idList = menus.split(',');
-    let exist = idList.some(ele=>ele == rowData.AgencyCode);
+checkValues(event,rowData,value){
+   
+  console.log('BBBBBBBBBBB',this.Brok)
+
+   if(this.Brok.length!=0){
+  this.selectedBrokerList = this.Brok.split(',');
+   }
+  if(this.selectedBrokerList.length!=0){
+    let exist = this.selectedBrokerList.some(ele=>ele == rowData.AgencyCode);
     if(exist) return true;
     else false
   }
   else return false;
 }
-changemenus(rowData,value){
-  let item =rowData  
-  this.Brok.push(item);
-console.log('kkkkkkkkk',this.Brok)
+changemenus(type,event,rowData,value){
+  console.log('hhhhhhhhhhhh',event.checked)
+
+   if(event.checked ==true){
+  if(type=='broker'){
+    let entry = this.selectedBrokerList.find(ele=>ele==rowData);
+    if(!entry){
+      this.selectedBrokerList.push(rowData);
+      this.Brok = this.Brok.concat(","+rowData);
+    }
+  }
+    // let item =rowData  
+    // this.Brok.push(item);
+    // console.log('kkkkkkkkk',this.Brok)
+  }
+  else if(event.checked==false){
+  
+    let index = this.selectedBrokerList.find(ele=>ele==rowData);
+    this.selectedBrokerList.splice(index,1);
+    //let brok:any[]=[];
+    //brok.push(this.Brok);
+     //this.Brok= brok.splice(index,1);
+    //this.Brok.splice(index);
+    console.log('sssssssss',this.Brok)
+  }
 }
 
 
@@ -850,7 +902,7 @@ onsubmit(){
   //const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
   //const selectedList: any[] = this.isChecked.filter((ele: any) => ele.isChecked === true);
   //const selectedList: any[]= this.isChecked;
-  const selectedList: any[] = this.isChecked;
+  let selectedList: any[];
   let exist
   console.log('llllllllllll',selectedList)
   let selectedListId: any = '';
@@ -883,6 +935,7 @@ onsubmit(){
   let att= isChecked.split(',');
   exist=att.filter(item => item);*/
   //exist = selectedList.some(ele=>ele == this.isChecked);
+  selectedList = this.isChecked;
    exist = selectedList.toString();
   console.log('llllllllllllllll',exist)
   this.dialog.closeAll();
@@ -900,13 +953,14 @@ if(this.clickedModal === 'import'){
        }
   this.dialog.closeAll();
 }*/
+selectedList = this.Brok;
 exist = selectedList.toString();
 console.log('llllllllllllllll',exist)
 this.dialog.closeAll();
 }
   if (this.clickedModal === 'import') {
-    this.second=true;
-    this.Brok=selectedListId;
+    this.Brok=exist;
+    console.log('SSSSSSS',this.Brok);
 
   }
   if (this.clickedModal === 'export') {

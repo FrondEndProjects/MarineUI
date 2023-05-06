@@ -239,7 +239,12 @@ export class PremiumInfoComponent implements OnInit {
   onUpdatePremiumInformation() {
     const CommodityDetails = this.premiumDetails?.QuoteDetails?.CommodityDetails[0];
     const CustomerDetails = this.premiumDetails?.CustomerDetails;
-
+       
+    console.log('kkkkkkkkkkk',this.premiumDetails?.Referral);
+    if(this.premiumDetails?.Referral){
+      this.premiumF?.totalPremium.setValue(0);
+    }
+   
     console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
     console.log('ppppppppp',this.premiumF?.warRate.value)
 
@@ -365,8 +370,12 @@ export class PremiumInfoComponent implements OnInit {
 
   onSetValue(){
     console.log('edit')
+  
     const commodityDetails = this.premiumDetails?.QuoteDetails?.CommodityDetails[0];
     const premiumDetail = this.premiumDetails?.PremiumDetails;
+    if(this.premiumDetails?.Referral){
+      this.premiumF?.totalPremium.setValue('0');
+    }
     console.log('premium',premiumDetail);
     console.log('Commodity',commodityDetails);
     this.premiumF?.marineRate.setValue(commodityDetails?.MarineRate);

@@ -134,6 +134,8 @@ this.onGetRegionList();
       let res:any = data;
       if(res.Result){
         this.IssuerDetails = res.Result[0];
+        this.Status= this.IssuerDetails.Status;
+
         this.CommaFormatted();
         this.BranchComma();
         //this.AttachedBranches(this.IssuerDetails.AttachedRegion);
@@ -350,7 +352,7 @@ this.onGetRegionList();
         "Password": this.password,
         "ProductInfo":ProductList,
         "RegionCode":this.IssuerDetails.RegionCode,
-        "Status": this.IssuerDetails.Status,
+        "Status": this.Status,
 
       }
       let urlLink = `${this.ApiUrl1}admin/AdminNewIssuerInsert`;
