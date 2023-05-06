@@ -110,7 +110,53 @@ export class ProtfolioGridComponent implements OnInit {
     }
     this.onLoadGrid();
   }
+  onmenu(row,rowData){
+    console.log('jjjjjjjjjjj',row)
+    console.log('kkkkkkkk',rowData)
+      if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
+  }
+  getSchedulePdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    ReqObj = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo": rowData.data?.QuoteNo
+    }
+    if(type=='Schedule'){
+      
+       UrlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    }
+    else if(type == 'Policy Wordings'){
+      type = 'PolicyWordings'
+       UrlLink = `${this.ApiUrl1}pdf/policywording`;
+    }
+      this.portfolioBrokerService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  onDownloadSchedule(Results,rowData){
 
+    console.log('jjjjjjjj',Results)
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    const reqData = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo":row.QuoteNo
+    }*/
+      if(Results){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download',rowData);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+   
+  }
   onLoadGrid() {
     const urlLink = `${this.ApiUrl1}menu/portfolio/policy`;
     const reqData = {

@@ -104,6 +104,68 @@ export class OpenCoverGridComponent implements OnInit {
       });
 
   }
+  onmenu(row,rowData){
+    console.log('jjjjjjjjjjj',row)
+    console.log('kkkkkkkk',rowData)
+      if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
+
+  }
+  getSchedulePdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    
+    if(type=='Schedule'){
+      ReqObj = {
+        "BranchCode":this.userDetails.BranchCode,
+        //"PolicyNo":row.data.OriginalPolicyNo,
+          "EndtStatus":rowData.data.EndtStatus,
+          "ImageStatus": "Y",
+          "OpenCoverNo": rowData.data.OpenCoverNo,
+          "ProposalNo": rowData.data.ProposalNo,
+          "Status":rowData.data.Status
+  
+      };
+       UrlLink = `${this.ApiUrl1}pdf/opencover`;
+    }
+    else if(type == 'Policy Wordings'){
+      type = 'PolicyWordings'
+      UrlLink = `${this.ApiUrl1}pdf/opencover/policywording`;
+      ReqObj = {
+        "BranchCode":this.userDetails.BranchCode,
+        //"PolicyNo":row.data.OriginalPolicyNo,
+        "EndtStatus":rowData.data.EndtStatus,
+        "ImageStatus": "Y",
+        "OpenCoverNo": rowData.data.OpenCoverNo,
+        "ProposalNo": rowData.data.ProposalNo,
+        "Status":rowData.data.Status
+
+      };
+    }
+      this.sharedService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  onDownloadSchedule(Results,rowData){
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    const reqData = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo":row.QuoteNo
+    }*/
+      if(Results){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download',rowData);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+   
+  }
   onChangeBroker() {
     this.loginId = this.selectedBroker;
     this.onLoadData();
@@ -185,6 +247,8 @@ export class OpenCoverGridComponent implements OnInit {
          sessionStorage.setItem('WithCertifi', 'true');
          this.router.navigate([`${this.routerBaseLink}/new-quotes`]);
     }
+    console.log("Event",event)
+    if(event.name=='Schedule' || event.name=='Policy Wordings')  this.getSchedulePdf(event,event.name);
   }
 
   onEdit(item: any) {

@@ -33,21 +33,21 @@
                 [(ngModel)]="mocFilterValue">
             </div>
           </div> -->
-          <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMocData" [filterValue]="filterValue"
+          <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMocData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
             (onOpenCoverAction)="onOpenCoverActions($event)">
           </app-grid-table>
         </ng-container>
       </nb-tab>
       <nb-tab tabTitle="Marine Open Cover(MOP)">
         <ng-container *ngIf="openCoverMopData">
-          <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMopData" [filterValue]="filterValue"
+          <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMopData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
           (onOpenCoverAction)="onOpenCoverActions($event)">
           </app-grid-table>
         </ng-container>
       </nb-tab>
       <nb-tab tabTitle="Marine Risk Land">
         <ng-container *ngIf="marineLandCoverData">
-          <app-grid-table [cols]="openCoverMocHeader" [data]="marineLandCoverData" [filterValue]="filterValue"
+          <app-grid-table [cols]="openCoverMocHeader" [data]="marineLandCoverData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
           (onOpenCoverAction)="onOpenCoverActions($event)">
           </app-grid-table>
         </ng-container>

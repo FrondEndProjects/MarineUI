@@ -23,8 +23,8 @@
       </div>
     </div>
   </div>
-  <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="isActionBtn($event)">
-  </app-material-table>
+  <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (onMenu)="onmenu($event,$event.name)" (isActionBtn)="isActionBtn($event)">
+  </app-grid-table>
   <!-- <div class="maan-card-footer">
     <app-back-btn></app-back-btn>
   </div> -->
