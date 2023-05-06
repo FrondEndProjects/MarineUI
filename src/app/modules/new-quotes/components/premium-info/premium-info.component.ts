@@ -249,7 +249,11 @@ export class PremiumInfoComponent implements OnInit {
     if(this.premiumDetails?.Referral){
       this.premiumF?.totalPremium.setValue(0);
     }
-   
+    if(this.premiumDetails?.Referral){
+      if(this.premiumDetails?.Referral.length!=0 && this.QuoteStatus=='QE'){
+          this.QuoteStatus = 'RU';
+      }
+    }
     console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
     console.log('ppppppppp',this.premiumF?.warRate.value)
 
