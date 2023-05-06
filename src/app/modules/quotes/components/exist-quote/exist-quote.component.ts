@@ -105,8 +105,8 @@ export class ExistQuoteComponent implements OnInit {
           this.columnHeader = [
             { key: 'QuoteNo', display: 'Quote No' },
             { key: 'CustomerName', display: 'Name' },
-            { key: 'Email', display: 'Email' },
-            { key: 'CustomerId', display: 'Customer Id' },
+            { key: 'QuotationDate', display: 'Quote Date' },
+            { key: 'ValidityDate', display: 'Validity Date' },
             { key: 'Premium', display: 'Premium' },
             {
               key: "edit",

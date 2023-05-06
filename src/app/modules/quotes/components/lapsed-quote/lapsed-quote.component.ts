@@ -100,7 +100,8 @@ export class LapsedQuoteComponent implements OnInit {
           this.columnHeader = [
             { key: 'QuoteNo', display: 'Quote No' },
             { key: 'CustomerName', display: 'Name' },
-            { key: 'CustomerId', display: 'Customer Id' },
+            { key: 'QuotationDate', display: 'Quote Date' },
+            { key: 'ValidityDate', display: 'Validity Date' },
             {
               key: "active",
               display: "Active",

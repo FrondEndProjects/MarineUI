@@ -93,10 +93,7 @@ export class CustomerInfoComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log('hhhhhhhhhhhhhhhhh',this.userDetails.LoginResponse.AgencyCode);
       
-    if(this.userDetails.UserType =='Broker'){
-    this.brokerFormComponent.onChangeBroker;
-    this.customerFormComponent.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
-    }
+    
     this.userDetails = this.userDetails?.LoginResponse;
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
@@ -200,6 +197,10 @@ export class CustomerInfoComponent implements OnInit {
     });
     this.onHeaderDetails();
     this.onendorsementSelected();
+    if(this.userDetails.UserType =='Broker'){
+      this.brokerFormComponent.onChangeBroker;
+      this.customerFormComponent.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
+      }
   }
 
 
@@ -254,7 +255,7 @@ export class CustomerInfoComponent implements OnInit {
           //console.log('kkkkkkkkkkkkkk',this.broCode)
           this.brokerF.borker.setValue(this.editQuoteData?.BrokerCode);
           if(this.userDetails.UserType !='Broker'){
-            this.brokerFormComponent.onChangeBroker();
+            this.brokerFormComponent?.onChangeBroker();
           }
           this.customerFormComponent.brokerCode = this.editQuoteData?.BrokerCode;
           //this.customerFormComponent.onGetCustomerList(this.broCode);

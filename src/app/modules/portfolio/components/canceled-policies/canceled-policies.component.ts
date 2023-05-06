@@ -157,7 +157,24 @@ export class CanceledPoliciesComponent implements OnInit {
       (err) => { },
     );
   }
+  onmenu(row,rowData){
+    console.log('jjjjjjjjjjj',row)
+    console.log('kkkkkkkk',rowData)
+    if(rowData=='Schedule'){
+        this.getSchedulePdf(row);
+    }
+  }
+  getSchedulePdf(rowData){
+      let ReqObj = {
+        "BranchCode": this.userDetails?.BranchCode,
+        "QuoteNo": this.userDetails?.QuoteNo
+      }
+      let UrlLink = `${this.ApiUrl1}menu/portfolio/policycancelled`;
+      this.portfolioBrokerService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+        (data: any) => {
 
+        });
+  }
   isActionBtn(event: any) {
      const data:any = {
       'PolicyNo':event.PolicyNo,

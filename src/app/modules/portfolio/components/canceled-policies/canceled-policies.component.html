@@ -1,5 +1,11 @@
 <div class="maan-card">
   <div class="row">
+    <div class="col-12">
+      <div class="middle-line">
+        Cancelled Policies
+      </div>
+    </div>
+  <div class="row">
     <div class="col-12 col-md-4 col-lg-4" *ngIf="isIssuer && userDetails?.UserType !='admin'">
       <div class="input-control-container">
         <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
@@ -17,8 +23,8 @@
       </div>
     </div>
   </div>
-  <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="isActionBtn($event)">
-  </app-material-table>
+  <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (onMenu)="onmenu($event,$event.name)" (isActionBtn)="isActionBtn($event)">
+  </app-grid-table>
   <!-- <div class="maan-card-footer">
     <app-back-btn></app-back-btn>
   </div> -->
