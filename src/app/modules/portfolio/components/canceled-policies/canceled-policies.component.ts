@@ -4,6 +4,8 @@ import { SessionStorageService } from '../../../../shared/storage/session-storag
 import { PortfolioComponent } from '../../portfolio.component';
 import { PortfolioService } from '../../portfolio.service';
 import * as Mydatas from '../../../../app-config.json';
+import { MatDialog } from '@angular/material/dialog';
+import { ViewcancelpolicyComponent } from '../viewcancelpolicy/viewcancelpolicy.component';
 
 @Component({
   selector: 'app-canceled-policies',
@@ -37,7 +39,8 @@ export class CanceledPoliciesComponent implements OnInit {
   constructor(
     private portfolioBrokerService: PortfolioService,
     private router: Router,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
+    public dialogService: MatDialog,
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
@@ -162,6 +165,23 @@ export class CanceledPoliciesComponent implements OnInit {
     console.log('kkkkkkkk',rowData)
       if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
 
+      if(rowData=='Canceled Certificate'){
+        this.canceldocument();
+      }
+
+  }
+
+  canceldocument(){
+    const dialogRef = this.dialogService.open(ViewcancelpolicyComponent,{
+      data: {
+        title: "Canceled Policy",
+             imageUrl: ""
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;

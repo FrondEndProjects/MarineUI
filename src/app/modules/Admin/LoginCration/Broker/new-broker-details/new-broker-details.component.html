@@ -609,9 +609,9 @@
                                           <label class="input-form-label">Provision for Loading/Discount<span class="text-required">*</span></label>
                                           <div class="input-form-radio-box">
                                             <div class="radio-toolbar">
-                                              <input id="fac-yes" type="radio" name="status" value="Y"  [(ngModel)]="Freight">
+                                              <input id="fac-yes" type="radio" name="status" value="Y"  [(ngModel)]="Provision">
                                               <label for="fac-yes">Yes</label>
-                                              <input type="radio" id="fac-no" name="status" value="N"  [(ngModel)]="Freight">
+                                              <input type="radio" id="fac-no" name="status" value="N"  [(ngModel)]="Provision">
                                               <label for="fac-no">No</label>
                                             
                                             </div>
@@ -620,7 +620,7 @@
                                       </div>
 
 
-                                      <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Freight == 'Y'">
+                                      <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Provision == 'Y'">
                                         <div class="customer-search-container">
                                             <div class="input-control-container">
                                                 <label class="input-form-label">Loading % Max<span
@@ -633,7 +633,7 @@
                                         </div>
                                     </div>
                                           
-                                    <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Freight == 'Y'">
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="Provision == 'Y'">
                                         <div class="customer-search-container">
                                             <div class="input-control-container">
                                                 <label class="input-form-label">Discount % Max<span
@@ -664,9 +664,9 @@
                                           <label class="input-form-label">Provision For Creation<span class="text-required">*</span></label>
                                           <div class="input-form-radio-box">
                                             <div class="radio-toolbar">
-                                              <input id="fac-b" type="radio" name="Pro" value="Y" [(ngModel)]="Provision">
+                                              <input id="fac-b" type="radio" name="Pro" value="Y" [(ngModel)]="Freight">
                                               <label for="fac-b">Yes</label>
-                                              <input type="radio" id="fac-c" name="Pro" value="N"  [(ngModel)]="Provision">
+                                              <input type="radio" id="fac-c" name="Pro" value="N"  [(ngModel)]="Freight">
                                               <label for="fac-c">No</label>
                                             
                                             </div>

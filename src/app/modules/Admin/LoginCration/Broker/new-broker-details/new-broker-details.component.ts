@@ -1017,7 +1017,7 @@ agent=this.AgencyCode
     else{
       CustomerId="";
     }
-    if(this.Freight=='N'){
+    if(this.Provision=='N'){
       this.LoadingPremium="";
       this.DiscountPremium="";
     }
@@ -1044,13 +1044,13 @@ let ReqObj={
   "CustomerId":CustomerId,
   "CustomerName": null,
   "DiscountPremium": this.DiscountPremium,
-  "Freight": this.Freight,
+  "Freight": this.Provision,
   "InsuranceEndLimit": this.InsuranceEndLimit,
   "LoadingPremium": this.LoadingPremium,
   "MinPremiumAmount": this.MinPremiumAmount,
   "PayReceipt":"N",
   "ProductId": this.ProId,
-  "Provision": this.Provision,
+  "Provision": this.Freight,
   "Remarks": "N",
   "UserId": ""
 }
