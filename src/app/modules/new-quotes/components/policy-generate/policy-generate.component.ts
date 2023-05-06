@@ -215,6 +215,7 @@ export class PolicyGenerateComponent implements OnInit {
                  if(i==this.uploadDocuments.length)
                   {
                     this.uploadedDocumentsList = [];
+                    this.uploadDocuments=[];
                     this.onFinalProceed();
                     this.ongetUploadedDocument();
                   }
