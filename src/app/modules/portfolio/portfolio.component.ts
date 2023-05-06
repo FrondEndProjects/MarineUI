@@ -156,11 +156,11 @@ export class PortfolioComponent implements OnInit {
     const reqData = {
       "BranchCode":this.userDetails.BranchCode,
       //"PolicyNo":row.data.OriginalPolicyNo,
-  "EndtStatus":row.data.EndtStatus,
-  "ImageStatus": "Y",
-  "OpenCoverNo": row.data.OpenCoverNo,
-  "ProposalNo": row.data.ProposalNo,
-  "Status":row.data.Status
+      "EndtStatus":row.data.EndtStatus,
+      "ImageStatus": "Y",
+      "OpenCoverNo": row.data.OpenCoverNo,
+      "ProposalNo": row.data.ProposalNo,
+      "Status":row.data.Status
 
     };
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
