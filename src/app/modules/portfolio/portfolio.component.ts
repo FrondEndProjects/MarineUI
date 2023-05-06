@@ -127,6 +127,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   scheduled(row,rowData){
+    let Results='';
     console.log('rrrrrrr',row.data.OriginalPolicyNo)
     const urlLink = `${this.ApiUrl1}pdf/opencover`;
     const reqData = {
@@ -142,6 +143,9 @@ export class PortfolioComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
+        Results=data.Result
+        this.onDownloadSchedule(Results,rowData)
+        
         //sessionStorage.setItem('ProposalNo',data.ProposalNo);
         //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
 
@@ -150,7 +154,31 @@ export class PortfolioComponent implements OnInit {
     );
   }
 
+  onDownloadSchedule(Results,rowData){
+
+    console.log('jjjjjjjj',Results)
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    const reqData = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo":row.QuoteNo
+    }*/
+      if(Results){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download',rowData);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+   
+  }
+
   policyword(row,rowData){
+    let Results:any;
     console.log('rrrrrrr',row.data.OriginalPolicyNo)
     const urlLink = `${this.ApiUrl1}pdf/opencover/policywording`;
     const reqData = {
@@ -166,6 +194,8 @@ export class PortfolioComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
+        Results=data.Result
+        this.onDownloadSchedule(Results,rowData)
         //sessionStorage.setItem('ProposalNo',data.ProposalNo);
         //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
 
@@ -180,6 +210,8 @@ export class PortfolioComponent implements OnInit {
   }
 
   EndtSchedule(row,rowData){
+    let Results:any='';
+    console.log('kkkkkkkkkkkk',row.data.OriginalPolicyNo)
     const urlLink = `${this.ApiUrl1}pdf/endtcertificate`;
     const reqData = { 
     "BranchCode": this.userDetails.BranchCode,
@@ -192,6 +224,8 @@ export class PortfolioComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data?.Result) {
+          Results=data.Result
+          this.onDownloadSchedule(Results,rowData)
           
         }
         //this.branchList = data || [];
@@ -240,13 +274,20 @@ export class PortfolioComponent implements OnInit {
        this.deactive(row,rowData)
     }
     else if(rowData == 'View'){
-        this.router.navigate(['/Marine/viewportfolio'])
+        this.views(row,rowData);
     }
   }
 
   onschedule(){
 
   }
+
+
+  views(row,rowData){
+    sessionStorage.setItem('ViewProposalNo',row.data.ProposalNo);
+    this.router.navigate(['/Marine/viewportfolio']);
+  }
+
 
   onEdit(event: any) {
   console.log(event);

@@ -4,6 +4,7 @@ import * as Mydatas from '../../../app-config.json';
 import { SharedService } from '../../../shared/shared.service';
 import { SessionStorageService } from '../../../shared/storage/session-storage.service';
 import { AdminReferralService } from '../../admin-referral/admin-referral.service';
+import { OpenCoverService } from '../../open-cover/open-cover.service';
 
 @Component({
   selector: 'app-viewportfolio',
@@ -30,6 +31,30 @@ export class ViewPortfolioComponent implements OnInit {
   pendingvalue:any='View';
   public filterValue;
   comodityHeader:any[]=[];  
+  viewlist:any;
+  bussinesTypeList:any[]=[];
+  openCoverTypeList:any[]=[]; 
+excutiveList:any[]=[];
+currencyList:any[]=[];
+DeclarationTypeList:any[]=[];
+editCountryList:any[]=[];
+  bussinesstype: any;
+  bussiness: any;
+  opencover: any;
+  opproduct: any;
+  brokerId: any;
+  brokerid: any;
+  ExecutiveId: any;
+  Executiveid: any;
+  currency: any;
+  currencyid: any;
+  DecType: any;
+  Decid: any;
+  countrylist:any[]=[];
+  uw: any;
+  orginCountry:any[]=[];
+  destCountryList:any[]=[];
+
 
 
 
@@ -38,6 +63,7 @@ export class ViewPortfolioComponent implements OnInit {
     private router: Router,
     private sessionStorageService: SessionStorageService,
     private adminReferralService: AdminReferralService,
+    private openCoverService: OpenCoverService,
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
@@ -93,10 +119,263 @@ export class ViewPortfolioComponent implements OnInit {
         },
       },
     ];
+    this.onGetCountryList();
+    let viewproposalNo=sessionStorage.getItem('ViewProposalNo')
+
+    if(viewproposalNo){
+      this.viewedit(viewproposalNo)
+      this.onGetCountry(viewproposalNo);
+      this.onGetdestCountry(viewproposalNo);
+    }
   }
 
   ngOnInit(): void {
-    this.onGetBrokerList();
+    this.onLoadDropdownList();
+  }
+
+  onLoadDropdownList() {
+    this.onGetBusinessTypeDropdownList();
+    this.onGetOpenCoverTypeDropdownList();
+    this.onGetBrokerDetailsDropdownList();
+    this.onGetExcutiveDropdownList();
+    this.onGetCurrencyDropdownList();
+    this.onGetDeclarationDropdownList();
+  }
+
+
+  viewedit(viewproposalNo){
+   
+    const urlLink = `${this.ApiUrl1}OpenCover/quote/edit`;
+    const reqData = {
+      "BranchCode":this.userDetails.BranchCode,
+      "ProposalNo":viewproposalNo,
+    };
+    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.viewlist=data.Result;
+        console.log('kkkkkkkkkkkkk',this.viewlist);
+        this.onGetBusinessTypeDropdownList();
+        this.bussinesstype=this.viewlist.BusinessType;
+        this.brokerId=this.viewlist.BrokerId;
+        this.ExecutiveId=this.viewlist.ExecutiveId;
+        this.opencover=this.viewlist.ProductId;
+        this.currency=this.viewlist.Currency;
+        this.DecType=this.viewlist.DecType;
+
+
+
+        if(this.bussinesstype){
+          this.onGetBusinessTypeDropdownList();
+        }
+        if(this.opencover){
+          this.onGetOpenCoverTypeDropdownList(); 
+        }
+        if(this.brokerId){
+          this.onGetBrokerDetailsDropdownList() 
+        }
+        if(this.ExecutiveId){
+          this.onGetExcutiveDropdownList()
+        }
+        if(this.currency){
+          this.onGetCurrencyDropdownList()
+        }
+        if(this.DecType){
+          this.onGetDeclarationDropdownList()
+        }
+       
+        
+        //sessionStorage.setItem('ProposalNo',data.ProposalNo);
+        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+
+      },
+      (err) => { },
+    );
+  }
+
+  onGetBusinessTypeDropdownList() {
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/businesstype`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          this.bussinesTypeList = data?.Result;
+          console.log('kkkkkkkkkkkkkkkk',this.bussinesstype,this.bussinesTypeList)
+          const bussinessList: any = this.bussinesTypeList.find(ele => ele.Code == this.bussinesstype);
+          console.log('llllllllllll',bussinessList)
+        this.bussiness=bussinessList?.CodeDescription;
+        }
+      },
+      (err) => { },
+    );
+  }
+  onGetOpenCoverTypeDropdownList() {
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/productdetails`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          this.openCoverTypeList = data?.Result;
+          console.log('kkkkkkkkkkkkkkkk',this.opencover,this.openCoverTypeList)
+          const bussinessList: any = this.openCoverTypeList.find(ele => ele.Code == this.opencover);
+          console.log('llllllllllll',bussinessList)
+        this.opproduct=bussinessList?.CodeDescription;
+        }
+      },
+      (err) => { },
+    );
+  }
+  onGetBrokerDetailsDropdownList() {
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/brokerdetails`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          this.brokerList = data?.Result;
+          console.log('kkkkkkkkkkkkkkkk',this.brokerId,this.brokerList)
+          const bussinessList: any = this.brokerList.find(ele => ele.Code == this.brokerId);
+          console.log('llllllllllll',bussinessList)
+        this.brokerid=bussinessList?.CodeDescription;
+        }
+      },
+      (err) => { },
+    );
+  }
+  onGetExcutiveDropdownList() {
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/excutivedetails`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          this.excutiveList = data?.Result;
+          console.log('kkkkkkkkkkkkkkkk',this.ExecutiveId,this.excutiveList)
+          const bussinessList: any = this.excutiveList.find(ele => ele.Code == this.ExecutiveId);
+          console.log('llllllllllll',bussinessList)
+        this.Executiveid=bussinessList?.CodeDescription;
+        }
+      },
+      (err) => { },
+    );
+  }
+
+  onGetCurrencyDropdownList() {
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/currency`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+      'CountryId': this.userDetails?.CountryId,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          this.currencyList = data?.Result;
+          console.log('kkkkkkkkkkkkkkkk',this.currency,this.currencyList)
+          const bussinessList: any = this.currencyList.find(ele => ele.Code == this.currency);
+          console.log('llllllllllll',bussinessList)
+        this.currencyid=bussinessList?.CodeDescription;
+
+        }
+      },
+      (err) => { },
+    );
+  }
+
+  onGetDeclarationDropdownList() {
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/declarationtype`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+      'CountryId': this.userDetails?.CountryId,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          this.DeclarationTypeList = data?.Result;
+          console.log('kkkkkkkkkkkkkkkk',this.DecType,this.DeclarationTypeList)
+          const bussinessList: any = this.currencyList.find(ele => ele.Code == this.DecType);
+          console.log('llllllllllll',bussinessList)
+        this.Decid=bussinessList?.CodeDescription;
+        }
+      },
+      (err) => { },
+    );
+  }
+
+  onGetCountryList() {
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/country`;
+    const reqData = {
+      'BranchCode': this.userDetails.BranchCode,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        this.countrylist= data?.Result;
+        console.log('CCCCCCCCCCCCCCCCCC',this.countrylist)
+          const bussinessList: any = this.countrylist.find(ele => ele.Code == this.uw);
+          console.log('llllllllllll',bussinessList)
+        if(bussinessList){
+          this.orginCountry.push(bussinessList?.CodeDescription);
+        }
+       
+      },
+      (err) => { },
+    );
+  }
+
+
+  onGetCountry(viewproposalNo) {
+    console.log('ooooooooooo')
+    const urlLink = `${this.ApiUrl1}OpenCover/originationcountry/edit`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+      "ProposalNo":viewproposalNo,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Result) {
+          this.editCountryList = data?.Result?.OriginationCountryInfo;
+          console.log('jjjjjjjjjjjjj',data.Result.OriginationCountryInfo)
+          console.log('EEEEEEEEEEEEE',this.editCountryList)
+
+           
+        }
+      },
+      (err) => { },
+    );
+  }
+
+  onGetdestCountry(viewproposalNo) {
+    console.log('ooooooooooo')
+    const urlLink = `${this.ApiUrl1}OpenCover/destinationcountry/edit`;
+    const reqData = {
+      'BranchCode': this.userDetails?.BranchCode,
+      "ProposalNo":viewproposalNo,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Result) {
+          this.destCountryList = data?.Result?.DestinationCountryInfo;
+          console.log('jjjjjjjjjjjjj',data.Result.OriginationCountryInfo)
+          console.log('EEEEEEEEEEEEE',this.editCountryList)
+
+           
+        }
+      },
+      (err) => { },
+    );
   }
 
   goback(){
@@ -107,228 +386,6 @@ export class ViewPortfolioComponent implements OnInit {
 public applyFilter(event: Event) {
   this.filterValue = (event.target as HTMLInputElement).value;
 }
-  onGetBrokerList() {
-    const urlLink = `${this.ApiUrl1}opencover/dropdown/portfolio/brokerList`;
-    const reqData = {
-      'BranchCode': this.userDetails.BranchCode,
-    };
-    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.brokerList = data?.Result;
-      },
-      (err) => { },
-    );
-  }
-  onChangeBroker() {
-    this.loginId = this.selectedBroker;
-    this.onLoadGrid();
-  }
-
-  onLoadGrid() {
-    const urlLink = `${this.ApiUrl1}opencover/report/policyregister`;
-    const reqData = {
-      "LoginId": this.loginId,
-      "BranchCode": this.userDetails.BranchCode
-    }
-    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.tableData = [];
-
-        if (data?.Result) {
-          this.columnHeader = [
-
-            { key: 'MissippiOpenCoverNo', display: 'Core Policy No', sticky: false, },
-            { key: 'CompanyName', display: 'Company Name' },
-            { key: 'ProposalNo', display: 'Proposal No' },
-            { key: 'CrossVoyageTurnover', display: 'Balance Suminsured' },
-            { key: 'OpenCoverStartDate', display: 'Policy StartDate' },
-            { key: 'OpenCoverEndDate', display: 'Policy EndDate' },
-            {
-              key: 'Endorse',
-              display: 'Endorse',
-              config: {
-                isEdit: true,
-              }
-            },
-
-            {
-              key: 'actions',
-              display: 'Action',
-              sticky: true,
-              config: {
-                isMenuAction: true,
-                menuList: [
-                  { name: 'View' },
-                  { name: 'Schedule' },
-                  { name: 'Policy Wordings' },
-                  { name: 'Documents' },
-                  { name: 'EndtSchedule' },
-                  { name: 'DeActivate' },
-                ]
-              },
-            },
-          ];
-          this.tableData = data?.Result;
-        }
-      },
-      (err) => { },
-    );
-  }
-
-  scheduled(row,rowData){
-    console.log('rrrrrrr',row.data.OriginalPolicyNo)
-    const urlLink = `${this.ApiUrl1}pdf/opencover`;
-    const reqData = {
-      "BranchCode":this.userDetails.BranchCode,
-      //"PolicyNo":row.data.OriginalPolicyNo,
-  "EndtStatus":row.data.EndtStatus,
-  "ImageStatus": "Y",
-  "OpenCoverNo": row.data.OpenCoverNo,
-  "ProposalNo": row.data.ProposalNo,
-  "Status":row.data.Status
-
-    };
-    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        //sessionStorage.setItem('ProposalNo',data.ProposalNo);
-        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
-
-      },
-      (err) => { },
-    );
-  }
-
-  policyword(row,rowData){
-    console.log('rrrrrrr',row.data.OriginalPolicyNo)
-    const urlLink = `${this.ApiUrl1}pdf/opencover/policywording`;
-    const reqData = {
-      "BranchCode":this.userDetails.BranchCode,
-      //"PolicyNo":row.data.OriginalPolicyNo,
-  "EndtStatus":row.data.EndtStatus,
-  "ImageStatus": "Y",
-  "OpenCoverNo": row.data.OpenCoverNo,
-  "ProposalNo": row.data.ProposalNo,
-  "Status":row.data.Status
-
-    };
-    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        //sessionStorage.setItem('ProposalNo',data.ProposalNo);
-        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
-
-      },
-      (err) => { },
-    );
-  }
-
-
-  viewDocument(){
-
-  }
-
-  EndtSchedule(row,rowData){
-    const urlLink = `${this.ApiUrl1}pdf/endtcertificate`;
-    const reqData = { 
-    "BranchCode": this.userDetails.BranchCode,
-    "ApplicationNo":"",
-    "BelongingBranchCode":"",
-    "PolicyNo": row.data.OriginalPolicyNo
-   
-    };
-    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        if (data?.Result) {
-          
-        }
-        //this.branchList = data || [];
-        //this.getExistingAdmin();
-      },
-      (err) => { },
-    );
-  }
-
-  deactive(row,rowData){
-    const urlLink = `${this.ApiUrl1}OpenCover/deactivate`;
-    const reqData = { 
-    "BranchCode": this.userDetails.BranchCode,
-    "ProposalNo": row.data.ProposalNo
-    };
-    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        if (data?.Result) {
-          this. onChangeBroker(); 
-        }
-        //this.branchList = data || [];
-        //this.getExistingAdmin();
-      },
-      (err) => { },
-    );
-  }
-  onmenu(row,rowData){
-    console.log('jjjjjjjjjjj',row)
-    console.log('kkkkkkkk',rowData)
-
-    if(rowData=='Schedule'){
-      this.scheduled(row,rowData);
-    }
-    else if(rowData=='Policy Wordings'){
-      this.policyword(row,rowData)
-    }
-    else if(rowData=='Documents'){
-      this.viewDocument()
-    }
-    else if(rowData=='EndtSchedule'){
-     this.EndtSchedule(row,rowData)
-    }
-    else if(rowData=='DeActivate'){
-       this.deactive(row,rowData)
-    }
-    else if(rowData == 'View'){
-    
-    }
-  }
-
-  onRedirect(value){
-    this.pendingvalue=value;
-    if(this.pendingvalue == 'View'){
-     
-    }
-    else if( this.pendingvalue == 'ChangePassword'){
-       
-    }
-
-    else if(this.pendingvalue == 'RejectedQuotes'){
-      
-    }
-  }
-  onschedule(){
-
-  }
-
-  onEdit(event: any) {
-  console.log(event);
-    this.onEndorse(event)
-  }
-
-  onEndorse(event:any) {
-    const urlLink = `${this.ApiUrl1}OpenCover/endorsement`;
-    const reqData = {
-      'ProposalNo': event.ProposalNo,
-    };
-    this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        sessionStorage.setItem('ProposalNo',data.ProposalNo);
-        this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
-
-      },
-      (err) => { },
-    );
-  }
+ 
+  
 }

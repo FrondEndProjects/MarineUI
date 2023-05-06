@@ -17,6 +17,7 @@
           </ng-select>
       </div>
     </div>-->
+    <div class="card-header m-4">
     <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
           <label class="input-form-label">Login Type<span class="text-required">*</span></label>
@@ -24,11 +25,14 @@
           </ng-select>
         </div>
       </div>
+      </div>
     <!-- /SEARCH FIELD -->
+    <div class="card-body">
     <ng-container>
         <app-commodity-table [cols]="columnHeader" [data]="tableData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
         </app-commodity-table>
     </ng-container>
+    </div>
    
 
     <!-- PAGINATOR -->
