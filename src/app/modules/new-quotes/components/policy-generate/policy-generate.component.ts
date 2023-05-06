@@ -283,12 +283,19 @@ export class PolicyGenerateComponent implements OnInit {
       this.router.navigate([`${this.routerBaseLink}/admin-referral/pending-quote`]);
     }
     else{
-      if(this.generateCerti == 'Q' || this.generateCerti == 'N'){
-        this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
+      let status = sessionStorage.getItem('QuoteStatus')
+      if(status=='E'){
+        this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-grid`]);
       }
-      else if(this.generateCerti == 'Y'){
-        this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
+      else{
+        if(this.generateCerti == 'Q' || this.generateCerti == 'N'){
+          this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
+        }
+        else if(this.generateCerti == 'Y'){
+          this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
+        }
       }
+      
       
     }
 

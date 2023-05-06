@@ -127,8 +127,17 @@ export class EndorsementGridComponent implements OnInit {
     };
     sessionStorage.setItem("endorsement", JSON.stringify(data));
     sessionStorage.setItem('QuoteStatus',event?.Status);
-
-    this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
+    sessionStorage.setItem('EndtReffStatus',event.ReferralStatus);
+    if(event.name!='Schedule'){
+      if(event.ReferralStatus=='ReferalApproved'){
+        this.router.navigate([`${this.routerBaseLink}/new-quotes/policy-generate`]);
+      }
+      else{
+        this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
+      }
+    }
+    
+    
   }
 
   onNewEndorse() {
