@@ -106,6 +106,7 @@ public loginType:any;
   }*/
 
   getExistingAdmin() {
+    this.tableData=[];
 
     let ReqObj = {
       "BranchCode":this.userDetails?.BranchCode,
@@ -119,19 +120,20 @@ public loginType:any;
           console.log(data);
           this.columnHeader = [
             //{key: 'S.No', display: 'S.No'},
+            {key: 'Core Application Policy No', display: 'MissippiOpenCoverNo'},
             {key: 'ProposalNo', display: 'Proposal No'},
             {key: 'CompanyName', display: 'Customer Name'},
             {key: 'OpenCoverStartDate', display: 'Policy Start Date'},
             {key: 'OpenCoverEndDate', display: 'Policy End Date'},
            //{key: 'EffectiveDate', display: 'Effective Date'},
-            {key: 'Draft', display: 'Draft'},
+            /*{key: 'Draft', display: 'Draft'},
             {
               key: 'actions',
               display: 'Edit',
               config: {
                 isEdit: true,
               }
-            }
+            }*/
           ];
           this.tableData = data?.Result;
         }

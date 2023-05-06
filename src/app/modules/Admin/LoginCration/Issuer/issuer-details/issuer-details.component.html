@@ -321,14 +321,18 @@
 
     <div *ngIf="value == 'Included'">
         <div class="row">
+            <div class="card-body">
             <ng-container *ngIf="IncludedData.length!=0">
-                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onSelectCopy)="onSelectCustomer($event)">
                 </app-grid-table>
                
             </ng-container>
-            <ng-container *ngIf="IncludedData.length==0">
-                <div class="text-center"> No Data Available</div>
+            </div>
+            <div class="card-body mt-2">
+            <ng-container *ngIf="IncludedData.length==0" class="m-5">
+                <div class="text-center m-5"> No Data Available</div>
             </ng-container>
+            </div>
            
         </div>
     </div>
@@ -336,13 +340,15 @@
     <div *ngIf="value == 'Excluded'">
         <div class="row">
             <ng-container *ngIf="IncludedData.length!=0">
-                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="ExcludedData" [filterValue]="filterValue" (onSelectCopy)="onSelectCustomer($event)">
                 </app-grid-table>
                
             </ng-container>
-            <ng-container *ngIf="IncludedData.length==0">
-                <div class="text-center"> No Data Available</div>
+            <div class="card-body mt-2">
+            <ng-container *ngIf="IncludedData.length==0" class="m-5">
+                <div class="text-center m-5"> No Data Available</div>
             </ng-container>
+            </div>
            
         </div>
     </div>

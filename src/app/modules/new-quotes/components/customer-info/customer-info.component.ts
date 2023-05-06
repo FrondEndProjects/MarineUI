@@ -91,6 +91,12 @@ export class CustomerInfoComponent implements OnInit {
     private sessionStorageService: SessionStorageService
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    console.log('hhhhhhhhhhhhhhhhh',this.userDetails.LoginResponse.AgencyCode);
+      
+    if(this.userDetails.UserType =='Broker'){
+    this.brokerFormComponent.onChangeBroker;
+    this.customerFormComponent.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
+    }
     this.userDetails = this.userDetails?.LoginResponse;
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));

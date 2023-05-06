@@ -17,18 +17,22 @@
           </ng-select>
       </div>
     </div>-->
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="card-header m-4">
+    <div class="col-12 col-md-4 col-lg-4 pl-2">
         <div class="input-control-container">
           <label class="input-form-label">Login Type<span class="text-required">*</span></label>
           <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="loginType" (change)="getExistingAdmin()" [items]="loginTypeList" bindValue="Code" bindLabel="CodeDescription">
           </ng-select>
         </div>
       </div>
+    </div>
     <!-- /SEARCH FIELD -->
+    <div class="card-body">
     <ng-container>
         <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
         </app-grid-table>
     </ng-container>
+    </div>
    
 
     <!-- PAGINATOR -->

@@ -27,20 +27,22 @@
                   <div class="col-12 col-md-4 col-lg-4">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Business Type<span class="text-required">*</span></label>
-                      <div class="mt-2">Direct Policies</div>
+                      <div class="mt-2">{{bussiness}}</div>
+                      <!--<ng-select  class="input-form-select" [(ngModel)]="viewlist.BusinessType" [items]="bussinesTypeList" bindValue="Code" bindLabel="CodeDescription">
+                      </ng-select>-->
                      
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Open Cover Type<span class="text-required">*</span></label>
-                       <div class="mt-2">Marine Open Cover(MOC)</div>
+                       <div class="mt-2">{{opproduct}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Select Broker<span class="text-required">*</span></label>
-                      <div class="mt-2">Insurance Broker Organization</div>
+                      <div class="mt-2">{{brokerid}}</div>
                     </div>
                   </div>
                  
@@ -48,21 +50,21 @@
                     <div class="col-12 col-md-4 col-lg-4 mt-3">
                         <div class="input-control-container">
                           <label class="input-form-label" style="color:lightslategrey">Sales Executive<span class="text-required">*</span></label>
-                           <div class="mt-2">NO BDM</div>
+                           <div class="mt-2">{{Executiveid}}</div>
                         </div>
                       </div>
                       <div class="col-12 col-md-4 col-lg-4 mt-3">
                         <div class="customer-search-container">
                         <div class="input-control-container">
                           <label class="input-form-label" style="color:lightslategrey">Customer<span class="text-required">*</span></label>
-                          <div class="mt-2">Mohammad Syed</div>
+                          <div class="mt-2">{{viewlist.InsuredName}}</div>
                         </div>
                       </div>
                       </div>
                       <div class="col-12 col-md-4 col-lg-4 mt-3">
                         <div class="input-control-container">
                           <label class="input-form-label" style="color:lightslategrey">Debit To<span class="text-required">*</span></label>
-                           <div class="mt-2">Broker</div>
+                           <div class="mt-2">{{viewlist.DebitType}}</div>
                         </div>
                       </div>
                  
@@ -71,13 +73,13 @@
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Open Cover Start Date<span class="text-required">*</span></label>
-                      <div class="mt-2">28/4/2023</div>
+                      <div class="mt-2">{{viewlist.PolicyStartDate}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Open Cover End Date<span class="text-required">*</span></label>
-                      <div class="mt-2">28/4/2023</div>
+                      <div class="mt-2">{{viewlist.PolicyEndDate}}</div>
                     </div>
                   </div>
                
@@ -89,111 +91,113 @@
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Annual Estimated Turnover</label>
-                      <div class="mt-2">10000000</div>
+                      <div class="mt-2">{{viewlist.EstimateAmount}}</div>
                      
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Utilized Amount</label>
-                       <div>0</div>
+                       <div>{{viewlist.UtilizedAmount}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                 
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Currency<span class="text-required">*</span></label>
-                       <div>UAE Dirham(1.0)</div>
+                       <div>{{currencyid}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Shared Percentage<span class="text-required">*</span></label>
-                      <div>100</div>
+                      <div>{{viewlist.RsaValue}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">No.of Co-Insurance Company</label>
-                       <div>0</div>
+                       <div>{{viewlist.NoOfCompany}}
+                      </div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Free Text Allowed<span class="text-required">*</span></label>
-                       <div>No</div>
+                       <div>{{viewlist.FreeText}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Cross Voyage<span class="text-required">*</span></label>
-                      <div>NO</div>
+                      <div>{{viewlist.CrossVoyage}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Cross Voyage(%)<span class="text-required">*</span></label>
-                      <div>0</div>
+                      <div>{{viewlist.VoyageValue}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Existing Core Application Policy No</label>
-                      <div>P-0099999-NJKHGF</div>
+                      <div>{{viewlist.PolicyNo}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Certificate No Start From<span class="text-required">*</span></label>
-                      <div>1</div>
+                      <div>{{viewlist.CertNo}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Commission(%)<span class="text-required">*</span></label>
-                       <div>20</div>
+                       <div>{{viewlist.Commission}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Minimum Premium<span class="text-required">*</span></label>
-                       <div>250</div>
+                       <div>{{viewlist.MinPremium}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Endorsement fee<span class="text-required">*</span></label>
-                     <div>20</div>
+                     <div>{{viewlist.EndorsementFee}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Issuance Fee(%)<span class="text-required">*</span></label>
-                      <div>25</div>
+                      <div>{{viewlist.IssuanceFee}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Minimum Premium Issuance Fee<span class="text-required">*</span></label>
-                       <div>2345</div>
+                       <div>{{viewlist.MinPremiumIssuance}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">No of Back Days<span class="text-required">*</span></label>
-                      
+                       <div>{{viewlist.BackDays}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Default Clauses<span class="text-required">*</span></label>
-                    
+                        <div>{{viewlist.DefaultClauses}}
+                        </div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
                     <div class="input-control-container">
                       <label class="input-form-label" style="color:lightslategrey">Declaration Type<span class="text-required">*</span></label>
-                    
+                           <div>{{viewlist.Decid}}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-4 col-lg-4 mt-3">
@@ -342,14 +346,14 @@
               <div class="col-md-6">
                 <div class="input-control-container">
                   <label class="input-form-label" style="color:lightslategrey">Country Of Orgin<span class="text-required">*</span></label>
-                  <div class="mt-2">UNITED ARAB EMIRATES,KUWAIT,QATAR,SAUDHI ARABIA</div>
+                  <div class="mt-2" *ngFor="let item of editCountryList">{{item.CountryName}}</div>
                  
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="input-control-container">
                   <label class="input-form-label" style="color:lightslategrey">Country Of Destination <span class="text-required">*</span></label>
-                  <div class="mt-2">UNITED ARAB EMIRATES,KUWAIT,QATAR,SAUDHI ARABIA</div>
+                  <div class="mt-2" *ngFor="let item of destCountryList">{{item.CountryName}}</div>
                  
                 </div>
               </div>
@@ -360,7 +364,7 @@
           </div>
       
         <div class="col-11">
-        <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+        <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" >
       </app-grid-table>
       </div>
 
@@ -653,6 +657,15 @@
                 <div class="input-control-container">
                   <label class="input-form-label" style="color:lightslategrey">Do You want to print Amended Insolvency Exclusion Clause</label>
                   <div class="mt-2">No</div>
+                 
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="input-control-container">
+                  <label class="input-form-label" style="color:lightslategrey">PPW days</label>
+                  <div class="mt-2">0</div>
                  
                 </div>
               </div>

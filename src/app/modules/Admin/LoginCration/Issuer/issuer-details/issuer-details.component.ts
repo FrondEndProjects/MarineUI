@@ -43,6 +43,7 @@ export class IssuerDetailsComponent implements OnInit {
   IssuerDetails:any;
   editdata=false;
   productNameList:any[]=[];
+  coverList:any[]=[];
   minDate:any;
   UserName:any;
   public AppConfig: any = (Mydatas as any).default;
@@ -55,10 +56,12 @@ export class IssuerDetailsComponent implements OnInit {
   IncludedData:any[]=[];
   ExcludedData:any[]=[];
   columnExcluded:any[]=[];
+  userDetails:any;
   
 
   constructor(private router: Router,private masterSer: MastersService,private adminReferralService: AdminReferralService,private datePipe:DatePipe,
     private toastrService:NbToastrService) {
+      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.activeMenu = "Issuer";
     this.IssuerDetails=new Issuer();
     this.minDate=new Date();
@@ -116,7 +119,7 @@ this.onGetRegionList();
       this.Search()
     }
     else if(value == 'Excluded'){
-
+          this.SearchExcluded()
     }
 
   }
@@ -479,6 +482,13 @@ this.onGetRegionList();
       (data: any) => {
         let res:any = data;
         this.columnIncluded = [
+          {
+            key: 'actions',
+            display: 'select',
+            config: {
+              isChecked: true,
+            }
+          },
           {key: 'BrokerName', display: 'Broker Organization'},
          {key: 'QuoteCreated', display: 'Quote Created By'},
          {key: 'CustomerName', display: 'Customer Name'},
@@ -497,6 +507,29 @@ this.onGetRegionList();
   }
 
 
+  onSelectCustomer(row:any,template){
+   
+    console.log("RowData",row.undefined);
+
+    console.log('jjjjjjjjjjjjjj',row)
+    if(row.undefined== true){
+     
+        let entry =  {
+          "BranchCode":this.userDetails.BranchCode,
+           "SearchValue":row.ProposalNo
+        }
+        this.coverList.push(entry);
+  
+      console.log("Cover List",this.coverList);
+    }
+    else if(row.undefined == false){
+      let index = this.coverList.findIndex(ele=>ele.CoverId==row.CoverId);
+      this.coverList.splice(index,1);
+    }
+
+  }
+
+
   SearchExcluded(){
     const urlLink = `${this.ApiUrl1}admin/IssuerExcludedBroker`;
     const reqData = {
@@ -507,6 +540,13 @@ this.onGetRegionList();
       (data: any) => {
         let res:any = data;
         this.columnExcluded = [
+          {
+            key: 'actions',
+            display: 'select',
+            config: {
+              isChecked: true,
+            }
+          },
           {key: 'BrokerName', display: 'Broker Organization'},
          {key: 'BrokerCode', display: 'BrokerCode'},
          {key: 'Branch', display: 'Branch'},

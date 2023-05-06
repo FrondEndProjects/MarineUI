@@ -82,7 +82,7 @@ export class BrokerFormComponent implements OnInit {
         if (data?.Message === 'Success') {
           this.dropBrokerList = data?.Result;
           if(this.productId=='11' && type!='change'){
-            alert("Broker Change Function")
+            //alert("Broker Change Function")
               this.headerDetails = this.opencoverComponent?.headerDetails;
               if(this.headerDetails){
                   let entry = this.dropBrokerList.find(ele=>ele.CodeDescription==this.headerDetails?.BrokerName)
