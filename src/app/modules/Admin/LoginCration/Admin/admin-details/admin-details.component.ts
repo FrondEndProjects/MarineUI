@@ -881,10 +881,6 @@ brokert(){
 
 }
 
-
-
-
-
 onsubmit(){
   //const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
   //const selectedList: any[] = this.isChecked.filter((ele: any) => ele.isChecked === true);
@@ -951,7 +947,7 @@ this.dialog.closeAll();
 
   }
   if (this.clickedModal === 'export') {
-   this.isChecked=exist;
+   this.MenuIds=exist;
    console.log('oooooooooo',this.MenuIds);
 
   }
