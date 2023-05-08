@@ -207,6 +207,9 @@ else{
 
 
   }
+  backs(){
+    this.value='View'
+  }
   goBack(){
   this.router.navigate(['/Marine/loginCreation/existingBrokers'])
   }
@@ -1044,13 +1047,13 @@ let ReqObj={
   "CustomerId":CustomerId,
   "CustomerName": null,
   "DiscountPremium": this.DiscountPremium,
-  "Freight": this.Provision,
+  "Freight": this.Freight,
   "InsuranceEndLimit": this.InsuranceEndLimit,
   "LoadingPremium": this.LoadingPremium,
   "MinPremiumAmount": this.MinPremiumAmount,
   "PayReceipt":"N",
   "ProductId": this.ProId,
-  "Provision": this.Freight,
+  "Provision": this.Provision,
   "Remarks": "N",
   "UserId": ""
 }
