@@ -877,8 +877,9 @@ brokert(){
 
 onsubmit(){
   let selectedList: any[]=[];
-  let exist:any;this.MenuIds = '';
+  let exist:any;
   if(this.clickedModal === 'menu'){
+    this.MenuIds = '';
     console.log("Selected List",this.selectedMenuList)
     let i=0;
     if(this.selectedMenuList.length!=0){
@@ -905,7 +906,7 @@ onsubmit(){
 }
 
   if(this.clickedModal === 'broker'){
-    let i=0;
+    let i=0;this.Brok = '';
     if(this.selectedBrokerList.length!=0){
           for(let entry of this.selectedBrokerList){
               let exist = this.BranchBrokerList.some(ele=>ele.AgencyCode==entry);
