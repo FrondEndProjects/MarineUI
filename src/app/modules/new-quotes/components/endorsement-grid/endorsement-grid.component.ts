@@ -130,7 +130,7 @@ export class EndorsementGridComponent implements OnInit {
     sessionStorage.setItem('EndtReffStatus',event.ReferralStatus);
     if(event.name!='Schedule'){
       if(event.ReferralStatus=='ReferalApproved'){
-        this.router.navigate([`${this.routerBaseLink}/new-quotes/policy-generate`]);
+        this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
       }
       else{
         this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
