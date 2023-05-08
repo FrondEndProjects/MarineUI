@@ -74,6 +74,14 @@ export class PremiumInfoComponent implements OnInit {
         this.premiumForm.controls[control].disable();
       }
     }
+    else{
+      let endtStatus = sessionStorage.getItem('EndtReffStatus');
+      if(this.QuoteStatus=='E' && endtStatus == 'ReferalApproved'){
+        for (var control in this.premiumForm.controls) {
+          this.premiumForm.controls[control].disable();
+        }
+      }
+    }
   }
 
 
@@ -242,90 +250,105 @@ export class PremiumInfoComponent implements OnInit {
   }
 
   onUpdatePremiumInformation() {
-    const CommodityDetails = this.premiumDetails?.QuoteDetails?.CommodityDetails[0];
-    const CustomerDetails = this.premiumDetails?.CustomerDetails;
-       
-    console.log('kkkkkkkkkkk',this.premiumDetails?.Referral);
-    if(this.premiumDetails?.Referral){
-      this.premiumF?.totalPremium.setValue(0);
-    }
-    if(this.premiumDetails?.Referral){
-      if(this.premiumDetails?.Referral.length!=0 && this.QuoteStatus=='QE'){
-          this.QuoteStatus = 'RU';
-      }
-    }
-    console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
-    console.log('ppppppppp',this.premiumF?.warRate.value)
-
-   const urlLink = `${this.ApiUrl1}quote/premium/update`;
-   const reqData = {
-    "AdminRemarks": this.premiumF.adminRemarks.value,
-    "ApplicationNo": this.ReferenceNo,
-    "BranchCode": this.userDetails?.BranchCode,
-    "Commission": this.premiumF.commission.value,
-    "CommissionYn": this.premiumF.commissionCheck.value,
-    "CommodityDetails": [
-      {
-        "InsuredValue": CommodityDetails?.InsuredValue,
-        "MarginRate": CommodityDetails?.MarginRate,
-        "MarineWarRate": CommodityDetails?.MarineWarRate,
-        "PolicyExcess": CommodityDetails?.PolicyExcess,
-        "PolicyExcessDescription": CommodityDetails?.PolicyExcessDescription,
-        "PolicyExcessPercentage": CommodityDetails?.PolicyExcessPercentage,
-        "MarineRate": this.premiumF.marineRate.value,
-        "WarRate": this.premiumF?.warRate.value,
-        "WarLandRate": this.premiumF?.warLandRate.value
-      }
-    ],
-    "CustomerCode": CustomerDetails?.Code,
-    "EditClausesYN": this.premiumF.isEditClauses.value,
-    "FinalizeYN": this.premiumF.isFinalizeQuote.value,
-    "GeneratePolicyYn": '',
-    "Issuer": this.premiumDetails?.IssuerId,
-    "LoginId":this.premiumDetails?.LoginId,
-    "LoginUserType": this.userDetails?.UserType,
-    "OpenCoverNo": this.OpenCover?.value,
-    "PolicyFee": this.premiumF.policyInsuAedPremium.value,
-    "PolicyFeeYn": this.premiumF.policyInsuAedEdit.value,
-    "PremiumDetails": {
-
-      "InspectionFee": 0.0,
-      "AdditionalPremium": this.premiumF.additionalPremium.value,
-      "ExcessSign": this.premiumF.additionalSelect.value,
-      "TotalPremium": this.premiumF?.totalPremium.value,
-      "TotalWarPremium": this.premiumF?.warPremium.value,
-      "VatTax": this.premiumF.vatTaxAmount.value
-
-
-    },
-    "PremiumYN": '',
-    "ProductId": this.productId,
-    "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
-    "QuoteStatus": this.QuoteStatus,
-    "ReferenceNo": this.ReferenceNo,
-    "ReferralRemarks": this.premiumF.comments.value,
-    "ReferralStatus": this.premiumF.referralStatus.value,
-    "ReferralUpdateYn": this.premiumF.ReferralUpdateYn.value,
-    "Status": this.premiumDetails?.Status,
-
-  }
-  console.log(reqData);
-   this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
-     (data: any) => {
-       console.log(data);
-       if(this.userDetails?.UserType == 'admin' ){
-        this.router.navigate([`${this.routerBaseLink}/admin-referral/approved-quote`]);
-       }else{
-        if(this.premiumF.ReferralUpdateYn.value =='Y' || this.premiumDetails?.Referral?.length > 0){
-          this.router.navigate([`${this.routerBaseLink}/referral/referral-unapproved`]);
-        }else{
-         this.onNext();
+    let endtStatus = sessionStorage.getItem('EndtReffStatus');
+      if(this.QuoteStatus=='E' && endtStatus == 'ReferalApproved'){
+        if(this.userDetails?.UserType == 'admin' ){
+          this.router.navigate([`${this.routerBaseLink}/admin-referral/approved-quote`]);
+         }else{
+          if(this.premiumF.ReferralUpdateYn.value =='Y' || this.premiumDetails?.Referral?.length > 0){
+            this.router.navigate([`${this.routerBaseLink}/referral/referral-unapproved`]);
+          }else{
+           this.onNext();
+          }
         }
-       }
-
-     },
-     (err) => { },
-   );
+      }
+      else{
+        const CommodityDetails = this.premiumDetails?.QuoteDetails?.CommodityDetails[0];
+        const CustomerDetails = this.premiumDetails?.CustomerDetails;
+           
+        console.log('kkkkkkkkkkk',this.premiumDetails?.Referral);
+        if(this.premiumDetails?.Referral){
+          this.premiumF?.totalPremium.setValue(0);
+        }
+        if(this.premiumDetails?.Referral){
+          if(this.premiumDetails?.Referral.length!=0 && this.QuoteStatus=='QE'){
+              this.QuoteStatus = 'RU';
+          }
+        }
+        console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
+        console.log('ppppppppp',this.premiumF?.warRate.value)
+    
+       const urlLink = `${this.ApiUrl1}quote/premium/update`;
+       const reqData = {
+        "AdminRemarks": this.premiumF.adminRemarks.value,
+        "ApplicationNo": this.ReferenceNo,
+        "BranchCode": this.userDetails?.BranchCode,
+        "Commission": this.premiumF.commission.value,
+        "CommissionYn": this.premiumF.commissionCheck.value,
+        "CommodityDetails": [
+          {
+            "InsuredValue": CommodityDetails?.InsuredValue,
+            "MarginRate": CommodityDetails?.MarginRate,
+            "MarineWarRate": CommodityDetails?.MarineWarRate,
+            "PolicyExcess": CommodityDetails?.PolicyExcess,
+            "PolicyExcessDescription": CommodityDetails?.PolicyExcessDescription,
+            "PolicyExcessPercentage": CommodityDetails?.PolicyExcessPercentage,
+            "MarineRate": this.premiumF.marineRate.value,
+            "WarRate": this.premiumF?.warRate.value,
+            "WarLandRate": this.premiumF?.warLandRate.value
+          }
+        ],
+        "CustomerCode": CustomerDetails?.Code,
+        "EditClausesYN": this.premiumF.isEditClauses.value,
+        "FinalizeYN": this.premiumF.isFinalizeQuote.value,
+        "GeneratePolicyYn": '',
+        "Issuer": this.premiumDetails?.IssuerId,
+        "LoginId":this.premiumDetails?.LoginId,
+        "LoginUserType": this.userDetails?.UserType,
+        "OpenCoverNo": this.OpenCover?.value,
+        "PolicyFee": this.premiumF.policyInsuAedPremium.value,
+        "PolicyFeeYn": this.premiumF.policyInsuAedEdit.value,
+        "PremiumDetails": {
+    
+          "InspectionFee": 0.0,
+          "AdditionalPremium": this.premiumF.additionalPremium.value,
+          "ExcessSign": this.premiumF.additionalSelect.value,
+          "TotalPremium": this.premiumF?.totalPremium.value,
+          "TotalWarPremium": this.premiumF?.warPremium.value,
+          "VatTax": this.premiumF.vatTaxAmount.value
+    
+    
+        },
+        "PremiumYN": '',
+        "ProductId": this.productId,
+        "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
+        "QuoteStatus": this.QuoteStatus,
+        "ReferenceNo": this.ReferenceNo,
+        "ReferralRemarks": this.premiumF.comments.value,
+        "ReferralStatus": this.premiumF.referralStatus.value,
+        "ReferralUpdateYn": this.premiumF.ReferralUpdateYn.value,
+        "Status": this.premiumDetails?.Status,
+    
+      }
+      console.log(reqData);
+       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+         (data: any) => {
+           console.log(data);
+           if(this.userDetails?.UserType == 'admin' ){
+            this.router.navigate([`${this.routerBaseLink}/admin-referral/approved-quote`]);
+           }else{
+            if(this.premiumF.ReferralUpdateYn.value =='Y' || this.premiumDetails?.Referral?.length > 0){
+              this.router.navigate([`${this.routerBaseLink}/referral/referral-unapproved`]);
+            }else{
+             this.onNext();
+            }
+           }
+    
+         },
+         (err) => { },
+       );
+      }
+    
  }
 
   onViewClausee(name: any, type: any) {

@@ -103,7 +103,7 @@
       <label class="input-form-label">Open Cover Start Date<span class="text-required">*</span></label>
       <div class="input-form-box">
           <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
-          formControlName="openCoverStartDate" (click)="d.toggle()" readonly [minDate]="minDate" (dateSelect)="onChangeStartDate($event)">
+          formControlName="openCoverStartDate" (click)="d.toggle()" readonly  (dateSelect)="onChangeStartDate($event)">
         </div>
       <div class="input-form-error" *ngIf="(newQuoteF.openCoverStartDate.errors && submitted) || (!newQuoteF.openCoverStartDate.valid && newQuoteF.openCoverStartDate.touched)">
         <div *ngIf="newQuoteF.openCoverStartDate.errors?.required" class="error-text">
