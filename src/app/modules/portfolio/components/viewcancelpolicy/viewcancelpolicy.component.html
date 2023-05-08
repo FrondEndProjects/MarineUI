@@ -1,30 +1,30 @@
-<div class="maan-grid customer-grid maan-grid-column-1">
-    <div class="maan-grid-item">
-        <div class="maan-grid-item-title">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <span class="mx-1">
-                      <i class="fas fa-document mx-1"></i>
-                  </span> {{title}}
-                </div>
-                <div>
-                    <ng-container>
-
-                    </ng-container>
-
-                </div>
-            </div>
-
+<div class="maan-card">
+    <div class="maan-card-header">
+      <div class="form-heading">
+        <div class="form-heading-number">
+          1
         </div>
-        <div class="maan-grid-item-body">
-            <ng-container>
-                <app-grid-table>
-                </app-grid-table>
-            </ng-container>
-
-            <div class="text-center mt-2">
-                <button class="btn btn-danger" (click)="close()">Close</button>
-            </div>
-        </div>
+        <div class="form-heading-text">
+         CANCELLED CERTIFICATES
+       </div>
+       </div>
     </div>
-</div>
+    <div class="d-sm-flex flex-sm-row align-items-center justify-content-sm-between mb-3">
+      <div class="p">
+        <div class="input-control-container">
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" [(ngModel)]="FilterValue" placeholder="Search">
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <!-- <button nbButton shape="round" size="small" status="primary" [disabled]="isButton" class="mx-2"
+          (click)="onNewEndorse()">New Endorsement</button> -->
+      </div>
+    </div>
+    <app-material-table [cols]="columnHeader" [data]="tableData" (isActionBtn)="isActionBtn($event)">
+    </app-material-table>
+    <div class="maan-card-footer">
+      <app-back-btn></app-back-btn>
+    </div>
+  </div>

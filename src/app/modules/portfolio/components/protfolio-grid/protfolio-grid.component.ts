@@ -31,11 +31,12 @@ export class ProtfolioGridComponent implements OnInit {
 
   public brokerList: any[] = [];
   public selectedBroker: any = '';
-
+  otherPolicyNo:any=null;
   public show = 'endo'
   public OpenCover:any='';
   public routerBaseLink:any='';
   isIssuer: boolean;
+  userType: any=null;
 
 
   constructor(
@@ -47,6 +48,7 @@ export class ProtfolioGridComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.userDetails = this.userDetails?.LoginResponse;
+    this.userType = this.userDetails?.UserType;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.OpenCover = this.portfolioComponent?.OpenCover;
     console.log(this.OpenCover);
@@ -158,13 +160,15 @@ export class ProtfolioGridComponent implements OnInit {
    
   }
   onLoadGrid() {
+    this.tableData = [];let loginId = null,applicationId=null;
+    if(this.otherPolicyNo==null){loginId = this.loginId;applicationId = this.applicationId; }
     const urlLink = `${this.ApiUrl1}menu/portfolio/policy`;
     const reqData = {
       "OpenCoverNo": this.OpenCover?.value,
-      "LoginId": this.loginId,
+      "LoginId": loginId,
       "ProductId": this.productId,
-      "ApplicationId": this.applicationId,
-      "OtherPolicyNo": null,
+      "ApplicationId": applicationId,
+      "OtherPolicyNo": this.otherPolicyNo,
       "BranchCode": this.userDetails?.BranchCode
     }
     this.portfolioBrokerService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -229,6 +233,7 @@ export class ProtfolioGridComponent implements OnInit {
       'QuoteNo':event.QuoteNo,
       'LoginId':this.selectedBroker
      }
+     if(this.otherPolicyNo!=null) data['LoginId'] = event.LoginId
      console.log(data);
     sessionStorage.setItem('portfolio',JSON.stringify(data));
     sessionStorage.setItem('quotesType', 'With-Endo');

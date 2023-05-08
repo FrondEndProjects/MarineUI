@@ -38,7 +38,7 @@ export class EndorsementGridComponent implements OnInit {
     this.applicationId= this.newQuotesComponent?.applicationId;
     this.portfolio = JSON.parse(sessionStorage.getItem("portfolio"));
     this.loginId = this.portfolio?.LoginId != undefined ? this.portfolio?.LoginId: this.loginId;
-
+    sessionStorage.removeItem('EndtReffStatus')
   }
 
   ngOnInit(): void {

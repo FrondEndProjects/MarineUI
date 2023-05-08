@@ -16,11 +16,24 @@
     </div>
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">Search</label>
+        <label class="input-form-label">Filter</label>
         <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" [(ngModel)]="FilterValue">
+          <input type="text" class="input-form-control without-icon" placeholder="Enter Any Key To Filter" [(ngModel)]="FilterValue">
         </div>
       </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4" *ngIf="userType=='RSAIssuer'">
+      <div class="input-control-container">
+        <label class="input-form-label">Search For Other Policy</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" placeholder="Enter Any PolicyNo" maxlength="30" [(ngModel)]="otherPolicyNo">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="otherPolicyNo">
+    <div class="col-12 col-md-4 col-lg-4 offset-8 text-center">
+      <button nbButton (click)="onLoadGrid()" shape="round" size="small" status="success" class="mx-2">Search</button> 
     </div>
   </div>
   <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (onMenu)="onmenu($event,$event.name)" (isActionBtn)="isActionBtn($event)">

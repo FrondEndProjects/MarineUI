@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProtfolioGridComponent } from './components/protfolio-grid/protfolio-grid.component';
 import { PortfolioComponent } from './portfolio.component';
+import { ViewcancelpolicyComponent } from './components/viewcancelpolicy/viewcancelpolicy.component';
 //import { ViewPortfolioComponent } from './components/viewportfolio/viewportfolio.component';
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'canceled-policies',
     component: CanceledPoliciesComponent,
+  },
+  {
+    path: 'cancelled-certificate',
+    component: ViewcancelpolicyComponent,
   },
   {
     path: 'failed-policies',

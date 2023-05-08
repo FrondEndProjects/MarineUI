@@ -5,7 +5,6 @@ import { PortfolioComponent } from '../../portfolio.component';
 import { PortfolioService } from '../../portfolio.service';
 import * as Mydatas from '../../../../app-config.json';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewcancelpolicyComponent } from '../viewcancelpolicy/viewcancelpolicy.component';
 
 @Component({
   selector: 'app-canceled-policies',
@@ -146,7 +145,7 @@ export class CanceledPoliciesComponent implements OnInit {
                 menuList: [
                   { name: 'Schedule' },
                   { name: 'Policy Wordings' },
-                  { name: 'Canceled Certificate' },
+                  { name: 'Cancelled Certificate' },
                 ]
               },
             },
@@ -165,23 +164,22 @@ export class CanceledPoliciesComponent implements OnInit {
     console.log('kkkkkkkk',rowData)
       if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
 
-      if(rowData=='Canceled Certificate'){
-        this.canceldocument();
+      if(rowData=='Cancelled Certificate'){
+        this.canceldocument(row.data);
       }
 
   }
 
-  canceldocument(){
-    const dialogRef = this.dialogService.open(ViewcancelpolicyComponent,{
-      data: {
-        title: "Canceled Policy",
-             imageUrl: ""
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  canceldocument(rowData){
+    const data:any = {
+      'PolicyNo':rowData.PolicyNo,
+      'QuoteNo':rowData.QuoteNo,
+      'LoginId':this.selectedBroker
+     }
+     console.log(data);
+    sessionStorage.setItem('portfolio',JSON.stringify(data));
+    sessionStorage.setItem('quotesType', 'With-Endo');
+    this.router.navigate(['/marine-opencover/portfolio/cancelled-certificate'])
   }
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;
