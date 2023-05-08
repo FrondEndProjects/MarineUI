@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import * as Mydatas from "../../../../app-config.json";
 import { NewQuotesComponent } from "../../new-quotes.component";
 import { NewQuotesService } from "../../new-quotes.service";
+//import { SharedService } from "src/app/shared/shared.service";
+
 
 @Component({
   selector: "app-endorsement-grid",
@@ -26,6 +28,7 @@ export class EndorsementGridComponent implements OnInit {
   public isButton: boolean = false;
   constructor(
     private newQuotesService: NewQuotesService,
+    //private sharedService: SharedService,
     private router: Router,
     private newQuotesComponent:NewQuotesComponent
   ) {
@@ -128,16 +131,71 @@ export class EndorsementGridComponent implements OnInit {
     sessionStorage.setItem("endorsement", JSON.stringify(data));
     sessionStorage.setItem('QuoteStatus',event?.Status);
     sessionStorage.setItem('EndtReffStatus',event.ReferralStatus);
+
     if(event.name!='Schedule'){
       if(event.ReferralStatus=='ReferalApproved'){
         this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
       }
       else{
-        this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
+        this.schedule(event);
+        console.log('kkkkkkkkkkkkkkkk',event)
+        //this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
       }
     }
     
     
+  }
+
+  schedule(row){
+    let Results='';
+    console.log('rrrrrrr',row)
+    const urlLink = `${this.ApiUrl1}pdf/opencover`;
+    const reqData = {
+      "BranchCode":this.userDetails.BranchCode,
+      //"PolicyNo":row.data.OriginalPolicyNo,
+  "EndtStatus":row.EndtStatus,
+  "ImageStatus": "Y",
+  "OpenCoverNo": row.OpenCoverNo,
+  "ProposalNo": row.PolicyNo,
+  "Status":row.Status
+
+    };
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        Results=data.Result
+        this.onDownloadSchedule(Results,row)
+        
+        //sessionStorage.setItem('ProposalNo',data.ProposalNo);
+        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+
+      },
+      (err) => { },
+    );
+  }
+
+
+  onDownloadSchedule(Results,rowData){
+
+    console.log('jjjjjjjj',Results)
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    const reqData = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo":row.QuoteNo
+    }*/
+      if(Results){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download',rowData);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+   
   }
 
   onNewEndorse() {
