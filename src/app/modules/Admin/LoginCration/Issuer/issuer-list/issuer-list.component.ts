@@ -44,8 +44,9 @@ export class IssuerListComponent implements OnInit {
    private router: Router,private adminReferralService: AdminReferralService) {
      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
      console.log(this.userDetails);
-
-     if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
+     let entry = JSON.parse(sessionStorage.getItem('editIssuerId'));
+     if(entry) this.branchValue = entry?.BranchCode;
+     else if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
      this.onGetBranchList()
 
    }

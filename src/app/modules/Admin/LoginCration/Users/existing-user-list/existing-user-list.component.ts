@@ -37,7 +37,9 @@ export class ExistingUserListComponent implements OnInit {
      //const user = this.userDetails?.Result;
      //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
 
-      if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
+      let entry = JSON.parse(sessionStorage.getItem('editUserId'));
+      if(entry) this.branchValue = entry?.BranchCode;
+      else if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
       //this.getBranchList()
       this.onGetBranchList();
 

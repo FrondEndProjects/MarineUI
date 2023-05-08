@@ -84,11 +84,8 @@
 <div class="col-12 col-md-4 col-lg-4">
   <div class="input-control-container">
       <label class="input-form-label">UnderWriter Grade <span class="text-required">*</span></label>
-
         <ng-select class="input-form-select" appendTo="body" [items]="userList"  [(ngModel)]="AdminDetails.AttachedUnderWriter"  [multiple]="true" bindValue="Code" bindLabel="CodeDescription">
         </ng-select>
-
-
   </div>
 </div>
 
@@ -138,12 +135,12 @@
 <div class="col-12 col-md-4 col-lg-4">
   <div class="customer-search-container">
     <div class="input-control-container">
-      <label class="input-form-label">Excluded Menus<span class="text-required">*</span></label>
+      <label class="input-form-label">Excluded Menu's<span class="text-required">*</span></label>
       <div class="input-group mb-3 mt-1">
         <input type="text" class="form-control" [(ngModel)]="MenuIds" disabled>
         <div class="input-group-append">
           <button class="btn btn-primary border bg-primary text-white" type="button" mat-button
-            (click)="openDialogWithoutRef('export',MenuList)">...</button>
+            (click)="openDialogWithoutRef('menu',MenuList)">...</button>
         </div>
       </div>
     </div>
@@ -158,7 +155,7 @@
         <input type="text" class="form-control" [(ngModel)]="Brok" disabled>
         <div class="input-group-append">
           <button class="btn btn-primary border bg-primary text-white" type="button" mat-button
-            (click)="brokert()">...</button>
+            (click)="openDialogWithoutRef('broker',BranchBrokerList)">...</button>
         </div>
       </div>
     </div>

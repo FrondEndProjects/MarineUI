@@ -45,8 +45,9 @@ public filterValue;  constructor( private masterSer: MastersService,
   private router: Router,private adminReferralService: AdminReferralService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log(this.userDetails);
-
-    if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
+    let entry = JSON.parse(sessionStorage.getItem('AgencyId'));
+    if(entry) this.branchValue = entry?.BranchCode;
+    else if (this.userDetails) this.branchValue = this.userDetails?.LoginResponse.BranchCode;
 
   }
 

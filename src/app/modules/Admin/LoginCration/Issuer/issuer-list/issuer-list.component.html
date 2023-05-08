@@ -10,7 +10,7 @@
       <input matInput (keyup)="applyFilter($event)">
   </mat-form-field>
   <div class="card-header m-4">
-  <div class="col-12 col-md-4 col-lg-4">
+  <div class="col-4 col-md-4 col-lg-4 ml-3">
     <div class="input-control-container">
         <label class="input-form-label">Branch <span class="text-required">*</span></label>
 
@@ -20,10 +20,18 @@
   </div>
   </div>
   <!-- /SEARCH FIELD -->
-  <ng-container *ngIf="issuerData">
-      <app-grid-table [cols]="columnHeader" [data]="issuerData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
-      </app-grid-table>
-  </ng-container>
+  <div class="col-12 col-md-12 col-lg-12">
+    <ng-container *ngIf="issuerData">
+        <app-grid-table [cols]="columnHeader" [data]="issuerData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+        </app-grid-table>
+    </ng-container>
+    <ng-container *ngIf="!issuerData">
+      <div class="text-center">
+              No Data Available
+      </div>
+    </ng-container>
+  </div>
+  
 
   <!-- PAGINATOR -->
   <!-- <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
