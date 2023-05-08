@@ -10,19 +10,30 @@
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)">
     </mat-form-field>
-    <div class="col-12 col-md-4 col-lg-4 ml-3">
-      <div class="input-control-container">
-          <label class="input-form-label">Branch <span class="text-required">*</span></label>
-
-          <ng-select class="input-form-select" appendTo="body" [items]="branchList"  [(ngModel)]="branchValue" (change)="getExistingBroker()"  bindValue="BranchCode" bindLabel="BranchName">
-          </ng-select>
-      </div>
+    <div class="card-header m-2">
+        <div class="col-4 col-md-4 col-lg-4 ml-3">
+            <div class="input-control-container">
+                <label class="input-form-label">Branch <span class="text-required">*</span></label>
+      
+                <ng-select class="input-form-select" appendTo="body" [items]="branchList"  [(ngModel)]="branchValue" (change)="getExistingBroker()"  bindValue="BranchCode" bindLabel="BranchName">
+                </ng-select>
+            </div>
+          </div>
     </div>
+    
     <!-- /SEARCH FIELD -->
-    <ng-container *ngIf="tableData">
-        <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
-        </app-grid-table>
-    </ng-container>
+    <div class="col-12 col-md-12 col-lg-12">
+        <ng-container *ngIf="tableData">
+            <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+            </app-grid-table>
+        </ng-container>
+        <ng-container *ngIf="!tableData">
+            <div class="text-center">
+                    No Data Available
+            </div>
+          </ng-container>
+    </div>
+   
    
 
     <!-- PAGINATOR -->

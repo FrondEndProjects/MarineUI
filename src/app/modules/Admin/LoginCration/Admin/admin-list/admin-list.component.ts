@@ -54,8 +54,9 @@ export class AdminListComponent implements OnInit {
      //this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     //const user = this.userDetails?.Result;
     //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-
-     if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
+    let entry = JSON.parse(sessionStorage.getItem('editAdminId'));
+    if(entry) this.branchValue = entry?.BranchCode;
+     else if (this.userDetails) this.branchValue = this.userDetails?.LoginResponse.BranchCode;
      //this.getBranchList()
      this.onGetBranchList();
 
@@ -124,7 +125,6 @@ export class AdminListComponent implements OnInit {
 
 
       }
-
       getExistingAdmin(){
 
         let ReqObj = {

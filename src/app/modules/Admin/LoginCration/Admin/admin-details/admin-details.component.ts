@@ -68,7 +68,7 @@ export class AdmindetailsComponent implements OnInit {
   first: boolean=false;
   second: boolean=false;
   mode: string;
-  isChecked:any[]=[];
+  selectedMenuList:any[]=[];
   selectedBrokerList: any[]=[];
   MenuIds:any;
 
@@ -131,7 +131,7 @@ this.onGetProductList()
       //if(this.CityDetails?.Status==null)  this.CityDetails.Status = 'Y';
     }
     this.onUserType();
-    //this.brokert();
+    this.brokert();
     
 
   }
@@ -207,7 +207,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
         let MenuIds=this.AdminDetails.MenuId;
         let attach= MenuIds.split(',');
         this.MenuIds = MenuIds;
-        this.isChecked = attach.filter(item => item!='');
+        this.selectedMenuList = attach.filter(item => item!='');
 
         let Brok=this.AdminDetails.BrokerCode;
         let attached= Brok.split(',');
@@ -479,13 +479,13 @@ AttachedMenu(uwList,RegionList,BranchList,ProductList){
       this.AdminDetails.MenuId=brok.split(",");
       console.log('BBBBBBBBBBBBBBB',this.Brok)
     }*/
-      for(let u of this.isChecked){      
+      for(let u of this.selectedMenuList){      
       let entryRegion={"MenuId":u}    
       MenuList.push(entryRegion);
       i++;
 
       console.log('kkkkkkkkkkkkk',MenuList)
-      if(i==this.isChecked.length) this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
+      if(i==this.selectedMenuList.length) this.AttachBrokercode(uwList,RegionList,BranchList,ProductList,MenuList) 
       //this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
     }
   
@@ -691,14 +691,15 @@ changemenu(type,event,rowData,value){
   
     let item =rowData  
       
-    this.isChecked.push(item);
+    this.selectedMenuList.push(item);
   }*/
   if(event.checked ==true){
     if(type=='menu'){
-      let entry = this.isChecked.find(ele=>ele==rowData);
+      let entry = this.selectedMenuList.find(ele=>ele==rowData);
       if(!entry){
-        this.isChecked.push(rowData);
-        this.MenuIds= this.MenuIds.concat(","+rowData);
+        this.selectedMenuList.push(rowData);
+        if(this.MenuIds==null || this.MenuIds == undefined) this.MenuIds = ''; 
+        this.MenuIds= this.MenuIds+","+rowData;
       }
     }
       // let item =rowData  
@@ -707,68 +708,66 @@ changemenu(type,event,rowData,value){
     }
     else if(event.checked==false){
     
-      let index = this.MenuIds.find(ele=>ele==rowData);
-      this.isChecked.splice(index,1);
+      let index = this.selectedMenuList.findIndex(ele=>ele==rowData);
+      this.selectedMenuList.splice(index,1);
       //let brok:any[]=[];
       //brok.push(this.Brok);
        //this.Brok= brok.splice(index,1);
       //this.Brok.splice(index);
-      console.log('sssssssss',this.isChecked)
+      console.log('sssssssss',this.selectedMenuList)
     }
 
    
- console.log('kkkkkkkkk',this.isChecked)
+ console.log('kkkkkkkkk',this.selectedMenuList)
 }
 
 checkUWValues(rowData,value){
-      console.log('kkkkkkk',this.MenuIds)
-      if(this.MenuIds.length!=0){
-  this.isChecked= this.MenuIds.split(',');
-      }
-  let exist = this.isChecked;
+  // if(this.MenuIds!=null && this.MenuIds!=''){
+  //   this.selectedMenuList= this.MenuIds.split(',');
+  // }
   //let menus= exist.toString();
-  if(this.isChecked.length!=0){
-  let exist = this.isChecked.some(ele=>ele == rowData.MenuId);
-   if(exist) return true;
-  else false
-   }
+  if(this.selectedMenuList){
+    if(this.selectedMenuList.length!=0){
+      let exist = this.selectedMenuList.some(ele=>ele == rowData.MenuId);
+      if(exist) return true;
+      else false
+    }
+    else return false;
+  } 
   else return false;
 }
 
 
 checkValues(event,rowData,value){
    
-  console.log('BBBBBBBBBBB',this.Brok)
-
-   if(this.Brok.length!=0){
-  this.selectedBrokerList = this.Brok.split(',');
-   }
-  if(this.selectedBrokerList.length!=0){
-    let exist = this.selectedBrokerList.some(ele=>ele == rowData.AgencyCode);
-    if(exist) return true;
-    else false
-  }
+  if(this.selectedBrokerList){
+    if(this.selectedBrokerList.length!=0){
+      let exist = this.selectedBrokerList.some(ele=>ele == rowData.AgencyCode);
+      if(exist) return true;
+      else false
+    }
+    else return false;
+  } 
   else return false;
 }
 changemenus(type,event,rowData,value){
   console.log('hhhhhhhhhhhh',event.checked)
 
    if(event.checked ==true){
-  if(type=='broker'){
     let entry = this.selectedBrokerList.find(ele=>ele==rowData);
     if(!entry){
       this.selectedBrokerList.push(rowData);
-      this.Brok = this.Brok.concat(","+rowData);
+      if(this.Brok==null || this.Brok == undefined) this.Brok = ''; 
+      this.Brok= this.Brok+","+rowData;
     }
-  }
     // let item =rowData  
     // this.Brok.push(item);
     // console.log('kkkkkkkkk',this.Brok)
   }
   else if(event.checked==false){
   
-    let index = this.selectedBrokerList.find(ele=>ele==rowData);
-    this.selectedBrokerList.splice(index,1);
+    let index = this.selectedBrokerList.findIndex(ele=>ele==rowData);
+      this.selectedBrokerList.splice(index,1);
     //let brok:any[]=[];
     //brok.push(this.Brok);
      //this.Brok= brok.splice(index,1);
@@ -842,24 +841,20 @@ Menu(menuList,para){
 
 
 @ViewChild('secondDialog', { static: true }) secondDialog: TemplateRef<any>;
-openDialogWithoutRef(war: string,menulist) {
-
-console.log('kkkkkkkkkkkk',menulist)
-  if (war === 'export') {
+openDialogWithoutRef(type: string,menulist) {
+  if (type === 'menu') {
     this.first=true;
     this.second=false;
-    this.clickedModal = war;
+    this.clickedModal = type;
     this.warrantyData = menulist;
   }
-  if (war === 'import') {
+  if (type === 'broker') {
     this.second=true;
     this.first=false;
-    this.clickedModal = war;
+    this.clickedModal = type;
     this.warrantyData = this.BranchBrokerList;
-
   }
   this.dialog.open(this.secondDialog);
-
 }
 
 brokert(){
@@ -874,82 +869,60 @@ brokert(){
     (data: any) => {
       console.log('ssssssss',data);
       this.BranchBrokerList= data.Result || [];
-      this.openDialogWithoutRef('import', this.BranchBrokerList)
-      console.log('NNNNNNNNNNNNN',this.BranchBrokerList)
+      //this.openDialogWithoutRef('broker', this.BranchBrokerList)
     }
   )
 
 }
 
 onsubmit(){
-  //const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
-  //const selectedList: any[] = this.isChecked.filter((ele: any) => ele.isChecked === true);
-  //const selectedList: any[]= this.isChecked;
-  let selectedList: any[];
-  let exist
-  console.log('llllllllllll',selectedList)
-  let selectedListId: any = '';
-
-  if(this.clickedModal === 'export'){
-  /*for (let index = 0; index < selectedList.length; index++) {
-    //const element = selectedList[index];
-    const element = selectedList[index];
-        if(index === 0){
-          selectedListId += element.MenuId;
-        }
-        else if(index !== 0){
-          selectedListId += ',' + element.MenuId;
-         }
-    this.dialog.closeAll();
-  }*/
-  //exist = selectedList.some(ele=>ele == this.isChecked);
-  //console.log('jjjjjjjjjjj',exist)
-  /*for(let i=0;i<selectedList.length;i++){
-    const element = selectedList;
-    if(i === 0){
-      selectedListId += element;
+  let selectedList: any[]=[];
+  let exist:any;this.MenuIds = '';
+  if(this.clickedModal === 'menu'){
+    console.log("Selected List",this.selectedMenuList)
+    let i=0;
+    if(this.selectedMenuList.length!=0){
+          for(let entry of this.selectedMenuList){
+              let exist = this.MenuList.some(ele=>ele.MenuId==entry);
+              if(exist){
+                if(this.MenuIds==''){
+                  this.MenuIds=String(entry);
+                }
+                else this.MenuIds = this.MenuIds+','+String(entry);
+                selectedList.push(entry);
+              }
+              i+=1;
+              if(i==this.selectedMenuList.length){
+                this.selectedMenuList = selectedList;
+                this.dialog.closeAll();
+              }
+          }
     }
-    else if(i !== 0){
-      selectedListId += ',' + element;
-     }
-  }*/
-
-  /*let check=this.isChecked;
-  let att= isChecked.split(',');
-  exist=att.filter(item => item);*/
-  //exist = selectedList.some(ele=>ele == this.isChecked);
-  selectedList = this.MenuIds;
-   exist = selectedList.toString();
-  console.log('llllllllllllllll',exist)
-  this.dialog.closeAll();
+  // selectedList = this.MenuIds;
+  //  exist = selectedList.toString();
+  // console.log('llllllllllllllll',exist)
+ 
 }
 
-if(this.clickedModal === 'import'){
-/*for (let index = 0; index < selectedList.length; index++) {
-  //const element = selectedList[index];
-  const element = selectedList[index];
-      if(index === 0){
-        selectedListId += element.AgencyCode;
-      }
-      else if(index !== 0){
-        selectedListId += ',' + element.AgencyCode;
-       }
-  this.dialog.closeAll();
-}*/
-selectedList = this.Brok;
-exist = selectedList.toString();
-console.log('llllllllllllllll',exist)
-this.dialog.closeAll();
-}
-  if (this.clickedModal === 'import') {
-    this.Brok=exist;
-    console.log('SSSSSSS',this.Brok);
-
-  }
-  if (this.clickedModal === 'export') {
-   this.MenuIds=exist;
-   console.log('oooooooooo',this.MenuIds);
-
+  if(this.clickedModal === 'broker'){
+    let i=0;
+    if(this.selectedBrokerList.length!=0){
+          for(let entry of this.selectedBrokerList){
+              let exist = this.BranchBrokerList.some(ele=>ele.AgencyCode==entry);
+              if(exist){
+                if(this.Brok==''){
+                  this.Brok=String(entry);
+                }
+                else this.Brok = this.Brok+','+String(entry);
+                selectedList.push(entry);
+              }
+              i+=1;
+              if(i==this.selectedBrokerList.length){
+                this.selectedBrokerList = selectedList;
+                this.dialog.closeAll();
+              }
+          }
+    }
   }
 }
 
