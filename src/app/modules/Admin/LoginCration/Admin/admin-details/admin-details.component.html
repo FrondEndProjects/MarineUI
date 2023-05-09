@@ -1,8 +1,8 @@
 <!--<div [formGroup]="cityForm" class="bg-white p-3">-->
   <div class="title-container bg-white p-4">
-    <nb-card>
+    <div>
       <div class="d-flex justify-content-between">
-        <nb-card-header value="View" (click)="onRedirect('View')">Admin-Details </nb-card-header>
+        <div class="card-header" value="View" (click)="onRedirect('View')">Admin-Details </div>
         <div>
 
        <button class="ml-2 p-1 btn btn-primary" value="ChangePassword" (click)="onRedirect('ChangePassword')">Change Password
@@ -12,7 +12,7 @@
       </div>
       
           
-        <div class="card-body">
+        <div class="card-body mt-2">
   <div class="row bg-white" *ngIf="value=='View'">
 
       <!-- Country Name -->
@@ -185,25 +185,25 @@
   </div>
   <div class="col-12 col-md-6 col-lg-6" *ngIf="value=='ChangePassword'">
     <div class="input-control-container">
-        <label class="input-form-label"> Re enter New Password <span class="text-required">*</span>
+        <label class="input-form-label"> Re enter New Password <span class="text-required">*</span></label>
         <div class="input-form-box" >
             <input type="password" [(ngModel)]="NPassword" class="input-form-control without-icon" maxlength="100">
         </div>
-        </label>
+      
     </div>
   </div>
 
   <div class="text-center mt-2" *ngIf="value=='View'">
     <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
-    <button class="btn btn-success ml-2" (click)="onSaveAdmin()">Submit</button>
+    <button class="btn btn-success" style="margin-left:10px;" (click)="onSaveAdmin()">Submit</button>
   </div>
-  <div class="mt-3 text-center" *ngIf="value=='ChangePassword'">
+  <div class="mt-3 ml-2 text-center" *ngIf="value=='ChangePassword'">
     <button mat-raised-button class="ml-2" color="accent" (click)="Back()">Back</button>
     <button mat-raised-button class="ml-2" color="primary" (click)="ChangePassword()">Save</button>
 </div>
 
   </div><!-- for card-->
-</nb-card>
+</div>
  </div>  <!--second row-->
 
 
