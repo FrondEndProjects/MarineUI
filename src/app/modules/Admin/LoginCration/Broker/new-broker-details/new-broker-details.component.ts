@@ -754,6 +754,8 @@ if(this.IssuerDetails||this.BrokerTaxDetails ){
 
     }
     else if(value == 'UserDetails'){
+      let reqobj=this.AgencyCode
+      sessionStorage.setItem('item',reqobj);
 this.router.navigate(['/Marine/loginCreation/existingUser'])
     }
 

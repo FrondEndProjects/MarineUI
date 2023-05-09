@@ -156,7 +156,8 @@ this.minDate= new Date(year - 18,month, day );
      this.LoginId = AdminObj.LoginId;
      this.AgencyCode=AdminObj.AgencyCode;
 
-     this.edit=AdminObj.Edit
+     this.edit=AdminObj.Edit;
+     
 
      if(this.AgencyCode!=null && this.AgencyCode!=undefined){
       this.getEditAdminDetails();

@@ -27,7 +27,9 @@ export class ExistingUserListComponent implements OnInit {
  branchList:any[]=[];
  branchValue:any;
  public adminData: any;
-
+ AgencyCode:any;
+ Agentcode:any;
+ first:boolean=false;
   constructor( private masterSer: MastersService,
     private router: Router,private sharedService: SharedService,  private adminReferralService: AdminReferralService,) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -36,19 +38,44 @@ export class ExistingUserListComponent implements OnInit {
       //this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
      //const user = this.userDetails?.Result;
      //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-
+   
       let entry = JSON.parse(sessionStorage.getItem('editUserId'));
-      if(entry) this.branchValue = entry?.BranchCode;
-      else if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
+      console.log('llllllllllll',entry)
+      if(entry) {
+        this.branchValue = entry?.BranchCode;
+      }
+      else if (this.userDetails) {
+        this.branchValue = this.userDetails?.LoginResponse.BranchCode;
+      }
       //this.getBranchList()
-      this.onGetBranchList();
+        
 
     }
 
   ngOnInit(): void {
+    let set=sessionStorage.getItem('item')
+    this.AgencyCode=set;
 
+    if(this.AgencyCode){
+     console.log('MMMMMMMMMM',this.AgencyCode)
+       this.Agentcode=this.AgencyCode;
+       this.first=true;
+       
+    }
+    else{
+     this.Agentcode=null;
+     console.log('kkkkkkkkk',this.first)
+     this.first=false;
+     sessionStorage.removeItem('item')
+ 
+    }
+    this.onGetBranchList();
   }
 
+  back(){
+    this.router.navigate(['/Marine/loginCreation/existingBrokers']);
+    sessionStorage.removeItem('item');
+  }
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
@@ -81,7 +108,8 @@ export class ExistingUserListComponent implements OnInit {
   getExistingAdmin(){
 
     let ReqObj = {
-       "BranchCode": this.branchValue
+       "BranchCode": this.branchValue,
+       "AgencyCode":this.Agentcode
    }
 
     let urlLink = `${this.ApiUrl1}admin/getUserMgtList`;

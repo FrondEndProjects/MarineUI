@@ -170,9 +170,12 @@
       </div>
     </ng-container>
   </div>
-  
-
   <!-- PAGINATOR -->
   <!-- <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
   <!-- /PAGINATOR -->
+</div>
+
+
+<div style="text-align:center" *ngIf="first">
+  <button class="btn btn-danger" (click)="back()">Back</button> 
 </div>

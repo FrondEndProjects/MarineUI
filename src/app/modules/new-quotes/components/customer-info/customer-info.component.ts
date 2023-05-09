@@ -514,7 +514,9 @@ export class CustomerInfoComponent implements OnInit {
         console.log(data);
         if (data?.Message === 'Success') {
           this.premiumDetails = data?.Result;
+         
           sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
+          //sessionStorage.removeItem('Item');
           this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
 
         }

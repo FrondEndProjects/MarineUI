@@ -46,8 +46,15 @@ public filterValue;  constructor( private masterSer: MastersService,
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log(this.userDetails);
     let entry = JSON.parse(sessionStorage.getItem('AgencyId'));
-    if(entry) this.branchValue = entry?.BranchCode;
-    else if (this.userDetails) this.branchValue = this.userDetails?.LoginResponse.BranchCode;
+    if(entry) 
+    {
+      this.branchValue = entry?.BranchCode;
+    }
+    else if (this.userDetails) 
+    {
+      this.branchValue = this.userDetails?.LoginResponse.BranchCode;
+    }
+   
 
   }
 
@@ -130,6 +137,7 @@ public filterValue;  constructor( private masterSer: MastersService,
       (data: any) => {
         console.log(data);
         this.branchList = data || [];
+        this.getExistingBroker();
 
       },
       (err) => { },

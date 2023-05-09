@@ -45,14 +45,18 @@ export class IssuerListComponent implements OnInit {
      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
      console.log(this.userDetails);
      let entry = JSON.parse(sessionStorage.getItem('editIssuerId'));
-     if(entry) this.branchValue = entry?.BranchCode;
-     else if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
-     this.onGetBranchList()
+     if(entry) {
+      this.branchValue = entry?.BranchCode;
+     }
+     else if (this.userDetails) {this.branchValue = this.userDetails?.LoginResponse.BranchCode;
+     }
+    
 
    }
 
    ngOnInit(): void {
-     this.getExistingIssuer();
+    this.onGetBranchList()
+
    }
    /*getExistingIssuer(){
      this.masterSer.onGetMethodSync(`${this.ApiUrl1}master/bank/list`).subscribe(

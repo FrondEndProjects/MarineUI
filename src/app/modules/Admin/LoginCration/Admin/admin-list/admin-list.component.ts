@@ -58,13 +58,13 @@ export class AdminListComponent implements OnInit {
     if(entry) this.branchValue = entry?.BranchCode;
      else if (this.userDetails) this.branchValue = this.userDetails?.LoginResponse.BranchCode;
      //this.getBranchList()
-     this.onGetBranchList();
+     
 
    }
 
    ngOnInit(): void {
 
-
+    this.onGetBranchList();
      //this.getExistingAdmin();
      //this.getList();
      //this.getExistingIssuer();

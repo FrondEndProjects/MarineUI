@@ -123,6 +123,8 @@ export class EndorsementGridComponent implements OnInit {
   }
 
   isActionBtn(event: any) {
+
+    console.log('lllllllllll',event)
     let data = {
       PolicyNo: event.PolicyNo,
       QuoteNo: event.QuoteNo,
@@ -132,16 +134,20 @@ export class EndorsementGridComponent implements OnInit {
     sessionStorage.setItem('QuoteStatus',event?.Status);
     sessionStorage.setItem('EndtReffStatus',event.ReferralStatus);
 
-    if(event.name!='Schedule'){
+    if(event.btName!='Schedule'){
       if(event.ReferralStatus=='ReferalApproved'){
+        sessionStorage.setItem('ReferenceNo',event.ApplicationNo);
+        sessionStorage.setItem('EntNo',event.ReferralStatus);
         this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
       }
       else{
-        this.schedule(event);
-        console.log('kkkkkkkkkkkkkkkk',event)
-        //this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
+        this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
       }
     }
+    if(event.btName=="Schedule"){
+      this.schedule(event);
+      console.log('kkkkkkkkkkkkkkkk',event)
+      }
     
     
   }
