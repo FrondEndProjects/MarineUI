@@ -132,11 +132,11 @@ export class NewQuotesComponent implements OnInit {
         { isActive: false, name: '5', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate` },
       ];
     }
-    this.router.navigate([this.stepperList[0].url]);
+    //this.router.navigate([this.stepperList[0].url]);
   }
   reloadCurrentRoute() {
    
-    window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
+    this.router.navigate([`${this.routerBaseLink}/new-quotes/customer-info`]);
   }
 
 

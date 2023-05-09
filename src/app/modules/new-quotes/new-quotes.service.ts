@@ -70,6 +70,7 @@ export class NewQuotesService {
   routerBaseLink: any;
 
   constructor(
+    private router:Router,
     private http: HttpClient,
     private authService: AuthService,
     private _formBuilder: FormBuilder,
@@ -163,7 +164,7 @@ export class NewQuotesService {
   }
   reloadCurrentRoute() {
    
-    window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
+    this.router.navigate([`${this.routerBaseLink}/new-quotes/customer-info`]);
   }
   ngbDateFormatt(data:any){
     let d:any = data;

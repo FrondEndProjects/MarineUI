@@ -83,8 +83,8 @@ export class ProductSelectionComponent implements OnInit {
     }
   }
   reloadCurrentRoute() {
-   
-    window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
+    this.router.navigate([`${this.routerBaseLink}/new-quotes/customer-info`]);
+    //window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
   }
 
 }

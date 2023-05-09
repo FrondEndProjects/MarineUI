@@ -130,6 +130,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   reloadCurrentRoute() {
-    window.location.href = `/login-layout/login`;
+    this.router.navigate([`/login-layout/login`]);
   }
 }
