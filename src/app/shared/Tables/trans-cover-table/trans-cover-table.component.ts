@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import * as Mydatas from '../../../app-config.json';
 import { OpenCoverService } from '../../../modules/open-cover/open-cover.service';
+import { table } from 'console';
 
 @Component({
   selector: 'app-trans-cover-table',
@@ -40,26 +41,28 @@ export class TransCoverTableComponent implements OnInit {
 
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+   
   }
 
-
-
   ngOnChanges() {
-    console.log(this.tableData);
+    //this.getTotalSICost(this.tableData)
+    //this.CommaFormatted(this.tableData)
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.applyFilter();
     console.log(this.filterValue);
+    console.log('RRRRRRRRRR',this.tableData);
+    this.CommaFormatted(this.tableData);
+    this.secondcommaseporator(this.tableData);
   }
 
 
   ngOnInit() {
-    console.log(this.tableData);
+    console.log('sssssssss',this.tableData);
     this.dataSource = new MatTableDataSource(this.tableData);
     console.log(this.dataSource);
     this.dataSource.sort = this.sort;
-
 
   }
 
@@ -77,6 +80,52 @@ export class TransCoverTableComponent implements OnInit {
 
   get keys() {
     return this.columnHeader.map(({ key }) => key);
+  }
+
+  onSIValueChange (args) {
+    if (args.key === 'e' || args.key === '+' || args.key === '-') {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  CommaFormatted(tableData) {
+    let i=0;
+    console.log('hhhhhhhhhhhhhhh',tableData)
+          let entry = this.tableData;
+          console.log("Entry Came")
+          if(entry.length!=0){
+            for(let build of this.tableData){
+              if(build.PerBottomLimit!=null||build.PerBottomLimit!=undefined){
+              console.log("Entry Came 1",build)
+            let value = build.PerBottomLimit.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.tableData[i].PerBottomLimit = value;
+              }
+            console.log('jjjjjjjjjj',tableData.PerBottomLimit)
+           i++;
+            }    //this.getTotalSICost('building');
+          } 
+          //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+   
+  }
+
+  secondcommaseporator(tableData){
+    let i=0;
+    console.log('SSEEEEEEEEEEEEEEE',tableData)
+          let entry = this.tableData;
+          if(entry.length!=0){
+            for(let build of this.tableData){
+              if(build.LocationLimit!=null||build.LocationLimit!=undefined){
+              console.log("Entry Came 2",build)
+            let value = build.LocationLimit.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.tableData[i].LocationLimit= value;
+              }
+            console.log('jjjjjjjjjj',tableData.LocationLimit)
+           i++;
+            }
+          }
   }
 
   applyFilter() {

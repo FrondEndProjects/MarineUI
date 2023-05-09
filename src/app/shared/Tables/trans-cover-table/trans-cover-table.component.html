@@ -43,7 +43,7 @@
                 <div class="input-control-container">
                   <label class="input-form-label">Per Bottom Limit<span class="text-required">*</span></label>
                   <div class="input-form-box">
-                    <input type="text" class="input-form-control without-icon" [(ngModel)]="element.PerBottomLimit" digitOnly [value]="element.PerBottomLimit | number:'1.0-0'">
+                    <input type="text" class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(element)" [(ngModel)]="element.PerBottomLimit" digitOnly [value]="element.PerBottomLimit">
                   </div>
                 </div>
               </div>
@@ -51,7 +51,7 @@
                 <div class="input-control-container">
                   <label class="input-form-label">Per Location Limit<span class="text-required">*</span></label>
                   <div class="input-form-box">
-                    <input type="text" class="input-form-control without-icon"  [(ngModel)]="element.LocationLimit" digitOnly [value]="element.LocationLimit | commaseparator">
+                    <input type="text" class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="secondcommaseporator(element)"  [(ngModel)]="element.LocationLimit" digitOnly [value]="element.LocationLimit">
                     <!--<div>{{element.LocationLimit|commaseparator}}</div>-->
                   </div>
                 </div>
@@ -59,7 +59,7 @@
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                   <label class="input-form-label">Currency<span class="text-required">*</span></label>
-                  <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="element.CurrencyId" [items]="currencyList" bindValue="Code" bindLabel="CodeDescription">
+                  <ng-select appendTo="body" placeholder="Select" class="input-form-select" [(ngModel)]="element.CurrencyId" [items]="currencyList" bindValue="Code" bindLabel="CodeDescription">
                   </ng-select>
                 </div>
 
