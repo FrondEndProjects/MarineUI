@@ -36,7 +36,7 @@ import {
   NbIconModule,
   NbTabsetModule,
 } from '@nebular/theme';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HomeLayoutComponent } from './layout/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -130,6 +130,7 @@ import { EndorsementComponent } from './modules/endorsement/endorsement.componen
       useClass: HttpInterceptorService,
       multi: true,
     },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
   ],
