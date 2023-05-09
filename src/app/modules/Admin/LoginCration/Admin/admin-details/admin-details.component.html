@@ -150,7 +150,7 @@
 <div class="col-12 col-md-4 col-lg-4">
   <div class="customer-search-container">
     <div class="input-control-container">
-      <label class="input-form-label">Brokers<span class="text-required">*</span></label>
+      <label class="input-form-label">Include Broker's<span class="text-required">*</span></label>
       <div class="input-group mb-3 mt-1">
         <input type="text" class="form-control" [(ngModel)]="Brok" disabled>
         <div class="input-group-append">
@@ -208,7 +208,7 @@
 
 
  <ng-template #secondDialog>
-  <h5 matDialogTitle *ngIf="first">Menu Include</h5>
+  <h5 matDialogTitle *ngIf="first">Excluded menu's</h5>
   <h5 matDialogTitle *ngIf="second">Broker Include</h5>
 <mat-dialog-content>
     <ul class="checklist">
