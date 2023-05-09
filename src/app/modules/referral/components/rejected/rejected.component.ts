@@ -87,6 +87,7 @@ export class RejectedComponent implements OnInit {
   onChangeBroker() {
     if(this.selectedBroker){
       this.loginId = this.selectedBroker;
+      console.log('jjjjjjjj',this.loginId);
     }
     this.onLoadGrid();
   }

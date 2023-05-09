@@ -115,6 +115,7 @@ export class PolicyGenerateComponent implements OnInit {
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log("Doc List",data);
+      console.log('llllllllllllll',this.uploadedDocumentsList);
       this.uploadedDocumentsList=data.Result;
     })
   }
@@ -342,7 +343,23 @@ export class PolicyGenerateComponent implements OnInit {
     
   }
   onDeleteUploadedDoc(index){
-    this.uploadedDocumentsList.splice(index,1);
+    const urlLink = `${this.ApiUrl1}file/delete`;
+    const reqData = {
+      /*"BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
+       "LoginId": this.userDetails?.LoginId,
+      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
+      "UploadId": this.uploadedDocumentsList[index].UploadId
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      if(data?.Result){
+       console.log('kkkkkkkkkk',this.uploadedDocumentsList);
+       this.ongetUploadedDocument();
+      }
+      
+    })
+    //this.uploadedDocumentsList.splice(index,1);
+    //this.onSubmit(); 
   }
   onDeleteUploadDoc(index){
     this.uploadDocuments.splice(index,1);

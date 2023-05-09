@@ -43,6 +43,7 @@ export class ExistingUserListComponent implements OnInit {
       console.log('llllllllllll',entry)
       if(entry) {
         this.branchValue = entry?.BranchCode;
+  
       }
       else if (this.userDetails) {
         this.branchValue = this.userDetails?.LoginResponse.BranchCode;
@@ -55,26 +56,30 @@ export class ExistingUserListComponent implements OnInit {
   ngOnInit(): void {
     let set=sessionStorage.getItem('item')
     this.AgencyCode=set;
+    let branch=sessionStorage.getItem('itemBranchCode')
 
     if(this.AgencyCode){
      console.log('MMMMMMMMMM',this.AgencyCode)
        this.Agentcode=this.AgencyCode;
        this.first=true;
-       
+       this.branchValue=branch;
     }
     else{
+      sessionStorage.removeItem('item');
+      sessionStorage.removeItem('itemBranchCode')
      this.Agentcode=null;
      console.log('kkkkkkkkk',this.first)
      this.first=false;
-     sessionStorage.removeItem('item')
- 
+    
     }
     this.onGetBranchList();
   }
 
   back(){
-    this.router.navigate(['/Marine/loginCreation/existingBrokers']);
     sessionStorage.removeItem('item');
+    sessionStorage.removeItem('itemBranchCode');
+    this.router.navigate(['/Marine/loginCreation/existingBrokers']);
+    
   }
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
