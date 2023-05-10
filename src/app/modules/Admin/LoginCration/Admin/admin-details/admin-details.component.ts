@@ -91,7 +91,8 @@ export class AdmindetailsComponent implements OnInit {
 this.exportWarrantyList=[{
   "Export":"Export List"
 }];
-this.onGetProductList()
+this.onGetProductList();
+this.onGetUnderwriter(); 
 
 //this.brokert();
 /*this.userList=[{"Code":"6","CodeDesc":"6"},
@@ -199,6 +200,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
       this.ProductComma();
       this.changeMenu('direct');
       this.onGetProductList();
+      this.onGetUnderwriter(); 
       //this.AttachedBranches(this.AdminDetails.AttachedRegion);
       if(this.AdminDetails){
         if(this.AdminDetails?.EffectiveDate!=null){

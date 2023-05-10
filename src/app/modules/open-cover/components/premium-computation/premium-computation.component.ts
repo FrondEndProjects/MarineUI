@@ -53,6 +53,7 @@ export class PremiumComputationComponent implements OnInit {
   public refundStatus = '';
   public premiumForm:FormGroup;
   public routerBaseLink:any='';
+  total: string;
 
   constructor(
     private openCoverService: OpenCoverService,
@@ -86,22 +87,55 @@ export class PremiumComputationComponent implements OnInit {
       PolicyFeePaid,
       InspectionFeePaid,
     ]) => {
+      /*let total
+      if(TotalPremium.includes(',')){ total=TotalPremium.replace(/,/g, '') }
+      console.log('<<<<<<<<<<<<<',total)
+      TotalPremium=total;*/
       let row1 = Number(TotalPremium) + Number(PolicyFee) + Number(InspectionFee);
       let row4 = Number(PayableMarinePremium) + Number(PolicyFeePaid) + Number(InspectionFeePaid)
       console.log(row1,row4);
       this.pF.FinalPremium.setValue(row1);
 
+      console.log('fffffffffffffffffffff',this.pF.FinalPremium.value)
+
         this.pF.BalanceAmount.setValue(Number(TotalPremium));
         this.pF.PolicyFeeBalance.setValue(Number(PolicyFee));
         this.pF.InsceptionFeeBalance.setValue(Number(InspectionFee));
         this.pF.ReceivedTotal.setValue(Number(row1));
-
         this.pF.Total.setValue(Number(row4));
 
     });
 
   }
 
+  /*CommaFormatted() {
+    // format number
+    if (this.total) {
+      console.log('TTTTTTTTTTTT',this.total)
+      //let premium=this.pF.TotalPremium.value
+     //let premium= String(this.pF.TotalPremium.value);
+     let value= this.total.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+     this.pF.TotalPremium.setValue(value) 
+     console.log('YYYYYYYYYYYYYYYYYYY',this.pF.TotalPremium.value)
+    }}*/
+
+
+    /*CommaFormattedFinal(){
+      if (this.pF.FinalPremium) {
+        console.log('FFFFFFFFFFFFFFF',this.pF.FinalPremium)
+       let premium= String(this.pF.FinalPremium);
+       let value= premium.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       this.pF.FinalPremium.setValue(value) 
+      }
+    }*/
+    /*onSIValueChange(args){
+    if (args.key === 'e' || args.key === '+' || args.key === '-') {
+      return false;
+    } else {
+      return true;
+    }
+  }*/
   onCreateFormControl() {
     this.premiumForm = this._formBuilder.group({
       TotalPremium:['', Validators.required],
@@ -155,6 +189,8 @@ export class PremiumComputationComponent implements OnInit {
         this.premiumDetails = data?.Result[0];
 
         this.pF.TotalPremium.setValue(Number(this.premiumDetails.TotalPremium));
+        //this.CommaFormatted();
+       
         this.pF.PolicyFee.setValue(Number(this.premiumDetails.PolicyFee));
         this.pF.InspectionFee.setValue(Number(this.premiumDetails.InspectionFee));
         // this.pF.FinalPremium.setValue(Number(this.premiumDetails.FinalPremium));
@@ -170,7 +206,12 @@ export class PremiumComputationComponent implements OnInit {
         this.pF.PolicyFeePaid.setValue(Number(this.premiumDetails.PolicyFeePaid));
         this.pF.InspectionFeePaid.setValue(Number(this.premiumDetails.InspectionFeePaid));
 
-
+           
+        /*if(this.pF?.TotalPremium?.value){
+          this.total= String(this.pF?.TotalPremium.value);
+          this.CommaFormatted();
+          //this.CommaFormatted();
+        }*/
 
 
       },

@@ -101,9 +101,9 @@ export class CommodityTableComponent implements OnInit {
       this.onAdd.emit(element);
       this.selectedData = element;
       console.log('lllllllllllll',this.selectedData)
-      if(this.selectedData?.innerTableData[0]?.ismore){
-       this.nan=this.selectedData.innerTableData[0].ismore
-      }
+        console.log('tttttttttttt',this.innerTableData[0]?.ismore)
+       this.nan=this.innerTableData[0]?.ismore
+    
       console.log('kkkkkkkkkk',this.nan)
     }
 
