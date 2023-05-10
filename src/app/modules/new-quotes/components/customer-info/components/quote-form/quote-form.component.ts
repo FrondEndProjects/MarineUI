@@ -5,6 +5,7 @@ import * as Mydatas from '../../../../../../app-config.json';
 import { NewQuotesService } from '../../../../new-quotes.service';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-quote-form',
@@ -22,7 +23,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public step = 0;
   public openCoverNo: any = '';
   public quoteForm!: FormGroup;
-  public referenceNo: any;
+  public referenceNo: any;renderSection:boolean = false;
   public submitted: boolean;
 
   public dropTransportList: any[] = [];
@@ -40,6 +41,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public dropCurrencyList: any[] = [];
   public dropGoodsOfCateList: any[] = [];
   public warStatus:any=''
+  subscription: Subscription;
 
   public dropPartialShipList: any[] = [
     { Code: 'N', CodeDescription: 'None' },
@@ -71,16 +73,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     }
     this.loginId = this.customerInfoComponent?.loginId;
     this.applicationId = this.customerInfoComponent?.applicationId;
-    this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
-      if (data && data?.OpenCoverNo!=null){
-        console.log("OCCCCCC Data",data);
-        this.openCoverNo = data?.OpenCoverNo;
-        this.omDropDownParallelCall();
-      }
-      else{
-        this.omDropDownParallelCall();
-      }
-      });
+   
   }
 
   ngOnInit(): void {
@@ -92,21 +85,45 @@ export class QuoteFormComponent implements OnInit, OnChanges {
       "day": newDate.getDate()
     }
     this.maxDate = ngbDate;
-
+    this.subscription =this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
+      if(!this.renderSection){
+        if (data && data?.OpenCoverNo!=null){
+          this.renderSection = true;
+          this.openCoverNo = data?.OpenCoverNo;
+          this.omDropDownParallelCall();
+        }
+        else{
+          this.renderSection = true;
+          this.omDropDownParallelCall();
+        }
+      }
+    });
 
 
   }
+  ClearSubscribe(): void {
+    this.subscription.unsubscribe();
+  }
   omDropDownParallelCall (){
-    this.onLoadDropdownList();
     this.quoteF.originatingCountry.setValue('1');
-    this.onGetOriginCityDropdownList();
     this.quoteF.destinationCountry.setValue('1');
-    this.onGetDestinaCityDropdownList();
-    this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
+    this.subscription=this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
       if (data) {
-        this.onEditQuote(data);
+        if(this.dropOriginCountryList.length==0){
+          this.onEditQuote(data);
+        }
+      }
+      else{
+        if(this.dropOriginCountryList.length==0){
+          this.onLoadDropdownList();
+        }
       }
     });
+    
+    
+    //this.onGetOriginCityDropdownList();
+    //this.onGetDestinaCityDropdownList();
+    
   }
 
   get quoteF() {
@@ -175,13 +192,13 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
   onLoadDropdownList() {
     this.onGetTransportDropdownList();
-    this.onGetOriginCountryDropdownList();
-    this.onGetDestinaCountryDropdownList();
-    this.onGetIncotermsDropdownList();
-    this.onGetToleranceDropdownList();
-    this.onGetCurrencyDropdownList();
-    this.onGetGoodsOfCategoryDropdownList();
-    this.onCheckWarYesOrNo();
+    if(this.dropOriginCountryList.length==0) this.onGetOriginCountryDropdownList();
+    if(this.dropDestinaCountryList.length==0) this.onGetDestinaCountryDropdownList();
+    if(this.dropIncotermsList.length==0) this.onGetIncotermsDropdownList();
+    if(this.dropToleranceList.length==0) this.onGetToleranceDropdownList();
+    if(this.dropCurrencyList.length==0) this.onGetCurrencyDropdownList();
+    if(this.dropGoodsOfCateList.length==0) this.onGetGoodsOfCategoryDropdownList();
+    if(this.dropGoodsOfCateList.length==0) this.onCheckWarYesOrNo();
 
   }
 
