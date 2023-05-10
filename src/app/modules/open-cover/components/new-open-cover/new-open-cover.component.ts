@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { table } from 'console';
 
 @Component({
   selector: 'app-new-open-cover',
@@ -75,12 +76,13 @@ export class NewOpenCoverComponent implements OnInit {
     this.onGetCustomerList();
 
     this.newQuoteF.utilizedAmount.valueChanges.subscribe(x => {
-      console.log(x);
+      console.log('kkkkkkkkkk',x);
       var annualEstimate = this.newQuoteF.annualEstimate.value;
       var removecomma: any = annualEstimate.toString().replace(/,/g, '');
       var number: any = Number(removecomma);
+      console.log('sssssssssssssssss',number);
       if (x > number) {
-        console.log(number);
+        console.log('hhhhhhhhhhhhh',number);
         // setTimeout(() => {
         this.newQuoteF.utilizedAmount.setErrors({ message: 'amount should be lessthan annual mount' })
         // });
@@ -307,6 +309,41 @@ export class NewOpenCoverComponent implements OnInit {
     this.newQuoteF.openCoverEndDate.setValue(endDate);
   }
 
+  CommaFormatted(tableData) {
+    let i=0;
+    console.log('hhhhhhhhhhhhhhh',tableData)
+          let entry = tableData;
+          console.log("Entry Came")
+          if(entry.length!=0){
+            //for(let build of this.tableData){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.newQuoteF.annualEstimate.setValue(value);
+              }
+            console.log('Esctimtaed Amount', this.newQuoteF.annualEstimate.value)
+            //}    //this.getTotalSICost('building');
+          } 
+          //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+   
+  }
+
+  CommaFormattedUtilizedAmount(tableData) {
+    let i=0;
+    console.log('hhhhhhhhhhhhhhh',tableData)
+          let entry = tableData;
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.newQuoteF.utilizedAmount.setValue(value);
+              }
+            console.log('Esctimtaed Amount', this.newQuoteF.utilizedAmount.value)
+          } 
+  }
 
   onEdit() {
     console.log(this.editData);
@@ -320,8 +357,17 @@ export class NewOpenCoverComponent implements OnInit {
     this.newQuoteF.customer.setValue(this.editData?.InsuredName);
     this.newQuoteF.openCoverStartDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyStartDate));
     this.newQuoteF.openCoverEndDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyEndDate));
-    this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
-    this.newQuoteF.utilizedAmount.setValue(this.editData?.UtilizedAmount);
+    if(this.editData?.EstimateAmount!=null){
+      this.CommaFormatted(this.editData?.EstimateAmount)
+    //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+    }
+    //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+    console.log('MMMMMMMMMMMMMMMMMMM',this.newQuoteF.annualEstimate);
+    if(this.editData?.UtilizedAmount!=null){
+      this.CommaFormattedUtilizedAmount(this.editData?.UtilizedAmount)
+    //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+    }
+    //this.newQuoteF.utilizedAmount.setValue(this.editData?.UtilizedAmount);
     this.newQuoteF.currency.setValue(this.editData?.Currency);
     this.newQuoteF.sharedPercentage.setValue(this.editData?.RsaValue);
     this.newQuoteF.crossVoyagePrecnt.setValue(this.editData?.VoyageValue);

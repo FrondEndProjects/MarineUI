@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { Issuer } from './IssuerModel';
 import { AdminReferralService } from '../../../../admin-referral/admin-referral.service';
 import { DatePipe } from '@angular/common';
+import { LoginService } from '../../../../login/login.service';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 @Component({
   selector: 'app-issuer-details',
@@ -60,7 +61,7 @@ export class IssuerDetailsComponent implements OnInit {
   
 
   constructor(private router: Router,private masterSer: MastersService,private adminReferralService: AdminReferralService,private datePipe:DatePipe,
-    private toastrService:NbToastrService) {
+    private toastrService:NbToastrService,private loginService: LoginService) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.activeMenu = "Issuer";
     this.IssuerDetails=new Issuer();
@@ -189,18 +190,29 @@ this.onGetRegionList();
     }
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode': this.IssuerDetails.RegionCode,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
         this.branchList = data || [];
+        this.onGetProductList(); 
 
       },
       (err) => { },
     );
   }
+
   onGetRegionList() {
+    const urlLink = `${this.ApiUrl1}admin/region/list`;
+    this.loginService.onGetMethodSync(urlLink).subscribe((data: any) => {
+      console.log(data);
+      this.regionList = data?.Result;
+
+      //this.AttachedBranchs();
+    });
+  }
+  /*onGetRegionList() {
     const urlLink = `${this.ApiUrl1}admin/region/list`;
     const reqData = {
       "RegionCode": "01"
@@ -213,7 +225,7 @@ this.onGetRegionList();
       },
       (err) => { },
     );
-  }
+  }*/
 
   onGetProductList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/referral/quoteproduct`;

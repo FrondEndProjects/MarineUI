@@ -12,6 +12,7 @@ import { Admins } from './AdminModel';
 import { AdminReferralService } from '../../../../admin-referral/admin-referral.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ExcludedPopUpComponent } from '../../ExcludedPopUp/excludedpopup.component';
+import { LoginService } from '../../../../login/login.service';
 
 
 @Component({
@@ -75,7 +76,7 @@ export class AdmindetailsComponent implements OnInit {
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
     private toastrService:NbToastrService, private router:Router, private adminReferralService: AdminReferralService,
-    private dialog: MatDialog){
+    private dialog: MatDialog,private loginService: LoginService){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.AdminDetails = new Admins();
 
@@ -266,7 +267,7 @@ onGetBranchList(para:any) {
     (err) => { },
   );
 }
-onGetRegionList() {
+/*onGetRegionList() {
   const urlLink = `${this.ApiUrl1}admin/region/list`;
   const reqData = {
     "RegionCode": "01"
@@ -281,6 +282,15 @@ onGetRegionList() {
     },
     (err) => { },
   );
+}*/
+onGetRegionList() {
+  const urlLink = `${this.ApiUrl1}admin/region/list`;
+  this.loginService.onGetMethodSync(urlLink).subscribe((data: any) => {
+    console.log(data);
+    this.regionList = data?.Result;
+
+    //this.AttachedBranchs();
+  });
 }
 
 onGetProductList() {

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as Mydatas from '../../app-config.json';
 import { SessionStorageService } from '../../shared/storage/session-storage.service';
 import { NbMenuService } from '@nebular/theme';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-admin-referral',
@@ -30,6 +31,7 @@ export class AdminReferralComponent implements OnInit {
     private router: Router,
     private sessionStorageService: SessionStorageService,
     private menuService: NbMenuService,
+    private loginService: LoginService
 
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -74,7 +76,7 @@ export class AdminReferralComponent implements OnInit {
       (err) => { },
     );
   }
-  onGetRegionList() {
+  /*onGetRegionList() {
     const urlLink = `${this.ApiUrl1}admin/region/list`;
     const reqData = {
       "RegionCode": "01"
@@ -86,11 +88,20 @@ export class AdminReferralComponent implements OnInit {
       },
       (err) => { },
     );
+  }*/
+  onGetRegionList() {
+    const urlLink = `${this.ApiUrl1}admin/region/list`;
+    this.loginService.onGetMethodSync(urlLink).subscribe((data: any) => {
+      console.log(data);
+      this.regionList = data?.Result;
+
+      //this.AttachedBranchs();
+    });
   }
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode':  this.sF.regions.value,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

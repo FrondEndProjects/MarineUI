@@ -92,7 +92,8 @@ export class InnerTableComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.commodityTableComponent.selectedData, this.tableData);
+    console.log('yyyyyyyyyyyyyyyyyyy',this.commodityTableComponent.selectedData)
+    console.log('kkkkkkkkkkk',this.tableData);
     const selectedData = this.commodityTableComponent.selectedData;
     const CommodityRateInfo: any[] = this.tableData.filter((x: any) => x.CommodityId == selectedData.CommodityId).map(z => ({
       "BaseRate": z.CommodityBaseRate,

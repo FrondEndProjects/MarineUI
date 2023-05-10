@@ -99,10 +99,12 @@ export class CommodityTableComponent implements OnInit {
   onPassData(element:any){
     if(element.isClicked){
       this.onAdd.emit(element);
-      // this.selectedData = element;
-      // console.log('lllllllllllll',this.selectedData)
-      //   this.nan=this.selectedData.innerTableData[0].ismore
-      //   console.log('kkkkkkkkkk',this.nan)
+      this.selectedData = element;
+      console.log('lllllllllllll',this.selectedData)
+      if(this.selectedData?.innerTableData[0]?.ismore){
+       this.nan=this.selectedData.innerTableData[0].ismore
+      }
+      console.log('kkkkkkkkkk',this.nan)
     }
 
   }
