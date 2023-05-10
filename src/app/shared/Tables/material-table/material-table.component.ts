@@ -27,6 +27,7 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
   @Output('onAddWar') onAddWar = new EventEmitter();
   @Output('isActionBtn') isActionBtn = new EventEmitter();
   @Output('choosedRow') choosedRow = new EventEmitter();
+  @Output('onMenu') onMenu = new EventEmitter();
 
 
 

@@ -110,7 +110,7 @@
             </button>
             <mat-menu #menus="matMenu">
               <ng-container *ngFor="let item of col.config.menuList">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
                 <span>{{item.name}}</span>
               </button>
               </ng-container>

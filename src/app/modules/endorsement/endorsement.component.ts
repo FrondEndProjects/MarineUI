@@ -135,9 +135,9 @@ export class EndorsementComponent implements OnInit {
               config: {
                 isMenuAction: true,
                 menuList: [
-                  { name: 'Schedule' },
-                  { name: 'Policy Wordings' },
-                  { name: 'Documents' },
+                  { name: 'Schedule'},
+                  { name: 'Policy Wordings'},
+                  { name: 'Documents'},
                 ]
               },
             },
@@ -153,6 +153,7 @@ export class EndorsementComponent implements OnInit {
   }
 
   isActionBtn(event: any) {
+    console.log('hhhhhhhhhhhhhhhhhh',event)
     //  const data:any = {
     //   'PolicyNo':event.PolicyNo,
     //   'QuoteNo':event.QuoteNo,
