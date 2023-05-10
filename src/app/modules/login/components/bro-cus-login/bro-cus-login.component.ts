@@ -20,7 +20,8 @@ export class BroCusLoginComponent implements OnInit {
   public submitted = false;
   public regionList: any[] = [];
   public branchList: any[] = [];
-  changeForm: FormGroup; ForgetForm : FormGroup
+  changeForm: FormGroup; ForgetForm : FormGroup;
+  PasswordCheckForm : FormGroup;
   pa: any;
   forget: boolean=false;
   first:boolean=true;
@@ -30,6 +31,7 @@ export class BroCusLoginComponent implements OnInit {
   type: string;
   ch: string;
   second: boolean=false;
+  forgetpassword:boolean=false;
   constructor(
     private _formBuilder: FormBuilder,
     private loginService: LoginService,
@@ -70,12 +72,21 @@ export class BroCusLoginComponent implements OnInit {
       LoginId: ['', Validators.required],
      Email: ['', Validators.required],
     });
-
+    this.PasswordCheckForm = this._formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      region: [null, Validators.required],
+      branch: [null, Validators.required],  
+    });
 
   }
   get f() {
     return this.loginForm.controls;
   }
+  get g() {
+    return this.PasswordCheckForm.controls;
+  }
+
 
   onGetRegionList() {
     const urlLink = `${this.ApiUrl1}admin/region/list`;
@@ -94,6 +105,17 @@ export class BroCusLoginComponent implements OnInit {
       this.branchList = data || []
     });
   }
+
+  onGetBranchListChange() {
+    const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
+    const reqData = {
+      'RegionCode': this.g.region.value,
+    };
+    this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      console.log(data);
+      this.branchList = data || []
+    });
+  }
   resetForm() {
     this.changeForm.controls['LoginId'].setValue('');
     this.changeForm.controls['NewPassword'].setValue('');
@@ -102,6 +124,10 @@ export class BroCusLoginComponent implements OnInit {
     this.loginForm.controls['password'].setValue('');
     this.ForgetForm.controls['LoginId'].setValue('');
     this.ForgetForm.controls['Email'].setValue('');
+    this.PasswordCheckForm.controls['username'].setValue('');
+    this.PasswordCheckForm.controls['password'].setValue('');
+    this.PasswordCheckForm.controls['region'].setValue('');
+    this.PasswordCheckForm.controls['branch'].setValue('');
   }
 
   Forget(type,change){
@@ -109,10 +135,16 @@ export class BroCusLoginComponent implements OnInit {
     console.log(change)
     this.pa=change
       if(type=='change') {this.forget = false;
-      this.first=false;}
+        this.forgetpassword=false;
+      this.first=false;
+      this.second=false;
+    }
       else 
       {this.forget = true;
-      this.first=false;}
+            this.forgetpassword=true;
+      this.first=false;
+      this.second=false;
+    }
 
       if(change=='ChangePassword'){
         this.pass=true;
@@ -191,6 +223,7 @@ export class BroCusLoginComponent implements OnInit {
     if (value_cancel === 'Cancel') {
       this.resetForm();
       this.first = true;
+      this.second=false;
     }
   }
   onLogin() {
@@ -227,11 +260,47 @@ export class BroCusLoginComponent implements OnInit {
     })
   }
 
+  onchangepasswordcheck(){
+    const urlLink = `${this.ApiUrl1}login/CheckChangePassword`;
+    const formData = this.PasswordCheckForm.value;
+
+    const reqData = {
+      UserId: formData.username,
+      Password: formData.password,
+      LoginType: 'Admin',
+      RegionCode: formData.region,
+      BranchCode: formData.branch,
+    };
+    this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      console.log(data);
+        if (data.Message=="This Login id and Password Record is there !!!") {
+          console.log('jjjjjjjjjjjj')
+          Swal.fire({
+            title: '<strong>Change Password </strong>',
+            icon: 'info',
+            html:
+              data.Message,
+            //showCloseButton: true,
+            //focusConfirm: false,
+            showCancelButton: false,
+
+            //confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancel',
+          })
+          this.PasswordCheckForm.reset();
+          this.second=true;
+           this.forget=true;
+           this.changeForm.controls['LoginId'].setValue(data.LoginId);
+
+        }
+    })
+
+  }
   submit() {
 
     let p=this.pa
     const formData = this.changeForm.value;
-    if(formData.NewPassword!=formData.OldPassword){
       const urlLink = `${this.ApiUrl1}login/LoginChangePassword`;
       const reqData = {
         "LoginId": formData.LoginId,
@@ -242,7 +311,7 @@ export class BroCusLoginComponent implements OnInit {
         (data: any) => {
           let res: any = data;
           console.log(data);
-          if (data.Result) {
+          if (data.Message=="Success") {
             Swal.fire({
               title: '<strong>Change Password </strong>',
               icon: 'info',
@@ -262,86 +331,7 @@ export class BroCusLoginComponent implements OnInit {
             this.second=true;
           }
         });
-    }
-    else{
-      console.log('pppppp',p)
-      if(p){
-        if( p =='ChangePassword' && formData.OldPassword=='' || formData.OldPassword==null || formData.OldPassword == undefined){
-          Swal.fire({
-            title: '<strong>Form Validation</strong>',
-            icon: 'info',
-            html:
-              `<ul class="list-group errorlist">
-              <li class="list-group-login-field">
-                <div style="color: darkgreen;">Field<span class="mx-2">:</span>Old Password</div>
-                <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Old Password</div>
-             </li>
-            </ul>`,
-            showCloseButton: true,
-            focusConfirm: false,
-            confirmButtonText:
-              '<i class="fa fa-thumbs-down"></i> Errors!',
-            confirmButtonAriaLabel: 'Thumbs down, Errors!',
-          })
-        }
-        else if(p =='ForgotPassword' && formData.OldPassword=='' || formData.OldPassword==null || formData.OldPassword == undefined){
-          Swal.fire({
-            title: '<strong>Form Validation</strong>',
-            icon: 'info',
-            html:
-              `<ul class="list-group errorlist">
-              <li class="list-group-login-field">
-                <div style="color: darkgreen;">Field<span class="mx-2">:</span>Temporary Password</div>
-                <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Temporary Password</div>
-             </li>
-            </ul>`,
-            showCloseButton: true,
-            focusConfirm: false,
-            confirmButtonText:
-              '<i class="fa fa-thumbs-down"></i> Errors!',
-            confirmButtonAriaLabel: 'Thumbs down, Errors!',
-          })
-        }
-      }
 
-      else if(formData.NewPassword=='' || formData.NewPassword==null || formData.NewPassword == undefined){
-        Swal.fire({
-          title: '<strong>Form Validation</strong>',
-          icon: 'info',
-          html:
-            `<ul class="list-group errorlist">
-            <li class="list-group-login-field">
-              <div style="color: darkgreen;">Field<span class="mx-2">:</span>New Password</div>
-              <div style="color: red;">Message<span class="mx-2">:</span>Please Enter New Password</div>
-           </li>
-          </ul>`,
-          showCloseButton: true,
-          focusConfirm: false,
-          confirmButtonText:
-            '<i class="fa fa-thumbs-down"></i> Errors!',
-          confirmButtonAriaLabel: 'Thumbs down, Errors!',
-        })
-      }
-      else{
-        Swal.fire({
-          title: '<strong>Form Validation</strong>',
-          icon: 'info',
-          html:
-            `<ul class="list-group errorlist">
-            <li class="list-group-login-field">
-              <div style="color: darkgreen;">Field<span class="mx-2">:</span>Mismatch Password</div>
-              <div style="color: red;">Message<span class="mx-2">:</span>Old Password Cannot Be New Password</div>
-           </li>
-          </ul>`,
-          showCloseButton: true,
-          focusConfirm: false,
-          confirmButtonText:
-            '<i class="fa fa-thumbs-down"></i> Errors!',
-          confirmButtonAriaLabel: 'Thumbs down, Errors!',
-        })
-      }
-
-    }
 
   }
 }
