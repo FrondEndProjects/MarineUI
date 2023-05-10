@@ -107,36 +107,36 @@ export class OpenCoverGridComponent implements OnInit {
   onmenu(row,rowData){
     console.log('jjjjjjjjjjj',row)
     console.log('kkkkkkkk',rowData)
-      if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
+      if(rowData=='Schedule' || rowData=='PolicyWording')  this.getSchedulePdf(row,rowData);
 
   }
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;
-    
+    console.log('SSSSSSSSSSSSSSSSSSSSSS',type)
     if(type=='Schedule'){
       ReqObj = {
         "BranchCode":this.userDetails.BranchCode,
         //"PolicyNo":row.data.OriginalPolicyNo,
-          "EndtStatus":rowData.data.EndtStatus,
+          "EndtStatus":"Y",
           "ImageStatus": "Y",
           "OpenCoverNo": rowData.data.OpenCoverNo,
           "ProposalNo": rowData.data.ProposalNo,
-          "Status":rowData.data.Status
+          "Status":"Y"
   
       };
        UrlLink = `${this.ApiUrl1}pdf/opencover`;
     }
-    else if(type == 'Policy Wordings'){
+    else if(type == 'PolicyWording'){
       type = 'PolicyWordings'
       UrlLink = `${this.ApiUrl1}pdf/opencover/policywording`;
       ReqObj = {
         "BranchCode":this.userDetails.BranchCode,
         //"PolicyNo":row.data.OriginalPolicyNo,
-        "EndtStatus":rowData.data.EndtStatus,
+        "EndtStatus":"Y",
         "ImageStatus": "Y",
         "OpenCoverNo": rowData.data.OpenCoverNo,
         "ProposalNo": rowData.data.ProposalNo,
-        "Status":rowData.data.Status
+        "Status":"Y"
 
       };
     }
@@ -236,6 +236,7 @@ export class OpenCoverGridComponent implements OnInit {
   }
 
   onOpenCoverActions(event: any) {
+    console.log('RRRRRRRRR',event)
     if (event.name === 'Certificate') {
         const data = {
           'name':event.name,
@@ -248,7 +249,7 @@ export class OpenCoverGridComponent implements OnInit {
          this.router.navigate([`${this.routerBaseLink}/new-quotes`]);
     }
     console.log("Event",event)
-    if(event.name=='Schedule' || event.name=='Policy Wordings')  this.getSchedulePdf(event,event.name);
+    if(event.name=='Schedule' || event.name=='PolicyWording')  this.getSchedulePdf(event,event.name);
   }
 
   onEdit(item: any) {

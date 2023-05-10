@@ -190,7 +190,6 @@ export class ProtfolioGridComponent implements OnInit {
             { key: 'LcNumber', display: 'LC Number' },
             { key: 'BlAwbNo', display: 'Bill No' },
             { key: 'BlAwbDate', display: 'Bill Date' },
-
             {
               key: 'endorse',
               display: 'Endorse',
@@ -202,7 +201,6 @@ export class ProtfolioGridComponent implements OnInit {
                 bg: 'primary'
               }
             },
-
             {
               key: 'actions',
               display: 'Action',
@@ -228,6 +226,7 @@ export class ProtfolioGridComponent implements OnInit {
   }
 
   isActionBtn(event: any) {
+    console.log('llllllllllllll',event)
      const data:any = {
       'PolicyNo':event.PolicyNo,
       'QuoteNo':event.QuoteNo,

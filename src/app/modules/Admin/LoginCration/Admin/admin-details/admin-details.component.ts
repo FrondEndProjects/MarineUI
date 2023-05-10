@@ -200,7 +200,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
       this.ProductComma();
       this.changeMenu('direct');
       this.onGetProductList();
-      this.onGetUnderwriter(); 
+      //this.onGetUnderwriter(); 
       //this.AttachedBranches(this.AdminDetails.AttachedRegion);
       if(this.AdminDetails){
         if(this.AdminDetails?.EffectiveDate!=null){

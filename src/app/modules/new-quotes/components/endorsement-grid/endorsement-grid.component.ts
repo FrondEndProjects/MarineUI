@@ -155,15 +155,13 @@ export class EndorsementGridComponent implements OnInit {
   schedule(row){
     let Results='';
     console.log('rrrrrrr',row)
-    const urlLink = `${this.ApiUrl1}pdf/opencover`;
+    const urlLink = `${this.ApiUrl1}pdf/endtcertificate`;
     const reqData = {
       "BranchCode":this.userDetails.BranchCode,
       //"PolicyNo":row.data.OriginalPolicyNo,
-  "EndtStatus":row.EndtStatus,
-  "ImageStatus": "Y",
-  "OpenCoverNo": row.OpenCoverNo,
-  "ProposalNo": row.PolicyNo,
-  "Status":row.Status
+  "ApplicationNo":row.ApplicationNo,
+  "BelongingBranchCode":"",
+  "PolicyNo":row.PolicyNo,
 
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -183,7 +181,7 @@ export class EndorsementGridComponent implements OnInit {
 
   onDownloadSchedule(Results,rowData){
 
-    console.log('jjjjjjjj',Results)
+    console.log('jjjjjjjj',Results,rowData)
    /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
     const reqData = {
       "BranchCode": this.userDetails?.BranchCode,
@@ -193,7 +191,7 @@ export class EndorsementGridComponent implements OnInit {
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', Results);
-        link.setAttribute('download',rowData);
+        link.setAttribute('download',rowData.PolicyNo);
         document.body.appendChild(link);
         link.click();
         link.remove();
