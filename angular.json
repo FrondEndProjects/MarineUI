@@ -12,7 +12,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "preserveSymlinks": true,
-            "outputPath": "dist",
+            "outputPath": "dist/Marine",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -21,6 +21,7 @@
               "src/assets",
               "src/favicon.ico",
               "src/favicon.png",
+              "src/web.config",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -142,6 +143,7 @@
               "src/assets",
               "src/favicon.ico",
               "src/favicon.png",
+              "src/web.config",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
