@@ -537,7 +537,9 @@ export class CustomerInfoComponent implements OnInit {
     }
     return description;
   }
-
+  ngOnDestroy() {
+    this.newQuotesService.quoteEditData.next(null)
+  }
 
 
 }

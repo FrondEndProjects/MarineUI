@@ -56,7 +56,7 @@ export class NewQuotesService {
   private PartialShipDropdown: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   getPartialShipDropdown = this.PartialShipDropdown.asObservable();
 
-  private quoteEditData: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public quoteEditData: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
   getQuoteEditData = this.quoteEditData.asObservable();
 
 
@@ -82,7 +82,10 @@ export class NewQuotesService {
     this.onCreateFormControl();
   }
 
-
+  ngOnDestroy(): void {
+    this.quoteEditData.next(null);
+    this.quoteEditData.complete();
+  }
   getDropDownList(list: any[], name: string) {
     if ( name === 'bank' ) {
       this.BankDropdown.next(list);
@@ -143,6 +146,7 @@ export class NewQuotesService {
 
   onEditQuoteDetails(item: any) {
     this.quoteEditData.next(item);
+    console.log("Showing Item Data",item)
   }
   redirectQuotePage(){
     this.sessionStorageService.remove('referral');
