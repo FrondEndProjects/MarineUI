@@ -121,6 +121,14 @@ export class PolicyGenerateCoverComponent implements OnInit {
       (err) => { },
     );
   }
+
+  vattax(event){
+    console.log('EEEEEEEEEEEEEEEEEE',event)
+    let value= event.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    console.log('VVVVVVVVVVV',value)
+    let total:number = (Number(this.pG.premium.value) + Number(this.pG.policyFee.value) + Number(event));
+    this.pG.totalPremium.setValue(total);
+  }
   onGetPremium() {
     const urlLink = `${this.ApiUrl1}OpenCover/openpolicy/moppremium`;
     const reqData = {
@@ -172,6 +180,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
       (data: any) => {
         console.log('depositinfo', data);
         this.depositInfo = data?.Result[0];
+        console.log('PPPPPPPIIIIIIIIIIIIII',this.depositInfo?.InstallmentType)
         this.pG.installment.setValue(this.depositInfo?.InstallmentType);
         this.pG.remarks.setValue(this.depositInfo?.Remarks);
 

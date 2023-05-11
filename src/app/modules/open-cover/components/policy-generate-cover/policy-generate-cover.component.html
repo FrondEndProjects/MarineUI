@@ -61,7 +61,7 @@
           <div class="input-control-container">
             <label class="input-form-label">Vat Tax<span class="text-required">*</span></label>
             <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="vatTax">
+              <input type="text" class="input-form-control without-icon" formControlName="vatTax" (keyup)="vattax(pG.vatTax.value)">
             </div>
           </div>
         </div>

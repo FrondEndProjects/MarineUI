@@ -38,10 +38,10 @@
       <tbody>
         <tr>
           <td>Actual</td>
-          <td><input type="text" formControlName="TotalPremium" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="TotalPremium" [value]="pF.TotalPremium.value|commaseparator" class="form-control form-control-sm" disabled></td>
           <td><input type="text" formControlName="PolicyFee" class="form-control form-control-sm"></td>
           <td><input type="text" formControlName="InspectionFee" class="form-control form-control-sm"></td>
-          <td><input type="text" formControlName="FinalPremium" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="FinalPremium" [value]="pF.FinalPremium.value|commaseparator" class="form-control form-control-sm" disabled></td>
         </tr>
         <tr>
           <td>Received Payment</td>
@@ -62,7 +62,7 @@
           <td colspan="4">
             <mat-radio-group aria-label="Select an option" [(ngModel)]="chargeOrRefund" [ngModelOptions]="{standalone: true}">
               <mat-radio-button value="C">Chargeable</mat-radio-button>
-              <mat-radio-button value="R">Refund</mat-radio-button>
+              <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus=='Y'">Refund</mat-radio-button>
             </mat-radio-group>
           </td>
         </tr>
