@@ -121,8 +121,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     });
     
     
-    //this.onGetOriginCityDropdownList();
-    //this.onGetDestinaCityDropdownList();
+    this.onGetOriginCityDropdownList();
+    this.onGetDestinaCityDropdownList();
     
   }
 
