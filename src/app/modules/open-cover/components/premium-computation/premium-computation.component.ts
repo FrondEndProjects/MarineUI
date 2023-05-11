@@ -188,6 +188,8 @@ export class PremiumComputationComponent implements OnInit {
         console.log('premium', data);
         this.premiumDetails = data?.Result[0];
 
+        console.log('PPPPPPPPPP',this.premiumDetails)
+
         this.pF.TotalPremium.setValue(Number(this.premiumDetails.TotalPremium));
         //this.CommaFormatted();
        
