@@ -57,10 +57,10 @@ export class PolicyGenerateCoverComponent implements OnInit {
       generateCover: ['N', Validators.required],
       policyEffectiveDate: [null, Validators.required],
       installment: [null, Validators.required],
-      premium: ['', Validators.required],
-      policyFee: [0, Validators.required],
-      vatTax: ['', Validators.required],
-      totalPremium: ['', Validators.required],
+      premium: [{value:'',disabled: true}, Validators.required],
+      policyFee: [{value:0,disabled: true}, Validators.required],
+      vatTax: [{value:'',disabled: true}, Validators.required],
+      totalPremium: [{value:'',disabled: true}, Validators.required],
       remarks: ['', Validators.required],
 
 

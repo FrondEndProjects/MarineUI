@@ -7,6 +7,7 @@ import * as Mydatas from '../../../../app-config.json';
 import { combineLatest, forkJoin } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { start } from 'repl';
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-premium-computation',
@@ -50,7 +51,7 @@ export class PremiumComputationComponent implements OnInit {
     Total: ''
   }
 
-  public chargeOrRefund;
+  public chargeOrRefund ="C";
   public refundStatus = '';
   public premiumForm:FormGroup;
   public routerBaseLink:any='';
@@ -64,7 +65,7 @@ export class PremiumComputationComponent implements OnInit {
     private openCoverService: OpenCoverService,
     private router: Router,
     private _formBuilder: FormBuilder,
-
+    private toastrService: NbToastrService,
   ) {
     this.proposalNo = sessionStorage.getItem('ProposalNo');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -74,8 +75,9 @@ export class PremiumComputationComponent implements OnInit {
 
   ngOnInit(): void {
 
+   
     this.onCallPremiumCal();
-    //this.onGetRefundChargeStatus();
+    this.onGetRefundChargeStatus();
     this.onCreateFormControl();
     combineLatest([
       this.pF.TotalPremium.valueChanges.pipe(startWith(0)),
@@ -135,6 +137,7 @@ export class PremiumComputationComponent implements OnInit {
 
 
       console.log('fffffffffffffffffffff',this.pF.FinalPremium.value)
+     
         //this.pF.BalanceAmount.setValue(Number(TotalPremium));
         //this.pF.PolicyFeeBalance.setValue(Number(PolicyFee));
         //this.pF.InsceptionFeeBalance.setValue(Number(InspectionFee));
@@ -153,7 +156,9 @@ export class PremiumComputationComponent implements OnInit {
     this.pF.PremiumReceived.setValue(row2);
   }
   minus(event){
-    this.totalActual=event.value
+    console.log('hhhhhhhh',event.value)
+    this.totalActual=Number(event.value);
+    this.pF.TotalPremium.setValue(this.totalActual);
   }
   minu(event){
     console.log('LLLLLLLLL',event.value)
@@ -174,7 +179,7 @@ export class PremiumComputationComponent implements OnInit {
   second(event){
     this.total1=event.value
   }
-  third(event){
+  /*third(event){
     console.log('LLLLLLLLL',event.value)
     if(event.value!='' || event.value!=null){
       this.total2=Number(event.value);
@@ -182,7 +187,7 @@ export class PremiumComputationComponent implements OnInit {
     else this.total2= 0;
     let t = this.pF.PolicyFee.value - this.total2;
     this.pF.PolicyFeeBalance.setValue(t)
-  }
+  }*/
 
 
   four(event){
@@ -208,7 +213,31 @@ export class PremiumComputationComponent implements OnInit {
     this.pF.ReceivedTotal.setValue(Number(t));
   }
 
+  policyfee(event){
+    console.log('ONNNNNNN',event.value)
+    let value = 0;
+    if(event.value!='' || event.value!=null){
+      value=Number(event.value);
+    }
+    this.pF.PolicyFeeBalance.setValue(Number(value));
+    //let t = Number(this.pF.FinalPremium.value) + Number(value) + Number(this.pF.InspectionFee.value);
+    //let t=Number(this.pF.ReceivedTotal.value) +  Number(value) + Number(this.pF.InspectionFee.value);
+    //console.log('FOOOO',t)
+    //this.pF.ReceivedTotal.setValue(Number(t));
+  }
 
+  Inspectionfee(event){
+    console.log('TWOOOOO',event.value)
+    let value = 0;
+    if(event.value!='' || event.value!=null){
+      value=Number(event.value);
+    }
+    this.pF.InsceptionFeeBalance.setValue(Number(value));
+    //let t =  Number(this.pF.FinalPremium.value) +  Number(value) +  Number(this.pF.PolicyFee.value);
+    //let t=Number(this.pF.ReceivedTotal.value) +  Number(value) +  Number(this.pF.PolicyFee.value);
+    //console.log('THREEEE',t)
+    //this.pF.ReceivedTotal.setValue(Number(t));
+  }
   /*CommaFormatted() {
     // format number
     if (this.total) {
@@ -239,20 +268,20 @@ export class PremiumComputationComponent implements OnInit {
   }*/
   onCreateFormControl() {
     this.premiumForm = this._formBuilder.group({
-      TotalPremium:['', Validators.required],
+      TotalPremium:[{value:'',disabled: true}, Validators.required],
       PolicyFee:['', Validators.required],
       InspectionFee:['', Validators.required],
-      FinalPremium:['', Validators.required],
+      FinalPremium:[{value:'',disabled: true}, Validators.required],
 
-      ReceivedTilDate:['', Validators.required],
-      PolicyFeeReceived:['', Validators.required],
-      InspectionFeeReceived:['', Validators.required],
-      PremiumReceived:['', Validators.required],
+      ReceivedTilDate:[{value:'',disabled: true}, Validators.required],
+      PolicyFeeReceived:[{value:'',disabled: true}, Validators.required],
+      InspectionFeeReceived:[{value:'',disabled: true}, Validators.required],
+      PremiumReceived:[{value:'',disabled: true}, Validators.required],
 
-      BalanceAmount:['',Validators.required],
-      PolicyFeeBalance:['',Validators.required],
-      InsceptionFeeBalance:['',Validators.required],
-      ReceivedTotal:['',Validators.required],
+      BalanceAmount:[{value:'',disabled: true},Validators.required],
+      PolicyFeeBalance:[{value:'',disabled: true},Validators.required],
+      InsceptionFeeBalance:[{value:'',disabled: true},Validators.required],
+      ReceivedTotal:[{value:'',disabled: true},Validators.required],
 
       PayableMarinePremium:['',Validators.required],
       PolicyFeePaid:['',Validators.required],
@@ -267,6 +296,7 @@ export class PremiumComputationComponent implements OnInit {
   }
   get pF() {
     return this.premiumForm.controls;
+    
   }
 
   onCallPremiumCal(){
@@ -299,7 +329,7 @@ export class PremiumComputationComponent implements OnInit {
        
         this.pF.PolicyFee.setValue(Number(this.premiumDetails.PolicyFee));
         this.pF.InspectionFee.setValue(Number(this.premiumDetails.InspectionFee));
-        this.pF.BalanceAmount.setValue(Number(this.premiumDetails.BalanceAmount))
+        this.pF.BalanceAmount.setValue(Number(this.premiumDetails.BalanceAmount));
         this.pF.PolicyFeeBalance.setValue(Number(this.premiumDetails.PolicyFeeBalance));
         this.pF.InsceptionFeeBalance.setValue(Number(this.premiumDetails.InsceptionFeeBalance));
 
@@ -354,6 +384,28 @@ export class PremiumComputationComponent implements OnInit {
       // here we just remove the commas from value
       m=s.toString().replace(/,/g, "");
     } 
+    let d=Number(s);
+
+    let r=this.pF.PayableMarinePremium.value;let m1:any;
+    if (r !== undefined && r !== null) {
+      // here we just remove the commas from value
+      m1=r.toString().replace(/,/g, "");
+    } 
+    let u;let h;
+    if(this.pF.PremiumReceived.value == 0){
+    u=null;
+    }
+    else{
+      u=this.pF.PremiumReceived.value;
+    }
+    if(this.pF.PolicyFeeReceived.value == 0){
+      h=null;
+    }
+    else{
+      h=this.pF.PolicyFeeReceived.value;
+    }
+
+    let r1=Number(m1);
     console.log('DDDDDDDDD',m);
     const urlLink = `${this.ApiUrl1}OpenCover/premiumcalc`;
     const reqData = {
@@ -362,25 +414,39 @@ export class PremiumComputationComponent implements OnInit {
       "BalanceAmount":this.pF.BalanceAmount.value,
       "ChargeableYN":charge,
       "ProposalNo":this.proposalNo,
-      "RefundChargeYN":refund,
-      "RefundAmount":this.pF.PayableMarinePremium.value,
-      "PolicyFee":this.pF.PolicyFee.value,
+      "RefundChargeYN":this.refundStatus,
+      "RefundAmount":r1,
+      "PolicyFee":Number(this.pF.PolicyFee.value),
       "InceptionFeePaid":this.pF.InspectionFeePaid.value,
-      "TotalAmount":m,
+      "TotalAmount":d,
       //"TotalAmount":this.pF.ReceivedTotal.value,
       "InceptionFee":this.pF.InspectionFee.value,
-      "PolicyFeeRcvd":this.pF.PolicyFeeReceived.value,
+      "PolicyFeeRcvd":h,
       "TotalPremium":this.pF.TotalPremium.value,
       //"TotalPremium":this.pF.FinalPremium.value,
       "ActualPremium":this.pF.TotalPremium.value,
       "PolicyFeePaid":this.pF.PolicyFeePaid.value,
-      "PremiumRcvd": this.pF.PremiumReceived.value
+      "PremiumRcvd":u
       //"PremiumRcvd":this.pF.ReceivedTilDate.value
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        if(data.Message == "Success"){
-          console.log('cal-premium', data); 
+        if(data.Result.Status == true){
+          console.log('cal-premium', data.Result.Status); 
+          let type: NbComponentStatus = 'success';
+                const config = {
+                  status: type,
+                  destroyByClick: true,
+                  duration: 4000,
+                  hasIcon: true,
+                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                  preventDuplicates: false,
+                };
+                this.toastrService.show(
+                  'Calculated Successfully',
+                  'Premium Details',
+                  config);
+                 
         }
         else if(data.ErrorMessage){
           //console.log('ERRRRRRRRRR', data.); 
@@ -393,7 +459,7 @@ export class PremiumComputationComponent implements OnInit {
     );
   }
 
-  /*onGetRefundChargeStatus() {
+  onGetRefundChargeStatus() {
     const urlLink = `${this.ApiUrl1}OpenCover/refundStatus`;
     const reqData = {
       "ProposalNo":this.proposalNo,
@@ -405,7 +471,7 @@ export class PremiumComputationComponent implements OnInit {
       },
       (err) => { },
     );
-  }*/
+  }
 
   onSubmit(){
     this.onCalculate();

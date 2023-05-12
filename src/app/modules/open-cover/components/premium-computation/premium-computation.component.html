@@ -38,17 +38,17 @@
       <tbody>
         <tr>
           <td>Actual</td>
-          <td><input type="text" formControlName="TotalPremium" (change)="minus(pF.TotalPremium)" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="PolicyFee" (change)="second(pF.PolicyFee)" class="form-control form-control-sm"></td>
-          <td><input type="text" formControlName="InspectionFee" (change)="four(pF.InspectionFee)" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="TotalPremium" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="PolicyFee" (keyup)="policyfee(pF.PolicyFee)" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="InspectionFee" (keyup)="Inspectionfee(pF.InspectionFee)" class="form-control form-control-sm"></td>
           <td><input type="text" formControlName="FinalPremium" class="form-control form-control-sm" disabled></td>
         </tr>
         <tr>
           <td>Received Payment</td>
-          <td><input type="text" formControlName="ReceivedTilDate" (keyup)="minu(pF.ReceivedTilDate)" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="PolicyFeeReceived" (keyup)="third(pF.PolicyFeeReceived)" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="InspectionFeeReceived" (keyup)="five(pF.InspectionFeeReceived)" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="PremiumReceived" (keyup)="six(pF.PremiumReceived)" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="ReceivedTilDate" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PolicyFeeReceived" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="InspectionFeeReceived" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PremiumReceived" class="form-control form-control-sm" disabled></td>
         </tr>
         <!--[value]="pF.PremiumReceived.value|commaseparator"-->
         <tr>
