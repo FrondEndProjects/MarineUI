@@ -369,13 +369,18 @@ export class PremiumComputationComponent implements OnInit {
      this.openCoverService.onMoveNext('Back');
      this.router.navigate([`${this.routerBaseLink}/new-open-cover/commodity-info`]);
     }
-  onCalculate() {
+  onCalculate(value) {
+
+    /*if(value=='submit'){
+      this.onSubmit();
+    }*/
+    
     let charge,refund=""
     if(this.chargeOrRefund=='C'){
       charge="C";
       refund="";
     }
-    else if(this.chargeOrRefund=='R'){
+  if(this.chargeOrRefund=='R'){
       charge="";
       refund="R"
     }
@@ -446,6 +451,10 @@ export class PremiumComputationComponent implements OnInit {
                   'Calculated Successfully',
                   'Premium Details',
                   config);
+                  if(value=='submit'){
+                    this.onSubmit();
+                  }
+
                  
         }
         else if(data.ErrorMessage){
@@ -457,6 +466,7 @@ export class PremiumComputationComponent implements OnInit {
         console.log('gggggggggggg')
       },
     );
+
   }
 
   onGetRefundChargeStatus() {
@@ -474,7 +484,7 @@ export class PremiumComputationComponent implements OnInit {
   }
 
   onSubmit(){
-    this.onCalculate();
+    //this.onCalculate('submit');
     const urlLink = `${this.ApiUrl1}opencover/report/depositinfo`;
     const reqData = {
       "ProposalNo":this.proposalNo
