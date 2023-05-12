@@ -347,16 +347,16 @@ export class PremiumComputationComponent implements OnInit {
       "RefundAmount":this.pF.PayableMarinePremium.value,
       "PolicyFee":this.pF.PolicyFee.value,
       "InceptionFeePaid":this.pF.InspectionFeePaid.value,
-      //"TotalAmount":this.pF.Total.value,
-      "TotalAmount":this.pF.ReceivedTotal.value,
+      "TotalAmount":this.pF.Total.value,
+      //"TotalAmount":this.pF.ReceivedTotal.value,
       "InceptionFee":this.pF.InspectionFee.value,
       "PolicyFeeRcvd":this.pF.PolicyFeeReceived.value,
-      //"TotalPremium":this.pF.TotalPremium.value,
-      "TotalPremium":this.pF.FinalPremium.value,
+      "TotalPremium":this.pF.TotalPremium.value,
+      //"TotalPremium":this.pF.FinalPremium.value,
       "ActualPremium":this.pF.TotalPremium.value,
       "PolicyFeePaid":this.pF.PolicyFeePaid.value,
-      //"PremiumRcvd": this.pF.PremiumReceived.value
-      "PremiumRcvd":this.pF.ReceivedTilDate.value
+      "PremiumRcvd": this.pF.PremiumReceived.value
+      //"PremiumRcvd":this.pF.ReceivedTilDate.value
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
