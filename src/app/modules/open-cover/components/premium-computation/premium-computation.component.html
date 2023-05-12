@@ -38,31 +38,32 @@
       <tbody>
         <tr>
           <td>Actual</td>
-          <td><input type="text" formControlName="TotalPremium" [value]="pF.TotalPremium.value|commaseparator" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="PolicyFee" class="form-control form-control-sm"></td>
-          <td><input type="text" formControlName="InspectionFee" class="form-control form-control-sm"></td>
-          <td><input type="text" formControlName="FinalPremium" [value]="pF.FinalPremium.value|commaseparator" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="TotalPremium" (change)="minus(pF.TotalPremium)" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PolicyFee" (change)="second(pF.PolicyFee)" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="InspectionFee" (change)="four(pF.InspectionFee)" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="FinalPremium" class="form-control form-control-sm" disabled></td>
         </tr>
         <tr>
           <td>Received Payment</td>
-          <td><input type="text" formControlName="ReceivedTilDate" [value]="pF.ReceivedTilDate.value|commaseparator" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="PolicyFeeReceived" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="InspectionFeeReceived" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="PremiumReceived" [value]="pF.PremiumReceived.value|commaseparator"  class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="ReceivedTilDate" (keyup)="minu(pF.ReceivedTilDate)" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PolicyFeeReceived" (keyup)="third(pF.PolicyFeeReceived)" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="InspectionFeeReceived" (keyup)="five(pF.InspectionFeeReceived)" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="PremiumReceived" (keyup)="six(pF.PremiumReceived)" class="form-control form-control-sm" disabled></td>
         </tr>
+        <!--[value]="pF.PremiumReceived.value|commaseparator"-->
         <tr>
           <td>Balance</td>
-          <td><input type="text" formControlName="BalanceAmount" [value]="pF.BalanceAmount.value|commaseparator" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="BalanceAmount" class="form-control form-control-sm" disabled></td>
           <td><input type="text" formControlName="PolicyFeeBalance" class="form-control form-control-sm" disabled></td>
           <td><input type="text" formControlName="InsceptionFeeBalance" class="form-control form-control-sm" disabled></td>
-          <td><input type="text" formControlName="ReceivedTotal" [value]="pF.ReceivedTotal.value|commaseparator" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="ReceivedTotal" class="form-control form-control-sm" disabled></td>
         </tr>
         <tr>
           <td>Are You Want?</td>
           <td colspan="4">
-            <mat-radio-group aria-label="Select an option" [(ngModel)]="chargeOrRefund" [ngModelOptions]="{standalone: true}">
+            <mat-radio-group aria-label="Select an option"  [(ngModel)]="chargeOrRefund" formControlName="chargeOrRefund">
               <mat-radio-button value="C">Chargeable</mat-radio-button>
-              <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus=='Y'">Refund</mat-radio-button>
+              <mat-radio-button value="R">Refund</mat-radio-button>
             </mat-radio-group>
           </td>
         </tr>

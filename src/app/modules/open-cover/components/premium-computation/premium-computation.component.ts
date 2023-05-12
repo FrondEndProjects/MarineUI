@@ -6,6 +6,7 @@ import { OpenCoverService } from '../../open-cover.service';
 import * as Mydatas from '../../../../app-config.json';
 import { combineLatest, forkJoin } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { start } from 'repl';
 
 @Component({
   selector: 'app-premium-computation',
@@ -49,11 +50,15 @@ export class PremiumComputationComponent implements OnInit {
     Total: ''
   }
 
-  public chargeOrRefund = 'C';
+  public chargeOrRefund;
   public refundStatus = '';
   public premiumForm:FormGroup;
   public routerBaseLink:any='';
   total: string;
+  totalReceived: any;
+  totalActual: any;
+  total1: any;
+  total2: any;
 
   constructor(
     private openCoverService: OpenCoverService,
@@ -70,7 +75,7 @@ export class PremiumComputationComponent implements OnInit {
   ngOnInit(): void {
 
     this.onCallPremiumCal();
-    this.onGetRefundChargeStatus();
+    //this.onGetRefundChargeStatus();
     this.onCreateFormControl();
     combineLatest([
       this.pF.TotalPremium.valueChanges.pipe(startWith(0)),
@@ -79,6 +84,13 @@ export class PremiumComputationComponent implements OnInit {
       this.pF.PayableMarinePremium.valueChanges.pipe(startWith(0)),
       this.pF.PolicyFeePaid.valueChanges.pipe(startWith(0)),
       this.pF.InspectionFeePaid.valueChanges.pipe(startWith(0)),
+      this.pF.ReceivedTilDate.valueChanges.pipe(startWith(0)),
+      this.pF.PolicyFeeReceived.valueChanges.pipe(startWith(0)),
+      this.pF.InspectionFeeReceived.valueChanges.pipe(startWith(0)),
+      this.pF.BalanceAmount.valueChanges.pipe(startWith(0)),
+      this.pF.PolicyFeeBalance.valueChanges.pipe(startWith(0)),
+      this.pF.InsceptionFeeBalance.valueChanges.pipe(startWith(0)),
+
     ]).subscribe(([
       TotalPremium,
       PolicyFee,
@@ -86,27 +98,103 @@ export class PremiumComputationComponent implements OnInit {
       PayableMarinePremium,
       PolicyFeePaid,
       InspectionFeePaid,
+      ReceivedTilDate,
+      PolicyFeeReceived,
+      InspectionFeeReceived,
+      BalanceAmount,
+      PolicyFeeBalance,
+      InsceptionFeeBalance,
+
     ]) => {
       /*let total
       if(TotalPremium.includes(',')){ total=TotalPremium.replace(/,/g, '') }
       console.log('<<<<<<<<<<<<<',total)
       TotalPremium=total;*/
       let row1 = Number(TotalPremium) + Number(PolicyFee) + Number(InspectionFee);
+      let row2 = Number(ReceivedTilDate) + Number(PolicyFee) + Number(InspectionFee);
+      let row3 = Number(BalanceAmount) + Number( PolicyFeeBalance) + Number(InsceptionFeeBalance);
+      this.secondrow(ReceivedTilDate,PolicyFeeReceived,InspectionFeeReceived);
+       
       let row4 = Number(PayableMarinePremium) + Number(PolicyFeePaid) + Number(InspectionFeePaid)
       console.log(row1,row4);
       this.pF.FinalPremium.setValue(row1);
+      this.pF.ReceivedTotal.setValue(row3);
+      let v= Number(row1)-Number(row4);
+
 
       console.log('fffffffffffffffffffff',this.pF.FinalPremium.value)
-
-        this.pF.BalanceAmount.setValue(Number(TotalPremium));
-        this.pF.PolicyFeeBalance.setValue(Number(PolicyFee));
-        this.pF.InsceptionFeeBalance.setValue(Number(InspectionFee));
-        this.pF.ReceivedTotal.setValue(Number(row1));
+        //this.pF.BalanceAmount.setValue(Number(TotalPremium));
+        //this.pF.PolicyFeeBalance.setValue(Number(PolicyFee));
+        //this.pF.InsceptionFeeBalance.setValue(Number(InspectionFee));
+        console.log('jjjjjjjjjjj',v);
+        this.six(this.pF.PremiumReceived)
+        //this.pF.ReceivedTotal.setValue(Number(v));
         this.pF.Total.setValue(Number(row4));
 
     });
 
   }
+
+  secondrow(ReceivedTilDate,PolicyFeeReceived,InspectionFeeReceived){
+    let row2 = Number(ReceivedTilDate) + Number(PolicyFeeReceived) + Number(InspectionFeeReceived);
+    this.pF.PremiumReceived.setValue(row2);
+  }
+  minus(event){
+    this.totalActual=event.value
+  }
+  minu(event){
+    console.log('LLLLLLLLL',event.value)
+    if(event.value!='' || event.value!=null){
+      this.totalReceived=Number(event.value);
+    }
+    else this.totalReceived= 0;
+    this.finalMinus();
+  }
+
+  finalMinus(){
+    let t=(this.totalActual-this.totalReceived);
+    console.log('YYYYYYYYYY',t)
+    this.pF.BalanceAmount.setValue(Number(t));
+  }
+
+
+  second(event){
+    this.total1=event.value
+  }
+  third(event){
+    console.log('LLLLLLLLL',event.value)
+    if(event.value!='' || event.value!=null){
+      this.total2=Number(event.value);
+    }
+    else this.total2= 0;
+    let t = this.pF.PolicyFee.value - this.total2;
+    this.pF.PolicyFeeBalance.setValue(t)
+  }
+
+
+  four(event){
+    this.total1=event.value
+  }
+  five(event){
+    console.log('LLLLLLLLL',event.value)
+    let value = 0;
+    if(event.value!='' || event.value!=null){
+      value=Number(event.value);
+    }
+    let t = this.pF.InspectionFee.value - value;
+    this.pF.InsceptionFeeBalance.setValue(Number(t));
+  }
+
+  six(event){
+    console.log('SIIIIIIXXXX',event.value)
+    let value = 0;
+    if(event.value!='' || event.value!=null){
+      value=Number(event.value);
+    }
+    let t = this.pF.FinalPremium.value - value;
+    this.pF.ReceivedTotal.setValue(Number(t));
+  }
+
 
   /*CommaFormatted() {
     // format number
@@ -158,6 +246,10 @@ export class PremiumComputationComponent implements OnInit {
       InspectionFeePaid:['',Validators.required],
       Total:['',Validators.required],
 
+      chargeOrRefund:['C'],
+
+
+
     });
   }
   get pF() {
@@ -188,13 +280,16 @@ export class PremiumComputationComponent implements OnInit {
         console.log('premium', data);
         this.premiumDetails = data?.Result[0];
 
-        console.log('PPPPPPPPPP',this.premiumDetails)
-
         this.pF.TotalPremium.setValue(Number(this.premiumDetails.TotalPremium));
+        this.totalActual = Number(this.premiumDetails.TotalPremium)
         //this.CommaFormatted();
        
         this.pF.PolicyFee.setValue(Number(this.premiumDetails.PolicyFee));
         this.pF.InspectionFee.setValue(Number(this.premiumDetails.InspectionFee));
+        this.pF.BalanceAmount.setValue(Number(this.premiumDetails.BalanceAmount))
+        this.pF.PolicyFeeBalance.setValue(Number(this.premiumDetails.PolicyFeeBalance));
+        this.pF.InsceptionFeeBalance.setValue(Number(this.premiumDetails.InsceptionFeeBalance));
+
         // this.pF.FinalPremium.setValue(Number(this.premiumDetails.FinalPremium));
 
         this.pF.ReceivedTilDate.setValue(Number(this.premiumDetails.ReceivedTilDate));
@@ -207,7 +302,9 @@ export class PremiumComputationComponent implements OnInit {
         this.pF.PayableMarinePremium.setValue(Number(this.premiumDetails.PayableMarinePremium));
         this.pF.PolicyFeePaid.setValue(Number(this.premiumDetails.PolicyFeePaid));
         this.pF.InspectionFeePaid.setValue(Number(this.premiumDetails.InspectionFeePaid));
-
+           
+        this.pF.chargeOrRefund.setValue(this.premiumDetails.PayableYn);
+        console.log('RRRRRRRRR',this.chargeOrRefund);
            
         /*if(this.pF?.TotalPremium?.value){
           this.total= String(this.pF?.TotalPremium.value);
@@ -230,34 +327,54 @@ export class PremiumComputationComponent implements OnInit {
      this.router.navigate([`${this.routerBaseLink}/new-open-cover/commodity-info`]);
     }
   onCalculate() {
+    let charge,refund=""
+    if(this.chargeOrRefund=='C'){
+      charge="C";
+      refund="";
+    }
+    else if(this.chargeOrRefund=='R'){
+      charge="";
+      refund="R"
+    }
     const urlLink = `${this.ApiUrl1}OpenCover/premiumcalc`;
     const reqData = {
       "LoginBranchCode":this.userDetails.BranchCode,
       "EndorsementStatus":this.premiumDetails.EndtStatus,
       "BalanceAmount":this.pF.BalanceAmount.value,
-      "ChargeableYN":this.chargeOrRefund,
+      "ChargeableYN":charge,
       "ProposalNo":this.proposalNo,
-      "RefundChargeYN":this.refundStatus,
-      "RefundAmount":this.pF.PayableMarinePremium.value ,
+      "RefundChargeYN":refund,
+      "RefundAmount":this.pF.PayableMarinePremium.value,
       "PolicyFee":this.pF.PolicyFee.value,
       "InceptionFeePaid":this.pF.InspectionFeePaid.value,
-      "TotalAmount":this.pF.Total.value,
+      //"TotalAmount":this.pF.Total.value,
+      "TotalAmount":this.pF.ReceivedTotal.value,
       "InceptionFee":this.pF.InspectionFee.value,
       "PolicyFeeRcvd":this.pF.PolicyFeeReceived.value,
-      "TotalPremium":this.pF.TotalPremium.value,
+      //"TotalPremium":this.pF.TotalPremium.value,
+      "TotalPremium":this.pF.FinalPremium.value,
       "ActualPremium":this.pF.TotalPremium.value,
       "PolicyFeePaid":this.pF.PolicyFeePaid.value,
-      "PremiumRcvd": this.pF.PremiumReceived.value
+      //"PremiumRcvd": this.pF.PremiumReceived.value
+      "PremiumRcvd":this.pF.ReceivedTilDate.value
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log('cal-premium', data);
+        if(data.Message == "Success"){
+          console.log('cal-premium', data); 
+        }
+        else if(data.ErrorMessage){
+          //console.log('ERRRRRRRRRR', data.); 
+        }
+       
       },
-      (err) => { },
+      (err) => { 
+        console.log('gggggggggggg')
+      },
     );
   }
 
-  onGetRefundChargeStatus() {
+  /*onGetRefundChargeStatus() {
     const urlLink = `${this.ApiUrl1}OpenCover/refundStatus`;
     const reqData = {
       "ProposalNo":this.proposalNo,
@@ -269,7 +386,7 @@ export class PremiumComputationComponent implements OnInit {
       },
       (err) => { },
     );
-  }
+  }*/
 
   onSubmit(){
     this.onCalculate();
@@ -279,8 +396,10 @@ export class PremiumComputationComponent implements OnInit {
     }
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
+        if(data.Message == 'Success'){
         console.log('depositinfo', data);
         this.onMoveFront();
+        }
       },
       (err) => { },
     );
