@@ -19,8 +19,8 @@
           <ng-container *ngIf="col.config.DiscountPercent">
             <div class="input-control-container input-edit">
               <div class="input-form-box">
-                <input type="text" decimal="true" mask="percent" class="input-form-control without-icon"
-                  [(ngModel)]="element.DiscountPercent">
+                <input type="text" decimal="true" class="input-form-control without-icon"
+                  [(ngModel)]="element.DiscountPercent"> <!--mask="percent"-->
               </div>
             </div>
           </ng-container>

@@ -164,7 +164,11 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
     this.quoteF.goodsCategory.setValue(commodityDetails?.GoodsCategoryCode);
     this.quoteF.goodsDescript.setValue(commodityDetails?.GoodsCategoryDescription);
-    this.quoteF.insuredValue.setValue(commodityDetails?.InsuredValue);
+    if(commodityDetails?.InsuredValue){
+      console.log('CCCCCCCCCCCCC',commodityDetails?.InsuredValue)
+      this.CommaFormatted(commodityDetails?.InsuredValue)
+    }
+   // this.quoteF.insuredValue.setValue(commodityDetails?.InsuredValue);
     this.quoteF.invoiceNumber.setValue(commodityDetails?.InvoiceNo);
     this.quoteF.invoiceDate.setValue(this.newQuotesService.ngbDateFormatt(commodityDetails?.InvoiceDate));
     this.quoteF.consignedTo.setValue(commodityDetails?.ConsignedTo);
@@ -202,8 +206,26 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
   }
 
-
-
+  CommaFormatted(tableData) {
+    let i=0;
+    console.log('hhhhhhhhhhhhhhh',tableData)
+          let entry = tableData;
+          console.log("Entry Came")
+          if(entry.length!=0){
+            //for(let build of this.tableData){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.quoteF.insuredValue.setValue(value);
+            //this.newQuoteF.annualEstimate.setValue(value);
+              }
+            console.log('Esctimtaed Amount',  this.quoteF.insuredValue.value )
+            //}    //this.getTotalSICost('building');
+          } 
+          //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+   
+  }
 
   setStep(index: number) {
     this.step = index;

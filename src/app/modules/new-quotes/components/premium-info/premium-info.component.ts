@@ -38,6 +38,7 @@ export class PremiumInfoComponent implements OnInit {
   QuoteStatus: string;
   coverId: any;
   currencyName: any;
+  Ref: string;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -94,7 +95,17 @@ export class PremiumInfoComponent implements OnInit {
   }
 
   onGetPremiumInformation() {
-
+    /*let Ref
+    let Refer=sessionStorage.getItem('Item')
+    let ent=sessionStorage.getItem('EntNo')
+    if(ent== 'ReferalApproved'){
+    console.log('RRRRRRRR',this.Ref);
+     Ref=Refer
+    }
+    else{
+      Ref=this.ReferenceNo
+    }*/
+  
     const urlLink = `${this.ApiUrl1}quote/premium/response`;
     const reqData = {
       "ReferenceNo": this.ReferenceNo,
@@ -335,7 +346,21 @@ export class PremiumInfoComponent implements OnInit {
          (data: any) => {
            console.log(data);
            if(this.userDetails?.UserType == 'admin' ){
-            this.router.navigate([`${this.routerBaseLink}/admin-referral/approved-quote`]);
+            console.log('kkkkkkkkkkkkkk');
+            if(this.premiumF.referralStatus.value=='A'){
+              console.log("AAAAAAAAAAAAAA");
+              sessionStorage.setItem('AAA','1');
+              this.router.navigate([`${this.routerBaseLink}/admin-referral/approved-quote`]);
+            }
+            else if(this.premiumF.referralStatus.value =='R'){
+              sessionStorage.setItem('AAA','3');
+              this.router.navigate([`${this.routerBaseLink}/admin-referral/rejected-quote`]);
+            }
+            else if(this.premiumF.referralStatus.value =='N'){
+              sessionStorage.setItem('AAA','2');
+              this.router.navigate([`${this.routerBaseLink}/admin-referral/pending-quote`]);
+            }
+            //this.router.navigate([`${this.routerBaseLink}/admin-referral/approved-quote`]);
            }else{
             if(this.premiumF.ReferralUpdateYn.value =='Y' || this.premiumDetails?.Referral?.length > 0){
               this.router.navigate([`${this.routerBaseLink}/referral/referral-unapproved`]);

@@ -39,23 +39,49 @@ export class AdminReferralComponent implements OnInit {
     this.userDetails = this.userDetails?.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.searchForm = this.adminReferralService.searchForm;
+    
   }
 
   ngOnInit(): void {
-    this.onLoadDropdownList();
-
+    this.onLoadDropdownList(); 
     this.router.navigate([`${this.routerBaseLink}/admin-referral/pending-quote`]);
     this.menuService.onItemClick().subscribe((data) => {
       if (data.item.link === `/${this.routerBaseLink}/admin-referral/pending-quote`) {
         this.tabActive = 2;
+        this.onLoadGrid();
       }
     });
+    let s= sessionStorage.getItem('AAA');
+    if(s!=null){
+      this.Load();
+    }
   }
 
   get sF() {
     return this.searchForm?.controls;
   }
 
+  Load(){
+    let s= sessionStorage.getItem('AAA');
+    console.log('WWWWWWWWWW',s);
+    if(s=='1'){
+     this.tabActive = 1;
+     this.onLoadGrid(); 
+     sessionStorage.removeItem('AAA');
+
+    }
+    else if(s=='3'){
+      this.tabActive = 3;
+      this.onLoadGrid(); 
+      sessionStorage.removeItem('AAA');
+    }
+    else if(s=='2'){
+      this.tabActive = 2;
+      this.onLoadGrid(); 
+      sessionStorage.removeItem('AAA');
+
+    }
+  }
   onLoadDropdownList() {
     this.onGetProductList();
     this.onGetRegionList();
