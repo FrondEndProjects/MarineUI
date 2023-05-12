@@ -110,12 +110,24 @@ export class PremiumComputationComponent implements OnInit {
       if(TotalPremium.includes(',')){ total=TotalPremium.replace(/,/g, '') }
       console.log('<<<<<<<<<<<<<',total)
       TotalPremium=total;*/
+      /*let f1=TotalPremium;let f2
+      if (f1 !== undefined && f1 !== null) {
+        // here we just remove the commas from value
+        f2=f1.toString().replace(/,/g, "");
+      } */
       let row1 = Number(TotalPremium) + Number(PolicyFee) + Number(InspectionFee);
       let row2 = Number(ReceivedTilDate) + Number(PolicyFee) + Number(InspectionFee);
       let row3 = Number(BalanceAmount) + Number( PolicyFeeBalance) + Number(InsceptionFeeBalance);
+      let s:any;
       this.secondrow(ReceivedTilDate,PolicyFeeReceived,InspectionFeeReceived);
        
-      let row4 = Number(PayableMarinePremium) + Number(PolicyFeePaid) + Number(InspectionFeePaid)
+      let r=PayableMarinePremium
+      if (r !== undefined && r !== null) {
+        // here we just remove the commas from value
+        s=r.toString().replace(/,/g, "");
+      } 
+       console.log('GGGGGGGGGGG',s);
+      let row4 = Number(s) + Number(PolicyFeePaid) + Number(InspectionFeePaid)
       console.log(row1,row4);
       this.pF.FinalPremium.setValue(row1);
       this.pF.ReceivedTotal.setValue(row3);
@@ -129,6 +141,7 @@ export class PremiumComputationComponent implements OnInit {
         console.log('jjjjjjjjjjj',v);
         this.six(this.pF.PremiumReceived)
         //this.pF.ReceivedTotal.setValue(Number(v));
+        
         this.pF.Total.setValue(Number(row4));
 
     });
@@ -336,6 +349,12 @@ export class PremiumComputationComponent implements OnInit {
       charge="";
       refund="R"
     }
+    let s=this.pF.Total.value;let m:any;
+    if (s !== undefined && s !== null) {
+      // here we just remove the commas from value
+      m=s.toString().replace(/,/g, "");
+    } 
+    console.log('DDDDDDDDD',m);
     const urlLink = `${this.ApiUrl1}OpenCover/premiumcalc`;
     const reqData = {
       "LoginBranchCode":this.userDetails.BranchCode,
@@ -347,7 +366,7 @@ export class PremiumComputationComponent implements OnInit {
       "RefundAmount":this.pF.PayableMarinePremium.value,
       "PolicyFee":this.pF.PolicyFee.value,
       "InceptionFeePaid":this.pF.InspectionFeePaid.value,
-      "TotalAmount":this.pF.Total.value,
+      "TotalAmount":m,
       //"TotalAmount":this.pF.ReceivedTotal.value,
       "InceptionFee":this.pF.InspectionFee.value,
       "PolicyFeeRcvd":this.pF.PolicyFeeReceived.value,

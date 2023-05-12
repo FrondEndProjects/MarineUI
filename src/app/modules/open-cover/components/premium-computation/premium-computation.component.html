@@ -63,7 +63,8 @@
           <td colspan="4">
             <mat-radio-group aria-label="Select an option"  [(ngModel)]="chargeOrRefund" formControlName="chargeOrRefund">
               <mat-radio-button value="C">Chargeable</mat-radio-button>
-              <mat-radio-button value="R">Refund</mat-radio-button>
+              <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus=='Y'">Refund</mat-radio-button>
+              <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus==''" disabled>Refund</mat-radio-button>
             </mat-radio-group>
           </td>
         </tr>
