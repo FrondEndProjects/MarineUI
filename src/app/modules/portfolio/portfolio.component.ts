@@ -86,6 +86,7 @@ export class PortfolioComponent implements OnInit {
         this.tableData = [];
 
         if (data?.Result) {
+         
           this.columnHeader = [
 
             { key: 'MissippiOpenCoverNo', display: 'Core Policy No', sticky: false, },
@@ -98,7 +99,15 @@ export class PortfolioComponent implements OnInit {
               key: 'Endorse',
               display: 'Endorse',
               config: {
-                isEdit: true,
+                isEdits: true,
+              }
+            },
+
+            {
+              key: 'Edit',
+              display: 'Edit',
+              config: {
+                isViewss: true,
               }
             },
 
@@ -290,10 +299,21 @@ export class PortfolioComponent implements OnInit {
 
 
   onEdit(event: any) {
-  console.log(event);
+  /*console.log('EEEEEEEEEEEEEEEEEE',event);
+  if(event.Status=='P' || event.EndtStatus!='N'){
+    this.onEndorse(event);
+  }
+  else if(event.Status=='Y'){
+    sessionStorage.setItem('ProposalNo',event.ProposalNo);
+    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+  }*/
     this.onEndorse(event)
   }
 
+  onred(event:any){
+    sessionStorage.setItem('ProposalNo',event.ProposalNo);
+    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+  }
   onEndorse(event:any) {
     const urlLink = `${this.ApiUrl1}OpenCover/endorsement`;
     const reqData = {

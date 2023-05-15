@@ -16,5 +16,5 @@
   </div>
 </div>
 
-<app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (onEdit)="onEdit($event)" (onMenu)="onmenu($event,$event.name)">
+<app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (onEdit)="onEdit($event)" (onView)="onred($event)" (onMenu)="onmenu($event,$event.name)">
 </app-grid-table>
