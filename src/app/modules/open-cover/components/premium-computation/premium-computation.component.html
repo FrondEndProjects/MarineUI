@@ -60,12 +60,26 @@
         </tr>
         <tr>
           <td>Are You Want?</td>
-          <td colspan="4">
-            <mat-radio-group aria-label="Select an option"  [(ngModel)]="chargeOrRefund" formControlName="chargeOrRefund">
-              <mat-radio-button value="C">Chargeable</mat-radio-button>
-              <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus=='Y'">Refund</mat-radio-button>
-              <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus==''" disabled>Refund</mat-radio-button>
-            </mat-radio-group>
+          <td colspan="4"> <!--[(ngModel)]="chargeOrRefund"--><!--formControlName="chargeOrRefund"-->
+            <!--<mat-radio-group aria-label="Select an option" [(ngModel)]="chargeOrRefund">
+              <mat-radio-button value="C" [checked]="checked('C')">Chargeable</mat-radio-button>
+              <mat-radio-button value="R" [checked]="checked('R')" *ngIf="premiumDetails.EndtStatus=='Y'">Refund</mat-radio-button>
+              <mat-radio-button value="R" [checked]="checked('R')" *ngIf="premiumDetails.EndtStatus==''" disabled>Refund</mat-radio-button>
+            </mat-radio-group>-->
+          <mat-radio-group aria-label="Select an option"  [(ngModel)]="chargeOrRefund" [ngModelOptions]="{standalone: true}">
+            <mat-radio-button value="C">Chargeable</mat-radio-button>
+            <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus=='Y'">Refund</mat-radio-button>
+            <mat-radio-button value="R" *ngIf="premiumDetails.EndtStatus==''" disabled>Refund</mat-radio-button>
+            <!--<mat-radio-button value="N">None</mat-radio-button>-->
+          </mat-radio-group>
+          <!--<div class="radio-toolbar">
+            <input id="fac-yes" type="radio" name="status" value="C" formControlName="chargeOrRefund">
+            <label for="fac-yes">Chargeable</label>
+            <input type="radio" *ngIf="premiumDetails.EndtStatus=='Y'" id="fac-no" name="status" value="R" formControlName="chargeOrRefund">
+            <label for="fac-no" *ngIf="premiumDetails.EndtStatus=='Y'" >Refund</label>
+            <input type="radio" *ngIf="premiumDetails.EndtStatus==''" id="fac-re" name="status" value="R" formControlName="chargeOrRefund">
+            <label for="fac-re" *ngIf="premiumDetails.EndtStatus==''"  disabled>Refund</label>
+          </div>-->
           </td>
         </tr>
         <tr>

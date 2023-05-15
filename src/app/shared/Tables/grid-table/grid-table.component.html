@@ -22,18 +22,26 @@
               
             <!--newlyAdded-->
             <ng-container *ngIf="col.config.isEdits">
-              <button class="btn btn-primary btn-sm" *ngIf="element.EndtStatus !='N'" (click)="onEdit.emit(element)">
-                <i class="fas fa-marker"></i>
+              
+              <button class="btn btn-primary btn-sm" *ngIf="element.EndtStatus !='N' && element.Status != 'Y'" (click)="onEdit.emit(element)">
+                <i class="fas fa-marker" >&nbsp;Endorse </i>
+                
               </button>
+              <button class="btn btn-warning btn-sm" *ngIf="element.Status == 'Y'"  (click)="onEdit.emit(element)">
+                <i class="fa-solid fa-pen-to-square">&nbsp;Edit</i>
+              </button>
+              <!--<button class="circle btn btn-warning btn-sm" *ngIf="element.Status == 'Y'" (click)="onView.emit(element)">
+                <i class="fa-solid fa-pen-to-square" style="color:blue"></i>
+                </button>-->
             </ng-container>
                    
-            <ng-container *ngIf="col.config.isViewss">
-              <button class="circle btn btn-warning btn-sm" *ngIf="element.Status == 'Y'" (click)="onView.emit(element)">
-                  <!--<i class="fas fa-eye" style='color: blue'></i>-->
+            <!--<ng-container *ngIf="col.config.isViewss && element.Status == 'Y'">
+              <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+               
                   <i class="fa-solid fa-pen-to-square" style="color:blue"></i>
                  
               </button>&nbsp;
-          </ng-container>
+          </ng-container>-->
             <!--newlyAdded-->
             <ng-container *ngIf="col.config.isView">
               <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
