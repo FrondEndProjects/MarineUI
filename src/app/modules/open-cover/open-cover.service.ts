@@ -20,7 +20,7 @@ export class OpenCoverService {
   private onMoveStepper: BehaviorSubject<any> = new BehaviorSubject<any>('');
   onGetStepper = this.onMoveStepper.asObservable();
 
-  private openCoverEdit: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  public openCoverEdit: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   onGetOpenCoverEdit = this.openCoverEdit.asObservable();
 
 

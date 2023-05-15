@@ -48,7 +48,7 @@ export class OpenCoverComponent implements OnInit {
       if (data.item.link === '/Marine/new-open-cover/new-open-cover-form') {
       sessionStorage.removeItem('ProposalNo');
 
-        this.reloadCurrentRoute();
+       // this.reloadCurrentRoute();
       }
     });
     this.router
@@ -62,10 +62,8 @@ export class OpenCoverComponent implements OnInit {
         } else if (child.snapshot.data && child.snapshot.data['title']) {
           return child.snapshot.data['title'];
         } else {
-          return null;
         }
       }
-      return null;
     })).subscribe((customData: any) => {
       console.log(customData);
       const index = this.stepperList.findIndex((ele: any) => ele.title === customData );
@@ -122,7 +120,11 @@ export class OpenCoverComponent implements OnInit {
       (err) => { },
     );
   }
-  reloadCurrentRoute() {
-    window.location.href ='/Marine/new-open-cover/new-open-cover-form';
+  // reloadCurrentRoute() {
+  //   this.router.navigate(['/Marine/new-open-cover/new-open-cover-form']);
+  //   //window.location.href ='/Marine/new-open-cover/new-open-cover-form';
+  // }
+  ngOnDestroy() {
+    this.openCoverService.openCoverEdit.next(null)
   }
 }
