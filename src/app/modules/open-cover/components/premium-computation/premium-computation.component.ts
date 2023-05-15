@@ -123,7 +123,7 @@ export class PremiumComputationComponent implements OnInit {
       } */
       let row1 = Number(TotalPremium) + Number(PolicyFee) + Number(InspectionFee);
       let row2 = Number(ReceivedTilDate) + Number(PolicyFee) + Number(InspectionFee);
-      let row3 = Number(BalanceAmount) + Number( PolicyFeeBalance) + Number(InsceptionFeeBalance);
+      //let row3 = Number(BalanceAmount) + Number( PolicyFeeBalance) + Number(InsceptionFeeBalance);
       let s:any;
       this.secondrow(ReceivedTilDate,PolicyFeeReceived,InspectionFeeReceived);
        
@@ -136,7 +136,7 @@ export class PremiumComputationComponent implements OnInit {
       let row4 = Number(s) + Number(PolicyFeePaid) + Number(InspectionFeePaid)
       console.log(row1,row4);
       this.pF.FinalPremium.setValue(row1);
-      this.pF.ReceivedTotal.setValue(row3);
+      //this.pF.ReceivedTotal.setValue(row3);
       let v= Number(row1)-Number(row4);
 
 
@@ -359,6 +359,7 @@ return this.chargeOrRefund == check;
         this.pF.PayableMarinePremium.setValue(Number(this.premiumDetails.PayableMarinePremium));
         this.pF.PolicyFeePaid.setValue(Number(this.premiumDetails.PolicyFeePaid));
         this.pF.InspectionFeePaid.setValue(Number(this.premiumDetails.InspectionFeePaid));
+        this.pF.ReceivedTotal.setValue(Number(this.premiumDetails.ReceivedTotal));
         console.log('MMMMMMMMM',this.chargeOrRefund);
         //this.pF.chargeOrRefund.setValue(this.premiumDetails.PayableYn);
         if(this.premiumDetails.PayableYn!=""){

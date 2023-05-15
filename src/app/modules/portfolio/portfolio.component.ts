@@ -304,7 +304,7 @@ if(event.Status=='Y'){
     sessionStorage.setItem('ProposalNo',event.ProposalNo);
     this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
   }
-  else if(event.Status!='Y' || event.EndtStatus!='N'){
+  else if(event.Status!='Y' && event.EndtStatus!='N'){
     this.onEndorse(event);
   }
   //this.onEndorse(event);
