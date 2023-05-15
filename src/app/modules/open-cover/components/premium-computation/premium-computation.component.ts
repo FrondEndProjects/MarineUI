@@ -51,7 +51,7 @@ export class PremiumComputationComponent implements OnInit {
     Total: ''
   }
 
-  public chargeOrRefund ="C";
+  public chargeOrRefund ='C';
   public refundStatus = '';
   public premiumForm:FormGroup;
   public routerBaseLink:any='';
@@ -60,6 +60,8 @@ export class PremiumComputationComponent implements OnInit {
   totalActual: any;
   total1: any;
   total2: any;
+  values:any[]=[];
+  check: any;
 
   constructor(
     private openCoverService: OpenCoverService,
@@ -71,10 +73,12 @@ export class PremiumComputationComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
+  
   }
 
   ngOnInit(): void {
 
+    
    
     this.onCallPremiumCal();
     this.onGetRefundChargeStatus();
@@ -286,14 +290,20 @@ export class PremiumComputationComponent implements OnInit {
       PayableMarinePremium:['',Validators.required],
       PolicyFeePaid:['',Validators.required],
       InspectionFeePaid:['',Validators.required],
-      Total:['',Validators.required],
-
-      chargeOrRefund:['C'],
+      Total:[{value:'',disabled: true},Validators.required],
+      //chargeOrRefund:['C'],
 
 
 
     });
   }
+
+
+
+  /*checked(row,check){
+    console.log('kkkkkkkkk',row)
+return this.chargeOrRefund == check;
+  }*/
   get pF() {
     return this.premiumForm.controls;
     
@@ -336,18 +346,31 @@ export class PremiumComputationComponent implements OnInit {
         // this.pF.FinalPremium.setValue(Number(this.premiumDetails.FinalPremium));
 
         this.pF.ReceivedTilDate.setValue(Number(this.premiumDetails.ReceivedTilDate));
+        console.log('ReceivedTilDate',this.premiumDetails.ReceivedTilDate);
         this.pF.PolicyFeeReceived.setValue(Number(this.premiumDetails.PolicyFeeReceived));
+        console.log('PolicyFeeReceived',this.premiumDetails.PolicyFeeReceived);
         this.pF.InspectionFeeReceived.setValue(Number(this.premiumDetails.InspectionFeeReceived));
+        console.log('InspectionFeeReceived',this.premiumDetails.InspectionFeeReceived);
         this.pF.PremiumReceived.setValue(Number(this.premiumDetails.PremiumReceived));
+        console.log('PremiumReceived',this.premiumDetails.PremiumReceived);
 
 
 
         this.pF.PayableMarinePremium.setValue(Number(this.premiumDetails.PayableMarinePremium));
         this.pF.PolicyFeePaid.setValue(Number(this.premiumDetails.PolicyFeePaid));
         this.pF.InspectionFeePaid.setValue(Number(this.premiumDetails.InspectionFeePaid));
-           
-        this.pF.chargeOrRefund.setValue(this.premiumDetails.PayableYn);
+        console.log('MMMMMMMMM',this.chargeOrRefund);
+        //this.pF.chargeOrRefund.setValue(this.premiumDetails.PayableYn);
+        if(this.premiumDetails.PayableYn!=""){
+        this.chargeOrRefund=this.premiumDetails.PayableYn;
         console.log('RRRRRRRRR',this.chargeOrRefund);
+        }
+      
+           
+       
+        //this.chargeOrRefund=this.premiumDetails.PayableYn;
+        //this.check=this.premiumDetails.PayableYn;
+        //console.log('RRRRRRRRR',this.chargeOrRefund);
            
         /*if(this.pF?.TotalPremium?.value){
           this.total= String(this.pF?.TotalPremium.value);
@@ -369,6 +392,21 @@ export class PremiumComputationComponent implements OnInit {
      this.openCoverService.onMoveNext('Back');
      this.router.navigate([`${this.routerBaseLink}/new-open-cover/commodity-info`]);
     }
+
+    Changevalue(value){
+      console.log('TTTTTTTTTTTT')
+      this.chargeOrRefund=value
+    }
+
+
+    onfinalsumbit(){
+       if(this.chargeOrRefund == 'C' ||this.chargeOrRefund == 'C' ){
+        this.onCalculate('submit'); 
+       }
+       else if(this.chargeOrRefund == 'N'){
+        this.onSubmit();
+       }
+    }
   onCalculate(value) {
 
     /*if(value=='submit'){
@@ -376,12 +414,14 @@ export class PremiumComputationComponent implements OnInit {
     }*/
     
     let charge,refund=""
+   
+    //console.log('RRRRRRRRRRRRRR',this.pF.chargeOrRefund.value)
     if(this.chargeOrRefund=='C'){
       charge="C";
       refund="";
     }
   if(this.chargeOrRefund=='R'){
-      charge="";
+      charge="R";
       refund="R"
     }
     let s=this.pF.Total.value;let m:any;
@@ -417,7 +457,7 @@ export class PremiumComputationComponent implements OnInit {
       "LoginBranchCode":this.userDetails.BranchCode,
       "EndorsementStatus":this.premiumDetails.EndtStatus,
       "BalanceAmount":this.pF.BalanceAmount.value,
-      "ChargeableYN":charge,
+      "ChargeableYN":this.chargeOrRefund,
       "ProposalNo":this.proposalNo,
       "RefundChargeYN":this.refundStatus,
       "RefundAmount":r1,
@@ -437,6 +477,7 @@ export class PremiumComputationComponent implements OnInit {
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         if(data.Result.Status == true){
+          this.onGetPremium();
           console.log('cal-premium', data.Result.Status); 
           let type: NbComponentStatus = 'success';
                 const config = {
@@ -451,10 +492,10 @@ export class PremiumComputationComponent implements OnInit {
                   'Calculated Successfully',
                   'Premium Details',
                   config);
+                  //this.onGetPremium();
                   if(value=='submit'){
                     this.onSubmit();
                   }
-
                  
         }
         else if(data.ErrorMessage){

@@ -44,6 +44,7 @@ export class PolicyGenerateComponent implements OnInit {
   uploadId:any;
   policySection: boolean = false;
   draftSection: boolean = false;
+  schedule:boolean=false;
   currencyName: any;
   constructor(
     private newQuotesService: NewQuotesService,
@@ -191,14 +192,15 @@ export class PolicyGenerateComponent implements OnInit {
             this.policySection = true;
             this.draftSection = false;
             this.policyNo = data?.Result?.policyNo;
+            //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
             // Swal.fire(
             //   'Policy Created!',
             //   `Policy Number : ${data?.Result?.policyNo}`,
             //   'success'
             // )
           }
-
-       this.onNavigate();
+          //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
+       //this.onNavigate();
 
       }
     })
@@ -266,7 +268,9 @@ export class PolicyGenerateComponent implements OnInit {
       if (data.Message == "Success") {
         console.log('jjjjjjjjjj',this.generateCerti)
         if(this.generateCerti == 'Y'){
-          this.onPolicyIntegrate();
+          //this.schedule=true;
+          //this.onNavigate();
+          this.onschedule();
         }
         else if(this.generateCerti == 'Q'){
           //this.onNavigate();
@@ -280,12 +284,18 @@ export class PolicyGenerateComponent implements OnInit {
     })
   }
 
+  onschedule(){
+    this.schedule=true;
+    this.onPolicyIntegrate();
+  }
+
   onNavigate(){
     if(this.userDetails.UserType == 'admin'){
       this.router.navigate([`${this.routerBaseLink}/admin-referral/pending-quote`]);
     }
     else{
       let status = sessionStorage.getItem('QuoteStatus')
+      console.log('HHHHHHHHHHHHHHHHHH',status)
       if(status=='E'){
         this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-grid`]);
       }
@@ -294,6 +304,8 @@ export class PolicyGenerateComponent implements OnInit {
           this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
         }
         else if(this.generateCerti == 'Y'){
+          //this.schedule=true;
+          //this.onPolicyIntegrate();
           this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
         }
       }

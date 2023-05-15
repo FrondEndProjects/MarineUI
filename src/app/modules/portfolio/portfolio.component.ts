@@ -103,13 +103,13 @@ export class PortfolioComponent implements OnInit {
               }
             },
 
-            {
+            /*{
               key: 'Edit',
               display: 'Edit',
               config: {
                 isViewss: true,
               }
-            },
+            },*/
 
             {
               key: 'actions',
@@ -299,15 +299,16 @@ export class PortfolioComponent implements OnInit {
 
 
   onEdit(event: any) {
-  /*console.log('EEEEEEEEEEEEEEEEEE',event);
-  if(event.Status=='P' || event.EndtStatus!='N'){
-    this.onEndorse(event);
-  }
-  else if(event.Status=='Y'){
+  console.log('EEEEEEEEEEEEEEEEEE',event);
+if(event.Status=='Y'){
     sessionStorage.setItem('ProposalNo',event.ProposalNo);
     this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
-  }*/
-    this.onEndorse(event)
+  }
+  else if(event.Status!='Y' || event.EndtStatus!='N'){
+    this.onEndorse(event);
+  }
+  //this.onEndorse(event);
+    
   }
 
   onred(event:any){

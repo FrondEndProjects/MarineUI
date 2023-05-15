@@ -1,8 +1,5 @@
 
-
-
-
-<div class="maan-card" *ngIf="!draftSection && !policySection">
+<div class="maan-card" *ngIf="!draftSection && !policySection && !schedule">
   <div class="maan-card-header">
     <div class="form-heading">
       <!-- <div class="form-heading-number">
@@ -191,12 +188,13 @@
     <button nbButton shape="round" size="small" status="primary" class="mx-2" (click)="onSubmit()">Submit</button>
   </div>
 </div>
-<div class="maan-card" *ngIf="draftSection || policySection">
+<div class="maan-card" *ngIf="draftSection || policySection || schedule">
   <div class="maan-card-header">
     <div class="form-heading">
         <div class="form-heading-text">
           <ng-container *ngIf="policySection">Policy Information</ng-container>
           <ng-container *ngIf="draftSection">Draft Information</ng-container>
+          <ng-container *ngIf="schedule">Schedule Information</ng-container>
       </div>
      </div>
   </div>
@@ -211,6 +209,16 @@
         
         <div class="vision-grid-item-body">
             <div class="row">
+              <div class="col-12 col-md-12 col-lg-12" *ngIf="schedule"> 
+                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                  <div class="p-2">
+                    Policy No
+                  </div>
+                  <div class="p-2">
+                    <b>{{policyNo}}</b> 
+                  </div>
+                </div>
+              </div>
               <div class="col-12 col-md-12 col-lg-12"> 
                 <div class="d-sm-flex flex-sm-row justify-content-sm-between">
                   <div class="p-2">
@@ -329,7 +337,7 @@
         <button nbButton shape="round" size="small" status="danger" class="mx-2" (click)="getBack()">Back</button>
         <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Schedule Pdf</button>
         <button nbButton shape="round" size="small" status="success" class="mx-2"  *ngIf="draftSection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
-        <button nbButton shape="round" size="small" status="primary" class="mx-2"   (click)="onNavigate()">Proceed</button>
+        <button nbButton shape="round" size="small" status="primary" class="mx-2"  (click)="onNavigate()">Proceed</button>
       </div>
   </div>
 </div>
