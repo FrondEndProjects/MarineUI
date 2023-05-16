@@ -6,6 +6,11 @@ import { map, startWith } from 'rxjs/operators';
 import { PortfolioService } from '../../portfolio.service';
 import { PortfolioComponent } from '../../portfolio.component';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import Swal from 'sweetalert2';
+//import { NewQuotesService } from 'src/app/modules/new-quotes/new-quotes.service';
+//import { NewQuotesService } from 'src/app/modules/new-quotes/new-quotes.service';
+import { NewQuotesService } from '../../../new-quotes/new-quotes.service';
 
 @Component({
   selector: 'app-protfolio-grid',
@@ -27,6 +32,7 @@ export class ProtfolioGridComponent implements OnInit {
 
   public tableData: any[] = [];
   public columnHeader: any[] = [];
+  uploadedDocumentsList:any[]=[];
 
 
   public brokerList: any[] = [];
@@ -37,13 +43,19 @@ export class ProtfolioGridComponent implements OnInit {
   public routerBaseLink:any='';
   isIssuer: boolean;
   userType: any=null;
+  imageUrl: any;
+  uploadDocuments: any[]=[];
+  quote: any;
+  policy: any;
 
 
   constructor(
     private portfolioBrokerService: PortfolioService,
     private router: Router,
     private portfolioComponent:PortfolioComponent,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
+    private dialog: MatDialog,
+    private newQuotesService: NewQuotesService,
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
@@ -112,11 +124,137 @@ export class ProtfolioGridComponent implements OnInit {
     }
     this.onLoadGrid();
   }
-  onmenu(row,rowData){
+  onmenu(row,rowData,template){
     console.log('jjjjjjjjjjj',row)
     console.log('kkkkkkkk',rowData)
       if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
+
+      if(rowData=='Documents'){
+        this.OpenDocument(template,row)
+      }
   }
+
+  submit(){
+    if(this.uploadDocuments.length!=0){
+      let i=0;
+        for(let doc of this.uploadDocuments){
+          const urlLink = `${this.ApiUrl1}file/upload`;
+          this.newQuotesService.onDocumentPostMethodSync(urlLink, doc).subscribe((data: any) => {
+            console.log(data);
+            if (data) {
+                 i+=1;
+                 if(i==this.uploadDocuments.length)
+                  {
+                    this.uploadedDocumentsList = []; 
+                    this.uploadDocuments=[];
+                    //this.close();
+                    this.ongetUploadedDocument();
+                    this.close();
+                  }
+            }
+          })
+        }
+    }
+    else{
+     
+    }
+  }
+  
+  ongetUploadedDocument(){
+    //console.log('fffffffffff',this.QuoteNo);
+    //this.uploadedDocumentsList=[];
+    const urlLink = `${this.ApiUrl1}file/upload/list`;
+    const reqData = {
+      "LoginId": this.userDetails?.LoginId,
+      "QuoteNo": this.quote,
+      "UploadId": null
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      console.log("Doc List kkkkkkkkkkkkk",data);
+      this.uploadedDocumentsList=data.Result;
+    })
+  }
+  onUploadDocument(event: any, eventType: string) {
+    console.log(event);
+    console.log('hhhhhhh',eventType)
+    let fileList;
+    if (eventType == 'click') {
+    let fileList = event.target.files;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+          let Exist = this.uploadDocuments.some((ele: any) => ele.fileName == filename);
+          console.log("Element Exist",Exist)
+          if (!Exist) {
+            this.uploadDocuments.push({ 'url': element,"fileName":filename,'productid':this.sessionStorageService.sessionStorgaeModel.productId,'loginid':this.userDetails?.LoginId,'quoteNo':this.quote});
+            console.log('jjjjjj',this.uploadDocuments)
+          }
+          else {
+            Swal.fire(
+              `Selected File ${element.name} Already Exist`,
+              'Invalid Document'
+            )
+          }
+
+        }
+
+    }
+      
+    }
+    if (eventType == 'drop') {
+      fileList = event[0];
+    }
+    
+  }
+
+
+  OpenDocument( templateRef,row ){
+     console.log('uuuuuuuuu',row.data)
+     this.policy=row.data.PolicyNo
+     this.quote=row.data.QuoteNo;
+      let dialogRef = this.dialog.open(templateRef, {
+       width: '100%',
+       height:'80%'
+     });
+     this.ongetUploadedDocument();
+    
+  }
+  onDeleteUploadedDoc(index){
+    const urlLink = `${this.ApiUrl1}file/delete`;
+    const reqData = {
+      /*"BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
+       "LoginId": this.userDetails?.LoginId,
+      "QuoteNo": this.quote,
+      "UploadId": this.uploadedDocumentsList[index].UploadId
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      if(data?.Result){
+       console.log('kkkkkkkkkk',this.uploadedDocumentsList);
+       this.ongetUploadedDocument();
+      }
+      
+    })
+    //this.uploadedDocumentsList.splice(index,1);
+    //this.onSubmit(); 
+  }
+
+  onDeleteUploadDoc(index){
+    this.uploadDocuments.splice(index,1);
+  }
+    close(){
+     
+      this.dialog.closeAll();
+    }
+  
+  
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;
     ReqObj = {

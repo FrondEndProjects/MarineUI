@@ -36,9 +36,80 @@
       <button nbButton (click)="onLoadGrid()" shape="round" size="small" status="success" class="mx-2">Search</button> 
     </div>
   </div>
-  <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="isActionBtn($event)" (onMenu)="onmenu($event,$event.name)" >
+  <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="isActionBtn($event)" (onMenu)="onmenu($event,$event.name,template)" >
   </app-material-table>
   <!-- <div class="maan-card-footer">
     <app-back-btn></app-back-btn>
   </div> -->
 </div>
+
+
+
+<ng-template #template>
+    
+  <div class="mt-4">
+  
+      <div style="text-align:center">
+        <div style="color:black;font-size: 19px;">PolicyNo:<span>{{policy}}</span></div>
+        <div>
+          Document Upload
+        </div>
+        <div>
+          <div>
+            <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
+            <div  class="imag-card my-3"  appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
+              (click)="doc.click()">
+              <div>
+                <div class="center">
+                  <b class="text-dark">
+                    <i class="far fa-images"></i> Drag or Click</b>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
+              <div class="row">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Filename</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container>
+                      <tr *ngFor="let UPdocuments of uploadedDocumentsList;let i=index">
+                        <td>{{UPdocuments.OriginalFileName}}</td>
+                        <td>
+                          <button class="circle btn btn-success btn-sm" (click)="onDeleteUploadedDoc(i)">
+                            <i class="fas fa-trash"></i>
+                          </button>&nbsp;
+                        </td>
+                      </tr>
+                    </ng-container>
+                        <ng-container  *ngIf="uploadDocuments?.length!=0">
+                          <tr *ngFor="let doc of uploadDocuments;let i=index">
+                            <td>{{doc.fileName}}</td>
+                            <td>
+                              <button class="circle btn btn-danger btn-sm" (click)="onDeleteUploadDoc(i)">
+                                <i class="fas fa-trash"></i>
+                              </button>&nbsp; 
+                            </td>
+                          </tr>
+                        </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;" class="mt-4">
+              <button class="btn btn-danger" (click)="close()">Close</button>
+              <button class="btn btn-success" style="margin-left:10px;" (click)="submit()">Submit</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+ </ng-template>

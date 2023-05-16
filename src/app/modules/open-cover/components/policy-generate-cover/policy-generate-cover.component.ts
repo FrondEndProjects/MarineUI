@@ -89,6 +89,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
       this.router.navigate([`${this.routerBaseLink}/new-open-cover/premium-computation`]);
     } else {
       this.openCoverService.onMoveNext('Front');
+      sessionStorage.removeItem('Move');
       this.router.navigate([`${this.routerBaseLink}/new-open-cover/commodity-info`]);
 
     }
@@ -231,6 +232,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
     }));
     const urlLink = `${this.ApiUrl1}OpenCover/policy/generated`;
     const MissippiCode= sessionStorage.getItem('MissippiCode');
+    console.log('MMMMMMMMMMMMMMMMMMMMMMMMM',MissippiCode);
     const reqData = {
       "OpenCoverNo": MissippiCode,
       "ProposalNo": this.proposalNo,

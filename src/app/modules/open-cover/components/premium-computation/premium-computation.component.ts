@@ -80,7 +80,15 @@ export class PremiumComputationComponent implements OnInit {
 
     
    
-    this.onCallPremiumCal();
+    //this.onCallPremiumCal();
+    let s=sessionStorage.getItem('Move');
+    if(s=='1'){
+      this.onCallPremiumCal();
+    }
+    else{
+      this.onGetPremium();
+    }
+    //this.onGetPremium();
     this.onGetRefundChargeStatus();
     this.onCreateFormControl();
     combineLatest([
@@ -123,7 +131,7 @@ export class PremiumComputationComponent implements OnInit {
       } */
       let row1 = Number(TotalPremium) + Number(PolicyFee) + Number(InspectionFee);
       let row2 = Number(ReceivedTilDate) + Number(PolicyFee) + Number(InspectionFee);
-      //let row3 = Number(BalanceAmount) + Number( PolicyFeeBalance) + Number(InsceptionFeeBalance);
+      let row3 = Number(BalanceAmount) + Number( PolicyFeeBalance) + Number(InsceptionFeeBalance);
       let s:any;
       this.secondrow(ReceivedTilDate,PolicyFeeReceived,InspectionFeeReceived);
        
@@ -136,7 +144,7 @@ export class PremiumComputationComponent implements OnInit {
       let row4 = Number(s) + Number(PolicyFeePaid) + Number(InspectionFeePaid)
       console.log(row1,row4);
       this.pF.FinalPremium.setValue(row1);
-      //this.pF.ReceivedTotal.setValue(row3);
+      this.pF.ReceivedTotal.setValue(row3);
       let v= Number(row1)-Number(row4);
 
 
@@ -317,7 +325,6 @@ return this.chargeOrRefund == check;
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
        this.onGetPremium();
-
       });
   }
 
@@ -387,9 +394,11 @@ return this.chargeOrRefund == check;
 
   onMoveFront() {
     this.openCoverService.onMoveNext('Front');
+    //this.onCallPremiumCal();
     this.router.navigate([`${this.routerBaseLink}/new-open-cover/policy-generate-cover`]);
    }
    onMoveBack() {
+    //this.onGetPremium();
      this.openCoverService.onMoveNext('Back');
      this.router.navigate([`${this.routerBaseLink}/new-open-cover/commodity-info`]);
     }

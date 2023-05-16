@@ -208,6 +208,7 @@ export class CommodityInfoComponent implements OnInit {
       this.router.navigate([`${this.routerBaseLink}/new-open-cover/premium-computation`]);
     } else {
       this.openCoverService.onMoveNext('Front');
+      sessionStorage.setItem('Move',"1");
       this.router.navigate([`${this.routerBaseLink}/new-open-cover/policy-generate-cover`]);
 
     }
