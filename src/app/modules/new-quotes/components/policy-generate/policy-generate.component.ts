@@ -401,5 +401,6 @@ export class PolicyGenerateComponent implements OnInit {
   }
   getBack(){
     this.policySection = false;this.draftSection=false;
+    this.schedule=false;
   }
 }

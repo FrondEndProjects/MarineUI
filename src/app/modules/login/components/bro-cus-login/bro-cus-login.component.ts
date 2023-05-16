@@ -159,8 +159,8 @@ export class BroCusLoginComponent implements OnInit {
     const formData = this.ForgetForm.value;
 
     const reqData = {
-   LoginId: formData.LoginId,
-   MailId: formData.Email,
+      UserId: formData.LoginId,
+      MailId: formData.Email,
 
     };
 
@@ -304,8 +304,8 @@ export class BroCusLoginComponent implements OnInit {
       const urlLink = `${this.ApiUrl1}login/LoginChangePassword`;
       const reqData = {
         "LoginId": formData.LoginId,
-        "Password": formData.NewPassword,
-        "RePassword": formData.OldPassword,
+        "Password": formData.OldPassword,
+        "RePassword": formData.NewPassword,
       };
       this.loginService.onPostMethodBasicSync(urlLink, reqData).subscribe(
         (data: any) => {

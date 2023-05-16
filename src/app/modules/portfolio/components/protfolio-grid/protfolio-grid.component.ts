@@ -67,6 +67,7 @@ export class ProtfolioGridComponent implements OnInit {
 
     if (this.userDetails?.UserType === 'Broker' || this.userDetails?.UserType === 'User') {
       this.loginId = this.userDetails.LoginId;
+      console.log('LLLLLLLLLLLLLL',this.loginId);
       this.applicationId = '1';
     }
     if (this.userDetails?.UserType !== 'Broker' && this.userDetails?.UserType !== 'User') {
@@ -120,7 +121,11 @@ export class ProtfolioGridComponent implements OnInit {
 
   onChangeBroker() {
     if(this.selectedBroker){
+      console.log('RRRRRRRRRR',this.loginId)
+      if(this.userDetails?.UserType !== 'Broker' && this.userDetails?.UserType !== 'User'){
       this.loginId = this.selectedBroker;
+      }
+      console.log('kkkkkkkkkkkk',this.loginId)
     }
     this.onLoadGrid();
   }
@@ -300,6 +305,7 @@ export class ProtfolioGridComponent implements OnInit {
   onLoadGrid() {
     this.tableData = [];let loginId = null,applicationId=null;
     if(this.otherPolicyNo==null){loginId = this.loginId;applicationId = this.applicationId; }
+    console.log('LLLLLLLLLLLLLLMMMMMMMMMM',this.loginId);
     const urlLink = `${this.ApiUrl1}menu/portfolio/policy`;
     const reqData = {
       "OpenCoverNo": this.OpenCover?.value,
