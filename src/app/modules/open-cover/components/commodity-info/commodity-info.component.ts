@@ -205,6 +205,7 @@ export class CommodityInfoComponent implements OnInit {
 
   onMoveFront() {
     if (this.coverTypeId == '13' || this.coverTypeId == '12') {
+      sessionStorage.setItem('Move',"1");
       this.router.navigate([`${this.routerBaseLink}/new-open-cover/premium-computation`]);
     } else {
       this.openCoverService.onMoveNext('Front');

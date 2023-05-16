@@ -83,6 +83,7 @@ export class PremiumComputationComponent implements OnInit {
     //this.onCallPremiumCal();
     let s=sessionStorage.getItem('Move');
     if(s=='1'){
+      console.log('lllllllllll',s)
       this.onCallPremiumCal();
     }
     else{
@@ -339,27 +340,28 @@ return this.chargeOrRefund == check;
       (data: any) => {
         console.log('premium', data);
         this.premiumDetails = data?.Result[0];
+        console.log('kkkkkkkkkkkkkk',this.premiumDetails)
 
-        this.pF.TotalPremium.setValue(Number(this.premiumDetails.TotalPremium));
-        this.totalActual = Number(this.premiumDetails.TotalPremium)
+        this.pF.TotalPremium.setValue(Number(this.premiumDetails?.TotalPremium));
+        this.totalActual = Number(this.premiumDetails?.TotalPremium)
         //this.CommaFormatted();
        
-        this.pF.PolicyFee.setValue(Number(this.premiumDetails.PolicyFee));
-        this.pF.InspectionFee.setValue(Number(this.premiumDetails.InspectionFee));
-        this.pF.BalanceAmount.setValue(Number(this.premiumDetails.BalanceAmount));
-        this.pF.PolicyFeeBalance.setValue(Number(this.premiumDetails.PolicyFeeBalance));
-        this.pF.InsceptionFeeBalance.setValue(Number(this.premiumDetails.InsceptionFeeBalance));
+        this.pF.PolicyFee.setValue(Number(this.premiumDetails?.PolicyFee));
+        this.pF.InspectionFee.setValue(Number(this.premiumDetails?.InspectionFee));
+        this.pF.BalanceAmount.setValue(Number(this.premiumDetails?.BalanceAmount));
+        this.pF.PolicyFeeBalance.setValue(Number(this.premiumDetails?.PolicyFeeBalance));
+        this.pF.InsceptionFeeBalance.setValue(Number(this.premiumDetails?.InsceptionFeeBalance));
 
         // this.pF.FinalPremium.setValue(Number(this.premiumDetails.FinalPremium));
 
-        this.pF.ReceivedTilDate.setValue(Number(this.premiumDetails.ReceivedTilDate));
-        console.log('ReceivedTilDate',this.premiumDetails.ReceivedTilDate);
-        this.pF.PolicyFeeReceived.setValue(Number(this.premiumDetails.PolicyFeeReceived));
-        console.log('PolicyFeeReceived',this.premiumDetails.PolicyFeeReceived);
-        this.pF.InspectionFeeReceived.setValue(Number(this.premiumDetails.InspectionFeeReceived));
-        console.log('InspectionFeeReceived',this.premiumDetails.InspectionFeeReceived);
-        this.pF.PremiumReceived.setValue(Number(this.premiumDetails.PremiumReceived));
-        console.log('PremiumReceived',this.premiumDetails.PremiumReceived);
+        this.pF.ReceivedTilDate.setValue(Number(this.premiumDetails?.ReceivedTilDate));
+        console.log('ReceivedTilDate',this.premiumDetails?.ReceivedTilDate);
+        this.pF.PolicyFeeReceived.setValue(Number(this.premiumDetails?.PolicyFeeReceived));
+        console.log('PolicyFeeReceived',this.premiumDetails?.PolicyFeeReceived);
+        this.pF.InspectionFeeReceived.setValue(Number(this.premiumDetails?.InspectionFeeReceived));
+        console.log('InspectionFeeReceived',this.premiumDetails?.InspectionFeeReceived);
+        this.pF.PremiumReceived.setValue(Number(this.premiumDetails?.PremiumReceived));
+        console.log('PremiumReceived',this.premiumDetails?.PremiumReceived);
 
 
 

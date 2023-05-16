@@ -86,6 +86,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
   onMoveBack() {
     this.openCoverService.onMoveNext('Back');
     if (this.coverTypeId == '13' || this.coverTypeId == '12') {
+      sessionStorage.removeItem('Move');
       this.router.navigate([`${this.routerBaseLink}/new-open-cover/premium-computation`]);
     } else {
       this.openCoverService.onMoveNext('Front');
