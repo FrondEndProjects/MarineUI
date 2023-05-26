@@ -71,7 +71,7 @@ export class CommodityClausesTableComponent implements OnInit {
         if (this.warYN == 'Y') {
           staticList.splice(2, 0, { CoverName: 'War', isColor: true, staticObj: {} },)
         }
-        this.tableData = [...staticList, ...this.clausesList];
+        this.tableData = [...this.clausesList,...staticList ];
         this.tableData = this.tableData.map(x=>({
           ...x,
           isClicked:false

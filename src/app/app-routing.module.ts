@@ -13,10 +13,13 @@ import { NgModule } from '@angular/core';
 
 import { ProductSelectionComponent } from './modules/product-selection/product-selection.component';
 import { AuthGuard } from './Auth/auth.guard';
+import { SessionRedirectComponent } from './layout/components/session-redirect/session-redirect.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login-layout', pathMatch: 'full' },
-
+  { path: 'sessionRedirect', 
+    component: SessionRedirectComponent
+  },
   {
     path: 'login-layout',
     component: LoginLayoutComponent,

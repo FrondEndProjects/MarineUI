@@ -348,10 +348,13 @@ return this.chargeOrRefund == check;
        
         this.pF.PolicyFee.setValue(Number(this.premiumDetails?.PolicyFee));
         this.pF.InspectionFee.setValue(Number(this.premiumDetails?.InspectionFee));
-        this.pF.BalanceAmount.setValue(Number(this.premiumDetails?.BalanceAmount));
-        this.pF.PolicyFeeBalance.setValue(Number(this.premiumDetails?.PolicyFeeBalance));
-        this.pF.InsceptionFeeBalance.setValue(Number(this.premiumDetails?.InsceptionFeeBalance));
-
+        //this.pF.BalanceAmount.setValue(Number(this.premiumDetails?.BalanceAmount));
+        this.pF.BalanceAmount.setValue(Number(this.premiumDetails?.BalanceAmountView));
+        //this.pF.PolicyFeeBalance.setValue(Number(this.premiumDetails?.PolicyFeeBalance));
+        this.pF.PolicyFeeBalance.setValue(Number(this.premiumDetails?.PolicyFeeBalanceView));
+        //this.pF.InsceptionFeeBalance.setValue(Number(this.premiumDetails?.InsceptionFeeBalance));
+        this.pF.InsceptionFeeBalance.setValue(Number(this.premiumDetails?.InsceptionFeeBalanceView));
+        
         // this.pF.FinalPremium.setValue(Number(this.premiumDetails.FinalPremium));
 
         this.pF.ReceivedTilDate.setValue(Number(this.premiumDetails?.ReceivedTilDate));
@@ -468,7 +471,7 @@ return this.chargeOrRefund == check;
     const reqData = {
       "LoginBranchCode":this.userDetails.BranchCode,
       "EndorsementStatus":this.premiumDetails.EndtStatus,
-      "BalanceAmount":this.pF.BalanceAmount.value,
+      "BalanceAmount":this.premiumDetails?.BalanceAmount,
       "ChargeableYN":this.chargeOrRefund,
       "ProposalNo":this.proposalNo,
       "RefundChargeYN":this.refundStatus,
@@ -489,9 +492,14 @@ return this.chargeOrRefund == check;
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         if(data.Result.Status == true){
-          this.onGetPremium();
+          
           console.log('cal-premium', data.Result.Status); 
-          let type: NbComponentStatus = 'success';
+          if(value=='submit'){
+            this.onSubmit();
+          }
+          else{
+            this.onGetPremium();
+            let type: NbComponentStatus = 'success';
                 const config = {
                   status: type,
                   destroyByClick: true,
@@ -504,10 +512,10 @@ return this.chargeOrRefund == check;
                   'Calculated Successfully',
                   'Premium Details',
                   config);
+          }
+          
                   //this.onGetPremium();
-                  if(value=='submit'){
-                    this.onSubmit();
-                  }
+                  
                  
         }
         else if(data.ErrorMessage){

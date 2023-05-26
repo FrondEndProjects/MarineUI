@@ -39,6 +39,9 @@ export class ExistQuoteComponent implements OnInit {
   ) {
     this.OpenCover = this.quotesComponent?.OpenCover;
     console.log(this.OpenCover);
+    sessionStorage.removeItem("endorsement");
+    sessionStorage.removeItem("ReferenceNo");
+    sessionStorage.removeItem('QuoteStatus');
     sessionStorage.removeItem('EndtReffStatus')
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;

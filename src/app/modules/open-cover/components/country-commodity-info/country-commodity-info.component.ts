@@ -32,6 +32,8 @@ export class CountryCommodityInfoComponent implements OnInit {
   public proposalNo: any = '';
 
   public routerBaseLink:any='';
+  showSection: boolean = false;
+  saleTermComponentmTableData: any;
 
 
   constructor(
@@ -119,35 +121,34 @@ export class CountryCommodityInfoComponent implements OnInit {
         console.log("res",data);
         let SaleTermList = data[0].Result;
         let ToleranceList = data[1].Result;
-        const saleTermList = SaleTermList.map(x => ({
-          ...x,
-          isChecked:false,
-          toleranceVal:'4',
-          toleranceList:ToleranceList
-        }));
-        this.saleTermComponent.columnHeader = [
-          {
-            key: 'SaleTermName',
-            display: 'SaleTerm Name',
-            config: {
-              isBsCheckBox: true,
-              model: 'isChecked'
-            },
-          },
-
-          {
-            key: 'toleranceList',
-            display: 'Tolerance List',
-            config: {
-              isdropdownLis: true,
-              keyName: 'ToleranceName',
-              KeyCode: 'ToleranceId',
-              model: 'toleranceVal'
-            },
-          },
-
-        ];
-        this.saleTermComponent.tableData = saleTermList;
+        if(SaleTermList.length!=0){
+          let i = 0;
+          for(let entry of SaleTermList){
+                entry['isChecked'] = false;
+                entry['toleranceVal'] = '4';
+                entry['toleranceList'] = ToleranceList;
+                i+=1;
+                if(i==SaleTermList.length){
+                  this.showSection = true;
+                  this.saleTermComponentmTableData = SaleTermList
+                  //this.saleTermComponent.tableData = SaleTermList;
+                  
+                  console.log("Sale Term List Data",this.saleTermComponent.tableData)
+                }
+          } 
+        }
+        else{
+          this.showSection = true;
+          this.saleTermComponentmTableData = []
+          console.log("Sale Term List Empty Data",this.saleTermComponent.tableData)
+        }
+        // const saleTermList = SaleTermList.map(x => ({
+        //   ...x,
+        //   isChecked:false,
+        //   toleranceVal:'4',
+        //   toleranceList:ToleranceList
+        // }));
+        
       },
       (err) => { },
       () => console.log('done')

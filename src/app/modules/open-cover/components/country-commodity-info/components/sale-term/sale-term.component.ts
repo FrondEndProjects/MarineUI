@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
@@ -12,15 +12,15 @@ import { AppComponent } from '../../../../../../app.component';
   styleUrls: ['./sale-term.component.scss'],
 })
 export class SaleTermComponent implements OnInit {
+  @Input('tableData') tableData: any[] = [];
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public proposalNo = '';
   public userDetails: any;
   public saleTermList: any[] = [];
   public filterValue: any = '';
-  public tableData: any[] = [];
   public columnHeader: any[] = [];
-
+  showSection:boolean = false;
 
   constructor(
     private openCoverService: OpenCoverService,
@@ -34,6 +34,28 @@ export class SaleTermComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.columnHeader = [
+      {
+        key: 'SaleTermName',
+        display: 'SaleTerm Name',
+        config: {
+          isBsCheckBox: true,
+          model: 'isChecked'
+        },
+      },
+
+      {
+        key: 'toleranceList',
+        display: 'Tolerance List',
+        config: {
+          isdropdownLis: true,
+          keyName: 'ToleranceName',
+          KeyCode: 'ToleranceId',
+          model: 'toleranceVal'
+        },
+      },
+
+    ];
     this.onEdit();
   }
 
@@ -149,15 +171,35 @@ export class SaleTermComponent implements OnInit {
         console.log("edit", data);
         let SaleTermList:any[] = data[0].Result?.SaleTermInfo || [];
         let ToleranceList:any[] = data[1].Result?.ToleranceInfo || [];
-
-        for (let index = 0; index < ToleranceList.length; index++) {
-          const element = ToleranceList[index];
-          let splitval = element.ToleranceId.split('~');
-          console.log(splitval);
-          let idx = this.tableData.findIndex((ele:any)=>ele.SaleTermId == splitval[0]);
-          this.tableData[idx].isChecked = true;
-          this.tableData[idx].toleranceVal = splitval[1];
+        if(ToleranceList.length!=0){
+          for (let index = 0; index < ToleranceList.length; index++) {
+            const element = ToleranceList[index];
+            let splitval = element.ToleranceId.split('~');
+            console.log("Split Process",this.tableData,splitval);
+            let idx = this.tableData.findIndex((ele:any)=>ele.SaleTermId == splitval[0]);
+            console.log("Entered 1",splitval,idx);
+            if(idx>=0){
+              if(this.tableData[idx]?.isChecked!=undefined && this.tableData[idx]?.isChecked!=null){
+                console.log("Entered 3",this.tableData[idx]);
+                this.tableData[idx].isChecked = true;
+                this.tableData[idx].toleranceVal = splitval[1];
+                console.log("Entered 4",this.tableData[idx]);
+              }
+              else{
+                console.log("Entered 2",idx);
+                let entry = this.tableData[idx];
+                entry['isChecked'] = true;
+                entry['toleranceVal'] = splitval[1];
+                console.log("Entered Final Set Value",entry,idx)
+              }
+            }   
+            
+            if(index==ToleranceList.length-1) this.showSection = true;
+          }
         }
+        else{
+          this.showSection = true;
+        } 
 
       },
       (err) => { },

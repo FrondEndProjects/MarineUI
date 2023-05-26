@@ -221,7 +221,7 @@ export class PortfolioComponent implements OnInit {
   EndtSchedule(row,rowData){
     let Results:any='';
     console.log('kkkkkkkkkkkk',row.data.OriginalPolicyNo)
-    const urlLink = `${this.ApiUrl1}pdf/endtcertificate`;
+    const urlLink = `${this.ApiUrl1}pdf/opencoverEndt`;
     const reqData = { 
     "BranchCode": this.userDetails.BranchCode,
     "ApplicationNo":"",
@@ -255,6 +255,7 @@ export class PortfolioComponent implements OnInit {
         console.log(data);
         if (data?.Result) {
           this.onChangeBroker(); 
+          window.location.reload();
           //this.onLoadGrid();
         }
         //this.branchList = data || [];

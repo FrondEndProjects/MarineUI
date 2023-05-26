@@ -47,12 +47,28 @@ export class CommoditySelectionComponent implements OnInit {
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        this.tableData = data?.Result?.CommodityInfo.map((ele:any)=>({
-          ...ele,
-          Fragile:ele.Fragile == null || ele.Fragile == 'false' ? false : true,
-          isChecked:ele.OptedCommodity == null || ele.OptedCommodity == 'false'? false : true
-        }))
-        console.log(data);
+        console.log("Entry Commodity Data",data);
+        let commodityList = data?.Result?.CommodityInfo;
+        if(commodityList.length!=0){
+          let i=0;
+          for(let commodity of commodityList){
+              if(commodity?.Fragile == undefined || commodity?.Fragile == null || commodity?.Fragile=='false'){
+                commodity.Fragile = false;
+              }
+              else commodity.Fragile = true;
+              if(commodity.OptedCommodity==undefined || commodity.OptedCommodity==null || commodity.OptedCommodity!='Y' || commodity.OptedCommodity=='false') commodity['isChecked'] = false;
+              else commodity['isChecked'] = true;
+              i+=1;
+              if(i==commodityList.length) this.tableData = commodityList;
+          }
+        }
+        else this.tableData = [];
+        // this.tableData = data?.Result?.CommodityInfo.map((ele:any)=>({
+        //   ...ele,
+        //   Fragile:ele.Fragile == null || ele.Fragile == 'false' ? false : true,
+        //   isChecked:ele.OptedCommodity == 'false' ? false : true
+        // }))
+        console.log("Final Commodity Data",data);
 
       },
       (err) => { },
@@ -60,7 +76,7 @@ export class CommoditySelectionComponent implements OnInit {
 
   }
   onSubmit() {
-    const filterCheckedList = this.tableData.filter((ele: any) => ele.isChecked === true);
+    const filterCheckedList = this.tableData.filter((ele: any) => ele?.isChecked === true);
     console.log(filterCheckedList);
     const CommodityInfo: any[] = filterCheckedList.map(x => ({
       "CommodityDescription": x.CommodityDescription,

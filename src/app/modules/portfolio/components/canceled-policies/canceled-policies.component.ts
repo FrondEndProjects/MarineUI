@@ -74,7 +74,12 @@ export class CanceledPoliciesComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.onGetBrokerList();
+    if (this.userDetails?.UserType == "RSAIssuer") {
+      this.onGetBrokerList();
+    }
+    else{
+      this.onChangeBroker();
+    }
     this.selectedBroker = sessionStorage.getItem('loginId');
   }
 
@@ -174,7 +179,7 @@ export class CanceledPoliciesComponent implements OnInit {
     const data:any = {
       'PolicyNo':rowData.PolicyNo,
       'QuoteNo':rowData.QuoteNo,
-      'LoginId':this.selectedBroker
+      'LoginId':rowData.LoginId
      }
      console.log(data);
     sessionStorage.setItem('portfolio',JSON.stringify(data));

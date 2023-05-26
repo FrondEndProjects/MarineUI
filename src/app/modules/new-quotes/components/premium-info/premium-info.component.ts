@@ -70,19 +70,33 @@ export class PremiumInfoComponent implements OnInit {
     this.onGetViewClausesInformation();
     this.onGetPremiumInformation();
     this.onChangeBetterQuote();
-    if( this.sessionStorageService.sessionStorgaeModel.referral =='Approved'){
+    if( this.sessionStorageService.sessionStorgaeModel.referral =='Approved' || this.userDetails?.UserType == 'Broker'){
       for (var control in this.premiumForm.controls) {
         this.premiumForm.controls[control].disable();
       }
+      if(this.userDetails?.UserType == 'Broker' && this.sessionStorageService.sessionStorgaeModel.referral !='Approved'){
+        this.premiumF.additionalSelect.enable();
+        this.premiumF.additionalPremium.enable();
+      }
+      this.premiumF.ReferralUpdateYn.enable();
+      if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
     }
     else{
       let endtStatus = sessionStorage.getItem('EndtReffStatus');
-      if(this.QuoteStatus=='E' && endtStatus == 'ReferalApproved'){
+      if(this.QuoteStatus=='E' && endtStatus == 'ReferalApproved' ){
         for (var control in this.premiumForm.controls) {
           this.premiumForm.controls[control].disable();
         }
+        this.premiumF.ReferralUpdateYn.enable();
+        if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
+      }
+      else{
+        this.premiumF.marinePremium.disable();
+        this.premiumF.warPremium.disable();
+        this.premiumF.warLandPremium.disable();
       }
     }
+    
   }
 
 
@@ -436,11 +450,17 @@ export class PremiumInfoComponent implements OnInit {
     console.log('premium',premiumDetail);
     console.log('Commodity',commodityDetails);
     this.premiumF?.marineRate.setValue(commodityDetails?.MarineRate);
+    this.premiumF.marinePremium.enable();
+    this.premiumF.warPremium.enable();
+    this.premiumF.warLandPremium.enable();
     this.premiumF?.marinePremium.setValue(premiumDetail?.MarinePremium);
     this.premiumF?.warRate.setValue(commodityDetails?.WarRate);
     this.premiumF?.warPremium.setValue(premiumDetail?.WarPremium);
     this.premiumF?.warLandRate.setValue(commodityDetails?.WarlandRate);
     this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
+    this.premiumF.marinePremium.disable();
+    this.premiumF.warPremium.disable();
+    this.premiumF.warLandPremium.disable();
     this.premiumF?.additionalSelect.setValue(premiumDetail?.ExcessSign);
     this.premiumF?.additionalPremium.setValue(premiumDetail?.AdditionalPremium);
     this.premiumF?.policyInsuAedPremium.setValue(premiumDetail?.PolicyIssunceFee);

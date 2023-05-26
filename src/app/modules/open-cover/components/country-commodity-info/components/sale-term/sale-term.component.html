@@ -5,20 +5,22 @@
       Tolerance Selection
     </div>
     <div class="vision-grid-item-body">
-      <div class="row">
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <div class="input-form-box">
-              <span class="input-form-icon">
-                <i class="fas fa-search"></i>
-              </span>
-              <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="filterValue" placeholder="search...">
+        <ng-container *ngIf="showSection">
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                <div class="input-form-box">
+                  <span class="input-form-icon">
+                    <i class="fas fa-search"></i>
+                  </span>
+                  <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="filterValue" placeholder="search...">
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)">
-      </app-material-table>
+          <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)">
+          </app-material-table>
+        </ng-container>
     </div>
     <div style="text-align:right">
       <button nbButton (click)="onSaveSaleterm()" shape="round" size="small" status="primary" class="mx-2">Submit</button>

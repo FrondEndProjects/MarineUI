@@ -8,6 +8,7 @@ import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { table } from 'console';
+import { NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'app-new-open-cover',
@@ -49,7 +50,7 @@ export class NewOpenCoverComponent implements OnInit {
 
   constructor(
     private openCoverService: OpenCoverService,
-    private router: Router,
+    private router: Router,private menuService: NbMenuService,
     private _formBuilder: FormBuilder,
     private currencyPipe: CurrencyPipe,
     private sessionStorageService: SessionStorageService,
@@ -60,20 +61,38 @@ export class NewOpenCoverComponent implements OnInit {
     this.userDetails = this.userDetails?.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.LoginId;
-    this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    
   }
 
   ngOnInit(): void {
     this.onCreateFormControl();
     this.onLoadDropdownList();
-    this.openCoverService.onGetOpenCoverEdit.subscribe((data: any) => {
-      console.log(data);
-      this.editData = data;
-      if (data) {
-        this.onEdit();
+    
+    this.menuService.onItemClick().subscribe((data) => {
+      console.log("Current Route",data.item.link)
+      if (data.item.link === `/${this.routerBaseLink}/new-open-cover/new-open-cover-form`) {
+        sessionStorage.removeItem("OpenCoverEdit");
+        this.reloadCurrentRoute();
       }
     });
-    this.onGetCustomerList();
+    let openCoverData = JSON.parse(sessionStorage.getItem('OpenCoverEdit'))
+    if(openCoverData){
+      this.onEdit();
+    }
+    else{
+      this.onGetCustomerList('direct');
+    }
+    // this.openCoverService.onGetOpenCoverEdit.subscribe((data: any) => {
+    //   console.log(data);
+    //   this.editData = data;
+    //   if (data) {
+    //     this.onEdit();
+    //   }
+    //   else{
+    //     this.onGetCustomerList('direct');
+    //   }
+    // });
+    
 
     this.newQuoteF.utilizedAmount.valueChanges.subscribe(x => {
       console.log('kkkkkkkkkk',x);
@@ -98,7 +117,10 @@ export class NewOpenCoverComponent implements OnInit {
     }
     this.minDate = ngbDate;
   }
-
+  reloadCurrentRoute() {
+   
+    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+  }
   onCreateFormControl() {
     this.newQuoteForm = this._formBuilder.group({
       businessType: [null, Validators.required],
@@ -146,7 +168,7 @@ export class NewOpenCoverComponent implements OnInit {
 
 
 
-  onGetCustomerList() {
+  onGetCustomerList(type) {
     this.columnHeader = [
       {
         key: 'CustomerId',
@@ -291,7 +313,7 @@ export class NewOpenCoverComponent implements OnInit {
     this.loginId = this.newQuoteF.selectBroker.value;
     console.log(this.loginId);
     sessionStorage.setItem('customerLoginId', this.loginId);
-    this.onGetCustomerList();
+    this.onGetCustomerList('From Broker');
   }
 
   onChangeStartDate(event: any) {
@@ -346,7 +368,40 @@ export class NewOpenCoverComponent implements OnInit {
   }
 
   onEdit() {
-    console.log(this.editData);
+    this.proposalNo = sessionStorage.getItem('ProposalNo');
+    const urlLink = `${this.ApiUrl1}OpenCover/quote/edit`;
+    const user = this.userDetails;
+    const reqData = {
+      'BranchCode': user?.BranchCode,
+      'ProposalNo': this.proposalNo,
+    };
+    sessionStorage.setItem('OpenCover',JSON.stringify(reqData));
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log('editData', data);
+        if (data?.Result?.ProposalNo) {
+          if(data?.Result?.OpenCoverNo){
+            const opencover = {
+              'name':'adminReferral',
+              'value':data?.Result?.OpenCoverNo
+            }
+            this.OpenCover = opencover;
+             sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+             
+          }
+          this.editData = data?.Result;
+             this.setFormValues();
+          //this.openCoverService.onGetCoverEditData(data?.Result);
+          sessionStorage.setItem('MissippiCode',data?.Result?.MissippiCode);
+
+        }
+      },
+      (err) => { },
+    );
+    
+
+  }
+  setFormValues(){
     this.proposalNo = this.editData?.ProposalNo;
     this.customerId = this.editData?.CustomerId;
     this.newQuoteF.businessType.setValue(this.editData?.BusinessType.toString());
@@ -396,10 +451,8 @@ export class NewOpenCoverComponent implements OnInit {
    this.RefNo =  this.editData?.RefNo;
    this.MissippiCode = this.editData?.MissippiCode;
 
-  this.onCheckCrossVoyage();
-
+    this.onCheckCrossVoyage();
   }
-
   onCheckCrossVoyage(){
     console.log(this.newQuoteF.crossVoyage.value);
 
@@ -524,5 +577,7 @@ export class NewOpenCoverComponent implements OnInit {
     const joinDate = reverseDate.join('-');
     return new Date(joinDate);
   }
-
+  ngOnDestroy(){
+    this.openCoverService.openCoverEdit.next(null);
+  }
 }

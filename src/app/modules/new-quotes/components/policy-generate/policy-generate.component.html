@@ -334,7 +334,7 @@
         </div>
       </div>
       <div class="text-center mx-1">
-        <button nbButton shape="round" size="small" status="danger" class="mx-2" (click)="getBack()">Back</button>
+        <button nbButton shape="round" size="small" status="danger" class="mx-2" *ngIf="!policySection" (click)="getBack()">Back</button>
         <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Schedule Pdf</button>
         <button nbButton shape="round" size="small" status="success" class="mx-2"  *ngIf="draftSection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
         <button nbButton shape="round" size="small" status="primary" class="mx-2"  (click)="onNavigate()">Proceed</button>

@@ -47,7 +47,7 @@ export class OpenCoverComponent implements OnInit {
 
       if (data.item.link === '/Marine/new-open-cover/new-open-cover-form') {
       sessionStorage.removeItem('ProposalNo');
-
+        
        // this.reloadCurrentRoute();
       }
     });
@@ -94,31 +94,38 @@ export class OpenCoverComponent implements OnInit {
 
   }
   onEditOpenCoverForm() {
-    const urlLink = `${this.ApiUrl1}OpenCover/quote/edit`;
     const user = this.userDetails?.LoginResponse;
     const reqData = {
       'BranchCode': user?.BranchCode,
       'ProposalNo': this.ProposalNo,
     };
-    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log('editData', data);
-        if (data?.Result?.ProposalNo) {
-          if(data?.Result?.OpenCoverNo){
-            const opencover = {
-              'name':'adminReferral',
-              'value':data?.Result?.OpenCoverNo
-            }
-             sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
-          }
+    sessionStorage.setItem('OpenCoverEdit',JSON.stringify(reqData));
+    // const urlLink = `${this.ApiUrl1}OpenCover/quote/edit`;
+    // const user = this.userDetails?.LoginResponse;
+    // const reqData = {
+    //   'BranchCode': user?.BranchCode,
+    //   'ProposalNo': this.ProposalNo,
+    // };
+    // sessionStorage.setItem('OpenCover',JSON.stringify(reqData));
+    // this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+    //   (data: any) => {
+    //     console.log('editData', data);
+    //     if (data?.Result?.ProposalNo) {
+    //       if(data?.Result?.OpenCoverNo){
+    //         const opencover = {
+    //           'name':'adminReferral',
+    //           'value':data?.Result?.OpenCoverNo
+    //         }
+    //          sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+    //       }
 
-          this.openCoverService.onGetCoverEditData(data?.Result);
-          sessionStorage.setItem('MissippiCode',data?.Result?.MissippiCode);
+    //       this.openCoverService.onGetCoverEditData(data?.Result);
+    //       sessionStorage.setItem('MissippiCode',data?.Result?.MissippiCode);
 
-        }
-      },
-      (err) => { },
-    );
+    //     }
+    //   },
+    //   (err) => { },
+    // );
   }
   // reloadCurrentRoute() {
   //   this.router.navigate(['/Marine/new-open-cover/new-open-cover-form']);

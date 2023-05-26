@@ -91,7 +91,6 @@ export class CustomerInfoComponent implements OnInit {
     private sessionStorageService: SessionStorageService
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    console.log('hhhhhhhhhhhhhhhhh',this.userDetails.LoginResponse.AgencyCode);
       
     
     this.userDetails = this.userDetails?.LoginResponse;
@@ -112,7 +111,6 @@ export class CustomerInfoComponent implements OnInit {
     this.bankForm = this.newQuotesService.bankForm;
     this.brokerForm = this.newQuotesService.brokerForm;
     this.customerForm = this.newQuotesService.customerForm;
-    console.log('QuoteStatus',this.QuoteStatus);
 
     // Broker
     if (this.userDetails?.UserType != "RSAIssuer") {
@@ -133,7 +131,30 @@ export class CustomerInfoComponent implements OnInit {
       console.log('referenceNo',this.referenceNo)
       this.onEditQuoteDetails();
     }
+    else{
+      this.brokerForm.reset();
+      this.quoteForm.reset();
+      this.customerForm.reset();
+      this.bankForm.reset();
+      this.quoteF.originatingWarehouse.setValue('NO');
+      this.quoteF.destinationWarehouse.setValue('NO');
+      this.quoteF.warSrcc.setValue('NO');
+      this.quoteF.warOnLand.setValue('NO');
+      this.quoteF.insuredValue.setValue('0');
+      this.quoteF.tolerance.setValue('4');
+      this.quoteF.partialShipment.setValue('N');
+      this.quoteF.fragileYN.setValue('off');
+      for (var control in this.customerForm.controls) {
+        this.customerForm.controls[control].enable();
 
+      }
+      for (var control in this.quoteForm.controls) {
+        this.quoteForm.controls[control].enable();
+      }
+      for (var control in this.bankForm.controls) {
+        this.bankForm.controls[control].enable();
+      }
+    }
   }
 
   ngOnInit(): void {

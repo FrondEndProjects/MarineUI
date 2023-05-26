@@ -61,6 +61,7 @@ import { CustomDateParserFormatter } from './shared/date-formatt/custom-date-par
 import { NgxMaskModule } from 'ngx-mask';
 import { SearchComponent } from './modules/search/search.component';
 import { EndorsementComponent } from './modules/endorsement/endorsement.component';
+import { SessionRedirectComponent } from './layout/components/session-redirect/session-redirect.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { EndorsementComponent } from './modules/endorsement/endorsement.componen
     CopyQuoteComponent,
     SearchComponent,
     EndorsementComponent,
-    OpenCoverDocument
+    OpenCoverDocument,
+    SessionRedirectComponent
   ],
   imports: [
     CommonModule,

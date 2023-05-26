@@ -163,7 +163,7 @@ export class PolicyGenerateComponent implements OnInit {
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', data?.Result);
-        link.setAttribute('download', this.premiumDetails?.QuoteDetails?.QuoteNo);
+        link.setAttribute('download', this.uploadedDocumentsList[i].OriginalFileName);
         document.body.appendChild(link);
         link.click();
         link.remove();

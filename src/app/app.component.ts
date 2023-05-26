@@ -11,6 +11,8 @@ import { AfterContentChecked, ChangeDetectorRef, Component, HostListener, OnInit
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { SeoService } from './@core/utils/seo.service';
 import { Observable } from 'rxjs';
+import { SharedService } from './shared/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -36,12 +38,13 @@ export class AppComponent implements OnInit, AfterContentChecked, AfterViewInit 
   public userdetails: any;
   public loading$!: Observable<any>;
   myValue = "Hello world!"
+  timeoutId: any;
   constructor(
     private analytics: AnalyticsService,
-    private seoService: SeoService,
+    private seoService: SeoService,private router:Router,
     private authService: AuthService,
     public customLoder: CustomLoadingService,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,private sharedService: SharedService,
     private sessionStorageService: SessionStorageService
   ) {
 
@@ -73,6 +76,16 @@ export class AppComponent implements OnInit, AfterContentChecked, AfterViewInit 
 
   }
 
+  @HostListener('window:keydown')
+  @HostListener('window:mousedown')
+  checkUserActivity() {
+    let url = this.router.url;
+    if(this.router.url!= '/' && this.router.url!='' && this.router.url!='/login-layout/login/broker' && this.router.url != '/sessionRedirect'){
+      clearTimeout(this.timeoutId);
+      console.log("Url Received",url);
+      this.sharedService.clearTimeOut();
+    }
+  }
   @HostListener("window:beforeunload", ["$event"])
   unloadHandler(event: Event) {
     this.processData();
