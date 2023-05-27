@@ -219,19 +219,7 @@
                 Referral Information
               </div>
               <div class="row my-2">
-                <div class="col-12">
-                  <div class="input-control-container">
-                    <label class="input-form-label">Would you like to get in touch with under writer for getting better quote?</label>
-                    <div class="input-form-radio-box">
-                      <div class="radio-toolbar">
-                        <input id="referralUpdateYn-y" type="radio" name="ReferralUpdateYn" value="Y" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
-                        <label for="referralUpdateYn-y">Yes</label>
-                        <input type="radio" id="referralUpdateYn-n" name="ReferralUpdateYn" value="N" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
-                        <label for="referralUpdateYn-n">No</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+               
                 <div class="col-12" *ngIf="userDetails?.UserType != 'Broker'">
                   <div class="input-control-container">
                     <label class="input-form-label">Are You finalizing this Quote?</label>
@@ -241,6 +229,19 @@
                         <label for="isFinalizeQuote-y">Yes</label>
                         <input type="radio" id="isFinalizeQuote-n" name="isFinalizeQuote" value="N" formControlName="isFinalizeQuote">
                         <label for="isFinalizeQuote-n">No</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Would you like to get in touch with under writer for getting better quote?</label>
+                    <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                        <input id="referralUpdateYn-y" type="radio" name="ReferralUpdateYn" value="Y" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
+                        <label for="referralUpdateYn-y">Yes</label>
+                        <input type="radio" id="referralUpdateYn-n" name="ReferralUpdateYn" value="N" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
+                        <label for="referralUpdateYn-n">No</label>
                       </div>
                     </div>
                   </div>
@@ -422,25 +423,25 @@
                       </div>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-12 col-md-8">
                             Premium Without VAT
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-12 col-md-2">
                           </div>
-                          <div class="col-12 col-md-3 text-right">
+                          <div class="col-12 col-md-2 text-right">
                             <span class="px-1">{{premiumF.premiumWithOutVat.value}}</span>
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-12 col-md-7">
                             VAT
                           </div>
                           <div class="col-12 col-md-3">
                             {{premiumF.vatTaxPrecentage.value}}%
                           </div>
-                          <div class="col-12 col-md-3 text-right">
+                          <div class="col-12 col-md-2 text-right">
                             <span class="px-1">{{premiumF.vatTaxAmount.value}}</span>
                           </div>
                         </div>
@@ -451,12 +452,12 @@
                       </div>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-12 col-md-7">
                             Total Premium Payable
                           </div>
                           <div class="col-12 col-md-3">
                           </div>
-                          <div class="col-12 col-md-3 text-right">
+                          <div class="col-12 col-md-2 text-right">
                             <span class="px-1">
                               {{premiumF.totalPremium.value}}
                               <ng-container *ngIf="quotesType =='With-Endo'">

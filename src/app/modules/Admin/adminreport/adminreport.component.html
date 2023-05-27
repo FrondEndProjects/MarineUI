@@ -108,7 +108,7 @@
             </div>
                </div>
                
-<div *ngIf="value=='Broker' && show">
+<div *ngIf="value=='Broker' && show && !brokero">
    
     <div class="row mt-1 table table_expand">
         <div class="col-md-12 col-lg-12 col-xl-12">
@@ -154,6 +154,11 @@
                   
                
             </table>
+
+
+                <div style="text-align:center">
+            <button class="btn btn-danger" style="width:100px;color:black"  (click)="gobackBroker()">back</button>
+            </div>
            
         </div>
     </div>
@@ -161,7 +166,7 @@
 </div>
 
 
-<div *ngIf="value=='View' && uwshow">
+<div *ngIf="value=='View' && uwshow && !brokerouw">
    
     <div class="row mt-1 table table_expand">
         <div class="col-md-12 col-lg-12 col-xl-12">
@@ -206,7 +211,10 @@
                   
                
             </table>
-           
+             
+            <div class="text-center">
+              <button class="btn btn-danger" style="width:100px;color:black;" (click)="goback()">back</button>
+            </div>
         </div>
     </div>
 
@@ -224,9 +232,11 @@
                 <app-commodity-table [cols]="columnHeader" [data]="branchData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)">
                 </app-commodity-table>
             </ng-container>
+            <div class="text-center">
             <button class="btn btn-success" style="width:100px" (click)="pdf('excel')">Excel</button>
             <button class="btn btn-primary ml-2" style="width:100px" (click)="pdf('pdf')">PDF</button>
-
+            <button class="btn btn-danger" style="width:100px;color:black;" (click)="gobroker()">back</button>
+             </div>
            </div>
 
            <div *ngIf="value=='View' && uwshow && brokerouw">
@@ -239,19 +249,26 @@
                 <app-commodity-table [cols]="columnHeader" [data]="branchData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)">
                 </app-commodity-table>
             </ng-container>
-
+              
+            <div class="text-center">
             <button class="btn btn-success" style="width:100px"  (click)="pdf('excel')">Excel</button>
             <button class="btn btn-primary ml-2" style="width:100px"  (click)="pdf('pdf')">PDF</button>
+            <button class="btn btn-danger" style="width:100px"  (click)="gobackss()">back</button>
+            </div>
 
            </div>
 
 
 
+         
+
+
+
            <div style="text-align: center;" class="mt-2">
             <button class="btn btn-success" style="width:100px" *ngIf="value=='Broker' && !show" (click)="getsearch(value)">Submit</button>
-            <button class="btn btn-danger" style="width:100px" *ngIf="value=='Broker' && show" (click)="goback()">back</button>
+            <!--<button class="btn btn-danger" style="width:100px" *ngIf="value=='Broker' && show" (click)="gobacks()">Back</button>-->
             <button class="btn btn-success" style="width:100px" *ngIf="value=='View' && !uwshow" (click)="getsearch(value)">Submit</button>
-            <button class="btn btn-danger" style="width:100px" *ngIf="value=='View' && uwshow" (click)="goback()">back</button>
+            <!--<button class="btn btn-danger" style="width:100px" *ngIf="value=='View' && uwshow" (click)="goback()">back</button>-->
            </div>
 
 

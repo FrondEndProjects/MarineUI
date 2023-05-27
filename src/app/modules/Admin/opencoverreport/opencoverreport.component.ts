@@ -144,10 +144,12 @@ export class OpenCoverComponent implements OnInit {
   goback(){
     this.show=false;
   }
+  gobacks(){
+    this.show=true;
+    this.brokero=false;
+  }
   getAdmin() {
   
-      this.show=true;
-      this.brokero=false;
       let t:any,s:any;
       if(this.effectiveDate!=null){
         this.t=  this.datePipe.transform(this.effectiveDate, "dd/MM/yyyy");
@@ -204,6 +206,11 @@ export class OpenCoverComponent implements OnInit {
              
             ];
               this.tableData = data?.Result;
+
+              if(this.tableData.length!=0){
+                this.show=true;
+      this.brokero=false;
+              }
               this.log=data.Result[0].LoginId
             }
           }, (err) => { }
@@ -232,7 +239,7 @@ export class OpenCoverComponent implements OnInit {
             this.branchData=data.Result;
             this.log=data.Result[0].LoginId;
             this.po=data.Result[0].ProductId;
-
+             
             this.opencov=open;
             console.log('mmmmmmmmm',this.log)
             this.brokero=true;
@@ -309,7 +316,7 @@ export class OpenCoverComponent implements OnInit {
         (data: any) => {
           if (data) {
             console.log('kkkkkkkkk',data);
-            Results=data.Results;
+            Results=data.Result;
             this.onDownloadSchedule(Results)
           }
         }, (err) => { }

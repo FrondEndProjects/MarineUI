@@ -24,7 +24,7 @@ export class CommodityTableComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
 
   @Input('data') tableData: any[] = [];
-  @Input('no') Nan:any;
+  @Input('no') Nan:boolean =true;
   @Input('cols') columnHeader: any[] = [];
   @Input("innerData") innerTableData: any = [];
   @Input("innerCols") innerColumnHeader:any=[];
@@ -67,7 +67,7 @@ export class CommodityTableComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
 
-    console.log('kkkkkkkkkkk',this.dataSource)
+    console.log('GGGGGGGGGG',this.dataSource)
 
   }
 
@@ -97,15 +97,22 @@ export class CommodityTableComponent implements OnInit {
 
 
   onPassData(element:any){
+   
     if(element.isClicked){
       this.onAdd.emit(element);
       this.selectedData = element;
-      console.log('lllllllllllll',this.selectedData)
-        console.log('tttttttttttt',this.innerTableData[0]?.ismore)
-       this.nan=this.innerTableData[0]?.ismore
+      console.log('lllllllllllll',this.selectedData) 
+       if(this.selectedData?.OpenVesselName){
+          //console.log('tttttttttttt',this.innerTableData[0]?.ismore) 
+             //this.nan=this.innerTableData[0]?.ismore; 
+             this.nan=true;
+             console.log('kkkkkkkkkk',this.nan);
+              }
+              else{
+                this.nan=false;
+              }
     
-      console.log('kkkkkkkkkk',this.nan)
+       }
     }
 
-  }
 }

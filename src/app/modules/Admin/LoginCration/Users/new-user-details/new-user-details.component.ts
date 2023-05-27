@@ -91,6 +91,8 @@ export class NewUserDetailsComponent implements OnInit {
   minDate;
   edit: any;
   mode: string;
+  disable = false;
+  disabled: boolean;
   
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
@@ -161,10 +163,9 @@ this.minDate= new Date(year - 18,month, day );
 
      if(this.AgencyCode!=null && this.AgencyCode!=undefined){
       this.getEditAdminDetails();
-      this.mode="edit"
+      this.mode="edit";
+     
       //this.editSection=false;
-
-
     }
     else{
       this.UserDetails = new User();
@@ -194,7 +195,14 @@ this.minDate= new Date(year - 18,month, day );
 
   }
 
-
+  change(){
+   if(this.AgencyCode!=null){
+    this.disabled = true;
+   }
+   else{
+    this.disabled = false;
+   }
+  }
   ProductComma(){
     var str = this.UserDetails.AttachedRegion;
   this.UserDetails.AttachedRegion= str.split(',');

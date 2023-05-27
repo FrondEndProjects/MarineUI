@@ -501,11 +501,9 @@ this.onGetRegionList();
               isChecked: true,
             }
           },
-          {key: 'BrokerName', display: 'Broker Organization'},
-         {key: 'QuoteCreated', display: 'Quote Created By'},
-         {key: 'CustomerName', display: 'Customer Name'},
-         {key: 'QuoteNo', display: 'QuoteNo'},
-         {key: 'Remarks', display: 'Remarks'},
+          {key: 'CompanyName', display: 'Broker Organization'},
+         {key: 'ApprovedPreparedBy', display: 'ApprovedPreparedBy'},
+         {key: 'ContactPerson', display: 'Customer Name'},
          {key: 'Status', display: 'Status'},
        ];
         if(res.Result){
@@ -519,6 +517,26 @@ this.onGetRegionList();
   }
 
 
+  /*AttachedBranchFinal(uwList,RegionList,ProductList){
+    let BranchList= [];
+    if(this.AdminDetails.AttachedBranch.length!=0){
+      let i=0;
+        for(let u of this.AdminDetails.AttachedBranch){      
+        let entryRegion={"AttachedBranchId":u}    
+        BranchList.push(entryRegion);
+        console.log('jjjjjjjjjjjjj',BranchList)
+        i++;
+        if(i==this.AdminDetails.AttachedBranch.length) 
+      this.AttachedMenu(uwList,RegionList,BranchList,ProductList) 
+        //this.onFinalSubmit(uwList,RegionList,BranchList,ProductList);
+      }
+    
+    }
+    else //this.AttachedMenu(uwList,RegionList,BranchList,ProductList) 
+    //else this.onFinalSubmit(uwList,RegionList,BranchList,ProductList)
+  }*/
+
+
   onSelectCustomer(row:any,template){
    
     console.log("RowData",row.undefined);
@@ -528,7 +546,19 @@ this.onGetRegionList();
      
         let entry =  {
           "BranchCode":this.userDetails.BranchCode,
-           "SearchValue":row.ProposalNo
+           "SearchValue":row.ProposalNo,
+            "BrokerInfo": [
+              {
+                "BrokerCode": "string",
+                "ProductInfo": [
+                  {
+                    "ProductId": "string"
+                  }
+                ]
+              }
+            ],
+            "LoginId": "string"
+        
         }
         this.coverList.push(entry);
   
@@ -541,7 +571,47 @@ this.onGetRegionList();
 
   }
 
+  includesubmit(value){
+     
+    if(value=='Included'){
+     this.onsubmitInclude(this.coverList);
+    }
+    else if(value=='Excluded'){
+      this.onsubmitExclude();
+    }
+  }
 
+  onsubmitInclude(reqData){
+    const urlLink = `${this.ApiUrl1}admin/IssuerIncludedInsert`;
+    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log("Change Password Done Successfully");
+        if(data.Result){
+          let type: NbComponentStatus = 'success';
+                const config = {
+                  status: type,
+                  destroyByClick: true,
+                  duration: 4000,
+                  hasIcon: true,
+                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                  preventDuplicates: false,
+                };
+                this.toastrService.show(
+                  'Included Successfully',
+                  'Included Broker Successfully',
+                  config);
+                  this.router.navigate(['/Marine/loginCreation/issuer']);
+
+        }
+       
+      },
+      (err) => { },
+    );
+  }
+
+  onsubmitExclude(){
+
+  }
   SearchExcluded(){
     const urlLink = `${this.ApiUrl1}admin/IssuerExcludedBroker`;
     const reqData = {

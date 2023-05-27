@@ -16,6 +16,7 @@ export class WsrccAppEditComponent implements OnInit {
   public min: Date = new Date();
   public newDate: Date = new Date();
   public minDate: any;
+  public CoverList=[];
 
   public wsrccForm :FormGroup;
   //public coverForm: FormGroup;
@@ -62,10 +63,10 @@ export class WsrccAppEditComponent implements OnInit {
       coreApplicationCode: new FormControl('', Validators.required),
       effectiveDate: new FormControl('', Validators.required),
       remarks: new FormControl(''),
-      DisplayOrder:new FormControl(''),
-      CoverId:new FormControl(''),
+      DisplayOrder:new FormControl('',Validators.required),
+      CoverId:new FormControl('',Validators.required),
       //refStatus: new FormControl('Y', Validators.required),
-      status: new FormControl('Active', Validators.required),
+      status: new FormControl('Y', Validators.required),
       PdfLocation:new FormControl('')
     });
   }
@@ -88,6 +89,30 @@ export class WsrccAppEditComponent implements OnInit {
     );
   }
 
+
+  public getCoverName(type) {
+    if(type=='change'){
+      this.wsrccForm.controls['CoverId'].setValue("");
+    }
+    const ReqObj = {
+      'BranchCode': this.branchCode,
+      'ProductId' : '3',
+      'ModeOfTransportCode':this.wsrccForm.controls['ModeOfTransportId'].value,
+      'OpenCoverNo':"",
+      'pvType': 'cover',
+    }
+
+    this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/cover`, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Message === 'Success') {
+          this.CoverList = data.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
+
+
   getCoverEdit() {
     let ReqObj = {
       "BranchCode": this.branchCode,
@@ -105,6 +130,7 @@ export class WsrccAppEditComponent implements OnInit {
         this.CoverId = this.coverDetails.CoverId;
         this.ReferralValue = this.coverDetails.ReferralValue;
         this.wsrccForm.controls['ModeOfTransportId'].setValue(this.coverDetails.ModeOfTransportId);
+        this.getCoverName('direct');
         this.wsrccForm.controls['CoverId'].setValue(this.coverDetails.CoverId);
         this.wsrccForm.controls['IntegrationCode'].setValue(this.coverDetails.IntegrationCode);
         this.wsrccForm.controls['ClausesDescription'].setValue(this.coverDetails.ClausesDescription);
@@ -208,7 +234,7 @@ export class WsrccAppEditComponent implements OnInit {
 
 
           sessionStorage.removeItem('CoverData');
-          this.router.navigateByUrl('/Marine/masters/cover/view');
+          this.router.navigateByUrl('/Marine/masters/wsrcc/view');
         }
         else if (data.Errors) {
           for (let entry of data.Errors) {

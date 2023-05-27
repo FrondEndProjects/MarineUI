@@ -46,8 +46,15 @@
                           <div class="input-form-box">
                               <!--<input type="text" class="input-form-control without-icon"
                                  [(ngModel)]="UserDetails.UserType" >-->
-                                 <ng-select class="input-form-select" appendTo="body" [items]="brokerType" [(ngModel)]="AgencyCode" bindValue="AgencyCode" bindLabel="CompanyName">
+                                 <div *ngIf="AgencyCode!=null">
+                                 <ng-select class="input-form-select" appendTo="body" [items]="brokerType"  [disabled]="true" [(ngModel)]="AgencyCode" bindValue="AgencyCode" bindLabel="CompanyName">
                                 </ng-select>
+                                </div>
+                                
+                                <div *ngIf="AgencyCode==null">
+                                <ng-select class="input-form-select" appendTo="body" [items]="brokerType" [(ngModel)]="AgencyCode" bindValue="AgencyCode" bindLabel="CompanyName">
+                                </ng-select>
+                                </div>
 
                           </div>
                       </div>

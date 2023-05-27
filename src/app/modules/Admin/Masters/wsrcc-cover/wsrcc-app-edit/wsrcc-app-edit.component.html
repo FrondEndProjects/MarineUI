@@ -8,7 +8,7 @@
                   <span class="text-required">*</span>
               </label>
               <ng-select class="input-form-select" name="ModeOfTransportId" formControlName="ModeOfTransportId"
-                  [items]="transportList" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+                  [items]="transportList" bindValue="Code" bindLabel="CodeDescription" (change)="getCoverName('change')"></ng-select>
           </div>
           <mat-error
               *ngIf="wsrccForm.controls['ModeOfTransportId'].errors?.['required'] && (wsrccForm.controls['ModeOfTransportId'].dirty || wsrccForm.controls['ModeOfTransportId'].touched)">
@@ -63,22 +63,26 @@
 
       <!-- Cover Rate -->
       <div class="col-12 col-md-6 col-lg-6">
-          <div class="customer-search-container">
-              <div class="input-control-container">
-                  <label class="input-form-label">
-                    ExtraCoverId
-                      <span class="text-required">*</span>
-                  </label>
-                  <div class="input-form-box">
-                      <input type="text" class="input-form-control without-icon" name="ExtraCoverId"
-                          formControlName="ExtraCoverId" />
-                  </div>
-              </div>
+        <div class="customer-search-container">
+        <div class="input-control-container">
+            <label class="input-form-label">
+              Cover Id
+                <span class="text-required">*</span>
+            </label>
+            <div class="input-form-box">
+              <!--<input type="text" class="input-form-control without-icon" name="CoverId"
+                  formControlName="CoverId" />-->
+                  <ng-select class="input-form-select" name="CoverId" formControlName="CoverId"
+          [items]="CoverList" bindValue="Code" bindLabel="CodeDescription"></ng-select>
           </div>
-          <mat-error
-              *ngIf="wsrccForm.controls['ExtraCoverId'].errors?.['required'] && (wsrccForm.controls['ExtraCoverId'].dirty || wsrccForm.controls['ExtraCoverId'].touched)">
-              Please choose ExtraCoverId
-          </mat-error>
+        </div>
+        <mat-error
+        *ngIf="wsrccForm.controls['CoverId'].errors?.['required'] && (wsrccForm.controls['CoverId'].dirty || wsrccForm.controls['CoverId'].touched)">
+        Please choose CoverId
+    </mat-error>
+    </div>
+
+       
       </div>
       <!-- Cover Rate -->
 
@@ -166,16 +170,23 @@
   <div class="row">
       <!-- STATUS -->
       <div class="col-12 col-md-6 col-lg-6">
-        <div class="input-control-container">
-            <label class="input-form-label">
-              Cover Id
-                <span class="text-required">*</span>
-            </label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" name="CoverId"
-                  formControlName="CoverId" />
-          </div>
+       
+ <div class="customer-search-container">
+            <div class="input-control-container">
+                <label class="input-form-label">
+                  ExtraCoverId
+                    <span class="text-required">*</span>
+                </label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" name="ExtraCoverId"
+                        formControlName="ExtraCoverId" />
+                </div>
+            </div>
         </div>
+        <mat-error
+            *ngIf="wsrccForm.controls['ExtraCoverId'].errors?.['required'] && (wsrccForm.controls['ExtraCoverId'].dirty || wsrccForm.controls['ExtraCoverId'].touched)">
+            Please choose ExtraCoverId
+        </mat-error>
     </div>
       <div class="col-12 col-md-6 col-lg-6">
           <div class="input-control-container">
@@ -185,9 +196,9 @@
               </label>
               <div class="input-form-radio-box">
                   <div class="radio-toolbar">
-                      <input id="fac-yes" type="radio" name="status" value="Active" formControlName="status" />
+                      <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status" />
                       <label for="fac-yes">Active</label>
-                      <input type="radio" id="fac-no" name="status" value="DeActive" formControlName="status" />
+                      <input type="radio" id="fac-no" name="status" value="N" formControlName="status" />
                       <label for="fac-no">DeActive</label>
                   </div>
               </div>

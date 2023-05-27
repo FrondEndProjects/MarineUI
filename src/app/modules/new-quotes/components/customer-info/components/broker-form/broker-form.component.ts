@@ -52,7 +52,11 @@ export class BrokerFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.brokerF.channel.value!='') this.onChangeChannel('direct')
+    if(this.brokerF.channel.value!=null && this.brokerF.channel.value!='null'){
+      this.onChangeChannel('direct');
+      console.log('YYYYYYYYYYYYYYYYYYY',this.brokerF.channel.value);
+    } 
+   
   }
 
   get brokerF() {
@@ -60,7 +64,10 @@ export class BrokerFormComponent implements OnInit {
   }
 
   onChangeChannel(type){
-    if(type=='change') this.brokerForm.controls['borker'].setValue('');
+    if(type=='change') 
+    {
+      this.brokerForm.controls['borker'].setValue('');
+    }
     var urlLink:any = this.brokerF.channel.value == 'cash'?`${this.ApiUrl1}quote/dropdown/cash`:`${this.ApiUrl1}quote/dropdown/broker`;
     const reqData = {
       "BranchCode":this.userDetails.BranchCode,
@@ -95,6 +102,9 @@ export class BrokerFormComponent implements OnInit {
                   }
                   else{
                     this.brokerForm.controls['borker'].setValue(entry.Code);
+                    this.brokerForm.controls['channel'].setValue('');
+                    this.brokerForm.controls['channel'].enable();
+                    this.brokerForm.controls['borker'].enable();
                   }
               }
           }

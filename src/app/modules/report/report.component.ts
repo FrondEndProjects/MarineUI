@@ -25,6 +25,7 @@ export class ReportComponent implements OnInit {
   public tableData: any[] = [];
   public columnHeader: any[] = [];
   public brokerList: any[] = [];
+  result: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -134,9 +135,34 @@ export class ReportComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
+        this.result=data.Result;
+        this.onDownloadSchedule(this.result,val)
+
       },
       (err) => { },
     );
+  }
+
+
+  onDownloadSchedule(Results,val){
+
+    console.log('jjjjjjjj',)
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    const reqData = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo":row.QuoteNo
+    }*/
+      if(Results){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download',val);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+   
   }
 
 }

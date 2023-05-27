@@ -116,7 +116,7 @@ export class EndorsementComponent implements OnInit {
             { key: 'BlAwbNo', display: 'Bill No' },
             { key: 'BlAwbDate', display: 'Bill Date' },
 
-            {
+            /*{
               key: 'endorse',
               display: 'Endorse',
               sticky: true,
@@ -126,7 +126,7 @@ export class EndorsementComponent implements OnInit {
                 isNgxIcon:'fas fa-plus-circle',
                 bg: 'primary'
               }
-            },
+            },*/
 
             {
               key: 'actions',

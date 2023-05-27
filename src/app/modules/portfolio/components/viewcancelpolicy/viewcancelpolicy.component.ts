@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as Mydatas from "../../../../app-config.json";
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
 
+
 @Component({
   selector: 'app-viewcancelpolicy',
   templateUrl: './viewcancelpolicy.component.html',
@@ -28,7 +29,7 @@ export class ViewcancelpolicyComponent  implements OnInit{
    constructor( private portfolioBrokerService: PortfolioService,
     private router: Router,
     private sessionStorageService: SessionStorageService,
-    public dialogService: MatDialog,) {
+    public dialogService: MatDialog, private newQuotesService: NewQuotesService,) {
       this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       this.routerBaseLink = this.userDetails?.routerBaseLink;
@@ -74,6 +75,18 @@ export class ViewcancelpolicyComponent  implements OnInit{
               key: "PolicyNo",
               display: "Policy No",
             },
+            {
+              key: "schedule",
+              display: "Schedule",
+              sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: "Schedule",
+                isNgxIcon: "fas fa-calendar-alt",
+                bg: "primary",
+                isCheckDisabled: 'Status',
+              },
+            },
             // {
             //   key: "ReferralStatus",
             //   display: "Status",
@@ -115,7 +128,61 @@ export class ViewcancelpolicyComponent  implements OnInit{
       );
     }
    close(){ }
-   isActionBtn(rowData){
+   isActionBtn(row){
 
+    console.log('hhhhhhhhhh',row)
+    if(row.btName =='Schedule'){
+      let Results='';
+      console.log('rrrrrrr',row)
+      const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+      const reqData = {
+        "BranchCode":this.userDetails.BranchCode,
+         "QuoteNo":row.QuoteNo
+
+        //"PolicyNo":row.data.OriginalPolicyNo,
+    //"ApplicationNo":row.ApplicationNo,
+    //"BelongingBranchCode":"",
+    //"PolicyNo":row.PolicyNo,
+  
+      };
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+        (data: any) => {
+          console.log(data);
+          Results=data.Result
+          this.onDownloadSchedule(Results,row);
+          
+          //sessionStorage.setItem('ProposalNo',data.ProposalNo);
+          //this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+  
+        },
+        (err) => { },
+      );
+    }
    }
+
+
+   
+  onDownloadSchedule(Results,rowData){
+
+    console.log('jjjjjjjj',Results,rowData)
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    const reqData = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo":row.QuoteNo
+    }*/
+      if(Results){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download',rowData.PolicyNo);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+   
+  }
+  
 }

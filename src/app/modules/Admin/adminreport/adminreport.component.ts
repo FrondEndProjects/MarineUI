@@ -111,6 +111,24 @@ branchData:any[]=[];
     this.uwshow=false;
   }
 
+  gobroker(){
+    this.show=true;
+    this.brokero=false;
+  }
+
+  gobackBroker(){
+    this.show=false;
+  }
+
+  gobackss(){
+    this.uwshow=true; 
+    this.brokerouw=false;
+  }
+
+  gobacks(){
+    this.uwshow=true;
+    this.brokerouw=true;
+  }
   /*onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
@@ -236,6 +254,9 @@ public applyFilter(event: Event) {
         console.log(data);
         this.show=true;
          this.brokerData=data.Result;
+         if(this.brokerData.length!=0){
+          this.brokero=false;
+         }
       }
     }, (err) => { }
   );  
@@ -446,12 +467,12 @@ public applyFilter(event: Event) {
   getsearch(value:any){
     if(value=='Broker'){
       this.getBroker();
-      this.brokero=false;
+     
     }
 
     if(value=='View'){
       this.underwriter();
-      this.brokerouw=false;
+     
     }
   }
 
@@ -482,6 +503,9 @@ public applyFilter(event: Event) {
         console.log(data);
         this.uwshow=true;
          this.uwbrokerData=data.Result;
+         if(this.uwbrokerData.length!=0){
+          this.brokerouw=false;
+         }
       }
     }, (err) => { }
   ); 

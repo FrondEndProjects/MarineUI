@@ -80,7 +80,7 @@ IntegrationCode:new FormControl(''),
   coreApplicationCode : new FormControl('', Validators.required),
       effectiveDate : new FormControl('', Validators.required),
       remarks : new FormControl(''),
-      status : new FormControl('Y', Validators.required),
+      status : new FormControl('Active', Validators.required),
     });
   }
 
@@ -105,13 +105,19 @@ IntegrationCode:new FormControl(''),
   }
 
 
-  public getCoverName() {
+  public getCoverName(type) {
+    if(type=='change'){
+      this.ClausesIdForm.controls['CoverId'].setValue("");
+    }
     const ReqObj = {
       'BranchCode': this.branchCode,
       'ProductId' : '3',
-    };
+      'ModeOfTransportCode':this.ClausesIdForm.controls['ModeOfTransportId'].value,
+      'OpenCoverNo':"",
+      'pvType': 'cover',
+    }
 
-    this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/covername`, ReqObj).subscribe(
+    this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/cover`, ReqObj).subscribe(
       (data: any) => {
         if (data?.Message === 'Success') {
           this.CoverList = data.Result;
@@ -132,9 +138,10 @@ IntegrationCode:new FormControl(''),
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/clauses/edit`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-          this.getCoverName();
+         
         let conveyanceDetails = data.Result;
         this.ClausesIdForm.controls['ModeOfTransportId'].setValue(conveyanceDetails.ModeOfTransportId);
+        this.getCoverName('direct');
         this.ClausesIdForm.controls['ClausesDescription'].setValue(conveyanceDetails.ClausesDescription);
         this.ClausesIdForm.controls['DisplayOrder'].setValue(conveyanceDetails.DisplayOrder);
         this.ClausesIdForm.controls['PdfLocation'].setValue(conveyanceDetails.PdfLocation);
@@ -173,7 +180,7 @@ IntegrationCode:new FormControl(''),
 
 
   public goBack() {
-    this.router.navigateByUrl('/Marine/masters/conveyance/view');
+    this.router.navigateByUrl('/Marine/masters/clause/view');
   }
 
   public onSave() {

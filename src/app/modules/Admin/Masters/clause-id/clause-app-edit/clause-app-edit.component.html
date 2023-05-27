@@ -8,7 +8,7 @@
           <span class="text-required">*</span>
         </label>
         <ng-select class="input-form-select" name="ModeOfTransportId" formControlName="ModeOfTransportId"
-          [items]="transportList" (change)="getCoverName()" bindValue="Code" bindLabel="CodeDescription"></ng-select>
+          [items]="transportList" (change)="getCoverName('change')" bindValue="Code" bindLabel="CodeDescription"></ng-select>
       </div>
       <mat-error
         *ngIf="ClausesIdForm.controls['ModeOfTransportId'].errors?.['required'] && (ClausesIdForm.controls['ModeOfTransportId'].dirty || ClausesIdForm.controls['ModeOfTransportId'].touched)">

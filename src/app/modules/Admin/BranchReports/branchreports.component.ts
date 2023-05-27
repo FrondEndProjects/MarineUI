@@ -241,7 +241,7 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
 
 getAdmin() {
 
-    this.show=true;
+   
       /*this.columnHeader = [
           //{key: 'S.No', display: 'S.No'},
           {
@@ -327,6 +327,10 @@ getAdmin() {
           ];
 
           this.tableData=data.Result;
+
+          if(this.tableData.length!=0){
+            this.show=true;
+          }
           }
         }, (err) => { }
       );
