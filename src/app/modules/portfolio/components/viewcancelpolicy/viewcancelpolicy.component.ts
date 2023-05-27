@@ -5,6 +5,7 @@ import { PortfolioService } from '../../portfolio.service';
 import { Router } from '@angular/router';
 import * as Mydatas from "../../../../app-config.json";
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
+import { NewQuotesService } from "../../../new-quotes/new-quotes.service";
 
 
 @Component({
