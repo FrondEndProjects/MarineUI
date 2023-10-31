@@ -177,6 +177,7 @@ this.minDate= new Date(year - 18,month, day );
       this.UserDetails.RePassword="";
       this.mode="new";
       this.Status="Y";
+      this.UserDetails.Gender='M';
       // this.BranchCode = IssuerObj.BranchCode;
       // this.IssuerDetails.LoginId = IssuerObj.LoginId;
       // this.editdata=true;

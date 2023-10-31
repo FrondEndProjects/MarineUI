@@ -75,14 +75,23 @@ export class PremiumInfoComponent implements OnInit {
         this.premiumForm.controls[control].disable();
       }
       if(this.userDetails?.UserType == 'Broker' && this.sessionStorageService.sessionStorgaeModel.referral !='Approved'){
+        console.log('USSSSSSSSSSSSSSSSSSSSSSSSSSSS',this.premiumForm.controls[control]);
         this.premiumF.additionalSelect.enable();
         this.premiumF.additionalPremium.enable();
+        this.premiumF.marineRate.enable();
+        this.premiumF.warRate.enable();
+        this.premiumF.warLandRate.enable();
+        // this.premiumF.marinePremium.enable();
+        // this.premiumF.warPremium.enable();
+        // this.premiumF.warLandPremium.enable();
+        //this.premiumForm.controls[control].enable();
       }
       this.premiumF.ReferralUpdateYn.enable();
       if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
     }
     else{
       let endtStatus = sessionStorage.getItem('EndtReffStatus');
+      console.log('RRRRRRRRRRRRRRRRRRRRRRRR');
       if(this.QuoteStatus=='E' && endtStatus == 'ReferalApproved' ){
         for (var control in this.premiumForm.controls) {
           this.premiumForm.controls[control].disable();
@@ -91,6 +100,7 @@ export class PremiumInfoComponent implements OnInit {
         if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
       }
       else{
+        console.log('GGGGGGGGGGGGGGGGGGGGGGGGG');
         this.premiumF.marinePremium.disable();
         this.premiumF.warPremium.disable();
         this.premiumF.warLandPremium.disable();
@@ -180,6 +190,26 @@ export class PremiumInfoComponent implements OnInit {
       (err) => { },
     );
   }
+  onclickgetquote(Clauses){
+    if(Clauses=='Clauses'){
+      this.onGetViewClausesInformation();
+      if(this.viewClausesInfo?.Clauses.length!=0){
+        this.viewClausesByClick = this.viewClausesInfo?.Clauses;
+      }
+    }
+    if(Clauses=='Exclusion'){
+          this.onGetViewClausesInformation();
+      this.viewClausesByClick = this.viewClausesInfo?.Exclusions;
+    }
+    if(Clauses=='Warranties'){
+      this.onGetViewClausesInformation();
+      this.viewClausesByClick = this.viewClausesInfo?.Warranties;
+    }
+    if(Clauses=='War'){
+      this.onGetViewClausesInformation();
+      this.viewClausesByClick = this.viewClausesInfo?.Wars;
+    }
+  }
   onGetViewClausesInformation() {
     const urlLink = `${this.ApiUrl1}quote/conditions/view`;
     const reqData = {
@@ -193,6 +223,7 @@ export class PremiumInfoComponent implements OnInit {
           this.viewClausesInfo = data?.Result;
           this.viewClausesByClick = this.viewClausesInfo?.Clauses;
         }
+        
       },
       (err) => { },
     );
@@ -432,6 +463,7 @@ export class PremiumInfoComponent implements OnInit {
 
           dialogRef.afterClosed().subscribe(result => {
             console.log(result);
+            this.onGetViewClausesInformation()
           });
         }
 

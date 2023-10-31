@@ -76,7 +76,8 @@ public searchCopy :any[]=[];
    
     console.log("RowData",row.undefined);
 
-    console.log('jjjjjjjjjjjjjj',row)
+    console.log('jjjjjjjjjjjjjj',row);
+    this.coverList=[];
     if(row.undefined== true){
      
         let entry =  {
@@ -123,10 +124,12 @@ public searchCopy :any[]=[];
   }
 
   submit(){
-
+console.log('this covessslist',this.coverList);
     let i=0;
       for(let u of this.coverList){
-        this.searchOpen(u)
+        if(u!=null){
+          this.searchOpen(u)
+        }
     i++;
       }
   }
@@ -139,7 +142,6 @@ public searchCopy :any[]=[];
         (data: any) => {
           console.log(data);
           if (data.Result) {
-
             let type: NbComponentStatus = 'success';
             const config = {
               status: type,
@@ -152,7 +154,6 @@ public searchCopy :any[]=[];
             this.toastrService.success(data.Result);
             this.tableData="";
             this.searchValue=""
-
           }
           //this.searchCopy = data || [];
           

@@ -82,7 +82,7 @@ export class ExistQuoteComponent implements OnInit {
     );
   }
   onChangeBroker() {
-    if(this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User'){
+    if(this.userDetails.UserType !== 'User'){
       this.loginId = this.selectedBroker;
     }
     

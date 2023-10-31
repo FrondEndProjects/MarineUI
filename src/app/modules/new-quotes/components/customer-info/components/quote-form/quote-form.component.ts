@@ -177,7 +177,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.excessDescription.setValue(commodityDetails?.PolicyExcessDescription);
 
 
-
+    this.quoteF.poPiNumber.setValue(commodityDetails?.PoDescription);
+    console.log('RRRRRRRRRRRR',this.quoteF?.poPiNumber.value);
     this.quoteF.currency.setValue(quoteDetails?.CurrencyCode);
     this.quoteF.currencyValue.setValue(quoteDetails?.CurrencyValue);
     this.quoteF.packageDescription.setValue(quoteDetails?.PackageCode);
@@ -202,7 +203,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     if(this.dropToleranceList.length==0) this.onGetToleranceDropdownList();
     if(this.dropCurrencyList.length==0) this.onGetCurrencyDropdownList();
     if(this.dropGoodsOfCateList.length==0) this.onGetGoodsOfCategoryDropdownList();
-    if(this.dropGoodsOfCateList.length==0) this.onCheckWarYesOrNo();
+    console.log('NNNNNNNNNN Open CoverNo',this.quoteF.warSrcc.value,this.openCoverNo);
+    if(this.dropGoodsOfCateList.length==0 && this.openCoverNo!=null && this.quoteF.warSrcc.value=='N') this.onCheckWarYesOrNo();
 
   }
 

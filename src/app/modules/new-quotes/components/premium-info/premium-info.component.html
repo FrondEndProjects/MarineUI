@@ -198,20 +198,22 @@
               <div class="clausesinfo">
                 <div *ngIf="viewClausesInfo?.Clauses">
                   <button nbButton status="primary" [nbPopover]="tabs" ghost
-                    (click)="viewClausesByClick = viewClausesInfo?.Clauses || [];">Clauses</button>
+                    (click)="viewClausesByClick = viewClausesInfo?.Clauses || [];">Clauses</button><!--viewClausesByClick = viewClausesInfo?.Clauses || []; onclickgetquote('Clauses')-->
                 </div>
                 <div *ngIf="viewClausesInfo?.Exclusions">
                   <button nbButton status="success" [nbPopover]="tabs" ghost
-                    (click)="viewClausesByClick = viewClausesInfo?.Exclusions || [];">Exclusions</button>
+                    (click)="viewClausesByClick = viewClausesInfo?.Exclusions || [];">Exclusions</button><!--viewClausesByClick = viewClausesInfo?.Exclusions || [];--><!--onclickgetquote('Exclusion')-->
                 </div>
                 <div *ngIf="viewClausesInfo?.Warranties">
                   <button nbButton status="info" [nbPopover]="tabs" ghost
-                    (click)="viewClausesByClick = viewClausesInfo?.Warranties || [];">Warranties</button>
+                    (click)="viewClausesByClick = viewClausesInfo?.Warranties || [];">Warranties</button><!--viewClausesByClick = viewClausesInfo?.Warranties || [];-->
                 </div>
-                <div *ngIf="viewClausesInfo?.Wars">
+                <div *ngIf="viewClausesInfo?.Wars!=null && premiumDetails?.QuoteDetails?.WarAndSrccYn=='YES'">
                   <button nbButton status="warning" [nbPopover]="tabs" ghost
-                    (click)="viewClausesByClick = viewClausesInfo?.Wars || [];">War</button>
-                </div>
+                    (click)="viewClausesByClick = viewClausesInfo?.Wars || [];">War</button><!--viewClausesByClick = viewClausesInfo?.Wars || [];-->
+                </div> 
+
+
               </div>
             </ng-container>
             <ng-container *ngIf="userDetails?.UserType !='admin'">

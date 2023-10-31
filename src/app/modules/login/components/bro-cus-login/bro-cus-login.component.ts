@@ -242,8 +242,8 @@ export class BroCusLoginComponent implements OnInit {
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
         if (data.LoginResponse) {
-
-          console.log('jjjjjjjjjjjj')
+        if(data.LoginResponse?.Status!="ChangePassword") { 
+            console.log('NNNNNNNNNNNNN',data.LoginResponse?.Status)
           if(data.LoginResponse?.UserType == 'admin'){
             data.LoginResponse['routerBaseLink'] = 'Marine';
           }else{
@@ -257,6 +257,14 @@ export class BroCusLoginComponent implements OnInit {
           sessionStorage.setItem('UserToken', Token);
           this.router.navigate(['/product-layout/product']);
         }
+        else{
+          console.log('NNNNNNNNNNNNN',data.LoginResponse?.Status,data.LoginResponse?.LoginId);
+          this.second=true;
+           this.first=false;
+           this.pass=true;
+           this.changeForm.controls['LoginId'].setValue(data.LoginResponse?.LoginId);
+        }
+      }
     })
   }
 
