@@ -270,6 +270,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
       (data: any) => {
         console.log('save', data);
         if(data?.Result?.Status){
+          sessionStorage.setItem('newpolicyyn',this.pG.generateCover.value)
           sessionStorage.setItem("policyGenerated",JSON.stringify(data?.Result));
           this.onMoveFront();
         }

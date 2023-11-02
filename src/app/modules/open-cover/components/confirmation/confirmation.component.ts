@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ConfirmationComponent implements OnInit {
   public activeMenu: any = 'menu1'
   public policyInfo: any;
+  public opencoveryn:any;
   public routerBaseLink:any='';
   public userDetails:any;
   constructor(
@@ -17,6 +18,7 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.policyInfo = JSON.parse(sessionStorage.getItem('policyGenerated') || '{}');
+    this.opencoveryn= sessionStorage.getItem('newpolicyyn');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;

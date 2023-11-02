@@ -19,7 +19,7 @@
         </ng-container>
         <ng-template #hasConfig>
           <ng-container *ngIf="col.config.isCollapse">
-            <button  nbButton shape="round" size="tiny" (click)="element.isClicked = !element.isClicked;onPassData(element,i);expandedElement = expandedElement === element ? null : element;">
+            <button  nbButton shape="round" size="tiny" (click)="onPassData(element,i);element.isClicked = !element.isClicked;expandedElement = expandedElement === element ? null : element;">
              <ng-container *ngIf="element.CommodityNotInResponse">
               New
             </ng-container>
