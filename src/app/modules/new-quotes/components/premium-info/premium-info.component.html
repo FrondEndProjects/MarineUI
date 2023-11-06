@@ -332,90 +332,90 @@
                     <ul class="list-group list-group-flush premium-inform">
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">Description</div>
-                          <div class="col-12 col-md-3">Rate</div>
-                          <div class="col-12 col-md-3">{{currencyName}}</div>
+                          <div class="col-4 col-md-6">Description</div>
+                          <div class="col-4 col-md-3">Rate</div>
+                          <div class="col-4 col-md-3">{{currencyName}}</div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-4 col-md-6">
                             Sum insured
                           </div>
 
-                          <div class="col-12 col-md-6 text-left text-right">
+                          <div class="col-4 col-md-6 text-left text-right">
                             <span class="px-1">{{premiumDetails?.EquivalentInsuredValue | commaseparator}}</span>
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-4 col-md-6">
                             Marine Premium
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="marineRate">
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="marinePremium">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-4 col-md-6">
                             War Premium
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warRate">
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warPremium">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-4 col-md-6">
                             War On Land Premium
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warLandRate">
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warLandPremium">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-4 col-md-6">
                             Additional Premium
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <select class="form-control form-control-sm" (change)="Minus(additionalSelect)" formControlName="additionalSelect">
                               <option value="+">+</option>
                               <option value="-">-</option>
                             </select>
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="additionalPremium">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-6">
+                          <div class="col-4 col-md-6">
                             Policy Issuance Fee AED
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <div class="custom-control custom-switch">
                               <input type="checkbox" class="custom-control-input" id="switch1"
                                 formControlName="policyInsuAedEdit">
                               <label class="custom-control-label" for="switch1">Edit</label>
                             </div>
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="policyInsuAedPremium">
                           </div>
                         </div>
@@ -425,25 +425,25 @@
                       </div>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-8">
+                          <div class="col-4 col-md-8">
                             Premium Without VAT
                           </div>
-                          <div class="col-12 col-md-2">
+                          <div class="col-4 col-md-2">
                           </div>
-                          <div class="col-12 col-md-2 text-right">
+                          <div class="smallpixel col-4 col-md-2 text-right">
                             <span class="px-1">{{premiumF.premiumWithOutVat.value}}</span>
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-7">
+                          <div class="col-4 col-md-7">
                             VAT
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="smallpixel col-4 col-md-3">
                             {{premiumF.vatTaxPrecentage.value}}%
                           </div>
-                          <div class="col-12 col-md-2 text-right">
+                          <div class="smallpixel col-4 col-md-2 text-right">
                             <span class="px-1">{{premiumF.vatTaxAmount.value}}</span>
                           </div>
                         </div>
@@ -454,12 +454,12 @@
                       </div>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-12 col-md-7">
+                          <div class="col-6 col-md-7">
                             Total Premium Payable
                           </div>
-                          <div class="col-12 col-md-3">
+                          <div class="col-3 col-md-3">
                           </div>
-                          <div class="col-12 col-md-2 text-right">
+                          <div class="smallpixel col-3 col-md-2 text-right">
                             <span class="px-1">
                               {{premiumF.totalPremium.value}}
                               <ng-container *ngIf="quotesType =='With-Endo'">

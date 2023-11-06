@@ -54,17 +54,67 @@
 
   @include media-breakpoint-down(sm) {
     .control-item {
-      display: none;
+      display: none !important;
+    }
+    .control-items {
+      // display: none;
+      margin-right:5px !important;
+      padding:8px !important;
     }
     .user-action {
       border: none;
       padding: 0;
     }
   }
-
   @include media-breakpoint-down(is) {
     nb-select {
       display: none;
     }
   }
 }
+
+
+
+  
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+.logo{
+  padding: 0 1.25rem !important;
+}
+.imgwid{
+  width:240px !important;
+}
+  }
+  
+   /* iPads (portrait and landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 701px) 
+   and (max-device-width : 1024px) {
+    .logo{
+      padding: 0 1.25rem !important;
+    }
+    .imgwid{
+      width:240px !important;
+    }
+   }
+   
+   /* iPads (landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 768px) 
+   and (max-device-width : 1024px) 
+   and (orientation : landscape) {
+    .logo{
+      padding: 0 1.25rem !important;
+    }
+    .imgwid{
+      width:240px !important;
+    }
+   }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .logo{
+      padding: 2px !important;
+    }
+    .imgwid{
+      width:190px !important;
+    }
+  }

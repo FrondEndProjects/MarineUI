@@ -46,9 +46,17 @@ button:focus {
   --font-size-95: 95%;
 
   --our-font-family: 'Poppins', sans-serif;
+  --doc-height: 100%;
 }
 *{
   font-family: var(--our-font-family);
+ 
+}
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh; /* fallback for Js load */
+  height: var(--doc-height);
 }
 .table thead th {
   font-weight: 500;

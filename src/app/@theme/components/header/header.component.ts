@@ -1,10 +1,10 @@
 import { SessionStorageService } from './../../../shared/storage/session-storage.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NbMediaBreakpoint, } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil,takeWhile,withLatestFrom } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../../Auth/auth.service';
 import { Router } from '@angular/router';
@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  private alive = true;
 
   themes = [
     {
@@ -57,7 +58,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private breakpointService: NbMediaBreakpointsService,
     private authService: AuthService,
     private router: Router,
-    private sessionStorageService:SessionStorageService
+    private sessionStorageService:SessionStorageService,
+    protected bpService: NbMediaBreakpointsService,
     ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userResponse = this.userDetails?.LoginResponse;
@@ -68,6 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
+   
 
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
@@ -101,6 +104,53 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.reloadCurrentRoute();
         }
       });
+      const isBp = this.bpService.getByName('is');
+this.menuService.onItemSelect()
+  .pipe(
+    takeWhile(() => this.alive),
+    withLatestFrom(this.themeService.onMediaQueryChange()),
+  )
+  .subscribe(([item, [bpFrom, bpTo]]: [any, [NbMediaBreakpoint, NbMediaBreakpoint]]) => {
+
+    if (bpTo.width <= isBp.width) {
+      this.sidebarService.collapse('menu-sidebar');
+    }
+  });
+
+  const ismd = this.bpService.getByName('md');
+  this.menuService.onItemSelect()
+    .pipe(
+      takeWhile(() => this.alive),
+      withLatestFrom(this.themeService.onMediaQueryChange()),
+    )
+    .subscribe(([item, [bpFrom, bpTo]]: [any, [NbMediaBreakpoint, NbMediaBreakpoint]]) => {
+  
+      if (bpTo.width <= ismd.width) {
+        this.sidebarService.collapse('menu-sidebar');
+      }
+    });
+    const documentHeight = () => {
+      const doc = document.documentElement
+      doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
+      console.log('RESIZESSSSSSSSSSSSSSSSSSSSS')
+     }
+     window.addEventListener('resize', documentHeight)
+     documentHeight()
+
+
+//   const isBpp = this.bpService.getByName('md');
+//   this.menuService.onItemSelect()
+//     .pipe(
+//       takeWhile(() => this.alive),
+//       withLatestFrom(this.themeService.onMediaQueryChange()),
+//     )
+//     .subscribe(([item, [bpFrom, bpTo]]: [any, [NbMediaBreakpoint, NbMediaBreakpoint]]) => {
+  
+//       if (bpTo.width <= isBpp.width) {
+//         this.sidebarService.collapse('menu-sidebar');
+//       }
+//     });
+   
 
   }
   onRoute() {
@@ -120,7 +170,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sidebarService.toggle(true, 'menu-sidebar');
 
     this.layoutService.changeLayoutSize();
-     console.log(1);
+     console.log('Navssss',1);
     return false;
   }
 

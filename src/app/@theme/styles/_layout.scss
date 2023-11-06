@@ -6,3 +6,42 @@
     }
   }
 }
+nb-layout.with-scroll .scrollable-container {
+  overflow-x: hidden !important; 
+}
+nb-layout.with-scroll .scrollable-container{
+ // min-height: -webkit-fill-available !important;
+//  height:100svh !important;
+  // height: var(--doc-height) !important;
+}
+
+
+  
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+ 
+    }
+    
+     /* iPads (portrait and landscape) ----------- */
+     @media only screen 
+     and (min-device-width : 701px) 
+     and (max-device-width : 1024px) {
+      nb-layout.with-scroll .scrollable-container{
+        height: var(--doc-height) !important;
+       }
+     }
+     
+     /* iPads (landscape) ----------- */
+     @media only screen 
+     and (min-device-width : 768px) 
+     and (max-device-width : 1024px) 
+     and (orientation : landscape) {
+      nb-layout.with-scroll .scrollable-container{
+          height: var(--doc-height) !important;
+        }
+     }
+    
+    @media screen and (min-width: 280px) and (max-width: 750px) {
+      nb-layout.with-scroll .scrollable-container{
+        height:100svh !important;
+        }
+    }

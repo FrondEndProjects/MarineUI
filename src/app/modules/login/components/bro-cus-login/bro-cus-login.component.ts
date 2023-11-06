@@ -51,6 +51,13 @@ export class BroCusLoginComponent implements OnInit {
     if(this.type){
       this.Forget(this.type,this.ch)
     }
+    const documentHeight = () => {
+      const doc = document.documentElement
+      doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
+      console.log('RESIZESSSSSSSSSSSSSSSSSSSSS');
+     }
+     window.addEventListener('resize', documentHeight)
+     documentHeight()
   }
 
 
