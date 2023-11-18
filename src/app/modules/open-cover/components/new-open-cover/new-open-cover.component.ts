@@ -379,16 +379,17 @@ export class NewOpenCoverComponent implements OnInit {
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log('editData', data);
-        if (data?.Result?.ProposalNo) {
-          if(data?.Result?.OpenCoverNo){
-            const opencover = {
-              'name':'adminReferral',
-              'value':data?.Result?.OpenCoverNo
-            }
-            this.OpenCover = opencover;
-             sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
-             
+        if(data?.Result?.OpenCoverNo){
+          const opencover = {
+            'name':'adminReferral',
+            'value':data?.Result?.OpenCoverNo
           }
+          this.OpenCover = opencover;
+           sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+           
+        }
+        if (data?.Result?.ProposalNo) {
+          
           this.editData = data?.Result;
              this.setFormValues();
           //this.openCoverService.onGetCoverEditData(data?.Result);

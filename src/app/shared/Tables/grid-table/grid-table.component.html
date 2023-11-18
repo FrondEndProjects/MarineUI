@@ -82,9 +82,19 @@
               </button>
               <mat-menu #menus="matMenu">
                 <ng-container *ngFor="let item of col.config.menuList">
-                <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
-                  <span>{{item.name}}</span>
-                </button>
+                  <ng-container *ngIf="item.name=='EndtSchedule' || item.name=='DeActivate'">
+                    <ng-container *ngIf="element.OriginalPolicyNo!='' && element.OriginalPolicyNo!=null">
+                        <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
+                          <span>{{item.name}}</span>
+                        </button>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="item.name!='EndtSchedule' && item.name!='DeActivate'">
+                    <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
+                      <span>{{item.name}}</span>
+                    </button>
+                  </ng-container>
+                
                 </ng-container>
               </mat-menu>
             </ng-container>

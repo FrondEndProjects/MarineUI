@@ -74,12 +74,12 @@ export class PremiumInfoComponent implements OnInit {
       for (var control in this.premiumForm.controls) {
         this.premiumForm.controls[control].disable();
       }
-      if(this.userDetails?.UserType == 'Broker' && this.sessionStorageService.sessionStorgaeModel.referral !='Approved'){
-        this.premiumF.additionalSelect.enable();
-        this.premiumF.additionalPremium.enable();
-      }
+      this.premiumF.additionalSelect.enable();
+      this.premiumF.additionalPremium.enable();
       this.premiumF.ReferralUpdateYn.enable();
+      this.premiumF.ReferralUpdateYn.setValue('N');
       if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
+      this.premiumF.comments.setValue(null);
     }
     else{
       let endtStatus = sessionStorage.getItem('EndtReffStatus');
@@ -88,9 +88,18 @@ export class PremiumInfoComponent implements OnInit {
           this.premiumForm.controls[control].disable();
         }
         this.premiumF.ReferralUpdateYn.enable();
+        this.premiumF.ReferralUpdateYn.setValue('N');
         if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
+        this.premiumF.comments.setValue(null);
+
       }
       else{
+        this.premiumF.additionalSelect.enable();
+        this.premiumF.additionalPremium.enable();
+        this.premiumF.ReferralUpdateYn.enable();
+        this.premiumF.ReferralUpdateYn.setValue('N');
+        if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
+        this.premiumF.comments.setValue(null);
         this.premiumF.marinePremium.disable();
         this.premiumF.warPremium.disable();
         this.premiumF.warLandPremium.disable();
