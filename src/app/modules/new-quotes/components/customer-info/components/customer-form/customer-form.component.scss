@@ -20,7 +20,7 @@
 .customersearch{
   display: none !important;
 background-color: #f9f9f9;
- width: 600px;
+ //width: 600px;
 left: 0;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
    border-radius: .5rem;
@@ -28,4 +28,38 @@ left: 0;
 }
 .customer-search-container:hover .customersearch{
   display: block !important;
+}
+
+
+
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+  .customersearch{
+   width: 600px !important;
+  }
+
+  }
+  
+   /* iPads (portrait and landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 750px) 
+   and (max-device-width : 1024px) {
+    .customersearch{
+      width: 410px !important;
+     }
+   }
+   
+   /* iPads (landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 750px) 
+   and (max-device-width : 1024px) 
+   and (orientation : landscape) {
+    .customersearch{
+      width: 400px !important;
+     }
+   }
+
+@media screen and (min-width: 280px) and (max-width: 750px) {
+  .customersearch{
+    width: 300px !important;
+   }
 }

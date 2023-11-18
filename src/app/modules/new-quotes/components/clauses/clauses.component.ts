@@ -134,8 +134,8 @@ export class ClausesComponent implements OnInit {
       "Conditions":{
         "Clauses":Clauses,
         "Wars":War,
-        "Warranties":Exclusions,
-        "Exclusions":Warranties
+        "Warranties":Warranties,
+        "Exclusions":Exclusions
       },
       "ConditionsType":this.data?.conditionType
     }

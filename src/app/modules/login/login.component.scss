@@ -1,14 +1,15 @@
 .login-grid{
   display: flex;
   height: 100vh;
+  height: var(--doc-height) !important;
   justify-content: center;
   align-items: center;
   background-color: #eee;
 }
 
 .login-grid-item{
-  width: 60%;
-  height: 500px;
+  // width: 60%;
+  //height: 500px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 1rem;
   background-color: #fff;
@@ -35,10 +36,7 @@
   justify-content: center;
   align-items: center;
 }
-.login-component{
-  width:50%;
 
-}
 
 
 .login-menu .radio-toolbar label{
@@ -53,4 +51,58 @@
   background-color: #fff;
   color: var(--logo-color-2);
   border-bottom: 3px solid var(--logo-color-2);
+}
+
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+
+ .login-grid-item{
+  width: 60% !important;
+   height: 500px !important;
+}
+.login-component{
+  width:50%;
+}
+}
+
+ /* iPads (portrait and landscape) ----------- */
+ @media only screen 
+ and (min-device-width : 701px) 
+ and (max-device-width : 1024px) {
+
+  .login-grid-item{
+    width: 80% !important;
+     height: auto !important;
+  }
+  .login-component{
+    width:100%;
+  }
+ }
+ 
+ /* iPads (landscape) ----------- */
+ @media only screen 
+ and (min-device-width : 768px) 
+ and (max-device-width : 1024px) 
+ and (orientation : landscape) {
+    
+ .login-grid-item{
+  width: 80% !important;
+   height: auto !important;
+}
+.login-component{
+  width:100%;
+
+}
+ }
+
+@media screen and (min-width: 280px) and (max-width: 750px) {
+  .login-grid-item{
+    width: 90% !important;
+    height:auto !important;
+  }
+  .login-component{
+    width:100%;
+    overflow:hidden !important;
+    //height: calc(100vh - 100%) !important;
+    height:60vh !important;
+  }
 }

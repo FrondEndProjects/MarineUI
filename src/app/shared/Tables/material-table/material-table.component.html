@@ -7,24 +7,61 @@
   <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection"
     matSortDisableClear>
     <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">{{ columnHeader[i]["display"] }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobiles table-header">{{ columnHeader[i]["display"] }}</th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="!col.config; else hasConfig">
-          {{ element[col.key] }}
+          <div class="display1 row" style="overflow-y: scroll !important;"><!--mobilev-->
+            <div class="col-6">
+              <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
+            </div>
+            <div class="col-6" style="word-break: break-word !important;"> 
+              {{ element[col.key] }}
+            </div>
+          </div>
+          <div class="display2">{{ element[col.key] }} </div><!--mobiless-->
         </ng-container>
         <ng-template #hasConfig>
           <ng-container *ngIf="col.config.select">
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
-                [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
-              <label class="custom-control-label" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
+            <div class="display1 row">
+              <div class="col-6">
+                <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
+              </div>
+              <div class="col-6">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
+                    [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                  <label class="custom-control-label" style="margin-left:10px !important;" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
+                </div>
+              </div>
             </div>
+            <div class="display2">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
+                  [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                <label class="custom-control-label" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
+              </div>
+            </div>
+          
           </ng-container>
           <ng-container *ngIf="col.config.isCheck">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
-                [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
-              <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
+            <div class="display1">
+              <div class="col-6">
+                <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
+              </div>
+              <div class="col-6">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
+                    [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                  <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="display2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
+                  [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
+              </div>
             </div>
           </ng-container>
           <ng-container *ngIf="col.config.isBsCheckBox">
@@ -100,11 +137,41 @@
             </button>
           </ng-container>
           <ng-container *ngIf="col.config.isActionBtn">
-            <button  nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
+            <div class="display1 row"><!--mobilev-->
+              <div class="col-6">
+                <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
+              </div>
+              <div class="col-6"> 
+                <button  nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
+                  <i [class]="col.config.isNgxIcon"></i>
+                </button>
+              </div>
+            </div>
+            <div class="display2">
+            <button nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
               <i [class]="col.config.isNgxIcon"></i>
             </button>
+          </div>
           </ng-container>
           <ng-container *ngIf="col.config.isMenuAction">
+            <div class="display1 row"><!--mobilev-->
+              <div class="col-6">
+                <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
+              </div>
+              <div class="col-6"> 
+                <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <mat-menu #menus="matMenu">
+                  <ng-container *ngFor="let item of col.config.menuList">
+                  <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
+                    <span>{{item.name}}</span>
+                  </button>
+                  </ng-container>
+                </mat-menu>
+              </div>
+            </div>
+            <div class="display2">
             <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
               <i class="fas fa-ellipsis-v"></i>
             </button>
@@ -115,6 +182,7 @@
               </button>
               </ng-container>
             </mat-menu>
+            </div>
           </ng-container>
 
         </ng-template>
@@ -122,7 +190,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="keys"></tr>
-    <tr mat-row *matRowDef="let row; columns: keys"></tr>
+    <tr mat-row *matRowDef="let row; columns: keys" class="mobile"></tr>
   </table>
   <ng-container *ngIf="!dataSource?.data?.length">
     <table>

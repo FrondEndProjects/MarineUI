@@ -98,7 +98,7 @@ export class CommodityTableComponent implements OnInit {
 
   onPassData(element:any){
    
-    if(element.isClicked){
+    //if(element.isClicked){
       this.onAdd.emit(element);
       this.selectedData = element;
       console.log('lllllllllllll',this.selectedData) 
@@ -112,7 +112,7 @@ export class CommodityTableComponent implements OnInit {
                 this.nan=false;
               }
     
-       }
+       //}
     }
 
 }

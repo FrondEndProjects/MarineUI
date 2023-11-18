@@ -18,14 +18,11 @@
 
 .product-grid{
   display: flex;
-  height: 100vh;
+  //height: 100vh;
   justify-content: center;
   align-items: center;
 }
-.product-grid-item{
-  width: 80%;
-  border-radius: 1rem;
-}
+
 .product-grid-item-title{
   display: flex;
   padding: 1rem;
@@ -36,18 +33,14 @@
 }
 
 
-.product-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 a
 {
     text-decoration: none;
 }
 .product-card {
-    width: 380px;
+    //width: 380px;
     position: relative;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     margin: 1rem;
@@ -152,3 +145,90 @@ a
 .product-links a:hover {
     color: #fbb72c;
 }
+
+
+
+  
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+  .product-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row !important;
+  }
+  .product-card {
+     width: 380px;
+}
+.product-grid{
+  height: 100vh;
+}
+.product-grid-item{
+  width: 80%;
+  border-radius: 1rem;
+}
+  }
+  
+   /* iPads (portrait and landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 701px) 
+   and (max-device-width : 1024px) {
+    .product-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row !important;
+    }
+    .product-card {
+      width: 340px;
+  } 
+  .product-grid{
+    height: 600px !important;
+  }
+  .product-grid-item{
+    width: 100% !important;
+    border-radius: 1rem;
+  }
+   }
+   
+   /* iPads (landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 768px) 
+   and (max-device-width : 1024px) 
+   and (orientation : landscape) {
+    .product-grid-item{
+      width: 100% !important;
+      border-radius: 1rem;
+    }
+    .product-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row !important;
+    }
+    .product-card {
+      width: 340px;
+  }
+  .product-grid{
+    height: 600px !important;
+  }
+   }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .product-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column !important;
+    }
+    .product-card {
+      width: 340px !important;
+  }
+  .product-grid{
+    height: auto !important;
+  }
+  .product-grid-item{
+    width: 80%;
+    border-radius: 1rem;
+  }
+  
+  }

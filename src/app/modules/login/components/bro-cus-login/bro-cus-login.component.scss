@@ -105,3 +105,91 @@
     padding: 0;
     border: none;
   }
+
+
+
+  
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+
+ .smallclass{
+  display:flex !important;
+  flex-direction: row !important;
+  justify-content: end !important;
+  left:6rem !important;
+  position:relative
+ }
+ .smallclass1{
+  left:20px;
+  right:20px;
+  cursor: pointer;
+ }
+ .smallclass2{
+  margin-left:20px;
+  cursor: pointer;
+ }
+ }
+ 
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen 
+  and (min-device-width : 701px) 
+  and (max-device-width : 1024px) {
+    .smallclass{
+      display:flex !important;
+      flex-direction: row !important;
+      justify-content: end !important;
+      left:0px !important;
+      position:relative
+     }
+     .smallclass1{
+      left:20px;
+      right:20px;
+      cursor: pointer;
+     }
+     .smallclass2{
+      margin-left:20px;
+      cursor: pointer;
+     }
+  }
+  
+  /* iPads (landscape) ----------- */
+  @media only screen 
+  and (min-device-width : 768px) 
+  and (max-device-width : 1024px) 
+  and (orientation : landscape) {
+    .smallclass{
+      display:flex !important;
+      flex-direction: row !important;
+      justify-content: end !important;
+      left:0px !important;
+      position:relative
+     }
+     .smallclass1{
+      left:20px;
+      right:20px;
+      cursor: pointer;
+     }
+     .smallclass2{
+      margin-left:20px;
+      cursor: pointer;
+     }
+  }
+ 
+ @media screen and (min-width: 280px) and (max-width: 750px) {
+ 
+  .smallclass{
+    display:flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    left:0 !important;
+    position:relative
+   }
+   .smallclass1{
+    left:0px !important;
+    right:20px !important;
+    cursor: pointer;
+   }
+   .smallclass2{
+    margin-left:0px !important;
+    cursor: pointer;
+   }
+ }

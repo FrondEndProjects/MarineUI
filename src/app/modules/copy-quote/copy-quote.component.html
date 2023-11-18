@@ -36,7 +36,7 @@
   <ng-container *ngIf="tableData.length !=0">
     <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (choosedRow)="choosedRowData($event)">
     </app-material-table>
-     <div class="text-right">
+     <div style="text-align:right;"><!--class="text-right"-->
       <button nbButton size="small" status="primary" class="mx-1" (click)="onCopyQuote()">Copy Quote</button>
 
      </div>

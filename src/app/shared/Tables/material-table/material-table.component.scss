@@ -33,3 +33,109 @@ table {
   top: 0px;
   padding: 7px 8px;
 }
+.mobile-label {
+  display: none;
+}
+
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+  .mobile{
+    display:table-row !important;
+  }
+  .mobiles{
+    display: table-cell !important;
+  }
+  .mobilev{
+ visibility: hidden !important;
+       }
+       .mobiless{
+visibility: visible !important;
+       }
+   .display1{
+    display: none !important;
+   }
+   ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
+    border-bottom: none !important; 
+}
+  }
+  
+   /* iPads (portrait and landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 750px) 
+   and (max-device-width : 1024px) {
+    .mobile{
+      display:table-row !important;
+    }
+    .mobiles{
+      display: table-cell !important;
+    }
+    .mobilev{
+      visibility: hidden !important;
+         }
+         .mobiless{
+          visibility: visible !important;
+                 }
+                 .display1{
+                  display: none !important;
+                 }
+     ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
+                  border-bottom: none !important; 
+              }
+   }
+   
+   /* iPads (landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 750px) 
+   and (max-device-width : 1024px) 
+   and (orientation : landscape) {
+    .mobile{
+      display:table-row !important;
+    }
+    .mobiles{
+      display: table-cell !important;
+    }
+    .mobilev{
+      visibility: hidden !important;
+         }
+         .mobiless{
+          visibility: visible !important;
+                 }
+                 .display1{
+                  display: none !important;
+                 }
+           ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
+                  border-bottom: none !important; 
+              }
+   }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .mobile{
+      display: flex !important;
+      flex-direction: column !important; 
+      border-top:1px solid navy !important; 
+      border-bottom:1px solid navy !important;
+      font-size:14px !important;
+      height:auto !important;
+    }
+    .mobiles{
+      display:none !important;
+    }
+      .mobile-label {
+        //width: 80px;
+        display: inline-block;
+            font-weight: bold;
+      }
+      .mobilev{
+   visibility: visible!important;
+      }
+      .mobiless{
+        visibility: hidden !important;
+               }
+               .display2{
+                display: none !important;
+               }
+
+        ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important; 
+            }
+    
+  }
