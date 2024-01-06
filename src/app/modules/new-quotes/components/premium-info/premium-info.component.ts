@@ -87,7 +87,9 @@ export class PremiumInfoComponent implements OnInit {
         //this.premiumForm.controls[control].enable();
       }
       this.premiumF.ReferralUpdateYn.enable();
+      this.premiumF.ReferralUpdateYn.setValue('N');
       if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
+      this.premiumF.comments.setValue(null);
     }
     else{
       let endtStatus = sessionStorage.getItem('EndtReffStatus');
@@ -97,10 +99,18 @@ export class PremiumInfoComponent implements OnInit {
           this.premiumForm.controls[control].disable();
         }
         this.premiumF.ReferralUpdateYn.enable();
+        this.premiumF.ReferralUpdateYn.setValue('N');
         if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
+        this.premiumF.comments.setValue(null);
+
       }
       else{
-        console.log('GGGGGGGGGGGGGGGGGGGGGGGGG');
+        this.premiumF.additionalSelect.enable();
+        this.premiumF.additionalPremium.enable();
+        this.premiumF.ReferralUpdateYn.enable();
+        this.premiumF.ReferralUpdateYn.setValue('N');
+        if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
+        this.premiumF.comments.setValue(null);
         this.premiumF.marinePremium.disable();
         this.premiumF.warPremium.disable();
         this.premiumF.warLandPremium.disable();

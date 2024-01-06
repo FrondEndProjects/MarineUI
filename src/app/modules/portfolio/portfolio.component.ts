@@ -142,11 +142,11 @@ export class PortfolioComponent implements OnInit {
     const reqData = {
       "BranchCode":this.userDetails.BranchCode,
       //"PolicyNo":row.data.OriginalPolicyNo,
-  "EndtStatus":row.data.EndtStatus,
-  "ImageStatus": "Y",
-  "OpenCoverNo": row.data.OpenCoverNo,
-  "ProposalNo": row.data.ProposalNo,
-  "Status":row.data.Status
+      "EndtStatus":row.data.EndtStatus,
+      "ImageStatus": "Y",
+      "OpenCoverNo": row.data.OpenCoverNo,
+      "ProposalNo": row.data.ProposalNo,
+      "Status":row.data.Status
 
     };
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -223,10 +223,13 @@ export class PortfolioComponent implements OnInit {
     console.log('kkkkkkkkkkkk',row.data.OriginalPolicyNo)
     const urlLink = `${this.ApiUrl1}pdf/opencoverEndt`;
     const reqData = { 
-    "BranchCode": this.userDetails.BranchCode,
-    "ApplicationNo":"",
-    "BelongingBranchCode":"",
-    "PolicyNo": row.data.OriginalPolicyNo
+      "BranchCode":this.userDetails.BranchCode,
+      //"PolicyNo":row.data.OriginalPolicyNo,
+      "EndtStatus":row.data.EndtStatus,
+      "ImageStatus": "Y",
+      "OpenCoverNo": row.data.OpenCoverNo,
+      "ProposalNo": row.data.ProposalNo,
+      "Status":row.data.Status
    
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
