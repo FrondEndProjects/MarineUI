@@ -448,16 +448,13 @@ getUserAll(){
   }*/
 
   Executive(){
-      let ReqObj = {
-        "BranchCode": this.branchValue,
-        "ProductId": "11",
-        "BrokerCode":this.RsaBrokerCode,
-        "OpenCoverNo": null,
-      }
-      this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/executive`, ReqObj).subscribe(
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/excutivedetails`;
+    const ReqObj = {
+      'BranchCode': this.branchValue,
+    };
+      this.masterSer.onPostMethodSync(urlLink,ReqObj).subscribe(
         (data: any) => {
           console.log(data);
-
           if (data.Message == 'Success') {
             this.ExcecutiveLists = data.Result;
             //this.city()
@@ -465,8 +462,34 @@ getUserAll(){
         }
       )
 
-    }
+      // this.masterSer.onGetMethodSync(`${this.ApiUrl1}opencover/dropdown/excutivedetails`).subscribe(
+      //   (data: any) => {
+      //     console.log(data);
 
+      //     if (data.Message == 'Success') {
+      //       this.ExcecutiveLists = data.Result;
+      //       //this.city()
+      //     }
+      //   }
+      // )
+
+    }
+    // onGetExcutiveDropdownList() {
+    //   const urlLink = `${this.ApiUrl1}opencover/dropdown/excutivedetails`;
+    //   const reqData = {
+    //     'BranchCode': this.userDetails?.BranchCode,
+    //   };
+    //   this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+    //     (data: any) => {
+    //       console.log(data);
+    //       if (data?.Message === 'Success') {
+    //         this.excutiveList = data?.Result;
+    //       }
+    //     },
+    //     (err) => { },
+    //   );
+    // }
+  
   /*city(){
 
 
