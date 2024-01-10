@@ -105,8 +105,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.subscription.unsubscribe();
   }
   omDropDownParallelCall (){
-    this.quoteF.originatingCountry.setValue('1');
-    this.quoteF.destinationCountry.setValue('1');
+    this.quoteF.originatingCountry.setValue(this.userDetails?.OrginationCountryId);
+    this.quoteF.destinationCountry.setValue(this.userDetails?.DestinationCountryId);
     this.subscription=this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
       if (data) {
         if(this.dropOriginCountryList.length==0){
