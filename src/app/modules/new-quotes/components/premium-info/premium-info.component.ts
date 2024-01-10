@@ -39,6 +39,9 @@ export class PremiumInfoComponent implements OnInit {
   coverId: any;
   currencyName: any;
   Ref: string;
+  premiumLevy: any=null;
+  levyPercent: any=null;
+  stampDuty: any=null;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -486,6 +489,10 @@ export class PremiumInfoComponent implements OnInit {
   
     const commodityDetails = this.premiumDetails?.QuoteDetails?.CommodityDetails[0];
     const premiumDetail = this.premiumDetails?.PremiumDetails;
+    this.premiumLevy = this.premiumDetails?.PremiumDetails?.PremiumLevy;
+    this.levyPercent = this.premiumDetails?.PremiumDetails?.LevyPercent;
+    this.stampDuty = this.premiumDetails?.PremiumDetails?.StampDuty;
+
     if(this.premiumDetails?.Referral){
       this.premiumF?.totalPremium.setValue('0');
     }
