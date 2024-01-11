@@ -113,7 +113,7 @@ export class PremiumInfoComponent implements OnInit {
         if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
         this.premiumF.comments.setValue(null);
         //thiii
-        //this.premiumF.marinePremium.disable();
+        this.premiumF.marinePremium.disable();
         this.premiumF.warPremium.disable();
         this.premiumF.warLandPremium.disable();
       }
@@ -134,7 +134,7 @@ export class PremiumInfoComponent implements OnInit {
               console.log('Esctimtaed Amount', this.premiumF.marinePremium)
               }
               else{
-                this.premiumF.marinePremium.setValue(0);
+                this.premiumF.marinePremium.setValue('');
               }
              //this.newQuoteF.annualEstimate.setValue(value);
               }
@@ -148,7 +148,7 @@ export class PremiumInfoComponent implements OnInit {
                   console.log('Esctimtaed Amount', this.premiumF.marinePremium)
                 }
                 else {
-                  this.premiumF.warPremium.setValue(0);
+                  this.premiumF.warPremium.setValue('');
                 }
                 }
                 else if(tableData!=null && type == 'additionalPremium'){
@@ -161,7 +161,7 @@ export class PremiumInfoComponent implements OnInit {
                     console.log('Esctimtaed Amount', this.premiumF.marinePremium)
                   }
                   else {
-                    this.premiumF.additionalPremium.setValue(0);
+                    this.premiumF.additionalPremium.setValue('');
                   }
                   }
                   //this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
@@ -174,7 +174,7 @@ export class PremiumInfoComponent implements OnInit {
                       this.premiumF.warLandPremium.setValue(value);
                     }
                     else {
-                      this.premiumF.warLandPremium.setValue(0);
+                      this.premiumF.warLandPremium.setValue('');
                     }
                   }
                   //this.premiumF?.policyInsuAedPremium.setValue(premiumDetail?.PolicyIssunceFee);
@@ -187,7 +187,7 @@ export class PremiumInfoComponent implements OnInit {
                       this.premiumF.policyInsuAedPremium.setValue(value);
                     }
                     else {
-                      this.premiumF.policyInsuAedPremium.setValue(0);
+                      this.premiumF.policyInsuAedPremium.setValue('');
                     }
                   }
   }
@@ -323,18 +323,28 @@ export class PremiumInfoComponent implements OnInit {
     let warpremium:any;let additionalPremium;let policyInsuAedPremium
     if(this.premiumF?.warPremium.value!=null && this.premiumF?.warPremium.value!=0){
       if(this.premiumF?.warPremium.value.includes(',')){ warpremium = this.premiumF?.warPremium.value.replace(/,/g, '') }
+      else {
+        warpremium = this.premiumF?.warPremium.value;
+      }
     }
     else {
       warpremium = this.premiumF?.warPremium.value;
     }
     if(this.premiumF?.additionalPremium.value!=null && this.premiumF?.additionalPremium.value!=0){
       if(this.premiumF.additionalPremium.value.includes(',')){ additionalPremium = this.premiumF.additionalPremium.value.replace(/,/g, '') }
+      else {
+        additionalPremium =this.premiumF?.additionalPremium.value;
+      }
     }
     else {
       additionalPremium =this.premiumF?.additionalPremium.value;
     }
+    console.log('this.premiumF?.policyInsuAedPremium',this.premiumF?.policyInsuAedPremium)
     if(this.premiumF?.policyInsuAedPremium.value!=null && this.premiumF?.policyInsuAedPremium.value!=0){
-      if(this.premiumF.policyInsuAedPremium.value.includes(',')){ additionalPremium = this.premiumF.policyInsuAedPremium.value.replace(/,/g, '') }
+      if(this.premiumF.policyInsuAedPremium.value.includes(',')){ policyInsuAedPremium = this.premiumF.policyInsuAedPremium.value.replace(/,/g, '') }
+      else {
+        policyInsuAedPremium =this.premiumF?.policyInsuAedPremium.value;
+      }
     }
     else {
       policyInsuAedPremium =this.premiumF?.policyInsuAedPremium.value;
@@ -438,26 +448,33 @@ export class PremiumInfoComponent implements OnInit {
         let warpremium:any;let additionalPremium;let policyInsuAedPremium
         if(this.premiumF?.warPremium.value!=null && this.premiumF?.warPremium.value!=0){
           if(this.premiumF?.warPremium.value.includes(',')){ warpremium = this.premiumF?.warPremium.value.replace(/,/g, '') }
+          else { warpremium = this.premiumF?.warPremium.value;}
         }
         else {
           warpremium = this.premiumF?.warPremium.value;
         }
         if(this.premiumF?.additionalPremium.value!=null && this.premiumF?.additionalPremium.value!=0){
           if(this.premiumF.additionalPremium.value.includes(',')){ additionalPremium = this.premiumF.additionalPremium.value.replace(/,/g, '') }
+          else {additionalPremium =this.premiumF?.additionalPremium.value;}
         }
         else {
           additionalPremium =this.premiumF?.additionalPremium.value;
         }
+       
         if(this.premiumF?.policyInsuAedPremium.value!=null && this.premiumF?.policyInsuAedPremium.value!=0){
-          if(this.premiumF.policyInsuAedPremium.value.includes(',')){ additionalPremium = this.premiumF.policyInsuAedPremium.value.replace(/,/g, '') }
-        }
+          if(this.premiumF.policyInsuAedPremium.value.includes(',')){ policyInsuAedPremium = this.premiumF.policyInsuAedPremium.value.replace(/,/g, '')}
+          else {policyInsuAedPremium =this.premiumF?.policyInsuAedPremium.value};
+        
+          console.log('this.premiumF?.policyInsuAedPremium.value', policyInsuAedPremium) }
+        
         else {
           policyInsuAedPremium =this.premiumF?.policyInsuAedPremium.value;
+          console.log('this.premiumF',this.premiumF?.policyInsuAedPremium.value)
         }
 
      
-        console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
-        console.log('ppppppppp',this.premiumF?.warRate.value)
+        // console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
+        // console.log('ppppppppp',this.premiumF?.warRate.value)
     
        const urlLink = `${this.ApiUrl1}quote/premium/update`;
        const reqData = {
@@ -614,9 +631,23 @@ export class PremiumInfoComponent implements OnInit {
     console.log('premium',premiumDetail);
     console.log('Commodity',commodityDetails);
     this.premiumF?.marineRate.setValue(commodityDetails?.MarineRate);
-    this.premiumF.marinePremium.enable();
-    this.premiumF.warPremium.enable();
-    this.premiumF.warLandPremium.enable();
+  
+    if(this.userDetails?.UserType=='Broker' || this.userDetails?.UserType=='User'){
+      this.premiumF.warRate.disable();
+    this.premiumF.warLandRate.disable();
+    this.premiumF.marineRate.disable();
+    this.premiumF.marinePremium.disable();
+    this.premiumF.warPremium.disable();
+    this.premiumF.warLandPremium.disable();
+    }
+    else {
+      this.premiumF.marinePremium.disable();
+      this.premiumF.warPremium.disable();
+      this.premiumF.warLandPremium.disable();
+      this.premiumF.warRate.enable();
+      this.premiumF.warLandRate.enable();
+      this.premiumF.marineRate.enable();
+    }
     if(premiumDetail?.MarinePremium!=0){
       this.CommaFormatted(premiumDetail?.MarinePremium,'marinepremium');
     }
@@ -640,9 +671,7 @@ export class PremiumInfoComponent implements OnInit {
     }
     //this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
     //thi
-    this.premiumF.marinePremium.disable();
-    this.premiumF.warPremium.disable();
-    this.premiumF.warLandPremium.disable();
+   
     this.premiumF?.additionalSelect.setValue(premiumDetail?.ExcessSign);
     if(premiumDetail?.AdditionalPremium!=0){
       this.CommaFormatted(premiumDetail?.AdditionalPremium,'additionalPremium');
