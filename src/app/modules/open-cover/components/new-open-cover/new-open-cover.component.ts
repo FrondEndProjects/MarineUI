@@ -413,15 +413,23 @@ export class NewOpenCoverComponent implements OnInit {
     this.newQuoteF.customer.setValue(this.editData?.InsuredName);
     this.newQuoteF.openCoverStartDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyStartDate));
     this.newQuoteF.openCoverEndDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyEndDate));
-    if(this.editData?.EstimateAmount!=null){
-      this.CommaFormatted(this.editData?.EstimateAmount)
+    if(this.editData?.EstimateAmount!=null && this.editData?.EstimateAmount!=undefined && this.editData?.EstimateAmount!='' && this.editData?.EstimateAmount!='0'){
+      let amount = this.editData?.EstimateAmount.split('.')[0];
+      this.CommaFormatted(amount)
     //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+    }
+    else{
+      this.newQuoteF.annualEstimate.setValue('0')
     }
     //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
     console.log('MMMMMMMMMMMMMMMMMMM',this.newQuoteF.annualEstimate);
-    if(this.editData?.UtilizedAmount!=null){
-      this.CommaFormattedUtilizedAmount(this.editData?.UtilizedAmount)
+    if(this.editData?.UtilizedAmount!=null && this.editData?.UtilizedAmount!=undefined && this.editData?.UtilizedAmount!='' && this.editData?.UtilizedAmount!='0'){
+      let amount = this.editData?.UtilizedAmount.split('.')[0];
+      this.CommaFormattedUtilizedAmount(amount)
     //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+    }
+    else{
+      this.newQuoteF.utilizedAmount.setValue('0')
     }
     //this.newQuoteF.utilizedAmount.setValue(this.editData?.UtilizedAmount);
     this.newQuoteF.currency.setValue(this.editData?.Currency);
