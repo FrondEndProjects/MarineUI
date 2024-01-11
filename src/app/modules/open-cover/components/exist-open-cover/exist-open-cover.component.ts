@@ -48,6 +48,10 @@ export class ExistOpenCoverComponent implements OnInit {
         console.log(data);
         if (data?.Message === 'Success') {
           this.loginTypeList = data?.Result;
+          if(this.loginTypeList.length!=0){
+            this.loginType = this.loginTypeList[0].Code;
+            this.onGetExistQuoteList();
+          }
         }
       },
       (err) => { },

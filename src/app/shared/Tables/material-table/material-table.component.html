@@ -105,7 +105,7 @@
             </mat-radio-group>
           </ng-container>
           <ng-container *ngIf="col.config.isdropdownLis">
-            <select class="form-control form-control-sm" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+            <select class="form-control form-control-sm" style="max-width: 200px !important;" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
               <option value="">select</option>
               <ng-container *ngFor="let item of element[col.key]">
                 <option [value]="item[col.config.KeyCode]">{{item[col.config.keyName]}}</option>
