@@ -18,7 +18,10 @@
               </div>
             </div>
               <div class="display2" style="max-width: 400px;word-wrap: break-word;">
-                  {{ element[col.key]}} 
+                <ng-container >
+                  <span *ngIf="element != expandedElement" >{{ element[col.key]}}</span>
+                  <span *ngIf="element === expandedElement" style="color: #0a6a6a !important;font-weight: 600;">{{ element[col.key]}}</span>
+                </ng-container>
               </div>
           </ng-container>
           <ng-container *ngIf="columnHeader[i]['display']!='Commodity Name'">
@@ -49,12 +52,27 @@
               </div>
             </div>
             <div class="display2">
-              <button  nbButton shape="round" size="tiny" (click)="onPassData(element,i);element.isClicked = !element.isClicked;expandedElement = expandedElement === element ? null : element;">
+              <ng-container *ngIf="element != expandedElement">
+                <button  nbButton shape="round" size="tiny" (click)="onPassData(element);element.isClicked = true;expandedElement = expandedElement === element ? null : element;">
+                  <ng-container *ngIf="element.CommodityNotInResponse">
+                    New
+                  </ng-container> {{col.config.isCollapseName}} <i class="fas fa-plus-circle mx-1" ></i>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="element === expandedElement">
+                  <button  nbButton style="background-color: #0a6a6a !important;color: #fff;" shape="round" size="tiny" (click)="onPassData(element);element.isClicked = true;expandedElement = expandedElement === element ? null : element;">
+                    <ng-container *ngIf="element.CommodityNotInResponse">
+                      New
+                    </ng-container> {{col.config.isCollapseName}} <i class="fas fa-minus-circle mx-1" ></i>
+                  </button>
+              </ng-container>
+              <!-- <button  nbButton shape="round" size="tiny" (click)="onPassData(element,i);element.isClicked = !element.isClicked;expandedElement = expandedElement === element ? null : element;">
                 <ng-container *ngIf="element.CommodityNotInResponse">
                  New
                </ng-container>
-               {{col.config.isCollapseName}} <i class="fas fa-plus-circle mx-1"></i>
-               </button>
+              
+                <i class="fas fa-plus-circle mx-1"></i>
+               </button> -->
             </div>
           </ng-container>
           <ng-container *ngIf="col.config.isMenuAction">

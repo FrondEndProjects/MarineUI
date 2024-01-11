@@ -13,17 +13,20 @@
             <mat-checkbox class="example-margin" [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">{{ element[col.key] }}</mat-checkbox>
           </ng-container>
           <ng-container *ngIf="col.config.isCoverageList">
-            <div class="covers-list">
+            <div class="covers-list mt-2 mb-2">
               <ng-container *ngFor="let item of element[col.key]">
                 <div class="covers-list-item">
                   <div class="d-sm-flex flex-sm-row justify-content-sm-between">
                     <div>
                       <mat-checkbox class="example-margin"  [(ngModel)]="item.CoverCheck">{{item.CoverName}}</mat-checkbox>
                     </div>
-                    <a [collapse]="content1" (click)="item.collapse = !item.collapse">
-                      <ng-container *ngIf="item.collapse == false || item.collapse == undefined"><i class="fas fa-plus"></i></ng-container>
-                      <ng-container *ngIf="item.collapse == true"><i class="fas fa-minus"></i></ng-container>
-                    </a>
+                    <div class="p-2">
+                      <a [collapse]="content1" (click)="item.collapse = !item.collapse">
+                        <ng-container *ngIf="item.collapse == false || item.collapse == undefined"><i class="fas fa-plus"></i></ng-container>
+                        <ng-container *ngIf="item.collapse == true"><i class="fas fa-minus"></i></ng-container>
+                      </a>
+                    </div>
+                    
                   </div>
                   <div collapseContent #content1="collapseContent">
                     <ul class="list-group conveyance-list">
@@ -43,7 +46,7 @@
                 <div class="input-control-container">
                   <label class="input-form-label">Per Bottom Limit<span class="text-required">*</span></label>
                   <div class="input-form-box">
-                    <input type="text" class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(element)" [(ngModel)]="element.PerBottomLimit" digitOnly [value]="element.PerBottomLimit">
+                    <input type="text" class="input-form-control2 without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(element)" [(ngModel)]="element.PerBottomLimit" digitOnly [value]="element.PerBottomLimit">
                   </div>
                 </div>
               </div>
@@ -51,7 +54,7 @@
                 <div class="input-control-container">
                   <label class="input-form-label">Per Location Limit<span class="text-required">*</span></label>
                   <div class="input-form-box">
-                    <input type="text" class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="secondcommaseporator(element)"  [(ngModel)]="element.LocationLimit" digitOnly [value]="element.LocationLimit">
+                    <input type="text" class="input-form-control2 without-icon" (keydown)="onSIValueChange($event)" (keyup)="secondcommaseporator(element)"  [(ngModel)]="element.LocationLimit" digitOnly [value]="element.LocationLimit">
                     <!--<div>{{element.LocationLimit|commaseparator}}</div>-->
                   </div>
                 </div>
