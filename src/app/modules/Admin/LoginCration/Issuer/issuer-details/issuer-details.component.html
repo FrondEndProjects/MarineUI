@@ -213,19 +213,19 @@
         <div class="col-12 col-md-6 col-lg-6">
         <div class="input-control-container">
             <label class="input-form-label">Choose Products <span class="text-required">*</span></label>
-
-
+            <div class="input-form-box">
                 <ng-select class="input-form-select" [multiple]="true" appendTo="body" [items]="productNameList"  [(ngModel)]="IssuerDetails.ProductId"  bindValue="ProductId" bindLabel="ProductName">
                 </ng-select>
-
+            </div>
         </div>
         </div>
         <div class="col-12 col-md-6 col-lg-6">
             <div class="input-control-container">
                 <label class="input-form-label">Atached Region <span class="text-required">*</span></label>
-          
-                <ng-select class="input-form-select"  [multiple]="true"  appendTo="body" [items]="regionList" (change)="changeRegion('change')" [(ngModel)]="IssuerDetails.AttachedRegion"  bindValue="RegionId" bindLabel="RegionName">
-                </ng-select>
+                <div class="input-form-box">
+                    <ng-select class="input-form-select"  [multiple]="true"  appendTo="body" [items]="regionList" (change)="changeRegion('change')" [(ngModel)]="IssuerDetails.AttachedRegion"  bindValue="RegionId" bindLabel="RegionName">
+                    </ng-select>
+                </div>
             </div>
           </div>
 

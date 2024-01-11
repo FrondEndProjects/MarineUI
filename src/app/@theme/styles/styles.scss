@@ -119,7 +119,13 @@ label {
 mat-form-field{
   width: 100%;
 }
-
+.mat-mdc-form-field {
+    max-width: 280px !important;
+}
+.customPadding{
+  padding-left: 50px !important;
+  padding-right: 50px !important;
+}
 /* Custom Formcontrol */
 .input-control-container .input-form-label {
   font-weight: 400;

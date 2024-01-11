@@ -1,5 +1,5 @@
 <form [formGroup]="newQuoteForm">
-  <div class="maan-card">
+  <div class="maan-card customPadding">
     <div class="row">
       <div class="col-12">
         <div class="middle-line">
@@ -58,8 +58,10 @@
         <div class="customer-search-container">
         <div class="input-control-container">
           <label class="input-form-label">Customer<span class="text-required">*</span></label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="customer">
+          <div class="input-form-box row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <input type="text" class="input-form-control without-icon" formControlName="customer">
+            </div>
           </div>
           <div class="input-form-error" *ngIf="(newQuoteF.customer.errors && submitted) || (!newQuoteF.customer.valid && newQuoteF.customer.touched)">
             <div *ngIf="newQuoteF.customer.errors?.required" class="error-text">

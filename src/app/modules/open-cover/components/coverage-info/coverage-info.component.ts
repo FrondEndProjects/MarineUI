@@ -170,7 +170,9 @@ export class CoverageInfoComponent implements OnInit {
   getCurrencyInfo(id:any,name:any){
     if(id){
       let idx =  this.currencyList.findIndex((m:any)=>m.Code == id);
-      return this.currencyList[idx][name];
+      console.log("Entry",idx)
+      if(idx>=0) return this.currencyList[idx][name];
+      else return '';
     }
 
   }
