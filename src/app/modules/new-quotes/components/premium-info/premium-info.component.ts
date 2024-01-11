@@ -25,10 +25,8 @@ export class PremiumInfoComponent implements OnInit {
   public ReferenceNo: any;
   public premiumForm!: FormGroup;
   public quoteForm: FormGroup;
-
   public OpenCover: any = '';
   public isEndoserment: boolean = false;
-
   public beforeEndorsement: any;
   public afterEndorsement: any;
   public difference: any;
@@ -114,7 +112,8 @@ export class PremiumInfoComponent implements OnInit {
         this.premiumF.ReferralUpdateYn.setValue('N');
         if(this.premiumF.ReferralUpdateYn.value == "Y") this.premiumF.comments.enable();
         this.premiumF.comments.setValue(null);
-        this.premiumF.marinePremium.disable();
+        //thiii
+        //this.premiumF.marinePremium.disable();
         this.premiumF.warPremium.disable();
         this.premiumF.warLandPremium.disable();
       }
@@ -122,6 +121,76 @@ export class PremiumInfoComponent implements OnInit {
     
   }
 
+  CommaFormatted(tableData,type) {
+    let i=0;
+    console.log('tableData',tableData)
+            if(tableData!=null && type == 'marinepremium'){
+              if(tableData!=0){
+              let entry=tableData.toString();
+              console.log("Entry Came 1",tableData)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              this.premiumF.marinePremium.setValue(value);
+              console.log('Esctimtaed Amount', this.premiumF.marinePremium)
+              }
+              else{
+                this.premiumF.marinePremium.setValue(0);
+              }
+             //this.newQuoteF.annualEstimate.setValue(value);
+              }
+              else if(tableData!=null && type == 'warPremium'){
+                if(tableData!=0){
+                  let entry=tableData.toString();
+                  console.log("Entry Came 1",tableData)
+                let value = entry.replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  this.premiumF.warPremium.setValue(value);
+                  console.log('Esctimtaed Amount', this.premiumF.marinePremium)
+                }
+                else {
+                  this.premiumF.warPremium.setValue(0);
+                }
+                }
+                else if(tableData!=null && type == 'additionalPremium'){
+                  if(tableData!=0){
+                    let entry=tableData.toString();
+                    console.log("Entry Came 1",tableData)
+                  let value = entry.replace(/\D/g, "")
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    this.premiumF.additionalPremium.setValue(value);
+                    console.log('Esctimtaed Amount', this.premiumF.marinePremium)
+                  }
+                  else {
+                    this.premiumF.additionalPremium.setValue(0);
+                  }
+                  }
+                  //this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
+                  else if (tableData!=null && type == 'warLandPremium'){
+                    if(tableData!=0){
+                      let entry=tableData.toString();
+                      console.log("Entry Came 1",tableData)
+                    let value = entry.replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      this.premiumF.warLandPremium.setValue(value);
+                    }
+                    else {
+                      this.premiumF.warLandPremium.setValue(0);
+                    }
+                  }
+                  //this.premiumF?.policyInsuAedPremium.setValue(premiumDetail?.PolicyIssunceFee);
+                  else if (tableData!=null && type == 'policyInsuAedPremium'){
+                    if(tableData!=0){
+                      let entry=tableData.toString();
+                      console.log("Entry Came 1",tableData)
+                    let value = entry.replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      this.premiumF.policyInsuAedPremium.setValue(value);
+                    }
+                    else {
+                      this.premiumF.policyInsuAedPremium.setValue(0);
+                    }
+                  }
+  }
 
 
   get premiumF() {
@@ -251,6 +320,25 @@ export class PremiumInfoComponent implements OnInit {
     const CommodityDetails = this.premiumDetails?.QuoteDetails?.CommodityDetails[0];
     const CustomerDetails = this.premiumDetails?.CustomerDetails;
     console.log('ttttttt',this.premiumF.additionalSelect.value);
+    let warpremium:any;let additionalPremium;let policyInsuAedPremium
+    if(this.premiumF?.warPremium.value!=null && this.premiumF?.warPremium.value!=0){
+      if(this.premiumF?.warPremium.value.includes(',')){ warpremium = this.premiumF?.warPremium.value.replace(/,/g, '') }
+    }
+    else {
+      warpremium = this.premiumF?.warPremium.value;
+    }
+    if(this.premiumF?.additionalPremium.value!=null && this.premiumF?.additionalPremium.value!=0){
+      if(this.premiumF.additionalPremium.value.includes(',')){ additionalPremium = this.premiumF.additionalPremium.value.replace(/,/g, '') }
+    }
+    else {
+      additionalPremium =this.premiumF?.additionalPremium.value;
+    }
+    if(this.premiumF?.policyInsuAedPremium.value!=null && this.premiumF?.policyInsuAedPremium.value!=0){
+      if(this.premiumF.policyInsuAedPremium.value.includes(',')){ additionalPremium = this.premiumF.policyInsuAedPremium.value.replace(/,/g, '') }
+    }
+    else {
+      policyInsuAedPremium =this.premiumF?.policyInsuAedPremium.value;
+    }
     const urlLink = `${this.ApiUrl1}quote/premium/calculate`;
     const reqData = {
       "AdminRemarks": this.premiumF.adminRemarks.value,
@@ -279,15 +367,18 @@ export class PremiumInfoComponent implements OnInit {
       "LoginId":this.premiumDetails?.LoginId,
       "LoginUserType": this.userDetails?.UserType,
       "OpenCoverNo": this.OpenCover?.value,
-      "PolicyFee": this.premiumF.policyInsuAedPremium.value,
+      "PolicyFee": policyInsuAedPremium,
+      //this.premiumF.policyInsuAedPremium.value,
       "PolicyFeeYn": this.premiumF.policyInsuAedEdit.value,
       "PremiumDetails": {
 
         "InspectionFee": 0.0,
-        "AdditionalPremium": this.premiumF.additionalPremium.value,
+        "AdditionalPremium": additionalPremium,
+        //this.premiumF.additionalPremium.value,
         "ExcessSign": this.premiumF.additionalSelect.value,
         "TotalPremium": this.premiumF?.totalPremium.value,
-        "TotalWarPremium": this.premiumF?.warPremium.value,
+        "TotalWarPremium": warpremium,
+        //this.premiumF?.warPremium.value,
         "VatTax": this.premiumF.vatTaxAmount.value
 
 
@@ -344,6 +435,27 @@ export class PremiumInfoComponent implements OnInit {
               this.QuoteStatus = 'RU';
           }
         }
+        let warpremium:any;let additionalPremium;let policyInsuAedPremium
+        if(this.premiumF?.warPremium.value!=null && this.premiumF?.warPremium.value!=0){
+          if(this.premiumF?.warPremium.value.includes(',')){ warpremium = this.premiumF?.warPremium.value.replace(/,/g, '') }
+        }
+        else {
+          warpremium = this.premiumF?.warPremium.value;
+        }
+        if(this.premiumF?.additionalPremium.value!=null && this.premiumF?.additionalPremium.value!=0){
+          if(this.premiumF.additionalPremium.value.includes(',')){ additionalPremium = this.premiumF.additionalPremium.value.replace(/,/g, '') }
+        }
+        else {
+          additionalPremium =this.premiumF?.additionalPremium.value;
+        }
+        if(this.premiumF?.policyInsuAedPremium.value!=null && this.premiumF?.policyInsuAedPremium.value!=0){
+          if(this.premiumF.policyInsuAedPremium.value.includes(',')){ additionalPremium = this.premiumF.policyInsuAedPremium.value.replace(/,/g, '') }
+        }
+        else {
+          policyInsuAedPremium =this.premiumF?.policyInsuAedPremium.value;
+        }
+
+     
         console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
         console.log('ppppppppp',this.premiumF?.warRate.value)
     
@@ -375,15 +487,18 @@ export class PremiumInfoComponent implements OnInit {
         "LoginId":this.premiumDetails?.LoginId,
         "LoginUserType": this.userDetails?.UserType,
         "OpenCoverNo": this.OpenCover?.value,
-        "PolicyFee": this.premiumF.policyInsuAedPremium.value,
+        "PolicyFee": policyInsuAedPremium,
+        //this.premiumF.policyInsuAedPremium.value
         "PolicyFeeYn": this.premiumF.policyInsuAedEdit.value,
         "PremiumDetails": {
     
           "InspectionFee": 0.0,
-          "AdditionalPremium": this.premiumF.additionalPremium.value,
+          "AdditionalPremium":additionalPremium, 
+          //this.premiumF.additionalPremium.value,
           "ExcessSign": this.premiumF.additionalSelect.value,
           "TotalPremium": this.premiumF?.totalPremium.value,
-          "TotalWarPremium": this.premiumF?.warPremium.value,
+          "TotalWarPremium": warpremium,
+          //this.premiumF?.warPremium.value,
           "VatTax": this.premiumF.vatTaxAmount.value
     
     
@@ -502,17 +617,47 @@ export class PremiumInfoComponent implements OnInit {
     this.premiumF.marinePremium.enable();
     this.premiumF.warPremium.enable();
     this.premiumF.warLandPremium.enable();
-    this.premiumF?.marinePremium.setValue(premiumDetail?.MarinePremium);
+    if(premiumDetail?.MarinePremium!=0){
+      this.CommaFormatted(premiumDetail?.MarinePremium,'marinepremium');
+    }
+    else {
+      this.premiumF?.marinePremium.setValue(premiumDetail?.MarinePremium);
+    }
     this.premiumF?.warRate.setValue(commodityDetails?.WarRate);
-    this.premiumF?.warPremium.setValue(premiumDetail?.WarPremium);
+    if(premiumDetail?.WarPremium!=0){
+      this.CommaFormatted(premiumDetail?.warPremium,'warPremium');
+    }
+    else {
+      this.premiumF?.warPremium.setValue(premiumDetail?.WarPremium);
+    }
+    //this.premiumF?.warPremium.setValue(premiumDetail?.WarPremium);
     this.premiumF?.warLandRate.setValue(commodityDetails?.WarlandRate);
-    this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
+    if(premiumDetail?.WarlandPremium!=0){
+      this.CommaFormatted(premiumDetail?.WarlandPremium,'warLandPremium');
+    }
+    else {
+      this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
+    }
+    //this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
+    //thi
     this.premiumF.marinePremium.disable();
     this.premiumF.warPremium.disable();
     this.premiumF.warLandPremium.disable();
     this.premiumF?.additionalSelect.setValue(premiumDetail?.ExcessSign);
-    this.premiumF?.additionalPremium.setValue(premiumDetail?.AdditionalPremium);
-    this.premiumF?.policyInsuAedPremium.setValue(premiumDetail?.PolicyIssunceFee);
+    if(premiumDetail?.AdditionalPremium!=0){
+      this.CommaFormatted(premiumDetail?.AdditionalPremium,'additionalPremium');
+    }
+    else {
+      this.premiumF?.additionalPremium.setValue(premiumDetail?.AdditionalPremium);
+    }
+    if(premiumDetail?.PolicyIssunceFee!=0){
+      this.CommaFormatted(premiumDetail?.PolicyIssunceFee,'policyInsuAedPremium');
+    }
+    else {
+      this.premiumF?.policyInsuAedPremium.setValue(premiumDetail?.PolicyIssunceFee);
+    }
+    //this.premiumF?.additionalPremium.setValue(premiumDetail?.AdditionalPremium);
+    //this.premiumF?.policyInsuAedPremium.setValue(premiumDetail?.PolicyIssunceFee);
     this.premiumF?.premiumWithOutVat.setValue(premiumDetail?.PremiumWithoutTax);
     this.premiumF?.vatTaxPrecentage.setValue(premiumDetail?.VatTaxPercentage);
     this.premiumF?.vatTaxAmount.setValue(premiumDetail?.VatTaxAmount);
