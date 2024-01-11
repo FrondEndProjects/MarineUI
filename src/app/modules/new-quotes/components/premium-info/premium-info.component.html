@@ -332,64 +332,66 @@
                     <ul class="list-group list-group-flush premium-inform">
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-6">Description</div>
+                          <div class="col-4 col-md-4">Description</div>
                           <div class="col-4 col-md-3">Rate</div>
-                          <div class="col-4 col-md-3">{{currencyName}}</div>
+                          <div class="col-4 col-md-4 offset-lg-1">{{currencyName}}</div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-6">
+                          <div class="col-4 col-md-4">
                             Sum insured
                           </div>
-
-                          <div class="col-4 col-md-6 text-left text-right">
+                          <div class="col-4 col-md-3">
+                       
+                          </div>
+                          <div class="col-4 col-md-5" style="text-align:right !important;"><!--text-right text-left text-right-->
                             <span class="px-1">{{premiumDetails?.EquivalentInsuredValue | commaseparator}}</span>
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-6">
+                          <div class="col-4 col-md-4">
                             Marine Premium
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="marineRate">
                           </div>
-                          <div class="col-4 col-md-3">
-                            <input type="text" class="form-control form-control-sm" formControlName="marinePremium">
+                          <div class="col-4 col-md-5">
+                            <input type="text" class="form-control form-control-sm" (keyup)="CommaFormatted(premiumF.marinePremium.value,'marinepremium')" formControlName="marinePremium">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-6">
+                          <div class="col-4 col-md-4">
                             War Premium
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warRate">
                           </div>
-                          <div class="col-4 col-md-3">
-                            <input type="text" class="form-control form-control-sm" formControlName="warPremium">
+                          <div class="col-4 col-md-5">
+                            <input type="text" class="form-control form-control-sm" formControlName="warPremium" (keyup)="CommaFormatted(premiumF.warPremium.value,'warPremium')">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-6">
+                          <div class="col-4 col-md-4">
                             War On Land Premium
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warLandRate">
                           </div>
-                          <div class="col-4 col-md-3">
-                            <input type="text" class="form-control form-control-sm" formControlName="warLandPremium">
+                          <div class="col-4 col-md-5">
+                            <input type="text" class="form-control form-control-sm" formControlName="warLandPremium" (change)="CommaFormatted(warLandPremium,'warLandPremium')">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-6">
+                          <div class="col-4 col-md-4">
                             Additional Premium
                           </div>
                           <div class="col-4 col-md-3">
@@ -398,14 +400,14 @@
                               <option value="-">-</option>
                             </select>
                           </div>
-                          <div class="col-4 col-md-3">
-                            <input type="text" class="form-control form-control-sm" formControlName="additionalPremium">
+                          <div class="col-4 col-md-5">
+                            <input type="text" class="form-control form-control-sm" formControlName="additionalPremium" (change)="CommaFormatted(premiumF.additionalPremium.value,'additionalPremium')">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-6">
+                          <div class="col-4 col-md-4">
                             Policy Issuance Fee AED
                           </div>
                           <div class="col-4 col-md-3">
@@ -415,20 +417,21 @@
                               <label class="custom-control-label" for="switch1">Edit</label>
                             </div>
                           </div>
-                          <div class="col-4 col-md-3">
-                            <input type="text" class="form-control form-control-sm" formControlName="policyInsuAedPremium">
+                          <div class="col-4 col-md-5">
+                            <input type="text" class="form-control form-control-sm" formControlName="policyInsuAedPremium" (change)="CommaFormatted(policyInsuAedPremium,'policyInsuAedPremium')">
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-7">
+                          <div class="col-4 col-md-4">
                           Premium Levy
                           </div>
-                          <div class="smallpixel col-4 col-md-3">
+                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
                             {{levyPercent}}
                           </div>
-                          <div class="smallpixel col-4 col-md-2 text-right">
+                          <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
+                            <!--smallpixel -->
                             <span class="px-1">
                               {{premiumLevy}}
                             </span>
@@ -441,40 +444,40 @@
                       </div>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-8">
+                          <div class="col-4 col-md-4">
                             Premium Without VAT
                           </div>
-                          <div class="col-4 col-md-2">
+                          <div class="col-4 col-md-3">
                           </div>
-                          <div class="smallpixel col-4 col-md-2 text-right">
-                            <span class="px-1">{{premiumF.premiumWithOutVat.value}}</span>
+                          <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
+                            <span class="px-1">{{premiumF.premiumWithOutVat.value | commaseparator}}</span>
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-7">
+                          <div class="col-4 col-md-4">
                             VAT
                           </div>
-                          <div class="smallpixel col-4 col-md-3">
+                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
                             {{premiumF.vatTaxPrecentage.value}}%
                           </div>
-                          <div class="smallpixel col-4 col-md-2 text-right">
-                            <span class="px-1">{{premiumF.vatTaxAmount.value}}</span>
+                          <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
+                            <span class="px-1">{{premiumF.vatTaxAmount.value | commaseparator}}</span>
                           </div>
                         </div>
                       </li>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-4 col-md-7">
+                          <div class="col-4 col-md-4">
                            Stamp Duty
                           </div>
                           <div class="smallpixel col-4 col-md-3">
                            
                           </div>
-                          <div class="smallpixel col-4 col-md-2 text-right">
+                          <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
                             <span class="px-1">
-                              {{stampDuty}}
+                              {{stampDuty | commaseparator}}
                             </span>
                           </div>
                         </div>
@@ -485,14 +488,14 @@
                       </div>
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-6 col-md-7">
+                          <div class="col-6 col-md-6">
                             Total Premium Payable
                           </div>
-                          <div class="col-3 col-md-3">
+                          <div class="col-3 col-md-1">
                           </div>
-                          <div class="smallpixel col-3 col-md-2 text-right">
+                          <div class="col-3 col-md-5" style="text-align:right !important;"><!--smallpixel-->
                             <span class="px-1">
-                              {{premiumF.totalPremium.value}}
+                              {{premiumF.totalPremium.value | commaseparator}}
                               <ng-container *ngIf="quotesType =='With-Endo'">
                                 <button nbButton size="tiny" status="warning" [nbPopover]="premium" nbPopoverPlacement="left">
                                   <i class="fas fa-question"></i>
