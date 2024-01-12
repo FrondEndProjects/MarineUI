@@ -140,15 +140,99 @@ export class PolicyGenerateCoverComponent implements OnInit {
       (data: any) => {
         console.log('premium', data);
         this.premiumInfo = data?.Result[0];
-        this.pG.premium.setValue(this.premiumInfo?.PayableMarinePremium == "" || this.premiumInfo?.PayableMarinePremium == null ? 0 :this.premiumInfo?.PayableMarinePremium);
-        this.pG.policyFee.setValue(this.premiumInfo?.PolicyInsceptionFeePaid == "" || this.premiumInfo?.PolicyInsceptionFeePaid == null ? 0 :this.premiumInfo?.PolicyInsceptionFeePaid);
-        this.pG.vatTax.setValue(this.premiumInfo?.VatTaxAmount == " " || this.premiumInfo?.VatTaxAmount == null ? 0 :this.premiumInfo?.VatTaxAmount);
-        let total:number = (Number(this.pG.premium.value) + Number(this.pG.policyFee.value) + Number(this.pG.vatTax.value));
-        this.pG.totalPremium.setValue(total);
+        //this.pG.premium.setValue(this.premiumInfo?.PayableMarinePremium == "" || this.premiumInfo?.PayableMarinePremium == null ? 0 :this.premiumInfo?.PayableMarinePremium);
+        if(this.premiumInfo?.PayableMarinePremium!='' && this.premiumInfo?.PayableMarinePremium!='0'){
+          let amount= parseInt(this.premiumInfo?.PayableMarinePremium);
+          this.CommaFormattedUtilizedAmount(amount,'Premium');
+        }
+        else{
+          this.pG.premium.setValue('0');
+        }
+        if(this.premiumInfo?.PolicyInsceptionFeePaid!='' && this.premiumInfo?.PolicyInsceptionFeePaid!='0'){
+          let amount= parseInt(this.premiumInfo?.PolicyInsceptionFeePaid);
+          this.CommaFormattedUtilizedAmount(amount,'PolicyInseption');
+        }
+        else{
+          this.pG.policyFee.setValue('0');
+        }
+        if(this.premiumInfo?.VatTaxAmount!='' && this.premiumInfo?.VatTaxAmount!='0'){
+          let amount= parseInt(this.premiumInfo?.VatTaxAmount);
+          this.CommaFormattedUtilizedAmount(amount,'Vat');
+        }
+        else{
+          this.pG.vatTax.setValue('0');
+        }
+        //this.pG.policyFee.setValue(this.premiumInfo?.PolicyInsceptionFeePaid == "" || this.premiumInfo?.PolicyInsceptionFeePaid == null ? 0 :this.premiumInfo?.PolicyInsceptionFeePaid);
+        //this.pG.vatTax.setValue(this.premiumInfo?.VatTaxAmount == " " || this.premiumInfo?.VatTaxAmount == null ? 0 :this.premiumInfo?.VatTaxAmount);
+        let total:any = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid) + Number(this.premiumInfo?.VatTaxAmount));
+        if(total!='0'){
+          let amount= parseInt(total);
+          this.CommaFormattedUtilizedAmount(amount,'total');
+        }
+        else{
+          this.pG.totalPremium.setValue('0');
+        }
+        //this.pG.totalPremium.setValue(total);
 
       },
       (err) => { },
     );
+  }
+
+
+  CommaFormattedUtilizedAmount(tableData,type) {
+    let i=0;
+    console.log('hhhhhhhhhhhhhhh',tableData)
+    if(tableData!=null && type=="Premium"){
+          let entry = String(tableData);
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.pG.premium.setValue(value);
+              }
+          } 
+        }
+        else if(tableData!=null && type=="PolicyInseption"){
+          let entry = String(tableData);
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.pG.policyFee.setValue(value);
+              }
+          } 
+        }
+        else if(tableData!=null && type=="Vat"){
+          let entry = String(tableData);
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.pG.vatTax.setValue(value);
+              }
+          } 
+        }
+        else if(tableData!=null && type=="total"){
+          let entry = String(tableData);
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.pG.totalPremium.setValue(value);
+              }
+          } 
+        }
+       
+      
   }
 
   onGetPolicyInfo() {
@@ -249,19 +333,22 @@ export class PolicyGenerateCoverComponent implements OnInit {
       "DepositDate": '',
       "DepositType": this.premiumInfo?.DepositType,
       "CreditNoteNo": '',
-      "PolicyFee": this.pG.policyFee.value == 0 ? this.policyInfo?.PolicyFee : this.pG.policyFee.value,
+      "PolicyFee": this.pG.policyFee.value == 0 ? this.policyInfo?.PolicyFee :  Number(this.pG.policyFee.value.toString().replace(/,/g, '')),
+      //this.pG.policyFee.value,
       "RefundAmount": '0',
       "ConveyanceInfo": conveyance,
       "RenewalYN": '',
       "DebitNoteName": '',
       "DebitNoteNo": '',
       "PPWDays": this.pG.pwwDays.value,
-      "VatTax": this.pG.vatTax.value,
+      "VatTax": Number(this.pG.vatTax.value.toString().replace(/,/g, '')),
+      //this.pG.vatTax.value,
       "CancelClauses": this.pG.cancelClauses.value,
       "InstallType": this.pG.installment.value,
       "PolicyFeePaid": '0',
       "UserType": this.userDetails.UserType,
-      "MarinePremium": this.pG.premium.value,
+      "MarinePremium": Number(this.pG.premium.value.toString().replace(/,/g, '')),
+      //this.pG.premium.value,
       "BranchCode": this.userDetails.BranchCode,
       "EffectiveDate": this.pG.policyEffectiveDate.value?.replace(/-/g,'/'),
     };

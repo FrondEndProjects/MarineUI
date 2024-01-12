@@ -45,7 +45,7 @@
           <div class="input-control-container">
             <label class="input-form-label">Premium<span class="text-required">*</span></label>
             <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="premium">
+              <input type="text" class="input-form-control without-icon" [value]="pG.premium.value | commaseparator" formControlName="premium">
             </div>
           </div>
         </div>
