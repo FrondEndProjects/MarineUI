@@ -123,73 +123,88 @@ export class PremiumInfoComponent implements OnInit {
 
   CommaFormatted(tableData,type) {
     let i=0;
-    console.log('tableData',tableData)
             if(tableData!=null && type == 'marinepremium'){
               if(tableData!=0){
               let entry=tableData.toString();
+              let splitValue= entry.split('.');
               console.log("Entry Came 1",tableData)
-            let value = entry.replace(/\D/g, "")
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              this.premiumF.marinePremium.setValue(value);
-              console.log('Esctimtaed Amount', this.premiumF.marinePremium)
-              }
-              else{
-                this.premiumF.marinePremium.setValue('');
-              }
+              let value = splitValue[0].replace(/\D/g, "")
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  if(splitValue.length>1){
+                    this.premiumF.marinePremium.setValue(value+'.'+splitValue[1]);
+                  }
+                  else this.premiumF.marinePremium.setValue(value)
+                }
+                else{
+                  this.premiumF.marinePremium.setValue('');
+                }
              //this.newQuoteF.annualEstimate.setValue(value);
               }
               else if(tableData!=null && type == 'warPremium'){
                 if(tableData!=0){
                   let entry=tableData.toString();
+                  let splitValue= entry.split('.');
+                  console.log("Entry Came 1",tableData)
+                  let value = splitValue[0].replace(/\D/g, "")
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    if(splitValue.length>1){
+                      this.premiumF.warPremium.setValue(value+'.'+splitValue[1]);
+                    }
+                    else this.premiumF.warPremium.setValue(value)
+                  }
+                  else {
+                    this.premiumF.warPremium.setValue('');
+                  }
+              }
+              else if(tableData!=null && type == 'additionalPremium'){
+                if(tableData!=0){
+                  let entry=tableData.toString();
+                  if(tableData.includes('.')){
+                    let splitValue = entry.split('.');
+                    let value = splitValue[0].replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      if(splitValue.length>1){
+                        this.premiumF.additionalPremium.setValue(value+'.'+splitValue[1]);
+                      }
+                      else{
+                        this.premiumF.additionalPremium.setValue(value+'.')
+                      }
+                    }
+                    else {
+                      let value = entry.replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        this.premiumF.additionalPremium.setValue(value);
+                    }
+                }
+                
+                
+              }
+                  //this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
+              else if (tableData!=null && type == 'warLandPremium'){
+                if(tableData!=0){
+                  let entry=tableData.toString();
                   console.log("Entry Came 1",tableData)
                 let value = entry.replace(/\D/g, "")
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                  this.premiumF.warPremium.setValue(value);
-                  console.log('Esctimtaed Amount', this.premiumF.marinePremium)
+                  this.premiumF.warLandPremium.setValue(value);
                 }
                 else {
-                  this.premiumF.warPremium.setValue('');
+                  this.premiumF.warLandPremium.setValue('');
                 }
-                }
-                else if(tableData!=null && type == 'additionalPremium'){
-                  if(tableData!=0){
-                    let entry=tableData.toString();
-                    console.log("Entry Came 1",tableData)
-                  let value = entry.replace(/\D/g, "")
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    this.premiumF.additionalPremium.setValue(value);
-                    console.log('Esctimtaed Amount', this.premiumF.marinePremium)
-                  }
-                  else {
-                    this.premiumF.additionalPremium.setValue('');
-                  }
-                  }
-                  //this.premiumF?.warLandPremium.setValue(premiumDetail?.WarlandPremium);
-                  else if (tableData!=null && type == 'warLandPremium'){
-                    if(tableData!=0){
-                      let entry=tableData.toString();
-                      console.log("Entry Came 1",tableData)
-                    let value = entry.replace(/\D/g, "")
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                      this.premiumF.warLandPremium.setValue(value);
-                    }
-                    else {
-                      this.premiumF.warLandPremium.setValue('');
-                    }
-                  }
+              }
                   //this.premiumF?.policyInsuAedPremium.setValue(premiumDetail?.PolicyIssunceFee);
-                  else if (tableData!=null && type == 'policyInsuAedPremium'){
-                    if(tableData!=0){
-                      let entry=tableData.toString();
-                      console.log("Entry Came 1",tableData)
-                    let value = entry.replace(/\D/g, "")
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                      this.premiumF.policyInsuAedPremium.setValue(value);
-                    }
-                    else {
-                      this.premiumF.policyInsuAedPremium.setValue('');
-                    }
-                  }
+              else if (tableData!=null && type == 'policyInsuAedPremium'){
+                if(tableData!=0){
+                  let entry=tableData.toString();
+                  console.log("Entry Came 1",tableData)
+                let value = entry.replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  this.premiumF.policyInsuAedPremium.setValue(value);
+                }
+                else {
+                  this.premiumF.policyInsuAedPremium.setValue('');
+                }
+              }
   }
 
 
@@ -656,7 +671,7 @@ export class PremiumInfoComponent implements OnInit {
     }
     this.premiumF?.warRate.setValue(commodityDetails?.WarRate);
     if(premiumDetail?.WarPremium!=0){
-      this.CommaFormatted(premiumDetail?.warPremium,'warPremium');
+      this.CommaFormatted(premiumDetail?.WarPremium,'warPremium');
     }
     else {
       this.premiumF?.warPremium.setValue(premiumDetail?.WarPremium);

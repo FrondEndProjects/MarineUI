@@ -208,34 +208,45 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
   CommaFormatted(tableData) {
     let i=0;
-          let entry = tableData;
-          if(entry.length!=0){
-            //for(let build of this.tableData){
-              if(entry!=null||entry!=undefined){
-            let value = entry.replace(/\D/g, "")
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            this.quoteF.insuredValue.setValue(value);
-            //this.newQuoteF.annualEstimate.setValue(value);
-              }
-            //}    //this.getTotalSICost('building');
-          } 
+    let entry=tableData.toString();
+    if(tableData.includes('.')){
+      let splitValue = entry.split('.');
+      let value = splitValue[0].replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if(splitValue.length>1){
+          this.quoteF.insuredValue.setValue(value+'.'+splitValue[1]);
+        }
+        else{
+          this.quoteF.insuredValue.setValue(value+'.')
+        }
+      }
+      else {
+        let value = entry.replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.quoteF.insuredValue.setValue(value);
+      }
           //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
    
   }
   ExposureCommaFormatted(tableData) {
     let i=0;
-          let entry = tableData;
-          console.log("Entered Entry",entry)
-          if(entry.length!=0){
-            //for(let build of this.tableData){
-              if(entry!=null||entry!=undefined){
-            let value = entry.replace(/\D/g, "")
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            this.quoteF.exposureOfShipment.setValue(value);
-            //this.newQuoteF.annualEstimate.setValue(value);
-              }
-            //}    //this.getTotalSICost('building');
-          } 
+    let entry=tableData.toString();
+    if(tableData.includes('.')){
+      let splitValue = entry.split('.');
+      let value = splitValue[0].replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if(splitValue.length>1){
+          this.quoteF.exposureOfShipment.setValue(value+'.'+splitValue[1]);
+        }
+        else{
+          this.quoteF.exposureOfShipment.setValue(value+'.')
+        }
+      }
+      else {
+        let value = entry.replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.quoteF.exposureOfShipment.setValue(value);
+      }
           //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
    
   }

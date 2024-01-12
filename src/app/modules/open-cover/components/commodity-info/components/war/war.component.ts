@@ -108,7 +108,7 @@ export class WarComponent implements OnInit {
         },
         {
           key: 'warRate',
-          display: 'War Rate',
+          display: 'Pvt Rate',
           config: {
             isTextBox: true,
             isDecimal:true,

@@ -81,7 +81,7 @@
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <div>WAR & SRCC Option</div>
+                    <div>Pvt Cover Option</div>
                     <div>{{premiumDetails?.QuoteDetails?.WarAndSrccYn}}</div>
                   </li>
                   <li class="list-group-item">
@@ -346,7 +346,7 @@
                        
                           </div>
                           <div class="col-4 col-md-5" style="text-align:right !important;"><!--text-right text-left text-right-->
-                            <span class="px-1">{{premiumDetails?.EquivalentInsuredValue | commaseparator}}</span>
+                            <span class="px-1">{{premiumDetails?.PremiumDetails?.EquivalentInsuredValue | commaseparator}}</span>
                           </div>
                         </div>
                       </li>
@@ -366,7 +366,7 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            War Premium
+                            Pvt Premium
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warRate">
@@ -379,7 +379,7 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            War On Land Premium
+                            Pvt On Land Premium
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warLandRate">
@@ -530,7 +530,7 @@
           <tr>
             <th>Endorsement</th>
             <th>Marine Premium</th>
-            <th>War Premium</th>
+            <th>Pvt Premium</th>
             <th>Additional Premium</th>
             <th>Total Premium</th>
           </tr>

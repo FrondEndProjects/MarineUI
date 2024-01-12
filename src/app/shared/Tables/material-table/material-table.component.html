@@ -15,10 +15,23 @@
               <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
             </div>
             <div class="col-6" style="word-break: break-word !important;"> 
-              {{ element[col.key] }}
+              <ng-container *ngIf="col.key=='Premium'">
+                <ng-container *ngIf="element[col.key]=='0'">{{ element[col.key] }}</ng-container>
+                <ng-container *ngIf="element[col.key]!='0'">{{ element[col.key] | commaseparator }}</ng-container>
+              </ng-container>
+              <ng-container *ngIf="col.key!='Premium'">
+                {{ element[col.key] }}
+              </ng-container>
             </div>
           </div>
-          <div class="display2">{{ element[col.key] }} </div><!--mobiless-->
+          <div class="display2">
+            <ng-container *ngIf="col.key=='Premium'">
+              {{ element[col.key] | commaseparator }}
+            </ng-container>
+            <ng-container *ngIf="col.key!='Premium'">
+              {{ element[col.key] }}
+            </ng-container>
+          </div><!--mobiless-->
         </ng-container>
         <ng-template #hasConfig>
           <ng-container *ngIf="col.config.select">
