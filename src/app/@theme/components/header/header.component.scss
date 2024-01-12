@@ -81,7 +81,8 @@
   padding: 0 1.25rem !important;
 }
 .imgwid{
-  width:240px !important;
+  width:190px !important;
+  height: 57px !important;
 }
   }
   
@@ -93,7 +94,8 @@
       padding: 0 1.25rem !important;
     }
     .imgwid{
-      width:240px !important;
+      width:190px !important;
+      height: 57px !important;
     }
    }
    
@@ -103,10 +105,11 @@
    and (max-device-width : 1024px) 
    and (orientation : landscape) {
     .logo{
-      padding: 0 1.25rem !important;
+      padding: 0 !important;
     }
     .imgwid{
-      width:240px !important;
+      width:190px !important;
+      height: 57px !important;
     }
    }
   
@@ -116,5 +119,6 @@
     }
     .imgwid{
       width:190px !important;
+      height: 57px !important;
     }
   }

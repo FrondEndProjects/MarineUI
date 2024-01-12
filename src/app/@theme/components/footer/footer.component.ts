@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-      Oriental Insurance
+      Alliance Insurance
     </span>
     <div class="socials">
       <a href="#" target="_blank" class="ion ion-social-github"></a>

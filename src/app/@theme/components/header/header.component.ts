@@ -180,6 +180,6 @@ this.menuService.onItemSelect()
   }
 
   reloadCurrentRoute() {
-    this.router.navigate([`/login-layout/login`]);
+    this.router.navigate([`/login`]);
   }
 }
