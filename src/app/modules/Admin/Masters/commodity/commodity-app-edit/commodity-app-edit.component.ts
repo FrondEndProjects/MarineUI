@@ -437,9 +437,9 @@ export class CommodityAppEditComponent implements OnInit {
                 }
                   this.commodityForm.controls['Clauses6'].setValue(Clauses1);
                   this.commodityForm.controls['dedet6'].setValue(this.dedet6);
-                this.commodityForm.controls['Warranty6'].setValue(Warranty1);
-              this.commodityForm.controls['War6'].setValue(War1);
-            this.commodityForm.controls['Exclusion6'].setValue(Exclusion1);
+                  this.commodityForm.controls['Warranty6'].setValue(Warranty1);
+                  this.commodityForm.controls['War6'].setValue(War1);
+                  this.commodityForm.controls['Exclusion6'].setValue(Exclusion1);
                     }  
                     if(this.icc_7){
                       let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
@@ -552,9 +552,9 @@ export class CommodityAppEditComponent implements OnInit {
                       }
                         this.commodityForm.controls['Clauses9'].setValue(Clauses1);
                         this.commodityForm.controls['dedet9'].setValue(this.dedet9);
-                      this.commodityForm.controls['Warranty9'].setValue(Warranty1);
-                    this.commodityForm.controls['War9'].setValue(War1);
-                  this.commodityForm.controls['Exclusion9'].setValue(Exclusion1);
+                        this.commodityForm.controls['Warranty9'].setValue(Warranty1);
+                        this.commodityForm.controls['War9'].setValue(War1);
+                        this.commodityForm.controls['Exclusion9'].setValue(Exclusion1);
                           }  
                           if(this.icc_10){
                             let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
@@ -702,7 +702,28 @@ export class CommodityAppEditComponent implements OnInit {
       }, (err) => { }
     )
   }
-
+  setWarranties(type){
+      let value = this.commodityForm.controls[type].value;
+      if(value!=null && value!='' && value!=undefined){
+        let id = this.commodityForm.controls[type].value.split(',');
+        this.setWarrantiesSelection(id,type);
+      }
+  }
+  setWarrantiesSelection(data,type){
+    if(data.length!=0){
+      if(this.Warranty.length!=0){
+        let i=0;
+        for(let warranty of this.Warranty){
+              let entry = data.some(ele=>ele==warranty.ClausesId);
+              warranty['isChecked']=entry;
+              i+=1;
+              if(i==this.Warranty.length)  this.openDialogWithoutRef(type)
+        }
+      }
+      else  this.openDialogWithoutRef(type)
+    }
+    else this.openDialogWithoutRef(type)
+  }
   getClauses(no){
     let ReqObj = {
       "BranchCode": this.branchCode,
@@ -713,33 +734,58 @@ export class CommodityAppEditComponent implements OnInit {
         console.log(data);
 
         if (data.Message === "Success") {
-            this.Clauses=data.Result;       
-            this.Clauses = this.Clauses.map(x => ({
-              isChecked: false,
-              ...x
-            }));
-            console.log('kkkkkkkkkkkkk',this.Clauses)
-          
-            //this.opendialog('Clauses');
-            if(no=='1'){this.openDialogWithoutRef('export1')}
-            if(no=='2'){this.openDialogWithoutRef('export2');}
-            if(no=='3'){this.openDialogWithoutRef('export3');}
-            if(no=='4'){this.openDialogWithoutRef('export4');}
-            if(no=='5'){this.openDialogWithoutRef('export5');}
-            if(no=='6'){this.openDialogWithoutRef('export6');}
-            if(no=='7'){this.openDialogWithoutRef('export7');}
-            if(no=='8'){this.openDialogWithoutRef('export8');}
-            if(no=='12'){this.openDialogWithoutRef('export12');}
-            if(no=='13'){this.openDialogWithoutRef('export13');}
-            if(no=='9'){this.openDialogWithoutRef('export9')}
-            if(no=='10'){this.openDialogWithoutRef('export10');}
-            if(no=='11'){this.openDialogWithoutRef('export11');}
-            if(no=='14'){this.openDialogWithoutRef('export14');}
-            if(no=='15'){this.openDialogWithoutRef('export15');}
-            if(no=='16'){this.openDialogWithoutRef('export16');}
-            if(no=='17'){this.openDialogWithoutRef('export17');}
-            if(no=='18'){this.openDialogWithoutRef('export18');}
-            if(no=='19'){this.openDialogWithoutRef('export19');}
+            this.Clauses=data.Result;
+            if(no=='1'){
+              let id = this.commodityForm.controls['Clauses'].value.split(',');
+              this.setClausesSelection(id,'export1');
+            }
+            if(no=='2'){
+              let id = this.commodityForm.controls['Clauses2'].value.split(',');
+              this.setClausesSelection(id,'export2');
+            }
+            if(no=='3'){
+              let id = this.commodityForm.controls['Clauses3'].value.split(',');
+              this.setClausesSelection(id,'export3');
+            }
+            if(no=='4'){let id = this.commodityForm.controls['Clauses4'].value.split(',');
+            this.setClausesSelection(id,'export4');}
+            if(no=='5'){let id = this.commodityForm.controls['Clauses5'].value.split(',');
+            this.setClausesSelection(id,'export5');}
+            if(no=='6'){let id = this.commodityForm.controls['Clauses6'].value.split(',');
+            this.setClausesSelection(id,'export6');}
+            if(no=='7'){let id = this.commodityForm.controls['Clauses7'].value.split(',');
+            this.setClausesSelection(id,'export7');}
+            if(no=='8'){let id = this.commodityForm.controls['Clauses8'].value.split(',');
+            this.setClausesSelection(id,'export8');}
+            if(no=='12'){let id = this.commodityForm.controls['Clauses12'].value.split(',');
+            this.setClausesSelection(id,'export12');}
+            if(no=='13'){let id = this.commodityForm.controls['Clauses13'].value.split(',');
+            this.setClausesSelection(id,'export13');}
+            if(no=='9'){let id = this.commodityForm.controls['Clauses9'].value.split(',');
+            this.setClausesSelection(id,'export9');}
+            if(no=='10'){let id = this.commodityForm.controls['Clauses10'].value.split(',');
+            this.setClausesSelection(id,'export10');}
+            if(no=='11'){let id = this.commodityForm.controls['Clauses11'].value.split(',');
+            this.setClausesSelection(id,'export11');}
+            if(no=='14'){let id = this.commodityForm.controls['Clauses14'].value.split(',');
+            this.setClausesSelection(id,'export14');}
+            if(no=='15'){
+              let id = this.commodityForm.controls['Clauses15'].value.split(',');
+            this.setClausesSelection(id,'export15');}
+            if(no=='16'){
+              let id = this.commodityForm.controls['Clauses16'].value.split(',');
+              this.setClausesSelection(id,'export16');
+            }
+            if(no=='17'){let id = this.commodityForm.controls['Clauses17'].value.split(',');
+            this.setClausesSelection(id,'export17');}
+            if(no=='18'){
+              let id = this.commodityForm.controls['Clauses18'].value.split(',');
+              this.setClausesSelection(id,'export18');
+            }
+            if(no=='19'){
+              let id = this.commodityForm.controls['Clauses19'].value.split(',');
+              this.setClausesSelection(id,'export19');
+            }
            
         }
         
@@ -747,7 +793,21 @@ export class CommodityAppEditComponent implements OnInit {
       }, (err) => { }
     )
   }
-
+  setClausesSelection(data,type){
+    if(data.length!=0){
+      if(this.Clauses.length!=0){
+        let i=0;
+        for(let clause of this.Clauses){
+              let entry = data.some(ele=>ele==clause.ClausesId);
+              clause['isChecked']=entry;
+              i+=1;
+              if(i==this.Clauses.length)  this.openDialogWithoutRef(type)
+        }
+      }
+      else  this.openDialogWithoutRef(type)
+    }
+    else this.openDialogWithoutRef(type)
+  }
   @ViewChild('secondDialog', { static: true }) secondDialog: TemplateRef<any>;
   openDialogWithoutRef(war: string) {
 

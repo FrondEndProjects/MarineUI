@@ -16,25 +16,25 @@ import { AuthGuard } from './Auth/auth.guard';
 import { SessionRedirectComponent } from './layout/components/session-redirect/session-redirect.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login-layout', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'sessionRedirect', 
     component: SessionRedirectComponent
   },
   {
-    path: 'login-layout',
+    path: 'login',
     component: LoginLayoutComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      },
-      {
-        path: 'login',
-        loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
-      },
+    // children: [
+    //   {
+    //     path: '',
+    //     redirectTo: 'login',
+    //     pathMatch: 'full'
+    //   },
+    //   {
+    //     path: 'login',
+    //     loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
+    //   },
 
-    ]
+    // ]
   },
   {
     path: 'product-layout',

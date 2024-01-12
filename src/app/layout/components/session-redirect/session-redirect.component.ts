@@ -13,9 +13,9 @@ export class SessionRedirectComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    setTimeout(() => {this.router.navigate(['login-layout/login/broker'])},5*60*1000);
+    setTimeout(() => {this.router.navigate(['/login'])},5*60*1000);
   }
   getLogin(){
-    this.router.navigate(['login-layout/login/broker'])
+    this.router.navigate(['/login'])
   }
 }

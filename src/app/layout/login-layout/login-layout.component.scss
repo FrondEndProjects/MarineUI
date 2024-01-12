@@ -1,0 +1,499 @@
+.login-grid{
+    display: flex;
+    height: 100vh;
+    height: var(--doc-height) !important;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+  }
+  
+  .login-grid-item{
+    // width: 60%;
+    //height: 500px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 1rem;
+    background-color: #fff;
+  }
+  .login-grid-item-title{
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+  }
+  .logo-img img{
+    width:190px !important;
+    height: 57px !important;
+  }
+  @media (max-width: 800px) {
+    .login-grid-item-title {
+      flex-direction: column;
+    }
+    .logo-img img{
+      width:190px !important;
+      height: 57px !important;
+    }
+  }
+  .login-grid-item-body{
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  
+  .login-menu .radio-toolbar label{
+    border: 0;
+    background-color: #fff;
+    font-family: var(--our-font-family);
+    font-weight: 400;
+    color: #c1c1c1;
+  }
+  .login-menu .radio-toolbar input[type="radio"]:checked+label {
+    font-weight: 400;
+    background-color: #fff;
+    color: var(--logo-color-2);
+    border-bottom: 3px solid var(--logo-color-2);
+  }
+  
+  @media screen and (min-width:1024px) and (max-width: 20000px) {
+  
+   .login-grid-item{
+    width: 60% !important;
+     height: 500px !important;
+  }
+  .login-component{
+    width:50%;
+  }
+  }
+  
+   /* iPads (portrait and landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 701px) 
+   and (max-device-width : 1024px) {
+  
+    .login-grid-item{
+      width: 80% !important;
+       height: auto !important;
+    }
+    .login-component{
+      width:100%;
+    }
+   }
+   
+   /* iPads (landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 768px) 
+   and (max-device-width : 1024px) 
+   and (orientation : landscape) {
+      
+   .login-grid-item{
+    width: 80% !important;
+     height: auto !important;
+  }
+  .login-component{
+    width:100%;
+  
+  }
+   }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .login-grid-item{
+      width: 90% !important;
+      height:auto !important;
+    }
+    .login-component{
+      width:100%;
+      overflow:hidden !important;
+      //height: calc(100vh - 100%) !important;
+      height:60vh !important;
+    }
+  }#chk{
+      display: none;
+  }
+  #chk:checked ~ .content_login{
+      animation: 2s animate;
+      transform:rotateY(180deg);
+  }
+  
+  #chek{
+    display:none;
+  }
+  
+  #chek:checked ~ .content_login{
+    animation: 2s animate;
+    transform:rotateY(180deg);
+  }
+  .custom-btn-reset  {
+      width: 130px;
+      height: 40px;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px 25px;
+      font-family: 'Avenir LT W05_65 Medium', sans-serif;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+        7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+  
+    .custom-btn-cancel  {
+      width: 130px;
+      height: 40px;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px 25px;
+      font-family: 'Avenir LT W05_65 Medium', sans-serif;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+        7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+    .custom-btn-submit  {
+      width: 130px;
+      height: 40px;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px 25px;
+      font-family: 'Avenir LT W05_65 Medium', sans-serif;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+        7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+    .btn-0 {
+      background: #df3f3f;
+      background: linear-gradient(
+        0deg,
+        rgb(174, 219, 69) 0%,
+        rgb(91, 190, 67) 100%
+      );
+      width: 71px;
+      height: 30px;
+      line-height: 32px;
+      padding: 0;
+      border: none;
+    }
+    .btn-2 {
+      background: #e2633c;
+      background: linear-gradient(
+        0deg,
+        rgb(248, 130, 94) 0%,
+        rgb(206, 123, 55) 100%
+      );
+      width: 71px;
+      height: 30px;
+      line-height: 32px;
+      padding: 0;
+      border: none;
+    }
+    .btn-1 {
+      background: #df3f3f;
+      background: linear-gradient(
+        0deg,
+        rgb(236, 82, 77) 0%,
+        rgb(228, 114, 114) 100%
+      );
+      width: 71px;
+      height: 30px;
+      line-height: 32px;
+      padding: 0;
+      border: none;
+    }
+  
+  
+  
+    
+  @media screen and (min-width:1024px) and (max-width: 20000px) {
+  
+   .smallclass{
+    display:flex !important;
+    flex-direction: row !important;
+    justify-content: end !important;
+    left:6rem !important;
+    position:relative
+   }
+   .smallclass1{
+    left:20px;
+    right:20px;
+    cursor: pointer;
+   }
+   .smallclass2{
+    margin-left:20px;
+    cursor: pointer;
+   }
+   }
+   
+    /* iPads (portrait and landscape) ----------- */
+    @media only screen 
+    and (min-device-width : 701px) 
+    and (max-device-width : 1024px) {
+      .smallclass{
+        display:flex !important;
+        flex-direction: row !important;
+        justify-content: end !important;
+        left:0px !important;
+        position:relative
+       }
+       .smallclass1{
+        left:20px;
+        right:20px;
+        cursor: pointer;
+       }
+       .smallclass2{
+        margin-left:20px;
+        cursor: pointer;
+       }
+    }
+    
+    /* iPads (landscape) ----------- */
+    @media only screen 
+    and (min-device-width : 768px) 
+    and (max-device-width : 1024px) 
+    and (orientation : landscape) {
+      .smallclass{
+        display:flex !important;
+        flex-direction: row !important;
+        justify-content: end !important;
+        left:0px !important;
+        position:relative
+       }
+       .smallclass1{
+        left:20px;
+        right:20px;
+        cursor: pointer;
+       }
+       .smallclass2{
+        margin-left:20px;
+        cursor: pointer;
+       }
+    }
+   
+   @media screen and (min-width: 280px) and (max-width: 750px) {
+   
+    .smallclass{
+      display:flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      left:0 !important;
+      position:relative
+     }
+     .smallclass1{
+      left:0px !important;
+      right:20px !important;
+      cursor: pointer;
+     }
+     .smallclass2{
+      margin-left:0px !important;
+      cursor: pointer;
+     }
+   }
+   #chk{
+    display: none;
+  }
+  #chk:checked ~ .content_login{
+    animation: 2s animate;
+    transform:rotateY(180deg);
+  }
+  
+  #chek{
+  display:none;
+  }
+  
+  #chek:checked ~ .content_login{
+  animation: 2s animate;
+  transform:rotateY(180deg);
+  }
+  .custom-btn-reset  {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Avenir LT W05_65 Medium', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+      7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  
+  .custom-btn-cancel  {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Avenir LT W05_65 Medium', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+      7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  .custom-btn-submit  {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Avenir LT W05_65 Medium', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+      7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  .btn-0 {
+    background: #df3f3f;
+    background: linear-gradient(
+      0deg,
+      rgb(174, 219, 69) 0%,
+      rgb(91, 190, 67) 100%
+    );
+    width: 71px;
+    height: 30px;
+    line-height: 32px;
+    padding: 0;
+    border: none;
+  }
+  .btn-2 {
+    background: #e2633c;
+    background: linear-gradient(
+      0deg,
+      rgb(248, 130, 94) 0%,
+      rgb(206, 123, 55) 100%
+    );
+    width: 71px;
+    height: 30px;
+    line-height: 32px;
+    padding: 0;
+    border: none;
+  }
+  .btn-1 {
+    background: #df3f3f;
+    background: linear-gradient(
+      0deg,
+      rgb(236, 82, 77) 0%,
+      rgb(228, 114, 114) 100%
+    );
+    width: 71px;
+    height: 30px;
+    line-height: 32px;
+    padding: 0;
+    border: none;
+  }
+  
+  
+  
+  
+  @media screen and (min-width:1024px) and (max-width: 20000px) {
+  
+  .smallclass{
+  display:flex !important;
+  flex-direction: row !important;
+  justify-content: end !important;
+  left:6rem !important;
+  position:relative
+  }
+  .smallclass1{
+  left:20px;
+  right:20px;
+  cursor: pointer;
+  }
+  .smallclass2{
+  margin-left:20px;
+  cursor: pointer;
+  }
+  }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen 
+  and (min-device-width : 701px) 
+  and (max-device-width : 1024px) {
+    .smallclass{
+      display:flex !important;
+      flex-direction: row !important;
+      justify-content: end !important;
+      left:0px !important;
+      position:relative
+     }
+     .smallclass1{
+      left:20px;
+      right:20px;
+      cursor: pointer;
+     }
+     .smallclass2{
+      margin-left:20px;
+      cursor: pointer;
+     }
+  }
+  
+  /* iPads (landscape) ----------- */
+  @media only screen 
+  and (min-device-width : 768px) 
+  and (max-device-width : 1024px) 
+  and (orientation : landscape) {
+    .smallclass{
+      display:flex !important;
+      flex-direction: row !important;
+      justify-content: end !important;
+      left:0px !important;
+      position:relative
+     }
+     .smallclass1{
+      left:20px;
+      right:20px;
+      cursor: pointer;
+     }
+     .smallclass2{
+      margin-left:20px;
+      cursor: pointer;
+     }
+  }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+  
+  .smallclass{
+    display:flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    left:0 !important;
+    position:relative
+   }
+   .smallclass1{
+    left:0px !important;
+    right:20px !important;
+    cursor: pointer;
+   }
+   .smallclass2{
+    margin-left:0px !important;
+    cursor: pointer;
+   }
+  }

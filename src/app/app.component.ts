@@ -80,7 +80,7 @@ export class AppComponent implements OnInit, AfterContentChecked, AfterViewInit 
   @HostListener('window:mousedown')
   checkUserActivity() {
     let url = this.router.url;
-    if(this.router.url!= '/' && this.router.url!='' && this.router.url!='/login-layout/login/broker' && this.router.url != '/sessionRedirect'){
+    if(this.router.url!= '/' && this.router.url!='' && this.router.url!='/login' && this.router.url != '/sessionRedirect'){
       clearTimeout(this.timeoutId);
       console.log("Url Received",url);
       this.sharedService.clearTimeOut();

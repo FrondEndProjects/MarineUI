@@ -24,7 +24,263 @@
     </div>
     <div class="login-grid-item-body">
       <div class="login-component">
-        <router-outlet></router-outlet>
+        <div>
+          <div class="row" *ngIf="first">
+            <div class="col-12">
+              <form [formGroup]="loginForm">
+                <div class="input-control-container">
+                  <label class="input-form-label">Username</label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control2 without-icon" formControlName="username" placeholder="Enter username">
+                  </div>
+                  <div class="input-form-error" *ngIf="(f.username.errors && submitted) || (!f.username.valid && f.username.touched)">
+                    <div *ngIf="f.username.errors?.required" class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+                <div class="input-control-container">
+                  <label class="input-form-label">Password</label>
+                  <div class="input-form-box">
+                    <input type="password" class="input-form-control2 without-icon" formControlName="password" placeholder="Enter password">
+                  </div>
+                  <div class="input-form-error" *ngIf="(f.password.errors && submitted) || (!f.password.valid && f.password.touched)">
+                    <div *ngIf="f.password.errors?.required" class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+                <div class="input-control-container2">
+                  <label class="input-form-label">Select Region<span class="text-required">*</span></label>
+                  <ng-select placeholder="Select" style="width: 100% important;" class="input-form-select" placeholder="Select" [items]="regionList" bindValue="RegionId" bindLabel="RegionName"
+                    formControlName="region" (change)="onGetBranchList()">
+                  </ng-select>
+                  <div class="input-form-error" *ngIf="(f.region.errors && submitted) || (!f.region.valid && f.region.touched)">
+                    <div *ngIf="f.region.errors?.required" class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+                <div class="input-control-container2">
+                  <label class="input-form-label">Select Branch<span class="text-required">*</span></label>
+                  <ng-select placeholder="Select" style="width: 100% important;" class="input-form-select"  placeholder="Select" [items]="branchList" bindValue="BranchCode" bindLabel="BranchName"
+                    formControlName="branch">
+                  </ng-select>
+                  <div class="input-form-error" *ngIf="(f.branch.errors && submitted) || (!f.branch.valid && f.branch.touched)">
+                    <div *ngIf="f.branch.errors?.required" class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+          
+                <!--<div class="text-center">
+                  <button class="button-34" role="button" (click)="onLogin()">Login</button>
+                </div>-->
+          
+                <div class="text-center" style="position: relative; margin-left:20px;">
+                    <button type="button" class="button-34 ml-3"
+                        (click)="onLogin()"><span>Login</span></button>
+                </div>
+          
+                <!--<label for="chek" aria-hidden="true">Forget Password ?</label>-->
+               
+              </form>
+            </div>
+          </div>
+          
+          <div class="back_login" *ngIf="second && !first">
+            <div class="login-component inner_login">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="middle-line">
+                            <span>Reset Password</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <form [formGroup]="changeForm">
+                            <div class="input-control-container" style="position: relative;top: 1.4rem;">
+                                <label class="input-form-label" style="position: absolute;bottom: 0rem;top: -1rem;left:.3rem">UserName</label>
+                                <div class="input-form-box">
+                                    <input type="text" formControlName="LoginId" class="input-form-control2 without-icon"
+                                        maxlength="20">
+                                </div>
+                            </div>
+                       
+                            <div class="input-control-container" style="position: relative;top: 1.4rem;" *ngIf="pass">
+                                <label class="input-form-label mt-2" style="position: absolute;left: -0.5rem;">New
+                                    Password</label>
+                                <div class="input-form-box" style="position: relative;top: 1.8rem;">
+                                    <input type="password" formControlName="OldPassword"
+                                        class="input-form-control2 without-icon" maxlength="20">
+                                </div>
+                            </div>
+          
+                            <div class="input-control-container" style="position: relative;top: 3.5rem;">
+                                <label class="input-form-label mt-2" style="position: absolute;left: -0.3rem;">Re Enter New
+                                    Password</label>
+                                <div class="input-form-box" style="position: relative;top: 1.8rem;">
+                                    <input type="password" formControlName="NewPassword"
+                                        class="input-form-control2 without-icon" maxlength="20">
+                                </div>
+                            </div>
+          
+                            <div class="text-center mt-3" style="position: relative;
+                            top: 4rem;">
+                            <!--<button type="button" class="custom-btn-reset btn-2 mt-2"
+                                (click)="resetForm()"><span>Reset</span></button>-->
+                            <button type="button" class="custom-btn-cancel btn-1 mt-2" style="position: relative;left: 2rem;"
+                                (click)="cancel(value_cancel)"><span>Cancel</span></button>
+                            <button type="button" class="custom-btn-submit btn-0 mt-2" style="position: relative;left: 4rem;"
+                                (click)="submit()"><span>Submit</span></button>
+                                </div>
+          
+                        </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+          
+          <div class="back_login" *ngIf="forget && !first && !second">
+          <div class="login-component inner_login">
+              <div class="row">
+                  <div class="col-12">
+                      <div class="middle-line">
+                          <span>ForgetPassword</span>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-12">
+                      <form [formGroup]="ForgetForm">
+                        
+                          <div class="input-control-container" style="position: relative;top: 1.4rem;">
+                            <label class="input-form-label mt-2" style="position: absolute;bottom: 0rem;top: -1rem;left:.3rem">UserName</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="LoginId" class="input-form-control2 without-icon"
+                                    maxlength="20">
+                            </div>
+                        </div>
+                        <div class="input-control-container" style="position: relative;top: 1.4rem;">
+                          <label class="input-form-label mt-2" style="position: absolute;left: .3rem;">
+                              Email</label>
+                          <div class="input-form-box" style="position: relative;top: 1.8rem;">
+                              <input type="text" formControlName="Email"
+                                  class="input-form-control2 without-icon" maxlength="20">
+                          </div>
+                      </div>
+                        
+                          <!--<div class="input-control-container" style="position: relative;top: 2.5rem;">
+                              <label class="input-form-label" style="position: absolute;left: -0.5rem;">
+                                  Email</label>
+                              <div class="input-form-box" style="position: relative;top: 2rem;">
+                                  <input type="password" formControlName="Email"
+                                      class="input-form-control2 without-icon" maxlength="20">
+                              </div>
+                          </div>-->
+                         
+                              <div class="text-center mt-3" style="position: relative;
+                              top: 4rem;">
+                              <!--<button type="button" class="custom-btn-reset btn-2 mt-2"
+                                  (click)="resetForm()"><span>Reset</span></button>-->
+                              <button type="button" class="custom-btn-cancel btn-1 mt-2" style="position: relative;left: 2rem;"
+                                  (click)="cancel(value_cancel)"><span>Cancel</span></button>
+                              <button type="button" class="custom-btn-submit btn-0 mt-2" style="position: relative;left: 4rem;"
+                                  (click)="forgetSubmit()"><span>submit</span></button>
+                                  </div>
+            
+                      </form>
+                  </div>
+              </div>
+          </div>
+          </div>
+          
+          
+          
+          
+          <div class="back_login" *ngIf="!forget && !first && !second">
+            <div class="login-component inner_login">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="middle-line">
+                            <span>Please Login To ChangePassword</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                      <form [formGroup]="PasswordCheckForm">
+                        <div class="input-control-container">
+                          <label class="input-form-label">Username</label>
+                          <div class="input-form-box">
+                            <input type="text" class="input-form-control2 without-icon" formControlName="username" placeholder="Enter username">
+                          </div>
+                        
+                        </div>
+                        <div class="input-control-container">
+                          <label class="input-form-label">Password</label>
+                          <div class="input-form-box">
+                            <input type="password" class="input-form-control2 without-icon" formControlName="password" placeholder="Enter password">
+                          </div>
+                      
+                        </div>
+                        <div class="input-control-container2">
+                          <label class="input-form-label">Select Region<span class="text-required">*</span></label>
+                          <ng-select placeholder="Select" style="width: 100% !important;" class="input-form-select" placeholder="Select" [items]="regionList" bindValue="RegionId" bindLabel="RegionName"
+                            formControlName="region" (change)="onGetBranchListChange()">
+                          </ng-select>
+                      
+                        </div>
+                        <div class="input-control-container2">
+                          <label class="input-form-label">Select Branch<span class="text-required">*</span></label>
+                          <ng-select placeholder="Select" style="width: 100% !important;" class="input-form-select"  placeholder="Select" [items]="branchList" bindValue="BranchCode" bindLabel="BranchName"
+                            formControlName="branch">
+                          </ng-select>
+                      
+                        </div>
+                        <div class="text-center mt-4" style="position: relative;">
+                        <button type="button" class="custom-btn-reset btn-2"
+                            (click)="resetForm()"><span>Reset</span></button>
+                        <button type="button" class="custom-btn-cancel btn-1" style="position: relative;left: 2rem;"
+                            (click)="cancel(value_cancel)"><span>Cancel</span></button>
+                        <button type="button" class="custom-btn-submit btn-0" style="position: relative;left: 4rem;"
+                            (click)="onchangepasswordcheck()"><span>Next</span></button>
+                            </div>
+                  
+                        <!--<div class="text-center">
+                          <button class="button-34" role="button" (click)="onLogin()">Login</button>
+                        </div>-->
+                  
+                  
+                        <!--<label for="chek" aria-hidden="true">Forget Password ?</label>-->
+                       
+                      </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+          
+          
+          
+          
+          <!--<div class="d-flex justify-content-end">
+            <div>
+              <label for="chk" aria-hidden="true" (click)="Forget('change','ChangePassword')" (change)="changepass('ChangePassword')">Change
+                Password ?</label>
+              <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword')"  (change)="changepass('ForgotPassword')">Forgot
+                Password ?</label>
+          </div>
+          </div>-->
+          </div>
+          <!-- HTML !-->
+          
+          <div class="smallclass mt-4" *ngIf="first">
+              <label for="chk" aria-hidden="true" class="smallclass1 mt-2" (click)="Forget('change','ChangePassword')" (change)="changepass('ChangePassword')">Change
+                Password ?</label>
+              <label for="chk" aria-hidden="true" class="smallclass2 mt-2" (click)="Forget('foget','ForgotPassword')"  (change)="changepass('ForgotPassword')">Forgot
+                Password ?</label>
+          </div>
       </div>
     </div>
   </div>

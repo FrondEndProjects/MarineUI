@@ -413,6 +413,10 @@ export class CustomerInfoComponent implements OnInit {
       issuerId = this.userDetails.LoginId;
 
     }
+    let exposureValue = null;
+    if(this.quoteF.exposureOfShipment.value!=null && this.quoteF.exposureOfShipment.value!=''){
+      exposureValue = this.quoteF.exposureOfShipment.value.replace(',','');
+    }
     const urlLink = `${this.ApiUrl1}quote/save`;
     const reqData = {
       'BranchCode': this.userDetails?.BranchCode,
@@ -473,7 +477,7 @@ export class CustomerInfoComponent implements OnInit {
         'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
         'CurrencyOfExposureValue': this.quoteF.partialShipment.value === 'N' ? '' : this.currencyPipe.transform(this.quoteF.currency.value, this.dropCurrencyList),
         'ExpiryDate': '',
-        'ExposureOfShipment': this.quoteF.exposureOfShipment.value,
+        'ExposureOfShipment': exposureValue,
         'FinalizeYn': this.editQuoteData?.FinalizeYn,
         'InceptionDate':this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
         'IncoTerms': this.quoteF.incoterms.value,

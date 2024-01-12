@@ -417,7 +417,7 @@
           <div class="input-control-container">
             <label class="input-form-label">Exposure of shipment</label>
             <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="exposureOfShipment">
+              <input type="text" class="input-form-control without-icon" formControlName="exposureOfShipment" [value]="quoteF.exposureOfShipment.value | commaseparator">
             </div>
           </div>
         </div>
@@ -433,7 +433,7 @@
               <div class="currrency-dollar">
                 <div class="input-control-container">
                   <div class="input-form-box">
-                    <input type="text" class="input-form-control without-icon"
+                    <input type="text" class="input-form-control2 without-icon"
                       [value]="quoteF.currencyOfExposure.value | currency: dropCurrencyList" disabled>
                   </div>
                 </div>

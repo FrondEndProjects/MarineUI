@@ -28,16 +28,16 @@
               </div>
               <div class="col-6">
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
-                    [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                  <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example" [checked]="onCheckCustomerId(element)"
+                    [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
                   <label class="custom-control-label" style="margin-left:10px !important;" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
                 </div>
               </div>
             </div>
             <div class="display2">
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
-                  [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example" [checked]="onCheckCustomerId(element)"
+                  [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
                 <label class="custom-control-label" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
               </div>
             </div>
@@ -51,7 +51,7 @@
               <div class="col-6">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
-                    [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                    [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
                   <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
                 </div>
               </div>
@@ -59,7 +59,7 @@
             <div class="display2">
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
-                  [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">
+                  [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
                 <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
               </div>
             </div>
@@ -67,7 +67,7 @@
           <ng-container *ngIf="col.config.isBsCheckBox">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
-              [(ngModel)]="element[col.config.model]"  (change)="onSelectCustomer.emit(element)">
+              [(ngModel)]="element[col.config.model]"  (change)="onSelectCustomer.emit(element)">&nbsp;
               <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
             </div>
           </ng-container>

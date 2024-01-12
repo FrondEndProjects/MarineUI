@@ -1,9 +1,11 @@
 declare var $:any;
 import { CustomerInfoComponent } from './../../customer-info.component';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import * as Mydatas from '../../../../../../app-config.json';
 import { NewQuotesService } from '../../../../new-quotes.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-customer-form',
   templateUrl: './customer-form.component.html',
@@ -27,12 +29,17 @@ export class CustomerFormComponent implements OnInit {
   public dropTitleList: any[] = [];
   public dropCityList: any[] = [];
 
-  public tableData: any[] = [];
-  public columnHeader: any[] = [];
-  broCode: any;
-
-
+  public tableData: any[] = [];mobileNo:any=null;
+  public columnHeader: any[] = [];coreAppcode:any=null;poBox:any=null;
+  broCode: any;title:any=null;customerName:any=null;cityValue:any=null;
+  closeResult: any=null;editSection:boolean=false;
+  titleError:boolean=false;customerNameError:boolean=false;
+  coreAppcodeError:boolean=false;cityNameError:boolean=false;
+  poBoxError:boolean=false;customerVat:any=null;Address1:any=null;
+  Address2:any=null;endorsement:any=null;emailIdError:boolean=false;
+  isIssuer: boolean=false;emailId:any=null;mobileNoError:boolean=false;
   constructor(
+    private modalService: NgbModal,
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
     private customerInfoComponent: CustomerInfoComponent,
@@ -42,6 +49,7 @@ export class CustomerFormComponent implements OnInit {
     this.openCoverNo = this.customerInfoComponent.OpenCover?.value;
     this.customerForm = this.customerInfoComponent.customerForm;
     this.loginId = this.customerInfoComponent?.loginId;
+    this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
 
     this.broCode=this.customerInfoComponent?.broCode
 
@@ -73,8 +81,7 @@ export class CustomerFormComponent implements OnInit {
       { key: 'CustomerName', display: 'Customer Namet' },
       { key: 'Email', display: 'Email' },
       { key: 'PoBox', display: 'P.O.Box' },
-      { key: 'CityName', display: 'City' },
-      { key: 'MissippiCustomerCode', display: 'Flag' },
+      { key: 'CityName', display: 'City' }
     ];
     this.onGetTitleDropdownList();
     this.onGetCityDropdownList();
@@ -87,7 +94,7 @@ export class CustomerFormComponent implements OnInit {
     else{
       this.onGetCustomerList(this.brokerCode);
     }*/
-    this.onGetCustomerList(this.brokerCode);
+    //this.onGetCustomerList(this.brokerCode);
   }
 
   onGetTitleDropdownList() {
@@ -157,6 +164,36 @@ export class CustomerFormComponent implements OnInit {
           // }
           this.tableData = data?.Result;
 
+        }
+      },
+      (err) => { },
+    );
+  }
+  getCustomerAltList(modal){
+   
+    this.tableData = [];
+    const urlLink = `${this.ApiUrl1}api/customer/information`;
+    if(this.productId=='3') this.openCoverNo = null;
+    const reqData = {
+      "BrokerCode": this.brokerCode,
+      'ApplicationId': this.applicationId,
+      'LoginId': this.loginId,
+      'OpenCoverNo': this.openCoverNo,
+    };
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          // if (this.customerF.name.status == "DISABLED" || data?.Result == null) {
+            if( this.productId == '3' ||  this.productId == '11'){
+              this.editSection = false;
+              if(modal) this.open(modal)
+            } 
+          // else {
+          //   this.isCustomerTable = true;
+          // }
+          this.tableData = data?.Result;
+
           console.log('kkkkkkkkkkkkkkkkkkkkkkk',this.tableData, this.isCustomerTable)
 
         }
@@ -164,10 +201,28 @@ export class CustomerFormComponent implements OnInit {
       (err) => { },
     );
   }
+  open(content) {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  public hideModel() {
+      
+  }
+  onSelectCustomer(event: any,modal) {
 
-  onSelectCustomer(event: any) {
-
-    console.log('kkkkkkkkkk',event?.Title)
+    console.log('kkkkkkkkkk',this.tableData)
     this.customerF.title.setValue(event?.Title);
     this.customerF.name.setValue(event?.CustomerName);
     this.customerF.coreAppcode.setValue(event?.MissippiCustomerCode);
@@ -179,5 +234,91 @@ export class CustomerFormComponent implements OnInit {
     this.customerF.Address1.setValue(event?.Address1);
     this.customerF.Address2.setValue(event?.Address2);
     this.customerF.Code.setValue(event.CustomerId);
+    modal.close();
+    
+  }
+  getCustomerId(){return this.customerF.Code.value}
+  close(){
+
+  }
+  onsubmit(){
+    let valid = this.checkMandatories();
+    if(valid){
+      if (this.userDetails?.UserType != "RSAIssuer") {
+        this.loginId = this.userDetails?.LoginId;
+        this.applicationId = '1';
+        this.isIssuer = false;
+  
+      }
+      // Issuer
+  
+      if (this.userDetails?.UserType == "RSAIssuer"){
+        this.loginId = this.endorsement?.LoginId || '';
+        this.applicationId = this.userDetails.LoginId;
+        this.isIssuer = true;
+      }
+      let cityName=null;
+      if(this.cityValue!=null && this.cityValue!='' && this.cityValue!=undefined){
+        let entry = this.dropCityList.find(ele=>ele.Code==this.cityValue);
+        console.log('Entry',entry)
+        if(entry) cityName = entry.CodeDescription;
+      }
+      let ReqObj = {
+        "Address1": this.Address1,
+        "Address2": this.Address2,
+        "ApplicationId": this.applicationId,
+        "CityCode": this.cityValue,
+        "CityName": cityName,
+        "ClientCustomerId": null,
+        "CompanyName": null,
+        "Country": null,
+        "CustFirstName": this.customerName,
+        "CustLastName": null,
+        "CustVatRegNo": this.customerVat,
+        "CustomerArNo": null,
+        "CustomerArabicName": null,
+        "CustomerCode": null,
+        "CustomerId": null,
+        "CustomerName": this.customerName,
+        "DateOfBirth": null,
+        "Email": this.emailId,
+        "Fax": null,
+        "Gender": null,
+        "LoginBranchCode": this.userDetails?.BranchCode,
+        "LoginId": this.loginId,
+        "MobileNo": this.mobileNo,
+        "Nationality": null,
+        "Occupation": null,
+        "PoBox": this.poBox,
+        "TelephoneNo": null,
+        "Title": this.title
+      }
+      console.log("Final obj",ReqObj)
+      let urlLink = `${this.ApiUrl1}OpenCover/customer/save`;
+      this.newQuotesService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data?.Status) {
+              this.customerName=null;this.mobileNo=null;this.emailId=null;this.title=null;
+              this.coreAppcode=null;this.cityValue=null;this.customerVat = null;this.Address1=null;
+              this.Address2=null;this.editSection=false;this.getCustomerAltList(null);
+          }
+        },
+        (err) => { },
+      );
+    }
+  }
+  checkMandatories(){
+    let i=0;this.titleError=false;this.customerNameError=false;this.coreAppcodeError=false;this.cityNameError=false;this.poBoxError=false;
+    this.mobileNoError=false;this.emailIdError=false;
+    if(this.title==null || this.title=='' || this.title==undefined){i+=1;this.titleError=true;}
+    if(this.customerName==null || this.customerName=='' || this.customerName==undefined){i+=1;this.customerNameError=true;}
+    if(this.coreAppcode==null || this.coreAppcode=='' || this.coreAppcode==undefined){i+=1;this.coreAppcodeError=true;}
+    if(this.cityValue==null || this.cityValue=='' || this.cityValue==undefined){i+=1;this.cityNameError=true;}
+    if(this.poBox==null || this.poBox=='' || this.poBox==undefined){i+=1;this.poBoxError=true;}
+    if(this.mobileNo==null || this.mobileNo=='' || this.mobileNo==undefined){i+=1;this.mobileNoError=true;}
+    if(this.emailId==null || this.emailId=='' || this.emailId==undefined){i+=1;this.emailIdError=true;}
+    return i==0;
   }
 }
+

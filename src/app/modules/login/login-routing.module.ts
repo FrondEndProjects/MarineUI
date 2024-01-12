@@ -9,19 +9,7 @@ const routes: Routes = [
     path: '',
     component: LoginComponent,
     children:[
-      {
-        path: '',
-        redirectTo: 'broker',
-        pathMatch: 'full'
-      },
-      {
-        path: 'broker',
-        component: BroCusLoginComponent,
-      },
-      {
-        path: 'issuer',
-        component: IssuerLoginComponent,
-      }
+     
     ]
   },
 ];

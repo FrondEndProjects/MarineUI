@@ -20,7 +20,7 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
   @Input('cols') columnHeader: any[] = [];
   @Input('filterValue') filterValue: any = '';
   @Input('btnConfig') btnConfig :any;
-
+  @Input('customerId') customerId :any;
 
   @Output('onSelectCustomer') onSelectCustomer = new EventEmitter();
   @Output('onRemoveWar') onRemoveWar = new EventEmitter();
@@ -46,7 +46,9 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
   ) {
 
   }
-
+  onCheckCustomerId(rowData){
+      return rowData.CustomerId ==this.customerId;
+  }
   ngOnChanges() {
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;

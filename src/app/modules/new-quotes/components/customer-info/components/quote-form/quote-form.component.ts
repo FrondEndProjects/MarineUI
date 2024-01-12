@@ -63,7 +63,6 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     private dateAdapter: NgbDateAdapter<string>
   ) {
     this.newQuotesService.getDropDownList(this.dropPartialShipList, 'partialShip');
-    console.log("Customer Information",this.customerInfoComponent);
     this.quoteForm = this.customerInfoComponent.quoteForm;
     this.userDetails = this.customerInfoComponent?.userDetails;
     this.productId = this.customerInfoComponent?.productId;
@@ -141,7 +140,6 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     const transportDetails = data?.QuoteDetails?.TransportDetails;
     const vesselDetails = data?.QuoteDetails?.VesselDetails;
 
-      console.log(new Date(quoteDetails?.InceptionDate));
     this.quoteF.modeOfTransport.setValue(transportDetails?.ModeOfTansportCode);
     this.onGetCoverDropdownList();
     this.onGetCarriageDropdownList();
@@ -165,7 +163,6 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.goodsCategory.setValue(commodityDetails?.GoodsCategoryCode);
     this.quoteF.goodsDescript.setValue(commodityDetails?.GoodsCategoryDescription);
     if(commodityDetails?.InsuredValue){
-      console.log('CCCCCCCCCCCCC',commodityDetails?.InsuredValue)
       this.CommaFormatted(commodityDetails?.InsuredValue)
     }
    // this.quoteF.insuredValue.setValue(commodityDetails?.InsuredValue);
@@ -178,7 +175,6 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
 
     this.quoteF.poPiNumber.setValue(commodityDetails?.PoDescription);
-    console.log('RRRRRRRRRRRR',this.quoteF?.poPiNumber.value);
     this.quoteF.currency.setValue(quoteDetails?.CurrencyCode);
     this.quoteF.currencyValue.setValue(quoteDetails?.CurrencyValue);
     this.quoteF.packageDescription.setValue(quoteDetails?.PackageCode);
@@ -189,7 +185,10 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.conveyanceVesselName.setValue(vesselDetails?.VesselName);
     this.quoteF.voyageNumber.setValue(quoteDetails?.VoyageNo);
     this.quoteF.partialShipment.setValue(quoteDetails?.PartialShipmentCode == null?'N':quoteDetails?.PartialShipmentCode);
-    this.quoteF.exposureOfShipment.setValue(quoteDetails?.ExposureOfShipment);
+    if(quoteDetails?.ExposureOfShipment!=null && quoteDetails?.ExposureOfShipment!='' && quoteDetails?.ExposureOfShipment!=undefined && quoteDetails?.ExposureOfShipment!='0'){
+      quoteDetails.ExposureOfShipment = String(quoteDetails?.ExposureOfShipment).split('.')[0];
+      this.ExposureCommaFormatted(quoteDetails?.ExposureOfShipment)
+    }
     this.quoteF.currencyOfExposure.setValue(quoteDetails?.CurrencyOfExposureCode);
   }
 
@@ -203,32 +202,43 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     if(this.dropToleranceList.length==0) this.onGetToleranceDropdownList();
     if(this.dropCurrencyList.length==0) this.onGetCurrencyDropdownList();
     if(this.dropGoodsOfCateList.length==0) this.onGetGoodsOfCategoryDropdownList();
-    console.log('NNNNNNNNNN Open CoverNo',this.quoteF.warSrcc.value,this.openCoverNo);
     if(this.dropGoodsOfCateList.length==0 && this.openCoverNo!=null && this.quoteF.warSrcc.value=='N') this.onCheckWarYesOrNo();
 
   }
 
   CommaFormatted(tableData) {
     let i=0;
-    console.log('hhhhhhhhhhhhhhh',tableData)
           let entry = tableData;
-          console.log("Entry Came")
           if(entry.length!=0){
             //for(let build of this.tableData){
               if(entry!=null||entry!=undefined){
-              console.log("Entry Came 1",entry)
             let value = entry.replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             this.quoteF.insuredValue.setValue(value);
             //this.newQuoteF.annualEstimate.setValue(value);
               }
-            console.log('Esctimtaed Amount',  this.quoteF.insuredValue.value )
             //}    //this.getTotalSICost('building');
           } 
           //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
    
   }
-
+  ExposureCommaFormatted(tableData) {
+    let i=0;
+          let entry = tableData;
+          console.log("Entered Entry",entry)
+          if(entry.length!=0){
+            //for(let build of this.tableData){
+              if(entry!=null||entry!=undefined){
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.quoteF.exposureOfShipment.setValue(value);
+            //this.newQuoteF.annualEstimate.setValue(value);
+              }
+            //}    //this.getTotalSICost('building');
+          } 
+          //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+   
+  }
   setStep(index: number) {
     this.step = index;
   }
@@ -548,7 +558,6 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log('warstatus',data);
         this.warStatus = data?.Result;
       }
     )

@@ -106,7 +106,7 @@ export class SharedService {
   showAlert(redirectSection,router){
     let redirectStatus = sessionStorage.getItem('redirectStatus');
     if((redirectStatus==undefined && router!= undefined)){
-      if(this.router.url!= '/' && this.router.url!='' && this.router.url!='/login-layout/login/broker' && this.router.url != '/sessionRedirect'){
+      if(this.router.url!= '/' && this.router.url!='' && this.router.url!='/login' && this.router.url != '/sessionRedirect'){
       sessionStorage.setItem('redirectStatus','started')
         const startValue = 1 * 60 + 5;
         this.timeLimit = timer(0, 1000).pipe(

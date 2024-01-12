@@ -1,1303 +1,1670 @@
 <div [formGroup]="commodityForm" class="bg-white p-4">
 
 
-    <div class="row">
-      <!-- Cover  -->
-      <div class="col-12 col-md-6 col-lg-6">
+  <div class="row">
+    <!-- Cover  -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">CommodityName<span class="text-required">*</span></label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" name="CommodityName"
+            formControlName="CommodityName">
+        </div>
+      </div>
+      <mat-error
+        *ngIf="commodityForm.controls['CommodityName'].errors?.['required'] && (commodityForm.controls['CommodityName'].dirty || commodityForm.controls['CommodityName'].touched)">
+        Please choose Cover</mat-error>
+    </div>
+    <!-- Cover  -->
+
+    <!-- Starting Amount  -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
         <div class="input-control-container">
-          <label class="input-form-label">CommodityName<span class="text-required">*</span></label>
+          <label class="input-form-label">CommodityRate <span class="text-required">*</span></label>
           <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" name="CommodityName" formControlName="CommodityName">
+            <input type="text" class="input-form-control without-icon" name="CommodityRate"
+              formControlName="CommodityRate">
           </div>
         </div>
-        <mat-error
-          *ngIf="commodityForm.controls['CommodityName'].errors?.['required'] && (commodityForm.controls['CommodityName'].dirty || commodityForm.controls['CommodityName'].touched)">
-          Please choose Cover</mat-error>
       </div>
-      <!-- Cover  -->
-
-      <!-- Starting Amount  -->
-      <div class="col-12 col-md-6 col-lg-6">
-        <div class="customer-search-container">
-          <div class="input-control-container">
-            <label class="input-form-label">CommodityRate <span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" name="CommodityRate" formControlName="CommodityRate">
-            </div>
-          </div>
-        </div>
-        <mat-error
-          *ngIf="commodityForm.controls['CommodityRate'].errors?.['required'] && (commodityForm.controls['CommodityRate'].dirty || commodityForm.controls['CommodityRate'].touched)">
-          Please enter Commodity Rate</mat-error>
-      </div>
-      <!-- Starting Amount  -->
+      <mat-error
+        *ngIf="commodityForm.controls['CommodityRate'].errors?.['required'] && (commodityForm.controls['CommodityRate'].dirty || commodityForm.controls['CommodityRate'].touched)">
+        Please enter Commodity Rate</mat-error>
     </div>
-
-    <div class="row">
-      <!-- Ending Amount -->
-      <div class="col-12 col-md-6 col-lg-6">
-        <div class="customer-search-container">
-          <div class="input-control-container">
-            <label class="input-form-label">Core Application Code<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" name="CoreApplicationCode" formControlName="CoreApplicationCode">
-            </div>
-          </div>
-        </div>
-        <mat-error
-          *ngIf="commodityForm.controls['CoreApplicationCode'].errors?.['required'] && (commodityForm.controls['CoreApplicationCode'].dirty || commodityForm.controls['CoreApplicationCode'].touched)">
-          Please enter Core Application Code</mat-error>
-      </div>
-      <!-- Ending Amount  -->
-
-      <!-- Deductible -->
-      <div class="col-12 col-md-6 col-lg-6">
-        <div class="customer-search-container">
-          <div class="input-control-container">
-            <label class="input-form-label">Remarks</label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" name="remarks" formControlName="remarks" />
-            </div>
+    <!-- Ending Amount -->
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label class="input-form-label">Core Application Code<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" name="CoreApplicationCode"
+              formControlName="CoreApplicationCode">
           </div>
         </div>
       </div>
-      <!-- /Deductible -->
+      <mat-error
+        *ngIf="commodityForm.controls['CoreApplicationCode'].errors?.['required'] && (commodityForm.controls['CoreApplicationCode'].dirty || commodityForm.controls['CoreApplicationCode'].touched)">
+        Please enter Core Application Code</mat-error>
     </div>
+  </div>
 
-    <div class="row">
-        <!-- Commodity Excess Rate -->
+ 
 
-      <!-- /Commodity Excess Rate -->
+        <div class="row">
+          <!-- Commodity Excess Rate -->
 
-         <!-- Effective date -->
-         <!--<div class="col-12 col-md-6 col-lg-6">
-          <div class="input-control-container">
-            <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" [nbDatepicker]="formpicker" class="input-form-control without-icon" name="effectiveDate"
-                formControlName="effectiveDate">
-              <nb-datepicker #formpicker format="dd/MM/yyyy"></nb-datepicker>
-            </div>
-          </div>
-        </div>-->
+          <!-- /Commodity Excess Rate -->
 
-        <div class="col-12 col-md-6 col-lg-6">
-          <div class="input-control-container">
-            <label class="input-form-label">Status<span class="text-required">*</span></label>
-            <div class="input-form-radio-box">
-              <div class="radio-toolbar">
-                <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
-                <label for="fac-yes">Active</label>
-                <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
-                <label for="fac-no">DeActive</label>
-              </div>
-            </div>
-          </div>
+          <!-- Effective date -->
+          <!--<div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                  <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" [nbDatepicker]="formpicker" class="input-form-control without-icon" name="effectiveDate"
+                      formControlName="effectiveDate">
+                    <nb-datepicker #formpicker format="dd/MM/yyyy"></nb-datepicker>
+                  </div>
+                </div>
+              </div>-->
+
+
+          <!-- /Effective date -->
         </div>
 
-        <div class="col-12 col-md-6 col-lg-6">
-          <div class="input-control-container">
-              <mat-form-field appearance="fill">
-                  <mat-label>EffectiveDate<span class="text-danger">*</span></mat-label>
-                  <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="effectiveDate">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-          </div>
-      </div>
-        <!-- /Effective date -->
-    </div>
+        <div class="single-row mt-2">
 
-    <div class="single-row mt-2">
-
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	ICC (A)</b></h5>
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> ICC (A)</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses" cols="60" rows="2"
+                        style="width: 100%;">
+                          </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('1')">::</button>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty1" rows="2"
+                        style="width: 100%;">
+                        </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Warranty1')">::</button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <div class="col-md-10 col-lg-10 col-10">
-                <fieldset style="background-color: white">
-                    <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses" cols="60" rows="2"  style="width: 100%;">
-                    </textarea>
-                </fieldset>
-              </div>
-              <div class="col-md-2 col-lg-2 col-2 mt-2">
-                <button type="submit" class="btn btn-outline-primary" (click)="getClauses('1')">::</button>
-              </div>
-            
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <div class="col-md-10 col-lg-10 col-10">
-              <fieldset style="background-color: white">
-                  <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty1" rows="2" style="width: 250px;">
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion1"
+                        style="width: 100%;">
                   </textarea>
-              </fieldset>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Exclusion1')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="War1" rows="2"
+                        style="width: 100%;">
+                </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('1')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac1-yes" type="radio" name="dedet1" value="Y" formControlName="dedet1">
+                    <label for="fac1-yes">Yes</label>
+                    <input type="radio" id="fac1-no" name="dedet1" value="N" formControlName="dedet1">
+                    <label for="fac1-no">No</label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-2 col-lg-2 col-2">
-              <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty1')">::</button>
+
+          </div>
+
+
+
+          <!-- STATUS -->
+
+
+        </div>
+
+        <div class="single-row mt-2">
+
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> ICC (B)</b></h5>
+          </div>
+          <div style="margin-left:20px;" class="col-md-9">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses2" rows="2"
+                        style="width: 100%;">
+                                  </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('2')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty2" rows="2"
+                        style="width: 100%;">
+                              </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Warranty2')">::</button>
+                  </div>
+                </div>
+              </div>
+            </div><br>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion2"
+                        style="width: 100%;">
+                    </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Exclusion2')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="War2" rows="2"
+                        style="width: 100%;">
+                    </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('2')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac2-yes" type="radio" name="dedet2" value="Y" formControlName="dedet2">
+                    <label for="fac2-yes">Yes</label>
+                    <input type="radio" id="fac2-no" name="dedet2" value="N" formControlName="dedet2">
+                    <label for="fac2-no">No</label>
+                  </div>
+                </div>
+              </div>
             </div>
-          
-        </div>
-      </div>
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion1" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion1')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War1" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('1')">::</button>
-  </div>
-  </div>
-
-  </div><br>
- 
-   
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac1-yes" type="radio" name="dedet1" value="Y" formControlName="dedet1">
-          <label for="fac1-yes">Yes</label>
-          <input type="radio" id="fac1-no" name="dedet1" value="N" formControlName="dedet1">
-          <label for="fac1-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
+          </div>
 
 
 
           <!-- STATUS -->
 
 
-      </div>
-    
-      <div class="single-row mt-2">
+        </div>
 
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	ICC (B)</b></h5>
+        <div class="single-row mt-2">
+
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> ICC (C)</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses3" rows="2"
+                        style="width: 100%;">
+                          </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('3')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty3" rows="2"
+                        style="width: 100%;">
+                          </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Warranty3')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses2" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('2')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion3"
+                        style="width: 100%;">
+                    </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Exclusion3')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="War3" rows="2"
+                        style="width: 100%;">
+                    </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('3')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac3-yes" type="radio" name="dedet3" value="Y" formControlName="dedet3">
+                    <label for="fac3-yes">Yes</label>
+                    <input type="radio" id="fac3-no" name="dedet3" value="N" formControlName="dedet3">
+                    <label for="fac3-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
-        </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty2" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty2')">::</button>
-        </div>
-      </div>
-
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion2" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion2')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War2" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('2')">::</button>
-  </div>
-  </div>
-
-  </div><br>
- 
-   
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac2-yes" type="radio" name="dedet2" value="Y" formControlName="dedet2">
-          <label for="fac2-yes">Yes</label>
-          <input type="radio" id="fac2-no" name="dedet2" value="N" formControlName="dedet2">
-          <label for="fac2-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
 
 
 
           <!-- STATUS -->
 
 
-      </div>
+        </div>
 
-      <div class="single-row mt-2">
 
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	ICC (C)</b></h5>
+        <div class="single-row mt-2">
+
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> IccCNonDeliveryInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
-            <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses3" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('3')">::</button>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty3" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty3')">::</button>
-        </div>
-      </div>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses4" rows="2"
+                        style="width: 100%;">
+                          </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('4')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty4" rows="2"
+                        style="width: 100%;">
+                          </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Warranty4')">::</button>
+                  </div>
+                </div>
+              </div>
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion3" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion3')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War3" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('3')">::</button>
-  </div>
-  </div>
-
-  </div><br>
- 
-   
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac3-yes" type="radio" name="dedet3" value="Y" formControlName="dedet3">
-          <label for="fac3-yes">Yes</label>
-          <input type="radio" id="fac3-no" name="dedet3" value="N" formControlName="dedet3">
-          <label for="fac3-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-
-
-
-          <!-- STATUS -->
-
-
-      </div>
-
-
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	IccCNonDeliveryInfo</b></h5>
-          </div>
-          <div style="margin-left:20px;" class="col-md-9">
+            </div><br>
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
-            <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses4" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('4')">::</button>
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion4"
+                        style="width: 100%;">
+                    </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Exclusion4')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="War4" rows="2"
+                        style="width: 100%;">
+                    </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('4')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac4-yes" type="radio" name="dedet4" value="Y" formControlName="dedet4">
+                    <label for="fac4-yes">Yes</label>
+                    <input type="radio" id="fac4-no" name="dedet4" value="N" formControlName="dedet4">
+                    <label for="fac4-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty4" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty4')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion4" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion4')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War4" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('4')">::</button>
-  </div>
-  </div>
-
-  </div><br>
- 
-   
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac4-yes" type="radio" name="dedet4" value="Y" formControlName="dedet4">
-          <label for="fac4-yes">Yes</label>
-          <input type="radio" id="fac4-no" name="dedet4" value="N" formControlName="dedet4">
-          <label for="fac4-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>IccAFrozenMeatSeaInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses5" rows="2"
+                            style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('5')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                  <fieldset style="background-color: white">
+                    <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty5" rows="2"
+                      style="width: 100%;">
+                </textarea>
+                  </fieldset>
+                </div>
+                <div class="col-md-2 col-lg-2 col-2 mt-2">
+                  <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty5')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses5" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('5')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                        <fieldset style="background-color: white">
+                          <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion5"
+                            style="width: 100%;">
+                          </textarea>
+                        </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                      <button type="submit" class="btn btn-primary"
+                        (click)="openDialogWithoutRef('Exclusion5')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War5" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('5')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac5-yes" type="radio" name="dedet5" value="Y" formControlName="dedet5">
+                    <label for="fac5-yes">Yes</label>
+                    <input type="radio" id="fac5-no" name="dedet5" value="N" formControlName="dedet5">
+                    <label for="fac5-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty5" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty5')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion5" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion5')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War5" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('5')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac5-yes" type="radio" name="dedet5" value="Y" formControlName="dedet5">
-          <label for="fac5-yes">Yes</label>
-          <input type="radio" id="fac5-no" name="dedet5" value="N" formControlName="dedet5">
-          <label for="fac5-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>IccAFrozenFoodseaInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses6" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('6')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty6" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty6')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses6" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('6')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion6"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion6')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="War6" rows="2"
+                        style="width: 100%;">
+                      </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('6')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac6-yes" type="radio" name="dedet6" value="Y" formControlName="dedet6">
+                    <label for="fac6-yes">Yes</label>
+                    <input type="radio" id="fac6-no" name="dedet6" value="N" formControlName="dedet6">
+                    <label for="fac6-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty6" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty6')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion6" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion6')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War6" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('6')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac6-yes" type="radio" name="dedet6" value="Y" formControlName="dedet6">
-          <label for="fac6-yes">Yes</label>
-          <input type="radio" id="fac6-no" name="dedet6" value="N" formControlName="dedet6">
-          <label for="fac6-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>IcccFrozenMeatInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses7" rows="2"
+                            style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('7')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty7" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                      <button type="submit" class="btn btn-primary"
+                        (click)="openDialogWithoutRef('Warranty7')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses7" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('7')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion7"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion7')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War7" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('7')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac7-yes" type="radio" name="dedet7" value="Y" formControlName="dedet7">
+                    <label for="fac7-yes">Yes</label>
+                    <input type="radio" id="fac4-no" name="dedet7" value="N" formControlName="dedet7">
+                    <label for="fac7-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty7" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty7')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion7" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion7')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War7" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('7')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac7-yes" type="radio" name="dedet7" value="Y" formControlName="dedet7">
-          <label for="fac7-yes">Yes</label>
-          <input type="radio" id="fac4-no" name="dedet7" value="N" formControlName="dedet7">
-          <label for="fac7-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	IccCFrozonFoodInfo </b></h5>
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> IccCFrozonFoodInfo </b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses8" rows="2"
+                        style="width: 100%;">
+                    </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('8')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty8" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty8')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses8" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('8')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion8"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                      <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Exclusion8')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War8" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('8')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac8-yes" type="radio" name="dedet8" value="Y" formControlName="dedet8">
+                    <label for="fac8-yes">Yes</label>
+                    <input type="radio" id="fac8-no" name="dedet8" value="N" formControlName="dedet8">
+                    <label for="fac8-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty8" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty8')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion8" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion8')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War8" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('8')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac8-yes" type="radio" name="dedet8" value="Y" formControlName="dedet8">
-          <label for="fac8-yes">Yes</label>
-          <input type="radio" id="fac8-no" name="dedet8" value="N" formControlName="dedet8">
-          <label for="fac8-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	LandTransitLandInfo </b></h5>
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> LandTransitLandInfo </b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses9" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('12')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty9" rows="2"
+                          style="width: 100%;">
+                    </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty12')">::</button></div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses9" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('12')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion9"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion12')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War9" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('12')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac9-yes" type="radio" name="dedet9" value="Y" formControlName="dedet9">
+                    <label for="fac9-yes">Yes</label>
+                    <input type="radio" id="fac9-no" name="dedet9" value="N" formControlName="dedet9">
+                    <label for="fac9-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty9" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty12')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion9" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion12')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War9" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('12')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac9-yes" type="radio" name="dedet9" value="Y" formControlName="dedet9">
-          <label for="fac9-yes">Yes</label>
-          <input type="radio" id="fac9-no" name="dedet9" value="N" formControlName="dedet9">
-          <label for="fac9-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	Courier</b></h5>
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> Courier</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses10" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('13')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty10" rows="2"
+                        style="width: 100%;">
+                      </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty13')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses10" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('13')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion10"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion13')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War10" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2 mt-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('13')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac10-yes" type="radio" name="dedet10" value="Y" formControlName="dedet10">
+                    <label for="fac10-yes">Yes</label>
+                    <input type="radio" id="fac4-no" name="dedet10" value="N" formControlName="dedet10">
+                    <label for="fac10-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty10" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty13')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion10" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion13')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War10" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('13')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac10-yes" type="radio" name="dedet10" value="Y" formControlName="dedet10">
-          <label for="fac10-yes">Yes</label>
-          <input type="radio" id="fac4-no" name="dedet10" value="N" formControlName="dedet10">
-          <label for="fac10-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
-            <h5 style="font-size:14px;"><b>	IccAirCargoAirInfo</b></h5>
+          <div class="col-md-3">
+            <h5 style="font-size:14px;"><b> IccAirCargoAirInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses11" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('10')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                            <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty11" rows="2"
+                              style="width: 100%;">
+                            </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty10')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses11" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('10')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion11"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion10')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War11" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('10')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac11-yes" type="radio" name="dedet11" value="Y" formControlName="dedet11">
+                    <label for="fac11-yes">Yes</label>
+                    <input type="radio" id="fac11-no" name="dedet11" value="N" formControlName="dedet11">
+                    <label for="fac11-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty11" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty10')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion11" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion10')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War11" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('10')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac11-yes" type="radio" name="dedet11" value="Y" formControlName="dedet11">
-          <label for="fac11-yes">Yes</label>
-          <input type="radio" id="fac11-no" name="dedet11" value="N" formControlName="dedet11">
-          <label for="fac11-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>IccAirCargoAllRisksInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses12" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('9')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty12" rows="2"
+                          style="width: 100%;">
+                    </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty9')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses12" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('9')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion12"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion9')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War12" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('9')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac12-yes" type="radio" name="dedet12" value="Y" formControlName="dedet12">
+                    <label for="fac12-yes">Yes</label>
+                    <input type="radio" id="fac4-no" name="dedet12" value="N" formControlName="dedet12">
+                    <label for="fac12-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty12" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty9')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion12" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion9')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War12" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('9')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac12-yes" type="radio" name="dedet12" value="Y" formControlName="dedet12">
-          <label for="fac12-yes">Yes</label>
-          <input type="radio" id="fac4-no" name="dedet12" value="N" formControlName="dedet12">
-          <label for="fac12-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>AllRisksSeaAndLandInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses14" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('15')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty14" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Warranty15')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses14" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('15')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion14"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion15')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War14" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('15')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac14-yes" type="radio" name="dedet14" value="Y" formControlName="dedet14">
+                    <label for="fac14-yes">Yes</label>
+                    <input type="radio" id="fac14-no" name="dedet14" value="N" formControlName="dedet14">
+                    <label for="fac14-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty14" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty15')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion14" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion15')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War14" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('15')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac14-yes" type="radio" name="dedet14" value="Y" formControlName="dedet14">
-          <label for="fac14-yes">Yes</label>
-          <input type="radio" id="fac14-no" name="dedet14" value="N" formControlName="dedet14">
-          <label for="fac14-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>AllRisksSeaAndAirInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses15" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('14')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty15" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                      (click)="openDialogWithoutRef('Warranty14')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses15" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('14')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion15"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion14')">::</button>
+                  </div>
+                
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War15" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('14')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac15-yes" type="radio" name="dedet15" value="Y" formControlName="dedet15">
+                    <label for="fac15-yes">Yes</label>
+                    <input type="radio" id="fac15-no" name="dedet15" value="N" formControlName="dedet15">
+                    <label for="fac15-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty15" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty14')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion15" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion14')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War15" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('14')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac15-yes" type="radio" name="dedet15" value="Y" formControlName="dedet15">
-          <label for="fac15-yes">Yes</label>
-          <input type="radio" id="fac15-no" name="dedet15" value="N" formControlName="dedet15">
-          <label for="fac15-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>AllRisksLandTransitLandInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses17" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('12')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty17" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                      <button type="submit" class="btn btn-primary"
+                        (click)="openDialogWithoutRef('Warranty12')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses17" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('12')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion17"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion12')">::</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War17" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('12')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac17-yes" type="radio" name="dedet17" value="Y" formControlName="dedet17">
+                    <label for="fac17-yes">Yes</label>
+                    <input type="radio" id="fac17-no" name="dedet17" value="N" formControlName="dedet17">
+                    <label for="fac17-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty17" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty12')">::</button>
-        </div>
-      </div>
+        <div class="single-row mt-2">
 
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion17" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion12')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War17" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('12')">::</button>
-  </div>
-  </div>
-
-  </div><br>
-
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac17-yes" type="radio" name="dedet17" value="Y" formControlName="dedet17">
-          <label for="fac17-yes">Yes</label>
-          <input type="radio" id="fac17-no" name="dedet17" value="N" formControlName="dedet17">
-          <label for="fac17-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-     </div>
-      </div>
-      <div class="single-row mt-2">
-
-        <div class="col-md-3">
+          <div class="col-md-3">
             <h5 style="font-size:14px;"><b>AllRisksAirSeaLandInfo</b></h5>
           </div>
           <div style="margin-left:20px;" class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-            <label>Clauses</label>
+                <label>Clauses</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Clauses18" rows="2"
+                          style="width: 100%;">
+                      </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getClauses('17')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Warranty</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty18" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                      <button type="submit" class="btn btn-primary"
+                        (click)="openDialogWithoutRef('Warranty17')">::</button>
+                  </div>
+                </div>
+              </div>
+
+            </div><br>
             <div class="row">
-              <fieldset style="background-color: white">
-            <textarea type="text" name="Clauses3" class="form-control"  formControlName="Clauses18" rows="2"  style="width: 250px;">
-            </textarea>
-            </fieldset>
-            <button type="submit" class="btn btn-outline-primary" (click)="getClauses('17')">::</button>
+              <div class="col-md-6">
+                <label>Exclusion</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                    <fieldset style="background-color: white">
+                      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion18"
+                        style="width: 100%;">
+                      </textarea>
+                    </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary"
+                    (click)="openDialogWithoutRef('Exclusion17')">::</button>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>WarCover</label>
+                <div class="row">
+                  <div class="col-md-10 col-lg-10 col-10">
+                      <fieldset style="background-color: white">
+                        <textarea type="text" name="Clauses3" class="form-control" formControlName="War18" rows="2"
+                          style="width: 100%;">
+                        </textarea>
+                      </fieldset>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-2">
+                    <button type="submit" class="btn btn-primary" (click)="getWar('17')">::</button>  
+                  </div>
+                  
+                </div>
+              </div>
+
+            </div><br>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="input-control-container">
+                <label class="input-form-label">Deductible<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                    <input id="fac18-yes" type="radio" name="dedet18" value="Y" formControlName="dedet18">
+                    <label for="fac18-yes">Yes</label>
+                    <input type="radio" id="fac4-no" name="dedet18" value="N" formControlName="dedet18">
+                    <label for="fac10-no">No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-6">
-          <label>Warranty</label>
-          <div class="row">
-            <fieldset style="background-color: white">
-          <textarea type="text" name="Clauses3" class="form-control" formControlName="Warranty18" rows="2" style="width: 250px;">
-          </textarea>
-            </fieldset>
-          <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Warranty17')">::</button>
+        <div class="row">
+
+          <!-- Ending Amount  -->
+
+          <!-- Deductible -->
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="customer-search-container">
+              <div class="input-control-container">
+                <label class="input-form-label">Remarks</label>
+                <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon" name="remarks" formControlName="remarks" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <label class="input-form-label">Status<span class="text-required">*</span></label>
+              <div class="input-form-radio-box">
+                <div class="radio-toolbar">
+                  <input id="fac-yes" type="radio" name="status" value="Y" formControlName="status">
+                  <label for="fac-yes">Active</label>
+                  <input type="radio" id="fac-no" name="status" value="N" formControlName="status">
+                  <label for="fac-no">DeActive</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <mat-form-field appearance="fill">
+                <mat-label>EffectiveDate<span class="text-danger">*</span></mat-label>
+                <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="effectiveDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- /Deductible -->
         </div>
-      </div>
-
-      </div><br>
-      <div class="row">
-        <div class="col-md-6">
-      <label>Exclusion</label>
-      <div class="row">
-        <fieldset style="background-color: white">
-      <textarea type="text" name="Clauses3" class="form-control" rows="2" formControlName="Exclusion18" style="width: 250px;">
-      </textarea>
-      </fieldset>
-      <button type="submit" class="btn btn-outline-primary" (click)="openDialogWithoutRef('Exclusion17')">::</button>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label>WarCover</label>
-    <div class="row">
-      <fieldset style="background-color: white">
-    <textarea type="text" name="Clauses3" class="form-control" formControlName="War18" rows="2" style="width: 250px;">
-    </textarea>
-      </fieldset>
-    <button type="submit" class="btn btn-outline-primary" (click)="getWar('17')">::</button>
-  </div>
+  <div class="mt-3 d-flex justify-content-center">
+    <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+    <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
   </div>
 
-  </div><br>
 
-  <div class="col-12 col-md-6 col-lg-6">
-    <div class="input-control-container">
-      <label class="input-form-label">Deductible<span class="text-required">*</span></label>
-      <div class="input-form-radio-box">
-        <div class="radio-toolbar">
-          <input id="fac18-yes" type="radio" name="dedet18" value="Y" formControlName="dedet18">
-          <label for="fac18-yes">Yes</label>
-          <input type="radio" id="fac4-no" name="dedet18" value="N" formControlName="dedet18">
-          <label for="fac10-no">No</label>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
 
-     </div>
-      </div>
-    
-    <div class="mt-3 btn-container">
-        <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
-        <button mat-raised-button style="margin-left: 20px" color="primary" (click)="onSave()">Save</button>
-    </div>
-
-
-  </div>
-
-  <ng-template #secondDialog>
-    <h5 matDialogTitle *ngIf="first">Clauses</h5>
-    <h5 matDialogTitle *ngIf="second">Exclusion</h5>
-    <h5 matDialogTitle *ngIf="third">Warranty</h5>
-    <h5 matDialogTitle *ngIf="four">War Cover</h5>
+<ng-template #secondDialog>
+  <h5 matDialogTitle *ngIf="first">Clauses</h5>
+  <h5 matDialogTitle *ngIf="second">Exclusion</h5>
+  <h5 matDialogTitle *ngIf="third">Warranty</h5>
+  <h5 matDialogTitle *ngIf="four">War Cover</h5>
   <mat-dialog-content>
-      <ul class="checklist">
-        <ng-container *ngFor="let item of warrantyData">
+    <ul class="checklist">
+      <ng-container *ngFor="let item of warrantyData">
         <li class="list-group-item" *ngIf="first">
           <div>
-            <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> <!--[checked]="checkUWValues(item,item.isChecked)"> -->
-              <span class="text-primary mx-1">({{item?.ClausesId}})</span></mat-checkbox></div>
+            <mat-checkbox color="primary" [(ngModel)]="item.isChecked">
+              <!--[checked]="checkUWValues(item,item.isChecked)"> -->
+              <span class="text-primary mx-1">({{item?.ClausesId}})</span></mat-checkbox>
+          </div>
           <div>{{item?.ClausesDescription}}</div>
         </li>
         <li class="list-group-item" *ngIf="second">
           <div>
-            <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
-              <span class="text-primary mx-1">({{item?.ExclusionId}})</span></mat-checkbox></div>
+            <mat-checkbox color="primary" [(ngModel)]="item.isChecked">
+              <span class="text-primary mx-1">({{item?.ExclusionId}})</span></mat-checkbox>
+          </div>
           <div>{{item?.ExclusionDescription}}</div>
         </li>
         <li class="list-group-item" *ngIf="third">
           <div>
-            <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> <!--[checked]="checkWValues(item,item.isChecked)"--> 
-              <span class="text-primary mx-1">({{item?.WarrantyId}})</span></mat-checkbox></div>
+            <mat-checkbox color="primary" [(ngModel)]="item.isChecked">
+              <!--[checked]="checkWValues(item,item.isChecked)"-->
+              <span class="text-primary mx-1">({{item?.WarrantyId}})</span></mat-checkbox>
+          </div>
           <div>{{item?.WarrantyDescription}}</div>
         </li>
         <li class="list-group-item" *ngIf="four">
           <div>
-            <mat-checkbox color="primary" [(ngModel)]="item.isChecked"> 
-              <span class="text-primary mx-1">({{item?.WarId}})</span></mat-checkbox></div>
+            <mat-checkbox color="primary" [(ngModel)]="item.isChecked">
+              <span class="text-primary mx-1">({{item?.WarId}})</span></mat-checkbox>
+          </div>
           <div>{{item?.WarDescription}}</div>
         </li>
       </ng-container>
-      </ul>
-    </mat-dialog-content>
-    <mat-dialog-actions align="center">
-      <button mat-button matDialogClose color="primary" (click)="close()">Cancel</button>
-      <button mat-button color="primary" (click)="onSubmit()">Proceed</button>
-    </mat-dialog-actions>
-  </ng-template>
+    </ul>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button matDialogClose color="primary" (click)="close()">Cancel</button>
+    <button mat-button color="primary" (click)="onSubmit()">Proceed</button>
+  </mat-dialog-actions>
+</ng-template>

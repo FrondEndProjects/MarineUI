@@ -58,9 +58,12 @@
         <div class="customer-search-container">
         <div class="input-control-container">
           <label class="input-form-label">Customer<span class="text-required">*</span></label>
-          <div class="input-form-box row">
-            <div class="col-12 col-md-4 col-lg-4">
-                <input type="text" class="input-form-control without-icon" formControlName="customer">
+          <div class="currency-flex">
+            <div class="opencover-drop input-form-box">
+              <input type="text" class="input-form-control2 without-icon" formControlName="customer" placeholder="Search & Select Customer">
+            </div>
+            <div class="opencover-dollar">
+              <button class="btn btn-secondary" style="cursor: poiinter;" [disabled]="checkSearchDisable()" (click)="getCustomerAltList(myModal2)" style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
             </div>
           </div>
           <div class="input-form-error" *ngIf="(newQuoteF.customer.errors && submitted) || (!newQuoteF.customer.valid && newQuoteF.customer.touched)">
@@ -68,18 +71,17 @@
               This field is required
             </div>
           </div>
-          <div class="customer-search-box">
+          <!-- <div class="customer-search-box">
             <ng-container *ngIf="tableData">
               <app-material-table
               [cols]="columnHeader"
               [data]="tableData"
               [filterValue]="newQuoteF.customer.value"
               (onSelectCustomer)="onSelectCustomer($event)"
-              [btnConfig]="btnConfig"
-              >
+              [btnConfig]="btnConfig" >
               </app-material-table>
             </ng-container>
-          </div>
+          </div> -->
         </div>
       </div>
       </div>
@@ -319,7 +321,7 @@
         <div class="input-control-container">
           <label class="input-form-label">Minimum Premium<span class="text-required">*</span></label>
           <div class="input-form-box">
-            <input type="text" digitOnly class="input-form-control without-icon" formControlName="minimumPremium">
+            <input type="text" digitOnly class="input-form-control without-icon" [value]="newQuoteF.minimumPremium.value | commaseparator" formControlName="minimumPremium">
           </div>
           <div class="input-form-error" *ngIf="(newQuoteF.commissiomPrecnt.errors && submitted) || (!newQuoteF.commissiomPrecnt.valid && newQuoteF.commissiomPrecnt.touched)">
             <div *ngIf="newQuoteF.commissiomPrecnt.errors?.required" class="error-text">
@@ -470,7 +472,7 @@
         <div class="input-control-container">
           <label class="input-form-label">Policy Fee<span class="text-required">*</span></label>
           <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="policyFee">
+            <input type="text" class="input-form-control without-icon" [value]="newQuoteF.policyFee.value | commaseparator" formControlName="policyFee">
           </div>
         </div>
       </div>
@@ -505,3 +507,161 @@
   </div>
   
 </form>
+
+<ng-template #myModal2 let-modal>
+  <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="!editSection">Select Customer</h5>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="editSection">Customer Details</h5>
+        <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+          <ng-container *ngIf="!editSection">
+            <div class="d-flex justify-content-end">
+              <div><button class="btn btn-primary" (click)="editSection=!editSection"><i class="fa fa-plus"></i>&nbsp;Create Customer</button></div>
+            </div>
+            <div class="row">
+                  <div class="col-12 col-lg-12 col-md-12 col-xl-12">
+                    <ng-container *ngIf="tableData.length!=0">
+                      <app-material-table [cols]="columnHeader" [customerId]="getCustomerId()" [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event,modal)">
+                      </app-material-table>
+                    </ng-container>
+                    <ng-container *ngIf="tableData.length==0">
+                        <div class="text-center">
+                              No Customer Available
+                        </div>
+                    </ng-container>
+                  </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="editSection">
+            <div class="row">
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Title<span class="text-required">*</span></label>
+                  <ng-select placeholder="Select" class="input-form-select" [items]="dropTitleList" bindValue="CodeDescription" bindLabel="CodeDescription"
+                    [(ngModel)]="title">
+                  </ng-select>
+                  <div class="input-form-error" *ngIf="titleError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Name<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="customerName"  placeholder="Enter Customer Name">
+                  </div>
+                  
+                  <div class="input-form-error" *ngIf="customerNameError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="coreAppcode"  placeholder="Enter Core App Code">
+                  </div>
+                  
+                  
+                  <div class="input-form-error" *ngIf="coreAppcodeError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">City<span class="text-required">*</span></label>
+                  <ng-select placeholder="Select" class="input-form-select" [items]="dropCityList" bindValue="Code" bindLabel="CodeDescription"
+                    [(ngModel)]="cityValue">
+                  </ng-select>
+                  <div class="input-form-error" *ngIf="cityNameError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">P.O Box<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control2 without-icon" maxlength="6" [(ngModel)]="poBox" placeholder="Enter Post Box Number">
+                  </div>
+                  <div class="input-form-error" *ngIf="poBoxError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Mobile Number<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control2 without-icon" maxlength="10" [(ngModel)]="mobileNo" placeholder="Enter Mobile Number">
+                  </div>
+                  <div class="input-form-error" *ngIf="mobileNoError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Email Id<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control2 without-icon" maxlength="50" [(ngModel)]="emailId" placeholder="Enter Email ID">
+                  </div>
+                  <div class="input-form-error" *ngIf="emailIdError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Customer VAT <i>(Registration No)</i> </label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control2 without-icon" [(ngModel)]="customerVat" placeholder="Enter Customer VAt Number">
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Address 1</label>
+                  <div class="input-form-box">
+                    <textarea type="text" class="input-form-control2 without-icon" [(ngModel)]="Address1"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Address 2</label>
+                  <div class="input-form-box">
+                    <textarea type="text" class="input-form-control2 without-icon" [(ngModel)]="Address2"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="editSection" (click)="onsubmit()">Submit</button>
+      </div>
+  </div>
+</ng-template>

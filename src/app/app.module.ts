@@ -62,6 +62,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { SearchComponent } from './modules/search/search.component';
 import { EndorsementComponent } from './modules/endorsement/endorsement.component';
 import { SessionRedirectComponent } from './layout/components/session-redirect/session-redirect.component';
+import { ErrorModalModule } from './shared/error/error-modal.module';
+import { LoginService } from './modules/login/login.service';
 
 @NgModule({
   declarations: [
@@ -120,10 +122,12 @@ import { SessionRedirectComponent } from './layout/components/session-redirect/s
     HeaderInformModule,
     NbMomentDateModule,
     NgbModule,
+    NgSelectModule,
+    ErrorModalModule,
     NgxMaskModule.forRoot()
   ],
   providers: [
-    AuthService,
+    AuthService,LoginService,
     AuthGuard,
     CustomLoadingService,
     SessionStorageService,
