@@ -665,38 +665,220 @@ export class CommodityAppEditComponent implements OnInit {
     let ReqObj = {
       "BranchCode": this.branchCode,
       "CoverId":para
-      
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/war`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-
         if (data.Message === "Success") {
-            this.War=data.Result;
-            this.War = this.War.map(x => ({
-              isChecked: false,
-              ...x
-            }));
-            if(para=='1'){this.openDialogWithoutRef('WarCover1')} 
-            if(para=='2'){this.openDialogWithoutRef('WarCover2')}
-            if(para=='3'){this.openDialogWithoutRef('WarCover3')}
-            if(para=='4'){this.openDialogWithoutRef('WarCover4')}
-            if(para=='5'){this.openDialogWithoutRef('WarCover5')}
-            if(para=='6'){this.openDialogWithoutRef('WarCover6')}
-            if(para=='7'){this.openDialogWithoutRef('WarCover7')}
-            if(para=='8'){this.openDialogWithoutRef('WarCover8')}
-            if(para=='12'){this.openDialogWithoutRef('WarCover12')}
-            if(para=='13'){this.openDialogWithoutRef('WarCover13')}
-            if(para=='9'){this.openDialogWithoutRef('WarCover9')}
-            if(para=='10'){this.openDialogWithoutRef('WarCover10')}
-            if(para=='11'){this.openDialogWithoutRef('WarCover11')}
-            if(para=='14'){this.openDialogWithoutRef('WarCover14')}
-            if(para=='15'){this.openDialogWithoutRef('WarCover15')}
-            if(para=='16'){this.openDialogWithoutRef('WarCover16')}
-            if(para=='17'){this.openDialogWithoutRef('WarCover17')}
-            if(para=='18'){this.openDialogWithoutRef('WarCover18')}
-            //this.opendialog('WarCover')
+          this.War=data.Result;
+          if(para=='1'){
+            let id
+            if(this.commodityForm.controls['War1'].value!=null){
+            id = this.commodityForm.controls['War1'].value.split(',');
+            this.setWarSelections(id,'WarCover1');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover1'); 
+            }
+            
+          }
+          if(para=='2'){
+            // let id = this.commodityForm.controls['War2'].value.split(',');
+            // this.setWarSelections(id,'WarCover2');
+            let id
+            if(this.commodityForm.controls['War2'].value!=null){
+            id = this.commodityForm.controls['War2'].value.split(',');
+            this.setWarSelections(id,'WarCover2');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover2');
+            } 
+          }
+          if(para=='3'){
+            let id
+            if(this.commodityForm.controls['War3'].value!=null){
+            id = this.commodityForm.controls['War3'].value.split(',');
+            this.setWarSelections(id,'WarCover3');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover3');
+            } 
+            // let id = this.commodityForm.controls['War3'].value.split(',');
+            // this.setWarSelections(id,'WarCover3');
+          }
+          if(para=='4'){
+            let id
+            if(this.commodityForm.controls['War4'].value!=null){
+            id = this.commodityForm.controls['War4'].value.split(',');
+            this.setWarSelections(id,'WarCover4');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover4');
+            } 
+          //   let id = this.commodityForm.controls['War4'].value.split(',');
+          // this.setWarSelections(id,'WarCover4');
         }
+          if(para=='5'){
+            let id
+            if(this.commodityForm.controls['War5'].value!=null){
+            id = this.commodityForm.controls['War5'].value.split(',');
+            this.setWarSelections(id,'WarCover5');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover5');
+            } 
+          //   let id = this.commodityForm.controls['War5'].value.split(',');
+          // this.setWarSelections(id,'WarCover5');
+        }
+          if(para=='6'){
+            let id
+            if(this.commodityForm.controls['War6'].value!=null){
+            id = this.commodityForm.controls['War6'].value.split(',');
+            this.setWarSelections(id,'WarCover6');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover6');
+            } 
+          //   let id = this.commodityForm.controls['War6'].value.split(',');
+          // this.setWarSelections(id,'WarCover6');
+        }
+          if(para=='7'){
+            let id
+            if(this.commodityForm.controls['War7'].value!=null){
+            id = this.commodityForm.controls['War7'].value.split(',');
+            this.setWarSelections(id,'WarCover7');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover7');
+            } 
+          //   let id = this.commodityForm.controls['War7'].value.split(',');
+          // this.setWarSelections(id,'WarCover7');
+        }
+          if(para=='12'){
+          //   let id = this.commodityForm.controls['War9'].value.split(',');
+          // this.setWarSelections(id,'WarCover12');
+          let id
+          if(this.commodityForm.controls['War9'].value!=null){
+          id = this.commodityForm.controls['War9'].value.split(',');
+          this.setWarSelections(id,'WarCover12');
+          }
+          else{
+            id = [];
+            this.setWarSelections(id,'WarCover12');
+          } 
+        }
+          if(para=='13'){
+            let id
+            if(this.commodityForm.controls['War10'].value!=null){
+            id = this.commodityForm.controls['War10'].value.split(',');
+            this.setWarSelections(id,'WarCover13');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover13');
+            } 
+          //   let id = this.commodityForm.controls['War10'].value.split(',');
+          // this.setWarSelections(id,'WarCover13');
+        }
+          if(para=='9'){
+            let id
+            if(this.commodityForm.controls['War12'].value!=null){
+            id = this.commodityForm.controls['War12'].value.split(',');
+            this.setWarSelections(id,'WarCover9');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover9');
+            } 
+          //   let id = this.commodityForm.controls['War12'].value.split(',');
+          // this.setWarSelections(id,'WarCover9');
+        }
+          if(para=='15'){
+            let id
+            if(this.commodityForm.controls['War14'].value!=null){
+            id = this.commodityForm.controls['War14'].value.split(',');
+            this.setWarSelections(id,'WarCover15');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover15');
+            } 
+          //   let id = this.commodityForm.controls['War14'].value.split(',');
+          // this.setWarSelections(id,'WarCover15');
+        }
+          if(para=='14'){
+            let id
+            if(this.commodityForm.controls['War15'].value!=null){
+            id = this.commodityForm.controls['War15'].value.split(',');
+            this.setWarSelections(id,'WarCover14');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover14');
+            } 
+          //   let id = this.commodityForm.controls['War15'].value.split(',');
+          // this.setWarSelections(id,'WarCover14');
+        }
+          if(para=='17'){
+            let id
+            if(this.commodityForm.controls['War18'].value!=null){
+            id = this.commodityForm.controls['War18'].value.split(',');
+            this.setWarSelections(id,'WarCover17');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover17');
+            } 
+            }
+          //   let id = this.commodityForm.controls['War18'].value.split(',');
+          // this.setWarSelections(id,'WarCover17');
+          if(para=='10'){
+            let id
+            if(this.commodityForm.controls['War11'].value!=null){
+            id = this.commodityForm.controls['War11'].value.split(',');
+            this.setWarSelections(id,'WarCover10');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover10');} 
+            }
+            //let id = this.commodityForm.controls['War11'].value.split(',');
+          //this.setWarSelections(id,'WarCover10');}
+      }
+
+        // if (data.Message === "Success") {
+        //     this.War=data.Result;
+        //     this.War = this.War.map(x => ({
+        //       isChecked: false,
+        //       ...x
+        //     }));
+        //     if(para=='1'){this.openDialogWithoutRef('WarCover1')} 
+        //     if(para=='2'){this.openDialogWithoutRef('WarCover2')}
+        //     if(para=='3'){this.openDialogWithoutRef('WarCover3')}
+        //     if(para=='4'){this.openDialogWithoutRef('WarCover4')}
+        //     if(para=='5'){this.openDialogWithoutRef('WarCover5')}
+        //     if(para=='6'){this.openDialogWithoutRef('WarCover6')}
+        //     if(para=='7'){this.openDialogWithoutRef('WarCover7')}
+        //     if(para=='8'){this.openDialogWithoutRef('WarCover8')}
+        //     if(para=='12'){this.openDialogWithoutRef('WarCover12')}
+        //     if(para=='13'){this.openDialogWithoutRef('WarCover13')}
+        //     if(para=='9'){this.openDialogWithoutRef('WarCover9')}
+        //     if(para=='10'){this.openDialogWithoutRef('WarCover10')}
+        //     if(para=='11'){this.openDialogWithoutRef('WarCover11')}
+        //     if(para=='14'){this.openDialogWithoutRef('WarCover14')}
+        //     if(para=='15'){this.openDialogWithoutRef('WarCover15')}
+        //     if(para=='16'){this.openDialogWithoutRef('WarCover16')}
+        //     if(para=='17'){this.openDialogWithoutRef('WarCover17')}
+        //     if(para=='18'){this.openDialogWithoutRef('WarCover18')}
+        //     //this.opendialog('WarCover')
+        // }
         
 
       }, (err) => { }
@@ -714,7 +896,8 @@ export class CommodityAppEditComponent implements OnInit {
       if(this.Warranty.length!=0){
         let i=0;
         for(let warranty of this.Warranty){
-              let entry = data.some(ele=>ele==warranty.ClausesId);
+          console.log('Warranty1',warranty)
+              let entry = data.some(ele=>ele==warranty.WarrantyId);
               warranty['isChecked']=entry;
               i+=1;
               if(i==this.Warranty.length)  this.openDialogWithoutRef(type)
@@ -724,6 +907,69 @@ export class CommodityAppEditComponent implements OnInit {
     }
     else this.openDialogWithoutRef(type)
   }
+
+
+
+  setExclusion(type){
+    let value = this.commodityForm.controls[type].value;
+    if(value!=null && value!='' && value!=undefined){
+      let id = this.commodityForm.controls[type].value.split(',');
+      this.setExclusionSelection(id,type);
+    }
+    else{
+      let id=[]
+      this.setExclusionSelection(id,type);
+    }
+}
+setExclusionSelection(data,type){
+  if(data.length!=0){
+    if(this.Exclusion.length!=0){
+      let i=0;
+      for(let warranty of this.Exclusion){
+        console.log('Warranty1',warranty)
+            let entry = data.some(ele=>ele==warranty.ExclusionId);
+            warranty['isChecked']=entry;
+            i+=1;
+            if(i==this.Exclusion.length)  this.openDialogWithoutRef(type)
+      }
+    }
+    else  this.openDialogWithoutRef(type)
+  }
+  else this.openDialogWithoutRef(type)
+}
+
+
+setWars(type){
+  let value = this.commodityForm.controls[type].value;
+  if(value!=null && value!='' && value!=undefined){
+    let id = this.commodityForm.controls[type].value.split(',');
+    this.setWarsSelection(id,type);
+  }
+  else {
+    let id=[]
+  this.setWarsSelection(id,type);
+}
+}
+setWarsSelection(data,type){
+if(data.length!=0){
+  if(this.War.length!=0){
+    let i=0;
+    for(let warranty of this.War){
+      console.log('Warranty1',warranty)
+          let entry = data.some(ele=>ele==warranty.WarId);
+          warranty['isChecked']=entry;
+          i+=1;
+          if(i==this.War.length)  this.openDialogWithoutRef(type)
+    }
+  }
+  else  this.openDialogWithoutRef(type)
+}
+else this.openDialogWithoutRef(type)
+}
+
+
+
+
   getClauses(no){
     let ReqObj = {
       "BranchCode": this.branchCode,
@@ -736,55 +982,252 @@ export class CommodityAppEditComponent implements OnInit {
         if (data.Message === "Success") {
             this.Clauses=data.Result;
             if(no=='1'){
-              let id = this.commodityForm.controls['Clauses'].value.split(',');
-              this.setClausesSelection(id,'export1');
+              let id
+            if(this.commodityForm.controls['Clauses'].value!=null){
+            id = this.commodityForm.controls['Clauses'].value.split(',');
+            this.setClausesSelection(id,'export1');
+            }
+            else{
+              id = [];
+              this.setClausesSelection(id,'export1'); 
+            }
+            
+              // let id = this.commodityForm.controls['Clauses'].value.split(',');
+              // this.setClausesSelection(id,'export1');
             }
             if(no=='2'){
-              let id = this.commodityForm.controls['Clauses2'].value.split(',');
+              let id
+              if(this.commodityForm.controls['Clauses2'].value!=null){
+              id = this.commodityForm.controls['Clauses2'].value.split(',');
               this.setClausesSelection(id,'export2');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export2'); 
+              }
+              // let id = this.commodityForm.controls['Clauses2'].value.split(',');
+              // this.setClausesSelection(id,'export2');
             }
             if(no=='3'){
-              let id = this.commodityForm.controls['Clauses3'].value.split(',');
+              let id
+              if(this.commodityForm.controls['Clauses3'].value!=null){
+              id = this.commodityForm.controls['Clauses3'].value.split(',');
               this.setClausesSelection(id,'export3');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export3'); 
+              }
+              // let id = this.commodityForm.controls['Clauses3'].value.split(',');
+              // this.setClausesSelection(id,'export3');
             }
-            if(no=='4'){let id = this.commodityForm.controls['Clauses4'].value.split(',');
-            this.setClausesSelection(id,'export4');}
-            if(no=='5'){let id = this.commodityForm.controls['Clauses5'].value.split(',');
-            this.setClausesSelection(id,'export5');}
-            if(no=='6'){let id = this.commodityForm.controls['Clauses6'].value.split(',');
-            this.setClausesSelection(id,'export6');}
-            if(no=='7'){let id = this.commodityForm.controls['Clauses7'].value.split(',');
-            this.setClausesSelection(id,'export7');}
-            if(no=='8'){let id = this.commodityForm.controls['Clauses8'].value.split(',');
-            this.setClausesSelection(id,'export8');}
-            if(no=='12'){let id = this.commodityForm.controls['Clauses12'].value.split(',');
-            this.setClausesSelection(id,'export12');}
-            if(no=='13'){let id = this.commodityForm.controls['Clauses13'].value.split(',');
-            this.setClausesSelection(id,'export13');}
-            if(no=='9'){let id = this.commodityForm.controls['Clauses9'].value.split(',');
-            this.setClausesSelection(id,'export9');}
-            if(no=='10'){let id = this.commodityForm.controls['Clauses10'].value.split(',');
-            this.setClausesSelection(id,'export10');}
-            if(no=='11'){let id = this.commodityForm.controls['Clauses11'].value.split(',');
-            this.setClausesSelection(id,'export11');}
-            if(no=='14'){let id = this.commodityForm.controls['Clauses14'].value.split(',');
-            this.setClausesSelection(id,'export14');}
+            if(no=='4'){
+            //   let id = this.commodityForm.controls['Clauses4'].value.split(',');
+            // this.setClausesSelection(id,'export4');
+            let id
+            if(this.commodityForm.controls['Clauses4'].value!=null){
+            id = this.commodityForm.controls['Clauses4'].value.split(',');
+            this.setClausesSelection(id,'export4');
+            }
+            else{
+              id = [];
+              this.setClausesSelection(id,'export4'); 
+            }
+          }
+            if(no=='5'){
+              let id
+              if(this.commodityForm.controls['Clauses5'].value!=null){
+              id = this.commodityForm.controls['Clauses5'].value.split(',');
+              this.setClausesSelection(id,'export5');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export5'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses5'].value.split(',');
+            // this.setClausesSelection(id,'export5');
+          }
+            if(no=='6'){
+              let id
+              if(this.commodityForm.controls['Clauses6'].value!=null){
+              id = this.commodityForm.controls['Clauses6'].value.split(',');
+              this.setClausesSelection(id,'export6');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export6'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses6'].value.split(',');
+            // this.setClausesSelection(id,'export6');
+          }
+            if(no=='7'){
+              let id
+              if(this.commodityForm.controls['Clauses7'].value!=null){
+              id = this.commodityForm.controls['Clauses7'].value.split(',');
+              this.setClausesSelection(id,'export7');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export7'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses7'].value.split(',');
+            // this.setClausesSelection(id,'export7');
+          }
+            if(no=='8'){
+              let id
+              if(this.commodityForm.controls['Clauses8'].value!=null){
+              id = this.commodityForm.controls['Clauses8'].value.split(',');
+              this.setClausesSelection(id,'export8');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export8'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses8'].value.split(',');
+            // this.setClausesSelection(id,'export8');
+          }
+            if(no=='12'){
+              let id
+              if(this.commodityForm.controls['Clauses12'].value!=null){
+              id = this.commodityForm.controls['Clauses12'].value.split(',');
+              this.setClausesSelection(id,'export12');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export12'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses12'].value.split(',');
+            // this.setClausesSelection(id,'export12');
+          }
+            if(no=='13'){
+              let id
+              if(this.commodityForm.controls['Clauses13'].value!=null){
+              id = this.commodityForm.controls['Clauses13'].value.split(',');
+              this.setClausesSelection(id,'export13');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export13'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses13'].value.split(',');
+            // this.setClausesSelection(id,'export13');
+          }
+            if(no=='9'){
+              let id
+              if(this.commodityForm.controls['Clauses9'].value!=null){
+              id = this.commodityForm.controls['Clauses9'].value.split(',');
+              this.setClausesSelection(id,'export9');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export9'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses9'].value.split(',');
+            // this.setClausesSelection(id,'export9');
+          }
+            if(no=='10'){
+              let id
+              if(this.commodityForm.controls['Clauses10'].value!=null){
+              id = this.commodityForm.controls['Clauses10'].value.split(',');
+              this.setClausesSelection(id,'export10');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export10'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses10'].value.split(',');
+            // this.setClausesSelection(id,'export10');
+          }
+            if(no=='11'){
+              let id
+              if(this.commodityForm.controls['Clauses11'].value!=null){
+              id = this.commodityForm.controls['Clauses11'].value.split(',');
+              this.setClausesSelection(id,'export11');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export11'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses11'].value.split(',');
+            // this.setClausesSelection(id,'export11');
+          }
+            if(no=='14'){
+              let id
+              if(this.commodityForm.controls['Clauses14'].value!=null){
+              id = this.commodityForm.controls['Clauses14'].value.split(',');
+              this.setClausesSelection(id,'export14');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export14'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses14'].value.split(',');
+            // this.setClausesSelection(id,'export14');
+          }
             if(no=='15'){
-              let id = this.commodityForm.controls['Clauses15'].value.split(',');
-            this.setClausesSelection(id,'export15');}
+              let id
+              if(this.commodityForm.controls['Clauses15'].value!=null){
+              id = this.commodityForm.controls['Clauses15'].value.split(',');
+              this.setClausesSelection(id,'export15');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export15'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses15'].value.split(',');
+            // this.setClausesSelection(id,'export15');
+          }
             if(no=='16'){
-              let id = this.commodityForm.controls['Clauses16'].value.split(',');
+              let id
+              if(this.commodityForm.controls['Clauses16'].value!=null){
+              id = this.commodityForm.controls['Clauses16'].value.split(',');
               this.setClausesSelection(id,'export16');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export16'); 
+              }
+              // let id = this.commodityForm.controls['Clauses16'].value.split(',');
+              // this.setClausesSelection(id,'export16');
             }
-            if(no=='17'){let id = this.commodityForm.controls['Clauses17'].value.split(',');
-            this.setClausesSelection(id,'export17');}
+            if(no=='17'){
+              let id
+              if(this.commodityForm.controls['Clauses17'].value!=null){
+              id = this.commodityForm.controls['Clauses17'].value.split(',');
+              this.setClausesSelection(id,'export17');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export17'); 
+              }
+            //   let id = this.commodityForm.controls['Clauses17'].value.split(',');
+            // this.setClausesSelection(id,'export17');
+          }
             if(no=='18'){
-              let id = this.commodityForm.controls['Clauses18'].value.split(',');
+              let id
+              if(this.commodityForm.controls['Clauses18'].value!=null){
+              id = this.commodityForm.controls['Clauses18'].value.split(',');
               this.setClausesSelection(id,'export18');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export18'); 
+              }
+              // let id = this.commodityForm.controls['Clauses18'].value.split(',');
+              // this.setClausesSelection(id,'export18');
             }
             if(no=='19'){
-              let id = this.commodityForm.controls['Clauses19'].value.split(',');
+              let id
+              if(this.commodityForm.controls['Clauses19'].value!=null){
+              id = this.commodityForm.controls['Clauses19'].value.split(',');
               this.setClausesSelection(id,'export19');
+              }
+              else{
+                id = [];
+                this.setClausesSelection(id,'export19'); 
+              }
+              // let id = this.commodityForm.controls['Clauses19'].value.split(',');
+              // this.setClausesSelection(id,'export19');
             }
            
         }
@@ -802,6 +1245,21 @@ export class CommodityAppEditComponent implements OnInit {
               clause['isChecked']=entry;
               i+=1;
               if(i==this.Clauses.length)  this.openDialogWithoutRef(type)
+        }
+      }
+      else  this.openDialogWithoutRef(type)
+    }
+    else this.openDialogWithoutRef(type)
+  }
+  setWarSelections(data,type){
+    if(data.length!=0){
+      if(this.War.length!=0){
+        let i=0;
+        for(let clause of this.War){
+              let entry = data.some(ele=>ele==clause.WarId);
+              clause['isChecked']=entry;
+              i+=1;
+              if(i==this.War.length)  this.openDialogWithoutRef(type)
         }
       }
       else  this.openDialogWithoutRef(type)
