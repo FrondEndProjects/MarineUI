@@ -1230,10 +1230,7 @@ else this.openDialogWithoutRef(type)
               // let id = this.commodityForm.controls['Clauses19'].value.split(',');
               // this.setClausesSelection(id,'export19');
             }
-           
         }
-        
-
       }, (err) => { }
     )
   }
@@ -3219,7 +3216,7 @@ else this.openDialogWithoutRef(type)
   this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/save`, ReqObj).subscribe(
     (data: any) => {
       console.log(data.Message);
-      if(data?.Status){
+      if(data?.Result){
         this.router.navigate(['/Marine/masters/commodity'])
       }
       else if (data.Errors) {
