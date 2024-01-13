@@ -6,6 +6,7 @@ import { MastersService } from '../../masters.service';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { PopUpComponent } from '../../popup/popup.component';
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 //import { ConsoleReporter } from 'jasmine';
 
 @Component({
@@ -59,7 +60,7 @@ export class CommodityAppEditComponent implements OnInit {
   de2: any;
   dedet3: any;
   constructor( private router: Router,
-     private route: ActivatedRoute,
+     private route: ActivatedRoute,private toastrService: NbToastrService,
      private masterSer: MastersService, private dialog: MatDialog ) {
       this.minDate = new Date();
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -628,7 +629,7 @@ export class CommodityAppEditComponent implements OnInit {
       (data: any) => {
         console.log(data);
 
-        if (data.Message === "Success") {
+        if (data.Result) {
             this.Warranty=data.Result;
             this.Warranty = this.Warranty.map(x => ({
               isChecked: false,
@@ -648,7 +649,7 @@ export class CommodityAppEditComponent implements OnInit {
       (data: any) => {
         console.log(data);
 
-        if (data.Message === "Success") {
+        if (data.Result) {
             this.Exclusion=data.Result;
             this.Exclusion = this.Exclusion.map(x => ({
               isChecked: false,
@@ -669,7 +670,7 @@ export class CommodityAppEditComponent implements OnInit {
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/war`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-        if (data.Message === "Success") {
+        if (data.Result) {
           this.War=data.Result;
           if(para=='1'){
             let id
@@ -979,7 +980,7 @@ else this.openDialogWithoutRef(type)
       (data: any) => {
         console.log(data);
 
-        if (data.Message === "Success") {
+        if (data.Result) {
             this.Clauses=data.Result;
             if(no=='1'){
               let id
@@ -3218,8 +3219,25 @@ else this.openDialogWithoutRef(type)
   this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/save`, ReqObj).subscribe(
     (data: any) => {
       console.log(data.Message);
-      if(data?.Result?.Message == 'Message'){
+      if(data?.Status){
         this.router.navigate(['/Marine/masters/commodity'])
+      }
+      else if (data.Errors) {
+        for (let entry of data.Errors) {
+          let type: NbComponentStatus = 'danger';
+          const config = {
+            status: type,
+            destroyByClick: true,
+            duration: 4000,
+            hasIcon: true,
+            position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            preventDuplicates: false,
+          };
+          this.toastrService.show(
+            entry.Field,
+            entry.Message,
+            config);
+        }
       }
     })
  }
@@ -3244,25 +3262,27 @@ else this.openDialogWithoutRef(type)
 
   onSubmit() {
     const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
-    let selectedListId: any = '';let lastCommaRemoved:any
-    /*for (let index = 0; index < selectedList.length; index++) {
+    const selectedClausesList: any[] = this.Clauses.filter((ele: any) => ele.isChecked === true);
+    const selectedExclusionList: any[] = this.Exclusion.filter((ele: any) => ele.isChecked === true);
+    const selectedWarList: any[] = this.War.filter((ele: any) => ele.isChecked === true);
+    let selectedListId: any = '';let lastCommaRemoved:any,selectedClausesId='',selectedExclusionId:any='',selectedWarId:any='';    /*for (let index = 0; index < selectedList.length; index++) {
       const element = selectedList[index];
       selectedListId += element.ClausesId + ',';
       this.dialog.closeAll();
     }*/
     if (this.clickedModal === 'export1') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
         if(index === 0){
-          selectedListId += element.ClausesId;
+          selectedClausesId += element.ClausesId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.ClausesId;
+          selectedClausesId += ',' + element.ClausesId;
          }
     
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty1') {
       for (let index = 0; index < selectedList.length; index++) {
@@ -3278,46 +3298,46 @@ else this.openDialogWithoutRef(type)
       this.commodityForm.controls['Warranty1'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion1') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
         //selectedListId += element.ExclusionId + ',';
         if(index === 0){
-          selectedListId += element.ExclusionId;
+          selectedExclusionId += element.ExclusionId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.ExclusionId;
+          selectedExclusionId += ',' + element.ExclusionId;
          }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion1'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion1'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover1') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
         if(index === 0){
-          selectedListId += element.WarId;
+          selectedWarId += element.WarId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.WarId;
+          selectedWarId += ',' + element.WarId;
          }
         //selectedListId += element.WarId + ',';
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War1'].setValue(selectedListId);
+      this.commodityForm.controls['War1'].setValue(selectedWarId);
     }
     else if (this.clickedModal === 'export2') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
         if(index === 0){
-          selectedListId += element.ClausesId;
+          selectedClausesId += element.ClausesId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.ClausesId;
+          selectedClausesId += ',' + element.ClausesId;
          }
         //selectedListId += element.ClausesId + ',';
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses2'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses2'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty2') {
       for (let index = 0; index < selectedList.length; index++) {
@@ -3334,46 +3354,46 @@ else this.openDialogWithoutRef(type)
       this.commodityForm.controls['Warranty2'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion2') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
        // selectedListId += element.ExclusionId + ',';
        if(index === 0){
-        selectedListId += element.ExclusionId;
+        selectedExclusionId += element.ExclusionId;
       }
       else if(index !== 0){
-        selectedListId += ',' + element.ExclusionId;
+        selectedExclusionId += ',' + element.ExclusionId;
        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion2'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion2'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover2') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
         if(index === 0){
-          selectedListId += element.WarId;
+          selectedWarId += element.WarId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.WarId;
+          selectedWarId += ',' + element.WarId;
          }
         //selectedListId += element.WarId + ',';
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War2'].setValue(selectedListId);
+      this.commodityForm.controls['War2'].setValue(selectedWarId);
     }
     else if (this.clickedModal === 'export3') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
         if(index === 0){
-          selectedListId += element.ClausesId;
+          selectedClausesId += element.ClausesId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.ClausesId;
+          selectedClausesId += ',' + element.ClausesId;
          }
         //selectedListId += element.ClausesId + ',';
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses3'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses3'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty3') {
       for (let index = 0; index < selectedList.length; index++) {
@@ -3390,417 +3410,658 @@ else this.openDialogWithoutRef(type)
       this.commodityForm.controls['Warranty3'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion3') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
         if(index === 0){
-          selectedListId += element.ExclusionId;
+          selectedExclusionId += element.ExclusionId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.ExclusionId;
+          selectedExclusionId += ',' + element.ExclusionId;
          }
         //selectedListId += element.ExclusionId + ',';
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion3'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion3'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover3') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
         if(index === 0){
-          selectedListId += element.WarId;
+          selectedWarId += element.WarId;
         }
         else if(index !== 0){
-          selectedListId += ',' + element.WarId;
+          selectedWarId += ',' + element.WarId;
          }
         //selectedListId += element.WarId + ',';
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War3'].setValue(selectedListId);
+      this.commodityForm.controls['War3'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export4') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId += element.ClausesId;
+        }
+        else if(index !== 0){
+          selectedClausesId += ',' + element.ClausesId;
+         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses4'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses4'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty4') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId += element.WarrantyId;
+        }
+        else if(index !== 0){
+          selectedListId += ',' + element.WarrantyId;
+         }
         this.dialog.closeAll();
       }
+     
       this.commodityForm.controls['Warranty4'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion4') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId += element.ExclusionId;
+        }
+        else if(index !== 0){
+          selectedExclusionId += ',' + element.ExclusionId;
+         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion4'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion4'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover4') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId += element.WarId;
+        }
+        else if(index !== 0){
+          selectedWarId += ',' + element.WarId;
+         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War4'].setValue(selectedListId);
+      this.commodityForm.controls['War4'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export5') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId += element.ClausesId;
+        }
+        else if(index !== 0){
+          selectedClausesId += ',' + element.ClausesId;
+         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses5'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses5'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty5') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+         selectedListId= element.WarrantyId;
+        }
+        else if(index !== 0){
+          selectedListId += ',' + element.WarrantyId;
+         }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty5'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion5') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+           selectedExclusionId += ',' + element.ExclusionId;
+          }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion5'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion5'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover5') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+           selectedWarId += ',' + element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War5'].setValue(selectedListId);
+      this.commodityForm.controls['War5'].setValue(selectedWarId);
     }
 
     if (this.clickedModal === 'export6') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+           selectedClausesId += ',' + element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses6'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses6'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty6') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+           selectedListId += ',' + element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty6'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion6') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId+= ','+ element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion6'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion6'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover6') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId+= ','+ element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War6'].setValue(selectedListId);
+      this.commodityForm.controls['War6'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export7') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId+= ','+ element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses7'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses7'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty7') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId+= ','+ element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty7'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion7') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId+= ','+ element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion7'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion7'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover7') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId+= ','+ element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War7'].setValue(selectedListId);
+      this.commodityForm.controls['War7'].setValue(selectedWarId);
     }
     else if (this.clickedModal === 'export7') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId+= ','+ element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses7'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses7'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty7') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId+= ','+ element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty7'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion7') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId+= ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion7'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion7'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover7') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId+= ','+ element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War7'].setValue(selectedListId);
+      this.commodityForm.controls['War7'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export8') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+ element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses8'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses8'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty8') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty8'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion8') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
-      }
-      this.commodityForm.controls['Exclusion8'].setValue(selectedListId);
+      } 
+      this.commodityForm.controls['Exclusion8'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover8') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War8'].setValue(selectedListId);
+      this.commodityForm.controls['War8'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export12') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses9'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses9'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty12') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty9'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion12') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion9'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion9'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover12') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War9'].setValue(selectedListId);
+      this.commodityForm.controls['War9'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export13') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses10'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses10'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty13') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty10'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion13') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion10'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion10'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover13') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War10'].setValue(selectedListId);
+      this.commodityForm.controls['War10'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export10') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses11'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses11'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty10') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty11'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion10') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion11'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion11'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover10') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War11'].setValue(selectedListId);
+      this.commodityForm.controls['War11'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export9') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses12'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses12'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty9') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty12'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion9') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion12'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion12'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover9') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War12'].setValue(selectedListId);
+      this.commodityForm.controls['War12'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export15') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses14'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses14'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty15') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty14'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion15') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion14'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion14'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover15') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War14'].setValue(selectedListId);
+      this.commodityForm.controls['War14'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export14') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ClausesId + ',';
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses15'].setValue(selectedListId);
+      this.commodityForm.controls['Clauses15'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty14') {
       for (let index = 0; index < selectedList.length; index++) {
         const element = selectedList[index];
-        selectedListId += element.WarrantyId + ',';
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
         this.dialog.closeAll();
       }
       this.commodityForm.controls['Warranty15'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion14') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.ExclusionId + ',';
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion15'].setValue(selectedListId);
+      this.commodityForm.controls['Exclusion15'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover14') {
-      for (let index = 0; index < selectedList.length; index++) {
-        const element = selectedList[index];
-        selectedListId += element.WarId + ',';
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War15'].setValue(selectedListId);
+      this.commodityForm.controls['War15'].setValue(selectedWarId);
     }
 
 
