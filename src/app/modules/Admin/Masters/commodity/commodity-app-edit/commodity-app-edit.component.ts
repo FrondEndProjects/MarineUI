@@ -23,7 +23,7 @@ export class CommodityAppEditComponent implements OnInit {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public userDetails: any;
-  public branchCode: any;
+  public branchCode: any;coverageList:any[]=[];
   public minDate:any;
   Warranty:any[]=[];
   Clauses:any[]=[];
@@ -37,8 +37,8 @@ export class CommodityAppEditComponent implements OnInit {
   tableData:any[]=[]; 
   clausesIDS:any;
   Clauses1: any;
-  icc_a:any;
-  Clauses1Code :any[]= [];
+  icc_a:any;selectedCoverList:any[]=[];
+  Clauses1Code :any[]= [];finalSelectedCovers:any=null;
   public clickedModal: any = '';
   warrantyData:any[]=[];
   ClausesData:any[]=[];
@@ -69,7 +69,8 @@ export class CommodityAppEditComponent implements OnInit {
     let commodityData = JSON.parse(sessionStorage.getItem('commodityData'));
 
     if ( commodityData) {
-      this.commodityId = commodityData
+      this.commodityId = commodityData;
+      this.getCommodityEdit();
     }
 
     //this.getClauses('1');
@@ -80,8 +81,7 @@ export class CommodityAppEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCommodityEdit();
-    this.createForm();
+      this.createForm();
   }
 
   checkUWValue(value) {
@@ -96,512 +96,740 @@ export class CommodityAppEditComponent implements OnInit {
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/edit`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-
-        let commodityForm = data.Result;
-        this.form =data.Result;
-        if(data.Result.IccASeaInfo){
-          this.icc_a = data.Result.IccASeaInfo;
-          this.icc_a = data.Result?.IccASeaInfo;
-          if(data.Result?.IccASeaInfo.DeductibleYn!='' && data.Result?.IccASeaInfo.DeductibleYn!=null && data.Result?.IccASeaInfo.DeductibleYn!='string'){
-            this.de1=data.Result?.IccASeaInfo.DeductibleYn;
+        if(data.Result){
+          let commodityForm = data.Result;
+          this.form =data.Result;
+          let coverageList = data.Result?.CoverageReferralInfo;
+          if(coverageList){
+            if(coverageList.length!=0){
+            this.selectedCoverList = [];let i=0;
+              for(let cover of coverageList){
+                  this.selectedCoverList.push(cover.CoverageReferral);
+                  i+=1;
+                  if(i==coverageList.length) this.onUpdateCoverages();
+              }
+            }
           }
-          else{
-            this.de1='N';
+          if(data.Result.IccASeaInfo){
+            this.icc_a = data.Result.IccASeaInfo;
+            this.icc_a = data.Result?.IccASeaInfo;
+            if(data.Result?.IccASeaInfo.DeductibleYn!='' && data.Result?.IccASeaInfo.DeductibleYn!=null && data.Result?.IccASeaInfo.DeductibleYn!='string'){
+              this.de1=data.Result?.IccASeaInfo.DeductibleYn;
+            }
+            else{
+              this.de1='N';
+            }
+            
           }
-          
-        }
-        if(data.Result.IccBSeaInfo){
-          this.icc_b=data.Result.IccBSeaInfo;
-          if(data.Result?.IccBSeaInfo.DeductibleYn!='' && data.Result?.IccBSeaInfo.DeductibleYn!=null && data.Result?.IccBSeaInfo.DeductibleYn!='string'){
-            this.de2=data.Result?.IccBSeaInfo.DeductibleYn;
+          if(data.Result.IccBSeaInfo){
+            this.icc_b=data.Result.IccBSeaInfo;
+            if(data.Result?.IccBSeaInfo.DeductibleYn!='' && data.Result?.IccBSeaInfo.DeductibleYn!=null && data.Result?.IccBSeaInfo.DeductibleYn!='string'){
+              this.de2=data.Result?.IccBSeaInfo.DeductibleYn;
+            }
+            else{
+              this.de2='N';
+            }
           }
-          else{
-            this.de2='N';
+          if(data.Result?.IccCSeaInfo){
+            this.icc_c=data.Result?.IccCSeaInfo;
+            if(data.Result?.IccCSeaInfo.DeductibleYn!='' && data.Result?.IccCSeaInfo.DeductibleYn!=null && data.Result?.IccCSeaInfo.DeductibleYn!='string'){
+              this.dedet3=data.Result?.IccCSeaInfo.DeductibleYn;
+            }
+            else{
+              this.dedet3='N';
+            }
           }
-        }
-        if(data.Result?.IccCSeaInfo){
-          this.icc_c=data.Result?.IccCSeaInfo;
-          if(data.Result?.IccCSeaInfo.DeductibleYn!='' && data.Result?.IccCSeaInfo.DeductibleYn!=null && data.Result?.IccCSeaInfo.DeductibleYn!='string'){
-            this.dedet3=data.Result?.IccCSeaInfo.DeductibleYn;
+          if(data.Result?.IccCNonDeliveryInfo){
+            this.icc_4=data.Result?.IccCNonDeliveryInfo;
+            if(data.Result?.IccCNonDeliveryInfo.DeductibleYn!='' && data.Result?.IccCNonDeliveryInfo.DeductibleYn!=null && data.Result?.IccCNonDeliveryInfo.DeductibleYn!='string'){
+              this.dedet4=data.Result?.IccCNonDeliveryInfo.DeductibleYn;
+            }
+            else{
+              this.dedet4='N';
+            }
           }
-          else{
-            this.dedet3='N';
+          if(data.Result?.IccAFrozenMeatSeaInfo){
+            this.icc_5=data.Result?.IccAFrozenMeatSeaInfo;
+            if(data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn!='' && data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn!=null && data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn!='string'){
+              this.dedet5=data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn;
+            }
+            else{
+              this.dedet5='N';
+            }
           }
-        }
-        if(data.Result?.IccCNonDeliveryInfo){
-          this.icc_4=data.Result?.IccCNonDeliveryInfo;
-          if(data.Result?.IccCNonDeliveryInfo.DeductibleYn!='' && data.Result?.IccCNonDeliveryInfo.DeductibleYn!=null && data.Result?.IccCNonDeliveryInfo.DeductibleYn!='string'){
-            this.dedet4=data.Result?.IccCNonDeliveryInfo.DeductibleYn;
+          if(data.Result?.IccAFrozenFoodSeaInfo){
+            this.icc_6=data.Result?.IccAFrozenFoodSeaInfo;
+            if(data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn!='' && data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn!=null && data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn!='string'){
+              this.dedet6=data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn;
+            }
+            else{
+              this.dedet6='N';
+            }
           }
-          else{
-            this.dedet4='N';
+          if(data.Result?.IccCFrozenMeatSeaInfo){
+            this.icc_7=data.Result?.IccCFrozenMeatSeaInfo;
+            if(data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn!='' && data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn!=null && data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn!='string'){
+              this.dedet7=data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn;
+            }
+            else{
+              this.dedet7='N';
+            }
           }
-        }
-        if(data.Result?.IccAFrozenMeatSeaInfo){
-          this.icc_5=data.Result?.IccAFrozenMeatSeaInfo;
-          if(data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn!='' && data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn!=null && data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn!='string'){
-            this.dedet5=data.Result?.IccAFrozenMeatSeaInfo.DeductibleYn;
+          if(data.Result?.IccCFrozenFoodSeaInfo){
+            this.icc_8=data.Result?.IccCFrozenFoodSeaInfo;
+            if(data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn!='' && data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn!=null && data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn!='string'){
+              this.dedet8=data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn;
+            }
+            else{
+              this.dedet8='N';
+            }
           }
-          else{
-            this.dedet5='N';
+          if(data.Result?.LandTransitLandInfo){
+            this.icc_9=data.Result?.LandTransitLandInfo;
+            if(data.Result?.LandTransitLandInfo.DeductibleYn!='' && data.Result?.LandTransitLandInfo.DeductibleYn!=null && data.Result?.LandTransitLandInfo.DeductibleYn!='string'){
+              this.dedet9=data.Result?.LandTransitLandInfo.DeductibleYn;
+            }
+            else{
+              this.dedet9='N';
+            }
           }
-        }
-        if(data.Result?.IccAFrozenFoodSeaInfo){
-          this.icc_6=data.Result?.IccAFrozenFoodSeaInfo;
-          if(data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn!='' && data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn!=null && data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn!='string'){
-            this.dedet6=data.Result?.IccAFrozenFoodSeaInfo.DeductibleYn;
+          if(data.Result?.PostParcelCourierInfo){
+            this.icc_10=data.Result?.PostParcelCourierInfo;
+            if(data.Result?.PostParcelCourierInfo.DeductibleYn!='' && data.Result?.PostParcelCourierInfo.DeductibleYn!=null && data.Result?.PostParcelCourierInfo.DeductibleYn!='string'){
+              this.dedet10=data.Result?.PostParcelCourierInfo.DeductibleYn;
+            }
+            else{
+              this.dedet10='N';
+            }
           }
-          else{
-            this.dedet6='N';
+          if(data.Result?.IccAirCargoAirInfo){
+            this.icc_11=data.Result?.IccAirCargoAirInfo;
+            if(data.Result?.IccAirCargoAirInfo.DeductibleYn!='' && data.Result?.IccAirCargoAirInfo.DeductibleYn!=null && data.Result?.IccAirCargoAirInfo.DeductibleYn!='string'){
+              this.dedet11=data.Result?.IccAirCargoAirInfo.DeductibleYn;
+            }
+            else{
+              this.dedet11='N';
+            }
           }
-        }
-        if(data.Result?.IccCFrozenMeatSeaInfo){
-          this.icc_7=data.Result?.IccCFrozenMeatSeaInfo;
-          if(data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn!='' && data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn!=null && data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn!='string'){
-            this.dedet7=data.Result?.IccCFrozenMeatSeaInfo.DeductibleYn;
+          if(data.Result?.IccAirCargoAllRisksInfo){
+            this.icc_12=data.Result?.IccAirCargoAllRisksInfo;
+            if(data.Result?.IccAirCargoAllRisksInfo.DeductibleYn!='' && data.Result?.IccAirCargoAllRisksInfo.DeductibleYn!=null && data.Result?.IccAirCargoAllRisksInfo.DeductibleYn!='string'){
+              this.dedet12=data.Result?.IccAirCargoAllRisksInfo.DeductibleYn;
+            }
+            else{
+              this.dedet12='N';
+            }
           }
-          else{
-            this.dedet7='N';
+          if(data.Result?.CoverageReferralInfo){
+            this.icc_13=data.Result?.CoverageReferralInfo;
+            if(data.Result?.CoverageReferralInfo.DeductibleYn!='' && data.Result?.CoverageReferralInfo.DeductibleYn!=null && data.Result?.CoverageReferralInfo.DeductibleYn!='string'){
+              this.dedet13=data.Result?.CoverageReferralInfo.DeductibleYn;
+            }
+            else{
+              this.dedet13='N';
+            } 
           }
-        }
-        if(data.Result?.IccCFrozenFoodSeaInfo){
-          this.icc_8=data.Result?.IccCFrozenFoodSeaInfo;
-          if(data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn!='' && data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn!=null && data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn!='string'){
-            this.dedet8=data.Result?.IccCFrozenFoodSeaInfo.DeductibleYn;
+          if(data.Result?.AllRisksSeaAndLandInfo){
+            this.icc_14=data.Result?.AllRisksSeaAndLandInfo;
+            if(data.Result?.AllRisksSeaAndLandInfo.DeductibleYn!='' && data.Result?.AllRisksSeaAndLandInfo.DeductibleYn!=null && data.Result?.AllRisksSeaAndLandInfo.DeductibleYn!='string'){
+              this.dedet14=data.Result?.AllRisksSeaAndLandInfo.DeductibleYn;
+            }
+            else{
+              this.dedet14='N';
+            } 
           }
-          else{
-            this.dedet8='N';
+          if(data.Result?.AllRisksSeaAndAirInfo){
+            this.icc_15=data.Result?.AllRisksSeaAndAirInfo;
+            if(data.Result?.AllRisksSeaAndAirInfo.DeductibleYn!='' && data.Result?.AllRisksSeaAndAirInfo.DeductibleYn!=null && data.Result?.AllRisksSeaAndAirInfo.DeductibleYn!='string'){
+              this.dedet15=data.Result?.AllRisksSeaAndAirInfo.DeductibleYn;
+            }
+            else{
+              this.dedet15='N';
+            } 
           }
-        }
-        if(data.Result?.LandTransitLandInfo){
-          this.icc_9=data.Result?.LandTransitLandInfo;
-          console.log('9999999999999999',this.icc_9.ClausesInfo);
-          if(data.Result?.LandTransitLandInfo.DeductibleYn!='' && data.Result?.LandTransitLandInfo.DeductibleYn!=null && data.Result?.LandTransitLandInfo.DeductibleYn!='string'){
-            this.dedet9=data.Result?.LandTransitLandInfo.DeductibleYn;
+          if(data.Result?.AllRisksParcelPostAirInfo){
+            this.icc_16=data.Result?.AllRisksParcelPostAirInfo;
+            if(data.Result?.AllRisksParcelPostAirInfo.DeductibleYn!='' && data.Result?.AllRisksParcelPostAirInfo.DeductibleYn!=null && data.Result?.AllRisksParcelPostAirInfo.DeductibleYn!='string'){
+              this.dedet16=data.Result?.AllRisksParcelPostAirInfo.DeductibleYn;
+            }
+            else{
+              this.dedet16='N';
+            } 
           }
-          else{
-            this.dedet9='N';
+          if(data.Result?.AllRisksLandTransitLandInfo){
+            this.icc_17=data.Result?.AllRisksLandTransitLandInfo;
+            if(data.Result?.AllRisksLandTransitLandInfo.DeductibleYn!='' && data.Result?.AllRisksLandTransitLandInfo.DeductibleYn!=null && data.Result?.AllRisksLandTransitLandInfo.DeductibleYn!='string'){
+              this.dedet17=data.Result?.AllRisksLandTransitLandInfo.DeductibleYn;
+            }
+            else{
+              this.dedet17='N';
+            } 
           }
-        }
-        if(data.Result?.PostParcelCourierInfo){
-          this.icc_10=data.Result?.PostParcelCourierInfo;
-          if(data.Result?.PostParcelCourierInfo.DeductibleYn!='' && data.Result?.PostParcelCourierInfo.DeductibleYn!=null && data.Result?.PostParcelCourierInfo.DeductibleYn!='string'){
-            this.dedet10=data.Result?.PostParcelCourierInfo.DeductibleYn;
-          }
-          else{
-            this.dedet10='N';
-          }
-        }
-        if(data.Result?.IccAirCargoAirInfo){
-          this.icc_11=data.Result?.IccAirCargoAirInfo;
-          if(data.Result?.IccAirCargoAirInfo.DeductibleYn!='' && data.Result?.IccAirCargoAirInfo.DeductibleYn!=null && data.Result?.IccAirCargoAirInfo.DeductibleYn!='string'){
-            this.dedet11=data.Result?.IccAirCargoAirInfo.DeductibleYn;
-          }
-          else{
-            this.dedet11='N';
-          }
-        }
-        if(data.Result?.IccAirCargoAllRisksInfo){
-          this.icc_12=data.Result?.IccAirCargoAllRisksInfo;
-          if(data.Result?.IccAirCargoAllRisksInfo.DeductibleYn!='' && data.Result?.IccAirCargoAllRisksInfo.DeductibleYn!=null && data.Result?.IccAirCargoAllRisksInfo.DeductibleYn!='string'){
-            this.dedet12=data.Result?.IccAirCargoAllRisksInfo.DeductibleYn;
-          }
-          else{
-            this.dedet12='N';
-          }
-        }
-        if(data.Result?.CoverageReferralInfo){
-          this.icc_13=data.Result?.CoverageReferralInfo;
-          if(data.Result?.CoverageReferralInfo.DeductibleYn!='' && data.Result?.CoverageReferralInfo.DeductibleYn!=null && data.Result?.CoverageReferralInfo.DeductibleYn!='string'){
-            this.dedet13=data.Result?.CoverageReferralInfo.DeductibleYn;
-          }
-          else{
-            this.dedet13='N';
+          if(data.Result?.AllRisksAirSeaLandInfo){
+            this.icc_18=data.Result?.AllRisksAirSeaLandInfo;
+            if(data.Result?.AllRisksAirSeaLandInfo.DeductibleYn!='' && data.Result?.AllRisksAirSeaLandInfo.DeductibleYn!=null && data.Result?.AllRisksAirSeaLandInfo.DeductibleYn!='string'){
+              this.dedet18=data.Result?.AllRisksAirSeaLandInfo.DeductibleYn;
+            }
+            else{
+              this.dedet18='N';
+            } 
           } 
-        }
-        if(data.Result?.AllRisksSeaAndLandInfo){
-          this.icc_14=data.Result?.AllRisksSeaAndLandInfo;
-          if(data.Result?.AllRisksSeaAndLandInfo.DeductibleYn!='' && data.Result?.AllRisksSeaAndLandInfo.DeductibleYn!=null && data.Result?.AllRisksSeaAndLandInfo.DeductibleYn!='string'){
-            this.dedet14=data.Result?.AllRisksSeaAndLandInfo.DeductibleYn;
+          if(data.Result?.AllRisksAirAndLandInfo){
+            this.icc_19=data.Result?.AllRisksAirAndLandInfo;
+            if(data.Result?.AllRisksAirAndLandInfo.DeductibleYn!='' && data.Result?.AllRisksAirAndLandInfo.DeductibleYn!=null && data.Result?.AllRisksAirAndLandInfo.DeductibleYn!='string'){
+              this.dedet19=data.Result?.AllRisksAirAndLandInfo.DeductibleYn;
+            }
+            else{
+              this.dedet19='N';
+            } 
           }
-          else{
-            this.dedet14='N';
-          } 
-        }
-        if(data.Result?.AllRisksSeaAndAirInfo){
-          this.icc_15=data.Result?.AllRisksSeaAndAirInfo;
-          if(data.Result?.AllRisksSeaAndAirInfo.DeductibleYn!='' && data.Result?.AllRisksSeaAndAirInfo.DeductibleYn!=null && data.Result?.AllRisksSeaAndAirInfo.DeductibleYn!='string'){
-            this.dedet15=data.Result?.AllRisksSeaAndAirInfo.DeductibleYn;
-          }
-          else{
-            this.dedet15='N';
-          } 
-        }
-        if(data.Result?.AllRisksParcelPostAirInfo){
-          this.icc_16=data.Result?.AllRisksParcelPostAirInfo;
-          if(data.Result?.AllRisksParcelPostAirInfo.DeductibleYn!='' && data.Result?.AllRisksParcelPostAirInfo.DeductibleYn!=null && data.Result?.AllRisksParcelPostAirInfo.DeductibleYn!='string'){
-            this.dedet16=data.Result?.AllRisksParcelPostAirInfo.DeductibleYn;
-          }
-          else{
-            this.dedet16='N';
-          } 
-        }
-        if(data.Result?.AllRisksLandTransitLandInfo){
-          this.icc_17=data.Result?.AllRisksLandTransitLandInfo;
-          if(data.Result?.AllRisksLandTransitLandInfo.DeductibleYn!='' && data.Result?.AllRisksLandTransitLandInfo.DeductibleYn!=null && data.Result?.AllRisksLandTransitLandInfo.DeductibleYn!='string'){
-            this.dedet17=data.Result?.AllRisksLandTransitLandInfo.DeductibleYn;
-          }
-          else{
-            this.dedet17='N';
-          } 
-        }
-        if(data.Result?.AllRisksAirSeaLandInfo){
-          this.icc_18=data.Result?.AllRisksAirSeaLandInfo;
-          if(data.Result?.AllRisksAirSeaLandInfo.DeductibleYn!='' && data.Result?.AllRisksAirSeaLandInfo.DeductibleYn!=null && data.Result?.AllRisksAirSeaLandInfo.DeductibleYn!='string'){
-            this.dedet18=data.Result?.AllRisksAirSeaLandInfo.DeductibleYn;
-          }
-          else{
-            this.dedet18='N';
-          } 
-        } 
-        if(data.Result?.AllRisksAirAndLandInfo){
-          this.icc_19=data.Result?.AllRisksAirAndLandInfo;
-          if(data.Result?.AllRisksAirAndLandInfo.DeductibleYn!='' && data.Result?.AllRisksAirAndLandInfo.DeductibleYn!=null && data.Result?.AllRisksAirAndLandInfo.DeductibleYn!='string'){
-            this.dedet19=data.Result?.AllRisksAirAndLandInfo.DeductibleYn;
-          }
-          else{
-            this.dedet19='N';
-          } 
-        }
-        
-
-        //this.commodityForm.controls['ModeOfTransportId'].setValue(commodityForm.ModeOfTransportId);
-        this.commodityForm.controls['CommodityName'].setValue(commodityForm.CommodityName);
-        this.commodityForm.controls['CommodityRate'].setValue(commodityForm.CommodityRate);
-        this.commodityForm.controls['CoreApplicationCode'].setValue(commodityForm.CoreApplicationCode);
-        this.commodityForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(commodityForm.EffectiveDate));
-        this.commodityForm.controls['remarks'].setValue(commodityForm.Remarks);
-        this.commodityForm.controls['status'].setValue(commodityForm.Status);
-        //this.commodityForm.controls['Clauses'].setValue(commodityForm.icc_a.ClausesInfo);
-         //console.log('kkkkkkkkkkk',this.commodityForm.controls['Clauses'].setValue(commodityForm.icc_a.ClausesInfo))
-        //this.commodityForm.controls['Exclusion1'].setValue(commodityForm.icc_a.ExclusionInfo);
-        //this.commodityForm.controls['Warranty1'].setValue(commodityForm.icc_a.WarrantyInfo);
-        //this.commodityForm.controls['War1'].setValue(commodityForm.icc_a.WarInfo);
-        //this.commodityForm.controls['Clauses'].setValue(this.icc_a.ClausesInfo) 
-
-        if(this.icc_a){
-        let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-        if(this.icc_a.ClausesInfo!="string" && this.icc_a.ClausesInfo!='' &&this.icc_a.ClausesInfo!=null){
-          this.commodityForm.controls['Clauses'].setValue(this.icc_a.ClausesInfo);
-        } 
-        else this.commodityForm.controls['Clauses'].setValue('');
-        if(this.icc_a.WarrantyInfo!="string" && this.icc_a.WarrantyInfo!='' &&this.icc_a.WarrantyInfo!=null){
-          this.commodityForm.controls['Warranty1'].setValue(this.icc_a.WarrantyInfo);
-        }
-        else this.commodityForm.controls['Warranty1'].setValue('');
-        if(this.icc_a.WarInfo!="string" && this.icc_a.WarInfo!='' &&this.icc_a.WarInfo!=null){
-          this.commodityForm.controls['War1'].setValue(this.icc_a.WarInfo);  
-        }
-        else this.commodityForm.controls['War1'].setValue('');
-        if(this.icc_a.ExclusionInfo!="string" && this.icc_a.ExclusionInfo!='' &&this.icc_a.ExclusionInfo!=null){
-          this.commodityForm.controls['Exclusion1'].setValue(this.icc_a.ExclusionInfo);
-        }
-        else this.commodityForm.controls['Exclusion1'].setValue('');
-        this.commodityForm.controls['dedet1'].setValue(this.de1);
-      }
-      if(this.icc_b){
+          //this.commodityForm.controls['ModeOfTransportId'].setValue(commodityForm.ModeOfTransportId);
+          this.commodityForm.controls['CommodityName'].setValue(commodityForm.CommodityName);
+          this.commodityForm.controls['CommodityRate'].setValue(commodityForm.CommodityRate);
+          this.commodityForm.controls['CoreApplicationCode'].setValue(commodityForm.CoreApplicationCode);
+          this.commodityForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(commodityForm.EffectiveDate));
+          this.commodityForm.controls['remarks'].setValue(commodityForm.Remarks);
+          this.commodityForm.controls['status'].setValue(commodityForm.Status);
+          //this.commodityForm.controls['Clauses'].setValue(commodityForm.icc_a.ClausesInfo);
+           //console.log('kkkkkkkkkkk',this.commodityForm.controls['Clauses'].setValue(commodityForm.icc_a.ClausesInfo))
+          //this.commodityForm.controls['Exclusion1'].setValue(commodityForm.icc_a.ExclusionInfo);
+          //this.commodityForm.controls['Warranty1'].setValue(commodityForm.icc_a.WarrantyInfo);
+          //this.commodityForm.controls['War1'].setValue(commodityForm.icc_a.WarInfo);
+          //this.commodityForm.controls['Clauses'].setValue(this.icc_a.ClausesInfo) 
+  
+              if(this.icc_a){
           let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-          console.log('kkkkkkkkkkkk',this.icc_b.ClausesInfo)
-          if(this.icc_b.ClausesInfo!="string" && this.icc_b.ClausesInfo!='' &&this.icc_b.ClausesInfo!=null){
-            this.commodityForm.controls['Clauses2'].setValue(this.icc_b.ClausesInfo);
+          if(this.icc_a.ClausesInfo!="string" && this.icc_a.ClausesInfo!='' &&this.icc_a.ClausesInfo!=null){
+            this.commodityForm.controls['Clauses'].setValue(this.icc_a.ClausesInfo);
+          } 
+          else this.commodityForm.controls['Clauses'].setValue('');
+          if(this.icc_a.WarrantyInfo!="string" && this.icc_a.WarrantyInfo!='' &&this.icc_a.WarrantyInfo!=null){
+            this.commodityForm.controls['Warranty1'].setValue(this.icc_a.WarrantyInfo);
           }
-          else this.commodityForm.controls['Clauses2'].setValue(Clauses1);
-          if(this.icc_b.WarrantyInfo!="string" && this.icc_b.WarrantyInfo!='' &&this.icc_b.WarrantyInfo!=null){
-            this.commodityForm.controls['Warranty2'].setValue(this.icc_b.WarrantyInfo);
+          else this.commodityForm.controls['Warranty1'].setValue('');
+          if(this.icc_a.WarInfo!="string" && this.icc_a.WarInfo!='' &&this.icc_a.WarInfo!=null){
+            this.commodityForm.controls['War1'].setValue(this.icc_a.WarInfo);  
           }
-          else this.commodityForm.controls['Warranty2'].setValue(Warranty1)
-          if(this.icc_b.WarInfo!="string" && this.icc_b.WarInfo!='' &&this.icc_b.WarInfo!=null){
-            this.commodityForm.controls['War2'].setValue(this.icc_b.WarInfo);
+          else this.commodityForm.controls['War1'].setValue('');
+          if(this.icc_a.ExclusionInfo!="string" && this.icc_a.ExclusionInfo!='' &&this.icc_a.ExclusionInfo!=null){
+            this.commodityForm.controls['Exclusion1'].setValue(this.icc_a.ExclusionInfo);
           }
-          else this.commodityForm.controls['War2'].setValue('')
-          if(this.icc_b.ExclusionInfo!="string" && this.icc_b.ExclusionInfo!='' &&this.icc_b.ExclusionInfo!=null){
-            this.commodityForm.controls['Exclusion2'].setValue(this.icc_b.ExclusionInfo);
-          }
-          else this.commodityForm.controls['Exclusion2'].setValue('')
-          this.commodityForm.controls['dedet2'].setValue(this.de2);
-      }   
-            if(this.icc_c){
-              let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-              console.log('kkkkkkkkkkkk',this.icc_c.ClausesInfo)
-              if(this.icc_c.ClausesInfo!="string" && this.icc_c.ClausesInfo!='' &&this.icc_c.ClausesInfo!=null){
-                Clauses1 = this.icc_c.ClausesInfo;
+          else this.commodityForm.controls['Exclusion1'].setValue('');
+          this.commodityForm.controls['dedet1'].setValue(this.de1);
               }
-              if(this.icc_c.WarrantyInfo!="string" && this.icc_c.WarrantyInfo!='' &&this.icc_c.WarrantyInfo!=null){
-                Warranty1 = this.icc_c.WarrantyInfo;
-              }
-              if(this.icc_c.WarInfo!="string" && this.icc_c.WarInfo!='' &&this.icc_c.WarInfo!=null){
-                War1 = this.icc_c.WarInfo
-              }
-              if(this.icc_c.ExclusionInfo!="string" && this.icc_c.ExclusionInfo!='' &&this.icc_c.ExclusionInfo!=null){
-                Exclusion1 = this.icc_c.ExclusionInfo
-              }
-              this.commodityForm.controls['Clauses3'].setValue(Clauses1);
-              this.commodityForm.controls['dedet3'].setValue(this.dedet3);
-              this.commodityForm.controls['Warranty3'].setValue(Warranty1);
-              this.commodityForm.controls['War3'].setValue(War1);
-              this.commodityForm.controls['Exclusion3'].setValue(Exclusion1);
-            }    
-              if(this.icc_4){
-                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-              
-              if(this.icc_4.ClausesInfo!="string" && this.icc_4.ClausesInfo!='' &&this.icc_4.ClausesInfo!=null){
-                  Clauses1 = this.icc_4.ClausesInfo
-              }
-              if(this.icc_4.WarrantyInfo!="string" && this.icc_4.WarrantyInfo!='' &&this.icc_4.WarrantyInfo!=null){
-                  Warranty1 = this.icc_4.WarrantyInfo
-              }
-              if(this.icc_4.WarInfo!="string" && this.icc_4.WarInfo!='' &&this.icc_4.WarInfo!=null){
-                  War1 = this.icc_4.WarInfo
-              }
-              if(this.icc_4.ExclusionInfo!="string" && this.icc_4.ExclusionInfo!='' &&this.icc_4.ExclusionInfo!=null){
-                Exclusion1 = this.icc_4.ExclusionInfo
-              }
-                this.commodityForm.controls['Clauses4'].setValue(Clauses1);
-                this.commodityForm.controls['dedet4'].setValue(this.dedet4);
-                this.commodityForm.controls['Warranty4'].setValue(Warranty1);
-                this.commodityForm.controls['War4'].setValue(War1);
-                this.commodityForm.controls['Exclusion4'].setValue(Exclusion1);
-            }  
-                if(this.icc_5){
+              if(this.icc_b){
                   let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-                if(this.icc_5.ClausesInfo!="string" && this.icc_5.ClausesInfo!='' &&this.icc_5.ClausesInfo!=null){
-                    Clauses1 = this.icc_5.ClausesInfo
-                }
-              if(this.icc_5.WarrantyInfo){
-                for (let index = 0; index < this.icc_5.WarrantyInfo.length; index++) {
-                  const element = this.icc_5.WarrantyInfo;
-                  console.log('ccccllllll',element)
-                    Warranty1 =element;
-                }
-              }
-              if(this.icc_5.WarInfo){
-                for (let index = 0; index < this.icc_5.WarInfo.length; index++) {
-                  const element = this.icc_5.WarInfo;
-                    War1 = element;
-                }
-                  
-              }
-              if(this.icc_5.ExclusionInfo){
-                for (let index = 0; index < this.icc_5.ExclusionInfo.length; index++) {
-                  const element = this.icc_5.ExclusionInfo;
-                  //console.log('ccccllllll',element)
-                    Exclusion1 = element;
-                }
-              }
-                this.commodityForm.controls['Clauses5'].setValue(Clauses1);
-                this.commodityForm.controls['dedet5'].setValue(this.dedet5);
-              this.commodityForm.controls['Warranty5'].setValue(Warranty1);
-            this.commodityForm.controls['War5'].setValue(War1);
-          this.commodityForm.controls['Exclusion5'].setValue(Exclusion1);
-                  }  
-                  if(this.icc_6){
-                    let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-                  console.log('kkkkkkkkkkkk',this.icc_6.ClausesInfo)
-                  if(this.icc_6.ClausesInfo){
-                  for (let index = 0; index < this.icc_6.ClausesInfo.length; index++) {
-                    const element = this.icc_6.ClausesInfo[index];
-                    console.log('ccccllllll',element)
-                     Clauses1 = element;
-                    
+                  console.log('kkkkkkkkkkkk',this.icc_b.ClausesInfo)
+                  if(this.icc_b.ClausesInfo!="string" && this.icc_b.ClausesInfo!='' &&this.icc_b.ClausesInfo!=null){
+                    this.commodityForm.controls['Clauses2'].setValue(this.icc_b.ClausesInfo);
                   }
+                  else this.commodityForm.controls['Clauses2'].setValue(Clauses1);
+                  if(this.icc_b.WarrantyInfo!="string" && this.icc_b.WarrantyInfo!='' &&this.icc_b.WarrantyInfo!=null){
+                    this.commodityForm.controls['Warranty2'].setValue(this.icc_b.WarrantyInfo);
+                  }
+                  else this.commodityForm.controls['Warranty2'].setValue(Warranty1)
+                  if(this.icc_b.WarInfo!="string" && this.icc_b.WarInfo!='' &&this.icc_b.WarInfo!=null){
+                    this.commodityForm.controls['War2'].setValue(this.icc_b.WarInfo);
+                  }
+                  else this.commodityForm.controls['War2'].setValue('')
+                  if(this.icc_b.ExclusionInfo!="string" && this.icc_b.ExclusionInfo!='' &&this.icc_b.ExclusionInfo!=null){
+                    this.commodityForm.controls['Exclusion2'].setValue(this.icc_b.ExclusionInfo);
+                  }
+                  else this.commodityForm.controls['Exclusion2'].setValue('')
+                  this.commodityForm.controls['dedet2'].setValue(this.de2);
+              }   
+              if(this.icc_c){
+                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                console.log('kkkkkkkkkkkk',this.icc_c.ClausesInfo)
+                if(this.icc_c.ClausesInfo!="string" && this.icc_c.ClausesInfo!='' &&this.icc_c.ClausesInfo!=null){
+                  Clauses1 = this.icc_c.ClausesInfo;
                 }
-                if(this.icc_6.WarrantyInfo){
-                  for (let index = 0; index < this.icc_6.WarrantyInfo.length; index++) {
-                    const element = this.icc_6.WarrantyInfo;
+                if(this.icc_c.WarrantyInfo!="string" && this.icc_c.WarrantyInfo!='' &&this.icc_c.WarrantyInfo!=null){
+                  Warranty1 = this.icc_c.WarrantyInfo;
+                }
+                if(this.icc_c.WarInfo!="string" && this.icc_c.WarInfo!='' &&this.icc_c.WarInfo!=null){
+                  War1 = this.icc_c.WarInfo
+                }
+                if(this.icc_c.ExclusionInfo!="string" && this.icc_c.ExclusionInfo!='' &&this.icc_c.ExclusionInfo!=null){
+                  Exclusion1 = this.icc_c.ExclusionInfo
+                }
+                this.commodityForm.controls['Clauses3'].setValue(Clauses1);
+                this.commodityForm.controls['dedet3'].setValue(this.dedet3);
+                this.commodityForm.controls['Warranty3'].setValue(Warranty1);
+                this.commodityForm.controls['War3'].setValue(War1);
+                this.commodityForm.controls['Exclusion3'].setValue(Exclusion1);
+              }    
+                if(this.icc_4){
+                  let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                
+                if(this.icc_4.ClausesInfo!="string" && this.icc_4.ClausesInfo!='' &&this.icc_4.ClausesInfo!=null){
+                    Clauses1 = this.icc_4.ClausesInfo
+                }
+                if(this.icc_4.WarrantyInfo!="string" && this.icc_4.WarrantyInfo!='' &&this.icc_4.WarrantyInfo!=null){
+                    Warranty1 = this.icc_4.WarrantyInfo
+                }
+                if(this.icc_4.WarInfo!="string" && this.icc_4.WarInfo!='' &&this.icc_4.WarInfo!=null){
+                    War1 = this.icc_4.WarInfo
+                }
+                if(this.icc_4.ExclusionInfo!="string" && this.icc_4.ExclusionInfo!='' &&this.icc_4.ExclusionInfo!=null){
+                  Exclusion1 = this.icc_4.ExclusionInfo
+                }
+                  this.commodityForm.controls['Clauses4'].setValue(Clauses1);
+                  this.commodityForm.controls['dedet4'].setValue(this.dedet4);
+                  this.commodityForm.controls['Warranty4'].setValue(Warranty1);
+                  this.commodityForm.controls['War4'].setValue(War1);
+                  this.commodityForm.controls['Exclusion4'].setValue(Exclusion1);
+              }  
+              if(this.icc_5){
+                    let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                  if(this.icc_5.ClausesInfo!="string" && this.icc_5.ClausesInfo!='' &&this.icc_5.ClausesInfo!=null){
+                      Clauses1 = this.icc_5.ClausesInfo
+                  }
+                if(this.icc_5.WarrantyInfo){
+                  for (let index = 0; index < this.icc_5.WarrantyInfo.length; index++) {
+                    const element = this.icc_5.WarrantyInfo;
                     console.log('ccccllllll',element)
                       Warranty1 =element;
                   }
                 }
-                if(this.icc_6.WarInfo){
-                  for (let index = 0; index < this.icc_6.WarInfo.length; index++) {
-                    const element = this.icc_6.WarInfo;
+                if(this.icc_5.WarInfo){
+                  for (let index = 0; index < this.icc_5.WarInfo.length; index++) {
+                    const element = this.icc_5.WarInfo;
                       War1 = element;
                   }
                     
                 }
-                if(this.icc_6.ExclusionInfo){
-                  for (let index = 0; index < this.icc_6.ExclusionInfo.length; index++) {
-                    const element = this.icc_6.ExclusionInfo;
+                if(this.icc_5.ExclusionInfo){
+                  for (let index = 0; index < this.icc_5.ExclusionInfo.length; index++) {
+                    const element = this.icc_5.ExclusionInfo;
                     //console.log('ccccllllll',element)
                       Exclusion1 = element;
                   }
                 }
-                  this.commodityForm.controls['Clauses6'].setValue(Clauses1);
-                  this.commodityForm.controls['dedet6'].setValue(this.dedet6);
-                  this.commodityForm.controls['Warranty6'].setValue(Warranty1);
-                  this.commodityForm.controls['War6'].setValue(War1);
-                  this.commodityForm.controls['Exclusion6'].setValue(Exclusion1);
-                    }  
-                    if(this.icc_7){
+                  this.commodityForm.controls['Clauses5'].setValue(Clauses1);
+                  this.commodityForm.controls['dedet5'].setValue(this.dedet5);
+                this.commodityForm.controls['Warranty5'].setValue(Warranty1);
+              this.commodityForm.controls['War5'].setValue(War1);
+            this.commodityForm.controls['Exclusion5'].setValue(Exclusion1);
+               }  
+              if(this.icc_6){
                       let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-                    console.log('kkkkkkkkkkkk',this.icc_7.ClausesInfo)
-                    if(this.icc_7.ClausesInfo){
-                    for (let index = 0; index < this.icc_7.ClausesInfo.length; index++) {
-                      const element = this.icc_7.ClausesInfo[index];
+                    console.log('kkkkkkkkkkkk',this.icc_6.ClausesInfo)
+                    if(this.icc_6.ClausesInfo){
+                    for (let index = 0; index < this.icc_6.ClausesInfo.length; index++) {
+                      const element = this.icc_6.ClausesInfo;
                       console.log('ccccllllll',element)
                        Clauses1 = element;
                       
                     }
                   }
-                  if(this.icc_7.WarrantyInfo){
-                    for (let index = 0; index < this.icc_7.WarrantyInfo.length; index++) {
-                      const element = this.icc_7.WarrantyInfo;
+                  if(this.icc_6.WarrantyInfo){
+                    for (let index = 0; index < this.icc_6.WarrantyInfo.length; index++) {
+                      const element = this.icc_6.WarrantyInfo;
                       console.log('ccccllllll',element)
                         Warranty1 =element;
                     }
                   }
-                  if(this.icc_7.WarInfo){
-                    for (let index = 0; index < this.icc_7.WarInfo.length; index++) {
-                      const element = this.icc_7.WarInfo;
+                  if(this.icc_6.WarInfo){
+                    for (let index = 0; index < this.icc_6.WarInfo.length; index++) {
+                      const element = this.icc_6.WarInfo;
                         War1 = element;
                     }
                       
                   }
-                  if(this.icc_7.ExclusionInfo){
-                    for (let index = 0; index < this.icc_7.ExclusionInfo.length; index++) {
-                      const element = this.icc_7.ExclusionInfo;
+                  if(this.icc_6.ExclusionInfo){
+                    for (let index = 0; index < this.icc_6.ExclusionInfo.length; index++) {
+                      const element = this.icc_6.ExclusionInfo;
                       //console.log('ccccllllll',element)
                         Exclusion1 = element;
                     }
                   }
-                    this.commodityForm.controls['Clauses7'].setValue(Clauses1);
-                    this.commodityForm.controls['dedet7'].setValue(this.dedet7);
-                  this.commodityForm.controls['Warranty7'].setValue(Warranty1);
-                this.commodityForm.controls['War7'].setValue(War1);
-              this.commodityForm.controls['Exclusion7'].setValue(Exclusion1);
-                      }  
-
-                      if(this.icc_8){
+                    this.commodityForm.controls['Clauses6'].setValue(this.icc_6.ClausesInfo);
+                    this.commodityForm.controls['dedet6'].setValue(this.dedet6);
+                    this.commodityForm.controls['Warranty6'].setValue(Warranty1);
+                    this.commodityForm.controls['War6'].setValue(War1);
+                    this.commodityForm.controls['Exclusion6'].setValue(Exclusion1);
+              }  
+              if(this.icc_7){
                         let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-                      console.log('kkkkkkkkkkkk',this.icc_8.ClausesInfo)
-                      if(this.icc_8.ClausesInfo){
-                      for (let index = 0; index < this.icc_8.ClausesInfo.length; index++) {
-                        const element = this.icc_8.ClausesInfo[index];
+                      console.log('kkkkkkkkkkkk',this.icc_7.ClausesInfo)
+                      if(this.icc_7.ClausesInfo){
+                      for (let index = 0; index < this.icc_7.ClausesInfo.length; index++) {
+                        const element = this.icc_7.ClausesInfo;
                         console.log('ccccllllll',element)
                          Clauses1 = element;
                         
                       }
                     }
-                    if(this.icc_8.WarrantyInfo){
-                      for (let index = 0; index < this.icc_8.WarrantyInfo.length; index++) {
-                        const element = this.icc_8.WarrantyInfo;
+                    if(this.icc_7.WarrantyInfo){
+                      for (let index = 0; index < this.icc_7.WarrantyInfo.length; index++) {
+                        const element = this.icc_7.WarrantyInfo;
                         console.log('ccccllllll',element)
                           Warranty1 =element;
                       }
                     }
-                    if(this.icc_8.WarInfo){
-                      for (let index = 0; index < this.icc_8.WarInfo.length; index++) {
-                        const element = this.icc_8.WarInfo;
+                    if(this.icc_7.WarInfo){
+                      for (let index = 0; index < this.icc_7.WarInfo.length; index++) {
+                        const element = this.icc_7.WarInfo;
                           War1 = element;
                       }
                         
                     }
-                    if(this.icc_8.ExclusionInfo){
-                      for (let index = 0; index < this.icc_8.ExclusionInfo.length; index++) {
-                        const element = this.icc_8.ExclusionInfo;
+                    if(this.icc_7.ExclusionInfo){
+                      for (let index = 0; index < this.icc_7.ExclusionInfo.length; index++) {
+                        const element = this.icc_7.ExclusionInfo;
                         //console.log('ccccllllll',element)
                           Exclusion1 = element;
                       }
                     }
-                      this.commodityForm.controls['Clauses8'].setValue(Clauses1);
-                      this.commodityForm.controls['dedet8'].setValue(this.dedet8);
-                    this.commodityForm.controls['Warranty8'].setValue(Warranty1);
-                  this.commodityForm.controls['War8'].setValue(War1);
-                this.commodityForm.controls['Exclusion8'].setValue(Exclusion1);
-                        }  
-                        if(this.icc_9){
+                      this.commodityForm.controls['Clauses7'].setValue(Clauses1);
+                      this.commodityForm.controls['dedet7'].setValue(this.dedet7);
+                      this.commodityForm.controls['Warranty7'].setValue(Warranty1);
+                      this.commodityForm.controls['War7'].setValue(War1);
+                      this.commodityForm.controls['Exclusion7'].setValue(Exclusion1);
+              }  
+              if(this.icc_8){
                           let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-                        console.log('kkkkkkkkkkkk',this.icc_9.ClausesInfo)
-                        if(this.icc_9.ClausesInfo){
-                        for (let index = 0; index < this.icc_9.ClausesInfo.length; index++) {
-                          const element = this.icc_9.ClausesInfo[index];
+                        console.log('kkkkkkkkkkkk',this.icc_8.ClausesInfo)
+                        if(this.icc_8.ClausesInfo){
+                        for (let index = 0; index < this.icc_8.ClausesInfo.length; index++) {
+                          const element = this.icc_8.ClausesInfo;
                           console.log('ccccllllll',element)
                            Clauses1 = element;
                           
                         }
                       }
-                      if(this.icc_9.WarrantyInfo){
-                        for (let index = 0; index < this.icc_9.WarrantyInfo.length; index++) {
-                          const element = this.icc_9.WarrantyInfo;
+                      if(this.icc_8.WarrantyInfo){
+                        for (let index = 0; index < this.icc_8.WarrantyInfo.length; index++) {
+                          const element = this.icc_8.WarrantyInfo;
                           console.log('ccccllllll',element)
                             Warranty1 =element;
                         }
                       }
-                      if(this.icc_9.WarInfo){
-                        for (let index = 0; index < this.icc_9.WarInfo.length; index++) {
-                          const element = this.icc_9.WarInfo;
+                      if(this.icc_8.WarInfo){
+                        for (let index = 0; index < this.icc_8.WarInfo.length; index++) {
+                          const element = this.icc_8.WarInfo;
                             War1 = element;
                         }
                           
                       }
-                      if(this.icc_9.ExclusionInfo){
-                        for (let index = 0; index < this.icc_9.ExclusionInfo.length; index++) {
-                          const element = this.icc_9.ExclusionInfo;
+                      if(this.icc_8.ExclusionInfo){
+                        for (let index = 0; index < this.icc_8.ExclusionInfo.length; index++) {
+                          const element = this.icc_8.ExclusionInfo;
                           //console.log('ccccllllll',element)
                             Exclusion1 = element;
                         }
                       }
-                        this.commodityForm.controls['Clauses9'].setValue(Clauses1);
-                        this.commodityForm.controls['dedet9'].setValue(this.dedet9);
-                        this.commodityForm.controls['Warranty9'].setValue(Warranty1);
-                        this.commodityForm.controls['War9'].setValue(War1);
-                        this.commodityForm.controls['Exclusion9'].setValue(Exclusion1);
-                          }  
-                          if(this.icc_10){
+                        this.commodityForm.controls['Clauses8'].setValue(Clauses1);
+                        this.commodityForm.controls['dedet8'].setValue(this.dedet8);
+                      this.commodityForm.controls['Warranty8'].setValue(Warranty1);
+                    this.commodityForm.controls['War8'].setValue(War1);
+                  this.commodityForm.controls['Exclusion8'].setValue(Exclusion1);
+              }  
+              if(this.icc_9){
                             let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
-                          console.log('kkkkkkkkkkkk',this.icc_10.ClausesInfo)
-                          if(this.icc_10.ClausesInfo){
-                          for (let index = 0; index < this.icc_10.ClausesInfo.length; index++) {
-                            const element = this.icc_10.ClausesInfo[index];
+                          console.log('kkkkkkkkkkkk',this.icc_9.ClausesInfo)
+                          if(this.icc_9.ClausesInfo){
+                          for (let index = 0; index < this.icc_9.ClausesInfo.length; index++) {
+                            const element = this.icc_9.ClausesInfo;
                             console.log('ccccllllll',element)
                              Clauses1 = element;
                             
                           }
                         }
-                        if(this.icc_10.WarrantyInfo){
-                          for (let index = 0; index < this.icc_10.WarrantyInfo.length; index++) {
-                            const element = this.icc_10.WarrantyInfo;
+                        if(this.icc_9.WarrantyInfo){
+                          for (let index = 0; index < this.icc_9.WarrantyInfo.length; index++) {
+                            const element = this.icc_9.WarrantyInfo;
                             console.log('ccccllllll',element)
                               Warranty1 =element;
                           }
                         }
-                        if(this.icc_10.WarInfo){
-                          for (let index = 0; index < this.icc_10.WarInfo.length; index++) {
-                            const element = this.icc_10.WarInfo;
+                        if(this.icc_9.WarInfo){
+                          for (let index = 0; index < this.icc_9.WarInfo.length; index++) {
+                            const element = this.icc_9.WarInfo;
                               War1 = element;
                           }
                             
                         }
-                        if(this.icc_10.ExclusionInfo){
-                          for (let index = 0; index < this.icc_10.ExclusionInfo.length; index++) {
-                            const element = this.icc_10.ExclusionInfo;
+                        if(this.icc_9.ExclusionInfo){
+                          for (let index = 0; index < this.icc_9.ExclusionInfo.length; index++) {
+                            const element = this.icc_9.ExclusionInfo;
                             //console.log('ccccllllll',element)
                               Exclusion1 = element;
                           }
                         }
-                          this.commodityForm.controls['Clauses10'].setValue(Clauses1);
-                          this.commodityForm.controls['dedet10'].setValue(this.dedet10);
-                        this.commodityForm.controls['Warranty10'].setValue(Warranty1);
-                      this.commodityForm.controls['War10'].setValue(War1);
-                    this.commodityForm.controls['Exclusion10'].setValue(Exclusion1);
-                            }  
+                          this.commodityForm.controls['Clauses9'].setValue(Clauses1);
+                          this.commodityForm.controls['dedet9'].setValue(this.dedet9);
+                          this.commodityForm.controls['Warranty9'].setValue(Warranty1);
+                          this.commodityForm.controls['War9'].setValue(War1);
+                          this.commodityForm.controls['Exclusion9'].setValue(Exclusion1);
+              }  
+              if(this.icc_10){
+                              let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                            console.log('kkkkkkkkkkkk',this.icc_10.ClausesInfo)
+                            if(this.icc_10.ClausesInfo){
+                            for (let index = 0; index < this.icc_10.ClausesInfo.length; index++) {
+                              const element = this.icc_10.ClausesInfo;
+                              console.log('ccccllllll',element)
+                               Clauses1 = element;
                               
-                          
-                        
-                      
-                    
-
-                            
+                            }
+                          }
+                          if(this.icc_10.WarrantyInfo){
+                            for (let index = 0; index < this.icc_10.WarrantyInfo.length; index++) {
+                              const element = this.icc_10.WarrantyInfo;
+                              console.log('ccccllllll',element)
+                                Warranty1 =element;
+                            }
+                          }
+                          if(this.icc_10.WarInfo){
+                            for (let index = 0; index < this.icc_10.WarInfo.length; index++) {
+                              const element = this.icc_10.WarInfo;
+                                War1 = element;
+                            }
+                              
+                          }
+                          if(this.icc_10.ExclusionInfo){
+                            for (let index = 0; index < this.icc_10.ExclusionInfo.length; index++) {
+                              const element = this.icc_10.ExclusionInfo;
+                              //console.log('ccccllllll',element)
+                                Exclusion1 = element;
+                            }
+                          }
+                            this.commodityForm.controls['Clauses10'].setValue(Clauses1);
+                            this.commodityForm.controls['dedet10'].setValue(this.dedet10);
+                          this.commodityForm.controls['Warranty10'].setValue(Warranty1);
+                        this.commodityForm.controls['War10'].setValue(War1);
+                      this.commodityForm.controls['Exclusion10'].setValue(Exclusion1);
+              }
+              if(this.icc_11){
+                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+              if(this.icc_12.ClausesInfo){
+                for (let index = 0; index < this.icc_11.ClausesInfo.length; index++) {
+                  const element = this.icc_11.ClausesInfo;
+                  console.log('ccccllllll',element)
+                  Clauses1 = element;
+                  
+                }
+              }
+              if(this.icc_11.WarrantyInfo){
+                for (let index = 0; index < this.icc_11.WarrantyInfo.length; index++) {
+                  const element = this.icc_11.WarrantyInfo;
+                  console.log('ccccllllll',element)
+                    Warranty1 =element;
+                }
+              }
+              if(this.icc_11.WarInfo){
+                for (let index = 0; index < this.icc_11.WarInfo.length; index++) {
+                  const element = this.icc_11.WarInfo;
+                    War1 = element;
+                }
+                  
+              }
+              if(this.icc_11.ExclusionInfo){
+                for (let index = 0; index < this.icc_11.ExclusionInfo.length; index++) {
+                  const element = this.icc_11.ExclusionInfo;
+                  //console.log('ccccllllll',element)
+                    Exclusion1 = element;
+                }
+              }
+              this.commodityForm.controls['Clauses11'].setValue(Clauses1);
+              this.commodityForm.controls['dedet11'].setValue(this.dedet12);
+            this.commodityForm.controls['Warranty11'].setValue(Warranty1);
+          this.commodityForm.controls['War11'].setValue(War1);
+        this.commodityForm.controls['Exclusion11'].setValue(Exclusion1);
+              }
+              if(this.icc_12){
+                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+              if(this.icc_12.ClausesInfo){
+                for (let index = 0; index < this.icc_12.ClausesInfo.length; index++) {
+                  const element = this.icc_12.ClausesInfo;
+                  console.log('ccccllllll',element)
+                  Clauses1 = element;
+                  
+                }
+              }
+              if(this.icc_12.WarrantyInfo){
+                for (let index = 0; index < this.icc_12.WarrantyInfo.length; index++) {
+                  const element = this.icc_12.WarrantyInfo;
+                  console.log('ccccllllll',element)
+                    Warranty1 =element;
+                }
+              }
+              if(this.icc_12.WarInfo){
+                for (let index = 0; index < this.icc_12.WarInfo.length; index++) {
+                  const element = this.icc_12.WarInfo;
+                    War1 = element;
+                }
+                  
+              }
+              if(this.icc_12.ExclusionInfo){
+                for (let index = 0; index < this.icc_12.ExclusionInfo.length; index++) {
+                  const element = this.icc_12.ExclusionInfo;
+                  //console.log('ccccllllll',element)
+                    Exclusion1 = element;
+                }
+              }
+              this.commodityForm.controls['Clauses12'].setValue(Clauses1);
+              this.commodityForm.controls['dedet12'].setValue(this.dedet12);
+            this.commodityForm.controls['Warranty12'].setValue(Warranty1);
+          this.commodityForm.controls['War12'].setValue(War1);
+        this.commodityForm.controls['Exclusion12'].setValue(Exclusion1);
+              }
+              if(this.icc_14){
+                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                            console.log('kkkkkkkkkkkk',this.icc_14.ClausesInfo)
+                            if(this.icc_14.ClausesInfo){
+                            for (let index = 0; index < this.icc_14.ClausesInfo.length; index++) {
+                              const element = this.icc_14.ClausesInfo;
+                              console.log('ccccllllll',element)
+                               Clauses1 = element;
+                              
+                            }
+                          }
+                          if(this.icc_14.WarrantyInfo){
+                            for (let index = 0; index < this.icc_14.WarrantyInfo.length; index++) {
+                              const element = this.icc_14.WarrantyInfo;
+                              console.log('ccccllllll',element)
+                                Warranty1 =element;
+                            }
+                          }
+                          if(this.icc_14.WarInfo){
+                            for (let index = 0; index < this.icc_14.WarInfo.length; index++) {
+                              const element = this.icc_14.WarInfo;
+                                War1 = element;
+                            }
+                              
+                          }
+                          if(this.icc_14.ExclusionInfo){
+                            for (let index = 0; index < this.icc_14.ExclusionInfo.length; index++) {
+                              const element = this.icc_14.ExclusionInfo;
+                              //console.log('ccccllllll',element)
+                                Exclusion1 = element;
+                            }
+                          }
+                            this.commodityForm.controls['Clauses14'].setValue(Clauses1);
+                            this.commodityForm.controls['dedet14'].setValue(this.dedet10);
+                          this.commodityForm.controls['Warranty14'].setValue(Warranty1);
+                        this.commodityForm.controls['War14'].setValue(War1);
+                      this.commodityForm.controls['Exclusion14'].setValue(Exclusion1);
+              }
+              if(this.icc_15){
+                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                            console.log('kkkkkkkkkkkk',this.icc_15.ClausesInfo)
+                            if(this.icc_15.ClausesInfo){
+                            for (let index = 0; index < this.icc_15.ClausesInfo.length; index++) {
+                              const element = this.icc_15.ClausesInfo;
+                              console.log('ccccllllll',element)
+                               Clauses1 = element;
+                              
+                            }
+                          }
+                          if(this.icc_15.WarrantyInfo){
+                            for (let index = 0; index < this.icc_15.WarrantyInfo.length; index++) {
+                              const element = this.icc_15.WarrantyInfo;
+                              console.log('ccccllllll',element)
+                                Warranty1 =element;
+                            }
+                          }
+                          if(this.icc_15.WarInfo){
+                            for (let index = 0; index < this.icc_15.WarInfo.length; index++) {
+                              const element = this.icc_14.WarInfo;
+                                War1 = element;
+                            }
+                              
+                          }
+                          if(this.icc_15.ExclusionInfo){
+                            for (let index = 0; index < this.icc_15.ExclusionInfo.length; index++) {
+                              const element = this.icc_15.ExclusionInfo;
+                              //console.log('ccccllllll',element)
+                                Exclusion1 = element;
+                            }
+                          }
+                            this.commodityForm.controls['Clauses15'].setValue(Clauses1);
+                            this.commodityForm.controls['dedet15'].setValue(this.dedet10);
+                          this.commodityForm.controls['Warranty15'].setValue(Warranty1);
+                        this.commodityForm.controls['War15'].setValue(War1);
+                      this.commodityForm.controls['Exclusion15'].setValue(Exclusion1);
+              }
+              if(this.icc_17){
+                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                            console.log('kkkkkkkkkkkk',this.icc_17.ClausesInfo)
+                            if(this.icc_15.ClausesInfo){
+                            for (let index = 0; index < this.icc_17.ClausesInfo.length; index++) {
+                              const element = this.icc_17.ClausesInfo;
+                              console.log('ccccllllll',element)
+                               Clauses1 = element;
+                              
+                            }
+                          }
+                          if(this.icc_17.WarrantyInfo){
+                            for (let index = 0; index < this.icc_17.WarrantyInfo.length; index++) {
+                              const element = this.icc_17.WarrantyInfo;
+                              console.log('ccccllllll',element)
+                                Warranty1 =element;
+                            }
+                          }
+                          if(this.icc_17.WarInfo){
+                            for (let index = 0; index < this.icc_17.WarInfo.length; index++) {
+                              const element = this.icc_17.WarInfo;
+                                War1 = element;
+                            }
+                              
+                          }
+                          if(this.icc_17.ExclusionInfo){
+                            for (let index = 0; index < this.icc_17.ExclusionInfo.length; index++) {
+                              const element = this.icc_17.ExclusionInfo;
+                              //console.log('ccccllllll',element)
+                                Exclusion1 = element;
+                            }
+                          }
+                            this.commodityForm.controls['Clauses17'].setValue(Clauses1);
+                            this.commodityForm.controls['dedet17'].setValue(this.dedet10);
+                          this.commodityForm.controls['Warranty17'].setValue(Warranty1);
+                        this.commodityForm.controls['War17'].setValue(War1);
+                      this.commodityForm.controls['Exclusion17'].setValue(Exclusion1);
+              }
+              if(this.icc_18){
+                let Clau:any[]=[];let Clauses1:any ='';let Warranty1:any ='';let War1:any='';let Exclusion1:any='';
+                            console.log('kkkkkkkkkkkk',this.icc_18.ClausesInfo)
+                            if(this.icc_15.ClausesInfo){
+                            for (let index = 0; index < this.icc_18.ClausesInfo.length; index++) {
+                              const element = this.icc_18.ClausesInfo;
+                              console.log('ccccllllll',element)
+                               Clauses1 = element;
+                              
+                            }
+                          }
+                          if(this.icc_18.WarrantyInfo){
+                            for (let index = 0; index < this.icc_18.WarrantyInfo.length; index++) {
+                              const element = this.icc_18.WarrantyInfo;
+                              console.log('ccccllllll',element)
+                                Warranty1 =element;
+                            }
+                          }
+                          if(this.icc_18.WarInfo){
+                            for (let index = 0; index < this.icc_18.WarInfo.length; index++) {
+                              const element = this.icc_18.WarInfo;
+                                War1 = element;
+                            }
+                              
+                          }
+                          if(this.icc_18.ExclusionInfo){
+                            for (let index = 0; index < this.icc_18.ExclusionInfo.length; index++) {
+                              const element = this.icc_18.ExclusionInfo;
+                              //console.log('ccccllllll',element)
+                                Exclusion1 = element;
+                            }
+                          }
+                            this.commodityForm.controls['Clauses18'].setValue(Clauses1);
+                            this.commodityForm.controls['dedet18'].setValue(this.dedet10);
+                          this.commodityForm.controls['Warranty18'].setValue(Warranty1);
+                        this.commodityForm.controls['War18'].setValue(War1);
+                      this.commodityForm.controls['Exclusion18'].setValue(Exclusion1);
+              }
+        }
+          
       }
     )
   }
@@ -636,6 +864,7 @@ export class CommodityAppEditComponent implements OnInit {
               ...x
             }));  
         }
+        
         
       }, (err) => { }
     )
@@ -761,7 +990,33 @@ export class CommodityAppEditComponent implements OnInit {
             } 
           //   let id = this.commodityForm.controls['War7'].value.split(',');
           // this.setWarSelections(id,'WarCover7');
-        }
+          }
+          if(para=='8'){
+            let id
+            if(this.commodityForm.controls['War8'].value!=null){
+            id = this.commodityForm.controls['War8'].value.split(',');
+            this.setWarSelections(id,'WarCover8');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover8');
+            } 
+          //   let id = this.commodityForm.controls['War7'].value.split(',');
+          // this.setWarSelections(id,'WarCover7');
+          }
+          if(para=='11'){
+            let id
+            if(this.commodityForm.controls['War11'].value!=null){
+            id = this.commodityForm.controls['War11'].value.split(',');
+            this.setWarSelections(id,'WarCover11');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover11');
+            } 
+          //   let id = this.commodityForm.controls['War7'].value.split(',');
+          // this.setWarSelections(id,'WarCover7');
+          }
           if(para=='12'){
           //   let id = this.commodityForm.controls['War9'].value.split(',');
           // this.setWarSelections(id,'WarCover12');
@@ -803,8 +1058,8 @@ export class CommodityAppEditComponent implements OnInit {
         }
           if(para=='15'){
             let id
-            if(this.commodityForm.controls['War14'].value!=null){
-            id = this.commodityForm.controls['War14'].value.split(',');
+            if(this.commodityForm.controls['War15'].value!=null){
+            id = this.commodityForm.controls['War15'].value.split(',');
             this.setWarSelections(id,'WarCover15');
             }
             else{
@@ -816,8 +1071,8 @@ export class CommodityAppEditComponent implements OnInit {
         }
           if(para=='14'){
             let id
-            if(this.commodityForm.controls['War15'].value!=null){
-            id = this.commodityForm.controls['War15'].value.split(',');
+            if(this.commodityForm.controls['War14'].value!=null){
+            id = this.commodityForm.controls['War14'].value.split(',');
             this.setWarSelections(id,'WarCover14');
             }
             else{
@@ -829,8 +1084,8 @@ export class CommodityAppEditComponent implements OnInit {
         }
           if(para=='17'){
             let id
-            if(this.commodityForm.controls['War18'].value!=null){
-            id = this.commodityForm.controls['War18'].value.split(',');
+            if(this.commodityForm.controls['War17'].value!=null){
+            id = this.commodityForm.controls['War17'].value.split(',');
             this.setWarSelections(id,'WarCover17');
             }
             else{
@@ -850,9 +1105,34 @@ export class CommodityAppEditComponent implements OnInit {
               id = [];
               this.setWarSelections(id,'WarCover10');} 
             }
+          if(para=='18'){
+            let id
+            if(this.commodityForm.controls['War18'].value!=null){
+            id = this.commodityForm.controls['War18'].value.split(',');
+            this.setWarSelections(id,'WarCover18');
+            }
+            else{
+              id = [];
+              this.setWarSelections(id,'WarCover18');} 
+            }
             //let id = this.commodityForm.controls['War11'].value.split(',');
           //this.setWarSelections(id,'WarCover10');}
-      }
+        }
+        else{
+          let type: NbComponentStatus = 'danger';
+          const config = {
+            status: type,
+            destroyByClick: true,
+            duration: 4000,
+            hasIcon: true,
+            position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            preventDuplicates: false,
+          };
+          this.toastrService.show(
+            'War',
+            'No Data Available',
+            config);
+        }
 
         // if (data.Message === "Success") {
         //     this.War=data.Result;
@@ -885,11 +1165,46 @@ export class CommodityAppEditComponent implements OnInit {
       }, (err) => { }
     )
   }
+  
   setWarranties(type){
       let value = this.commodityForm.controls[type].value;
       if(value!=null && value!='' && value!=undefined){
+       
         let id = this.commodityForm.controls[type].value.split(',');
         this.setWarrantiesSelection(id,type);
+      }
+      else{
+        this.setWarrantiesSelection([],type);
+      }
+  }
+  onUpdateCoverages(){
+    this.finalSelectedCovers = "";
+    if(this.selectedCoverList.length!=0){
+      let i=0;
+      if(this.selectedCoverList.length==1){
+        this.finalSelectedCovers=this.selectedCoverList[0];
+        this.close();
+      }
+      else{
+        for(let cover of this.selectedCoverList){
+              if(i==0){this.finalSelectedCovers=cover;i+=1;}
+              else{this.finalSelectedCovers=this.finalSelectedCovers+','+cover; i+=1;}
+              if(i==this.selectedCoverList.length){
+                this.close();
+              }
+        } 
+      }
+    }
+    console.log("Final Selected Covers",this.selectedCoverList,this.finalSelectedCovers)
+  }
+  onSelectcover(rowData){
+      let entry = this.selectedCoverList.some(ele=>ele==rowData.CoverId);
+      if(entry){
+          let index = this.selectedCoverList.findIndex(ele=>ele==rowData.CoverId);
+          this.selectedCoverList.splice(index,1);
+      }
+      else{
+        this.selectedCoverList.push(rowData.CoverId);
       }
   }
   setWarrantiesSelection(data,type){
@@ -906,7 +1221,19 @@ export class CommodityAppEditComponent implements OnInit {
       }
       else  this.openDialogWithoutRef(type)
     }
-    else this.openDialogWithoutRef(type)
+    else{
+      if(this.Warranty.length!=0){
+        let i=0;
+        for(let warranty of this.Warranty){
+          warranty['isChecked'] = false;
+          i+=1;
+          if(i==this.Warranty.length){
+            this.openDialogWithoutRef(type)
+          }
+        }
+      }
+      else this.openDialogWithoutRef(type);
+    } 
   }
 
 
@@ -935,6 +1262,16 @@ setExclusionSelection(data,type){
       }
     }
     else  this.openDialogWithoutRef(type)
+  }
+  else if(this.Exclusion.length!=0){
+    let i=0;
+    for(let exclusion of this.Exclusion){
+      exclusion['isChecked'] = false;
+      i+=1;
+      if(i==this.Exclusion.length){
+        this.openDialogWithoutRef(type)
+      }
+    }
   }
   else this.openDialogWithoutRef(type)
 }
@@ -1231,6 +1568,21 @@ else this.openDialogWithoutRef(type)
               // this.setClausesSelection(id,'export19');
             }
         }
+        else{
+          let type: NbComponentStatus = 'danger';
+          const config = {
+            status: type,
+            destroyByClick: true,
+            duration: 4000,
+            hasIcon: true,
+            position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            preventDuplicates: false,
+          };
+          this.toastrService.show(
+            'Clauses',
+            'No Data Available',
+            config);
+        }
       }, (err) => { }
     )
   }
@@ -1265,6 +1617,7 @@ else this.openDialogWithoutRef(type)
     else this.openDialogWithoutRef(type)
   }
   @ViewChild('secondDialog', { static: true }) secondDialog: TemplateRef<any>;
+  @ViewChild('firstDialog', { static: true }) firstDialog: TemplateRef<any>;
   openDialogWithoutRef(war: string) {
 
       console.log('jjjjjjjj',war)
@@ -1881,7 +2234,23 @@ else this.openDialogWithoutRef(type)
     this.dialog.open(this.secondDialog);
 
   }
-
+  checkCoverSelection(rowData){
+    return this.selectedCoverList.some(ele=>ele==rowData.CoverId);
+  }
+  getCoverageList(){
+    const ReqObj = {
+      'BranchCode': this.branchCode,
+    };
+    this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/cover/list`, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Message === 'Success') {
+          this.coverageList = data.Result;
+          this.dialog.open(this.firstDialog)
+        }
+      },
+      (err) => { },
+    );
+  }
 
   getExistingConveyance() {
     const ReqObj = {
@@ -2800,7 +3169,28 @@ else this.openDialogWithoutRef(type)
 
         this.onSave(commonObj,WarrObj,ExclusionObj,warObj)
   }*/
- public onSave(){
+onFormSubmit(){
+  if(this.finalSelectedCovers=='' || this.finalSelectedCovers==null || this.finalSelectedCovers==undefined){
+    this.finalSelectedCovers='';
+    this.onSave([]);
+  }
+  else{
+    let splitList = this.finalSelectedCovers.split(',');
+    if(splitList.length!=0){
+      let i=0;let finalList:any[]=[];
+      for(let cover of splitList){
+          let entry = {
+            "CoverageReferral":cover
+          }
+          finalList.push(entry);
+          i+=1;
+          if(i==splitList.length){this.onSave(finalList)}
+      }
+    }
+    else this.onSave([]);
+  }
+}
+ public onSave(finalList){
   let split;let split1; let com
      if(this.commodityId){
      com=this.commodityId
@@ -3010,7 +3400,11 @@ else this.openDialogWithoutRef(type)
   }
   if(this.commodityForm.controls['Warranty12'].value!="" || this.commodityForm.controls['Warranty12'].value!=undefined ||
   this.commodityForm.controls['Warranty12'].value!=null){
-    warranty12=this.commodityForm.controls['Warranty11'].value
+    warranty12=this.commodityForm.controls['Warranty12'].value
+  }
+  if(this.commodityForm.controls['Exclusion12'].value!="" || this.commodityForm.controls['Exclusion12'].value!=undefined ||
+  this.commodityForm.controls['Exclusion12'].value!=null){
+    Exc12=this.commodityForm.controls['Exclusion12'].value
   }
   if(this.commodityForm.controls['War12'].value!="" || this.commodityForm.controls['War12'].value!=undefined ||
   this.commodityForm.controls['War12'].value!=null){
@@ -3034,7 +3428,7 @@ else this.openDialogWithoutRef(type)
   }
   if(this.commodityForm.controls['Clauses14'].value!=""|| this.commodityForm.controls['Clauses14'].value!=undefined ||
   this.commodityForm.controls['Clauses14'].value!=null){
-    clauses14 = this.commodityForm.controls['Clauses12'].value
+    clauses14 = this.commodityForm.controls['Clauses14'].value
   }
   if(this.commodityForm.controls['Exclusion14'].value!="" || this.commodityForm.controls['Exclusion14'].value!=undefined ||
   this.commodityForm.controls['Exclusion14'].value!=null){
@@ -3047,6 +3441,22 @@ else this.openDialogWithoutRef(type)
   if(this.commodityForm.controls['War14'].value!="" || this.commodityForm.controls['War14'].value!=undefined ||
   this.commodityForm.controls['War14'].value!=null){
    War14=this.commodityForm.controls['War14'].value
+  }
+  if(this.commodityForm.controls['Clauses15'].value!=""|| this.commodityForm.controls['Clauses15'].value!=undefined ||
+  this.commodityForm.controls['Clauses15'].value!=null){
+    clauses15 = this.commodityForm.controls['Clauses15'].value
+  }
+  if(this.commodityForm.controls['Exclusion15'].value!="" || this.commodityForm.controls['Exclusion15'].value!=undefined ||
+  this.commodityForm.controls['Exclusion15'].value!=null){
+    Exc15=this.commodityForm.controls['Exclusion15'].value
+  }
+  if(this.commodityForm.controls['Warranty15'].value!="" || this.commodityForm.controls['Warranty15'].value!=undefined ||
+  this.commodityForm.controls['Warranty15'].value!=null){
+    warranty15=this.commodityForm.controls['Warranty15'].value
+  }
+  if(this.commodityForm.controls['War15'].value!="" || this.commodityForm.controls['War15'].value!=undefined ||
+  this.commodityForm.controls['War15'].value!=null){
+   War15=this.commodityForm.controls['War15'].value
   }
   if(this.commodityForm.controls['Clauses17'].value!=""|| this.commodityForm.controls['Clauses17'].value!=undefined ||
   this.commodityForm.controls['Clauses17'].value!=null){
@@ -3064,17 +3474,21 @@ else this.openDialogWithoutRef(type)
   this.commodityForm.controls['War17'].value!=null){
    War17=this.commodityForm.controls['War17'].value
   }
+  if(this.commodityForm.controls['Clauses18'].value!="" || this.commodityForm.controls['Clauses18'].value!=undefined ||
+  this.commodityForm.controls['Clauses18'].value!=null){
+    clauses18=this.commodityForm.controls['Clauses18'].value
+  }
   if(this.commodityForm.controls['Exclusion18'].value!="" || this.commodityForm.controls['Exclusion18'].value!=undefined ||
   this.commodityForm.controls['Exclusion18'].value!=null){
-    Exc17=this.commodityForm.controls['Exclusion18'].value
+    Exc18=this.commodityForm.controls['Exclusion18'].value
   }
   if(this.commodityForm.controls['Warranty18'].value!="" || this.commodityForm.controls['Warranty18'].value!=undefined ||
   this.commodityForm.controls['Warranty18'].value!=null){
-    warranty17=this.commodityForm.controls['Warranty18'].value
+    warranty18=this.commodityForm.controls['Warranty18'].value
   }
   if(this.commodityForm.controls['War18'].value!="" || this.commodityForm.controls['War18'].value!=undefined ||
   this.commodityForm.controls['War18'].value!=null){
-   War17=this.commodityForm.controls['War18'].value
+   War18=this.commodityForm.controls['War18'].value
   }
   const ReqObj = {
   
@@ -3083,6 +3497,7 @@ else this.openDialogWithoutRef(type)
       "CommodityRate":this.commodityForm.controls['CommodityRate'].value,
       "CoreApplicationCode":this.commodityForm.controls['CoreApplicationCode'].value,
       "CommodityId":com,
+      "CoverageReferralInfo": finalList,
       "EffectiveDate":effectiveDate,
       "Remarks":this.commodityForm.controls['remarks'].value,
       "Status":this.commodityForm.controls['status'].value, 
@@ -3110,37 +3525,37 @@ else this.openDialogWithoutRef(type)
         "IccCNonDeliveryInfo": {
           "ClausesInfo":clauses4,
           "DeductibleYn":  this.commodityForm.controls['dedet4'].value,
-          "ExclusionInfo":clauses4,
+          "ExclusionInfo":Exc4,
           "WarInfo":War4,
           "WarrantyInfo":warranty4 
         },
         "IccCFrozenFoodSeaInfo": {
-          "ClausesInfo":clauses7,
-          "DeductibleYn": this.commodityForm.controls['dedet7'].value,
-          "ExclusionInfo":Exc7,
-          "WarInfo":War7,
-          "WarrantyInfo":warranty7
-        },
-        "IccCFrozenMeatSeaInfo": {
           "ClausesInfo":clauses8,
           "DeductibleYn": this.commodityForm.controls['dedet8'].value,
           "ExclusionInfo":Exc8,
           "WarInfo":War8,
           "WarrantyInfo":warranty8
         },
-        "IccAFrozenFoodSeaInfo": {
-          "ClausesInfo": clauses5,
-          "DeductibleYn": this.commodityForm.controls['dedet5'].value,
-          "ExclusionInfo": Exc5,
-          "WarInfo": War5,
-          "WarrantyInfo": warranty5
+        "IccCFrozenMeatSeaInfo": {
+          "ClausesInfo":clauses7,
+          "DeductibleYn": this.commodityForm.controls['dedet7'].value,
+          "ExclusionInfo":Exc7,
+          "WarInfo":War7,
+          "WarrantyInfo":warranty7
         },
-        "IccAFrozenMeatSeaInfo": {
-          "ClausesInfo":clauses6,
-          "DeductibleYn":this.commodityForm.controls['dedet6'].value,
+        "IccAFrozenFoodSeaInfo": {
+          "ClausesInfo": clauses6,
+          "DeductibleYn": this.commodityForm.controls['dedet5'].value,
           "ExclusionInfo": Exc6,
           "WarInfo": War6,
           "WarrantyInfo": warranty6
+        },
+        "IccAFrozenMeatSeaInfo": {
+          "ClausesInfo":clauses5,
+          "DeductibleYn":this.commodityForm.controls['dedet5'].value,
+          "ExclusionInfo": Exc5,
+          "WarInfo": War5,
+          "WarrantyInfo": warranty5
         },
         "LandTransitLandInfo": {
           "ClausesInfo":clauses9,
@@ -3164,11 +3579,11 @@ else this.openDialogWithoutRef(type)
             "WarrantyInfo": ""
           },
           "AllRisksAirSeaLandInfo": {
-            "ClausesInfo": "",
-            "DeductibleYn": "",
-            "ExclusionInfo": "",
-            "WarInfo": "",
-            "WarrantyInfo": ""
+            "ClausesInfo": clauses18,
+            "DeductibleYn": this.commodityForm.controls['dedet18'].value,
+            "ExclusionInfo": Exc18,
+            "WarInfo": War18,
+            "WarrantyInfo": warranty18
           },
           "AllRisksLandTransitLandInfo": {
             "ClausesInfo":clauses17,
@@ -3186,10 +3601,10 @@ else this.openDialogWithoutRef(type)
           },
           "AllRisksSeaAndAirInfo": {
             "ClausesInfo": clauses15,
-            "DeductibleYn": this.commodityForm.controls['dedet14'].value,
-            "ExclusionInfo": "string",
-            "WarInfo": "string",
-            "WarrantyInfo": "string"
+            "DeductibleYn": this.commodityForm.controls['dedet15'].value,
+            "ExclusionInfo": Exc15,
+            "WarInfo": War15,
+            "WarrantyInfo": warranty15
           },
           "AllRisksSeaAndLandInfo": {
             "ClausesInfo": clauses14,
@@ -3217,7 +3632,7 @@ else this.openDialogWithoutRef(type)
     (data: any) => {
       console.log(data.Message);
       if(data?.Result){
-        this.router.navigate(['/Marine/masters/commodity'])
+        this.router.navigate(['/Marine/masters/commodity/view'])
       }
       else if (data.Errors) {
         for (let entry of data.Errors) {
@@ -3748,6 +4163,59 @@ else this.openDialogWithoutRef(type)
       }
       this.commodityForm.controls['War8'].setValue(selectedWarId);
     }
+    if (this.clickedModal === 'export11') {
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Clauses11'].setValue(selectedClausesId);
+    }
+    else if (this.clickedModal === 'Warranty11') {
+      for (let index = 0; index < selectedList.length; index++) {
+        const element = selectedList[index];
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Warranty11'].setValue(selectedListId);
+    }
+    else if (this.clickedModal === 'Exclusion11') {
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
+        this.dialog.closeAll();
+      } 
+      this.commodityForm.controls['Exclusion11'].setValue(selectedExclusionId);
+    }
+    else if (this.clickedModal === 'WarCover11') {
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['War11'].setValue(selectedWarId);
+    }
+    
     if (this.clickedModal === 'export12') {
       for (let index = 0; index < selectedClausesList.length; index++) {
         const element = selectedClausesList[index];
@@ -3759,7 +4227,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses9'].setValue(selectedClausesId);
+      this.commodityForm.controls['Clauses12'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty12') {
       for (let index = 0; index < selectedList.length; index++) {
@@ -3772,7 +4240,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Warranty9'].setValue(selectedListId);
+      this.commodityForm.controls['Warranty12'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion12') {
       for (let index = 0; index < selectedExclusionList.length; index++) {
@@ -3785,7 +4253,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion9'].setValue(selectedExclusionId);
+      this.commodityForm.controls['Exclusion12'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover12') {
       for (let index = 0; index < selectedWarList.length; index++) {
@@ -3967,7 +4435,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses14'].setValue(selectedClausesId);
+      this.commodityForm.controls['Clauses15'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty15') {
       for (let index = 0; index < selectedList.length; index++) {
@@ -3980,7 +4448,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Warranty14'].setValue(selectedListId);
+      this.commodityForm.controls['Warranty15'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion15') {
       for (let index = 0; index < selectedExclusionList.length; index++) {
@@ -3993,7 +4461,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion14'].setValue(selectedExclusionId);
+      this.commodityForm.controls['Exclusion15'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover15') {
       for (let index = 0; index < selectedWarList.length; index++) {
@@ -4006,7 +4474,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War14'].setValue(selectedWarId);
+      this.commodityForm.controls['War15'].setValue(selectedWarId);
     }
     if (this.clickedModal === 'export14') {
       for (let index = 0; index < selectedClausesList.length; index++) {
@@ -4019,7 +4487,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Clauses15'].setValue(selectedClausesId);
+      this.commodityForm.controls['Clauses14'].setValue(selectedClausesId);
     }
     else if (this.clickedModal === 'Warranty14') {
       for (let index = 0; index < selectedList.length; index++) {
@@ -4032,7 +4500,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Warranty15'].setValue(selectedListId);
+      this.commodityForm.controls['Warranty14'].setValue(selectedListId);
     }
     else if (this.clickedModal === 'Exclusion14') {
       for (let index = 0; index < selectedExclusionList.length; index++) {
@@ -4045,7 +4513,7 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['Exclusion15'].setValue(selectedExclusionId);
+      this.commodityForm.controls['Exclusion14'].setValue(selectedExclusionId);
     }
     else if (this.clickedModal === 'WarCover14') {
       for (let index = 0; index < selectedWarList.length; index++) {
@@ -4058,10 +4526,112 @@ else this.openDialogWithoutRef(type)
         }
         this.dialog.closeAll();
       }
-      this.commodityForm.controls['War15'].setValue(selectedWarId);
+      this.commodityForm.controls['War14'].setValue(selectedWarId);
     }
-
-
+    if (this.clickedModal === 'export17') {
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Clauses17'].setValue(selectedClausesId);
+    }
+    else if (this.clickedModal === 'Warranty17') {
+      for (let index = 0; index < selectedList.length; index++) {
+        const element = selectedList[index];
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Warranty17'].setValue(selectedListId);
+    }
+    else if (this.clickedModal === 'Exclusion17') {
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Exclusion17'].setValue(selectedExclusionId);
+    }
+    else if (this.clickedModal === 'WarCover17') {
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['War17'].setValue(selectedWarId);
+    }
+    if (this.clickedModal === 'export18') {
+      for (let index = 0; index < selectedClausesList.length; index++) {
+        const element = selectedClausesList[index];
+        if(index === 0){
+          selectedClausesId= element.ClausesId;
+         }
+         else if(index !== 0){
+          selectedClausesId += ','+element.ClausesId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Clauses18'].setValue(selectedClausesId);
+    }
+    else if (this.clickedModal === 'Warranty18') {
+      for (let index = 0; index < selectedList.length; index++) {
+        const element = selectedList[index];
+        if(index === 0){
+          selectedListId= element.WarrantyId;
+         }
+         else if(index !== 0){
+          selectedListId += ','+element.WarrantyId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Warranty18'].setValue(selectedListId);
+    }
+    else if (this.clickedModal === 'Exclusion18') {
+      for (let index = 0; index < selectedExclusionList.length; index++) {
+        const element = selectedExclusionList[index];
+        if(index === 0){
+          selectedExclusionId= element.ExclusionId;
+         }
+         else if(index !== 0){
+          selectedExclusionId += ','+element.ExclusionId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['Exclusion18'].setValue(selectedExclusionId);
+    }
+    else if (this.clickedModal === 'WarCover18') {
+      for (let index = 0; index < selectedWarList.length; index++) {
+        const element = selectedWarList[index];
+        if(index === 0){
+          selectedWarId= element.WarId;
+         }
+         else if(index !== 0){
+          selectedWarId += ','+element.WarId;
+        }
+        this.dialog.closeAll();
+      }
+      this.commodityForm.controls['War18'].setValue(selectedWarId);
+    }
     
 
   }

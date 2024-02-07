@@ -76,7 +76,7 @@ export class CustomerInfoComponent implements OnInit {
   public WithCertifi:any='';
   public routerBaseLink:any;
   QuoteStatus: string ="QE";
-  broCode: any;
+  broCode: any;quoteNo:any=null;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -103,7 +103,11 @@ export class CustomerInfoComponent implements OnInit {
     }
     this.WithCertifi = sessionStorage.getItem('WithCertifi');
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
-
+    if(this.OpenCover){
+      if(this.OpenCover?.name == 'adminReferral'){
+            this.productId = this.OpenCover?.productId;
+      } 
+    }
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     if(sessionStorage.getItem('QuoteStatus')) this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
     this.customerForm = this.newQuotesService.customerForm;
@@ -242,8 +246,7 @@ export class CustomerInfoComponent implements OnInit {
 
   checkCustomerList(brokerCode){
     this.loginId = brokerCode;
-    console.log('mmmmmmmmmmmmm',brokerCode)
-      this.customerFormComponent.onGetCustomerList(brokerCode);
+    this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {
     const urlLink = `${this.ApiUrl1}quote/edit`;
@@ -268,9 +271,9 @@ export class CustomerInfoComponent implements OnInit {
           this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
           const customerDetails = this.editQuoteData?.CustomerDetails;
           const lcBankDetails = this.editQuoteData?.LcBankDetails;
-
+          const commodityDetails = this.editQuoteData?.QuoteDetails?.CommodityDetails[0];
           this.brokerF.channel.setValue(this.editQuoteData?.ChannelType);
-          
+          this.quoteNo = this.editQuoteData?.QuoteDetails?.QuoteNo;
           this.brokerFormComponent?.onChangeChannel('direct');
           //this.broCode=this.editQuoteData?.BrokerCode;
           //console.log('kkkkkkkkkkkkkk',this.broCode)
@@ -291,8 +294,11 @@ export class CustomerInfoComponent implements OnInit {
           this.customerF.Address1.setValue(customerDetails?.Address1);
           this.customerF.Address2.setValue(customerDetails?.Address2);
           this.customerF.Code.setValue(customerDetails?.Code);
-
-
+          this.bankF.invoiceNumber.setValue(commodityDetails?.InvoiceNo);
+          this.bankF.invoiceDate.setValue(this.newQuotesService.ngbDateFormatt(commodityDetails?.InvoiceDate));
+          this.bankF.consignedTo.setValue(commodityDetails?.ConsignedTo);
+          this.bankF.consignedForm.setValue(commodityDetails?.ConsignedFrom);
+          this.bankF.poPiNumber.setValue(commodityDetails?.PoDescription);
           this.bankF.lCBank.setValue(lcBankDetails?.BankCode);
           this.bankF.lcNumber.setValue(lcBankDetails?.LcNo);
           this.bankF.lcBankDesc.setValue(lcBankDetails?.BankDescription);
@@ -443,7 +449,7 @@ export class CustomerInfoComponent implements OnInit {
         'AwbDate': this.bankF.blAwbLrRrDate.value?.replace(/-/g, "/"),
         'AwbNo': this.bankF.blAwbLrRrNumber.value,
         'BankCode': this.bankF.lCBank.value,
-        'BankDescription': this.bankF.lcBankDesc.value,
+        'BankDescription': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
         'BankName': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
         'BankOthers': this.bankF.lcBankDesc.value,
         'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
@@ -457,16 +463,16 @@ export class CustomerInfoComponent implements OnInit {
       'QuoteDetails': {
         'CommodityDetails': [
           {
-            'ConsignedFrom': this.quoteF.consignedForm.value,
-            'ConsignedTo': this.quoteF.consignedTo.value,
+            'ConsignedFrom': this.bankF.consignedForm.value,
+            'ConsignedTo': this.bankF.consignedTo.value,
             'Fragile': this.quoteF.fragileYN.value ,
             'GoodsCategoryCode': this.quoteF.goodsCategory.value,
             'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
             'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
             'InsuredValue': this.quoteF.insuredValue.value?.replace(/,/g, ''),
-            'InvoiceDate': this.quoteF.invoiceDate.value?.replace(/-/g, '/'),
-            'InvoiceNo': this.quoteF.invoiceNumber.value,
-            'PoDescription': this.quoteF.poPiNumber.value,
+            'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
+            'InvoiceNo': this.bankF.invoiceNumber.value,
+            'PoDescription': this.bankF.poPiNumber.value,
             'PolicyExcessDescription': this.quoteF.excessDescription.value,
           },
         ],
@@ -539,7 +545,6 @@ export class CustomerInfoComponent implements OnInit {
         console.log(data);
         if (data?.Message === 'Success') {
           this.premiumDetails = data?.Result;
-         
           sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
           //sessionStorage.removeItem('Item');
           this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);

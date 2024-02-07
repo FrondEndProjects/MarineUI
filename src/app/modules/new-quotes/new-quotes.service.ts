@@ -266,6 +266,11 @@ export class NewQuotesService {
       blAwbLrRrNumber: [''],
       blAwbLrRrDate: [''],
       sailingDate: [''],
+      invoiceNumber: [''],
+      invoiceDate: [null],
+      poPiNumber: [''],
+      consignedTo: [''],
+      consignedForm: [''],
     });
 
 

@@ -20,7 +20,7 @@ export class SaleTermComponent implements OnInit {
   public saleTermList: any[] = [];
   public filterValue: any = '';
   public columnHeader: any[] = [];
-  showSection:boolean = false;
+  showSection:boolean = false;totalSelected:any=null;
 
   constructor(
     private openCoverService: OpenCoverService,
@@ -83,6 +83,7 @@ export class SaleTermComponent implements OnInit {
     };
 
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe((ele:any)=>{
+      this.filterValue=null;
       this.onSaveTolarence();
     })
   }
@@ -102,7 +103,8 @@ export class SaleTermComponent implements OnInit {
     };
 
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe((ele:any)=>{
-       console.log(ele)
+       this.filterValue=null;
+       this.onEdit();
     })
   }
 
@@ -194,7 +196,12 @@ export class SaleTermComponent implements OnInit {
               }
             }   
             
-            if(index==ToleranceList.length-1) this.showSection = true;
+            if(index==ToleranceList.length-1){
+              this.totalSelected = this.tableData.filter(ele=>ele.isChecked==true).length;
+              this.tableData = this.tableData.filter(ele=>ele.isChecked==true).concat(this.tableData.filter(ele=>ele.isChecked!=true))
+              console.log("Filtered Data",this.tableData.filter(ele=>ele.isChecked==true))
+              this.showSection = true;
+            }
           }
         }
         else{

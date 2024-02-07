@@ -49,16 +49,16 @@ export const adminNavItems: NbMenuItem[] = [
       
     ],
   },
+  
   {
     title: 'Login Creation',
     icon: 'icon-cursor',
     children: [
-      {
-
-        title: 'Broker Management',
-        link: '/Marine/loginCreation/existingBrokers',
-        icon: 'icon-cursor',
-      },
+        {
+          title: 'Broker Management',
+          link: '/Marine/loginCreation/existingBrokers',
+          icon: 'icon-cursor',
+        },
         {
 
           title: 'Admin',
@@ -90,6 +90,11 @@ export const adminNavItems: NbMenuItem[] = [
     icon: 'icon-cursor',
     children: [
       {
+        title: 'Bank Master',
+        link: 'masters/bank-master/view',
+        icon: 'icon-cursor',
+      },
+      {
         title: 'Conveyance',
         link: 'masters/conveyance/view',
         icon: 'icon-cursor',
@@ -110,10 +115,21 @@ export const adminNavItems: NbMenuItem[] = [
         icon: 'icon-cursor',
       },
       {
-        title: 'Bank Master',
-        link: 'masters/bank-master/view',
+        title: 'Commodity Excess',
+        link: 'masters/commodity-excess/view',
         icon: 'icon-cursor',
       },
+      {
+        title: 'Cover',
+        link: 'masters/cover/view',
+        icon: 'icon-cursor',
+      },
+      {
+        title: 'Deposit Master',
+        icon: 'icon-cursor',
+        link: '/Marine/deposit-master/view',
+      },
+      
       {
         title: 'War Rate Master',
         link: 'masters/war-rate/view',
@@ -134,11 +150,7 @@ export const adminNavItems: NbMenuItem[] = [
         link: 'masters/tolerance/view',
         icon: 'icon-cursor',
       },
-      {
-        title: 'Commodity Excess',
-        link: 'masters/commodity-excess/view',
-        icon: 'icon-cursor',
-      },
+      
       {
         title: 'Settling Agent',
         link: 'masters/settling-agent/view',
@@ -199,11 +211,7 @@ export const adminNavItems: NbMenuItem[] = [
         link: 'masters/wsrcc/view',
         icon: 'icon-cursor',
       },
-      {
-        title: 'Cover',
-        link: 'masters/cover/view',
-        icon: 'icon-cursor',
-      },
+     
       {
         title: 'Error',
         link: 'masters/error/view',

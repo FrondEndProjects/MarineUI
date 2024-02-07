@@ -160,7 +160,16 @@
     </div>
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">Pvt YN</label>
+        <label class="input-form-label">Via</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="via">
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">PVT YN</label>
         <div class="input-form-radio-box">
           <div class="radio-toolbar">
             <input id="warsrcc_Yes" type="radio" name="warSrcc" value="YES" formControlName="warSrcc">
@@ -171,9 +180,9 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <!-- <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">Pvt on Land</label>
+        <label class="input-form-label">PVT on Land</label>
         <div class="input-form-radio-box">
           <div class="radio-toolbar">
             <input id="warland_Yes" type="radio" name="warOnLand" value="YES" formControlName="warOnLand">
@@ -182,25 +191,18 @@
             <label for="warland_No">No</label>
           </div>
         </div>
-      </div>
-    </div>
+      </div> 
+    </div> -->
 
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Via</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="via">
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    
+    <!-- <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Settling agent</label>
         <ng-select placeholder="Select" class="input-form-select" formControlName="settlingAgent" [items]="dropSettlingAgentCityList"
           bindValue="Code" bindLabel="CodeDescription">
         </ng-select>
       </div>
-    </div>
+    </div> -->
     <ng-container *ngIf="quoteF.settlingAgent.value === '9999'">
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
@@ -224,14 +226,7 @@
           </ng-select>
         </div>
       </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Goods Description<span class="text-required">*</span></label>
-          <div class="input-form-box">
-            <textarea  class="input-form-control without-icon" formControlName="goodsDescript"></textarea>
-          </div>
-        </div>
-      </div>
+      
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
           <label class="input-form-label">Insured Value<span class="text-required">*</span></label>
@@ -240,53 +235,145 @@
           </div>
         </div>
       </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Currency<span class="text-required">*</span></label>
+          <div class="currency-flex">
+            <div class="currrency-drop">
+              <ng-select placeholder="Select" class="input-form-select" formControlName="currency" [items]="dropCurrencyList"
+                bindValue="Code" bindLabel="CodeDescription" (change)="onChangeCurrencyDrop()">
+              </ng-select>
+            </div>
+            <div class="currrency-dollar">
+              <div class="input-control-container">
+                <div class="input-form-box">
+                  <input type="text" class="input-form-control2 without-icon" formControlName="currencyValue"
+                    [value]="quoteF.currency.value | currency: dropCurrencyList">
+                </div>
+              </div>
+            </div>
 
-
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Invoice Number</label>
-          <div class="input-form-box">
-            <input type="text"
-             [patterns]="pattern"
-             [dropSpecialCharacters]="false"
-              mask="000000000000000000"  class="input-form-control without-icon" formControlName="invoiceNumber">
+          </div>
+          <div class="input-form-error" *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+            <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+              This field is required
+            </div>
           </div>
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
-          <label class="input-form-label">Invoice Date</label>
-          <div class="input-form-box">
-            <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="invoiceDate" (click)="d1.toggle()" readonly>
+          <label class="input-form-label">Package description<span class="text-required">*</span></label>
+          <ng-select placeholder="Select" class="input-form-select" formControlName="packageDescription"
+            [items]="dropPackageDescList" bindValue="Code" bindLabel="CodeDescription">
+          </ng-select>
+          <div class="input-form-error" *ngIf="(quoteF.packageDescription.errors && submitted) || (!quoteF.packageDescription.valid && quoteF.packageDescription.touched)">
+            <div *ngIf="quoteF.packageDescription.errors?.required" class="error-text">
+              This field is required
+            </div>
           </div>
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
-          <label class="input-form-label">PO/PI Number</label>
+          <label class="input-form-label">Conveyance | Vessel name</label>
           <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="poPiNumber">
+            <input type="text" class="input-form-control without-icon" formControlName="conveyanceVesselName">
           </div>
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
-          <label class="input-form-label">Consigned To</label>
+          <label class="input-form-label">Voyage number</label>
           <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="consignedTo">
+            <input type="text" class="input-form-control without-icon" formControlName="voyageNumber">
           </div>
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
-          <label class="input-form-label">Consigned From</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="consignedForm">
+          <label class="input-form-label">Incoterms<span class="text-required">*</span></label>
+          <ng-select placeholder="Select" class="input-form-select" formControlName="incoterms" [items]="dropIncotermsList"
+            bindValue="Code" bindLabel="CodeDescription" (change)="onGetIncotermsPrecentDropdownList()">
+          </ng-select>
+          <div class="input-form-error" *ngIf="(quoteF.incoterms.errors && submitted) || (!quoteF.incoterms.valid && quoteF.incoterms.touched)">
+            <div *ngIf="quoteF.incoterms.errors?.required" class="error-text">
+              This field is required
+            </div>
           </div>
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Incoterms<i>(Percentage)</i><span class="text-required">*</span></label>
+          <ng-select placeholder="Select" class="input-form-select" formControlName="incotermsPercentage"
+            [items]="dropIncotermsPrecentList" bindValue="Code" bindLabel="CodeDescription" (change)="onGetToleranceDropdownList()">
+          </ng-select>
+          <div class="input-form-error" *ngIf="(quoteF.incotermsPercentage.errors && submitted) || (!quoteF.incotermsPercentage.valid && quoteF.incotermsPercentage.touched)">
+            <div *ngIf="quoteF.incotermsPercentage.errors?.required" class="error-text">
+              This field is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Tolerance</label>
+          <ng-select placeholder="Select" class="input-form-select" formControlName="tolerance" [items]="dropToleranceList"
+            bindValue="Code" bindLabel="CodeDescription">
+          </ng-select>
+        </div>
+      </div>
+      
+     
+      <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='11' && productId!=11">
+        <div class="input-control-container">
+          <label class="input-form-label">Partial shipment</label>
+          <ng-select placeholder="Select" class="input-form-select" formControlName="partialShipment" [items]="dropPartialShipList"
+            bindValue="Code" bindLabel="CodeDescription">
+          </ng-select>
+        </div>
+      </div>
+      <ng-container *ngIf="(quoteF.partialShipment.value !== 'N' && productId!='11' && productId!=11)">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Exposure of shipment</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="exposureOfShipment" [value]="quoteF.exposureOfShipment.value | commaseparator">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Currency of exposure</label>
+          <div class="currency-flex">
+            <div class="currrency-drop">
+              <ng-select placeholder="Select" class="input-form-select" formControlName="currencyOfExposure" [items]="dropCurrencyList"
+                bindValue="Code" bindLabel="CodeDescription">
+              </ng-select>
+            </div>
+            <div class="currrency-dollar">
+              <div class="input-control-container">
+                <div class="input-form-box">
+                  <input type="text" class="input-form-control2 without-icon"
+                    [value]="quoteF.currencyOfExposure.value | currency: dropCurrencyList" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     </ng-container>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Goods Description<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <textarea  class="input-form-control3 without-icon" rows="3"  formControlName="goodsDescript"></textarea>
+          </div>
+        </div>
+      </div>
+      
+      <!-- <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
           <label class="input-form-label">Fragile</label>
           <div class="input-form-radio-box">
@@ -308,140 +395,13 @@
             <textarea type="text" class="input-form-control without-icon" formControlName="excessDescription"></textarea>
           </div>
         </div>
-      </div>
-      <div class="col-12">
+      </div> -->
+      <!-- <div class="col-12">
         <div class="middle-line">
            Currency Details
         </div>
-      </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Currency<span class="text-required">*</span></label>
-            <div class="currency-flex">
-              <div class="currrency-drop">
-                <ng-select placeholder="Select" class="input-form-select" formControlName="currency" [items]="dropCurrencyList"
-                  bindValue="Code" bindLabel="CodeDescription" (change)="onChangeCurrencyDrop()">
-                </ng-select>
-              </div>
-              <div class="currrency-dollar">
-                <div class="input-control-container">
-                  <div class="input-form-box">
-                    <input type="text" class="input-form-control2 without-icon" formControlName="currencyValue"
-                      [value]="quoteF.currency.value | currency: dropCurrencyList">
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="input-form-error" *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
-              <div *ngIf="quoteF.currency.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Package description<span class="text-required">*</span></label>
-            <ng-select placeholder="Select" class="input-form-select" formControlName="packageDescription"
-              [items]="dropPackageDescList" bindValue="Code" bindLabel="CodeDescription">
-            </ng-select>
-            <div class="input-form-error" *ngIf="(quoteF.packageDescription.errors && submitted) || (!quoteF.packageDescription.valid && quoteF.packageDescription.touched)">
-              <div *ngIf="quoteF.packageDescription.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Conveyance | Vessel name</label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="conveyanceVesselName">
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Incoterms<span class="text-required">*</span></label>
-            <ng-select placeholder="Select" class="input-form-select" formControlName="incoterms" [items]="dropIncotermsList"
-              bindValue="Code" bindLabel="CodeDescription" (change)="onGetIncotermsPrecentDropdownList()">
-            </ng-select>
-            <div class="input-form-error" *ngIf="(quoteF.incoterms.errors && submitted) || (!quoteF.incoterms.valid && quoteF.incoterms.touched)">
-              <div *ngIf="quoteF.incoterms.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Incoterms<i>(Percentage)</i><span class="text-required">*</span></label>
-            <ng-select placeholder="Select" class="input-form-select" formControlName="incotermsPercentage"
-              [items]="dropIncotermsPrecentList" bindValue="Code" bindLabel="CodeDescription" (change)="onGetToleranceDropdownList()">
-            </ng-select>
-            <div class="input-form-error" *ngIf="(quoteF.incotermsPercentage.errors && submitted) || (!quoteF.incotermsPercentage.valid && quoteF.incotermsPercentage.touched)">
-              <div *ngIf="quoteF.incotermsPercentage.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Tolerance</label>
-            <ng-select placeholder="Select" class="input-form-select" formControlName="tolerance" [items]="dropToleranceList"
-              bindValue="Code" bindLabel="CodeDescription">
-            </ng-select>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Voyage number</label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="voyageNumber">
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Partial shipment</label>
-            <ng-select placeholder="Select" class="input-form-select" formControlName="partialShipment" [items]="dropPartialShipList"
-              bindValue="Code" bindLabel="CodeDescription">
-            </ng-select>
-          </div>
-        </div>
-        <ng-container *ngIf="quoteF.partialShipment.value !== 'N'">
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Exposure of shipment</label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="exposureOfShipment" [value]="quoteF.exposureOfShipment.value | commaseparator">
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Currency of exposure</label>
-            <div class="currency-flex">
-              <div class="currrency-drop">
-                <ng-select placeholder="Select" class="input-form-select" formControlName="currencyOfExposure" [items]="dropCurrencyList"
-                  bindValue="Code" bindLabel="CodeDescription">
-                </ng-select>
-              </div>
-              <div class="currrency-dollar">
-                <div class="input-control-container">
-                  <div class="input-form-box">
-                    <input type="text" class="input-form-control2 without-icon"
-                      [value]="quoteF.currencyOfExposure.value | currency: dropCurrencyList" disabled>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       </ng-container>
+      </div> -->
+        
 
   </div>
 </form>

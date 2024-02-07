@@ -98,6 +98,9 @@ export class AdminReferralComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.productNameList = data?.Result?.ProductionDetails || [];
+        if(this.productNameList.length!=0){
+            this.searchForm.controls['productName'].setValue(this.productNameList[0].ProductId);
+        } 
       },
       (err) => { },
     );
@@ -133,6 +136,12 @@ export class AdminReferralComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.branchList = data || [];
+        if(this.branchList.length!=0){
+            this.searchForm.controls['branch'].setValue(this.branchList[0].BranchCode);
+            if(this.searchForm.controls['regions'].value!='' && this.searchForm.controls['productName'].value!=''){
+              this.onLoadGrid();
+            }
+        }
       },
       (err) => { },
     );
@@ -140,6 +149,9 @@ export class AdminReferralComponent implements OnInit {
   onChangeProduct(){
     sessionStorage.setItem('productId', this.sF.productName.value);
     this.sessionStorageService.set('productId',this.sF.productName.value);
+    if(this.searchForm.controls['regions'].value!='' && this.searchForm.controls['branch'].value!=''){
+      this.onLoadGrid();
+    }
 
   }
 

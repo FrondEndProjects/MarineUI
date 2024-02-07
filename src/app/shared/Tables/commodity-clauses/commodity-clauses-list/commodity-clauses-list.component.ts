@@ -371,6 +371,7 @@ export class CommodityClausesListComponent implements OnInit {
   }
 
   onCommodityCheckedOrNot(item:any,list:any){
+    console.log("Common Item",item,list)
    return list?.CommodityInfo?.some((ele:any) =>ele.CommodityId == item.CommodityCode);
   }
 
@@ -451,7 +452,7 @@ export class CommodityClausesListComponent implements OnInit {
     console.log(reqData);
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        selectedData['isUpdated'] = true;
       },
       (err) => { },
     );
@@ -480,7 +481,7 @@ export class CommodityClausesListComponent implements OnInit {
     console.log(reqData);
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        selectedData['isUpdated'] = true;
       },
       (err) => { },
     );
@@ -506,7 +507,7 @@ export class CommodityClausesListComponent implements OnInit {
     console.log(reqData);
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        selectedData['isUpdated'] = true;
       },
       (err) => { },
     );
@@ -528,7 +529,7 @@ export class CommodityClausesListComponent implements OnInit {
     console.log(reqData);
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        selectedData['isUpdated'] = true;
       },
       (err) => { },
     );
@@ -557,12 +558,21 @@ export class CommodityClausesListComponent implements OnInit {
     console.log(reqData);
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        selectedData['isUpdated'] = true;
       },
       (err) => { },
     );
   }
-
+  checkUpdated(){
+    const selectedData = this.commodityClausesComponent.selectedData;
+    if(selectedData){
+        if(selectedData?.isUpdated){
+          return false;
+        }
+        else return true;
+    }
+    else return true;
+  }
 
 
 

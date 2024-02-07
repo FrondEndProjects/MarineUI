@@ -83,6 +83,8 @@ export class DestCountryComponent implements OnInit {
   }
 
   onSelected(arrayaside: string) {
+    this.excludedCountrySearch = null;
+        this.includedCountrySearch = null;
     if (arrayaside === 'right') {
       const selectedCountry = this.excludedCountry.filter((ele: any) => ele.isDesti === true);
       selectedCountry.map((ele: any) => ele.isDesti = false);
@@ -106,6 +108,8 @@ export class DestCountryComponent implements OnInit {
     }
   }
   onMoveAll(arrayaside: string) {
+    this.excludedCountrySearch = null;
+    this.includedCountrySearch = null;
     if (arrayaside === 'right') {
       this.includedCountry = [...this.includedCountry, ...this.excludedCountry];
       this.excludedCountry = [];
@@ -116,6 +120,8 @@ export class DestCountryComponent implements OnInit {
     }
   }
   async onMoveGroupWise(name: string, arrayaside: string, list: any[]) {
+    this.excludedCountrySearch = null;
+    this.includedCountrySearch = null;
     if (arrayaside === 'right') {
       let result: any[] = await this.excludedCountry.filter(ele => list.some(Code => ele.CodeValue === Code));
       if (result.length > 0) {
@@ -183,7 +189,8 @@ export class DestCountryComponent implements OnInit {
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        this.excludedCountrySearch = null;
+        this.includedCountrySearch = null;
       },
       (err) => { },
     );

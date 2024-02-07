@@ -150,8 +150,11 @@ public applyFilter(event: Event) {
 
 public onEdit(event) {
   console.log(event);
-
-  sessionStorage.setItem('CoverData', JSON.stringify(event.ClausesId));
+  let entry = {
+    "ClausesId": event?.ClausesId,
+    "CoverId": event?.CoverId
+  }
+  sessionStorage.setItem('CoverData', JSON.stringify(entry));
   this.router.navigateByUrl('Marine/masters/wsrcc/add-edit');
 }
 

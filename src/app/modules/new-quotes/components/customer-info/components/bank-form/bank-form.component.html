@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div class="middle-line">
-        Bank Details
+        Bank & Other Details
       </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
@@ -30,14 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">LC Bank description</label>
-        <div class="input-form-box">
-          <textarea type="text" class="input-form-control without-icon" formControlName="lcBankDesc"></textarea>
-        </div>
-      </div>
-    </div>
+    
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">BL | AWB | LR | RR Number</label>
@@ -60,10 +53,62 @@
       <div class="input-control-container">
         <label class="input-form-label">Sailing date</label>
         <div class="input-form-box">
-          <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="sailingDate" (click)="d2.toggle()" readonly>
+          <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="sailingDate" (click)="d3.toggle()" readonly>
         </div>
       </div>
     </div>
+    <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Invoice Number</label>
+          <div class="input-form-box">
+            <input type="text"
+             [patterns]="pattern"
+             [dropSpecialCharacters]="false"
+              mask="000000000000000000"  class="input-form-control without-icon" formControlName="invoiceNumber">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Invoice Date</label>
+          <div class="input-form-box">
+            <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
+            formControlName="invoiceDate" (click)="d2.toggle()" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">PO/PI Number</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="poPiNumber">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Consigned To</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="consignedTo">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Consigned From</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="consignedForm">
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">LC Bank description</label>
+          <div class="input-form-box">
+            <textarea type="text" class="input-form-control3 without-icon" rows="3" formControlName="lcBankDesc"></textarea>
+          </div>
+        </div>
+      </div> -->
   </div>
 </form>

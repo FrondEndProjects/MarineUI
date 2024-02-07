@@ -25,7 +25,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
   public conveyance:any[]=[];
   public submitted:boolean = false;
   public routerBaseLink:any='';
-  depositInfo: any;
+  depositInfo: any;regionCode:any=null;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -38,6 +38,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails?.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
+    if(this.userDetails?.RegionCode) this.regionCode = this.userDetails?.RegionCode;
   }
 
   ngOnInit(): void {
@@ -60,7 +61,9 @@ export class PolicyGenerateCoverComponent implements OnInit {
       premium: [{value:'',disabled: true}, Validators.required],
       policyFee: [{value:0,disabled: true}, Validators.required],
       vatTax: [{value:'',disabled: true}, Validators.required],
+      levyPremium: [{value:'',disabled: true}, Validators.required],
       totalPremium: [{value:'',disabled: true}, Validators.required],
+      stampDuty: [{value:'',disabled: true}, Validators.required],
       remarks: ['', Validators.required],
 
 
@@ -155,6 +158,21 @@ export class PolicyGenerateCoverComponent implements OnInit {
         else{
           this.pG.policyFee.setValue('0');
         }
+      if(this.premiumInfo?.PremiumLevy!='' && this.premiumInfo?.PremiumLevy!='0'){
+        let amount= parseInt(this.premiumInfo?.PremiumLevy);
+          this.CommaFormattedUtilizedAmount(amount,'Levy');
+      }
+      else{
+        this.pG.levyPremium.setValue('0');
+      }
+      if(this.premiumInfo?.StampDuty!='' && this.premiumInfo?.StampDuty!='0'){
+        let amount= parseInt(this.premiumInfo?.StampDuty);
+          this.CommaFormattedUtilizedAmount(amount,'StampDuty');
+      }
+      else{
+        this.pG.stampDuty.setValue('0');
+      }
+      
         if(this.premiumInfo?.VatTaxAmount!='' && this.premiumInfo?.VatTaxAmount!='0'){
           let amount= parseInt(this.premiumInfo?.VatTaxAmount);
           this.CommaFormattedUtilizedAmount(amount,'Vat');
@@ -164,7 +182,11 @@ export class PolicyGenerateCoverComponent implements OnInit {
         }
         //this.pG.policyFee.setValue(this.premiumInfo?.PolicyInsceptionFeePaid == "" || this.premiumInfo?.PolicyInsceptionFeePaid == null ? 0 :this.premiumInfo?.PolicyInsceptionFeePaid);
         //this.pG.vatTax.setValue(this.premiumInfo?.VatTaxAmount == " " || this.premiumInfo?.VatTaxAmount == null ? 0 :this.premiumInfo?.VatTaxAmount);
-        let total:any = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid) + Number(this.premiumInfo?.VatTaxAmount));
+        let total:any =null;
+        if(this.regionCode=='02'){
+            total = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid) + Number(this.premiumInfo?.StampDuty) + Number(this.premiumInfo?.PremiumLevy) + Number(this.premiumInfo?.VatTaxAmount));
+        }
+        else total = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid)  + Number(this.premiumInfo?.VatTaxAmount));
         if(total!='0'){
           let amount= parseInt(total);
           this.CommaFormattedUtilizedAmount(amount,'total');
@@ -216,6 +238,30 @@ export class PolicyGenerateCoverComponent implements OnInit {
             let value = entry.replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             this.pG.vatTax.setValue(value);
+              }
+          } 
+        }
+        else if(tableData!=null && type=="Levy"){
+          let entry = String(tableData);
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.pG.levyPremium.setValue(value);
+              }
+          } 
+        }
+        else if(tableData!=null && type=="StampDuty"){
+          let entry = String(tableData);
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.pG.stampDuty.setValue(value);
               }
           } 
         }
@@ -317,7 +363,6 @@ export class PolicyGenerateCoverComponent implements OnInit {
     }));
     const urlLink = `${this.ApiUrl1}OpenCover/policy/generated`;
     const MissippiCode= sessionStorage.getItem('MissippiCode');
-    console.log('MMMMMMMMMMMMMMMMMMMMMMMMM',MissippiCode);
     const reqData = {
       "OpenCoverNo": MissippiCode,
       "ProposalNo": this.proposalNo,
@@ -342,6 +387,8 @@ export class PolicyGenerateCoverComponent implements OnInit {
       "DebitNoteNo": '',
       "PPWDays": this.pG.pwwDays.value,
       "VatTax": Number(this.pG.vatTax.value.toString().replace(/,/g, '')),
+      "StampDuty": Number(this.pG.stampDuty.value.toString().replace(/,/g, '')),
+      "PremiumLevy": Number(this.pG.levyPremium.value.toString().replace(/,/g, '')),
       //this.pG.vatTax.value,
       "CancelClauses": this.pG.cancelClauses.value,
       "InstallType": this.pG.installment.value,

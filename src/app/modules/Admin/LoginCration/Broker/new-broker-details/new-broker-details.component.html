@@ -410,7 +410,7 @@
                                 </div>
             
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <span>Enter Policy Fee in AED</span>
+                                    <span>Enter Policy Fee</span>
                                 </div>
             
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -526,7 +526,7 @@
                     </div>
                   
                     <div>
-                        <div class="col-lg-12 ml-2" *ngIf="pro"> 
+                        <div class="col-lg-12 ml-2 mt-3" *ngIf="pro"> 
                             <div class="panel p-4">
                                 <div class="ti">
                                     <div class="ml-3">Existing Product Modification</div>
@@ -569,7 +569,7 @@
                                     <div class="col-12 col-md-4 col-lg-4 mt-2">
                                         <div class="customer-search-container">
                                             <div class="input-control-container">
-                                                <label class="input-form-label">Minimum Premium [AED]<span
+                                                <label class="input-form-label">Minimum Premium<span
                                                         class="text-required">*</span></label>
                                                 <div class="input-form-box">
                                                     <input type="text" class="input-form-control without-icon"
@@ -677,8 +677,8 @@
                                   </div>
                                   
                                   <div class="text-center" *ngIf="pro">
-                                     <button mat-raised-button color="primary" (click)="backs()">Back</button>
-                                    <button class="btn btn-danger ml-2" (click)="proDelete()">Delete</button>
+                                     <button mat-raised-button color="primary" (click)="backs()">Back</button>&nbsp;
+                                    <button class="btn btn-danger ml-2" (click)="proDelete()">Delete</button>&nbsp;
                                     <button class="btn btn-success ml-2" (click)="productInsert()">Submit</button>
                                    
                                   </div>
@@ -1220,7 +1220,7 @@
 
 
     <div class="mt-3 text-center" *ngIf="value=='ChangePassword'">
-        <button mat-raised-button class="ml-2" color="accent" (click)="goBack()">Back</button>
+        <button mat-raised-button class="ml-2" color="accent" (click)="goBack()">Back</button>&nbsp;
         <button mat-raised-button class="ml-2" color="primary" (click)="ChangePassword()">Save</button>
     </div>
     

@@ -130,6 +130,12 @@ export class LoginLayoutComponent implements OnInit {
     this.loginService.onGetMethodSync(urlLink).subscribe((data: any) => {
       console.log(data);
       this.regionList = data?.Result || [];
+      if(this.regionList.length!=0){
+        let entry = this.regionList.some(ele=>ele.RegionId=='02');
+        if(entry){this.loginForm.controls['region'].setValue('02')}
+        else  this.loginForm.controls['region'].setValue(this.regionList[0]?.RegionId);
+        this.onGetBranchList();
+      }
     });
   }
   onGetBranchList() {
@@ -138,8 +144,10 @@ export class LoginLayoutComponent implements OnInit {
       'RegionCode': this.f.region.value,
     };
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      console.log(data);
-      this.branchList = data || []
+      this.branchList = data
+      if(this.branchList.length!=0){
+        this.loginForm.controls['branch'].setValue(this.branchList[0]?.BranchCode);
+      }
     });
   }
 
@@ -150,7 +158,10 @@ export class LoginLayoutComponent implements OnInit {
     };
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
-      this.branchList = data || []
+      this.branchList = data || [];
+      if(this.branchList.length!=0){
+        this.PasswordCheckForm.controls['branch'].setValue(this.branchList[0]?.BranchCode);
+      }
     });
   }
   resetForm() {

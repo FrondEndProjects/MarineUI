@@ -46,6 +46,8 @@ export class PolicyGenerateComponent implements OnInit {
   draftSection: boolean = false;
   schedule:boolean=false;
   currencyName: any;
+  bankName: any=null;
+  quoteNo: any=null;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder:FormBuilder,
@@ -102,6 +104,8 @@ export class PolicyGenerateComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.premiumDetails = data?.Result;
+        this.quoteNo = this.premiumDetails?.QuoteDetails?.QuoteNo;
+        this.bankName = this.premiumDetails?.LcBankDetails?.BankName;
         this.ongetUploadedDocument();
       },
       (err) => { },
@@ -242,7 +246,7 @@ export class PolicyGenerateComponent implements OnInit {
       "CustomerCode": this.premiumDetails?.CustomerDetails?.Code,
       "Foreign": this.foreignCurrency?'Y':'N',
       "GeneratePolicyYn": this.generateCerti,
-      "LcBankDetail": "",
+      "LcBankDetail": this.nameOfBroker ? 'Y':'N',
       "LoginUserType": this.userDetails.UserType,
       "ModeOfPayment": "CR",
       "NoteType": "",
@@ -262,18 +266,15 @@ export class PolicyGenerateComponent implements OnInit {
       "ShowPremiumYn": "N",
       "TotalPremium": ""
     }
-
+    console.log(this.bankerAssured,this.foreignCurrency,this.premium,this.excess,reqData);
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
       if (data.Message == "Success") {
         console.log('jjjjjjjjjj',this.generateCerti)
         if(this.generateCerti == 'Y'){
-          //this.schedule=true;
-          //this.onNavigate();
           this.onschedule();
         }
         else if(this.generateCerti == 'Q'){
-          //this.onNavigate();
           this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
         }
         else{

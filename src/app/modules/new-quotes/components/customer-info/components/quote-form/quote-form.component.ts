@@ -55,7 +55,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     },
   };
   minDate: { year: number; month: number; day: number; };
-  maxDate:any;
+  maxDate:any;OpenCover:any=null;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -66,6 +66,12 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteForm = this.customerInfoComponent.quoteForm;
     this.userDetails = this.customerInfoComponent?.userDetails;
     this.productId = this.customerInfoComponent?.productId;
+    this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    if(this.OpenCover){
+      if(this.OpenCover?.name == 'adminReferral'){
+            this.productId = this.OpenCover?.productId;
+      } 
+    }
     if(this.customerInfoComponent.OpenCover?.value){
       this.openCoverNo = this.customerInfoComponent.OpenCover?.value;
 
@@ -426,6 +432,9 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropSettlingAgentCityList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropSettlingAgentCityList, 'settlingAgent');
+          if(this.dropSettlingAgentCityList.length!=0){
+            this.quoteForm.controls['settlingAgent'].setValue(this.dropSettlingAgentCityList[0]?.Code)
+          }
 
         }
       },
@@ -505,7 +514,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
       'ProductId': this.productId,
       'OpenCoverNo': this.openCoverNo,
       'pvType': 'tolerance',
-      'IncotermPercent':this.quoteF.incoterms.value
+      'IncotermPercent':this.quoteF.incotermsPercentage.value
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

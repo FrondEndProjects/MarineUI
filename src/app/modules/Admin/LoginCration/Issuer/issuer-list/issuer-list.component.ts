@@ -40,10 +40,12 @@ export class IssuerListComponent implements OnInit {
  public branchCode: any;
  branchList:any[]=[];
  branchValue:any;
- public filterValue;  constructor( private masterSer: MastersService,
+ public filterValue;regionCode: any;
+  constructor( private masterSer: MastersService,
    private router: Router,private adminReferralService: AdminReferralService) {
      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
      console.log(this.userDetails);
+     this.regionCode = this.userDetails?.LoginResponse.RegionCode;
      let entry = JSON.parse(sessionStorage.getItem('editIssuerId'));
      if(entry) {
       this.branchValue = entry?.BranchCode;
@@ -130,7 +132,7 @@ export class IssuerListComponent implements OnInit {
    onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode': this.regionCode,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

@@ -16,7 +16,7 @@ export class CommoditySelectionComponent implements OnInit {
   public filterValue: any = '';
   public tableData: any[] = [];
   public columnHeader: any[] = [];
-  public OpenCover:any;
+  public OpenCover:any;totalSelected:any=null;
 
   constructor(
     private openCoverService: OpenCoverService,
@@ -48,6 +48,7 @@ export class CommoditySelectionComponent implements OnInit {
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log("Entry Commodity Data",data);
+        this.filterValue = null;
         let commodityList = data?.Result?.CommodityInfo;
         if(commodityList.length!=0){
           let i=0;
@@ -59,7 +60,10 @@ export class CommoditySelectionComponent implements OnInit {
               if(commodity.OptedCommodity==undefined || commodity.OptedCommodity==null || commodity.OptedCommodity!='Y' || commodity.OptedCommodity=='false') commodity['isChecked'] = false;
               else commodity['isChecked'] = true;
               i+=1;
-              if(i==commodityList.length) this.tableData = commodityList;
+              if(i==commodityList.length){
+                this.totalSelected = commodityList.filter(ele=>ele.isChecked==true).length;
+                this.tableData = commodityList.filter(ele=>ele.isChecked==true).concat(commodityList.filter(ele=>ele.isChecked!=true));
+              }
           }
         }
         else this.tableData = [];
@@ -93,7 +97,8 @@ export class CommoditySelectionComponent implements OnInit {
     }
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        this.filterValue = null;
+        this.onEdit();
       },
       (err) => { },
     );

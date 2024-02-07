@@ -29,7 +29,7 @@ export class ExistingUserListComponent implements OnInit {
  public adminData: any;
  AgencyCode:any;
  Agentcode:any;
- first:boolean=false;
+ first:boolean=false;regionCode:any=null;
   constructor( private masterSer: MastersService,
     private router: Router,private sharedService: SharedService,  private adminReferralService: AdminReferralService,) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -38,7 +38,7 @@ export class ExistingUserListComponent implements OnInit {
       //this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
      //const user = this.userDetails?.Result;
      //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-   
+     this.regionCode = this.userDetails?.LoginResponse.RegionCode;
       let entry = JSON.parse(sessionStorage.getItem('editUserId'));
       console.log('llllllllllll',entry)
       if(entry) {
@@ -84,7 +84,7 @@ export class ExistingUserListComponent implements OnInit {
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode': this.regionCode,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

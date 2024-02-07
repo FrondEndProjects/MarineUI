@@ -32,7 +32,7 @@ export class RenewalPendingComponent implements OnInit {
 public tableData: any;
 public columnHeader: any[] = [];
 branchValue:any;
-public filterValue;  
+public filterValue; regionCode:any=null; 
   constructor(
     private openCoverService: OpenCoverService,
     private _formBuilder: FormBuilder,
@@ -49,6 +49,7 @@ public filterValue;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.LoginId;
     this.searchForm = this.adminReferralService.searchForm;
+    this.regionCode = this.userDetails?.RegionCode;
     /*this.columnHeader = [
         //{key: 'S.No', display: 'S.No'},
         {key: 'ProposalNo', display: 'Proposal No'},
@@ -92,7 +93,7 @@ public filterValue;
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode': this.regionCode,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

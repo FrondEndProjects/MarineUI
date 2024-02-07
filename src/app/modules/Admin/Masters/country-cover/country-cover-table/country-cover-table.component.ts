@@ -28,7 +28,7 @@ export class CountryCoverTableComponent implements OnInit {
    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
  ];
-
+ branchCode:any=null;
  public tableSection: boolean = false;
  public dataSource = new MatTableDataSource(this.ELEMENT_DATA);
  public tableData: any;
@@ -43,10 +43,9 @@ export class CountryCoverTableComponent implements OnInit {
  constructor (
   private masterSer: MastersService, 
   private router: Router ) {
-
    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-   
    if (this.userDetails) this.countryId = this.userDetails?.LoginResponse?.CountryId;
+   if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse?.BranchCode;
   }
 
 
@@ -58,7 +57,8 @@ export class CountryCoverTableComponent implements OnInit {
 
 getCountryCoverList() {
  let ReqObj = {
-   'CountryId': this.countryId
+   'CountryId': this.countryId,
+   "BranchCode": this.branchCode
  }
  this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/countrycover/list`, ReqObj).subscribe(
   (data: any) => {

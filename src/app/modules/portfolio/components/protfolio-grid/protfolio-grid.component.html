@@ -6,7 +6,7 @@
       </div>
     </div>
   <div class="row">
-    <div class="col-12 col-md-4 col-lg-4"  *ngIf="isIssuer && userDetails?.UserType !='admin'">
+    <div class="col-12 col-md-4 col-lg-4"  *ngIf="userDetails.UserType!='User' && userDetails?.UserType !='admin'">
       <div class="input-control-container">
         <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
         <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="selectedBroker" [items]="brokerList" bindValue="LoginId"

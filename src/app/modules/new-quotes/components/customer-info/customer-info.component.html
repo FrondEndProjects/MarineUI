@@ -1,13 +1,16 @@
 <div class="maan-card customPadding">
   <div class="maan-card-header">
-    <div class="form-heading">
       <!-- <div class="form-heading-number">
         3
       </div> -->
-      <div class="form-heading-text">
-        Customer Information
+      <div class="row">
+        <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
+          Customer Information
+        </div>
+        <div class="col-md-2 col-lg-2 col-2 col-xl-2 offset-6" *ngIf="quoteNo">
+          Quote No - {{quoteNo}}
+        </div>
       </div>
-    </div>
   </div>
   <div class="maan-card-body">
     <ng-container *ngIf="isIssuer && userDetails?.UserType !='admin'">

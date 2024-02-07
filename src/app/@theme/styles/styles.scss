@@ -63,6 +63,7 @@ body {
 }
 .text-required{
   padding: 3px;
+  color: red !important;
 }
 .logo-bg-1{
  background-color: var(--logo-color-1) !important;
@@ -145,6 +146,32 @@ mat-form-field{
   box-sizing: border-box;
   transition: all .3s;
   height: 35px;
+}
+.input-form-box .input-form-control3 {
+  min-width: 280px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px !important;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all .3s;
+}
+.input-form-box .input-form-control3:hover {
+  border-color: var(--logo-color-1);
+  transition: 1s;
+}
+
+.input-form-box .input-form-control3.without-icon {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box .input-form-control3.with-icon {
+  padding-left: 60px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
 }
 .input-form-box .input-form-control2 {
   width: 100%;

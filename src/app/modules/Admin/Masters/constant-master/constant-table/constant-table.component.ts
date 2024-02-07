@@ -44,7 +44,7 @@ public filterValue;
     private router: Router) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       
-      if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.branchCode;
+      if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
       sessionStorage.removeItem('constantData');
      }
 

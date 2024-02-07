@@ -98,7 +98,7 @@ export class ClauseTableComponent implements OnInit {
 
  public onEdit(event) {
    console.log(event);
-
+   sessionStorage.setItem('editClausesCoverId', event.CoverId);
    sessionStorage.setItem('editClausesId', event.ClausesId);
    //sessionStorage.setItem('editErrorIds', event.StageId);
    this.router.navigateByUrl('Marine/masters/clause/add-edit');

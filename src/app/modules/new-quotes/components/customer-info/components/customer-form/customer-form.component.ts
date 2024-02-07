@@ -32,7 +32,7 @@ export class CustomerFormComponent implements OnInit {
   public tableData: any[] = [];mobileNo:any=null;
   public columnHeader: any[] = [];coreAppcode:any=null;poBox:any=null;
   broCode: any;title:any=null;customerName:any=null;cityValue:any=null;
-  closeResult: any=null;editSection:boolean=false;
+  closeResult: any=null;editSection:boolean=false;OpenCover:any=null;
   titleError:boolean=false;customerNameError:boolean=false;
   coreAppcodeError:boolean=false;cityNameError:boolean=false;
   poBoxError:boolean=false;customerVat:any=null;Address1:any=null;
@@ -50,7 +50,12 @@ export class CustomerFormComponent implements OnInit {
     this.customerForm = this.customerInfoComponent.customerForm;
     this.loginId = this.customerInfoComponent?.loginId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
-
+    this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    if(this.OpenCover){
+      if(this.OpenCover?.name == 'adminReferral'){
+            this.productId = this.OpenCover?.productId;
+      } 
+    }
     this.broCode=this.customerInfoComponent?.broCode
 
     console.log('llllllllllllllll',this.loginId)
@@ -139,8 +144,6 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onGetCustomerList(code) {
-
-    console.log('hhhhhhhh',code)
     this.tableData = [];
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if(this.productId=='3') this.openCoverNo = null;
@@ -277,7 +280,7 @@ export class CustomerFormComponent implements OnInit {
         "CustVatRegNo": this.customerVat,
         "CustomerArNo": null,
         "CustomerArabicName": null,
-        "CustomerCode": null,
+        "CustomerCode": this.coreAppcode,
         "CustomerId": null,
         "CustomerName": this.customerName,
         "DateOfBirth": null,

@@ -142,7 +142,7 @@ tableData:any[]=[];
      {key: 'DiscountPremium', display: 'Discount % MAx'},
      {key: 'BackDateAllowed', display: 'Back Days Allowed'},
      {
-      key: 'actions',
+      key: 'BrokerProductActions',
       display: 'Edit',
       sticky: true,
       config: {

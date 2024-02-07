@@ -47,6 +47,14 @@ export class RejectedQuotesComponent implements OnInit {
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item.ApplicationNo);
     sessionStorage.setItem('QuoteStatus',item.QuoteStatus);
+    if(item?.OpenCoverNo){
+      const opencover = {
+        'name':'adminReferral',
+        'value':item?.OpenCoverNo,
+        "productId": item?.ProductId
+      }
+       sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+    }
     this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
   }
 

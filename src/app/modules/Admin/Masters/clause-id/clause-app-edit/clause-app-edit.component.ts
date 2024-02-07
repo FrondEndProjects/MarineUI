@@ -29,7 +29,7 @@ export class ClauseAppEditComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public userDetails: any;
   public branchCode: any;
-  ClausesId: any;
+  ClausesId: any;CoverId:any=null;
   productId: any;
 
   constructor(
@@ -46,7 +46,7 @@ export class ClauseAppEditComponent implements OnInit {
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
 
     console.log('jjjjjjjj',this.productId)
-
+    this.CoverId = JSON.parse(sessionStorage.getItem('editClausesCoverId'));
     this.ClausesId = JSON.parse(sessionStorage.getItem('editClausesId'));
     this.conveyanceTransport = JSON.parse(sessionStorage.getItem('conveyanceTransport'));
 
@@ -131,6 +131,7 @@ IntegrationCode:new FormControl(''),
     let ReqObj = {
       "BranchCode": this.branchCode,
       "ClausesId":this.ClausesId,
+      "CoverId": this.CoverId
 
     }
     console.log(ReqObj);
@@ -138,20 +139,22 @@ IntegrationCode:new FormControl(''),
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/clauses/edit`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-         
-        let conveyanceDetails = data.Result;
-        this.ClausesIdForm.controls['ModeOfTransportId'].setValue(conveyanceDetails.ModeOfTransportId);
-        this.getCoverName('direct');
-        this.ClausesIdForm.controls['ClausesDescription'].setValue(conveyanceDetails.ClausesDescription);
-        this.ClausesIdForm.controls['DisplayOrder'].setValue(conveyanceDetails.DisplayOrder);
-        this.ClausesIdForm.controls['PdfLocation'].setValue(conveyanceDetails.PdfLocation);
-        this.ClausesIdForm.controls['IntegrationCode'].setValue(conveyanceDetails.IntegrationCode);
-        this.ClausesIdForm.controls['ExtraCoverId'].setValue(conveyanceDetails.ExtraCoverId);
-        this.ClausesIdForm.controls['coreApplicationCode'].setValue(conveyanceDetails.CoreApplicationCode);
-        this.ClausesIdForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(conveyanceDetails.EffectiveDate));
-        this.ClausesIdForm.controls['remarks'].setValue(conveyanceDetails.Remarks);
-        this.ClausesIdForm.controls['CoverId'].setValue(conveyanceDetails.CoverId);
-        this.ClausesIdForm.controls['status'].setValue(conveyanceDetails.Status);
+        if(data.Result){
+          let conveyanceDetails = data.Result;
+          this.ClausesIdForm.controls['ModeOfTransportId'].setValue(conveyanceDetails.ModeOfTransportId);
+          this.getCoverName('direct');
+          this.ClausesIdForm.controls['ClausesDescription'].setValue(conveyanceDetails.ClausesDescription);
+          this.ClausesIdForm.controls['DisplayOrder'].setValue(conveyanceDetails.DisplayOrder);
+          this.ClausesIdForm.controls['PdfLocation'].setValue(conveyanceDetails.PdfLocation);
+          this.ClausesIdForm.controls['IntegrationCode'].setValue(conveyanceDetails.IntegrationCode);
+          this.ClausesIdForm.controls['ExtraCoverId'].setValue(conveyanceDetails.ExtraCoverId);
+          this.ClausesIdForm.controls['coreApplicationCode'].setValue(conveyanceDetails.CoreApplicationCode);
+          this.ClausesIdForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(conveyanceDetails.EffectiveDate));
+          this.ClausesIdForm.controls['remarks'].setValue(conveyanceDetails.Remarks);
+          this.ClausesIdForm.controls['CoverId'].setValue(conveyanceDetails.CoverId);
+          this.ClausesIdForm.controls['status'].setValue(conveyanceDetails.Status);
+        }
+        else alert('Null Response')
 
       }
     )

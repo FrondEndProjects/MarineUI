@@ -74,12 +74,13 @@ export class CanceledPoliciesComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    if (this.userDetails?.UserType == "RSAIssuer") {
-      this.onGetBrokerList();
-    }
-    else{
-      this.onChangeBroker();
-    }
+    // if (this.userDetails?.UserType == "RSAIssuer") {
+      
+    // }
+    // else{
+    //   this.onChangeBroker();
+    // }
+    this.onGetBrokerList();
     this.selectedBroker = sessionStorage.getItem('loginId');
   }
 

@@ -84,21 +84,25 @@ export class NewOpenCoverComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onCreateFormControl();
-    this.onLoadDropdownList();
+    
     
     this.menuService.onItemClick().subscribe((data) => {
       console.log("Current Route",data.item.link)
-      if (data.item.link === `/${this.routerBaseLink}/new-open-cover/new-open-cover-form`) {
+      if (data.item.link === `/${this.routerBaseLink}/new-open-cover/new-open-cover-form` || data.item.link===`/Marine/new-open-cover/new-open-cover-form`) {
         sessionStorage.removeItem("OpenCoverEdit");
         this.reloadCurrentRoute();
+
       }
     });
     let openCoverData = JSON.parse(sessionStorage.getItem('OpenCoverEdit'))
     if(openCoverData){
+      this.onCreateFormControl();
+      this.onLoadDropdownList();
       this.onEdit();
     }
     else{
+      this.onCreateFormControl();
+      this.onLoadDropdownList();
       this.newQuoteF.customer.disable();
       //this.onGetCustomerList('direct');
     }
@@ -139,7 +143,7 @@ export class NewOpenCoverComponent implements OnInit {
   }
   reloadCurrentRoute() {
    
-    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+    window.location.reload();
   }
   checkSearchDisable(){
     return (this.newQuoteF.selectBroker.value=='' || this.newQuoteF.selectBroker.value==null || this.newQuoteF.selectBroker.value==undefined);
@@ -155,8 +159,6 @@ export class NewOpenCoverComponent implements OnInit {
       debitTo: ['Customer', Validators.required],
       openCoverStartDate: [null, Validators.required],
       openCoverEndDate: [null, Validators.required],
-
-
       annualEstimate: ['', Validators.required],
       utilizedAmount: ['0'],
       currency: [null, Validators.required],
@@ -169,16 +171,16 @@ export class NewOpenCoverComponent implements OnInit {
       certificateStartForm: ['', Validators.required],
       commissiomPrecnt: ['', Validators.required],
       minimumPremium: ['', Validators.required],
-      endorsementFee: ['', Validators.required],
-      issuanceFeePrecnt: ['', Validators.required],
-      minimumPremIssuanceFee: ['', Validators.required],
+      endorsementFee: ['0', Validators.required],
+      issuanceFeePrecnt: ['0', Validators.required],
+      minimumPremIssuanceFee: ['0', Validators.required],
       noOfBackDays: ['', Validators.required],
       defaultClauses: ['N', Validators.required],
       declarationType: [null, Validators.required],
       hauilerType: ['N', Validators.required],
       war: ['N', Validators.required],
       fac: ['N', Validators.required],
-      policyFee: ['', Validators.required],
+      policyFee: ['0', Validators.required],
       voyageRemarks: [''],
       effectiveDate: [null],
     });
@@ -621,7 +623,7 @@ export class NewOpenCoverComponent implements OnInit {
     //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
     }
     else{
-      this.newQuoteF.minimumPremium.setValue('0')
+      this.newQuoteF.minimumPremium.setValue('');
     }
     //this.newQuoteF.minimumPremium.setValue(this.editData?.MinPremium);
     this.newQuoteF.endorsementFee.setValue(this.editData?.EndorsementFee);

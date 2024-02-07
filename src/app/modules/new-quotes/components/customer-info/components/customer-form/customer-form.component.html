@@ -121,34 +121,6 @@
   </div>
 </form>
 
-<!-- <div class="modal fade" #secondDialog tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Select Customer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <ng-container *ngIf="tableData.length!=0">
-            <app-material-table [cols]="columnHeader" [customerId]="getCustomerId()" [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)">
-            </app-material-table>
-          </ng-container>
-          <ng-container *ngIf="tableData.length==0">
-              <div class="text-center">
-                    No Customer Available
-              </div>
-          </ng-container>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="onsubmit()">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 
 <ng-template #myModal2 let-modal>
   <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
@@ -159,7 +131,7 @@
       </div>
       <div class="modal-body">
           <ng-container *ngIf="!editSection">
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end" *ngIf="productId!='11' && productId!=11">
               <div><button class="btn btn-primary" (click)="editSection=!editSection"><i class="fa fa-plus"></i>&nbsp;Create Customer</button></div>
             </div>
             <div class="row">

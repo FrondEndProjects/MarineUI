@@ -137,8 +137,11 @@ export class LoginComponent {
       'RegionCode': this.f.region.value,
     };
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      console.log(data);
-      this.branchList = data || []
+      console.log("Branch Response",data);
+      this.branchList = data;
+      if(this.branchList.length!=0){
+        this.loginForm.controls['branch'].setValue(this.branchList[0]?.BranchCode);
+      }
     });
   }
 
@@ -149,7 +152,10 @@ export class LoginComponent {
     };
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
-      this.branchList = data || []
+      this.branchList = data;
+      if(this.branchList.length!=0){
+        this.PasswordCheckForm.controls['branch'].setValue(this.branchList[0]?.BranchCode);
+      }
     });
   }
   resetForm() {

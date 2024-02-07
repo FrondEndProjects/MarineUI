@@ -49,11 +49,19 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 col-lg-4">
+        <!-- <div class="col-12 col-md-4 col-lg-4">
           <div class="input-control-container">
             <label class="input-form-label">Policy Fee<span class="text-required">*</span></label>
             <div class="input-form-box">
               <input type="text" class="input-form-control without-icon" formControlName="policyFee">
+            </div>
+          </div>
+        </div> -->
+        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='02'">
+          <div class="input-control-container">
+            <label class="input-form-label">Levy Premium<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="levyPremium">
             </div>
           </div>
         </div>
@@ -62,6 +70,14 @@
             <label class="input-form-label">Vat Tax<span class="text-required">*</span></label>
             <div class="input-form-box">
               <input type="text" class="input-form-control without-icon" formControlName="vatTax" (keyup)="vattax(pG.vatTax.value)">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='02'">
+          <div class="input-control-container">
+            <label class="input-form-label">Stamp Duty<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="stampDuty">
             </div>
           </div>
         </div>
@@ -76,7 +92,7 @@
         </ng-container>
         <div class="col-12 col-md-4 col-lg-4">
           <div class="input-control-container">
-            <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+            <label class="input-form-label">Remarks</label>
             <div class="input-form-box">
               <input type="text" class="input-form-control without-icon" formControlName="remarks">
             </div>
@@ -100,7 +116,6 @@
             </div>
           </div>
         </div>
-
       </ng-container>
       </div>
   </div>

@@ -19,7 +19,10 @@
                 <ng-container *ngIf="element[col.key]=='0'">{{ element[col.key] }}</ng-container>
                 <ng-container *ngIf="element[col.key]!='0'">{{ element[col.key] | commaseparator }}</ng-container>
               </ng-container>
-              <ng-container *ngIf="col.key!='Premium'">
+              <ng-container *ngIf="col.key=='GoodsDescription'">
+                  
+              </ng-container>
+              <ng-container *ngIf="col.key!='Premium' && col.key!='GoodsDescription'">
                 {{ element[col.key] }}
               </ng-container>
             </div>
@@ -28,7 +31,10 @@
             <ng-container *ngIf="col.key=='Premium'">
               {{ element[col.key] | commaseparator }}
             </ng-container>
-            <ng-container *ngIf="col.key!='Premium'">
+            <ng-container *ngIf="col.key=='GoodsDescription'">
+                  <div style="min-width: 120px !important;max-height: 60px !important;"> {{ element[col.key] }}</div>
+            </ng-container>
+            <ng-container *ngIf="col.key!='Premium' && col.key!='GoodsDescription'">
               {{ element[col.key] }}
             </ng-container>
           </div><!--mobiless-->

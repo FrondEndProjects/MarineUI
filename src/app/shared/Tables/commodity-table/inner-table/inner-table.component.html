@@ -63,7 +63,8 @@
 </div>
 
 <div class="text-right my-1" *ngIf="!Nan">
-  <button nbButton (click)="onSubmit()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+  <button nbButton (click)="onSubmit()" *ngIf="checkUpdated()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+  <button nbButton (click)="onSubmit()" *ngIf="!checkUpdated()" shape="round" size="small" status="success" class="mx-2">Submit</button>
 </div>
 <!-- <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons
   aria-label="Select page of periodic elements">

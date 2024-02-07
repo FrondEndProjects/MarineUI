@@ -39,7 +39,9 @@ export class PremiumInfoComponent implements OnInit {
   Ref: string;
   premiumLevy: any=null;
   levyPercent: any=null;
-  stampDuty: any=null;
+  stampDuty: any=null;regionCode:any=null;
+  stampDutyYN: any='N';
+  quoteNo: any;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -63,7 +65,7 @@ export class PremiumInfoComponent implements OnInit {
     this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
     this.coverId = this.sessionStorageService.sessionStorgaeModel.coverId;
     this.quoteForm = this.newQuotesService.quoteForm;
-
+    if(this.userDetails?.RegionCode) this.regionCode = this.userDetails?.RegionCode;
 
   }
 
@@ -159,8 +161,8 @@ export class PremiumInfoComponent implements OnInit {
               else if(tableData!=null && type == 'additionalPremium'){
                 if(tableData!=0){
                   let entry=tableData.toString();
-                  if(tableData.includes('.')){
-                    let splitValue = entry.split('.');
+                  let splitValue = entry.split('.');
+                  if(splitValue.length>1){
                     let value = splitValue[0].replace(/\D/g, "")
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                       if(splitValue.length>1){
@@ -238,7 +240,7 @@ export class PremiumInfoComponent implements OnInit {
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         this.premiumDetails = data?.Result;
-
+        this.quoteNo = this.premiumDetails?.QuoteDetails?.QuoteNo;
 
         console.log('PREMIUM DETIAL',this.premiumDetails)
         this.onSetValue();
@@ -427,6 +429,7 @@ export class PremiumInfoComponent implements OnInit {
 
         console.log('pppprrrrrrrr',data.Result.ExcessSign)
         this.premiumDetails = data?.Result;
+        this.quoteNo = this.premiumDetails?.QuoteDetails?.QuoteNo;
         this.onSetValue();
 
       },
@@ -639,7 +642,7 @@ export class PremiumInfoComponent implements OnInit {
     this.premiumLevy = this.premiumDetails?.PremiumDetails?.PremiumLevy;
     this.levyPercent = this.premiumDetails?.PremiumDetails?.LevyPercent;
     this.stampDuty = this.premiumDetails?.PremiumDetails?.StampDuty;
-
+    this.stampDutyYN = this.premiumDetails?.PremiumDetails?.StampDutyYN;
     if(this.premiumDetails?.Referral){
       this.premiumF?.totalPremium.setValue('0');
     }

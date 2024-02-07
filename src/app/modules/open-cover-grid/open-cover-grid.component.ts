@@ -72,7 +72,9 @@ export class OpenCoverGridComponent implements OnInit {
       { key: 'OpenCoverNo', display: 'OpenCover No' },
       { key: 'CustomerName', display: 'Customer Name' },
       { key: 'InceptionDate', display: 'OpenCover Date' },
+      { key: 'CurrencyName', display: 'Currency' },
       { key: 'Voyage', display: 'Balance Sum Insured' },
+      
       { key: 'ExpiryDate', display: 'Validity Period' },
       {
         key: 'actions',
@@ -99,7 +101,6 @@ export class OpenCoverGridComponent implements OnInit {
     };
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data)
         this.brokerList = data?.Result;
       });
 

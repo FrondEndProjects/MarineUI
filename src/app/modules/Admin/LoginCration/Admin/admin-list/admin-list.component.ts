@@ -44,13 +44,15 @@ export class AdminListComponent implements OnInit {
  public branchCode: any;
  insuranceId:any;
  branchList:any[]=[];
- branchValue:any;
+ branchValue:any;regionCode:any=null;
  public filterValue;branch: any;
   constructor( private masterSer: MastersService,
    private router: Router,private sharedService: SharedService,  private adminReferralService: AdminReferralService,) {
      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+     
      //this.userDetails = this.userDetails?.LoginResponse;
      console.log(this.userDetails);
+     this.regionCode = this.userDetails?.LoginResponse.RegionCode;
      //this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     //const user = this.userDetails?.Result;
     //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
@@ -161,7 +163,7 @@ export class AdminListComponent implements OnInit {
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode': this.regionCode,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

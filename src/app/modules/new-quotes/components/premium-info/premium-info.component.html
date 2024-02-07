@@ -1,18 +1,21 @@
 <div class="maan-card">
   <div class="maan-card-header">
-    <div class="form-heading">
       <!-- <div class="form-heading-number">
         4
       </div> -->
-      <div class="form-heading-text">
-       Premium Information
-     </div>
-     </div>
+      <div class="row">
+        <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
+          Premium Information
+        </div>
+        <div class="col-md-2 col-lg-2 col-2 col-xl-2 offset-6" *ngIf="quoteNo">
+          Quote No - {{quoteNo}}
+        </div>
+      </div>
   </div>
   <div class="maan-card-body">
     <div class="header-details">
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-6">
+        <!-- <div class="col-12 col-md-6 col-lg-6">
           <div class="d-sm-flex flex-sm-row justify-content-sm-between">
             <div class="p-2">
               Quote No
@@ -21,7 +24,7 @@
               {{premiumDetails?.QuoteDetails?.QuoteNo}}
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col-12 col-md-6 col-lg-6">
           <div class="d-sm-flex flex-sm-row justify-content-sm-between">
             <div class="p-2">
@@ -81,7 +84,7 @@
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <div>Pvt Cover Option</div>
+                    <div>PVT Cover Option</div>
                     <div>{{premiumDetails?.QuoteDetails?.WarAndSrccYn}}</div>
                   </li>
                   <li class="list-group-item">
@@ -366,7 +369,7 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            Pvt Premium
+                            PVT Premium
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warRate">
@@ -376,10 +379,10 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item">
+                      <!-- <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            Pvt On Land Premium
+                            PVT On Land Premium
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warLandRate">
@@ -388,7 +391,7 @@
                             <input type="text" class="form-control form-control-sm" formControlName="warLandPremium" (keyup)="CommaFormatted(premiumF.warLandPremium.value,'warLandPremium')">
                           </div>
                         </div>
-                      </li>
+                      </li> -->
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
@@ -408,7 +411,7 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            Policy Issuance Fee AED
+                            Policy Issuance Fee
                           </div>
                           <div class="col-4 col-md-3">
                             <div class="custom-control custom-switch">
@@ -422,7 +425,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item">
+                      <li class="list-group-item" *ngIf="regionCode =='02'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                           Premium Levy
@@ -467,7 +470,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item">
+                      <li class="list-group-item" *ngIf="regionCode =='02' && stampDutyYN=='Y'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                            Stamp Duty
@@ -530,7 +533,7 @@
           <tr>
             <th>Endorsement</th>
             <th>Marine Premium</th>
-            <th>Pvt Premium</th>
+            <th>PVT Premium</th>
             <th>Additional Premium</th>
             <th>Total Premium</th>
           </tr>

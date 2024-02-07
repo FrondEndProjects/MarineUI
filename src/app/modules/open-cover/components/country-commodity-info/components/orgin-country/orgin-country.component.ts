@@ -85,6 +85,8 @@ export class OrginCountryComponent implements OnInit {
   }
 
   onSelected(arrayaside: string) {
+    this.excludedCountrySearch = null;
+    this.includedCountrySearch = null;
     if (arrayaside === 'right') {
       console.log('yyyyyyyyyyyy',this.excludedCountry)
       const selectedCountry = this.excludedCountry.filter((ele: any) => ele.isOrigin === true);
@@ -189,7 +191,8 @@ export class OrginCountryComponent implements OnInit {
       };
       this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
-          console.log(data);
+          this.excludedCountrySearch = null;
+          this.includedCountrySearch = null;
         },
         (err) => { },
       );

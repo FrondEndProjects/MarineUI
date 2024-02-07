@@ -156,7 +156,7 @@ export class ReportComponent implements OnInit {
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', Results);
-        link.setAttribute('download',val);
+        link.setAttribute('download','Reports');
         document.body.appendChild(link);
         link.click();
         link.remove();

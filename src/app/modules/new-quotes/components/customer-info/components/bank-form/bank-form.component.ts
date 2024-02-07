@@ -13,13 +13,17 @@ export class BankFormComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public userDetails: any;
   public productId: any;
-  public loginId: any;
+  public loginId: any;OpenCover:any=null;
   public applicationId: any;
 
   public bankForm!: FormGroup;
   public dropBankList: any[] = [];
   @ViewChild('formDirective') public bankFormDirective: NgForm;
-
+  pattern = {
+    0: {
+      pattern: new RegExp('\[a-zA-Z0-9]'),
+    },
+  };
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -31,11 +35,17 @@ export class BankFormComponent implements OnInit {
     this.productId = this.customerInfoComponent?.productId;
     this.loginId = this.customerInfoComponent?.loginId;
     this.applicationId = this.customerInfoComponent?.applicationId;
-
+    this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    if(this.OpenCover){
+      if(this.OpenCover?.name == 'adminReferral'){
+            this.productId = this.OpenCover?.productId;
+      } 
+    }
   }
 
   ngOnInit(): void {
     this.onLoadDropdownList();
+    console.log("Bank Form",this.quoteF)
   }
 
   get quoteF() {

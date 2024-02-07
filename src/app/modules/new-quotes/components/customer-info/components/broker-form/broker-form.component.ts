@@ -41,7 +41,12 @@ export class BrokerFormComponent implements OnInit {
     this.loginId = this.customerInfoComponent.loginId;
     this.applicationId = this.customerInfoComponent.applicationId;
     this.OpenCover = this.customerInfoComponent.OpenCover;
-
+    this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    if(this.OpenCover){
+      if(this.OpenCover?.name == 'adminReferral'){
+            this.productId = this.OpenCover?.productId;
+      } 
+    }
     this.dropChannelList=[
       {name:'Broker',id:'broker'},
       {name:'Cash',id:'cash'},

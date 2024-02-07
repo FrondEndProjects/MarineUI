@@ -149,7 +149,8 @@ export class CountryCoverAppEditComponent implements OnInit {
   getCountryCoverList() {
     let ReqObj = {
       "CountryId": this.CountryCoverId,
-      "Sno": this.CountryCoverSno
+      "Sno": this.CountryCoverSno,
+      "BranchCode": this.branchCode
     }
     console.log(ReqObj);
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/countrycover/edit`, ReqObj).subscribe(
@@ -162,7 +163,7 @@ export class CountryCoverAppEditComponent implements OnInit {
         this.countryCoverForm.controls['countryName'].setValue(this.countryCoverData.CountryName);
         this.countryCoverForm.controls['countryShortName'].setValue(this.countryCoverData.CountryShortName);
         this.countryCoverForm.controls['warRate'].setValue(this.countryCoverData.WarRate);
-        this.countryCoverForm.controls['warOnLandRate'].setValue(this.countryCoverData.WarOnLandRate);
+        this.countryCoverForm.controls['warOnLandRate'].setValue(this.countryCoverData.WarLandRate);
         this.countryCoverForm.controls['export'].setValue(this.countryCoverData.EndingPlace);
         this.countryCoverForm.controls['exportWarrantyCondition'].setValue(this.countryCoverData.SPWarrantyCondition);
         this.countryCoverForm.controls['import'].setValue(this.countryCoverData.StartingPlace);

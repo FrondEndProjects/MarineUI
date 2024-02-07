@@ -23,9 +23,21 @@
               </div>
             </ng-container>
             <ng-container *ngIf="col.config.isEdit">
-              <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
-                <i class="fas fa-marker"></i>
-              </button>
+              <ng-container *ngIf="col.key!='BrokerProductActions'">
+                  <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                    <i class="fas fa-marker"></i>
+                  </button>
+              </ng-container>
+              <ng-container *ngIf="col.key=='BrokerProductActions'">
+                  <ng-container *ngIf="element.ProductId!='11'">
+                    <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                      <i class="fas fa-marker"></i>
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="element.ProductId=='11'">
+                        N/A
+                  </ng-container>
+                </ng-container>
             </ng-container>
               
             <!--newlyAdded-->
@@ -75,18 +87,18 @@
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
+                  <!-- <button mat-menu-item>
                     <span>Lc Details</span>
-                  </button>
+                  </button> -->
                   <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
                     <span>Certificate</span>
                   </button>
-                  <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Schedule'})">
+                  <!-- <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Schedule'})">
                     <span>Schedule</span>
                   </button>
                   <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'PolicyWording'})">
                     <span>Policy Wording</span>
-                  </button>
+                  </button> -->
                 </mat-menu>
               </div>
                 </div>

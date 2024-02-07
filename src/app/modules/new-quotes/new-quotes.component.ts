@@ -39,6 +39,11 @@ export class NewQuotesComponent implements OnInit {
     this.userDetails = this.userDetails?.LoginResponse;
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
+    if(this.OpenCover){
+      if(this.OpenCover?.name == 'adminReferral'){
+            this.productId = this.OpenCover?.productId;
+      } 
+    }
     this.routerBaseLink = this.userDetails?.routerBaseLink;
 
     // Broker

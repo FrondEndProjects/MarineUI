@@ -2,6 +2,13 @@
 
 <div class="maan-card">
   <form [formGroup]="searchForm">
+    <div class="row">
+      <div class="col-12">
+        <div class="middle-line">
+         Reports
+        </div>
+      </div>
+    </div>
   <div class="row">
     <div class="col-12 col-md-3 col-lg-3">
       <div class="input-control-container">
@@ -15,7 +22,7 @@
       <div class="input-control-container">
         <label class="input-form-label">Start Date<span class="text-required">*</span></label>
         <div class="input-form-box">
-            <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
+            <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control2 without-icon"
             formControlName="startDate" (click)="d.toggle()" readonly>
         </div>
       </div>
@@ -24,7 +31,7 @@
       <div class="input-control-container">
         <label class="input-form-label">End Date<span class="text-required">*</span></label>
         <div class="input-form-box">
-          <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control without-icon"
+          <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control2 without-icon"
             formControlName="endDate" (click)="d1.toggle()" readonly>
         </div>
       </div>

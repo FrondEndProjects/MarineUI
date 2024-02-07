@@ -38,9 +38,11 @@ export class WsrccAppEditComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse?.BranchCode;
 
-    this.clausesId = JSON.parse(sessionStorage.getItem('CoverData'));
+    let entry = JSON.parse(sessionStorage.getItem('CoverData'));
 
-    if (this.clausesId) {
+    if (entry) {
+      this.clausesId = entry?.ClausesId;
+      this.CoverId = entry?.CoverId
       this.getCoverEdit();
     }
     else {
@@ -116,7 +118,8 @@ export class WsrccAppEditComponent implements OnInit {
   getCoverEdit() {
     let ReqObj = {
       "BranchCode": this.branchCode,
-      "ClausesId": this.clausesId
+      "ClausesId": this.clausesId,
+      "CoverId": this.CoverId
     }
     console.log(ReqObj);
 

@@ -55,8 +55,11 @@ public filterValue;
     this.getExistingBank();
   }
 
-  getExistingBank() {
-    this.masterSer.onGetMethodSync(`${this.ApiUrl1}master/bank/list`).subscribe(
+  async getExistingBank() {
+    let ReqObj = {
+      "BranchCode": this.branchCode
+    }
+    ;(await this.masterSer.onPostMethodAsync(`${this.ApiUrl1}master/bank/list`, ReqObj)).subscribe(
       (data: any) => {
         if (data?.Message === 'Success') {
           console.log(data);

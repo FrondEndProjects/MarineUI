@@ -288,7 +288,10 @@ export const routes: Routes = [
         path: 'masters/sales-exe',
         loadChildren: () => import('./modules/Admin/Masters/sales-exe-master/sales-exe-master.module').then(m => m.SalesExeMasterModule),
       },
-
+      {
+        path: 'deposit-master',
+        loadChildren: () => import('./modules/Admin/Masters/deposit-master/deposit-master.module').then(m => m.DepositMasterModule),
+      },
     ],
   },
 

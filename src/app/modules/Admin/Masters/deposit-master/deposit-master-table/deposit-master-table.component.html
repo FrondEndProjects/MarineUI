@@ -1,0 +1,32 @@
+<div class="bg-white">
+    <!-- SEARCH FIELD -->
+    <ng-container *ngIf="!subSection">
+        <mat-form-field class="search-box  px-4" appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)">
+        </mat-form-field>
+        <!-- /SEARCH FIELD -->
+        <ng-container *ngIf="tableData">
+            <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)" (onViews)="onViews($event)" (onView)="onView($event)">
+            </app-grid-table>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="subSection">
+        <mat-form-field class="search-box  px-4" appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)">
+        </mat-form-field>
+        <!-- /SEARCH FIELD -->
+        <ng-container *ngIf="tableData2">
+            <app-grid-table [cols]="columnHeader2" [data]="tableData2" [filterValue]="filterValue">
+            </app-grid-table>
+        </ng-container>
+        <div class="text-center">
+            <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+        </div>
+    </ng-container>
+
+    <!-- PAGINATOR -->
+    <!-- <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator> -->
+    <!-- /PAGINATOR -->
+</div>

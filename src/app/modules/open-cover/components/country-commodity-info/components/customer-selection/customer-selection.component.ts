@@ -18,7 +18,7 @@ export class CustomerSelectionComponent implements OnInit {
   public tableData: any[] = [];
   public columnHeader: any[] = [];
   public customerEdit: any[] = [];
-  public LoginId:any;
+  public LoginId:any;totalSelected:any=null;
   constructor(
     private openCoverService: OpenCoverService,
     private countryCommodityInfoComponent: CountryCommodityInfoComponent,
@@ -79,10 +79,14 @@ export class CustomerSelectionComponent implements OnInit {
         { key: 'MissippiCustomerCode', display: 'Flag' },
       ];
       const customer: [] = list[0]?.Result?.CustomerResponse || [];
-      this.tableData = customer.map((x: any) => ({
+      let customerChecked:any[] = customer.map((x: any) => ({
         ...x,
         isChecked: this.onCheckCustomer(x)
-      }))
+      }));
+      let customersOpted:any[] = customerChecked.filter(ele=>ele.isChecked==true);
+      this.totalSelected = customersOpted.length;
+      let customersNotOpted = customerChecked.filter(ele=>ele.isChecked!=true);
+      this.tableData = customersOpted.concat(customersNotOpted);
     })
 
 
@@ -108,7 +112,8 @@ export class CustomerSelectionComponent implements OnInit {
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+        this.filterValue = null;
+        this.onGetCustomerList();
       },
       (err) => { },
     );

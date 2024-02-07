@@ -123,13 +123,22 @@ export class InnerTableComponent implements OnInit {
 
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
+          selectedData['isUpdated'] = true;
       },
       (err) => { },
     );
 
   }
-
+  checkUpdated(){
+    const selectedData = this.commodityTableComponent.selectedData;
+    if(selectedData){
+        if(selectedData?.isUpdated){
+            return false;
+        } 
+        else return true;
+    }
+    else return true;
+  }
   onPassData(element: any, name: any) {
     element['btnValue'] = name
     this.isActionBtn.emit(element);

@@ -122,7 +122,7 @@ export class ProtfolioGridComponent implements OnInit {
   onChangeBroker() {
     if(this.selectedBroker){
       console.log('RRRRRRRRRR',this.loginId)
-      if(this.userDetails?.UserType !== 'Broker' && this.userDetails?.UserType !== 'User'){
+      if( this.userDetails?.UserType !== 'User'){
       this.loginId = this.selectedBroker;
       }
       console.log('kkkkkkkkkkkk',this.loginId)

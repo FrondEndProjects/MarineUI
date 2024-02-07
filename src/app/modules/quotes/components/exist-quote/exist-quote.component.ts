@@ -185,19 +185,31 @@ export class ExistQuoteComponent implements OnInit {
     //  sessionStorage.setItem('OpenCover',JSON.stringify(data));
     this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
   }
-
+  onGetReasonDropdown(){
+    
+  }
   onReject(item:any){
-    const reasonList:any[] = this.quoteService.getReasonList();
-     const dialogRef = this.dialog.open(ConfirmPromptComponent, {
-       width: '400px',
-       data: {items:reasonList,row:item},
-     });
-
-     dialogRef.afterClosed().subscribe(result => {
-       if(result){
-         this.onLoadGrid();
-       }
-     });
+    const urlLink = `${this.ApiUrl1}menu/rejectedreasons`;
+    const reqData = {
+      "QuoteNo": item?.QuoteNo,
+      "BranchCode": this.userDetails?.BranchCode
+    };
+    this.quoteService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        const reasonList:any[] = data?.Result;
+        const dialogRef = this.dialog.open(ConfirmPromptComponent, {
+          width: '400px',
+          data: {items:reasonList,row:item},
+        });
+   
+        dialogRef.afterClosed().subscribe(result => {
+          if(result){
+            this.onLoadGrid();
+          }
+        });
+      },
+      (err) => { },
+    );
 
    }
 

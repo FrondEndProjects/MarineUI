@@ -27,12 +27,6 @@
     <nb-tabset fullWidth>
       <nb-tab tabTitle="Marine Open Cover(MOC)">
         <ng-container *ngIf="openCoverMocData">
-          <!-- <div class="input-control-container">
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon search-control" placeholder="Search.."
-                [(ngModel)]="mocFilterValue">
-            </div>
-          </div> -->
           <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMocData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
             (onOpenCoverAction)="onOpenCoverActions($event)">
           </app-grid-table>
@@ -45,13 +39,13 @@
           </app-grid-table>
         </ng-container>
       </nb-tab>
-      <nb-tab tabTitle="Marine Risk Land">
+      <!-- <nb-tab tabTitle="Marine Risk Land">
         <ng-container *ngIf="marineLandCoverData">
           <app-grid-table [cols]="openCoverMocHeader" [data]="marineLandCoverData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
           (onOpenCoverAction)="onOpenCoverActions($event)">
           </app-grid-table>
         </ng-container>
-      </nb-tab>
+      </nb-tab> -->
     </nb-tabset>
   </div>
 

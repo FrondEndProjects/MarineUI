@@ -93,7 +93,7 @@ export class NewUserDetailsComponent implements OnInit {
   mode: string;
   disable = false;
   disabled: boolean;
-  
+  regionCode:any=null;userDetails:any=null;
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
     private toastrService:NbToastrService, private router:Router, private adminReferralService: AdminReferralService,public dialog: MatDialog, private loginService: LoginService) {
@@ -107,7 +107,9 @@ export class NewUserDetailsComponent implements OnInit {
   var month = d.getMonth();
   var day = d.getDate();
 this.minDate= new Date(year - 18,month, day );
- 
+this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+  this.regionCode = this.userDetails?.LoginResponse.RegionCode;
+  
   this.UserDetails=new User();
  
 
@@ -424,7 +426,7 @@ Open(){
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode': this.regionCode,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
