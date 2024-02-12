@@ -43,6 +43,8 @@ export class PendingQuotesComponent implements OnInit {
   }
 
   isActionBtn(item: any) {
+    let productid=sessionStorage.getItem('productId');
+    console.log('ProductIdsssssss',productid);
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item?.ApplicationNo);
     sessionStorage.setItem('QuoteStatus',item?.QuoteStatus);
@@ -50,7 +52,7 @@ export class PendingQuotesComponent implements OnInit {
       const opencover = {
         'name':'adminReferral',
         'value':item?.OpenCoverNo,
-        "productId": item?.ProductId
+        "productId":productid 
       }
        sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
     }
@@ -58,7 +60,7 @@ export class PendingQuotesComponent implements OnInit {
       const opencover = {
         'name':'adminReferral',
         'value':null,
-        "productId": item?.ProductId
+        "productId":productid
       }
        sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
     }

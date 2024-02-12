@@ -295,7 +295,9 @@ Open(){
       this.List=data.Result;
       if (data.Message == 'Success') {
         const dialogRef = this.dialog.open(OpenCoverDocument, {
-
+          maxWidth: '100vw',
+          width: '1200px',
+          height: '80vh',
           data: {
          list:data.Result
           }

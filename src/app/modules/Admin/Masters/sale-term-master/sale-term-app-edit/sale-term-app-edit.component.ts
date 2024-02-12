@@ -5,6 +5,7 @@ import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@n
 import * as moment from 'moment';
 import * as Mydatas from '../../../../../app-config.json';
 import { MastersService } from '../../masters.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sale-term-app-edit',
@@ -25,7 +26,7 @@ export class SaleTermAppEditComponent implements OnInit {
   constructor( 
     private router: Router,
     private masterSer: MastersService,
-    private toastrService:NbToastrService ) {
+    private toastrService:NbToastrService,private datePipe: DatePipe) {
 
     this.Userdetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     
@@ -62,6 +63,7 @@ export class SaleTermAppEditComponent implements OnInit {
         this.saleTermForm.controls['coreApplicationCode'].setValue(saleTermDetails.CoreApplicationCode);
         this.saleTermForm.controls['remarks'].setValue(saleTermDetails.Remarks);
         this.saleTermForm.controls['status'].setValue(saleTermDetails.Status);
+        this.saleTermForm.controls['EffectiveDateStart'].setValue(this.onDateFormatInEdit(saleTermDetails.EffectiveDate))
         // this.saleTermForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(saleTermDetails.EffectiveDate));    
       }, (err) => { }
     )
@@ -69,21 +71,24 @@ export class SaleTermAppEditComponent implements OnInit {
 
    // Date Format
    onDateFormatInEdit(date) {
+    console.log(date);
     if (date) {
       let format = date.split('-');
-      if (format.length > 1) {
+      if(format.length >1){
         var NewDate = new Date(new Date(format[0], format[1], format[2]));
         NewDate.setMonth(NewDate.getMonth() - 1);
         return NewDate;
       }
-      else {
+      else{
         format = date.split('/');
-        if (format.length > 1) {
-          var NewDate = new Date(new Date(format[2], format[1], format[0]));
-          NewDate.setMonth(NewDate.getMonth() - 1);
+        if(format.length >1){
+          // var NewDate = new Date(new Date(format[2], format[1], format[0]));
+          // NewDate.setMonth(NewDate.getMonth() - 1);
+          let NewDate = format[2]+'-'+format[1]+'-'+format[0];
           return NewDate;
         }
       }
+
     }
   }
 
@@ -96,6 +101,7 @@ export class SaleTermAppEditComponent implements OnInit {
       remarks : new FormControl(''),
       effectiveDate : new FormControl( '', Validators.required),
       status : new FormControl('Y', Validators.required),
+      EffectiveDateStart:new FormControl('',Validators.required)
     });
   }
 
@@ -121,7 +127,15 @@ export class SaleTermAppEditComponent implements OnInit {
       "SaleTermName": this.saleTermForm.controls['saleTermName'].value,
       "SaleTermValue": this.saleTermForm.controls['saleTermValue'].value,
       "Status": this.saleTermForm.controls['status'].value,
+      "EffectiveDate":this.saleTermForm.controls['EffectiveDateStart'].value,
+      "AmendId":'',
       // "EffectiveDate": effDate
+    }
+    if (ReqObj.EffectiveDate != '' && ReqObj.EffectiveDate != null && ReqObj.EffectiveDate != undefined) {
+      ReqObj['EffectiveDate'] =  this.datePipe.transform(ReqObj.EffectiveDate, "dd/MM/yyyy")
+    }
+    else{
+      ReqObj['EffectiveDate'] = "";
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/saleTermMaster/save`, ReqObj).subscribe(
       (data: any) => {

@@ -156,6 +156,8 @@ export class AdminReferralComponent implements OnInit {
   }
 
   onLoadGrid() {
+    sessionStorage.removeItem('productId');
+    sessionStorage.setItem('productId', this.sF.productName.value);
     let urlLink = ''
     if (this.tabActive === 1) {
       urlLink = `${this.ApiUrl1}opencover/report/approved/referralquote`;

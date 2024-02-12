@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as Mydatas from '../../../../../app-config.json';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { MastersService } from '../../masters.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-extra-app-edit',
@@ -23,7 +24,7 @@ export class ExtraAppEditComponent implements OnInit {
 
   constructor(private masterSer: MastersService,
     private router: Router,
-    private toastrService: NbToastrService) {
+    private toastrService: NbToastrService,private datePipe: DatePipe) {
 
 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -83,6 +84,7 @@ export class ExtraAppEditComponent implements OnInit {
         this.extraCoverForm.controls['remarks'].setValue(this.extraCoverData.Remarks);
         this.extraCoverForm.controls['coreApplicationCode'].setValue(this.extraCoverData.CoreApplicationCode);
         this.extraCoverForm.controls['status'].setValue(this.extraCoverData.Status);
+        this.extraCoverForm.controls['EffectiveDateStart'].setValue(this.onDateFormatInEdit(this.extraCoverData.EffectiveDate))
       }, (err) => { }
     )
 
@@ -97,6 +99,7 @@ export class ExtraAppEditComponent implements OnInit {
       remarks: new FormControl(''),
       coreApplicationCode: new FormControl('', Validators.required),
       status: new FormControl('Y', Validators.required),
+      EffectiveDateStart:new FormControl('',Validators.required)
     });
   }
   
@@ -114,8 +117,15 @@ export class ExtraAppEditComponent implements OnInit {
       "ModeOfTransportId": this.extraCoverForm.controls['ModeOfTransportId'].value,
       "Remarks": this.extraCoverForm.controls['remarks'].value,
       "Status": this.extraCoverForm.controls['status'].value,
+      "EffectiveDate":this.extraCoverForm.controls['EffectiveDateStart'].value,
+      "AmendId":'',
     }
-
+    if (ReqObj.EffectiveDate != '' && ReqObj.EffectiveDate != null && ReqObj.EffectiveDate != undefined) {
+      ReqObj['EffectiveDate'] =  this.datePipe.transform(ReqObj.EffectiveDate, "dd/MM/yyyy")
+    }
+    else{
+      ReqObj['EffectiveDate'] = "";
+    }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/extracover/save`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -160,5 +170,27 @@ export class ExtraAppEditComponent implements OnInit {
       }
     )
 
+  }
+
+  onDateFormatInEdit(date) {
+    console.log(date);
+    if (date) {
+      let format = date.split('-');
+      if(format.length >1){
+        var NewDate = new Date(new Date(format[0], format[1], format[2]));
+        NewDate.setMonth(NewDate.getMonth() - 1);
+        return NewDate;
+      }
+      else{
+        format = date.split('/');
+        if(format.length >1){
+          // var NewDate = new Date(new Date(format[2], format[1], format[0]));
+          // NewDate.setMonth(NewDate.getMonth() - 1);
+          let NewDate = format[2]+'-'+format[1]+'-'+format[0];
+          return NewDate;
+        }
+      }
+
+    }
   }
 }

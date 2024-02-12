@@ -30,6 +30,7 @@ import { CustomDateParserFormatter } from '../../shared/date-formatt/custom-date
 import { CustomAdapter } from '../../shared/date-formatt/custom-adapter';
 import { ClausesComponent } from './components/clauses/clauses.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { FilterPipe } from '../../shared/pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,8 @@ import { NgxMaskModule } from 'ngx-mask';
   providers: [
     CurrencyPipe,
     NewQuotesService,
+    FilterPipe
+     
     // { provide: NgbDateAdapter, useClass: CustomAdapter },
     // { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
   ],

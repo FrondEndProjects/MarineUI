@@ -69,6 +69,16 @@
                   <i class="fa fa-file" aria-hidden="true"></i>
               </button>&nbsp;
           </ng-container>
+
+          <ng-container *ngIf="element.Status == 'Y'">
+            <ng-container *ngIf="col.config.isViewn" >
+              <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+                  <!--<i class="fas fa-eye" style='color: blue'></i>-->
+                  <i class="fa fa-file" aria-hidden="true"></i>
+              </button>&nbsp;
+          </ng-container>
+          </ng-container>
+        
           <ng-container *ngIf="col.config.isViews">
             <button class="circle btn btn-warning btn-sm" (click)="onViews.emit(element)">
                 <i class="fas fa-eye" style='color: blue'></i>

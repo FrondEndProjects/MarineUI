@@ -162,25 +162,26 @@ IntegrationCode:new FormControl(''),
 
   // Date Format
   onDateFormatInEdit(date) {
+    console.log(date);
     if (date) {
       let format = date.split('-');
-      if (format.length > 1) {
+      if(format.length >1){
         var NewDate = new Date(new Date(format[0], format[1], format[2]));
         NewDate.setMonth(NewDate.getMonth() - 1);
         return NewDate;
       }
-      else {
+      else{
         format = date.split('/');
-        if (format.length > 1) {
-          var NewDate = new Date(new Date(format[2], format[1], format[0]));
-          NewDate.setMonth(NewDate.getMonth() - 1);
+        if(format.length >1){
+          // var NewDate = new Date(new Date(format[2], format[1], format[0]));
+          // NewDate.setMonth(NewDate.getMonth() - 1);
+          let NewDate = format[2]+'-'+format[1]+'-'+format[0];
           return NewDate;
         }
       }
+
     }
   }
-
-
 
   public goBack() {
     this.router.navigateByUrl('/Marine/masters/clause/view');

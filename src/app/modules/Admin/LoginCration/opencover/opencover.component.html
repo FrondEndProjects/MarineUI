@@ -1,7 +1,7 @@
 
 <div class="card-body">
     <ng-container>
-        <app-grid-table [cols]="PolicyHeader" [data]="List">
+        <app-grid-table [cols]="PolicyHeader" [data]="List" (onSelectCustomer)="onSelectCustomer($event,$event.checked)">
         </app-grid-table>
         <div style="text-align: center;">
         <div class="btn btn-danger ml-3" style="justify-content: center;" (click)="close()">Close</div>

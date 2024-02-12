@@ -387,7 +387,7 @@
                 <!-- <div class="row mt-1">
 
                 </div> table_expand-->
-                <div class="row mt-1 table table_expand">
+                <div class="row mt-1">
                     <div class="col-md-12 col-lg-12 col-xl-12">
                         <table class="table">
                             <thead style="background-color: #333b85;">
@@ -403,30 +403,34 @@
                                 <!--*ngFor="let row of building|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'} ;let i = index"-->
                                 <tr  *ngFor="let row of ProductInfo;let i = index">
                                     <td>
-                                        <div class="input-form-box input-data-hover">
-                                        <input type="checkbox" class="input-form-control without-icon" [checked]="checkUWValues(row,'Y')" (change)="handleSelected($event,row,i)"> <!--(change)="onActiveDetails(row)">-->
+                                        <div class="input-control-container"><!--class="input-form-box input-data-hover"-->
+                                        <input type="checkbox"  [checked]="checkUWValues(row,'Y')" (change)="handleSelected($event,row,i)"> <!--(change)="onActiveDetails(row)">-->
                                         </div>
+                                        <!--class="input-form-control without-icon"-->
                                     </td>
                                     <td class="tbl-content">
-                                        <div class="input-form-box input-data-hover">
+                                        <div class="input-control-container"><!--input-form-box input-data-hover-->
                                             <!--<ng-select class="input-form-select" appendTo="body"[(ngModel)]="row.ProductId" [items]="productNameList" bindValue="ProductId" bindLabel="ProductName">
                                             </ng-select>-->
-<input type="text" class="input-form-control without-icon" [(ngModel)]="row.ProductName" maxlength="50">
+<input type="text"  [(ngModel)]="row.ProductName" maxlength="50" style="width:300px !important;">
+<!--class="input-form-control without-icon"-->
                                         </div>
                                     </td>
                                     <td class="tbl-content" *ngIf="row.ProductId=='3'">
-                                        <div class="input-form-box input-data-hover">
-                                            <input type="text" [(ngModel)]="row.SpecialDiscount" (change)="special(row,row.SpecialDiscount,i)" class="input-form-control without-icon" maxlength="50">
+                                        <div class="input-control-container"><!--class="input-form-box input-data-hover"-->
+                                            <input type="text" [(ngModel)]="row.SpecialDiscount" (change)="special(row,row.SpecialDiscount,i)"  maxlength="50">
+                                            <!--class="input-form-control without-icon"-->
                                         </div>
                                     <td class="tbl-content" *ngIf="row.ProductId=='3'">
-                                        <div class="input-form-box input-data-hover" >
-                                            <input type="text" [(ngModel)]="row.InsuranceEndLimit" (change)="Insurance(row,row.InsuranceEndLimit,i)" class="input-form-control without-icon" maxlength="50" style="text-align: end;">
+                                        <div class="input-control-container"><!--class="input-form-box input-data-hover" -->
+                                            <input type="text" [(ngModel)]="row.InsuranceEndLimit" (change)="Insurance(row,row.InsuranceEndLimit,i)"  maxlength="50" style="text-align: end;">
+                                            <!--class="input-form-control without-icon"-->
                                         </div>
                                         
                                     </td>
 
                                     <td class="tbl-content" colspan="2" style="text-align:center ;" *ngIf="row.ProductId=='11'">
-                                        <div class="input-form-box input-data-hover">
+                                        <div class="input-control-container"><!--class="input-form-box input-data-hover"-->
                                             <button mat-raised-button style="margin-left: 20px" color="primary" (click)="Open()">OpenCover</button>
                                         </div>
                                     </td>

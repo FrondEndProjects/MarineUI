@@ -66,10 +66,12 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteForm = this.customerInfoComponent.quoteForm;
     this.userDetails = this.customerInfoComponent?.userDetails;
     this.productId = this.customerInfoComponent?.productId;
+    console.log('Productidssss',this.productId);
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
-    if(this.OpenCover){
+    if(this.OpenCover?.name){
       if(this.OpenCover?.name == 'adminReferral'){
             this.productId = this.OpenCover?.productId;
+            console.log('ADMIN REFERAL',this.productId);
       } 
     }
     if(this.customerInfoComponent.OpenCover?.value){

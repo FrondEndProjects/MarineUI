@@ -210,11 +210,13 @@ this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
         let MenuIds=this.AdminDetails.MenuId;
         let attach= MenuIds.split(',');
         this.MenuIds = MenuIds;
+        console.log('MenuIds',this.MenuIds);
         this.selectedMenuList = attach.filter(item => item!='');
 
         let Brok=this.AdminDetails.BrokerCode;
         let attached= Brok.split(',');
         this.Brok = Brok;
+        console.log('BROKKKKKK',this.Brok);
         this.selectedBrokerList = attached.filter(item => item!='');
 
         /*if(this.AdminDetails?.EffectiveDateEnd!=null){
@@ -738,9 +740,12 @@ checkUWValues(rowData,value){
   //   this.selectedMenuList= this.MenuIds.split(',');
   // }
   //let menus= exist.toString();
+  
   if(this.selectedMenuList){
     if(this.selectedMenuList.length!=0){
       let exist = this.selectedMenuList.some(ele=>ele == rowData.MenuId);
+      console.log('EXIST111',rowData.MenuId,rowData);
+      console.log('EXIST',exist,rowData.MenuId,rowData);
       if(exist) return true;
       else false
     }
@@ -750,11 +755,13 @@ checkUWValues(rowData,value){
 }
 
 
-checkValues(event,rowData,value){
-   
+checkValues(rowData,value){
+   console.log('this.selectedBrokerList',this.selectedBrokerList)
   if(this.selectedBrokerList){
     if(this.selectedBrokerList.length!=0){
       let exist = this.selectedBrokerList.some(ele=>ele == rowData.AgencyCode);
+      console.log('EXIST33',rowData.AgencyCode,rowData);
+      console.log('EXIST',exist,rowData.AgencyCode);
       if(exist) return true;
       else false
     }
@@ -864,7 +871,8 @@ openDialogWithoutRef(type: string,menulist) {
     this.second=true;
     this.first=false;
     this.clickedModal = type;
-    this.warrantyData = this.BranchBrokerList;
+    this.warrantyData = menulist;
+    //this.BranchBrokerList;
   }
   this.dialog.open(this.secondDialog);
 }

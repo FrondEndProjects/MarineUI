@@ -5,6 +5,7 @@ import * as Mydatas from '../../../../../app-config.json';
 import { MastersService } from '../../masters.service';
 import * as moment from 'moment';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tolerance-app-edit',
@@ -24,7 +25,7 @@ export class ToleranceAppEditComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
     private masterSer: MastersService, 
-    private toastrService: NbToastrService ) {
+    private toastrService: NbToastrService,private datePipe: DatePipe) {
 
     this.min = new Date();
 
@@ -62,6 +63,7 @@ export class ToleranceAppEditComponent implements OnInit {
         this.toleranceForm.controls['coreApplicationCode'].setValue(toleranceDetails.CoreApplicationCode);
         this.toleranceForm.controls['remarks'].setValue(toleranceDetails.Remarks);
         this.toleranceForm.controls['status'].setValue(toleranceDetails.Status);
+        this.toleranceForm.controls['EffectiveDateStart'].setValue(this.onDateFormatInEdit(toleranceDetails.EffectiveDate))
         // this.toleranceForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(toleranceDetails.EffectiveDate));
       }, (err) => { }
     )
@@ -69,24 +71,26 @@ export class ToleranceAppEditComponent implements OnInit {
 
   // Date Format
   onDateFormatInEdit(date) {
+    console.log(date);
     if (date) {
       let format = date.split('-');
-      if (format.length > 1) {
+      if(format.length >1){
         var NewDate = new Date(new Date(format[0], format[1], format[2]));
         NewDate.setMonth(NewDate.getMonth() - 1);
         return NewDate;
       }
-      else {
+      else{
         format = date.split('/');
-        if (format.length > 1) {
-          var NewDate = new Date(new Date(format[2], format[1], format[0]));
-          NewDate.setMonth(NewDate.getMonth() - 1);
+        if(format.length >1){
+          // var NewDate = new Date(new Date(format[2], format[1], format[0]));
+          // NewDate.setMonth(NewDate.getMonth() - 1);
+          let NewDate = format[2]+'-'+format[1]+'-'+format[0];
           return NewDate;
         }
       }
+
     }
   }
-
 
   public createForm() {
 
@@ -96,6 +100,7 @@ export class ToleranceAppEditComponent implements OnInit {
       coreApplicationCode: new FormControl('', Validators.required),
       remarks: new FormControl(''),
       status: new FormControl('Y', Validators.required),
+      EffectiveDateStart:new FormControl('',Validators.required)
     });
   }
 
@@ -116,10 +121,17 @@ export class ToleranceAppEditComponent implements OnInit {
       "ToleranceId": this.toleranceId,
       "ToleranceName": this.toleranceForm.controls['toleranceName'].value,
       "ToleranceValue": this.toleranceForm.controls['toleranceValue'].value,
+      "EffectiveDate":this.toleranceForm.controls['EffectiveDateStart'].value,
+      "AmendId":'',
       // "EffectiveDate": effectiveDate,
     }
     console.log(ReqObj);
-
+    if (ReqObj.EffectiveDate != '' && ReqObj.EffectiveDate != null && ReqObj.EffectiveDate != undefined) {
+      ReqObj['EffectiveDate'] =  this.datePipe.transform(ReqObj.EffectiveDate, "dd/MM/yyyy")
+    }
+    else{
+      ReqObj['EffectiveDate'] = "";
+    }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/tolerance/save`, ReqObj).subscribe(
       (data: any) => {
 

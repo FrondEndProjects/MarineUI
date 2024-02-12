@@ -50,6 +50,7 @@ public loginType:any[]=[];
   innerTableData:any[]=[];
   Results:any;
   t:any;s:any;
+  RegionCode: any;
   constructor(
     private openCoverService: OpenCoverService,
     private _formBuilder: FormBuilder,
@@ -70,7 +71,8 @@ public loginType:any[]=[];
     this.searchForm = this.adminReferralService.searchForm;
     console.log('kkkkkkkk',this.userDetails)
     this.loginId = this.userDetails.LoginId;
-
+    this.RegionCode = this.userDetails.RegionCode;
+  
     this.usertype=this.userDetails.UserType
     this.columnHeader = [
         {key: 'S.No', display: 'S.No'},
@@ -151,7 +153,7 @@ public loginType:any[]=[];
    
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': "01",
+      'RegionCode': this.RegionCode
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

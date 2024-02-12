@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import * as Mydatas from '../../../../../app-config.json';
 import { MastersService } from '../../masters.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-deposit-master-table',
@@ -76,7 +77,7 @@ loginId:any=null;subSection:boolean=false;
               key: 'BrokerId',
               display: 'Transaction Details',
               config: {
-                isView: true,
+                isViewn: true,
               }
             }
           ];
@@ -133,6 +134,21 @@ onView(rowData){
         ];
         this.tableData2 = data.Result;
         this.subSection = true;
+      }
+      else if(data.Message == 'NO TRANSACTION FOUND'){
+          let Result = data.Message
+          console.log('HHHHHHHHHH',Result);
+          Swal.fire({
+            // title: '<strong>Error</strong>',
+            icon: 'info',
+            html: `<ul class="list-group errorlist">
+               <li>${Result}</li>
+           </ul>`,
+            showCloseButton: false,
+           cancelButtonColor: '#d33',
+           cancelButtonText: 'Ok',
+          })
+        
       }
     }, (err) => { }
     );

@@ -77,6 +77,7 @@ export class CustomerInfoComponent implements OnInit {
   public routerBaseLink:any;
   QuoteStatus: string ="QE";
   broCode: any;quoteNo:any=null;
+  brokercallcode: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -246,6 +247,7 @@ export class CustomerInfoComponent implements OnInit {
 
   checkCustomerList(brokerCode){
     this.loginId = brokerCode;
+    this.brokercallcode =brokerCode;
     this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {

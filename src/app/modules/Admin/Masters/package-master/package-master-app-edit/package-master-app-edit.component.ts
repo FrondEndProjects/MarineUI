@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { MastersService } from '../../masters.service';
 import * as Mydatas from '../../../../../app-config.json';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-package-master-app-edit',
@@ -24,7 +25,7 @@ export class PackageMasterAppEditComponent implements OnInit {
 
   constructor(private masterSer: MastersService,
     private router: Router,
-    private toastrService:NbToastrService) {
+    private toastrService:NbToastrService,private datePipe: DatePipe) {
 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse?.BranchCode;
@@ -84,6 +85,7 @@ export class PackageMasterAppEditComponent implements OnInit {
         this.packageForm.controls['remarks'].setValue(this.packageData.Remarks);
         this.packageForm.controls['coreApplicationCode'].setValue(this.packageData.CoreApplicationCode);
         this.packageForm.controls['status'].setValue(this.packageData.Status);
+        this.packageForm.controls['EffectiveDateStart'].setValue(this.onDateFormatInEdit(this.packageData.EffectiveDate))
         // this.packageForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(this.packageData.EffectiveDate));
 
       }, (err) => { }
@@ -101,6 +103,7 @@ export class PackageMasterAppEditComponent implements OnInit {
       remarks: new FormControl(''),
       coreApplicationCode: new FormControl('', Validators.required),
       status: new FormControl('Y', Validators.required),
+      EffectiveDateStart:new FormControl('',Validators.required)
       // effectiveDate: new FormControl('', Validators.required),
     });
   }
@@ -108,28 +111,6 @@ export class PackageMasterAppEditComponent implements OnInit {
   doRate() {
 
   }
-
-  onDateFormatInEdit(date) {
-    console.log(date);
-    if (date) {
-      let format = date.split('-');
-      if (format.length > 1) {
-        var NewDate = new Date(new Date(format[0], format[1], format[2]));
-        NewDate.setMonth(NewDate.getMonth() - 1);
-        return NewDate;
-      }
-      else {
-        format = date.split('/');
-        if (format.length > 1) {
-          var NewDate = new Date(new Date(format[2], format[1], format[0]));
-          NewDate.setMonth(NewDate.getMonth() - 1);
-          return NewDate;
-        }
-      }
-
-    }
-  }
-
 
   public goBack() {
     this.router.navigateByUrl('/Marine/masters/package/view');
@@ -149,10 +130,16 @@ export class PackageMasterAppEditComponent implements OnInit {
       "Remarks": this.packageForm.controls['remarks'].value,
       "CoreApplicationCode": this.packageForm.controls['coreApplicationCode'].value,
       "Status": this.packageForm.controls['status'].value,
-      
+      "AmendId":'',
+      "EffectiveDate":this.packageForm.controls['EffectiveDateStart'].value
     }
     console.log(ReqObj);
-    
+    if (ReqObj.EffectiveDate != '' && ReqObj.EffectiveDate != null && ReqObj.EffectiveDate != undefined) {
+      ReqObj['EffectiveDate'] =  this.datePipe.transform(ReqObj.EffectiveDate, "dd/MM/yyyy")
+    }
+    else{
+      ReqObj['EffectiveDate'] = "";
+    }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/package/save`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -198,5 +185,27 @@ export class PackageMasterAppEditComponent implements OnInit {
       }, (err) => { }
     )
 
+  }
+
+  onDateFormatInEdit(date) {
+    console.log(date);
+    if (date) {
+      let format = date.split('-');
+      if(format.length >1){
+        var NewDate = new Date(new Date(format[0], format[1], format[2]));
+        NewDate.setMonth(NewDate.getMonth() - 1);
+        return NewDate;
+      }
+      else{
+        format = date.split('/');
+        if(format.length >1){
+          // var NewDate = new Date(new Date(format[2], format[1], format[0]));
+          // NewDate.setMonth(NewDate.getMonth() - 1);
+          let NewDate = format[2]+'-'+format[1]+'-'+format[0];
+          return NewDate;
+        }
+      }
+
+    }
   }
 }

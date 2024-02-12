@@ -40,10 +40,23 @@ export class OpenCoverDocument implements OnInit {
    submit(rowdata:any){
       console.log('gggggggg')
        console.log('ggggggg',rowdata);
-       this.opencover=rowdata[0].OpenCoverNo;
+       //this.opencover=rowdata[0].OpenCoverNo;
        console.log('yyyyyyy',this.opencover)
        this.close();
 
    }
+
+
+   onSelectCustomer(rowData,checked){
+    console.log('NNNNNNNNNN',rowData,checked);
+    this.opencover=rowData.OpenCoverNo;
+    // if(rowData.isChecked){
+    //   this.opencover=rowData.OpenCoverNo;
+    //   console.log('NNNNNNNNNN',this.opencover,rowData.OpenCoverNo,rowData)
+    // }
+    // else{
+    //   this.opencover='';
+    // }
+  }
    close(){ this.dialogRef.close(this.opencover);}
  }

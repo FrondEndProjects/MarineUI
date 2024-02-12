@@ -45,6 +45,7 @@ export class IssuerDetailsComponent implements OnInit {
   editdata=false;
   productNameList:any[]=[];
   coverList:any[]=[];
+  ExcludedList:any[]=[];
   minDate:any;
   UserName:any;
   public AppConfig: any = (Mydatas as any).default;
@@ -57,7 +58,7 @@ export class IssuerDetailsComponent implements OnInit {
   IncludedData:any[]=[];
   ExcludedData:any[]=[];
   columnExcluded:any[]=[];
-  userDetails:any;
+  userDetails:any;ProductInfos:any[]=[];
   
 
   constructor(private router: Router,private masterSer: MastersService,private adminReferralService: AdminReferralService,private datePipe:DatePipe,
@@ -117,10 +118,10 @@ this.onGetRegionList();
     }
 
     else if(value == 'Included'){
-      this.Search()
+      this.Search();
     }
     else if(value == 'Excluded'){
-          this.SearchExcluded()
+        this.SearchExcluded();
     }
 
   }
@@ -535,82 +536,158 @@ this.onGetRegionList();
     else //this.AttachedMenu(uwList,RegionList,BranchList,ProductList) 
     //else this.onFinalSubmit(uwList,RegionList,BranchList,ProductList)
   }*/
-
+onselects(row){
+  console.log('Rowssssss',row)
+  let AttachedRegionNo= [];
+  this.ProductInfos=[];
+  AttachedRegionNo =row?.ProductId.split(',');
+  let i=0;
+  if(row?.ProductId){
+    console.log('KKKKKKKKK',AttachedRegionNo)
+    for(let s of AttachedRegionNo){
+      let ProductInfo={"ProductId":s}  
+      this.ProductInfos.push(ProductInfo);
+      console.log('NNNNNN',this.ProductInfos);
+      i+1;
+          //ProductId.push(row?.ProductId);
+    }
+    this.onSelectCustomer(row,'direct');
+  }
+  
+}
 
   onSelectCustomer(row:any,template){
-   
     console.log("RowData",row.undefined);
 
-    console.log('jjjjjjjjjjjjjj',row)
+    // let ProductInfo=this.onselects(row);
+    console.log('jjjjjjjjjjjjjj',this.ProductInfos);
+    let ProductId:any;
+  console.log('jjjjjjjjjjjjjj');
     if(row.undefined== true){
      
         let entry =  {
-          "BranchCode":this.userDetails.BranchCode,
-           "SearchValue":row.ProposalNo,
-            "BrokerInfo": [
-              {
-                "BrokerCode": "string",
-                "ProductInfo": [
-                  {
-                    "ProductId": "string"
-                  }
-                ]
-              }
-            ],
-            "LoginId": "string"
+          "BranchCode": row.BranchCode,
+          "BrokerInfo": [
+            {
+              "BrokerCode": row?.AgencyCode,
+              "ProductInfo":this.ProductInfos
+            }
+          ],
+          "LoginId": this.LoginId
         
         }
+        //this.onsubmitInclude(this.coverList);
         this.coverList.push(entry);
   
       console.log("Cover List",this.coverList);
     }
     else if(row.undefined == false){
-      let index = this.coverList.findIndex(ele=>ele.CoverId==row.CoverId);
+      let index = this.coverList.findIndex(ele=>ele.AgencyCode==row.AgencyCode);
       this.coverList.splice(index,1);
     }
 
   }
 
+  onselectexclude(row:any){
+    let ProductId:any;
+  console.log('jjjjjjjjjjjjjj');
+    if(row.undefined== true){
+     
+        let entry =  {
+          "BrokerInfo": [
+            {
+              "BrokerCode": row?.AgencyCode
+            }
+          ],
+          "LoginId": this.LoginId
+        }
+        this.ExcludedList.push(entry);
+    }
+    else if(row.undefined == false){
+      let index = this.ExcludedList.findIndex(ele=>ele.AgencyCode==row.AgencyCode);
+      this.ExcludedList.splice(index,1);
+    }
+
+  }
   includesubmit(value){
      
     if(value=='Included'){
-     this.onsubmitInclude(this.coverList);
+     this.onsubmitInclude(this.coverList,value);
     }
     else if(value=='Excluded'){
-      this.onsubmitExclude();
+      //this.onsubmitInclude(this.coverList,value);
+       this.onsubmitExclude(this.ExcludedList,value);
     }
   }
 
-  onsubmitInclude(reqData){
+  onsubmitInclude(reqData,types){
     const urlLink = `${this.ApiUrl1}admin/IssuerIncludedInsert`;
-    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log("Change Password Done Successfully");
-        if(data.Result){
-          let type: NbComponentStatus = 'success';
-                const config = {
-                  status: type,
-                  destroyByClick: true,
-                  duration: 4000,
-                  hasIcon: true,
-                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
-                  preventDuplicates: false,
-                };
-                this.toastrService.show(
-                  'Included Successfully',
-                  'Included Broker Successfully',
-                  config);
-                  this.router.navigate(['/Marine/loginCreation/issuer']);
-
-        }
-       
-      },
-      (err) => { },
-    );
+let i=0;
+    for(let n of reqData){
+      this.adminReferralService.onPostMethodSync(urlLink, n).subscribe(
+        (data: any) => {
+          if(data.Result){
+            let type: NbComponentStatus = 'success';
+                  const config = {
+                    status: type,
+                    destroyByClick: true,
+                    duration: 4000,
+                    hasIcon: true,
+                    position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                    preventDuplicates: false,
+                  };
+                  this.toastrService.show(
+                    'Included Successfully',
+                    'Included Broker Successfully',
+                    config);
+                    this.coverList=[];
+                    if(types=='Excluded'){
+                       this.SearchExcluded()
+                    }
+                    else if(types=='Included'){
+                      this.Search();
+                    }
+                    //this.router.navigate(['/Marine/loginCreation/issuer']);
+  
+          }
+         
+        },
+        (err) => { },
+      );
+      i+1;
+    }
+  
   }
 
-  onsubmitExclude(){
-
+  onsubmitExclude(reqData:any,value){
+    const urlLink = `${this.ApiUrl1}admin/included/delete`;
+    let i=0;
+    for(let n of reqData){
+      this.adminReferralService.onPostMethodSync(urlLink, n).subscribe(
+        (data: any) => {
+          if(data.Message=='Success'){
+            let type: NbComponentStatus = 'success';
+                  const config = {
+                    status: type,
+                    destroyByClick: true,
+                    duration: 4000,
+                    hasIcon: true,
+                    position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                    preventDuplicates: false,
+                  };
+                  this.toastrService.show(
+                    'Excluded Successfully',
+                    'Excluded Broker Successfully',
+                    config);
+                    this.ExcludedList=[];
+                    this.SearchExcluded();
+          }
+         
+        },
+        (err) => { },
+      );
+      i+1;
+    }
   }
   SearchExcluded(){
     const urlLink = `${this.ApiUrl1}admin/IssuerExcludedBroker`;
@@ -636,8 +713,7 @@ this.onGetRegionList();
          {key: 'Remarks', display: 'Remarks'},
          {key: 'Status', display: 'Status'},
        ];
-        if(res.Result){
-          
+        if(res.Result){    
       this.ExcludedData=res?.Result;
        console.log('pppppppppp',this.ExcludedData)
       }

@@ -68,7 +68,36 @@
             </div>
             <!-- /REMARKS -->
         </div>
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-3"></div>
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="customer-search-container">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Effective Date</label>
+                        <div class="input-form-box">
+                            <mat-form-field appearance="fill">
+                                <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="EffectiveDateStart" >
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 col-md-6 col-lg-6">
+                <div class="customer-search-container">
+                <div class="input-control-container">
+                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                    <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="EffectiveDateStart" >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                </div>
+            </div> -->
+        </div>
 
         <div class="row">
 
@@ -93,7 +122,7 @@
 
         <div class="row">
             <div class="col-12 col-md-3 col-lg-3"></div>
-
+            
             <!-- STATUS -->
             <div class="col-12 col-md-6 col-lg-6">
                 <div class="input-control-container">
@@ -111,6 +140,8 @@
             <!-- STATUS -->
 
         </div>
+
+    
 
 
 

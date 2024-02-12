@@ -85,6 +85,11 @@
     font-family: var(--our-font-family-new) !important;
 }
 
+.table-responsive{
+    overflow-y: auto;
+    position: relative;
+    left: 0.8rem;
+}
 
 .table_expand {
     display: flex !important;
@@ -115,3 +120,15 @@
     overflow: hidden;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }*/
+
+.input-control-container{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    padding-bottom: 5px !important;
+}
+.input-control-container .input-form-label {
+    font-weight: 400;
+    font-family: var(--our-font-family-new);
+    font-size: 0.83rem;
+    letter-spacing: 0.3px;
+}

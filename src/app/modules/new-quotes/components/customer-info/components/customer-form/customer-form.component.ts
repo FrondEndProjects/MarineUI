@@ -144,6 +144,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onGetCustomerList(code) {
+    console.log('Codes',this.customerInfoComponent.brokercallcode);
     this.tableData = [];
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if(this.productId=='3') this.openCoverNo = null;
@@ -175,10 +176,19 @@ export class CustomerFormComponent implements OnInit {
   getCustomerAltList(modal){
    
     this.tableData = [];
+    // if (this.userDetails?.UserType == "RSAIssuer"){
+    //   this.loginId = this.userDetails.LoginId;
+    //   this.applicationId = ''
+    // }
+
+    //console.log('Brokercodess',this.brokerComponent.brokerForm.controls['borker'].value)
+    let code = this.customerInfoComponent.brokercallcode;
+    console.log('GCOdesssss',code);
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if(this.productId=='3') this.openCoverNo = null;
     const reqData = {
-      "BrokerCode": this.brokerCode,
+      "BrokerCode": code,
+      //this.brokerCode,
       'ApplicationId': this.applicationId,
       'LoginId': this.loginId,
       'OpenCoverNo': this.openCoverNo,
@@ -242,13 +252,14 @@ export class CustomerFormComponent implements OnInit {
   }
   getCustomerId(){return this.customerF.Code.value}
   close(){
-
   }
   onsubmit(){
     let valid = this.checkMandatories();
+    let LoginId:any
     if(valid){
       if (this.userDetails?.UserType != "RSAIssuer") {
         this.loginId = this.userDetails?.LoginId;
+        LoginId = this.userDetails?.LoginId;
         this.applicationId = '1';
         this.isIssuer = false;
   
@@ -257,6 +268,8 @@ export class CustomerFormComponent implements OnInit {
   
       if (this.userDetails?.UserType == "RSAIssuer"){
         this.loginId = this.endorsement?.LoginId || '';
+        //this.loginId = this.customerInfoComponent.brokercallcode;
+        LoginId = this.customerInfoComponent.brokercallcode;
         this.applicationId = this.userDetails.LoginId;
         this.isIssuer = true;
       }
@@ -288,7 +301,7 @@ export class CustomerFormComponent implements OnInit {
         "Fax": null,
         "Gender": null,
         "LoginBranchCode": this.userDetails?.BranchCode,
-        "LoginId": this.loginId,
+        "LoginId": LoginId,
         "MobileNo": this.mobileNo,
         "Nationality": null,
         "Occupation": null,

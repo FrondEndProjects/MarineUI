@@ -1,7 +1,7 @@
 import { NewQuotesService } from './../../new-quotes.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { filter, forkJoin } from 'rxjs';
 import * as Mydatas from '../../../../app-config.json';
 import Swal from 'sweetalert2';
 import { NewQuotesComponent } from '../../new-quotes.component';
@@ -21,7 +21,7 @@ export class EndorsementTypeComponent implements OnInit {
   public productId: any;
   public loginId: any;
   public applicationId: any;
-
+  searchText:any;searchTexts:any;
   public nonFinancial: any[] = [];
   public financial: any[] = [];
   public QuoteNo: any = '';
@@ -34,6 +34,7 @@ export class EndorsementTypeComponent implements OnInit {
   public issueDate:any;
   public OpenCover:any;
   public routerBaseLink:any='';
+  searchtext:any;
 
   constructor(
     private newQuotesService: NewQuotesService,
@@ -104,7 +105,6 @@ export class EndorsementTypeComponent implements OnInit {
 
     })
   }
-
   onSubmit() {
     const urlLink = `${this.ApiUrl1}api/endorsement/save`;
     const listMerge: any[] = [...this.financial, ...this.nonFinancial];

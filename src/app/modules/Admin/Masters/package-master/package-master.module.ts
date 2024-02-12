@@ -16,6 +16,8 @@ import { NbDatepickerModule } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TablesModule } from '../../../../shared/Tables/tables.module';
 import { MaterialModule } from '../../../../shared/material/material.module';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 
@@ -40,6 +42,8 @@ import { MaterialModule } from '../../../../shared/material/material.module';
 
     // material
     MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,

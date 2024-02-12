@@ -24,11 +24,12 @@
               <span class="input-form-icon">
                 <i class="fas fa-search"></i>
               </span>
-              <input type="text" class="input-form-control with-icon search-input" placeholder="search...">
+              <input type="text" [(ngModel)]="searchText"  class="input-form-control with-icon search-input" placeholder="search...">
+              <!--(keyup)="applyFilter($event)"-->
             </div>
           </div>
           <ul class="list-group checklist list-group-flush">
-            <ng-container *ngFor="let item of nonFinancial">
+            <ng-container *ngFor="let item of nonFinancial | filter:searchText">
               <li class="list-group-item">
                 <mat-checkbox class="example-margin" [(ngModel)]="item.isChecked">{{item?.EndtType}}</mat-checkbox>
               </li>
@@ -46,11 +47,11 @@
               <span class="input-form-icon">
                 <i class="fas fa-search"></i>
               </span>
-              <input type="text" class="input-form-control with-icon search-input" placeholder="search...">
+              <input type="text" [(ngModel)]="searchTexts" class="input-form-control with-icon search-input" placeholder="search...">
             </div>
           </div>
           <ul class="list-group checklist list-group-flush">
-            <ng-container *ngFor="let item of financial">
+            <ng-container *ngFor="let item of financial | filter:searchTexts">
               <li class="list-group-item">
                 <mat-checkbox class="example-margin" [(ngModel)]="item.isChecked" (change)="onChangeType(item)">{{item?.EndtType}}</mat-checkbox>
               </li>

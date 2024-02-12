@@ -47,11 +47,22 @@ export class ApprovedQuotesComponent implements OnInit {
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item?.ApplicationNo);
     sessionStorage.setItem('QuoteStatus',item?.QuoteStatus);
+    let productid=sessionStorage.getItem('productId');
+    console.log('ProductIdsssssss',productid);
     if(item?.OpenCoverNo){
       const opencover = {
         'name':'adminReferral',
         'value':item?.OpenCoverNo,
-        "productId": item?.ProductId
+        "productId": productid
+        //item?.ProductId
+      }
+       sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+    }
+    else{
+      const opencover = {
+        'name':'adminReferral',
+        'value':null,
+        "productId":productid
       }
        sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
     }

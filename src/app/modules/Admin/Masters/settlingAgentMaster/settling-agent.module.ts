@@ -16,6 +16,8 @@ import { MaterialModule } from '../../../../shared/material/material.module';
 import { SettlingAgentAppEditComponent } from './settlingAgentAppEdit/settling-agent-app-edit/settling-agent-app-edit.component';
 import { SettlingAgentTableComponent } from './settlingAgentTable/settling-agent-table/settling-agent-table.component';
 import { SettlingAgentRoutingModule } from './settling-agent-routing.module';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 
@@ -44,6 +46,8 @@ import { SettlingAgentRoutingModule } from './settling-agent-routing.module';
     MatInputModule,
     MatFormFieldModule,
     MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class SettlingAgentMasterModule { }

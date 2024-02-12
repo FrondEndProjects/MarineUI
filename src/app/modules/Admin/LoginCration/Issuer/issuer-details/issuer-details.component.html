@@ -141,8 +141,8 @@
               <button mat-raised-button>Costomer Details</button><br>
               <button mat-raised-button>OpenCover</button><br>
               <button mat-raised-button>Referral</button><br>-->
-              <button mat-raised-button value="Included" (click)="onRedirect('Included')">Included Brokers</button><br>
-              <button mat-raised-button value="Excluded" (click)="onRedirect('Excluded')">Excluded Brokers</button><br>
+              <button mat-raised-button value="Included" (click)="onRedirect('Included')" *ngIf="LoginId!=null && LoginId!=undefined">Included Brokers</button><br>
+              <button mat-raised-button value="Excluded" (click)="onRedirect('Excluded')" *ngIf="LoginId!=null && LoginId!=undefined">Excluded Brokers</button><br>
           </div>
       </div>
        <div class="col-12 col-md-9 col-lg-9">
@@ -323,7 +323,8 @@
         <div class="row">
             <div class="card-body">
             <ng-container *ngIf="IncludedData.length!=0">
-                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onSelectCopy)="onSelectCustomer($event)">
+                <!--style="overflow-x: scroll !important;"-->
+                <app-grid-table  [cols]="columnIncluded" [data]="IncludedData" [filterValue]="filterValue" (onSelectCopy)="onselects($event)">
                 </app-grid-table>
                
             </ng-container>
@@ -345,16 +346,22 @@
 
     <div *ngIf="value == 'Excluded'">
         <div class="row">
-            <ng-container *ngIf="IncludedData.length!=0">
-                <app-grid-table style="overflow-x: scroll !important;" [cols]="columnIncluded" [data]="ExcludedData" [filterValue]="filterValue" (onSelectCopy)="onSelectCustomer($event)">
+            <ng-container *ngIf="ExcludedData.length!=0">
+                <!--style="overflow-x: scroll !important;"-->
+                <app-grid-table  [cols]="columnIncluded" [data]="ExcludedData" [filterValue]="filterValue" (onSelectCopy)="onselectexclude($event)">
                 </app-grid-table>
                
             </ng-container>
             <div class="card-body mt-2">
-            <ng-container *ngIf="IncludedData.length==0" class="m-5">
+            <ng-container *ngIf="ExcludedData.length==0" class="m-5">
                 <div class="text-center m-5"> No Data Available</div>
             </ng-container>
             </div>
+            <div class="text-center">
+                <button class="btn btn-primary" (click)="includesubmit(value)">
+                    Submit
+                </button>
+                </div>
            
         </div>
     </div>

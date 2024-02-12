@@ -6,6 +6,7 @@ import * as Mydatas from '../../../../../../app-config.json';
 import { MastersService } from '../../../masters.service';
 import * as moment from 'moment';
 import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class SettlingAgentAppEditComponent implements OnInit {
     constructor(
       private router: Router,
       private toastrService: NbToastrService,
-      private masterSer: MastersService ) {
+      private masterSer: MastersService,private datePipe: DatePipe) {
 
         //this.minDate = {year: this.newDate.getFullYear(), month: this.newDate.getMonth() + 1, day: this.newDate.getDate()};
           this.minDate = new Date();
@@ -87,6 +88,7 @@ export class SettlingAgentAppEditComponent implements OnInit {
         FaxNo : new FormControl('', Validators.required),
         ZipCode : new FormControl('', Validators.required),
         SettlingName : new FormControl('', Validators.required),
+        EffectiveDateStart:new FormControl('',Validators.required)
 
       });
     }
@@ -176,30 +178,31 @@ export class SettlingAgentAppEditComponent implements OnInit {
           this.settlingForm.controls['ZipCode'].setValue(conveyanceDetails.ZipCode);
           this.settlingForm.controls['ShortName'].setValue(conveyanceDetails.ShortName);
           this.settlingForm.controls['SettlingName'].setValue(conveyanceDetails.SettlingAgentName);
-
-
-
+          this.settlingForm.controls['EffectiveDateStart'].setValue(this.onDateFormatInEdit(conveyanceDetails.EffectiveDate));
         }
       )
     }
 
     // Date Format
     onDateFormatInEdit(date) {
+      console.log(date);
       if (date) {
         let format = date.split('-');
-        if (format.length > 1) {
+        if(format.length >1){
           var NewDate = new Date(new Date(format[0], format[1], format[2]));
           NewDate.setMonth(NewDate.getMonth() - 1);
           return NewDate;
         }
-        else {
+        else{
           format = date.split('/');
-          if (format.length > 1) {
-            var NewDate = new Date(new Date(format[2], format[1], format[0]));
-            NewDate.setMonth(NewDate.getMonth() - 1);
+          if(format.length >1){
+            // var NewDate = new Date(new Date(format[2], format[1], format[0]));
+            // NewDate.setMonth(NewDate.getMonth() - 1);
+            let NewDate = format[2]+'-'+format[1]+'-'+format[0];
             return NewDate;
           }
         }
+  
       }
     }
 
@@ -225,6 +228,7 @@ export class SettlingAgentAppEditComponent implements OnInit {
        //let effectiveDate = this.settlingForm.controls['effectiveDate'].value ? moment(new Date(this.conveyanceForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
         //console.log('EEEEEEEEEE',effectiveDate);
        let ReqObj = {
+        "AmendId":'',
         "BranchCode": this.branchCode,
         //"ConveyanId": this.conveyanceId,
         "CoreApplicationCode": this.settlingForm.controls['coreApplicationCode'].value,
@@ -246,8 +250,14 @@ export class SettlingAgentAppEditComponent implements OnInit {
    "ShortName":this.settlingForm.controls['ShortName'].value,
    "TelephoneNo": this.settlingForm.controls['TelephoneNo'].value,
    "ZipCode": this.settlingForm.controls['ZipCode'].value,
+   "EffectiveDate":this.settlingForm.controls['EffectiveDateStart'].value
       }
-
+      if (ReqObj.EffectiveDate != '' && ReqObj.EffectiveDate != null && ReqObj.EffectiveDate != undefined) {
+        ReqObj['EffectiveDate'] =  this.datePipe.transform(ReqObj.EffectiveDate, "dd/MM/yyyy")
+      }
+      else{
+        ReqObj['EffectiveDate'] = "";
+      }
       this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/settlingagent/save`, ReqObj).subscribe(
         (data: any) => {
           console.log(data);

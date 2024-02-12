@@ -182,10 +182,14 @@ export class LoginLayoutComponent implements OnInit {
 
     console.log(change)
     this.pa=change
-      if(type=='change') {this.forget = false;
+      if(type=='change') {
+        this.forget = false;
         this.forgetpassword=false;
       this.first=false;
       this.second=false;
+      console.log('MAinsss',this.f.region.value)
+      this.PasswordCheckForm.controls['region'].setValue(this.f.region.value);
+      this.PasswordCheckForm.controls['branch'].setValue(this.f.branch.value);
     }
       else 
       {this.forget = true;

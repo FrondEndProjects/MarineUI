@@ -36,7 +36,7 @@ export class BankFormComponent implements OnInit {
     this.loginId = this.customerInfoComponent?.loginId;
     this.applicationId = this.customerInfoComponent?.applicationId;
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
-    if(this.OpenCover){
+    if(this.OpenCover?.name){
       if(this.OpenCover?.name == 'adminReferral'){
             this.productId = this.OpenCover?.productId;
       } 
@@ -60,6 +60,7 @@ export class BankFormComponent implements OnInit {
     const reqData = {
       'ProductId': this.productId,
       'pvType': 'lcBank',
+      'BranchCode':this.userDetails?.BranchCode,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
