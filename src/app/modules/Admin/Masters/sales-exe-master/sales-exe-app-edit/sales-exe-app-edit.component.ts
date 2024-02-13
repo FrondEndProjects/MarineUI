@@ -121,6 +121,7 @@ export class SalesExeAppEditComponent implements OnInit {
 
     let ReqObj = {
       "AcExecutiveId":this.executiveId,
+      "BranchCode":this.branchCode,
       "AcExecutiveName": this.executiveForm.controls['executiveName'].value,
       "Commission": this.executiveForm.controls['oneOffCommission'].value,
       "EffectiveDate": effectiveDate,
