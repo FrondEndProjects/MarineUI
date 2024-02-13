@@ -84,6 +84,11 @@
                 <i class="fas fa-eye" style='color: blue'></i>
             </button>&nbsp;
         </ng-container>
+        <ng-container *ngIf="col.config.isRating">
+          <button class="circle btn btn-warning btn-sm" (click)="onRating.emit(element)">
+            <i class="fa fa-star" style='color: blue'></i>
+          </button>&nbsp;
+      </ng-container>
         <ng-container *ngIf="col.config.isChecked">
           <mat-checkbox class="example-margin" [(ngModel)]="element[col.config.model]" (change)="onSelectCopy.emit(element)"></mat-checkbox>
       </ng-container>

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommodityAppEditComponent } from './commodity-app-edit/commodity-app-edit.component';
 import { CommodityTableComponent } from './commodity-table/commodity-table.component';
 import { CommodityComponent } from './commodity.component';
+import { RateCoverComponent } from '../RateCoverCommodity/RateCover.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,15 @@ const routes: Routes = [
         component: CommodityAppEditComponent,
       },
     ],
+  },
+  {
+    path: 'RateCover',
+    component:RateCoverComponent,
+    data: {
+      preload: true,
+      title: "Rate Cover",
+      breadcrumb:  "Rate Cover",
+    }
   },
 ];
 

@@ -1,0 +1,143 @@
+<div class="vision-grid">
+    <div class="vision-grid-item">
+      <div class="vision-grid-item-title">
+       <div>
+        Commodity Name : {{commodityname}}
+       </div>
+       <div style="display:flex !important;justify-content: end !important;">
+          <button  (click)="addFormRow()" status="warning" class="btn btn-primary mx-2">Add New</button>
+       </div>
+      </div>
+      <div class="vision-grid-item-body">
+        <!-- <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" >
+        </app-material-table>
+   -->
+
+
+   
+   <div>
+    <div>
+        <div class="row">
+            
+            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                <label class="input-form-label">Effective Date</label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="effectiveDateStart">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+                <div class="customer-search-container">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Remarks</label>
+                    <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" [(ngModel)]="remarks">
+                    </div>
+          
+                  </div>
+                </div>
+              </div>
+        </div>
+    
+        <div class="row mt-1">
+            <!-- <div>
+                Commodity Name : {{commodityname}}
+                   </div> -->
+                   
+            <div class="col-md-12 col-lg-12 col-xl-12" style="margin:auto !important;">
+                
+                <table class="table">
+                    <!-- <div class="author"> Commodity Name : {{commodityname}}</div> -->
+                    <thead style="background-color: #554F27 !important;">   
+                        <tr class="table_row">
+                            <th class="tbl-header spancommon span_font_size">Cover</th>
+                            <!-- <th class="tbl-header spancommon span_font_size">Calc Type</th> -->
+                            <th class="tbl-header spancommon span_font_size">Container</th>
+                            <th class="tbl-header spancommon span_font_size">Rate</th>
+                            <th class="tbl-header spancommon span_font_size">Regulatory Code</th>
+                            <th class="tbl-header spancommon span_font_size">Status</th>
+                            <th class="tbl-header spancommon span_font_size">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr  *ngFor="let row of ProductInfo;let i = index">
+                         
+                            <td class="tbl-content" style="width: 300px !important;z-index:1000 !important">
+                                <ng-select class="custom" name="calcType" [(ngModel)]="row.CoverId" placeholder="Select Cover" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true" (change)="commoditysname(row.CoverId,i)">
+                                    <ng-option *ngFor="let opt of CoverList" [value]="opt.Code" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;" >{{opt.CodeDescription}}</ng-option>
+                                </ng-select>
+        <!-- <ng-select class="input-form-select"  [items]="CoverList"
+        [(ngModel)]="row.InsuranceEndLimit"  bindValue="Code" bindLabel="CodeDescription" style="z-index:1000 !important"> </ng-select> -->
+                    
+                            </td>
+                            <!-- <td class="tbl-content">
+                                <ng-select class="input-form-select"  [items]="countryList"
+                                [(ngModel)]="row.CalcType"  bindValue="Code" bindLabel="CodeDescription"> </ng-select>
+                                            
+                                                    </td> -->
+                            <td class="tbl-content table-data-center" style="text-align: center !important;">
+                                
+                                <div style="margin-top: 8px !important;">
+                                  <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i"  [(ngModel)]="row.ContainerisedYn" value="Y">
+                                  <label [for]="'orginwarehouse_Yes'+i" class="yes">Yes</label>
+                                  <input style="margin-left:10px !important;" type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i"  [(ngModel)]="row.ContainerisedYn" value="N">
+                                  <label [for]="'orginwarehouse_No'+i" class="no">No</label>
+                                  
+                                </div>      
+                      </td>
+                            <td class="tbl-content" style="text-align: center !important;">
+                                <div class="input-control-container" style="margin-top: 8px !important;">
+                                    <input type="text" [(ngModel)]="row.Rate"  maxlength="50">
+                                    
+                                </div>
+                            </td>
+                            <td class="tbl-content" style="text-align: center !important;">
+                                <div class="input-control-container" style="margin-top: 8px !important;">
+                                    <input type="text" [(ngModel)]="row.RegulatoryCode"  maxlength="50">
+                                    
+                                </div>
+                            </td>
+                            <td class="tbl-content table-data-center" style="text-align: center !important;">
+                                
+                                <div style="margin-top: 8px !important;">
+                                  <input [id]="'orginwareStatus_Yes'+i" type="radio" [name]="'originatingWarehouseN'+i"  [(ngModel)]="row.Status" value="Y">
+                                  <label [for]="'orginwareStatus_Yes'+i" class="yes">Active</label>
+                                  <input style="margin-left:10px !important;" type="radio" [id]="'orginwareStatus_No'+i" [name]="'originatingWarehouseN'+i"  [(ngModel)]="row.Status" value="N">
+                                  <label [for]="'orginwareStatus_No'+i" class="no">DeActive</label>
+                                  
+                                </div>      
+                      </td>
+                            <td class="tbl-content" style="text-align: center !important;">
+                                <ng-container *ngIf="i==0">
+                                    <span style="margin-top:10px !important;">N/A</span>
+                                </ng-container>
+                                <button class="btn btn-primary" (click)="onDeleteRow(i)" *ngIf="i!=0 && ProductInfo.length!=1" style="height:30px !important;"> <i class="fa fa-trash"></i></button>
+                            </td>
+                        
+                        </tr>
+                         
+                       
+                    </tbody>
+                  
+                </table>
+            
+               
+            </div>
+            <div class="mt-2" style="text-align: center !important;">
+                <button class="btn btn-danger" style="width:80px !important;" (click)="goback()">Back</button>
+                <button class="btn btn-success" style="width:80px !important;margin-left:20px !important;" (click)="onSaves()">Save</button>
+        </div>
+        </div>
+
+    </div>
+</div>
+        <!-- <div class="my-1" style="text-align:right">
+          <button nbButton (click)="onSubmit()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  

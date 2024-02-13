@@ -231,7 +231,7 @@
         <div class="input-control-container">
           <label class="input-form-label">Insured Value<span class="text-required">*</span></label>
           <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="insuredValue" [value]="quoteF.insuredValue.value | commaseparator">
+            <input type="text" class="input-form-control without-icon" (keyup)="CommaFormatteds()" formControlName="insuredValue" [value]="quoteF.insuredValue.value | commaseparator">
           </div>
         </div>
       </div>
@@ -338,7 +338,7 @@
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
           <label class="input-form-label">Exposure of shipment</label>
-          <div class="input-form-box">
+          <div class="input-form-box" (keyup)="ExposureFormatteds()">
             <input type="text" class="input-form-control without-icon" formControlName="exposureOfShipment" [value]="quoteF.exposureOfShipment.value | commaseparator">
           </div>
         </div>
@@ -367,8 +367,8 @@
      <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Premium Currency<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="premiumCurrency" [items]="dropCurrencyList"
-        bindValue="Code" bindLabel="CodeDescription" (change)="onChangeCurrencyDrop()">
+        <ng-select placeholder="Select" class="input-form-select" formControlName="premiumCurrency" [items]="dropPremiumCurrencyList"
+        bindValue="Code" bindLabel="CodeDescription" (change)="onChangeCurrencyDropdown()">
       </ng-select>
         <div class="input-form-error" *ngIf="(quoteF.premiumCurrency.errors && submitted) || (!quoteF.premiumCurrency.valid && quoteF.premiumCurrency.touched)">
           <div *ngIf="quoteF.premiumCurrency.errors?.required" class="error-text">

@@ -41,6 +41,7 @@ export class CustomerInfoComponent implements OnInit {
   public dropBankList: any[] = [];
   public dropGoodsOfCateList: any[] = [];
   public dropCurrencyList: any;
+  public dropPremiumCurrencyList :any;
   public dropPackageDescList: any[] = [];
   public dropPartialShipList: any[] = [];
   public dropSettlingAgentList: any[] = [];
@@ -184,7 +185,7 @@ export class CustomerInfoComponent implements OnInit {
         this.newQuotesService.getCatgOfGoodDropdown.pipe(startWith([])),
         this.newQuotesService.getCurrencyDropdown.pipe(startWith([])),
         this.newQuotesService.getPartialShipDropdown.pipe(startWith([])),
-
+        this.newQuotesService.getPremiumDropdown.pipe(startWith([]))
       ],
     ).subscribe(([
       dropBankList,
@@ -205,11 +206,13 @@ export class CustomerInfoComponent implements OnInit {
       dropGoodsOfCateList,
       dropCurrencyList,
       dropPartialShipList,
+      dropPremiumCurrencyList
     ]) => {
       this.dropCityList = dropCityList;
       this.dropBankList = dropBankList;
       this.dropGoodsOfCateList = dropGoodsOfCateList;
       this.dropCurrencyList = dropCurrencyList;
+      this.dropPremiumCurrencyList = dropPremiumCurrencyList;
       this.dropPackageDescList = dropPackageDescList;
       this.dropPartialShipList = dropPartialShipList;
       this.dropSettlingAgentList = dropSettlingAgentList;
@@ -480,8 +483,8 @@ export class CustomerInfoComponent implements OnInit {
         ],
         'CurrencyCode': this.quoteF.currency.value,
         'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
-        'PremiumCurrencyCode': this.quoteF.premiumCurreny.value,
-        'PremiumCurrencyName': this.getCodeDescription(this.dropCurrencyList,this.quoteF.premiumCurreny.value),
+        'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
+        'PremiumCurrencyName':this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
         'CurrencyValue': this.quoteF.currencyValue.value,
         'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
         'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),

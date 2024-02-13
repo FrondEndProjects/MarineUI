@@ -26,6 +26,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Output('onSelectCustomer') onSelectCustomer = new EventEmitter();
   @Output('onOpenCoverAction') onOpenCoverAction = new EventEmitter();
   @Output('onMenu') onMenu = new EventEmitter();
+  @Output('onRating') onRating = new EventEmitter();
 
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;

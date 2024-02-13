@@ -56,6 +56,9 @@ export class NewQuotesService {
   private PartialShipDropdown: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   getPartialShipDropdown = this.PartialShipDropdown.asObservable();
 
+  private PremiumDropdown: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  getPremiumDropdown = this.PremiumDropdown.asObservable();
+
   public quoteEditData: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
   getQuoteEditData = this.quoteEditData.asObservable();
 
@@ -140,6 +143,9 @@ export class NewQuotesService {
     }
     if ( name === 'partialShip' ) {
       this.PartialShipDropdown.next(list);
+    }
+    if ( name === 'PremiumcurrencyList' ) {
+      this.PremiumDropdown.next(list);
     }
 
   }
@@ -244,8 +250,8 @@ export class NewQuotesService {
 
       commodity: [''],
       currency: [null, Validators.required],
-      premiumCurrency: [null, Validators.required],
       currencyValue: [null, Validators.required],
+      premiumCurrency: [''],
       packageDescription: [null, Validators.required],
       incoterms: [null, Validators.required],
       incotermsPercentage: [null, Validators.required],

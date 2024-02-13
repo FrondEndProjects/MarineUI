@@ -116,8 +116,8 @@ getExistingConveyance() {
       if (data?.Message === 'Success') {
         this.columnHeader = [
           {key: 'CoverId', display: 'Cover Id'},
+          {key: 'ClausesDescription', display: 'Clauses Description'},
           {key: 'CoverName', display: 'Cover Name'},
-          {key: 'CoverRate', display: 'Cover Rate'},
           {key: 'ModeOfTransportDesc', display: 'Transport Description'},
           {key: 'Status', display: 'Status'},
           {

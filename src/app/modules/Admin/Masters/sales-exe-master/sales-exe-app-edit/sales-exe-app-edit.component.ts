@@ -67,7 +67,8 @@ export class SalesExeAppEditComponent implements OnInit {
     console.log(this.executiveId, this.branchCode);
 
     let ReqObj = {
-      "AcExecutiveId": this.executiveId
+      "AcExecutiveId": this.executiveId,
+      "BranchCode":this.branchCode
     }
     console.log(ReqObj);
 

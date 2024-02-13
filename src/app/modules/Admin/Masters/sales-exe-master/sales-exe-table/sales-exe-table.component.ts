@@ -56,7 +56,10 @@ export class SalesExeTableComponent implements OnInit {
    }
  
    getExecutiveEdit() {
-     this.masterSer.onGetMethodSync(`${this.ApiUrl1}master/executive/list`).subscribe(
+    let ReqObj={
+      "BranchCode":this.branchCode
+    }
+     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/executive/list`,ReqObj).subscribe(
        (data: any) => {
          if (data?.Message === 'Success') {
            console.log(data);

@@ -39,6 +39,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public dropIncotermsPrecentList: any[] = [];
   public dropToleranceList: any[] = [];
   public dropCurrencyList: any[] = [];
+  public dropPremiumCurrencyList :any[]=[];
   public dropGoodsOfCateList: any[] = [];
   public warStatus:any=''
   subscription: Subscription;
@@ -184,8 +185,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
     this.quoteF.poPiNumber.setValue(commodityDetails?.PoDescription);
     this.quoteF.currency.setValue(quoteDetails?.CurrencyCode);
-    this.quoteF.premiumCurrency.setValue(quoteDetails?.PremiumCurrencyCode);
     this.quoteF.currencyValue.setValue(quoteDetails?.CurrencyValue);
+    this.quoteF.premiumCurrency.setValue(quoteDetails?.PremiumCurrencyCode);
     this.quoteF.packageDescription.setValue(quoteDetails?.PackageCode);
     this.quoteF.incoterms.setValue(quoteDetails?.IncoTerms);
     this.onGetIncotermsPrecentDropdownList();
@@ -210,12 +211,47 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     if(this.dropIncotermsList.length==0) this.onGetIncotermsDropdownList();
     if(this.dropToleranceList.length==0) this.onGetToleranceDropdownList();
     if(this.dropCurrencyList.length==0) this.onGetCurrencyDropdownList();
+    if(this.dropPremiumCurrencyList.length==0) this.onGetPremiumDropdownList();
     if(this.dropGoodsOfCateList.length==0) this.onGetGoodsOfCategoryDropdownList();
     if(this.dropGoodsOfCateList.length==0 && this.openCoverNo!=null && this.quoteF.warSrcc.value=='N') this.onCheckWarYesOrNo();
 
   }
 
+
+  CommaFormatteds() {
+
+    // format number
+    console.log('valuesss',this.quoteF.insuredValue.value)
+    if (this.quoteF.insuredValue.value) {
+      let value =this.quoteF.insuredValue.value.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.quoteF.insuredValue.setValue(value);
+    }
+  
+  }
+
+
+  ExposureFormatteds() {
+
+    // format number
+    console.log('valuesss',this.quoteF.exposureOfShipment.value)
+    if (this.quoteF.exposureOfShipment.value) {
+      let value =this.quoteF.exposureOfShipment.value.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+       this.quoteF.exposureOfShipment.setValue(value);
+    }
+  
+  }
+ omit_special_char(e) {
+  console.log('BBBBBBB',e)
+    var k;
+    // document.all ? k = e.key:
+     k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57));
+}
+
   CommaFormatted(tableData) {
+    // console.log('HIDESSSS',tableData);
     let i=0;
     let entry=tableData.toString();
     if(tableData.includes('.')){
@@ -573,7 +609,23 @@ export class QuoteFormComponent implements OnInit, OnChanges {
       (err) => { },
     );
   }
+  onGetPremiumDropdownList() {
+    const urlLink = `${this.ApiUrl1}quote/dropdown/premiumcurrency`;
+    const reqData = {
+      'BranchCode':this.userDetails?.BranchCode,
+    };
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
 
+        if (data?.Message === 'Success') {
+          this.dropPremiumCurrencyList = data?.Result;
+          this.newQuotesService.getDropDownList(this.dropPremiumCurrencyList, 'PremiumcurrencyList');
+
+        }
+      },
+      (err) => { },
+    );
+  }
   onCheckWarYesOrNo(){
     const urlLink = `${this.ApiUrl1}api/warsrc/status`;
     const reqData = {
@@ -593,6 +645,10 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
     this.quoteF.currencyOfExposure.setValue(this.quoteF.currency.value);
   }
-
+  onChangeCurrencyDropdown() {
+    console.log('hhhhhhhhh',this.quoteF.premiumCurrency.value)
+    const countryList: any = this.dropPremiumCurrencyList.find(ele => ele.Code === this.quoteF.premiumCurrency.value);
+    this.quoteF.premiumCurrency.setValue(countryList?.Code);
+  }
 
 }

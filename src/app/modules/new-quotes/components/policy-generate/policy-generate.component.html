@@ -325,6 +325,8 @@
                       Total SumInsured
                     </div>
                     <div class="p-2">
+                      <!--<b>
+                        {{premiumDetails?.PremiumDetails.PremiumInsuredValue | commaseparator}}</b> &nbsp;({{premiumDetails?.PremiumDetails.PremiumCurrency}}) -->
                       <b>{{premiumDetails?.TotalInsuredValue  | commaseparator}}</b> &nbsp;({{premiumDetails?.QuoteDetails?.CurrencyName}})
                     </div>
                   </div>
@@ -335,7 +337,8 @@
                       Premium
                     </div>
                     <div class="p-2">
-                      <b>{{premiumDetails?.PremiumDetails?.NetPremium | commaseparator}}</b> &nbsp;({{premiumDetails?.QuoteDetails?.CurrencyName}})
+                      <b>{{premiumDetails?.PremiumDetails?.NetPremium | commaseparator}}</b> &nbsp;
+                      ({{premiumDetails?.PremiumDetails?.PremiumCurrency}})
                     </div>
                   </div>
                 </div>

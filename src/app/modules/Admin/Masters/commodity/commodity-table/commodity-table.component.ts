@@ -75,6 +75,13 @@ export class CommodityTableComponent implements OnInit {
               config: {
                 isEdit: true,
               }
+            },
+            {
+              key: 'action',
+              display: 'Cover Rating',
+              config: {
+                isRating: true,
+              }
             }
           ];
           this.tableData = data?.Result;
@@ -98,6 +105,14 @@ export class CommodityTableComponent implements OnInit {
  public onEdit(event) {
    sessionStorage.setItem('commodityData', event.CommodityId);
    this.router.navigateByUrl('Marine/masters/commodity/add-edit');
+ }
+ onRating(event){
+  let ReqObj={
+    "CommodityName":event?.CommodityName,
+    "CommodityID":event?.CommodityId
+  }
+  sessionStorage.setItem('CommodityRating',JSON.stringify(ReqObj))
+  this.router.navigateByUrl('Marine/masters/commodity/RateCover');
  }
 
 }

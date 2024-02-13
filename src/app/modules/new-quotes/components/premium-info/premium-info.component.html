@@ -337,10 +337,13 @@
                         <div class="row">
                           <div class="col-4 col-md-4">Description</div>
                           <div class="col-4 col-md-3">Rate</div>
-                          <div class="col-4 col-md-4 offset-lg-1">{{premiumDetails?.QuoteDetails?.CurrencyName}}</div>
+                          <div class="col-4 col-md-4 offset-lg-1">
+                            {{premiumDetails?.PremiumDetails?.PremiumCurrency}}
+                            <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                          </div>
                         </div>
                       </li>
-                      <li class="list-group-item">
+                      <!-- <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
                             Sum insured
@@ -348,11 +351,14 @@
                           <div class="col-4 col-md-3">
                        
                           </div>
-                          <div class="col-4 col-md-5" style="text-align:right !important;"><!--text-right text-left text-right-->
-                            <span class="px-1">{{premiumDetails?.PremiumDetails?.EquivalentInsuredValue | commaseparator}}</span>
+                          <div class="col-4 col-md-5" style="text-align:right !important;">text-right text-left text-right
+                            <span class="px-1">
+                              {{premiumDetails?.PremiumDetails?.PremiumInsuredValue | commaseparator}}
+                              {{premiumDetails?.PremiumDetails?.EquivalentInsuredValue | commaseparator}}
+                            </span>
                           </div>
                         </div>
-                      </li>
+                      </li> -->
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">

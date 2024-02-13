@@ -18,6 +18,7 @@ import { CommodityComponent } from './commodity.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { PopUpComponent } from '../popup/popup.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { RateCoverComponent } from '../RateCoverCommodity/RateCover.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CommodityComponent,
     CommodityAppEditComponent,
     CommodityTableComponent,
-    PopUpComponent
+    PopUpComponent,
+    RateCoverComponent
   ],
   imports: [
     CommonModule,

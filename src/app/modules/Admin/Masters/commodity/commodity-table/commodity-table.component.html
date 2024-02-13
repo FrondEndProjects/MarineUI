@@ -6,7 +6,7 @@
     </mat-form-field>
     <!-- /SEARCH FIELD -->
     <ng-container *ngIf="tableData">
-      <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+      <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)" (onRating)="onRating($event)">
       </app-grid-table>
     </ng-container>
   
