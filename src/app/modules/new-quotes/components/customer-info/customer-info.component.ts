@@ -480,6 +480,8 @@ export class CustomerInfoComponent implements OnInit {
         ],
         'CurrencyCode': this.quoteF.currency.value,
         'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
+        'PremiumCurrencyCode': this.quoteF.premiumCurreny.value,
+        'PremiumCurrencyName': this.getCodeDescription(this.dropCurrencyList,this.quoteF.premiumCurreny.value),
         'CurrencyValue': this.quoteF.currencyValue.value,
         'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
         'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),

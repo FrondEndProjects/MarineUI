@@ -184,6 +184,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
     this.quoteF.poPiNumber.setValue(commodityDetails?.PoDescription);
     this.quoteF.currency.setValue(quoteDetails?.CurrencyCode);
+    this.quoteF.premiumCurrency.setValue(quoteDetails?.PremiumCurrencyCode);
     this.quoteF.currencyValue.setValue(quoteDetails?.CurrencyValue);
     this.quoteF.packageDescription.setValue(quoteDetails?.PackageCode);
     this.quoteF.incoterms.setValue(quoteDetails?.IncoTerms);

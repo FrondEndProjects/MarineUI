@@ -244,6 +244,7 @@ export class NewQuotesService {
 
       commodity: [''],
       currency: [null, Validators.required],
+      premiumCurrency: [null, Validators.required],
       currencyValue: [null, Validators.required],
       packageDescription: [null, Validators.required],
       incoterms: [null, Validators.required],
