@@ -441,8 +441,11 @@
                           </div>
                           <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
                             <!--smallpixel -->
-                            <span class="px-1">
+                            <span class="px-1" *ngIf="premiumLevy!='0.0' || premiumLevy!=0">
                               {{premiumLevy}}
+                            </span>
+                            <span class="px-1" *ngIf="premiumLevy=='0.0' || premiumLevy==0">
+                               0
                             </span>
                           </div>
                         </div>
@@ -459,7 +462,8 @@
                           <div class="col-4 col-md-3">
                           </div>
                           <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
-                            <span class="px-1">{{premiumF.premiumWithOutVat.value | commaseparator}}</span>
+                            <span class="px-1" *ngIf="premiumF.premiumWithOutVat.value!=0 || premiumF.premiumWithOutVat.value!='0.0'">{{premiumF.premiumWithOutVat.value | commaseparator}}</span>
+                            <span class="px-1" *ngIf="premiumF.premiumWithOutVat.value==0 || premiumF.premiumWithOutVat.value=='0.0'">0</span>
                           </div>
                         </div>
                       </li>
@@ -472,7 +476,9 @@
                             {{premiumF.vatTaxPrecentage.value}}%
                           </div>
                           <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
-                            <span class="px-1">{{premiumF.vatTaxAmount.value | commaseparator}}</span>
+                            <span class="px-1" *ngIf="premiumF.vatTaxAmount.value!=0">{{premiumF.vatTaxAmount.value | commaseparator}}</span>
+                            <span class="px-1" *ngIf="premiumF.vatTaxAmount.value==0">0</span>
+                           
                           </div>
                         </div>
                       </li>
@@ -485,9 +491,13 @@
                            
                           </div>
                           <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
-                            <span class="px-1">
+                            <span class="px-1" *ngIf="stampDuty!=0">
                               {{stampDuty | commaseparator}}
                             </span>
+                            <span class="px-1" *ngIf="stampDuty==0">
+                              0
+                            </span>
+                           
                           </div>
                         </div>
                       </li>
@@ -504,7 +514,8 @@
                           </div>
                           <div class="col-3 col-md-5" style="text-align:right !important;"><!--smallpixel-->
                             <span class="px-1">
-                              {{premiumF.totalPremium.value | commaseparator}}
+                              <ng-container *ngIf="premiumF.totalPremium.value!=0 || premiumF.totalPremium.value!='0.0'">{{premiumF.totalPremium.value | commaseparator}}</ng-container>
+                              <ng-container *ngIf="premiumF.totalPremium.value==0 || premiumF.totalPremium.value=='0.0'">0</ng-container>
                               <ng-container *ngIf="quotesType =='With-Endo'">
                                 <button nbButton size="tiny" status="warning" [nbPopover]="premium" nbPopoverPlacement="left">
                                   <i class="fas fa-question"></i>
@@ -541,6 +552,7 @@
             <th>Marine Premium</th>
             <th>PVT Premium</th>
             <th>Additional Premium</th>
+            <th>PremiumLevy</th>
             <th>Total Premium</th>
           </tr>
         </thead>
@@ -550,6 +562,7 @@
              <td>{{beforeEndorsement?.MarinePremium}}</td>
             <td>{{beforeEndorsement?.WarPremium}}</td>
             <td>{{beforeEndorsement?.ExcessPremium}}</td>
+            <td>{{beforeEndorsement?.PremiumLevy}}</td>
             <td>{{beforeEndorsement?.TotalPremium}}</td>
           </tr>
           <tr>
@@ -557,6 +570,7 @@
              <td>{{afterEndorsement?.MarinePremium}}</td>
             <td>{{afterEndorsement?.WarPremium}}</td>
             <td>{{afterEndorsement?.ExcessPremium}}</td>
+            <td>{{afterEndorsement?.PremiumLevy}}</td>
             <td>{{afterEndorsement?.TotalPremium}}</td>
           </tr>
           <tr>
@@ -564,6 +578,7 @@
             <td>{{difference?.MarinePremium}}</td>
             <td>{{difference?.WarPremium}}</td>
             <td>{{difference?.ExcessPremium}}</td>
+            <td>{{difference?.PremiumLevy}}</td>
             <td>{{difference?.TotalPremium}}</td>
           </tr>
         </tbody>

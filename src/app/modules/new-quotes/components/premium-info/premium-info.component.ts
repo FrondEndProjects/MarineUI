@@ -641,10 +641,23 @@ export class PremiumInfoComponent implements OnInit {
     const premiumDetail = this.premiumDetails?.PremiumDetails;
     this.premiumLevy = this.premiumDetails?.PremiumDetails?.PremiumLevy;
     this.levyPercent = this.premiumDetails?.PremiumDetails?.LevyPercent;
-    this.stampDuty = this.premiumDetails?.PremiumDetails?.StampDuty;
+   
+    if(this.premiumDetails?.PremiumDetails?.StampDuty!=0 || this.premiumDetails?.PremiumDetails?.StampDuty!='0.0'){
+      this.stampDuty = this.premiumDetails?.PremiumDetails?.StampDuty;
+    }
+    else{
+      this.stampDuty=0;
+    }
     this.stampDutyYN = this.premiumDetails?.PremiumDetails?.StampDutyYN;
     if(this.premiumDetails?.Referral){
       this.premiumF?.totalPremium.setValue('0');
+    }
+    if(this.premiumDetails?.PremiumDetails?.VatTaxAmount!=0 || this.premiumDetails?.PremiumDetails?.VatTaxAmount!='0.0'){
+      this.premiumF.vatTaxAmount.setValue(this.premiumDetails?.PremiumDetails?.VatTaxAmount);
+    }
+    else{
+      this.premiumF?.vatTaxAmount.setValue('0');
+      console.log('Vat Taxesssss',this.premiumF?.vatTaxAmount.value);
     }
     console.log('premium',premiumDetail);
     console.log('Commodity',commodityDetails);
