@@ -58,6 +58,7 @@ export class NewOpenCoverComponent implements OnInit {
   emailIdError: boolean;
   mobileNoError: boolean;
   title: any=null;customerName: any=null;
+  dropPremiumCurrencyList:any;
   coreAppcode: any=null;cityValue: any=null;
   poBox: any=null;mobileNo: any=null;emailId: any=null;
   dropCityList: any[]=[];
@@ -99,11 +100,13 @@ export class NewOpenCoverComponent implements OnInit {
       this.onCreateFormControl();
       this.onLoadDropdownList();
       this.onEdit();
+      this.onGetPremiumDropdownList();
     }
     else{
       this.onCreateFormControl();
       this.onLoadDropdownList();
       this.newQuoteF.customer.disable();
+      this.onGetPremiumDropdownList();
       //this.onGetCustomerList('direct');
     }
     // this.openCoverService.onGetOpenCoverEdit.subscribe((data: any) => {
@@ -183,6 +186,7 @@ export class NewOpenCoverComponent implements OnInit {
       policyFee: ['0', Validators.required],
       voyageRemarks: [''],
       effectiveDate: [null],
+      premiumCurrency:[null, Validators.required],
     });
 
 
@@ -584,6 +588,7 @@ export class NewOpenCoverComponent implements OnInit {
     this.onChangeBroker();
     this.newQuoteF.salesExective.setValue(this.editData?.ExecutiveId.toString());
     this.newQuoteF.customer.setValue(this.editData?.InsuredName);
+    this.newQuoteF.premiumCurrency.setValue(this.editData?.PremiumCurrencyCode);
     this.newQuoteF.customer.disable();
     this.newQuoteF.openCoverStartDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyStartDate));
     this.newQuoteF.openCoverEndDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyEndDate));
@@ -731,6 +736,18 @@ export class NewOpenCoverComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+  getCodeDescription(list: any[], code: any) {
+    let description: any = '';
+    if (code && code !== '') {
+      const find = list.find((ele: any) => ele.Code === code);
+      if (find) {
+        description = find.CodeDescription;
+      } else {
+        description = '';
+      }
+    }
+    return description;
+  }
   onSubmitData() {
     this.submitted = true;
     let utilizedAmount:any,policyFee:any;
@@ -823,6 +840,8 @@ export class NewOpenCoverComponent implements OnInit {
       'VoyageValue': this.newQuoteF.crossVoyagePrecnt.value,
       'W&Srcc': this.newQuoteF.war.value,
       'Warland': '',
+      'PremiumCurrencyCode': this.newQuoteF.premiumCurrency.value,
+      'PremiumCurrencyName':this.getCodeDescription(this.dropPremiumCurrencyList, this.newQuoteF.premiumCurrency.value),
     };
     console.log(this.newQuoteForm.valid, this.newQuoteForm)
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -837,8 +856,27 @@ export class NewOpenCoverComponent implements OnInit {
     );
   }
 
+  onChangeCurrencyDropdown() {
+    console.log('hhhhhhhhh',this.newQuoteF.premiumCurrency.value)
+    const countryList: any = this.dropPremiumCurrencyList.find(ele => ele.Code === this.newQuoteF.premiumCurrency.value);
+    this.newQuoteF.premiumCurrency.setValue(countryList?.Code);
+  }
+  onGetPremiumDropdownList() {
+    const urlLink = `${this.ApiUrl1}quote/dropdown/premiumcurrency`;
+    const reqData = {
+      'BranchCode':this.userDetails?.BranchCode,
+    };
+    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
 
+        if (data?.Message === 'Success') {
+          this.dropPremiumCurrencyList = data?.Result;
 
+        }
+      },
+      (err) => { },
+    );
+  }
 
 
 

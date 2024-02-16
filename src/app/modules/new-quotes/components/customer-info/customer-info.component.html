@@ -21,7 +21,7 @@
       <app-bank-form></app-bank-form>
   </div>
   <div class="maan-card-footer">
-    <ng-container *ngIf="userDetails?.UserType != 'RSAIssuer'">
+    <ng-container><!--*ngIf="userDetails?.UserType != 'RSAIssuer'"-->
       <app-back-btn></app-back-btn>
     </ng-container>
     <button nbButton (click)="onSaveQuote()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
