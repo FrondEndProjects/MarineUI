@@ -129,19 +129,49 @@ export class PremiumInfoComponent implements OnInit {
               if(tableData!=0){
               let entry=tableData.toString();
               let splitValue= entry.split('.');
-              console.log("Entry Came 1",tableData)
-              let value = splitValue[0].replace(/\D/g, "")
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                  if(splitValue.length>1){
-                    this.premiumF.marinePremium.setValue(value+'.'+splitValue[1]);
-                  }
-                  else this.premiumF.marinePremium.setValue(value)
+              console.log("Entry Came 1",tableData);
+
+              if(entry.charAt(0) === '-' || entry.charAt(0)=== '+' ){
+                let value = splitValue[0]
+                if(splitValue.length>1){
+                  console.log('Areasss1',splitValue[1],value);
+                  this.premiumF.marinePremium.setValue(value+'.'+splitValue[1]);
+                }
+                else this.premiumF.marinePremium.setValue(value)
+              }
+              else {
+                let value = splitValue[0].replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    if(splitValue.length>1){
+                      console.log('Areasss2S',splitValue[1],value);
+                      this.premiumF.marinePremium.setValue(value+'.'+splitValue[1]);
+                    }
+                    else this.premiumF.marinePremium.setValue(value)
+              }
                 }
                 else{
                   this.premiumF.marinePremium.setValue('');
                 }
              //this.newQuoteF.annualEstimate.setValue(value);
               }
+
+              if(tableData!=null && type == 'NetPremium'){
+                if(tableData!=0){
+                let entry=tableData.toString();
+                console.log('ENTRYYYYYY1',entry)
+                let splitValue= entry.split('.');
+                console.log("Entry Came 1",tableData)
+                let value = splitValue[0].replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    if(splitValue.length>1){
+                      this.premiumF.totalPremium.setValue(value+'.'+splitValue[1]);
+                    }
+                    else this.premiumF.totalPremium.setValue(value)
+                  }
+                  else{
+                    this.premiumF.totalPremium.setValue('');
+                  }
+                }
               else if(tableData!=null && type == 'warPremium'){
                 if(tableData!=0){
                   let entry=tableData.toString();
@@ -721,6 +751,9 @@ export class PremiumInfoComponent implements OnInit {
     this.premiumF?.premiumWithOutVat.setValue(premiumDetail?.PremiumWithoutTax);
     this.premiumF?.vatTaxPrecentage.setValue(premiumDetail?.VatTaxPercentage);
     this.premiumF?.vatTaxAmount.setValue(premiumDetail?.VatTaxAmount);
+    // if(premiumDetail?.NetPremium!=0){
+    //   this.CommaFormatted(premiumDetail?.NetPremium,'NetPremium');
+    // }
     this.premiumF?.totalPremium.setValue(premiumDetail?.NetPremium);
     this.premiumF.isFinalizeQuote.setValue(this.premiumDetails?.FinalizeYn ==''?'N':this.premiumDetails?.FinalizeYn);
     // if (this.userDetails?.UserType === 'Broker') {

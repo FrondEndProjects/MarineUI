@@ -138,7 +138,8 @@ uploadDocuments: any[]=[];
           console.log("Element Exist",Exist)
           if (!Exist) {
             this.uploadDocuments.push({ 'url': element,"fileName":filename,'productid':this.sessionStorageService.sessionStorgaeModel.productId,'loginid':this.userDetails?.LoginId,'quoteNo':this.QuoteNo});
-            console.log('jjjjjj',this.uploadDocuments)
+            console.log('jjjjjj',this.uploadDocuments);
+            this.submit();
           }
           else {
             Swal.fire(
@@ -155,11 +156,13 @@ uploadDocuments: any[]=[];
     if (eventType == 'drop') {
       fileList = event[0];
     }
+   
     
   }
 
   ongetUploadedDocument(){
     console.log('fffffffffff',this.QuoteNo);
+        
     //this.uploadedDocumentsList=[];
     const urlLink = `${this.ApiUrl1}file/upload/list`;
     const reqData = {
@@ -202,11 +205,11 @@ uploadDocuments: any[]=[];
     this.uploadDocuments=[];
     if(row.QuoteNo){
       this.QuoteNo=row.QuoteNo;
-      this.ongetUploadedDocument();
     let dialogRef = this.dialog.open(templateRef, {
-     width: '100%',
-     height:'80%'
+     width: '70%',
+     height:'60%'
    });
+   this.ongetUploadedDocument();
   }
   }
   close(){
@@ -229,7 +232,7 @@ uploadDocuments: any[]=[];
                     this.uploadedDocumentsList = []; 
                     //this.close();
                     this.ongetUploadedDocument();
-                    this.close();
+                    //this.close();
                   }
             }
           })
@@ -493,6 +496,7 @@ uploadDocuments: any[]=[];
     //this.pass=true;
 
     console.log('vvvvvvvvvv',rowData)
+    rowData.OpenVesselName='AdminPortfolio'
     this.innerTableData =[{
       "ismore":true,
       "CustomerName":rowData.CustomerName,

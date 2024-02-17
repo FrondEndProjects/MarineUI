@@ -261,3 +261,7 @@
     width: 200px;
     margin: auto;
 }
+
+::ng-deep .mdc-dialog__surface {
+  overflow-x: hidden !important;
+}

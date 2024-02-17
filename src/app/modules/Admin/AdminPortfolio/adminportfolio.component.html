@@ -158,7 +158,7 @@
             <div>
               <div *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
                 <div class="row">
-                  <table class="table table-striped">
+                  <table class="table table-striped" style="width:60% !important;margin:auto !important;">
                     <thead>
                       <tr>
                         <th>Filename</th>
@@ -199,7 +199,7 @@
             </div>
             <div style="text-align:center;" class="mt-4">
                 <button class="btn btn-danger" (click)="close()">Close</button>
-                <button class="btn btn-success ml-2" (click)="submit()">Submit</button>
+                <!-- <button class="btn btn-success ml-2" (click)="submit()">Submit</button> -->
             </div>
           </div>
         </div>

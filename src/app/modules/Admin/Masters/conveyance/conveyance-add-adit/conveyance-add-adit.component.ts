@@ -62,6 +62,7 @@ export class ConveyanceAddAditComponent implements OnInit {
       effectiveDate : new FormControl('', Validators.required),
       remarks : new FormControl(''),
       status : new FormControl('Y', Validators.required),
+      ContainersedYn: new FormControl('Y', Validators.required),
     });
   }
 
@@ -103,6 +104,7 @@ export class ConveyanceAddAditComponent implements OnInit {
         this.conveyanceForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(conveyanceDetails.EffectiveDate));
         this.conveyanceForm.controls['remarks'].setValue(conveyanceDetails.Remarks);
         this.conveyanceForm.controls['status'].setValue(conveyanceDetails.Status);
+        this.conveyanceForm.controls['ContainersedYn'].setValue(conveyanceDetails.ContainersedYn);
 
       }
     )
@@ -149,7 +151,8 @@ export class ConveyanceAddAditComponent implements OnInit {
       "EffectiveDate": effectiveDate,
       "ModeOfTransportId": this.conveyanceForm.controls['ModeOfTransportId'].value,
       "Remarks": this.conveyanceForm.controls['remarks'].value,
-      "Status": this.conveyanceForm.controls['status'].value
+      "Status": this.conveyanceForm.controls['status'].value,
+      "ContainersedYn": this.conveyanceForm.controls['ContainersedYn'].value,
     }
 
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/conveyance/save`, ReqObj).subscribe(

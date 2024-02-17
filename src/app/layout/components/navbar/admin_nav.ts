@@ -161,11 +161,11 @@ export const adminNavItems: NbMenuItem[] = [
         link: 'masters/exchange-master/view',
         icon: 'icon-cursor',
       },
-      {
-        title: 'Exchange Master Upload',
-        link: 'masters/exchange-master-upload/view',
-        icon: 'icon-cursor',
-      },
+      // {
+      //   title: 'Exchange Master Upload',
+      //   link: 'masters/exchange-master-upload/view',
+      //   icon: 'icon-cursor',
+      // },
       {
         title: 'Currency Master',
         link: 'masters/currency/view',

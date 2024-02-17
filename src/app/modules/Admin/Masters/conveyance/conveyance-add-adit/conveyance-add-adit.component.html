@@ -59,9 +59,43 @@
         Please choose conveyance rate
       </mat-error>
     </div>
+
+
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <label class="input-form-label">
+          Container Type
+          <span class="text-required">*</span>
+        </label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="fac-yess" type="radio" name="Containersed" value="CO" formControlName="ContainersedYn" />
+            <label for="fac-yess">Container</label>
+            <input type="radio" id="fac-noo" name="Containersed" value="NC" formControlName="ContainersedYn" />
+            <label for="fac-noo"> NON - CONTAINER</label>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- CONVEYANCE Rate -->
 
     <!-- CORE APPLICATION CODE -->
+   
+    <!-- /CORE APPLICATION CODE -->
+  </div>
+
+  <div class="row">
+    <!--<div class="col-12 col-md-6 col-lg-6">
+
+     <div class="input-control-container">
+      <label class="input-form-label">Policy End Date</label>
+      <div class="input-form-box">
+        <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
+          name="effectiveDate" formControlName="effectiveDate" (click)="d3.toggle()" [minDate]="minDate"
+          autocomplete="off" />
+      </div>
+    </div>
+    </div>-->
     <div class="col-12 col-md-6 col-lg-6">
       <div class="customer-search-container">
         <div class="input-control-container">
@@ -80,21 +114,6 @@
         </mat-error>
       </div>
     </div>
-    <!-- /CORE APPLICATION CODE -->
-  </div>
-
-  <div class="row">
-    <!--<div class="col-12 col-md-6 col-lg-6">
-
-     <div class="input-control-container">
-      <label class="input-form-label">Policy End Date</label>
-      <div class="input-form-box">
-        <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
-          name="effectiveDate" formControlName="effectiveDate" (click)="d3.toggle()" [minDate]="minDate"
-          autocomplete="off" />
-      </div>
-    </div>
-    </div>-->
     <!-- effective date -->
     <div class="col-12 col-md-6 col-lg-6">
       <div class="input-control-container">
@@ -107,6 +126,12 @@
       </div>
   </div>
     <!-- REMARKS -->
+    
+    <!-- /REMARKS -->
+  </div>
+
+
+  <div class="row">
     <div class="col-12 col-md-6 col-lg-6">
       <div class="customer-search-container">
         <div class="input-control-container">
@@ -117,11 +142,6 @@
         </div>
       </div>
     </div>
-    <!-- /REMARKS -->
-  </div>
-
-
-  <div class="row">
     <!-- STATUS -->
     <div class="col-12 col-md-6 col-lg-6">
       <div class="input-control-container">
@@ -141,6 +161,10 @@
         </div>
       </div>
     </div>
+   
+
+
+    
   </div>
 
   <div class="mt-3 text-center">
