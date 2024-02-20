@@ -46,7 +46,7 @@ export class ApprovedComponent implements OnInit {
     this.loginId = this.referralComponent.loginId;
     this.productId = this.referralComponent.productId;
     this.applicationId = this.referralComponent.applicationId;
-    this.OpenCover = this.referralComponent.OpenCover;
+    //this.OpenCover = this.referralComponent.OpenCover;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
 
    
@@ -96,7 +96,14 @@ export class ApprovedComponent implements OnInit {
     if(this.selectedBroker){
       this.loginId = this.selectedBroker;
     }
+    this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.onLoadGrid();
+    // if(this.OpenCover.value!=null){
+    //   this.onLoadGrid();
+    // }
+    // else {
+    //   this.OpenCover.value = null;
+    // }
   }
 
   onLoadGrid() {
