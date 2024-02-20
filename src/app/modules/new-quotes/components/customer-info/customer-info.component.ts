@@ -105,7 +105,9 @@ export class CustomerInfoComponent implements OnInit {
     }
     this.WithCertifi = sessionStorage.getItem('WithCertifi');
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    console.log('Opecover Product Ids',this.OpenCover)
     if(this.OpenCover){
+      console.log('Open COvers Testinggsss')
       if(this.OpenCover?.name == 'adminReferral'){
             this.productId = this.OpenCover?.productId;
       } 
@@ -267,6 +269,7 @@ export class CustomerInfoComponent implements OnInit {
             const opencover = {
               'name':'adminReferral',
               'value':this.editQuoteData?.OpenCoverNo,
+              "productId":this.editQuoteData?.ProductCode
             }
             this.OpenCover = opencover;
              sessionStorage.setItem('OpenCover',JSON.stringify(opencover));

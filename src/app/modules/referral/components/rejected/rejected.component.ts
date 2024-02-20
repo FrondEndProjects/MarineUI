@@ -40,7 +40,7 @@ export class RejectedComponent implements OnInit {
     this.loginId = this.referralComponent.loginId;
     this.productId = this.referralComponent.productId;
     this.applicationId = this.referralComponent.applicationId;
-    this.OpenCover = this.referralComponent.OpenCover;
+    //this.OpenCover = this.referralComponent.OpenCover;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
 
     if (this.userDetails?.UserType != "RSAIssuer") {
@@ -89,6 +89,7 @@ export class RejectedComponent implements OnInit {
       this.loginId = this.selectedBroker;
       console.log('jjjjjjjj',this.loginId);
     }
+    this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.onLoadGrid();
   }
 

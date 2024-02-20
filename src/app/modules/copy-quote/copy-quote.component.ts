@@ -30,6 +30,7 @@ export class CopyQuoteComponent implements OnInit {
   public brokerList: any[] = [];
 
   public choosedRow:any;
+  currencycode: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -40,7 +41,7 @@ export class CopyQuoteComponent implements OnInit {
     this.userDetails = this.userDetails?.LoginResponse;
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
-
+    console.log('NNNNNNNNNNNN',this.userDetails)
     if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
       this.loginId = this.userDetails.LoginId;
       this.applicationId = '1';
@@ -49,6 +50,7 @@ export class CopyQuoteComponent implements OnInit {
       this.loginId = '';
       this.applicationId = this.userDetails.LoginId;
     }
+    this.currencycode= this.userDetails?.CurrencyAbbreviation
   }
 
   ngOnInit(): void {
@@ -121,7 +123,7 @@ export class CopyQuoteComponent implements OnInit {
              },
             { key: 'QuoteNo', display: 'Quote Number' },
             { key: 'CustomerName', display: 'Customer Name' },
-            { key: 'Premium', display: 'Premium(SAR)' },
+            { key: 'Premium', display: `Premium(${this.currencycode})` },
 
           ];
           this.tableData = data?.Result || [];

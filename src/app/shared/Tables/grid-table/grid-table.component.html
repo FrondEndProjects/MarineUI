@@ -13,8 +13,12 @@
                 {{ element[col.key] }}
               </div>
             </div>
-            <div class="display2">{{ element[col.key] }}</div>
+            <div class="display2" *ngIf="col.key!='ContainerisedYn'">{{ element[col.key] }}</div>
           </ng-container>
+          <ng-container *ngIf="col.key=='ContainerisedYn'">
+            <span *ngIf="element[col.key]=='CO'" style="color:green;">CONTAINER</span>
+            <span *ngIf="element[col.key]=='NC'" style="color:red;">NON-CONTAINER</span>
+        </ng-container>
           <ng-template #hasConfig>
             <ng-container *ngIf="col.config.select">
               <div class="custom-control custom-radio custom-control-inline">
@@ -54,6 +58,8 @@
                 <i class="fa-solid fa-pen-to-square" style="color:blue"></i>
                 </button>-->
             </ng-container>
+
+        
                    
             <!--<ng-container *ngIf="col.config.isViewss && element.Status == 'Y'">
               <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">

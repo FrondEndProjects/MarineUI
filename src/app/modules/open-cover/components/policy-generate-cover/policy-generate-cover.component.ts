@@ -116,8 +116,11 @@ export class PolicyGenerateCoverComponent implements OnInit {
   }
 
   onGetInstallment() {
+    let ReqObj={
+      "BranchCode": this.userDetails.BranchCode
+    }
     const urlLink = `${this.ApiUrl1}OpenCover/installment`;
-    this.openCoverService.onGetMethodSync(urlLink).subscribe(
+    this.openCoverService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log('installment', data);
         this.installmentList = data?.Result;

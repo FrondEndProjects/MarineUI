@@ -124,6 +124,7 @@ export class EndorsementGridComponent implements OnInit {
 
   isActionBtn(event: any) {
 
+    sessionStorage.removeItem('Edit')
     console.log('lllllllllll',event)
     let data = {
       PolicyNo: event.PolicyNo,
@@ -216,6 +217,8 @@ export class EndorsementGridComponent implements OnInit {
     }
     console.log(data);
     sessionStorage.removeItem('QuoteStatus');
+    sessionStorage.setItem('Edit','NewEdit');
+    console.log('Endorsement Status Master',data);
     sessionStorage.setItem("endorsement", JSON.stringify(data));
     this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-type`]);
 

@@ -57,8 +57,10 @@ export class EndorsementTypeComponent implements OnInit {
   }
   ngOnInit(): void {
     this.QuoteNo = this.endorsement?.QuoteNo;
+    console.log('Enodorsement Quote Nos',this.endorsement);
     this.PolicyNo = this.endorsement?.PolicyNo;
     this.onGetEndorsements();
+    
   }
 
   onChangeType(event: any) {
@@ -74,14 +76,22 @@ export class EndorsementTypeComponent implements OnInit {
   }
 
   onGetEndorsements() {
+    let quoteno:any
     const urlLink = `${this.ApiUrl1}menu/endorsementtype/list`;
     const urlLink2 = `${this.ApiUrl1}menu/endorsement/edit`;
 
     const reqData = {
       "ProductId": '3',
     };
+    let s= sessionStorage.getItem('Edit');
+    if(s!='NewEdit'){
+      quoteno=this.QuoteNo 
+    }
+    else{
+      quoteno='';
+    }
     const reqData2 = {
-      "QuoteNo": this.QuoteNo
+      "QuoteNo": quoteno
     };
     const endoList = this.newQuotesService.onPostMethodSync(urlLink, reqData);
     const endoListEdit = this.newQuotesService.onPostMethodSync(urlLink2, reqData2);
@@ -174,6 +184,12 @@ export class EndorsementTypeComponent implements OnInit {
           console.log(data);
           if (data.Message == "Success") {
             sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
+            let datas = {
+              PolicyNo: data?.Result?.PolicyNo,
+              QuoteNo: data?.Result?.QuoteNo,
+            };
+            sessionStorage.setItem("endorsement", JSON.stringify(datas));
+            sessionStorage.removeItem('Edit');
             this.router.navigate([url]);
           }
         })
