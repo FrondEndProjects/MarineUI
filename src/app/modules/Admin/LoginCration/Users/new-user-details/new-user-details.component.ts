@@ -94,6 +94,7 @@ export class NewUserDetailsComponent implements OnInit {
   disable = false;
   disabled: boolean;
   regionCode:any=null;userDetails:any=null;
+  editspro: any;
 
   constructor(private masterSer: MastersService,private datePipe:DatePipe,
     private toastrService:NbToastrService, private router:Router, private adminReferralService: AdminReferralService,public dialog: MatDialog, private loginService: LoginService) {
@@ -293,22 +294,35 @@ Open(){
       console.log(data);
           
       this.List=data.Result;
+      console.log('DataResults',this.List);
       if (data.Message == 'Success') {
         const dialogRef = this.dialog.open(OpenCoverDocument, {
           maxWidth: '100vw',
           width: '1200px',
           height: '80vh',
           data: {
-         list:data.Result
-          }
+         list:data.Result,
+         lists:this.editspro
+          },
         });
         dialogRef.afterClosed().subscribe((result) => {
           {
             this.openCover=result;
             console.log('jjjjjjjj',this.openCover);
-            this.openCovers=[{
-              "OpenCoverNo":this.openCover
-            }]
+            let i=0;
+            if(this.openCover.length!=0){
+              for(let n of this.openCover){
+                let entry ={
+                  "OpenCoverNo":n
+                }
+                this.openCovers.push(entry);
+                console.log('Entrysssssss',this.openCovers)
+                i+1;
+              }
+            }
+            // this.openCovers=[{
+            //   "OpenCoverNo":this.openCover
+            // }]
           }
         });
        
@@ -776,6 +790,7 @@ else if($event.target.checked ==false){
         console.log(data);
         this.ProductInfo = data?.Result.CommisionResponse;
         this.pro=data?.Result.CommisionResponse;
+        this.editspro = data?.Result.CommisionResponse[1];
         console.log('ttttttt',this.ProductInfo)
       },
       (err) => { },
