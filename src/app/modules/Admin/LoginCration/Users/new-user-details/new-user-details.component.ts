@@ -351,6 +351,7 @@ Open(){
 
     let ReqObj =  {
       "AgencyCode": this.AgencyCode,
+      "BranchCode": this.BranchCode,
       //"UAgencyCode": this.AgencyCode
 
   }

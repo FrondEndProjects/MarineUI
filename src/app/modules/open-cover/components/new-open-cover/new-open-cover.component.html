@@ -434,7 +434,12 @@
       </div> -->
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
-          <label class="input-form-label">PVT YN<span class="text-required">*</span></label>
+          <ng-container *ngIf="userDetails?.RegionCode == '02'">
+            <label class="input-form-label">PVT YN<span class="text-required">*</span></label>
+            </ng-container>
+            <ng-container *ngIf="userDetails?.RegionCode != '02'">
+              <label class="input-form-label">War YN<span class="text-required">*</span></label>
+              </ng-container>
           <div class="input-form-radio-box">
             <div class="radio-toolbar">
               <input id="war-yes" type="radio" name="war" value="Y" formControlName="war">

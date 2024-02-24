@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 import { ProductSelectionComponent } from './modules/product-selection/product-selection.component';
 import { AuthGuard } from './Auth/auth.guard';
 import { SessionRedirectComponent } from './layout/components/session-redirect/session-redirect.component';
+import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRedirect.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -35,6 +36,10 @@ export const routes: Routes = [
     //   },
 
     // ]
+  },
+  {
+    path: 'customer-Redirect',
+    component: CustomerRedirectComponent,
   },
   {
     path: 'product-layout',

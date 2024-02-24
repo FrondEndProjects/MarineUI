@@ -137,6 +137,9 @@ export class ProtfolioGridComponent implements OnInit {
       if(rowData=='Documents'){
         this.OpenDocument(template,row)
       }
+      if(rowData == 'Debit Note'){
+        this.getDebitPdf(row,rowData);
+      }
   }
 
   submit(){
@@ -280,6 +283,21 @@ export class ProtfolioGridComponent implements OnInit {
           this.onDownloadSchedule(Results,type)
         });
   }
+
+
+  getDebitPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
   onDownloadSchedule(Results,rowData){
 
     console.log('jjjjjjjj',Results)
@@ -355,6 +373,8 @@ export class ProtfolioGridComponent implements OnInit {
                   { name: 'Schedule' },
                   { name: 'Policy Wordings' },
                   { name: 'Documents' },
+                  { name: 'Debit Note' },
+                  // { name: 'Credit Note' },
                 ]
               },
             },

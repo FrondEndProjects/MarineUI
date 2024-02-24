@@ -1,3 +1,22 @@
+
+<ng-container *ngIf="userDetails?.UserType =='admin' && opencoverno">
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-primary">
+      <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+        <div class="p-1">Broker Name</div>
+        <div class="p-1">{{headerDetails?.BrokerName}}</div>
+      </div>
+      <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+        <div class="p-1">Customer Name</div>
+        <div class="p-1">{{headerDetails?.CustomerName}}</div>
+      </div>
+      <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+        <div class="p-1">OpenCover Number</div>
+        <div class="p-1">{{headerDetails?.OpenCoverNo}}</div>
+      </div>
+    </li>
+  </ul>
+</ng-container>
 <div class="maan-card customPadding">
   <div class="maan-card-header">
       <!-- <div class="form-heading-number">

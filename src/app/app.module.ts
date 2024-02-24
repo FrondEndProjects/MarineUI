@@ -64,6 +64,7 @@ import { EndorsementComponent } from './modules/endorsement/endorsement.componen
 import { SessionRedirectComponent } from './layout/components/session-redirect/session-redirect.component';
 import { ErrorModalModule } from './shared/error/error-modal.module';
 import { LoginService } from './modules/login/login.service';
+import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRedirect.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { LoginService } from './modules/login/login.service';
     SearchComponent,
     EndorsementComponent,
     OpenCoverDocument,
-    SessionRedirectComponent
+    SessionRedirectComponent,
+    CustomerRedirectComponent
   ],
   imports: [
     CommonModule,

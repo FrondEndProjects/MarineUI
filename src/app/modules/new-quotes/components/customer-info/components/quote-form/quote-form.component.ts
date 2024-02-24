@@ -6,6 +6,7 @@ import { NewQuotesService } from '../../../../new-quotes.service';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { Subscription } from 'rxjs';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-quote-form',
@@ -17,15 +18,16 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public userDetails: any;
-  public productId: any;
+  public productId: any;VesselNames:any ='';
   public loginId: any;
   public applicationId: any;
+  VesselName:any;
   public step = 0;
   public openCoverNo: any = '';
   public quoteForm!: FormGroup;
   public referenceNo: any;renderSection:boolean = false;
   public submitted: boolean;
-
+  public filterValue: any;
   public dropTransportList: any[] = [];
   public dropCoverList: any[] = [];
   public dropCarriageList: any[] = [];
@@ -41,8 +43,10 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public dropCurrencyList: any[] = [];
   public dropPremiumCurrencyList :any[]=[];
   public dropGoodsOfCateList: any[] = [];
-  public warStatus:any=''
-  subscription: Subscription;
+  vesselSearchList:any[]=[];
+  public warStatus:any=''; closeResult: any=null;
+  subscription: Subscription;public tableData: any[] = [];
+  ManufactureYear:any;manshow:any = false;
 
   public dropPartialShipList: any[] = [
     { Code: 'N', CodeDescription: 'None' },
@@ -57,18 +61,27 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   };
   minDate: { year: number; month: number; day: number; };
   maxDate:any;OpenCover:any=null;
+  values: any ='others';
+  columnHeader: any[];
+  manshows: any = false;
+  newshow: any=false;
+  newVesselName: any='';
+  vesselid: any;
+  manyr: any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
     private customerInfoComponent: CustomerInfoComponent,
-    private dateAdapter: NgbDateAdapter<string>
+    private dateAdapter: NgbDateAdapter<string>,
+    private modalService: NgbModal,
   ) {
     this.newQuotesService.getDropDownList(this.dropPartialShipList, 'partialShip');
     this.quoteForm = this.customerInfoComponent.quoteForm;
     this.userDetails = this.customerInfoComponent?.userDetails;
     this.productId = this.customerInfoComponent?.productId;
-    console.log('Productidssss',this.productId);
+    console.log('Productidssss',this.userDetails);
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    
     if(this.OpenCover?.name){
       if(this.OpenCover?.name == 'adminReferral'){
             this.productId = this.OpenCover?.productId;
@@ -157,6 +170,14 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.originatingCountry.setValue(transportDetails?.OriginCountryCode);
     this.onGetOriginCityDropdownList();
     this.quoteF.originatingCity.setValue(transportDetails?.OriginCityCode);
+    if(this.userDetails?.RegionCode=='03'){
+      this.quoteF.TranshipmentYN.setValue(transportDetails?.TranshipmentYn);
+      this.quoteF.StoragePeriodYn.setValue(transportDetails?.StoragePeriodYn);
+    }
+    else {
+      this.quoteF.TranshipmentYN.setValue('N');
+      this.quoteF.StoragePeriodYn.setValue('N');
+    }
     this.quoteF.originatingWarehouse.setValue(transportDetails?.OriginWarehouseYn);
     this.quoteF.destinationCountry.setValue(transportDetails?.DestinationCountryCode);
     this.onGetDestinaCityDropdownList();
@@ -192,7 +213,9 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.onGetIncotermsPrecentDropdownList();
     this.quoteF.incotermsPercentage.setValue(quoteDetails?.Percentage);
     this.quoteF.tolerance.setValue(quoteDetails?.Tolerance);
+    console.log('Vessel Namesss',vesselDetails?.VesselName);
     this.quoteF.conveyanceVesselName.setValue(vesselDetails?.VesselName);
+    this.quoteF.ManufactureYear.setValue(vesselDetails?.VesselYear);
     this.quoteF.voyageNumber.setValue(quoteDetails?.VoyageNo);
     this.quoteF.partialShipment.setValue(quoteDetails?.PartialShipmentCode == null?'N':quoteDetails?.PartialShipmentCode);
     if(quoteDetails?.ExposureOfShipment!=null && quoteDetails?.ExposureOfShipment!='' && quoteDetails?.ExposureOfShipment!=undefined && quoteDetails?.ExposureOfShipment!='0'){
@@ -248,6 +271,27 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     // document.all ? k = e.key:
      k = e.which;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57));
+}
+
+none(value){
+  console.log('values',this.values);
+  if(this.values=='others'){
+    this.newshow = false;
+    this.VesselNames =null;
+    this.ManufactureYear = null;
+  }
+  else if(this.values=='None'){
+    this.newshow = true;
+    this.VesselName=null;
+  }
+// this.values = value;
+// console.log('values',this.values);
+// if(value =='1'){
+// this.values= 'None';
+// }
+// else if(value == '2'){
+//   this.quoteF.conveyanceVesselName.setValue(this.VesselName)
+// }
 }
 
   CommaFormatted(tableData) {
@@ -401,6 +445,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     const reqData = {
       'pvType': 'orgCity',
       'OriginationCountryCode': this.quoteF.originatingCountry.value,
+      'BranchCode':this.userDetails?.BranchCode,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -436,12 +481,15 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     );
   }
 
+  // getCustomerId(){return this.quoteF.conveyanceVesselName.value}
+
   onGetDestinaCityDropdownList() {
     this.quoteF.destinationCity.setValue('');
     this.onGetSettlingAgenDropdownList();
     const urlLink = `${this.ApiUrl1}quote/dropdown/destinationcity`;
     const reqData = {
       'pvType': 'destCity',
+      'BranchCode':this.userDetails?.BranchCode,
       'DestinationCountryCode': this.quoteF.destinationCountry.value,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -496,6 +544,164 @@ export class QuoteFormComponent implements OnInit, OnChanges {
           this.dropPackageDescList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropPackageDescList, 'packageDesc');
 
+        }
+      },
+      (err) => { },
+    );
+  }
+
+
+  onGetVesselDropdownList() {
+    this.newshow = false;
+this.vesselSearchList=[];
+// let vseel:any[]=[];
+// vseel= this.VesselName
+// if(this.VesselName.length>=3){
+  console.log('Marinexx',(this.VesselName).length)
+  if((this.VesselName).length>=3){
+      const urlLink = `${this.ApiUrl1}quote/dropdown/vesselname`;
+      const reqData = {
+        'BranchCode':this.userDetails?.BranchCode,
+        'VesselName':this.VesselName
+      };
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+        (data: any) => {
+  
+          if (data?.Message === 'Success') {
+            this.vesselSearchList = data?.Result;
+            this.columnHeader=[
+              {
+                key: 'actions',
+                display: 'select',
+                config: {
+                  select: true,
+                }
+                },
+                { key: 'VesselId', display: 'Vessel Id' },
+                { key: 'VesselDescription', display: 'Vessel Name' },
+                { key: 'ManfctureYear', display: 'MFYYears' },
+            ]
+  
+          }
+          else{
+            this.vesselSearchList = [];
+          }
+        },
+        (err) => { },
+      );
+  }
+     
+    
+  
+  }
+
+  vessel(modal){
+    
+
+    if(this.VesselNames!=null && this.VesselNames!='' && this.VesselNames!=undefined){
+      this.values='None';
+    }
+    else{
+      this.values='others';
+      this.VesselNames=null;
+      this.ManufactureYear=null;
+    }
+    if(this.quoteF.conveyanceVesselName.value!=null && this.quoteF.conveyanceVesselName.value!=undefined){
+      this.VesselName=this.quoteF.conveyanceVesselName.value;
+    }
+    else{
+      this.VesselName='';
+      this.vesselSearchList=[];
+    }
+    if(this.values=='None'){
+      console.log(this.newshow)
+      this.newshow=true;
+      this.manshows=false;
+      this.vesselSearchList=[];
+      this.vesselid='';
+      this.manyr = '';
+    }
+    else if(this.values=='others'){
+      this.newshow=false;
+      this.manshow=false;
+      this.VesselNames='';
+    }
+   this.open(modal);
+   this.onGetVesselDropdownList();
+  }
+
+  onSelectCustomer(rowData,checked,modal){
+    console.log('NNNNNNNNNN',rowData,checked);
+    if(checked == undefined){
+      console.log('Vesss',rowData?.VesselDescription);
+      this.newVesselName=rowData?.VesselDescription;
+      this.vesselid=rowData?.VesselId;
+      this.manyr = rowData?.ManfctureYear;
+      // this.quoteF.VesselId.setValue(rowData?.VesselId);
+      // this.quoteF.ManfctureYear.setValue(rowData?.ManfctureYear);
+    }
+  }
+
+  submits(modal){
+   
+    if(this.values=='None'){
+      if(this.ManufactureYear!=null && this.VesselNames!=null){
+        this.manshow=false;
+        this.quoteF.ManfctureYear.setValue(this.ManufactureYear);
+        this.quoteF.conveyanceVesselName.setValue(this.VesselNames);
+        modal.dismiss('Cross click');
+      }
+      else{
+        this.manshow=true;
+      }
+    }
+    else if(this.values=='others'){
+     
+      if(this.newVesselName!=null && this.newVesselName!=''){
+        this.quoteF.conveyanceVesselName.setValue(this.newVesselName);
+        this.quoteF.VesselId.setValue(this.vesselid);
+      this.quoteF.ManfctureYear.setValue(this.manyr);
+        this.manshows=false;
+        modal.dismiss('Cross click');
+      }
+      else{
+        this.manshows=true;
+      }
+      
+    }
+  }
+
+  numberOnly(event): boolean {
+    return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+    // const charCode = (event.which) ? event.which : event.keyCode;
+    // if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    //   return false;
+    // }
+    // return true;
+  }
+
+  getCustomerAltList(modal){
+   
+    this.tableData = [];
+    let code = this.customerInfoComponent.brokercallcode;
+    console.log('GCOdesssss',code);
+    const urlLink = `${this.ApiUrl1}api/customer/information`;
+    if(this.productId=='3') this.openCoverNo = null;
+    const reqData = {
+      "BrokerCode": code,
+      'ApplicationId': this.applicationId,
+      'LoginId': this.loginId,
+      'OpenCoverNo': this.openCoverNo,
+    };
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+            if( this.productId == '3' ||  this.productId == '11'){
+              // this.editSection = false;
+              if(modal) this.open(modal)
+            } 
+          this.tableData = data?.Result;
         }
       },
       (err) => { },
@@ -651,4 +857,20 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.premiumCurrency.setValue(countryList?.Code);
   }
 
+  open(content) {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
 }

@@ -176,15 +176,39 @@ export class PremiumInfoComponent implements OnInit {
                 if(tableData!=0){
                   let entry=tableData.toString();
                   let splitValue= entry.split('.');
-                  console.log("Entry Came 1",tableData)
-                  let value = splitValue[0].replace(/\D/g, "")
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  console.log("Entry Came 1",tableData);
+    
+                  if(entry.charAt(0) === '-' || entry.charAt(0)=== '+' ){
+                    let value = splitValue[0]
                     if(splitValue.length>1){
+                      console.log('Areasss1',splitValue[1],value);
                       this.premiumF.warPremium.setValue(value+'.'+splitValue[1]);
                     }
                     else this.premiumF.warPremium.setValue(value)
                   }
                   else {
+                    let value = splitValue[0].replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if(splitValue.length>1){
+                          console.log('Areasss2S',splitValue[1],value);
+                          this.premiumF.warPremium.setValue(value+'.'+splitValue[1]);
+                        }
+                        else this.premiumF.warPremium.setValue(value)
+                  }
+                  // let entry=tableData.toString();
+                  // let splitValue= entry.split('.');
+                  // console.log("Entry Came 1",tableData)
+                  // let value = splitValue[0].replace(/\D/g, "")
+                  // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  //   if(splitValue.length>1){
+                  //     this.premiumF.warPremium.setValue(value+'.'+splitValue[1]);
+                  //   }
+                  //   else this.premiumF.warPremium.setValue(value)
+                  // }
+                  // else {
+                  //   this.premiumF.warPremium.setValue('');
+                  }
+                  else{
                     this.premiumF.warPremium.setValue('');
                   }
               }
@@ -228,14 +252,40 @@ export class PremiumInfoComponent implements OnInit {
               else if (tableData!=null && type == 'policyInsuAedPremium'){
                 if(tableData!=0){
                   let entry=tableData.toString();
-                  console.log("Entry Came 1",tableData)
-                let value = entry.replace(/\D/g, "")
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                  this.premiumF.policyInsuAedPremium.setValue(value);
-                }
-                else {
-                  this.premiumF.policyInsuAedPremium.setValue('');
-                }
+                  let splitValue= entry.split('.');
+                  console.log("Entry Came 1",tableData);
+    
+                  if(entry.charAt(0) === '-' || entry.charAt(0)=== '+' ){
+                    let value = splitValue[0]
+                    if(splitValue.length>1){
+                      console.log('Areasss1',splitValue[1],value);
+                      this.premiumF.policyInsuAedPremium.setValue(value+'.'+splitValue[1]);
+                    }
+                    else this.premiumF.policyInsuAedPremium.setValue(value)
+                  }
+                  else {
+                    let value = splitValue[0].replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if(splitValue.length>1){
+                          console.log('Areasss2S',splitValue[1],value);
+                          this.premiumF.policyInsuAedPremium.setValue(value+'.'+splitValue[1]);
+                        }
+                        else this.premiumF.policyInsuAedPremium.setValue(value)
+                  }
+                  }
+                  else{
+                    this.premiumF.policyInsuAedPremium.setValue('');
+                  }
+                // if(tableData!=0){
+                //   let entry=tableData.toString();
+                //   console.log("Entry Came 1",tableData)
+                // let value = entry.replace(/\D/g, "")
+                // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                //   this.premiumF.policyInsuAedPremium.setValue(value);
+                // }
+                // else {
+                //   this.premiumF.policyInsuAedPremium.setValue('');
+                // }
               }
   }
 

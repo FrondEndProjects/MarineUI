@@ -1195,6 +1195,9 @@ export class CommodityAppEditComponent implements OnInit {
         } 
       }
     }
+    else{
+      this.close();
+    }
     console.log("Final Selected Covers",this.selectedCoverList,this.finalSelectedCovers)
   }
   onSelectcover(rowData){
@@ -3673,6 +3676,8 @@ onFormSubmit(){
 
 
   onSubmit() {
+
+    console.log('JJJJJJJJJ')
     const selectedList: any[] = this.warrantyData.filter((ele: any) => ele.isChecked === true);
     const selectedClausesList: any[] = this.Clauses.filter((ele: any) => ele.isChecked === true);
     const selectedExclusionList: any[] = this.Exclusion.filter((ele: any) => ele.isChecked === true);

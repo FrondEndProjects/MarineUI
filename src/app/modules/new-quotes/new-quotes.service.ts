@@ -233,6 +233,8 @@ export class NewQuotesService {
       destinationWarehouse: ['NO'],
       policyStartDate: [null, Validators.required],
       warSrcc: ['NO'],
+      StoragePeriodYn:['N'],
+      TranshipmentYN:['N'],
       warOnLand: ['NO'],
       via: [''],
       settlingAgent: [null],
@@ -257,12 +259,20 @@ export class NewQuotesService {
       incotermsPercentage: [null, Validators.required],
       tolerance: ['4'],
       conveyanceVesselName: [''],
+      ManfctureYear: [null,[
+        Validators.maxLength(4),
+        Validators.required,  
+        // // Validators.min(-90),
+        // // Validators.max(90),
+        // Validators.pattern("^[0-9]*$")
+      ]],
       voyageNumber: [''],
       partialShipment: ['N'],
       exposureOfShipment: [null],
       currencyOfExposure: [null],
       fragileYN:['off'],
-      excessDescription:['']
+      excessDescription:[''],
+      VesselId:['']
 
     });
     this.bankForm = this._formBuilder.group({

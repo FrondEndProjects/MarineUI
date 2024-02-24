@@ -415,7 +415,7 @@ uploadDocuments: any[]=[];
             },
             {
               key: 'Views',
-              display: 'View Documnet',
+              display: 'View Document',
               config: {
                 isViews: true,
               }
@@ -611,7 +611,8 @@ uploadDocuments: any[]=[];
         {key: 'LoginId', display: 'Quote Created By'},
         {key: 'PolicyNo', display: 'PolicyNo'},
         {key: 'CustomerName', display: 'Customer Name'},
-       {key: 'Premium', display: 'Premium'},
+        {key: 'Premium', display: 'Premium'},
+        {key: 'QuoteNo', display: 'Quote No'},
         {
           key: 'View',
           display: 'ViewPdf',
@@ -621,7 +622,7 @@ uploadDocuments: any[]=[];
         },
         {
           key: 'Views',
-          display: 'View Documnet',
+          display: 'View Document',
           config: {
             isViews: true,
           }

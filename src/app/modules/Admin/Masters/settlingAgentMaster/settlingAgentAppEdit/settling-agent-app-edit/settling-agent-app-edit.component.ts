@@ -133,7 +133,8 @@ export class SettlingAgentAppEditComponent implements OnInit {
     this.c=this.settlingForm.controls['CountryId'].value
     let reqObj=
        {
-        "OriginationCountryCode":this.c
+        "OriginationCountryCode":this.c,
+        'BranchCode':this.userDetails?.BranchCode,
       }
       this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/originationcity`, reqObj).subscribe(
         (data: any) => {

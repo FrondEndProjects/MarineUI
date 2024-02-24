@@ -169,13 +169,42 @@
     
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">PVT YN</label>
+        <div *ngIf="userDetails?.RegionCode=='02'"><label class="input-form-label">PVT Cover</label> </div>
+        <div *ngIf="userDetails?.RegionCode!='02'"><label class="input-form-label">War Cover</label> </div>
         <div class="input-form-radio-box">
           <div class="radio-toolbar">
             <input id="warsrcc_Yes" type="radio" name="warSrcc" value="YES" formControlName="warSrcc">
             <label for="warsrcc_Yes" [ngClass]="warStatus =='N'?'disabled':'enabled'">Yes</label>
             <input type="radio" id="warsrcc_No" name="warSrcc" value="NO" formControlName="warSrcc">
             <label for="warsrcc_No" [ngClass]="warStatus =='N'?'disabled':'enabled'">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='03'">
+      <div class="input-control-container">
+        <label class="input-form-label">Transhipment</label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="Transhipment_Yes" type="radio" name="Transhipment" value="Y" formControlName="TranshipmentYN">
+            <label for="Transhipment_Yes">Yes</label>
+            <input type="radio" id="Transhipment_No" name="Transhipment" value="N" formControlName="TranshipmentYN">
+            <label for="Transhipment_No">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='03'">
+      <div class="input-control-container">
+        <label class="input-form-label">Storage Period (>60 days)</label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="StoragePeriod_Yes" type="radio" name="StoragePeriod" value="Y" formControlName="StoragePeriodYn">
+            <label for="StoragePeriod_Yes">Yes</label>
+            <input type="radio" id="StoragePeriod_No" name="StoragePeriod" value="N" formControlName="StoragePeriodYn">
+            <label for="StoragePeriod_No">No</label>
           </div>
         </div>
       </div>
@@ -277,9 +306,24 @@
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
           <label class="input-form-label">Conveyance | Vessel name</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="conveyanceVesselName">
+          <div class="currency-flex">
+            <div class="currrency-drop input-form-box">
+              <input type="text" class="input-form-control2 with-icon" [(ngModel)]="filterValue" formControlName="conveyanceVesselName" placeholder="Enter Vessel Name"
+               >
+            </div>
+            <div class="currrency-dollar">
+              <button class="btn btn-secondary" (click)="vessel(myModal2)" style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
+
+            </div>
+             <div class="input-form-box" style="margin-left:-20px!important;width:80px !important">
+                <input type="text" class="input-form-control2 with-icon" formControlName="ManfctureYear" placeholder="Year">
+                <!--(keyup)="numberOnly($event)"-->
+              </div>
           </div>
+         
+          <!-- <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="conveyanceVesselName">
+          </div> -->
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-4">
@@ -418,3 +462,76 @@
 
   </div>
 </form>
+
+<ng-template #myModal2 let-modal>
+  <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Vessel Search</h5>
+        <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+          <ng-container>
+            <div class="row">
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <label class="input-form-label">Vessel Name<span class="text-required">*</span></label>
+                  <input type="text" style="height: 40px !important;
+                  width: 100% !important;" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="VesselName" (keyup)="onGetVesselDropdownList()" placeholder="Enter Vessel Name">
+                  <div class="input-form-error" *ngIf="titleError">
+                    <div class="error-text">
+                      This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 col-lg-4">
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="values" (change)="none(value)">
+                  <mat-radio-button value="others">None</mat-radio-button>
+                  <mat-radio-button value="None">Others</mat-radio-button>
+                </mat-radio-group>
+                <div class="row">
+                  <div class="col-12 col-md-9">
+                    <div class="input-control-container mt-2" *ngIf="values=='None'">
+                      <input type="text" style="width:110% !important;" placeholder="Vessel Name" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="VesselNames">
+                    </div>
+                    <div *ngIf="manshow">
+                      <div style="color:red;font-size:14px !important;"> Please Fill Vessel Name</div>
+                             </div>
+                  </div>
+                 <div class="col-12 col-md-3">
+                  <div class="input-control-container mt-2" *ngIf="values=='None'">
+                    <input type="text" placeholder="Manufacture Year" class="input-form-control2 with-icon" maxlength="10" [(ngModel)]="ManufactureYear">
+                  </div>
+                
+                 </div>
+                 <div *ngIf="manshow">
+                  <div style="color:red;font-size:14px !important;"> Please Fill Manufacute Year</div>
+                         </div>
+                </div>
+                
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!newshow">
+              <ng-container *ngIf="vesselSearchList.length!=0">
+                <app-grid-table [cols]="columnHeader" [data]="vesselSearchList" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event,$event.checked,modal)">
+                </app-grid-table>
+              </ng-container>
+              <div *ngIf="manshows">
+       <div style="color:red;font-size:14px !important;"> Please Select One Vessel Name</div>
+              </div>
+
+              <!-- <ng-container *ngIf="vesselSearchList.length==0">
+                 No Records Found
+              </ng-container> -->
+            </div>
+          </ng-container>
+          
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="submits(modal)">Submit</button>
+      </div>
+  </div>
+</ng-template>

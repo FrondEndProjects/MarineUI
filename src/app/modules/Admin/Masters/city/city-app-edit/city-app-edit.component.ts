@@ -86,7 +86,8 @@ export class CityAppEditComponent implements OnInit {
     console.log(this.cityId, this.branchCode);
 
     let ReqObj = {
-      "CityId": this.cityId
+      "CityId": this.cityId,
+      "BranchCode":this.branchCode
     }
     console.log(ReqObj);
 
@@ -145,6 +146,7 @@ export class CityAppEditComponent implements OnInit {
       "Status": this.cityForm.controls['status'].value,
       "EffectiveDate":this.cityForm.controls['EffectiveDateStart'].value,
       "AmendId":'',
+      "BranchCode":this.branchCode
     }
     console.log(ReqObj);
 

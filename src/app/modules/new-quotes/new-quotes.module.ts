@@ -31,6 +31,8 @@ import { CustomAdapter } from '../../shared/date-formatt/custom-adapter';
 import { ClausesComponent } from './components/clauses/clauses.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { FilterPipe } from '../../shared/pipes/filter.pipe';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,7 @@ import { FilterPipe } from '../../shared/pipes/filter.pipe';
     EndorsementTypeComponent,
     EndorsementGridComponent,
     BrokerFormComponent,
-    ClausesComponent
+    ClausesComponent,
   ],
   imports: [
     CommonModule,
@@ -74,7 +76,8 @@ import { FilterPipe } from '../../shared/pipes/filter.pipe';
     DigitOnlyModule,
     BackBtnModule,
     NgbModule,
-    NgxMaskModule
+    NgxMaskModule,
+    MatRadioModule,
   ],
   bootstrap: [NewQuotesComponent],
   providers: [

@@ -106,6 +106,7 @@ tableData:any[]=[];
   minDate;
   Status:any;
   mode:any;
+  dropChannelLists:any[]=[];BrokerType:any;
 
   constructor(private router:Router,private masterSer: MastersService,private adminReferralService: AdminReferralService,  private loginService: LoginService,private datePipe:DatePipe,
     private toastrService: NbToastrService,) {
@@ -114,7 +115,11 @@ tableData:any[]=[];
       {"Code":"D","CodeDesc":"Delete"},
       {"Code":"T","CodeDesc":"Lock"},
   ];
-
+  this.droplist();
+  // this.dropChannelLists=[
+  //   {Code:'Broker',CodeDescription:'broker'},
+  //   {Code:'Cash',CodeDescription:'cash'},
+  // ]
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log(this.userDetails);
      //let minsDate=new Date().getTime();
@@ -223,6 +228,14 @@ else{
       //this.AttachedBranchs();
     });
   }
+
+  droplist(){
+    const urlLink = `${this.ApiUrl1}quote/dropdown/channeltype`;
+    this.masterSer.onGetMethodSync(urlLink).subscribe((data: any) => {
+      console.log(data);
+      this.dropChannelLists = data?.Result;
+    });
+  }
   onSave(RegionList,BranchList){
 let Agent:any; let CustomerId:any;
     if(this.AgencyCode){
@@ -283,7 +296,8 @@ let ReqObj={
     "TaxApplicable": this.TaxApplicable,
     "TelephoneNo": this.TelephoneNo,
     "Title": this.Title,
-    "ValidNcheck": ""
+    "ValidNcheck": "",
+    "BrokerTypeCode":this.BrokerType
   }
     let urlLink = `${this.ApiUrl1}admin/AdminNewBrokerInsert`;
 
@@ -628,7 +642,7 @@ this.AttachedBranch = this.AttachedBranch.filter(item => item);
 
            this.BrokerTaxDetails=res?.Result.BrokerTaxDetails;
            this.BrokerCommissionDetails=res?.Result.BrokerCommissionDetails;
-
+           this.BrokerType = this.IssuerDetails[0]?.BrokerTypeCode;
 
            this.PolicyFees=this.BrokerTaxDetails[0]?.PolicyFees;
            console.log('ppp',this.PolicyFeeStatus);
@@ -669,7 +683,7 @@ this.AttachedBranch = this.AttachedBranch.filter(item => item);
               this.Executives=this.IssuerDetails[0]?.AcExecutiveId;
               this.OneOffCommission=this.IssuerDetails[0]?.IssuerCommissionOneOff;
               this.OpenCoverCommission=this.IssuerDetails[0]?.IssuerCommissionOpenCover;
-
+                 
 
 
             

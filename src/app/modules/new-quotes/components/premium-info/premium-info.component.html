@@ -84,7 +84,12 @@
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <div>PVT Cover Option</div>
+                    <ng-container *ngIf="userDetails?.RegionCode == '02'">
+                      <div>PVT Cover Option</div>
+                      </ng-container>
+                      <ng-container *ngIf="userDetails?.RegionCode != '02'">
+                        <div>War Cover Option</div>
+                        </ng-container>
                     <div>{{premiumDetails?.QuoteDetails?.WarAndSrccYn}}</div>
                   </li>
                   <li class="list-group-item">
@@ -375,7 +380,12 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            PVT Premium
+                            <ng-container *ngIf="userDetails?.RegionCode == '02'">
+                              <div>  PVT Premium</div>
+                              </ng-container>
+                              <ng-container *ngIf="userDetails?.RegionCode != '02'">
+                                <div>  War Premium</div>
+                                </ng-container>
                           </div>
                           <div class="col-4 col-md-3">
                             <input type="text" class="form-control form-control-sm" formControlName="warRate">
@@ -550,7 +560,12 @@
           <tr>
             <th>Endorsement</th>
             <th>Marine Premium</th>
-            <th>PVT Premium</th>
+            <ng-container *ngIf="userDetails?.RegionCode == '02'">
+              <th>PVT Premium</th>
+              </ng-container>
+              <ng-container *ngIf="userDetails?.RegionCode != '02'">
+                <th>War Premium</th>
+                </ng-container>
             <th>Additional Premium</th>
             <th>PremiumLevy</th>
             <th>Total Premium</th>

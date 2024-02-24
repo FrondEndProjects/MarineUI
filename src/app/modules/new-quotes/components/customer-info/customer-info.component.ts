@@ -79,6 +79,7 @@ export class CustomerInfoComponent implements OnInit {
   QuoteStatus: string ="QE";
   broCode: any;quoteNo:any=null;
   brokercallcode: any;
+  opencoverno: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -107,6 +108,7 @@ export class CustomerInfoComponent implements OnInit {
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     console.log('Opecover Product Ids',this.OpenCover)
     if(this.OpenCover){
+      this.opencoverno =  this.OpenCover?.value;
       console.log('Open COvers Testinggsss')
       if(this.OpenCover?.name == 'adminReferral'){
             this.productId = this.OpenCover?.productId;
@@ -147,6 +149,8 @@ export class CustomerInfoComponent implements OnInit {
       this.quoteF.originatingWarehouse.setValue('NO');
       this.quoteF.destinationWarehouse.setValue('NO');
       this.quoteF.warSrcc.setValue('NO');
+      this.quoteF.TranshipmentYN.setValue('N');
+      this.quoteF.StoragePeriodYn.setValue('N');
       this.quoteF.warOnLand.setValue('NO');
       this.quoteF.insuredValue.setValue('0');
       this.quoteF.tolerance.setValue('4');
@@ -229,8 +233,8 @@ export class CustomerInfoComponent implements OnInit {
     this.onHeaderDetails();
     this.onendorsementSelected();
     if(this.userDetails.UserType =='Broker'){
-      this.brokerFormComponent.onChangeBroker;
-      this.customerFormComponent.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
+      this.brokerFormComponent?.onChangeBroker;
+      this.customerFormComponent?.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
       }
   }
 
@@ -289,10 +293,11 @@ export class CustomerInfoComponent implements OnInit {
           if(this.userDetails.UserType !='Broker'){
             this.brokerFormComponent?.onChangeBroker();
           }
-          this.customerFormComponent.brokerCode = this.editQuoteData?.BrokerCode;
+          
           //this.customerFormComponent.onGetCustomerList(this.broCode);
           this.customerF.title.setValue(customerDetails?.Title);
           this.customerF.name.setValue(customerDetails?.Name);
+          this.customerFormComponent.brokerCode = this.editQuoteData?.BrokerCode;
           this.customerF.coreAppcode.setValue(customerDetails?.CoreAppCode);
           this.customerF.city.setValue(customerDetails?.CityCode);
           this.customerF.poBox.setValue(customerDetails?.PoBox);
@@ -350,20 +355,6 @@ export class CustomerInfoComponent implements OnInit {
           }
 
         }
-      },
-      (err) => { },
-    );
-  }
-  onHeaderDetails(){
-    var urlLink:any = `${this.ApiUrl1}api/endorsement/headerdetails`;
-    const reqData = {
-      "Result":false,
-      "QuoteNo":this.endorsement?.QuoteNo
-    }
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log('header',data);
-        this.headerDetails = data?.Result;
       },
       (err) => { },
     );
@@ -528,24 +519,29 @@ export class CustomerInfoComponent implements OnInit {
           'OriginCountryName': this.getCodeDescription(this.dropOriginCountryList, this.quoteF.originatingCountry.value),
           'OriginWarehouseYn': this.quoteF.originatingWarehouse.value,
           'Via': this.quoteF.via.value,
+          "StoragePeriodYn": this.quoteF.StoragePeriodYn.value,
+          "TranshipmentYn":this.quoteF.TranshipmentYN.value
         },
         'VesselDetails': {
           'IHSLRORIMO': '',
           'ImoNumber': '',
           'NameString': '',
           'ShipsCategory': '',
-          'VesselCode': '',
+          'VesselCode':  this.quoteF.VesselId.value,
           'VesselDeclareYN': 'N',
-          'VesselName': '',
+          'VesselName': this.quoteF.conveyanceVesselName.value,
           'VesselSearchBy': '',
           'exNameString': '',
           'exshipsCategory': '',
           'ihslrorimo': '',
+          'VesselYear':this.quoteF.ManfctureYear.value
         },
         'VoyageNo':this.quoteF.voyageNumber.value,
         //'VoyageNo':"",
         'WarAndSrccYn': this.quoteF.warSrcc.value,
         'WarOnLandYn': this.quoteF.warOnLand.value,
+       
+
       },
       'ReferenceNo': this.referenceNo,
     };
@@ -580,6 +576,22 @@ export class CustomerInfoComponent implements OnInit {
   ngOnDestroy() {
     this.newQuotesService.quoteEditData.next(null)
   }
+
+  onHeaderDetails() {
+    var urlLink: any = `${this.ApiUrl1}api/opencover/headerdetails`;
+    const reqData = {
+      "Result": false,
+      "OpenCoverNo": this.OpenCover?.value
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        this.headerDetails = data?.Result;
+        console.log('Header Details',this.headerDetails);
+      },
+      (err) => { },
+    );
+  }
+
 
 
 }

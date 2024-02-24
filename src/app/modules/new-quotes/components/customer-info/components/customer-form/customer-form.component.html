@@ -51,57 +51,6 @@
         </div>
       </div>
     </div>
-
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">City<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" [items]="dropCityList" bindValue="Code" bindLabel="CodeDescription"
-          formControlName="city">
-        </ng-select>
-        <div class="input-form-error" *ngIf="(customerF.city.errors && submitted) || (!customerF.city.valid && customerF.city.touched)">
-          <div *ngIf="customerF.city.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">P.O Box<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="poBox">
-        </div>
-        <div class="input-form-error" *ngIf="(customerF.poBox.errors && submitted) || (!customerF.poBox.valid && customerF.poBox.touched)">
-          <div *ngIf="customerF.poBox.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Mobile Number</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="mobileNo">
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Email</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="email">
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Customer VAT <i>(Registration No)</i> </label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="customerVat">
-        </div>
-      </div>
-    </div>
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Address 1</label>
@@ -118,6 +67,60 @@
         </div>
       </div>
     </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">P.O Box<span class="text-required">*</span></label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="poBox">
+        </div>
+        <div class="input-form-error" *ngIf="(customerF.poBox.errors && submitted) || (!customerF.poBox.valid && customerF.poBox.touched)">
+          <div *ngIf="customerF.poBox.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">City<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select" [items]="dropCityList" bindValue="Code" bindLabel="CodeDescription"
+          formControlName="city">
+        </ng-select>
+        <div class="input-form-error" *ngIf="(customerF.city.errors && submitted) || (!customerF.city.valid && customerF.city.touched)">
+          <div *ngIf="customerF.city.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Mobile Number</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="mobileNo">
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Customer VAT <i>(Registration No)</i> </label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="customerVat">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Email</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="email">
+        </div>
+      </div>
+    </div>
+   
   </div>
 </form>
 
