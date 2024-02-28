@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
                     <ng-container *ngIf="tableData">
-                        <app-commodity-table [cols]="columnHeader" [data]="tableData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)" (onView)="onDownloadSchedule($event)"  (onViews)="openDialog(template,$event)">
+                        <app-commodity-table [cols]="columnHeader" [data]="tableData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)" (onView)="onDownloadSchedule($event)" (onMenu)="onmenu($event,$event.name,template)" (onViews)="openDialog(template,$event)">
                         </app-commodity-table>
                     </ng-container>
                     <!--<ng-container *ngIf="tableData">
@@ -116,7 +116,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
                     <ng-container *ngIf="PortData">
-                        <app-grid-table [cols]="QuoteHeader" [data]="PortData" (onView)="onDownloadSchedule($event)" (onViews)="openDialog(template,$event)">
+                        <app-grid-table [cols]="QuoteHeader" [data]="PortData" (onView)="onDownloadSchedule($event)" (onMenu)="onmenu($event,$event.name,template)" (onViews)="openDialog(template,$event)">
                         </app-grid-table>
                     </ng-container>
                     <!--<ng-container *ngIf="tableData">

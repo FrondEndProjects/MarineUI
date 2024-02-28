@@ -308,7 +308,7 @@
           <label class="input-form-label">Conveyance | Vessel name</label>
           <div class="currency-flex">
             <div class="currrency-drop input-form-box">
-              <input type="text" class="input-form-control2 with-icon" [(ngModel)]="filterValue" formControlName="conveyanceVesselName" placeholder="Enter Vessel Name"
+              <input type="text" class="input-form-control2 with-icon" disabled [ngModelOptions]="{standalone: true}" [(ngModel)]="vesselValue" placeholder="Enter Vessel Name"
                >
             </div>
             <div class="currrency-dollar">
@@ -316,7 +316,7 @@
 
             </div>
              <div class="input-form-box" style="margin-left:-20px!important;width:80px !important">
-                <input type="text" class="input-form-control2 with-icon" formControlName="ManfctureYear" placeholder="Year">
+                <input type="text" class="input-form-control2 with-icon" disabled [ngModelOptions]="{standalone: true}" [(ngModel)]="ManufactureYear" placeholder="Year">
                 <!--(keyup)="numberOnly($event)"-->
               </div>
           </div>
@@ -328,7 +328,7 @@
       </div>
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
-          <label class="input-form-label">Voyage number</label>
+          <label class="input-form-label">Container Number</label>
           <div class="input-form-box">
             <input type="text" class="input-form-control without-icon" formControlName="voyageNumber">
           </div>
@@ -472,7 +472,7 @@
       <div class="modal-body">
           <ng-container>
             <div class="row">
-              <div class="col-12 col-md-4 col-lg-4">
+              <div class="col-12 col-md-4 col-lg-4" *ngIf="values!='None'">
                 <div class="input-control-container">
                   <label class="input-form-label">Vessel Name<span class="text-required">*</span></label>
                   <input type="text" style="height: 40px !important;
@@ -485,40 +485,52 @@
                 </div>
               </div>
               <div class="col-12 col-md-4 col-lg-4">
-                <mat-radio-group aria-label="Select an option" [(ngModel)]="values" (change)="none(value)">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch3" [checked]="values=='None'" (change)="none($event.target.checked)">
+                  <label class="custom-control-label" for="switch3">&nbsp;Other</label>
+                </div>
+                <!-- <mat-radio-group aria-label="Select an option" [(ngModel)]="values" (change)="none(value)">
                   <mat-radio-button value="others">None</mat-radio-button>
                   <mat-radio-button value="None">Others</mat-radio-button>
-                </mat-radio-group>
-                <div class="row">
-                  <div class="col-12 col-md-9">
-                    <div class="input-control-container mt-2" *ngIf="values=='None'">
-                      <input type="text" style="width:110% !important;" placeholder="Vessel Name" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="VesselNames">
+                </mat-radio-group> -->
+                
+                 
+                
+              </div>
+            </div>
+            <div class="row" *ngIf="values=='None'">
+              <div class="col-md-5 col-xl-5 col-lg-5 col-12">
+                <div class="input-control-container mt-2" >
+                  <label class="input-form-label">Vessel Name</label>
+                    <div class="input-form-box">
+                    <input type="text" style="width:110% !important;" placeholder="Vessel Name" class="input-form-control without-icon" maxlength="100" [(ngModel)]="VesselNames">
                     </div>
                     <div *ngIf="manshow">
                       <div style="color:red;font-size:14px !important;"> Please Fill Vessel Name</div>
                              </div>
-                  </div>
-                 <div class="col-12 col-md-3">
-                  <div class="input-control-container mt-2" *ngIf="values=='None'">
-                    <input type="text" placeholder="Manufacture Year" class="input-form-control2 with-icon" maxlength="10" [(ngModel)]="ManufactureYear">
-                  </div>
-                
-                 </div>
-                 <div *ngIf="manshow">
-                  <div style="color:red;font-size:14px !important;"> Please Fill Manufacute Year</div>
-                         </div>
                 </div>
                 
               </div>
-            </div>
-
+             <div class="col-12 col-md-2 col-xl-2 col-lg-2">
+              <div class="input-control-container mt-2" *ngIf="values=='None'">
+                     <label class="input-form-label">Manufacture Year</label>
+                    <div class="input-form-box">
+                        <input type="text" placeholder="Manufacture Year" class="input-form-control without-icon" maxlength="10" [(ngModel)]="ManufactureYear">
+                    </div>
+                    <div *ngIf="manshow">
+                      <div style="color:red;font-size:14px !important;"> Please Fill Manufacute Year</div>
+                             </div>
+                    </div>
+              </div>
+            
+             </div>
             <div class="row" *ngIf="!newshow">
               <ng-container *ngIf="vesselSearchList.length!=0">
                 <app-grid-table [cols]="columnHeader" [data]="vesselSearchList" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event,$event.checked,modal)">
                 </app-grid-table>
               </ng-container>
               <div *ngIf="manshows">
-       <div style="color:red;font-size:14px !important;"> Please Select One Vessel Name</div>
+              <div style="color:red;font-size:14px !important;"> Please Select One Vessel Name</div>
               </div>
 
               <!-- <ng-container *ngIf="vesselSearchList.length==0">
@@ -531,6 +543,7 @@
       <div class="modal-footer">
         
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Close</button>
+        <button type="button" class="btn btn-warning" *ngIf="vesselSearchList.length!=0" (click)="clearSearch()">Clear</button>
         <button type="button" class="btn btn-primary" (click)="submits(modal)">Submit</button>
       </div>
   </div>

@@ -400,6 +400,40 @@ export class PolicyGenerateComponent implements OnInit {
 
     })
   }
+  onDownloadCredit(){
+    const urlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${this.policyNo}`;
+    this.newQuotesService.onGetMethodSync(urlLink).subscribe((data: any) => {
+      if(data?.Result){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result);
+        link.setAttribute('download', 'CreditNote');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+    })
+  }
+  onDownloadDebit(){
+    const urlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${this.policyNo}`;
+    this.newQuotesService.onGetMethodSync(urlLink).subscribe((data: any) => {
+      if(data?.Result){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result);
+        link.setAttribute('download', 'DebitNote');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+    })
+  }
   getBack(){
     this.policySection = false;this.draftSection=false;
     this.schedule=false;

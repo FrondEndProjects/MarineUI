@@ -242,22 +242,78 @@ uploadDocuments: any[]=[];
      
     }
   }
+  onmenu(row,rowData,template){
+    console.log('jjjjjjjjjjj',row)
+    console.log('kkkkkkkk',rowData)
+      if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
 
-  onDownloadSchedule(row:any){
+      if(rowData == 'Debit Note'){
+        this.getDebitPdf(row,rowData);
+      }
+      if(rowData=='Credit Note'){
+        this.getCreditPdf(row,rowData);
+      }
+  }
+  getSchedulePdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    ReqObj = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo": rowData.data?.QuoteNo
+    }
+    if(type=='Schedule'){
+      
+       UrlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    }
+    else if(type == 'Policy Wordings'){
+      type = 'PolicyWordings'
+       UrlLink = `${this.ApiUrl1}pdf/policywording`;
+    }
+      this.newQuotesService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
 
-    console.log('jjjjjjjj',row)
-    const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+  getCreditPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.newQuotesService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  getDebitPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.newQuotesService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  onDownloadSchedule(Results,rowData){
+
+    console.log('jjjjjjjj',Results)
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
     const reqData = {
       "BranchCode": this.userDetails?.BranchCode,
       "QuoteNo":row.QuoteNo
-    }
-    
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      if(data?.Result){
+    }*/
+      if(Results){
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
-        link.setAttribute('href', data?.Result);
-        link.setAttribute('download', row.QuoteNo);
+        link.setAttribute('href', Results);
+        link.setAttribute('download',rowData);
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -265,8 +321,32 @@ uploadDocuments: any[]=[];
       }
       
 
-    })
+   
   }
+  // onDownloadSchedule(row:any){
+
+  //   console.log('jjjjjjjj',row)
+  //   const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+  //   const reqData = {
+  //     "BranchCode": this.userDetails?.BranchCode,
+  //     "QuoteNo":row.QuoteNo
+  //   }
+    
+  //   this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+  //     if(data?.Result){
+  //       const link = document.createElement('a');
+  //       link.setAttribute('target', '_blank');
+  //       link.setAttribute('href', data?.Result);
+  //       link.setAttribute('download', row.QuoteNo);
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       link.remove();
+       
+  //     }
+      
+
+  //   })
+  // }
 
   onDragDocument(target:any,fileType:any,type:any){
     let fileList = target;
@@ -341,12 +421,18 @@ uploadDocuments: any[]=[];
                 //{key: 'PolicyNo', display: 'Policy No'},
                 //{key: 'CustomerName', display: 'Customer Name'},
                //{key: 'EffectiveDate', display: 'Effective Date'},
-                {
-                  key: 'View',
-                  display: 'View PDF',
-                  config: {
-                    isView: true,
-                  }
+               {
+                key: 'actions',
+                display: 'Action',
+                sticky: true,
+                config: {
+                  isMenuAction: true,
+                  menuList: [
+                    { name: 'Schedule' },
+                    { name: 'Debit Note' },
+                    { name: 'Credit Note' },
+                  ]
+                },
                 },
                 {
                   key: 'Views',
@@ -407,12 +493,18 @@ uploadDocuments: any[]=[];
             {key: 'LoginId', display: 'Quote Created By'},
             {key: 'QuoteNo', display: 'Quote No'},
             {
-              key: 'View',
-              display: 'View PDF',
+              key: 'actions',
+              display: 'Action',
+              sticky: true,
               config: {
-                isView: true,
-              }
-            },
+                isMenuAction: true,
+                menuList: [
+                  { name: 'Schedule' },
+                  { name: 'Debit Note' },
+                  { name: 'Credit Note' },
+                ]
+              },
+              },
             {
               key: 'Views',
               display: 'View Document',
@@ -462,12 +554,18 @@ uploadDocuments: any[]=[];
             //{key: 'PolicyNo', display: 'Policy No'},
             //{key: 'CustomerName', display: 'Customer Name'},
            //{key: 'EffectiveDate', display: 'Effective Date'},
-            {
-              key: 'View',
-              display: 'View PDF',
-              config: {
-                isView: true,
-              }
+           {
+            key: 'actions',
+            display: 'Action',
+            sticky: true,
+            config: {
+              isMenuAction: true,
+              menuList: [
+                { name: 'Schedule' },
+                { name: 'Debit Note' },
+                { name: 'Credit Note' },
+              ]
+            },
             },
             {
               key: 'Views',
@@ -557,12 +655,18 @@ uploadDocuments: any[]=[];
         {key: 'PolicyNo', display: 'PolicyNo'},
         {key: 'CustomerName', display: 'Customer Name'},
        {key: 'Premium', display: 'Premium'},
-        {
-          key: 'View',
-          display: 'ViewPdf',
-          config: {
-            isView: true,
-          }
+       {
+        key: 'actions',
+        display: 'Action',
+        sticky: true,
+        config: {
+          isMenuAction: true,
+          menuList: [
+            { name: 'Schedule' },
+            { name: 'Debit Note' },
+            { name: 'Credit Note' },
+          ]
+        },
         },
         {
           key: 'Views',
@@ -614,12 +718,18 @@ uploadDocuments: any[]=[];
         {key: 'Premium', display: 'Premium'},
         {key: 'QuoteNo', display: 'Quote No'},
         {
-          key: 'View',
-          display: 'ViewPdf',
+          key: 'actions',
+          display: 'Action',
+          sticky: true,
           config: {
-            isView: true,
-          }
-        },
+            isMenuAction: true,
+            menuList: [
+              { name: 'Schedule' },
+              { name: 'Debit Note' },
+              { name: 'Credit Note' },
+            ]
+          },
+          },
         {
           key: 'Views',
           display: 'View Document',
@@ -669,12 +779,18 @@ uploadDocuments: any[]=[];
         {key: 'PolicyNo', display: 'PolicyNo'},
         {key: 'CustomerName', display: 'Customer Name'},
        {key: 'Premium', display: 'Premium'},
-        {
-          key: 'View',
-          display: 'ViewPdf',
-          config: {
-            isView: true,
-          }
+       {
+        key: 'actions',
+        display: 'Action',
+        sticky: true,
+        config: {
+          isMenuAction: true,
+          menuList: [
+            { name: 'Schedule' },
+            { name: 'Debit Note' },
+            { name: 'Credit Note' },
+          ]
+        },
         },
         {
           key: 'Views',

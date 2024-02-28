@@ -27,7 +27,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public quoteForm!: FormGroup;
   public referenceNo: any;renderSection:boolean = false;
   public submitted: boolean;
-  public filterValue: any;
+  public filterValue: any;vesselValue:any=null;
   public dropTransportList: any[] = [];
   public dropCoverList: any[] = [];
   public dropCarriageList: any[] = [];
@@ -68,6 +68,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   newVesselName: any='';
   vesselid: any;
   manyr: any;
+  vesselId: any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -213,9 +214,15 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.onGetIncotermsPrecentDropdownList();
     this.quoteF.incotermsPercentage.setValue(quoteDetails?.Percentage);
     this.quoteF.tolerance.setValue(quoteDetails?.Tolerance);
-    console.log('Vessel Namesss',vesselDetails?.VesselName);
     this.quoteF.conveyanceVesselName.setValue(vesselDetails?.VesselName);
-    this.quoteF.ManufactureYear.setValue(vesselDetails?.VesselYear);
+    this.vesselValue = vesselDetails?.VesselName;
+    this.ManufactureYear = vesselDetails?.VesselYear;
+    this.vesselId = vesselDetails?.VesselCode;
+    this.quoteF.ManfctureYear.setValue(vesselDetails?.VesselYear);
+    if(this.vesselId=='9999'){
+      this.VesselNames=this.vesselValue;
+    }
+    else{this.VesselName=this.vesselValue}
     this.quoteF.voyageNumber.setValue(quoteDetails?.VoyageNo);
     this.quoteF.partialShipment.setValue(quoteDetails?.PartialShipmentCode == null?'N':quoteDetails?.PartialShipmentCode);
     if(quoteDetails?.ExposureOfShipment!=null && quoteDetails?.ExposureOfShipment!='' && quoteDetails?.ExposureOfShipment!=undefined && quoteDetails?.ExposureOfShipment!='0'){
@@ -273,8 +280,9 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57));
 }
 
-none(value){
-  console.log('values',this.values);
+none(event){
+  if(event) this.values='None';
+  else this.values = 'others'
   if(this.values=='others'){
     this.newshow = false;
     this.VesselNames =null;
@@ -550,15 +558,19 @@ none(value){
     );
   }
 
-
+  clearSearch(){
+    this.vesselSearchList = [];
+    this.VesselName =null;
+    this.values = 'others';
+  }
   onGetVesselDropdownList() {
     this.newshow = false;
 this.vesselSearchList=[];
 // let vseel:any[]=[];
 // vseel= this.VesselName
 // if(this.VesselName.length>=3){
-  console.log('Marinexx',(this.VesselName).length)
-  if((this.VesselName).length>=3){
+  if(this.VesselName){
+    if(String(this.VesselName).length>=3){
       const urlLink = `${this.ApiUrl1}quote/dropdown/vesselname`;
       const reqData = {
         'BranchCode':this.userDetails?.BranchCode,
@@ -589,10 +601,8 @@ this.vesselSearchList=[];
         },
         (err) => { },
       );
+    }
   }
-     
-    
-  
   }
 
   vessel(modal){
@@ -607,7 +617,10 @@ this.vesselSearchList=[];
       this.ManufactureYear=null;
     }
     if(this.quoteF.conveyanceVesselName.value!=null && this.quoteF.conveyanceVesselName.value!=undefined){
-      this.VesselName=this.quoteF.conveyanceVesselName.value;
+      let value = this.quoteF.conveyanceVesselName.value;
+      if(value!='Vessel as per Institute Classification Clause') this.VesselName=this.quoteF.conveyanceVesselName.value;
+      
+      this.vesselValue = this.quoteF.conveyanceVesselName.value;
     }
     else{
       this.VesselName='';
@@ -635,8 +648,10 @@ this.vesselSearchList=[];
     if(checked == undefined){
       console.log('Vesss',rowData?.VesselDescription);
       this.newVesselName=rowData?.VesselDescription;
+      this.vesselValue = this.newVesselName;
       this.vesselid=rowData?.VesselId;
       this.manyr = rowData?.ManfctureYear;
+      this.ManufactureYear = this.manyr;
       // this.quoteF.VesselId.setValue(rowData?.VesselId);
       // this.quoteF.ManfctureYear.setValue(rowData?.ManfctureYear);
     }
@@ -649,6 +664,7 @@ this.vesselSearchList=[];
         this.manshow=false;
         this.quoteF.ManfctureYear.setValue(this.ManufactureYear);
         this.quoteF.conveyanceVesselName.setValue(this.VesselNames);
+        this.vesselValue = this.VesselNames;
         modal.dismiss('Cross click');
       }
       else{
@@ -661,6 +677,7 @@ this.vesselSearchList=[];
         this.quoteF.conveyanceVesselName.setValue(this.newVesselName);
         this.quoteF.VesselId.setValue(this.vesselid);
       this.quoteF.ManfctureYear.setValue(this.manyr);
+      this.vesselValue = this.newVesselName;
         this.manshows=false;
         modal.dismiss('Cross click');
       }

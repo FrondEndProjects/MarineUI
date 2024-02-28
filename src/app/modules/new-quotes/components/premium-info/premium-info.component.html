@@ -467,7 +467,7 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            Premium Without VAT
+                            Premium Without Tax
                           </div>
                           <div class="col-4 col-md-3">
                           </div>
@@ -477,7 +477,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item">
+                      <li class="list-group-item" *ngIf="regionCode!='03'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                             VAT
@@ -492,7 +492,45 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item" *ngIf="regionCode =='02' && stampDutyYN=='Y'">
+                      <li class="list-group-item" *ngIf="regionCode =='03'">
+                        <div class="row">
+                          <div class="col-4 col-md-4">
+                          Training Levy
+                          </div>
+                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                            {{levyPercent}}
+                          </div>
+                          <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
+                            <!--smallpixel -->
+                            <span class="px-1" *ngIf="premiumLevy!='0.0' || premiumLevy!=0">
+                              {{premiumLevy}}
+                            </span>
+                            <span class="px-1" *ngIf="premiumLevy=='0.0' || premiumLevy==0">
+                               0
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item" *ngIf="regionCode =='03'">
+                        <div class="row">
+                          <div class="col-4 col-md-4">
+                          PolicyHolder Fee
+                          </div>
+                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                            {{policyHolderPercent}}
+                          </div>
+                          <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
+                            <!--smallpixel -->
+                            <span class="px-1" *ngIf="policyHolderPremium!='0.0' || policyHolderPremium!=0">
+                              {{policyHolderPremium}}
+                            </span>
+                            <span class="px-1" *ngIf="policyHolderPremium=='0.0' || policyHolderPremium==0">
+                               0
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item" *ngIf="(regionCode =='02' || regionCode=='03') && stampDutyYN=='Y'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                            Stamp Duty

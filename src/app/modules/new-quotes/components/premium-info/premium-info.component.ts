@@ -42,6 +42,8 @@ export class PremiumInfoComponent implements OnInit {
   stampDuty: any=null;regionCode:any=null;
   stampDutyYN: any='N';
   quoteNo: any;
+  policyHolderPercent: any;
+  policyHolderPremium: any;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -721,7 +723,8 @@ export class PremiumInfoComponent implements OnInit {
     const premiumDetail = this.premiumDetails?.PremiumDetails;
     this.premiumLevy = this.premiumDetails?.PremiumDetails?.PremiumLevy;
     this.levyPercent = this.premiumDetails?.PremiumDetails?.LevyPercent;
-   
+    this.policyHolderPercent =this.premiumDetails?.PremiumDetails?. PolicyholderFeePercent
+    this.policyHolderPremium =this.premiumDetails?.PremiumDetails?. PolicyholderFee
     if(this.premiumDetails?.PremiumDetails?.StampDuty!=0 || this.premiumDetails?.PremiumDetails?.StampDuty!='0.0'){
       this.stampDuty = this.premiumDetails?.PremiumDetails?.StampDuty;
     }
