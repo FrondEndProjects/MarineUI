@@ -578,11 +578,227 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-12 text-right">
-                            <button nbButton status="success" size="small" (click)="onPremiumCalculate()">Calculate</button>
+                            <button nbButton status="success" size="small" (click)="onPremiumCalculate()">Calculate</button>&nbsp;
+                            <button nbButton status="warning" size="small"  [nbPopover]="rateTab">View Rate Details</button>
                           </div>
                         </div>
                       </li>
                     </ul>
+                    <ng-template #rateTab>
+                      <ul class="list-group list-group-flush premium-inform" style="min-width: 400px;border: 1px solid lightgrey;">
+                        <li class="list-group-item">
+                          <div class="row">
+                            <div class="col-4 col-md-4">Description</div>
+                            <div class="col-4 col-md-3"></div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              Rate
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <ng-container *ngIf="regionCode!='03' && regionCode!='04'" >
+                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                            <div class="row">
+                              <div class="col-8 col-md-7">Commodity Rate</div>
+                              <div class="col-4 col-md-4 offset-lg-1">
+                                <ng-container *ngIf="rateDetails.CommodityFactorRate">
+                                  {{rateDetails?.CommodityRate}}
+                                </ng-container>
+                                <ng-container *ngIf="!rateDetails.CommodityFactorRate">0.0</ng-container>
+                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                              </div>
+                            </div>
+                          </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">SumInsured Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.SumInsuredRate">
+                                    {{rateDetails?.SumInsuredRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.SumInsuredRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Geo Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.GeoRate">
+                                    {{rateDetails?.GeoRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.GeoRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Conveyance Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.ConvRate">
+                                    {{rateDetails?.ConvRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.ConvRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Cover Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.CoverRate">
+                                    {{rateDetails?.CoverRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.CoverRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Package Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.PackageRate">
+                                    {{rateDetails?.PackageRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.PackageRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">InLand/Cross Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.InlandRate">
+                                    {{rateDetails?.InlandRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.InlandRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Marine Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.Rate">
+                                    {{rateDetails?.Rate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.Rate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">War Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.WarRate">
+                                    {{rateDetails?.WarRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.WarRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            
+                        </ng-container>
+                        <ng-container *ngIf="regionCode=='03' || regionCode=='04'" >
+                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                            <div class="row">
+                              <div class="col-8 col-md-7">Commodity Rate</div>
+                              <div class="col-4 col-md-4 offset-lg-1 text-end">
+                                <ng-container *ngIf="rateDetails.CommodityRate">
+                                  {{rateDetails?.CommodityFactorRate}}
+                                </ng-container>
+                                <ng-container *ngIf="!rateDetails.CommodityRate">0.0</ng-container>
+                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                              </div>
+                            </div>
+                          </li>
+                          <ng-container *ngIf="regionCode=='03'">
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Storage Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.StorageRate">
+                                    {{rateDetails?.StorageRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.StorageRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Transhipment Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.TranshipmentRate">
+                                    {{rateDetails?.TranshipmentRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.TranshipmentRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Warehouse Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.WarehouseRate">
+                                    {{rateDetails?.WarehouseRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.WarehouseRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                              <div class="row">
+                                <div class="col-8 col-md-7">Vessel Rate</div>
+                                <div class="col-4 col-md-4 offset-lg-1">
+                                  <ng-container *ngIf="rateDetails.VesselRate">
+                                    {{rateDetails?.VesselRate}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!rateDetails.VesselRate">0.0</ng-container>
+                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                                </div>
+                              </div>
+                            </li>
+                          </ng-container>
+                          
+                          
+                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                            <div class="row">
+                              <div class="col-8 col-md-7">Marine Rate</div>
+                              <div class="col-4 col-md-4 offset-lg-1">
+                                <ng-container *ngIf="rateDetails.Rate">
+                                  {{rateDetails?.Rate}}
+                                </ng-container>
+                                <ng-container *ngIf="!rateDetails.Rate">0.0</ng-container>
+                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                            <div class="row">
+                              <div class="col-8 col-md-7">War Rate</div>
+                              <div class="col-4 col-md-4 offset-lg-1">
+                                <ng-container *ngIf="rateDetails.WarRate">
+                                  {{rateDetails?.WarRate}}
+                                </ng-container>
+                                <ng-container *ngIf="!rateDetails.WarRate">0.0</ng-container>
+                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                              </div>
+                            </div>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </ng-template>
                   </nb-tab>
                 </nb-tabset>
             </ng-template>

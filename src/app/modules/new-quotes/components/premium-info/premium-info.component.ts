@@ -44,6 +44,7 @@ export class PremiumInfoComponent implements OnInit {
   quoteNo: any;
   policyHolderPercent: any;
   policyHolderPremium: any;
+  rateDetails: any=null;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -75,6 +76,7 @@ export class PremiumInfoComponent implements OnInit {
     this.onGetViewClausesInformation();
     this.onGetPremiumInformation();
     this.onChangeBetterQuote();
+    this.viewRateDetails();
     if( this.sessionStorageService.sessionStorgaeModel.referral =='Approved' || this.userDetails?.UserType == 'Broker'){
       for (var control in this.premiumForm.controls) {
         this.premiumForm.controls[control].disable();
@@ -124,7 +126,20 @@ export class PremiumInfoComponent implements OnInit {
     }
     
   }
-
+  viewRateDetails(){
+    const urlLink = `${this.ApiUrl1}master/commodity/rate/edit`;
+    const reqData = {
+      "ApplicationNo": this.ReferenceNo
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        if(data.Result){
+          if(data.Result.length!=0){
+            this.rateDetails = data.Result[0];
+          }
+        }
+      });
+  }
   CommaFormatted(tableData,type) {
     let i=0;
             if(tableData!=null && type == 'marinepremium'){
