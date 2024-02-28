@@ -655,6 +655,7 @@ uploadDocuments: any[]=[];
         {key: 'PolicyNo', display: 'PolicyNo'},
         {key: 'CustomerName', display: 'Customer Name'},
        {key: 'Premium', display: 'Premium'},
+       {key: 'PremiumCurrencyName', display: 'Currency'},
        {
         key: 'actions',
         display: 'Action',
@@ -715,8 +716,10 @@ uploadDocuments: any[]=[];
         {key: 'LoginId', display: 'Quote Created By'},
         {key: 'PolicyNo', display: 'PolicyNo'},
         {key: 'CustomerName', display: 'Customer Name'},
-        {key: 'Premium', display: 'Premium'},
         {key: 'QuoteNo', display: 'Quote No'},
+        {key: 'Premium', display: 'Premium'},
+        {key: 'PremiumCurrencyName', display: 'Currency'},
+        
         {
           key: 'actions',
           display: 'Action',
@@ -779,6 +782,7 @@ uploadDocuments: any[]=[];
         {key: 'PolicyNo', display: 'PolicyNo'},
         {key: 'CustomerName', display: 'Customer Name'},
        {key: 'Premium', display: 'Premium'},
+       {key: 'PremiumCurrencyName', display: 'Currency'},
        {
         key: 'actions',
         display: 'Action',
