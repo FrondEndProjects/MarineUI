@@ -51,11 +51,17 @@ export class BrokerFormComponent implements OnInit {
       {name:'Broker',id:'broker'},
       {name:'Cash',id:'cash'},
     ]
-
+    this.droplist();
     this.item=sessionStorage.getItem('Exist');
     
   }
-
+  droplist(){
+    const urlLink = `${this.ApiUrl1}quote/dropdown/channeltype`;
+    this.newQuotesService.onGetMethodSync(urlLink).subscribe((data: any) => {
+      console.log(data);
+      this.dropChannelList = data?.Result;
+    });
+  }
   ngOnInit(): void {
     if(this.brokerF.channel.value!=null && this.brokerF.channel.value!='null'){
       this.onChangeChannel('direct');

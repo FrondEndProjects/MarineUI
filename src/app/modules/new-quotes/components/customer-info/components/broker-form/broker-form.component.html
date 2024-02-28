@@ -8,7 +8,7 @@
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Channel<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" [items]="dropChannelList" bindValue="id" bindLabel="name"
+        <ng-select placeholder="Select" class="input-form-select" [items]="dropChannelList" bindValue="Code" bindLabel="CodeDescription"
           formControlName="channel" (change)="onChangeChannel('change')">
         </ng-select>
         <div class="input-form-error" *ngIf="(brokerF.channel.errors && submitted) || (!brokerF.channel.valid && brokerF.channel.touched)">
