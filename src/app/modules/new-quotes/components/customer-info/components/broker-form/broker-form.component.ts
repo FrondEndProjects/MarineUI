@@ -85,7 +85,8 @@ export class BrokerFormComponent implements OnInit {
       "ProductId":this.productId,
       "IncotermCode":"",
       "IncotermPercent":"",
-      "CoverCode":""
+      "CoverCode":"",
+      "ChannelType": this.brokerF.channel.value
     }
 
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
