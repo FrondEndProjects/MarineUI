@@ -111,6 +111,7 @@ export class ExistQuoteComponent implements OnInit {
             { key: 'QuotationDate', display: 'Quote Date' },
             { key: 'ValidityDate', display: 'Validity Date' },
             { key: 'Premium', display: 'Premium' },
+            { key: 'PremiumCurrencyName', display: 'Currency' },
             {
               key: "edit",
               display: "Edit",

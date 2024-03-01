@@ -78,6 +78,10 @@ export class EndorsementGridComponent implements OnInit {
             display: "Premium",
           },
           {
+            key: "PremiumCurrencyName",
+            display: "Currency",
+          },
+          {
             key: "PolicyNo",
             display: "Policy No",
           },

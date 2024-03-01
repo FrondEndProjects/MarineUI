@@ -134,6 +134,7 @@ export class CanceledPoliciesComponent implements OnInit {
             { key: 'CustomerName', display: 'Customer Name' },
             { key: 'QuotationDate', display: 'Policy Date' },
             { key: 'Premium', display: 'Premium' },
+            { key: 'PremiumCurrencyName', display: 'Currency' },
             { key: 'PolicyNo', display: 'Policy No' },
             { key: 'Username', display: 'Username' },
             { key: 'GoodsDescription', display: 'Goods' },
