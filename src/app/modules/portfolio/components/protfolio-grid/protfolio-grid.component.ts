@@ -387,10 +387,11 @@ export class ProtfolioGridComponent implements OnInit {
                 isMenuAction: true,
                 menuList: [
                   { name: 'Schedule' },
-                  { name: 'Policy Wordings' },
-                  { name: 'Documents' },
                   { name: 'Debit Note' },
                   { name: 'Credit Note' },
+                  { name: 'Policy Wordings' },
+                  { name: 'Documents' },
+                  
                 ]
               },
             },

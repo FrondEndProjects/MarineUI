@@ -178,7 +178,24 @@
                 <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
               </div>
               <div class="col-6"> 
-                <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
+                <ng-container *ngIf="element?.Status!='E'">
+                  <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" [disabled]="col.config.isActionBtnName | mydisabled :element" aria-label="Example icon-button with a menu">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <mat-menu #menus="matMenu">
+                    <ng-container *ngFor="let item of col.config.menuList">
+                    <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
+                      <span>{{item.name}}</span>
+                    </button>
+                    </ng-container>
+                  </mat-menu>
+                </ng-container>
+                <ng-container *ngIf="element?.Status=='E'">N/A</ng-container>
+              </div>
+            </div>
+            <div class="display2">
+              <ng-container *ngIf="element?.Status!='E'">
+                <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" [disabled]="col.config.isActionBtnName | mydisabled :element" aria-label="Example icon-button with a menu">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <mat-menu #menus="matMenu">
@@ -188,19 +205,8 @@
                   </button>
                   </ng-container>
                 </mat-menu>
-              </div>
-            </div>
-            <div class="display2">
-            <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
-            <mat-menu #menus="matMenu">
-              <ng-container *ngFor="let item of col.config.menuList">
-              <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
-                <span>{{item.name}}</span>
-              </button>
               </ng-container>
-            </mat-menu>
+              <ng-container *ngIf="element?.Status=='E'">N/A</ng-container>
             </div>
           </ng-container>
 

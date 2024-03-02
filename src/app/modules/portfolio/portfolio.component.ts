@@ -120,6 +120,8 @@ export class PortfolioComponent implements OnInit {
                 menuList: [
                   { name: 'View' },
                   { name: 'Schedule' },
+                  { name: 'Debit Note' },
+                  { name: 'Credit Note' },
                   { name: 'Policy Wordings' },
                   { name: 'Documents' },
                   { name: 'EndtSchedule' },
@@ -274,6 +276,12 @@ export class PortfolioComponent implements OnInit {
     if(rowData=='Schedule'){
       this.scheduled(row,rowData);
     }
+    else if(rowData == 'Debit Note'){
+      this.getDebitPdf(row,rowData);
+    }
+    else if(rowData=='Credit Note'){
+      this.getCreditPdf(row,rowData);
+    }
     else if(rowData=='Policy Wordings'){
       this.policyword(row,rowData)
     }
@@ -290,7 +298,32 @@ export class PortfolioComponent implements OnInit {
         this.views(row,rowData);
     }
   }
-
+  getCreditPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.sharedService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  getDebitPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.sharedService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
   onschedule(){
 
   }

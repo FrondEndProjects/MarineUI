@@ -22,7 +22,7 @@
         (click)="onNewEndorse()">New Endorsement</button>
     </div>
   </div>
-  <app-material-table [cols]="columnHeader" [data]="tableData" (isActionBtn)="isActionBtn($event)">
+  <app-material-table [cols]="columnHeader" [data]="tableData" (isActionBtn)="isActionBtn($event)" (onMenu)="onmenu($event,$event.name)" >
   </app-material-table>
   <div class="maan-card-footer">
     <app-back-btn></app-back-btn>

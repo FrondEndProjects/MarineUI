@@ -151,6 +151,8 @@ export class CanceledPoliciesComponent implements OnInit {
                 isMenuAction: true,
                 menuList: [
                   { name: 'Schedule' },
+                  { name: 'Credit Note' },
+                  { name: 'Debit Note' },
                   { name: 'Policy Wordings' },
                   { name: 'Cancelled Certificate' },
                 ]
@@ -170,13 +172,43 @@ export class CanceledPoliciesComponent implements OnInit {
     console.log('jjjjjjjjjjj',row)
     console.log('kkkkkkkk',rowData)
       if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
-
+      if(rowData == 'Debit Note'){
+        this.getDebitPdf(row,rowData);
+      }
+      if(rowData=='Credit Note'){
+        this.getCreditPdf(row,rowData);
+      }
       if(rowData=='Cancelled Certificate'){
         this.canceldocument(row.data);
       }
 
   }
-
+  getCreditPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  getDebitPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
   canceldocument(rowData){
     const data:any = {
       'PolicyNo':rowData.PolicyNo,

@@ -80,6 +80,7 @@ export class CustomerInfoComponent implements OnInit {
   broCode: any;quoteNo:any=null;
   brokercallcode: any;
   opencoverno: any;
+  editSection: boolean=false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -269,6 +270,7 @@ export class CustomerInfoComponent implements OnInit {
         console.log('editData', data);
         if (data?.Message === 'Success') {
           this.editQuoteData = data?.Result;
+          this.editSection = true;
           if(this.editQuoteData?.OpenCoverNo){
             const opencover = {
               'name':'adminReferral',
@@ -405,17 +407,31 @@ export class CustomerInfoComponent implements OnInit {
   }
   onSaveQuote() {
     this.submitted = true;
-    let issuerId:any = '';
+    let issuerId:any = '',loginId=null;
 
     // Broker
     if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
       this.brokerCode = this.userDetails.AgencyCode;
-      issuerId = '';
+      if(this.editSection) {
+        loginId = this.editQuoteData?.LoginId;
+        issuerId = '';
+      }
+      else {
+        loginId = this.loginId;
+        issuerId ='';
+      }
     }
     // Issuer
     if (this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User') {
       this.brokerCode = this.brokerF.borker.value;
-      issuerId = this.userDetails.LoginId;
+      if(this.editSection) {
+        loginId = this.editQuoteData?.LoginId;
+        issuerId = this.editQuoteData?.Issuer;
+      }
+      else {
+        loginId = this.loginId
+        issuerId = this.userDetails.LoginId;
+      }
 
     }
     let exposureValue = null;
@@ -455,7 +471,7 @@ export class CustomerInfoComponent implements OnInit {
         'LcNo': this.bankF.lcNumber.value,
         'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/") ,
       },
-      'LoginId': this.loginId,
+      'LoginId': loginId,
       'LoginUserType': this.userDetails.UserType,
       'OpenCoverNo': this.OpenCover?.value,
       'ProductId': this.productId,

@@ -88,6 +88,18 @@ export class ViewcancelpolicyComponent  implements OnInit{
                 isCheckDisabled: 'Status',
               },
             },
+            {
+              key: 'actions',
+              display: 'Action',
+              sticky: true,
+              config: {
+                isMenuAction: true,
+                menuList: [
+                  { name: 'Debit Note' },
+                  { name: 'Credit Note' },
+                ]
+              }
+            }
             // {
             //   key: "ReferralStatus",
             //   display: "Status",
@@ -137,7 +149,7 @@ export class ViewcancelpolicyComponent  implements OnInit{
       console.log('rrrrrrr',row)
       const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
       const reqData = {
-        "BranchCode":this.userDetails.BranchCode,
+        "BranchCode":this.userDetails.LoginResponse.BranchCode,
          "QuoteNo":row.QuoteNo
 
         //"PolicyNo":row.data.OriginalPolicyNo,
@@ -160,7 +172,70 @@ export class ViewcancelpolicyComponent  implements OnInit{
       );
     }
    }
+   onmenu(row,rowData){
+    console.log('jjjjjjjjjjj',row)
+    console.log('kkkkkkkk',rowData)
 
+    if(rowData=='Schedule'){
+      this.getSchedulePdf(row,rowData);
+    }
+    else if(rowData == 'Debit Note'){
+      this.getDebitPdf(row,rowData);
+    }
+    else if(rowData=='Credit Note'){
+      this.getCreditPdf(row,rowData);
+    }
+    
+  }
+  getSchedulePdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    ReqObj = {
+      "BranchCode":this.userDetails.LoginResponse.BranchCode,
+      "QuoteNo": rowData.data?.QuoteNo
+    }
+    if(type=='Schedule'){
+      
+       UrlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    }
+    else if(type == 'Policy Wordings'){
+      type = 'PolicyWordings'
+       UrlLink = `${this.ApiUrl1}pdf/policywording`;
+    }
+      this.portfolioBrokerService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  getCreditPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  getDebitPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  onschedule(){
+
+  }
 
    
   onDownloadSchedule(Results,rowData){
@@ -175,7 +250,8 @@ export class ViewcancelpolicyComponent  implements OnInit{
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', Results);
-        link.setAttribute('download',rowData.PolicyNo);
+        if(rowData.PolicyNo) link.setAttribute('download',rowData.PolicyNo);
+        else link.setAttribute('download',rowData);
         document.body.appendChild(link);
         link.click();
         link.remove();

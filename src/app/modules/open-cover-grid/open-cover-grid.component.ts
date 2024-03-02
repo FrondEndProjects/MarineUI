@@ -109,7 +109,38 @@ export class OpenCoverGridComponent implements OnInit {
     console.log('jjjjjjjjjjj',row)
     console.log('kkkkkkkk',rowData)
       if(rowData=='Schedule' || rowData=='PolicyWording')  this.getSchedulePdf(row,rowData);
-
+      if(rowData == 'Debit Note'){
+        this.getDebitPdf(row,rowData);
+      }
+      if(rowData=='Credit Note'){
+        this.getCreditPdf(row,rowData);
+      }
+  }
+  getCreditPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.sharedService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
+  }
+  getDebitPdf(rowData,type){
+    let ReqObj:any,UrlLink:any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+      this.sharedService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,type)
+        });
   }
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;
@@ -251,6 +282,12 @@ export class OpenCoverGridComponent implements OnInit {
     }
     console.log("Event",event)
     if(event.name=='Schedule' || event.name=='PolicyWording')  this.getSchedulePdf(event,event.name);
+    if(event.name == 'Debit Note'){
+      this.getDebitPdf(event,event.name);
+    }
+    if(event.name=='Credit Note'){
+      this.getCreditPdf(event,event.name);
+    }
   }
 
   onEdit(item: any) {
