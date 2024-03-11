@@ -186,7 +186,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
         //this.pG.policyFee.setValue(this.premiumInfo?.PolicyInsceptionFeePaid == "" || this.premiumInfo?.PolicyInsceptionFeePaid == null ? 0 :this.premiumInfo?.PolicyInsceptionFeePaid);
         //this.pG.vatTax.setValue(this.premiumInfo?.VatTaxAmount == " " || this.premiumInfo?.VatTaxAmount == null ? 0 :this.premiumInfo?.VatTaxAmount);
         let total:any =null;
-        if(this.regionCode=='02'){
+        if(this.regionCode=='100019'){
             total = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid) + Number(this.premiumInfo?.StampDuty) + Number(this.premiumInfo?.PremiumLevy) + Number(this.premiumInfo?.VatTaxAmount));
         }
         else total = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid)  + Number(this.premiumInfo?.VatTaxAmount));

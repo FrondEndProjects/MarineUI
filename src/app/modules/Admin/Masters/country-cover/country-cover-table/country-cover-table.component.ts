@@ -44,7 +44,7 @@ export class CountryCoverTableComponent implements OnInit {
   private masterSer: MastersService, 
   private router: Router ) {
    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-   if (this.userDetails) this.countryId = this.userDetails?.LoginResponse?.CountryId;
+   if (this.userDetails) this.countryId = this.userDetails?.LoginResponse?.OrginationCountryId;
    if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse?.BranchCode;
   }
 

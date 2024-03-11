@@ -45,6 +45,7 @@ export class PremiumInfoComponent implements OnInit {
   policyHolderPercent: any;
   policyHolderPremium: any;
   rateDetails: any=null;
+  rateShowSection: boolean=false;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -135,8 +136,10 @@ export class PremiumInfoComponent implements OnInit {
       (data: any) => {
         if(data.Result){
           if(data.Result.length!=0){
+            this.rateShowSection = true;
             this.rateDetails = data.Result[0];
           }
+          else this.rateShowSection = false;
         }
       });
   }

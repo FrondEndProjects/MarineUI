@@ -33,7 +33,7 @@ export class AdminReferralService {
   onCreateFormControl() {
     this.searchForm = this._formBuilder.group({
       productName: [null, Validators.required],
-      regions: ['01', Validators.required],
+      regions: ['100002', Validators.required],
       branch: [null, Validators.required]
     });
   }

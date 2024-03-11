@@ -84,10 +84,10 @@
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <ng-container *ngIf="userDetails?.RegionCode == '02'">
+                    <ng-container *ngIf="userDetails?.RegionCode == '100019'">
                       <div>PVT Cover Option</div>
                       </ng-container>
-                      <ng-container *ngIf="userDetails?.RegionCode != '02'">
+                      <ng-container *ngIf="userDetails?.RegionCode != '100019'">
                         <div>War Cover Option</div>
                         </ng-container>
                     <div>{{premiumDetails?.QuoteDetails?.WarAndSrccYn}}</div>
@@ -380,10 +380,10 @@
                       <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
-                            <ng-container *ngIf="userDetails?.RegionCode == '02'">
+                            <ng-container *ngIf="userDetails?.RegionCode == '100019'">
                               <div>  PVT Premium</div>
                               </ng-container>
-                              <ng-container *ngIf="userDetails?.RegionCode != '02'">
+                              <ng-container *ngIf="userDetails?.RegionCode != '100019'">
                                 <div>  War Premium</div>
                                 </ng-container>
                           </div>
@@ -441,7 +441,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item" *ngIf="regionCode =='02'">
+                      <li class="list-group-item" *ngIf="regionCode =='100019'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                           Premium Levy
@@ -477,7 +477,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item" *ngIf="regionCode!='03'">
+                      <li class="list-group-item" *ngIf="regionCode!='100020'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                             VAT
@@ -492,7 +492,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item" *ngIf="regionCode =='03'">
+                      <li class="list-group-item" *ngIf="regionCode =='100020'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                           Training Levy
@@ -511,7 +511,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item" *ngIf="regionCode =='03'">
+                      <li class="list-group-item" *ngIf="regionCode =='100020'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                           PolicyHolder Fee
@@ -530,7 +530,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item" *ngIf="(regionCode =='02' || regionCode=='03') && stampDutyYN=='Y'">
+                      <li class="list-group-item" *ngIf="(regionCode =='100019' || regionCode=='100020') && stampDutyYN=='Y'">
                         <div class="row">
                           <div class="col-4 col-md-4">
                            Stamp Duty
@@ -579,7 +579,7 @@
                         <div class="row">
                           <div class="col-12 text-right">
                             <button nbButton status="success" size="small" (click)="onPremiumCalculate()">Calculate</button>&nbsp;
-                            <button nbButton status="warning" size="small"  [nbPopover]="rateTab">View Rate Details</button>
+                            <button nbButton status="warning" size="small" *ngIf="rateShowSection"  [nbPopover]="rateTab">View Rate Details</button>
                           </div>
                         </div>
                       </li>
@@ -596,7 +596,7 @@
                             </div>
                           </div>
                         </li>
-                        <ng-container *ngIf="regionCode!='03' && regionCode!='04'" >
+                        <ng-container *ngIf="regionCode!='100020' && regionCode!='04'" >
                           <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
                             <div class="row">
                               <div class="col-8 col-md-7">Commodity Rate</div>
@@ -707,7 +707,7 @@
                             </li>
                             
                         </ng-container>
-                        <ng-container *ngIf="regionCode=='03' || regionCode=='04'" >
+                        <ng-container *ngIf="regionCode=='100020' || regionCode=='04'" >
                           <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
                             <div class="row">
                               <div class="col-8 col-md-7">Commodity Rate</div>
@@ -720,7 +720,7 @@
                               </div>
                             </div>
                           </li>
-                          <ng-container *ngIf="regionCode=='03'">
+                          <ng-container *ngIf="regionCode=='100020'">
                             <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
                               <div class="row">
                                 <div class="col-8 col-md-7">Storage Rate</div>
@@ -814,10 +814,10 @@
           <tr>
             <th>Endorsement</th>
             <th>Marine Premium</th>
-            <ng-container *ngIf="userDetails?.RegionCode == '02'">
+            <ng-container *ngIf="userDetails?.RegionCode == '100019'">
               <th>PVT Premium</th>
               </ng-container>
-              <ng-container *ngIf="userDetails?.RegionCode != '02'">
+              <ng-container *ngIf="userDetails?.RegionCode != '100019'">
                 <th>War Premium</th>
                 </ng-container>
             <th>Additional Premium</th>

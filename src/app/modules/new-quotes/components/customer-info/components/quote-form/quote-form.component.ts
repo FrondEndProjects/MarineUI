@@ -171,7 +171,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.originatingCountry.setValue(transportDetails?.OriginCountryCode);
     this.onGetOriginCityDropdownList();
     this.quoteF.originatingCity.setValue(transportDetails?.OriginCityCode);
-    if(this.userDetails?.RegionCode=='03'){
+    if(this.userDetails?.RegionCode=='100020'){
       this.quoteF.TranshipmentYN.setValue(transportDetails?.TranshipmentYn);
       this.quoteF.StoragePeriodYn.setValue(transportDetails?.StoragePeriodYn);
     }

@@ -637,7 +637,7 @@ uploadDocuments: any[]=[];
    {
     "BranchCode":this.branchValue,
     "EndDate": s,
-    "ProductId":"3",
+    "ProductId":"ALL",
     "StartDate":t
      }
 

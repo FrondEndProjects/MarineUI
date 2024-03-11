@@ -122,7 +122,7 @@ export class ExpiredComponent implements OnInit {
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '01',
+      'RegionCode': '100019',
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

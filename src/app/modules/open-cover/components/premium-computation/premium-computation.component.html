@@ -10,10 +10,10 @@
           <div class="premium-val">{{premiumDetails?.MarineRate}}</div>
         </div>
         <div class="col-12 col-md-3 col-lg-3">
-          <ng-container *ngIf="userDetails?.RegionCode == '02'">
+          <ng-container *ngIf="userDetails?.RegionCode == '100019'">
             <div class="premium-lable">PVT Rate</div>
             </ng-container>
-            <ng-container *ngIf="userDetails?.RegionCode != '02'">
+            <ng-container *ngIf="userDetails?.RegionCode != '100019'">
               <div class="premium-lable">War Rate</div>
               </ng-container>
           <div class="premium-val">{{premiumDetails?.WarRate}}</div>

@@ -131,8 +131,8 @@ export class LoginLayoutComponent implements OnInit {
       console.log(data);
       this.regionList = data?.Result || [];
       if(this.regionList.length!=0){
-        let entry = this.regionList.some(ele=>ele.RegionId=='02');
-        if(entry){this.loginForm.controls['region'].setValue('02')}
+        let entry = this.regionList.some(ele=>ele.RegionId=='100019');
+        if(entry){this.loginForm.controls['region'].setValue('100019')}
         else  this.loginForm.controls['region'].setValue(this.regionList[0]?.RegionId);
         this.onGetBranchList();
       }

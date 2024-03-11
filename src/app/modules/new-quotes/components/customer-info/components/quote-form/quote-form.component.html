@@ -169,8 +169,8 @@
     
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <div *ngIf="userDetails?.RegionCode=='02'"><label class="input-form-label">PVT Cover</label> </div>
-        <div *ngIf="userDetails?.RegionCode!='02'"><label class="input-form-label">War Cover</label> </div>
+        <div *ngIf="userDetails?.RegionCode=='100019'"><label class="input-form-label">PVT Cover</label> </div>
+        <div *ngIf="userDetails?.RegionCode!='100019'"><label class="input-form-label">War Cover</label> </div>
         <div class="input-form-radio-box">
           <div class="radio-toolbar">
             <input id="warsrcc_Yes" type="radio" name="warSrcc" value="YES" formControlName="warSrcc">
@@ -182,7 +182,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='03'">
+    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
       <div class="input-control-container">
         <label class="input-form-label">Transhipment</label>
         <div class="input-form-radio-box">
@@ -196,7 +196,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='03'">
+    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
       <div class="input-control-container">
         <label class="input-form-label">Storage Period (>60 days)</label>
         <div class="input-form-radio-box">
