@@ -17,6 +17,9 @@ export class CustomerRedirectComponent implements OnInit {
     public AppConfig: any = (Mydatas as any).default;
     public ApiUrl1: any = this.AppConfig.ApiUrl1;
     encryptedValue:any=null;loginId:any=null;insuranceId:any=null;
+  branchcode: any;
+  productId: any;
+  public routerBaseLink:any='';
     constructor(private _formBuilder: FormBuilder,
         private loginService: LoginService,
         private authService: AuthService,
@@ -47,6 +50,8 @@ export class CustomerRedirectComponent implements OnInit {
           sessionStorage.setItem('storageData',JSON.stringify(decryptedInfo));
           this.loginId = decryptedInfo?.Username;
           this.insuranceId = decryptedInfo?.insuranceId;
+          this.branchcode = decryptedInfo?.BranchCode;
+          this.productId= decryptedInfo?.ProductId;
           this.onLogin();
         }
         console.log('Cutomer Redirect',decryptedInfo);
@@ -61,7 +66,7 @@ export class CustomerRedirectComponent implements OnInit {
           Password: "",
           LoginType: 'Admin',
           RegionCode: "",
-          BranchCode: "",
+          BranchCode: this.branchcode,
           LoginFlag:'Y'
         };
     
@@ -81,9 +86,49 @@ export class CustomerRedirectComponent implements OnInit {
               this.sessionStorageService.set('Userdetails',data);
               sessionStorage.setItem('Userdetails', JSON.stringify(data));
               sessionStorage.setItem('UserToken', Token);
-              this.router.navigate(['/product-layout/product']);
+            
+               this.onSelectProduct();
+              //this.router.navigate(['/product-layout/product']);
             }
           }
         })
+      }
+
+      onSelectProduct() {
+        sessionStorage.removeItem('OpenCover');
+        sessionStorage.removeItem("endorsement");
+        sessionStorage.removeItem('quotesType');
+        sessionStorage.removeItem('ReferenceNo');
+        sessionStorage.removeItem('MissippiCode');
+        sessionStorage.removeItem('ProposalNo');
+        sessionStorage.removeItem('loginId');
+        sessionStorage.removeItem('WithCertifi');  
+        sessionStorage.removeItem('customerLoginId');
+        sessionStorage.removeItem('OpenCoverNo');
+        sessionStorage.setItem('quotesType', 'Without-Endo');
+      
+    
+        if (this.productId=== '53') {
+          sessionStorage.removeItem('ReferenceNo');
+          this.sessionStorageService.remove('referral');
+          sessionStorage.setItem('quotesType', 'Without-Endo');
+          //sessionStorage.removeItem('quotesType')
+          sessionStorage.removeItem("endorsement");
+          sessionStorage.removeItem("ReferenceNo");
+          sessionStorage.setItem('productId','3');
+          this.sessionStorageService.set('productId','3');
+          this.reloadCurrentRoute();
+        }
+        
+        else if (this.productId === '54') {
+          sessionStorage.setItem('productId','11');
+          this.sessionStorageService.set('productId','11');
+            this.router.navigate(['product-layout/opencover']);
+        }
+      }
+
+      reloadCurrentRoute() {
+        this.router.navigate([`/marine-opencover/new-quotes/customer-info`]);
+        //window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
       }
 }
