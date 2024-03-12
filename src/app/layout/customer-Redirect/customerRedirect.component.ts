@@ -108,7 +108,7 @@ export class CustomerRedirectComponent implements OnInit {
         sessionStorage.setItem('quotesType', 'Without-Endo');
       
     
-        if (this.productId=== '53') {
+        if (this.productId=== '3') {
           sessionStorage.removeItem('ReferenceNo');
           this.sessionStorageService.remove('referral');
           sessionStorage.setItem('quotesType', 'Without-Endo');
@@ -120,7 +120,7 @@ export class CustomerRedirectComponent implements OnInit {
           this.reloadCurrentRoute();
         }
         
-        else if (this.productId === '54') {
+        else if (this.productId === '11') {
           sessionStorage.setItem('productId','11');
           this.sessionStorageService.set('productId','11');
             this.router.navigate(['product-layout/opencover']);
