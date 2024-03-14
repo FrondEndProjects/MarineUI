@@ -47,6 +47,7 @@ export class ProtfolioGridComponent implements OnInit {
   uploadDocuments: any[]=[];
   quote: any;
   policy: any;
+  porttype: string;
 
 
   constructor(
@@ -64,6 +65,7 @@ export class ProtfolioGridComponent implements OnInit {
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.OpenCover = this.portfolioComponent?.OpenCover;
     console.log(this.OpenCover);
+    this.porttype= sessionStorage.getItem('openCOverType');
 
     if (this.userDetails?.UserType === 'Broker' || this.userDetails?.UserType === 'User') {
       this.loginId = this.userDetails.LoginId;
@@ -354,6 +356,48 @@ export class ProtfolioGridComponent implements OnInit {
         this.tableData = [];
 
         if (data?.Result) {
+        if(this.porttype == 'MOP'){
+          this.columnHeader = [
+
+            { key: 'QuoteNo', display: 'Quote No', sticky: false, },
+            { key: 'CustomerName', display: 'Customer Name' },
+            { key: 'QuotationDate', display: 'Policy Date' },
+            { key: 'Premium', display: 'Premium' },
+            { key: 'PremiumCurrencyName', display: 'Currency' },
+            { key: 'PolicyNo', display: 'Policy No' },
+            { key: 'Username', display: 'Username' },
+            { key: 'GoodsDescription', display: 'Goods' },
+            { key: 'LcDate', display: 'LC Date' },
+            { key: 'LcNumber', display: 'LC Number' },
+            { key: 'BlAwbNo', display: 'Bill No' },
+            { key: 'BlAwbDate', display: 'Bill Date' },
+            {
+              key: 'endorse',
+              display: 'Endorse',
+              sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: 'add',
+                isNgxIcon:'fas fa-plus-circle',
+                bg: 'primary'
+              }
+            },
+            {
+              key: 'actions',
+              display: 'Action',
+              sticky: true,
+              config: {
+                isMenuAction: true,
+                menuList: [
+                  { name: 'Schedule' },
+                  { name: 'Policy Wordings' },
+                  { name: 'Documents' },
+                ]
+              },
+            },
+          ];
+        }
+        else{
           this.columnHeader = [
 
             { key: 'QuoteNo', display: 'Quote No', sticky: false, },
@@ -391,11 +435,11 @@ export class ProtfolioGridComponent implements OnInit {
                   { name: 'Credit Note' },
                   { name: 'Policy Wordings' },
                   { name: 'Documents' },
-                  
                 ]
               },
             },
           ];
+        }
           this.tableData = data?.Result.map(x => ({
             ...x,
             isClicked: false

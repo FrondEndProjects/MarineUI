@@ -48,6 +48,7 @@ export class PolicyGenerateComponent implements OnInit {
   currencyName: any;
   bankName: any=null;
   quoteNo: any=null;
+  porttype: string;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder:FormBuilder,
@@ -64,6 +65,8 @@ export class PolicyGenerateComponent implements OnInit {
     this.OpenCover = this.newQuotesComponent.OpenCover;
     this.applicationId = this.newQuotesComponent.applicationId;
     this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
+    this.porttype= sessionStorage.getItem('openCOverType');
+    console.log('Tpes',this.porttype);
     console.log(this.QuoteStatus);
     this.ongetUploadedDocument();
   }

@@ -26,6 +26,7 @@ export class EndorsementGridComponent implements OnInit {
 
   public portfolio: any;
   public isButton: boolean = false;
+  porttype: string;
   constructor(
     private newQuotesService: NewQuotesService,
     //private sharedService: SharedService,
@@ -41,7 +42,8 @@ export class EndorsementGridComponent implements OnInit {
     this.applicationId= this.newQuotesComponent?.applicationId;
     this.portfolio = JSON.parse(sessionStorage.getItem("portfolio"));
     this.loginId = this.portfolio?.LoginId != undefined ? this.portfolio?.LoginId: this.loginId;
-    sessionStorage.removeItem('EndtReffStatus')
+    sessionStorage.removeItem('EndtReffStatus');
+    this.porttype= sessionStorage.getItem('openCOverType');
   }
 
   ngOnInit(): void {
@@ -59,77 +61,151 @@ export class EndorsementGridComponent implements OnInit {
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
-        this.columnHeader = [
-          {
-            key: "QuoteNo",
-            display: "Quote No",
-            sticky: false,
-          },
-          {
-            key: "CustomerName",
-            display: "Customer Name",
-          },
-          {
-            key: "QuotationDate",
-            display: "Quotation Date",
-          },
-          {
-            key: "Premium",
-            display: "Premium",
-          },
-          {
-            key: "PremiumCurrencyName",
-            display: "Currency",
-          },
-          {
-            key: "PolicyNo",
-            display: "Policy No",
-          },
-          {
-            key: "ReferralStatus",
-            display: "Status",
-          },
-          {
-            key: "edit",
-            display: "Edit",
-            sticky: true,
-            config: {
-              isActionBtn: true,
-              isActionBtnName: "Edit",
-              isNgxIcon: "fas fa-pen-alt",
-              bg: "primary",
-              isCheckDisabled: 'Status',
-
+        if(this.porttype == 'MOP'){
+          this.columnHeader = [
+            {
+              key: "QuoteNo",
+              display: "Quote No",
+              sticky: false,
             },
-          },
-          {
-            key: "schedule",
-            display: "Schedule",
-            sticky: true,
-            config: {
-              isActionBtn: true,
-              isActionBtnName: "Schedule",
-              isNgxIcon: "fas fa-calendar-alt",
-              bg: "primary",
-              isCheckDisabled: 'Status',
+            {
+              key: "CustomerName",
+              display: "Customer Name",
             },
-          },
-          {
-            key: "Action",
-            display: "Action",
-            sticky: true,
-            config: {
-              isMenuAction: true,
-              isActionBtnName: "Action",
-              menuList: [
-                { name: 'Schedule' },
-                { name: 'Debit Note' },
-                { name: 'Credit Note' },
-              ],
-              isCheckDisabled: 'Status',
+            {
+              key: "QuotationDate",
+              display: "Quotation Date",
             },
-          },
-        ];
+            {
+              key: "Premium",
+              display: "Premium",
+            },
+            {
+              key: "PremiumCurrencyName",
+              display: "Currency",
+            },
+            {
+              key: "PolicyNo",
+              display: "Policy No",
+            },
+            {
+              key: "ReferralStatus",
+              display: "Status",
+            },
+            {
+              key: "edit",
+              display: "Edit",
+              sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: "Edit",
+                isNgxIcon: "fas fa-pen-alt",
+                bg: "primary",
+                isCheckDisabled: 'Status',
+  
+              },
+            },
+            {
+              key: "schedule",
+              display: "Schedule",
+              sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: "Schedule",
+                isNgxIcon: "fas fa-calendar-alt",
+                bg: "primary",
+                isCheckDisabled: 'Status',
+              },
+            },
+            {
+              key: "Action",
+              display: "Action",
+              sticky: true,
+              config: {
+                isMenuAction: true,
+                isActionBtnName: "Action",
+                menuList: [
+                  { name: 'Schedule' },
+                ],
+                isCheckDisabled: 'Status',
+              },
+            },
+          ];
+        }
+        else{
+          this.columnHeader = [
+            {
+              key: "QuoteNo",
+              display: "Quote No",
+              sticky: false,
+            },
+            {
+              key: "CustomerName",
+              display: "Customer Name",
+            },
+            {
+              key: "QuotationDate",
+              display: "Quotation Date",
+            },
+            {
+              key: "Premium",
+              display: "Premium",
+            },
+            {
+              key: "PremiumCurrencyName",
+              display: "Currency",
+            },
+            {
+              key: "PolicyNo",
+              display: "Policy No",
+            },
+            {
+              key: "ReferralStatus",
+              display: "Status",
+            },
+            {
+              key: "edit",
+              display: "Edit",
+              sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: "Edit",
+                isNgxIcon: "fas fa-pen-alt",
+                bg: "primary",
+                isCheckDisabled: 'Status',
+  
+              },
+            },
+            {
+              key: "schedule",
+              display: "Schedule",
+              sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: "Schedule",
+                isNgxIcon: "fas fa-calendar-alt",
+                bg: "primary",
+                isCheckDisabled: 'Status',
+              },
+            },
+            {
+              key: "Action",
+              display: "Action",
+              sticky: true,
+              config: {
+                isMenuAction: true,
+                isActionBtnName: "Action",
+                menuList: [
+                  { name: 'Schedule' },
+                  { name: 'Debit Note' },
+                  { name: 'Credit Note' },
+                ],
+                isCheckDisabled: 'Status',
+              },
+            },
+          ];
+        }
+     
         this.tableData = data?.Result?.EndorsementDetails || [];
         if (this.tableData.length == 0) {
           this.isButton = false;
