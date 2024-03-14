@@ -12,7 +12,6 @@
           </div>
         </div>
     </ng-container>
-
         <div class="col-12 col-md-6 col-lg-6">
           <div class="input-control-container">
             <label class="input-form-label">Search</label>
@@ -28,14 +27,14 @@
       <nb-tab tabTitle="Marine Open Cover(MOC)">
         <ng-container *ngIf="openCoverMocData">
           <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMocData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
-            (onOpenCoverAction)="onOpenCoverActions($event)">
+            (onOpenCoverAction)="onOpenCoverActions($event,'MOC')">
           </app-grid-table>
         </ng-container>
       </nb-tab>
       <nb-tab tabTitle="Marine Open Cover(MOP)">
         <ng-container *ngIf="openCoverMopData">
           <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMopData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
-          (onOpenCoverAction)="onOpenCoverActions($event)">
+          (onOpenCoverAction)="onOpenCoverActions($event,'MOP')">
           </app-grid-table>
         </ng-container>
       </nb-tab>

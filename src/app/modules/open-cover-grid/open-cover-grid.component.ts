@@ -267,7 +267,7 @@ export class OpenCoverGridComponent implements OnInit {
     );
   }
 
-  onOpenCoverActions(event: any) {
+  onOpenCoverActions(event: any,type) {
     console.log('RRRRRRRRR',event)
     if (event.name === 'Certificate') {
         const data = {
@@ -278,9 +278,9 @@ export class OpenCoverGridComponent implements OnInit {
          sessionStorage.setItem('loginId', this.loginId);
          sessionStorage.setItem('quotesType', 'Without-Endo');
          sessionStorage.setItem('WithCertifi', 'true');
+         sessionStorage.setItem('openCOverType',type);
          this.router.navigate([`${this.routerBaseLink}/new-quotes`]);
     }
-    console.log("Event",event)
     if(event.name=='Schedule' || event.name=='PolicyWording')  this.getSchedulePdf(event,event.name);
     if(event.name == 'Debit Note'){
       this.getDebitPdf(event,event.name);
