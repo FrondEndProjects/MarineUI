@@ -637,17 +637,18 @@ return this.chargeOrRefund == check;
                     }
                     }
                     else if(tableData!=null && type=='BalanceAmount'){
-                      if(tableData!=0){
-                      let entry=tableData.toString();
-                      console.log("Entry Came 1",tableData)
-                    let value = entry.replace(/\D/g, "")
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    this.pF.BalanceAmount.setValue(value);
+                       this.pF.BalanceAmount.setValue(String(tableData));
+                    //   if(tableData!=0){
+                    //   let entry=tableData.toString();
+                    //   console.log("Entry Came 1",tableData)
+                    // let value = entry.replace(/\D/g, "")
+                    // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // this.pF.BalanceAmount.setValue(value);
 
-                      }
-                      else{
-                        this.pF.BalanceAmount.setValue('');
-                      }
+                    //   }
+                    //   else{
+                    //     this.pF.BalanceAmount.setValue('');
+                    //   }
                       }
                       else if(tableData!=null && type=='InsView'){
                         if(tableData!=0){

@@ -26,6 +26,9 @@
 <ng-container *ngIf="isWarType == 'Y'">
 <app-war></app-war>
 </ng-container>
+<ng-container *ngIf="EndorsementStatus == 'Y'">
+  <app-endorsement-admin></app-endorsement-admin>
+  </ng-container>
 <app-share-percentage></app-share-percentage>
 
 <div class="col-12" style="text-align:right">

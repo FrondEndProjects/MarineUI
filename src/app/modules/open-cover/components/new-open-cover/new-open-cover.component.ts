@@ -848,6 +848,7 @@ export class NewOpenCoverComponent implements OnInit {
       (data: any) => {
         if (data?.Result?.Status) {
           sessionStorage.setItem('ProposalNo', data?.Result?.ProposalNo);
+          sessionStorage.setItem('ReportNo',this.newQuoteF.openCoverType.value);
           this.router.navigate([`${this.routerBaseLink}/new-open-cover/country-commodity-info`]);
         }
         else{ this.newQuoteF.customer.disable();}

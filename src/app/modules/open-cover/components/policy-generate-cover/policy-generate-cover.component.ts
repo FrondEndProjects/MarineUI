@@ -62,10 +62,11 @@ export class PolicyGenerateCoverComponent implements OnInit {
       policyFee: [{value:0,disabled: true}, Validators.required],
       vatTax: [{value:'',disabled: true}, Validators.required],
       levyPremium: [{value:'',disabled: true}, Validators.required],
+      PolicyHolderFee: [{value:'',disabled: true}, Validators.required],
       totalPremium: [{value:'',disabled: true}, Validators.required],
       stampDuty: [{value:'',disabled: true}, Validators.required],
       remarks: ['', Validators.required],
-
+ 
 
       cancelClauses: ['', Validators.required],
       schedule: ['N', Validators.required],
@@ -168,6 +169,14 @@ export class PolicyGenerateCoverComponent implements OnInit {
       else{
         this.pG.levyPremium.setValue('0');
       }
+
+      if(this.premiumInfo?.PolicyholderFee!='' && this.premiumInfo?.PolicyholderFee!='0'){
+        let amount= parseInt(this.premiumInfo?.PolicyholderFee);
+          this.CommaFormattedUtilizedAmount(amount,'PolicyholderFee');
+      }
+      else{
+        this.pG.PolicyHolderFee.setValue('0');
+      }
       if(this.premiumInfo?.StampDuty!='' && this.premiumInfo?.StampDuty!='0'){
         let amount= parseInt(this.premiumInfo?.StampDuty);
           this.CommaFormattedUtilizedAmount(amount,'StampDuty');
@@ -188,6 +197,9 @@ export class PolicyGenerateCoverComponent implements OnInit {
         let total:any =null;
         if(this.regionCode=='100019'){
             total = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid) + Number(this.premiumInfo?.StampDuty) + Number(this.premiumInfo?.PremiumLevy) + Number(this.premiumInfo?.VatTaxAmount));
+        }
+        else if (this.regionCode=='100020'){
+          total = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid) + Number(this.premiumInfo?.StampDuty) + Number(this.premiumInfo?.PremiumLevy) + Number(this.premiumInfo?.PolicyholderFee));
         }
         else total = (Number(this.premiumInfo?.PayableMarinePremium) + Number(this.premiumInfo?.PolicyInsceptionFeePaid)  + Number(this.premiumInfo?.VatTaxAmount));
         if(total!='0'){
@@ -229,6 +241,18 @@ export class PolicyGenerateCoverComponent implements OnInit {
             let value = entry.replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             this.pG.policyFee.setValue(value);
+              }
+          } 
+        }
+        else if(tableData!=null && type=="PolicyholderFee"){
+          let entry = String(tableData);
+          console.log("Entry Came")
+          if(entry.length!=0){
+              if(entry!=null||entry!=undefined){
+              console.log("Entry Came 1",entry)
+            let value = entry.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.pG.PolicyHolderFee.setValue(value);
               }
           } 
         }
@@ -392,6 +416,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
       "VatTax": Number(this.pG.vatTax.value.toString().replace(/,/g, '')),
       "StampDuty": Number(this.pG.stampDuty.value.toString().replace(/,/g, '')),
       "PremiumLevy": Number(this.pG.levyPremium.value.toString().replace(/,/g, '')),
+      "PolicyholderFee": Number(this.pG.PolicyHolderFee.value.toString().replace(/,/g, '')),
       //this.pG.vatTax.value,
       "CancelClauses": this.pG.cancelClauses.value,
       "InstallType": this.pG.installment.value,

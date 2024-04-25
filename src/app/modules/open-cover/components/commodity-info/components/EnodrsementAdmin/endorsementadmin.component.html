@@ -1,0 +1,78 @@
+<div class="vision-grid">
+    <div class="vision-grid-item">
+      <div class="vision-grid-item-title">
+        Endorsement List
+      </div>
+      <div class="vision-grid-item-body">
+        <div class="row">
+          <!-- <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <div class="input-form-box">
+                <span class="input-form-icon">
+                  <i class="fas fa-search"></i>
+                </span>
+                <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="filterValue" placeholder="search...">
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="col-12 col-md-3 col-lg-3 offset-md-5 offset-lg-5" *ngIf="totalSelected!=null && totalSelected!=0">
+            <button nbButton disabled shape="round" size="small" status="secondary" class="mx-2">Customer Selected - {{totalSelected}}</button>
+          </div> -->
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-4 col-md-4" *ngFor="let table of tableData1">
+                <mat-checkbox class="example-margin" [checked]="checkSections(table?.EndtTypeId)" (change)="Checknew($event.checked,table?.EndtTypeId)"></mat-checkbox>
+                  {{table?.EndtType}}
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="!show">
+            <div class="customer-search-container">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span
+                            class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon"
+                           [(ngModel)]="Remarks" >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="show">
+          <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="show">
+            <div class="customer-search-container">
+                <div class="input-control-container">
+                    <label class="input-form-label">Cancel Remarks<span
+                            class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon"
+                           [(ngModel)]="CancelRemarks" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="show">
+          <div class="customer-search-container">
+              <div class="input-control-container">
+                  <label class="input-form-label">Cancel Date<span
+                          class="text-required">*</span></label>
+                    <div class="input-form-box">
+                      <mat-form-field appearance="fill">
+                          <input matInput [matDatepicker]="picker" [min]="min" [(ngModel)]="EffectiveDateStart">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                  </div>
+              </div>
+          </div>
+      </div>
+        </div>
+      
+        <!-- <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)">
+        </app-material-table> -->
+      </div>
+      <div style="text-align:right">
+        <button nbButton (click)="onFinalSub()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+      </div>
+    </div>
+  </div>

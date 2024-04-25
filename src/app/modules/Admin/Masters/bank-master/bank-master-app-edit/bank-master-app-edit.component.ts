@@ -66,8 +66,21 @@ export class BankMasterAppEditComponent implements OnInit {
     //     }
     //   }
     // )
-
-    this.countryList = [{Code : "1", CodeDescription : "SAUDI ARABIA", CodeValue : "0"}]
+      let ReqObj={
+          "BranchCode": this.branchCode
+      }
+      this.masterSer.onPostMethodSync(`${this.ApiUrl1}admin/getUserMgtDropDown`, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+    
+          if (data.Message == 'Success') {
+            this.countryList = data.Result.CountryDetails;
+          }
+        }
+      )
+    
+    
+    //this.countryList = [{Code : "1", CodeDescription : "SAUDI ARABIA", CodeValue : "0"}]
   }
 
 
@@ -141,11 +154,11 @@ export class BankMasterAppEditComponent implements OnInit {
     // Country Name Filter
     if (this.bankForm.controls['BelongingCountryId'].value) {
       var countryId = this.countryList.filter((val) => {
-        if (val.Code == this.bankForm.controls['BelongingCountryId'].value) {
+        if (val.CountryCode == this.bankForm.controls['BelongingCountryId'].value) {
           return val
         }
       })
-      console.log(countryId[0].Code);
+      console.log(countryId[0]?.CountryCode);
     } else {
       countryId = [""];
     }
@@ -154,7 +167,7 @@ export class BankMasterAppEditComponent implements OnInit {
     let effectiveDate = this.bankForm.controls['effectiveDate'].value ? moment(new Date(this.bankForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
 
     let ReqObj = {
-      "CountryName": countryId[0].CodeDescription,
+      "CountryName": countryId[0].CountryName,
       "BankId":this.bankId,
       "BankName": this.bankForm.controls['bankName'].value,
       "BelongingCountryId": this.bankForm.controls['BelongingCountryId'].value,

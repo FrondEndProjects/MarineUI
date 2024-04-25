@@ -102,6 +102,13 @@ export class PortfolioComponent implements OnInit {
                 isEdits: true,
               }
             },
+            {
+                    key: 'actions',
+                    display: 'Action',
+                    config: {
+                      isPolicyConfig: true,
+                    },
+            },
 
             /*{
               key: 'Edit',
@@ -110,25 +117,25 @@ export class PortfolioComponent implements OnInit {
                 isViewss: true,
               }
             },*/
-
-            {
-              key: 'actions',
-              display: 'Action',
-              sticky: true,
-              config: {
-                isMenuAction: true,
-                menuList: [
-                  { name: 'View' },
-                  { name: 'Schedule' },
-                  { name: 'Debit Note' },
-                  { name: 'Credit Note' },
-                  { name: 'Policy Wordings' },
-                  { name: 'Documents' },
-                  { name: 'EndtSchedule' },
-                  { name: 'DeActivate' },
-                ]
-              },
-            },
+          
+            // {
+            //   key: 'actions',
+            //   display: 'Action',
+            //   sticky: true,
+            //   config: {
+            //     isMenuAction: true,
+            //     menuList: [
+            //       { name: 'View' },
+            //       { name: 'Schedule' },
+            //       { name: 'Debit Note' },
+            //       { name: 'Credit Note' },
+            //       { name: 'Policy Wordings' },
+            //       { name: 'Documents' },
+            //       { name: 'EndtSchedule' },
+            //       { name: 'DeActivate' },
+            //     ]
+            //   },
+            // },
           ];
           this.tableData = data?.Result;
         }
@@ -304,10 +311,11 @@ export class PortfolioComponent implements OnInit {
     //   "BranchCode": this.userDetails?.BranchCode,
     //   "QuoteNo": rowData.data?.QuoteNo
     // }
-       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+       UrlLink = `${this.ApiUrl1}pdf/openCovercreditNote?policyNo=${rowData.data?.OpenCoverNo}`;
+       //pdf/creditNote?policyNo=${rowData.data?.OpenCoverNo};
       this.sharedService.onGetMethodSync(UrlLink).subscribe(
         (data: any) => {
-          let Results=data.Result
+          let Results=data.Result;
           this.onDownloadSchedule(Results,type)
         });
   }
@@ -317,7 +325,9 @@ export class PortfolioComponent implements OnInit {
     //   "BranchCode": this.userDetails?.BranchCode,
     //   "QuoteNo": rowData.data?.QuoteNo
     // }
-       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+    console.log('RRRRRR44444',rowData?.data?.OpenCoverNo)
+       UrlLink = `${this.ApiUrl1}pdf/openCoverdebitNote?policyNo=${rowData.data?.OpenCoverNo}`;
+       //pdf/debitNote?policyNo=${rowData.data?.OpenCoverNo}`;
       this.sharedService.onGetMethodSync(UrlLink).subscribe(
         (data: any) => {
           let Results=data.Result

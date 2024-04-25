@@ -57,7 +57,7 @@
             </div>
           </div>
         </div> -->
-        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100019'">
+        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100019' || regionCode=='100020'">
           <div class="input-control-container">
             <label class="input-form-label">Levy Premium<span class="text-required">*</span></label>
             <div class="input-form-box">
@@ -65,7 +65,15 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 col-lg-4">
+        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100020'">
+          <div class="input-control-container">
+            <label class="input-form-label">Policy Holder Fee<span class="text-required">*</span></label>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" formControlName="PolicyHolderFee">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode!='100020'">
           <div class="input-control-container">
             <label class="input-form-label">Vat Tax<span class="text-required">*</span></label>
             <div class="input-form-box">
@@ -73,7 +81,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100019'">
+        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100019' || regionCode=='100020'">
           <div class="input-control-container">
             <label class="input-form-label">Stamp Duty<span class="text-required">*</span></label>
             <div class="input-form-box">

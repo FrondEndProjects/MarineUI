@@ -26,6 +26,7 @@ export class CommodityInfoComponent implements OnInit {
   public isWarType: any;
 
   public routerBaseLink:any='';
+  EndorsementStatus: any;
   constructor(
     private openCoverService: OpenCoverService,
     private router: Router,
@@ -43,6 +44,7 @@ export class CommodityInfoComponent implements OnInit {
     this.onGetLandTrasitYesOrNo();
     this.onGetCoverTypeId();
     this.onGetCommodityList();
+    this.editapis();
   }
 
 
@@ -87,7 +89,21 @@ export class CommodityInfoComponent implements OnInit {
       (err) => { },
     );
   }
-
+  editapis(){
+    const urlLink = `${this.ApiUrl1}OpenCover/endorsement/edit`;
+    let ReqObj={
+      "ProposalNo": this.proposalNo,
+      "BranchCode": this.userDetails.BranchCode
+    }
+    this.openCoverService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log('Datas',data);
+        this.EndorsementStatus = data?.EndorsementStatus
+      },
+      (err) => { },
+    );
+  
+}
   onGetCommodityList() {
     const urlLink = `${this.ApiUrl1}OpenCover/commodity/edit/info`;
     const reqData = {

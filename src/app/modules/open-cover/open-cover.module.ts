@@ -32,6 +32,7 @@ import { SaleTermComponent } from './components/country-commodity-info/component
 import { CommodityClausesTableComponent } from './components/commodity-info/components/commodity-clauses-table/commodity-clauses-table.component';
 import { WarComponent } from './components/commodity-info/components/war/war.component';
 import { SharePercentageComponent } from './components/commodity-info/components/share-percentage/share-percentage.component';
+import { EndorsementComponent } from './components/commodity-info/components/EnodrsementAdmin/endorsementadmin.component';
 import { LandTrasitComponent } from './components/commodity-info/components/land-trasit/land-trasit.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -61,6 +62,7 @@ import { CustomAdapter } from '../../shared/date-formatt/custom-adapter';
    CommodityClausesTableComponent,
    WarComponent,
    SharePercentageComponent,
+   EndorsementComponent,
    LandTrasitComponent,
   ],
   imports: [

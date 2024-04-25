@@ -177,6 +177,34 @@
               </div>
             </ng-container>
 
+            <ng-container *ngIf="col.config.isPolicyConfig">
+              <div class="row">
+                    <div class="col-6">
+                          <button mat-button [matMenuTriggerFor]="menu">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <ng-container *ngIf="element.EndtStatus =='Y' && element.Status == 'Y'">
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'View'})">&nbsp;View</button>
+                              <!-- <button mat-menu-item (click)="onMenu.emit({data:element,name:'Schedule'})">&nbsp;Schedule</button>
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'Credit Note'})">&nbsp;Credit Note</button> -->
+                            </ng-container>
+                            <ng-container *ngIf="element.Status == 'P'">
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'View'})">&nbsp;View</button>
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'Schedule'})">&nbsp;Schedule</button>
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'Debit Note'})">&nbsp;Debit Note</button>
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'Credit Note'})">&nbsp;Credit Note</button>
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'Policy Wordings'})">&nbsp;Policy Wordings</button>
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'Documents'})">&nbsp;Documents</button>
+                              <button mat-menu-item *ngIf="element.EndtStatus =='Y' && element.Status == 'P'" (click)="onMenu.emit({data:element,name:'EndtSchedule'})">&nbsp;EndtSchedule</button>
+                              <button mat-menu-item (click)="onMenu.emit({data:element,name:'DeActivate'})">&nbsp;DeActivate</button>
+                            </ng-container>
+                          </mat-menu>
+                      </div>                    
+              </div>
+             
+          </ng-container>
+
 
           </ng-template>
         </td>

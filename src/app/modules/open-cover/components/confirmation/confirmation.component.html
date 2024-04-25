@@ -10,6 +10,20 @@
         </div>
 
         <div class="my-2">
+          <div class="row mt-2 mb-2"  *ngIf="opencoveryn=='Y'">
+            <div class="col-md-4 col-12 col-lg-4">
+              <button class="btn btn-primary" (click)="scheduled()"><span>Schedule</span></button>
+            </div>
+            <div class="col-md-4 col-12 col-lg-4" *ngIf="Mop">
+              <button class="btn btn-success" (click)="getDebitPdf()">Debit Note</button>
+            </div>
+            <div class="col-md-4 col-12 col-lg-4" *ngIf="Mop">
+              <button class="btn btn-warning" (click)="getCreditPdf()">Credit Note</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-2">
           <button nbButton  (click)="onMove()" shape="round" size="small" status="warning" class="mx-2">Go</button>
         </div>
     </div>

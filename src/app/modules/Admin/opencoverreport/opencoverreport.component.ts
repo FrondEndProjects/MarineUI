@@ -357,7 +357,7 @@ export class OpenCoverComponent implements OnInit {
          "StartDate":this.t,
         "BrokerLogin":this.log,
        "OpenCoverNo":this.opencov,
-        "ProductId":this.po,
+        "ProductId":this.productId,
          "Type": typelist
        }
        

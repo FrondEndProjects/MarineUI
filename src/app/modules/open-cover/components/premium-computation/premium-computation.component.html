@@ -58,7 +58,7 @@
         <!--[value]="pF.PremiumReceived.value|commaseparator"-->
         <tr>
           <td>Balance</td>
-          <td><input type="text" formControlName="BalanceAmount" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="BalanceAmount" [value]="pF.BalanceAmount.value | commaseparator" class="form-control form-control-sm" disabled></td>
           <!-- <td><input type="text" formControlName="PolicyFeeBalance" [value]="pF.PolicyFeeBalance.value | commaseparator" class="form-control form-control-sm" disabled></td>
           <td><input type="text" formControlName="InsceptionFeeBalance" [value]="pF.InsceptionFeeBalance.value | commaseparator" class="form-control form-control-sm" disabled></td> -->
           <td><input type="text" formControlName="ReceivedTotal" [value]="pF.ReceivedTotal.value | commaseparator" class="form-control form-control-sm" disabled></td>
@@ -89,10 +89,10 @@
         </tr>
         <tr>
           <td>Received/Refund</td>
-          <td><input type="text" formControlName="PayableMarinePremium" [value]="pF.PayableMarinePremium.value|commaseparator" class="form-control form-control-sm"></td>
+          <td><input type="text" formControlName="PayableMarinePremium" [value]="pF.PayableMarinePremium.value" class="form-control form-control-sm"></td>
           <!-- <td><input type="text" formControlName="PolicyFeePaid" [value]="pF.PolicyFeePaid.value|commaseparator" class="form-control form-control-sm"></td>
           <td><input type="text" formControlName="InspectionFeePaid" [value]="pF.InspectionFeePaid.value|commaseparator" class="form-control form-control-sm"></td> -->
-          <td><input type="text" formControlName="Total" [value]="pF.Total.value|commaseparator" class="form-control form-control-sm" disabled></td>
+          <td><input type="text" formControlName="Total" [value]="pF.Total.value" class="form-control form-control-sm" disabled></td>
         </tr>
 
       </tbody>
