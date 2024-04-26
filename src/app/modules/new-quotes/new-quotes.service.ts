@@ -363,6 +363,21 @@ export class NewQuotesService {
       .post<any>(UrlLink, ReqObj, { headers: headers })
       .pipe(shareReplay());
   }
+  onDocumentAltPostMethodSync(UrlLink: string, ReqObj: any): Observable<any[]> {
+    const formData: FormData = new FormData();
+    formData.append('files', ReqObj.url);
+    formData.append('filename', ReqObj.fileName);
+    formData.append('docType', ReqObj.docType);
+    formData.append('loginid',ReqObj?.loginid);
+    formData.append('productid',ReqObj?.productid);
+    formData.append('quoteno', ReqObj.quoteNo);
+    formData.append('remarks', ReqObj.remarks);
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    return this.http
+      .post<any>(UrlLink, formData, { headers: headers })
+      .pipe(catchError(this.handleError));
+  }
   onDocumentPostMethodSync(UrlLink: string, ReqObj: any): Observable<any[]> {
     const formData: FormData = new FormData();
     formData.append('files', ReqObj.url);

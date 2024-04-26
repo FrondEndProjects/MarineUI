@@ -41,7 +41,7 @@ export class PolicyGenerateComponent implements OnInit {
   uploadedDocumentsList:any[]=[];
   imageUrl: any;
   policyNo: any;
-  uploadId:any;
+  uploadId:any;docTypeList:any[]=[];
   policySection: boolean = false;
   draftSection: boolean = false;
   schedule:boolean=false;
@@ -68,7 +68,7 @@ export class PolicyGenerateComponent implements OnInit {
     this.porttype= sessionStorage.getItem('openCOverType');
     console.log('Tpes',this.porttype);
     console.log(this.QuoteStatus);
-    this.ongetUploadedDocument();
+    //this.ongetUploadedDocument();
   }
 
   ngOnInit(): void {
@@ -109,10 +109,64 @@ export class PolicyGenerateComponent implements OnInit {
         this.premiumDetails = data?.Result;
         this.quoteNo = this.premiumDetails?.QuoteDetails?.QuoteNo;
         this.bankName = this.premiumDetails?.LcBankDetails?.BankName;
-        this.ongetUploadedDocument();
+        this.getdocTypeList();
+        //this.ongetUploadedDocument();
       },
       (err) => { },
     );
+  }
+  getdocTypeList(){
+    const urlLink = `${this.ApiUrl1}quote/dropdown/getDocumentList`;
+    const reqData = {
+      "CompanyId": this.userDetails?.RegionCode,
+      "ProductId": this.productId,
+      "DocApplicable": "DOC_COMMODITY"
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+          if(data.Result){
+            if(data.Result.length!=0){
+              let i=0;
+              for(let doc of data.Result){
+                doc['DocAvailable'] = 'N';
+                i+=1;
+                if(i==data.Result.length){
+                  this.docTypeList = data.Result;
+                  this.ongetUploadedDocument();
+                }
+              }
+            }
+          } 
+    });
+  }
+  onUploadDocuments(event, item) {
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    var filename = event.target.files[0].name;
+    if(filename){
+      let typeList:any[] = filename.split('.');
+      if(typeList.length!=0){
+        let type = typeList[1];
+        item['FileType'] = type;
+      }
+    }
+    item['url'] = event.target.files[0];
+    console.log('Final Display',item);
+    reader.onload = (event) => {
+      let imageUrl: any;
+      imageUrl = event.target.result;
+      item['urlPath']= imageUrl;
+     
+        item['FileName'] = filename;
+        item['DocAvailable'] = 'P';
+
+    }
+  }
+  checkUploadButton(){
+    return this.docTypeList.some(ele=>ele.DocAvailable=='P');
+  }
+  onDeleteDoc(item){
+        item.url = null;
+        item.DocAvailable = 'N';
   }
   ongetUploadedDocument(){
     const urlLink = `${this.ApiUrl1}file/upload/list`;
@@ -125,6 +179,19 @@ export class PolicyGenerateComponent implements OnInit {
       console.log("Doc List",data);
       console.log('llllllllllllll',this.uploadedDocumentsList);
       this.uploadedDocumentsList=data.Result;
+      if(this.uploadedDocumentsList.length!=0){
+        for(let document of this.uploadedDocumentsList){
+              let entry = this.docTypeList.find(ele=>ele.Code==document.UploadType);
+              if(entry){
+                entry['DocAvailable'] = 'S';
+                entry['urlPath'] = null;
+                entry['FileName'] = document.OriginalFileName;
+                entry['url'] = null;
+                entry['FileType']= null;
+                entry['UploadId'] = document.UploadId;
+              }
+        }
+      }
     })
   }
   /*onDownloadfile(index:any){
@@ -155,30 +222,34 @@ export class PolicyGenerateComponent implements OnInit {
   }*/
 
 
-  onDownloadfile(i){
-    const urlLink = `${this.ApiUrl1}file/download`;
-    const reqData = {
-      /*"BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
-       "LoginId": this.userDetails?.LoginId,
-      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
-      "UploadId": this.uploadedDocumentsList[i].UploadId
-    }
-    
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      if(data?.Result){
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', data?.Result);
-        link.setAttribute('download', this.uploadedDocumentsList[i].OriginalFileName);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-       
+  onDownloadfile(item){
+    let entry = this.uploadedDocumentsList.find(ele=>ele.UploadId==item.UploadId);
+    if(entry){
+      const urlLink = `${this.ApiUrl1}file/download`;
+      const reqData = {
+        /*"BranchCode": this.userDetails?.BranchCode,
+        "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
+         "LoginId": this.userDetails?.LoginId,
+        "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
+        "UploadId": entry.UploadId
       }
       
-
-    })
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+        if(data?.Result){
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href', data?.Result);
+          link.setAttribute('download', entry.OriginalFileName);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+         
+        }
+        
+  
+      })
+    }
+    
   }
    onPolicyIntegrate() {
     const urlLink = `${this.ApiUrl1}quote/policy/integrate`;
@@ -212,7 +283,40 @@ export class PolicyGenerateComponent implements OnInit {
       }
     })
   }
-
+  onUploadSubmit(){
+    if(this.docTypeList.length!=0){
+      let i=0;
+        for(let doc of this.docTypeList){
+          if(doc.DocAvailable=='P'){
+            let ReqObj ={
+              "url": doc.url,
+              "docType": doc.Code,
+              "fileName":doc.FileName,
+              'productid':this.sessionStorageService.sessionStorgaeModel.productId,
+              'loginid':this.userDetails?.LoginId,
+              'quoteNo':this.premiumDetails?.QuoteDetails?.QuoteNo,
+              'remarks': doc.CodeDescription
+            }
+            const urlLink = `${this.ApiUrl1}file/upload`;
+            this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe((data: any) => {
+              console.log(data);
+              if (data) {
+                  i+=1;
+                  if(i==this.docTypeList.length){
+                        this.ongetUploadedDocument();
+                  }
+              }
+            });
+          }
+          else{
+            i+=1;
+            if(i==this.docTypeList.length){
+              this.ongetUploadedDocument();
+            }
+          }
+        }
+      }
+  }
   onSubmit() {
     if(this.uploadDocuments.length!=0){
       let i=0;
@@ -233,10 +337,6 @@ export class PolicyGenerateComponent implements OnInit {
           })
         }
     }
-    else{
-      this.onFinalProceed();
-    }
-    
   }
   onFinalProceed(){
     const urlLink = `${this.ApiUrl1}quote/policy/generate`;
@@ -273,7 +373,6 @@ export class PolicyGenerateComponent implements OnInit {
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
       if (data.Message == "Success") {
-        console.log('jjjjjjjjjj',this.generateCerti)
         if(this.generateCerti == 'Y'){
           this.onschedule();
         }
@@ -282,7 +381,6 @@ export class PolicyGenerateComponent implements OnInit {
         }
         else{
           this.draftSection = true;
-          //this.onNavigate();
         }
       }
     })
@@ -358,24 +456,27 @@ export class PolicyGenerateComponent implements OnInit {
     }
     
   }
-  onDeleteUploadedDoc(index){
-    const urlLink = `${this.ApiUrl1}file/delete`;
-    const reqData = {
-      /*"BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
-       "LoginId": this.userDetails?.LoginId,
-      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
-      "UploadId": this.uploadedDocumentsList[index].UploadId
-    }
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      if(data?.Result){
-       console.log('kkkkkkkkkk',this.uploadedDocumentsList);
-       this.ongetUploadedDocument();
+  onDeleteUploadedDoc(item){
+    let entry = this.uploadedDocumentsList.find(ele=>ele.UploadId==item.UploadId);
+    if(entry){
+      const urlLink = `${this.ApiUrl1}file/delete`;
+      const reqData = {
+        /*"BranchCode": this.userDetails?.BranchCode,
+        "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
+        "LoginId": this.userDetails?.LoginId,
+        "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
+        "UploadId": entry.UploadId
       }
-      
-    })
-    //this.uploadedDocumentsList.splice(index,1);
-    //this.onSubmit(); 
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+        if(data?.Result){
+        console.log('kkkkkkkkkk',this.uploadedDocumentsList);
+        this.ongetUploadedDocument();
+        }
+        
+      })
+      //this.uploadedDocumentsList.splice(index,1);
+      //this.onSubmit(); 
+    }
   }
   onDeleteUploadDoc(index){
     this.uploadDocuments.splice(index,1);

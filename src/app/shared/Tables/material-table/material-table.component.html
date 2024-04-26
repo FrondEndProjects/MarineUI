@@ -167,9 +167,22 @@
               </div>
             </div>
             <div class="display2">
-            <button nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
-              <i [class]="col.config.isNgxIcon"></i>
-            </button>
+            <ng-container *ngIf="col.config.isActionBtnName=='Print'">
+                <ng-container *ngIf="element.QuoteNo!=null && element.QuoteNo!=''">
+                    <button nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
+                      <i [class]="col.config.isNgxIcon"></i>
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="element.QuoteNo==null || element.QuoteNo==''">
+                        N/A
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="col.config.isActionBtnName!='Print'">
+                <button nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
+                  <i [class]="col.config.isNgxIcon"></i>
+                </button>
+            </ng-container>
+            
           </div>
           </ng-container>
           <ng-container *ngIf="col.config.isMenuAction">

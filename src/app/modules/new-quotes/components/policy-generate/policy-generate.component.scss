@@ -9,7 +9,13 @@
   }
 
 }
-
+.customImage{
+  max-height: 150px !important;
+}
+.customImageCard{
+  min-height: 150px !important;
+  max-height: 150px !important;
+}
 .policy-grid .vision-grid-item:nth-child(2) {
   background-color: #c1c1c14d;
 }

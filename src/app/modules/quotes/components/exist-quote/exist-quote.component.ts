@@ -124,6 +124,17 @@ export class ExistQuoteComponent implements OnInit {
               },
             },
             {
+              key: "print",
+              display: "Print",
+              // sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: "Print",
+                isNgxIcon: "fas fa-print",
+                bg: "success",
+              },
+            },
+            {
               key: "mail",
               display: "Mail",
               // sticky: true,
@@ -165,8 +176,43 @@ export class ExistQuoteComponent implements OnInit {
     if(event?.btName === 'Reject'){
       this.onReject(event);
     }
+    if(event?.btName === 'Print'){
+      this.onGetSchedule(event);
+    }
   }
-
+  onGetSchedule(rowData){
+    let ReqObj:any,UrlLink:any;
+    ReqObj = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo": rowData.QuoteNo,
+      "PrintQuoteYn": 'Y'
+    }
+      
+       UrlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+      this.quoteService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+        (data: any) => {
+          let Results=data.Result
+          this.onDownloadSchedule(Results,'Quotation')
+        });
+  }
+  onDownloadSchedule(Results,rowData){
+    console.log('jjjjjjjj',Results)
+   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+    const reqData = {
+      "BranchCode": this.userDetails?.BranchCode,
+      "QuoteNo":row.QuoteNo
+    }*/
+      if(Results){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download',rowData);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+  }
   onEdit(item: any) {
 
   
