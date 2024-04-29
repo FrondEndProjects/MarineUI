@@ -248,6 +248,8 @@ export class NewQuotesService {
       poPiNumber: [''],
       consignedTo: [''],
       consignedForm: [''],
+      UCRNumber: [''],
+
 
 
       commodity: [''],
@@ -288,6 +290,7 @@ export class NewQuotesService {
       poPiNumber: [''],
       consignedTo: [''],
       consignedForm: [''],
+      UCRNumber: [''],
     });
 
 

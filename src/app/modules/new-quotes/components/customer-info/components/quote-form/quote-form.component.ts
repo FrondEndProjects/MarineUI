@@ -201,6 +201,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.invoiceDate.setValue(this.newQuotesService.ngbDateFormatt(commodityDetails?.InvoiceDate));
     this.quoteF.consignedTo.setValue(commodityDetails?.ConsignedTo);
     this.quoteF.consignedForm.setValue(commodityDetails?.ConsignedFrom);
+    this.quoteF.UCRNumber.setValue(commodityDetails?.UCRNumber);
     this.quoteF.fragileYN.setValue(commodityDetails?.Fragile);
     this.quoteF.excessDescription.setValue(commodityDetails?.PolicyExcessDescription);
 

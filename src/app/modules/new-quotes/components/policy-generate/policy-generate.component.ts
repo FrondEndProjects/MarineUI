@@ -470,6 +470,7 @@ export class PolicyGenerateComponent implements OnInit {
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
         if(data?.Result){
         console.log('kkkkkkkkkk',this.uploadedDocumentsList);
+        this.getdocTypeList();
         this.ongetUploadedDocument();
         }
         

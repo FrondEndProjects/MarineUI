@@ -313,6 +313,7 @@ export class CustomerInfoComponent implements OnInit {
           this.bankF.invoiceDate.setValue(this.newQuotesService.ngbDateFormatt(commodityDetails?.InvoiceDate));
           this.bankF.consignedTo.setValue(commodityDetails?.ConsignedTo);
           this.bankF.consignedForm.setValue(commodityDetails?.ConsignedFrom);
+          this.bankF.UCRNumber.setValue(commodityDetails?.UCRNumber);
           this.bankF.poPiNumber.setValue(commodityDetails?.PoDescription);
           this.bankF.lCBank.setValue(lcBankDetails?.BankCode);
           this.bankF.lcNumber.setValue(lcBankDetails?.LcNo);
@@ -489,6 +490,7 @@ export class CustomerInfoComponent implements OnInit {
             'InvoiceNo': this.bankF.invoiceNumber.value,
             'PoDescription': this.bankF.poPiNumber.value,
             'PolicyExcessDescription': this.quoteF.excessDescription.value,
+            'UCRNumber':this.bankF.UCRNumber.value
           },
         ],
         'CurrencyCode': this.quoteF.currency.value,

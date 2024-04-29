@@ -35,7 +35,11 @@
                                           position: relative;">
                                                   <div class="center">
                                                       <b class="text-dark">
-                                    {{doc.CodeDescription}}<br>
+                                    {{doc.CodeDescription}}
+                                    <ng-container *ngIf="doc.CodeValue == 'Y'">
+                                      <span class="text-danger">*</span>
+                                    </ng-container>
+                                    <br>
                                     <i class="fa fa-plus-circle"></i>
                                   </b>
                                 </div>
@@ -54,7 +58,9 @@
                               background-size: cover;
                               height: 100px;
                               padding: 2px;">
-                                  <p class="text-center">{{doc.FileName}}</p>
+                                  <p class="text-center">{{doc.FileName}}
+                               
+                                  </p>
                               </div>
                               <div class="d-flex justify-content-center mt-1">
                                   <!-- <a mat-raised-button class="mx-1" *ngIf="doc.FileType!='pdf'"><i
