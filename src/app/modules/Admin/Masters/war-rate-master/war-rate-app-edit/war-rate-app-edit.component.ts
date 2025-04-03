@@ -51,7 +51,7 @@ export class WarRateAppEditComponent implements OnInit {
 
   getModeofTransportList() {
     let ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId' : '3',
       OpenCoverNo : '',
     }
@@ -136,7 +136,7 @@ export class WarRateAppEditComponent implements OnInit {
 
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.warRateForm.controls['coreApplicationCode'].value,
       "EffectiveDate": effectiveDate,
       "ModeOfTransportId": this.warRateForm.controls['ModeOfTransportId'].value,

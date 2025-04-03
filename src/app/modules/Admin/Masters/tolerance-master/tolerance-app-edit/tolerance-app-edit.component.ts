@@ -114,7 +114,7 @@ export class ToleranceAppEditComponent implements OnInit {
     // let effectiveDate = this.toleranceForm.controls['effectiveDate'].value ? moment(new Date(this.toleranceForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails.Result?.BelongingBranch,
       "CoreApplicationCode": this.toleranceForm.controls['coreApplicationCode'].value,
       "Remarks": this.toleranceForm.controls['remarks'].value,
       "Status": this.toleranceForm.controls['status'].value,

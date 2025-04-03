@@ -59,7 +59,7 @@ export class CountryCommodityInfoComponent implements OnInit {
   onGetCommodityList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/commodity`;
     const reqData = {
-      'BranchCode': this.userDetails.BranchCode,
+      'BranchCode': this.userDetails.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -105,7 +105,7 @@ export class CountryCommodityInfoComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/saleterm`;
     const urlLink1 = `${this.ApiUrl1}opencover/dropdown/tolerance`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
     };
 
     let SaleTermList = this.openCoverService.onPostMethodSync(urlLink, reqData);

@@ -367,7 +367,8 @@ export class PolicyGenerateComponent implements OnInit {
       "RubberStamp": "N",
       "SettlingAgent": this.premiumDetails?.SettlingAgentName,
       "ShowPremiumYn": "N",
-      "TotalPremium": ""
+      "TotalPremium": "",
+      "LoginId":this.userDetails?.LoginId
     }
     console.log(this.bankerAssured,this.foreignCurrency,this.premium,this.excess,reqData);
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {

@@ -42,7 +42,7 @@ export class CommoditySelectionComponent implements OnInit {
   onEdit() {
     const urlLink = `${this.ApiUrl1}OpenCover/commodity/edit`;
     const reqData = {
-      'BranchCode': this.userDetails.BranchCode,
+      'BranchCode': this.userDetails.BelongingBranch,
       'ProposalNo': this.proposalNo,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(

@@ -52,7 +52,7 @@ export class CountryAddEditComponent implements OnInit {
 
   getCountryList() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails.BelongingBranch,
       "ProductId": "3"
 
     }
@@ -167,8 +167,7 @@ export class CountryAddEditComponent implements OnInit {
       "NationalityName": this.countryForm.controls['nationalityName'].value,
       "Remarks": this.countryForm.controls['remarks'].value,
       "Status": this.countryForm.controls['status'].value,
-      "BranchCode": this.branchCode
-    }
+      "BranchCode": this.Userdetails?.Result.BelongingBranch    }
     console.log(ReqObj);
 
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/country/save`, ReqObj).subscribe(

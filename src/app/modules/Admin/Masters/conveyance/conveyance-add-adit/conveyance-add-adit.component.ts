@@ -69,9 +69,9 @@ export class ConveyanceAddAditComponent implements OnInit {
    // get transport list
    public getModeOFtransportList() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId' : '3',
-      OpenCoverNo : '',
+      'OpenCoverNo' : '',
     };
 
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/modeoftransport`, ReqObj).subscribe(
@@ -143,7 +143,7 @@ export class ConveyanceAddAditComponent implements OnInit {
      let effectiveDate = this.conveyanceForm.controls['effectiveDate'].value ? moment(new Date(this.conveyanceForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
       console.log('EEEEEEEEEE',effectiveDate);
      let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "ConveyanId": this.conveyanceId,
       "ConveyanName": this.conveyanceForm.controls['conveyanceName'].value,
       "ConveyanRate": this.conveyanceForm.controls['conveyanceRate'].value,

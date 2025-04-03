@@ -107,7 +107,7 @@ ngOnInit(): void {
 
 getExistingConveyance() {
   const ReqObj = {
-    'BranchCode': this.branchCode,
+    'BranchCode': this.userDetails?.Result.BelongingBranch,
   };
   this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/warsrcc/list`, ReqObj).subscribe(
     (data: any) => {

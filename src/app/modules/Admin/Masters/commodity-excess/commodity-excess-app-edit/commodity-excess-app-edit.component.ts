@@ -152,7 +152,7 @@ this.getCoverName();
     let effectiveDate = this.exchangeForm.controls['effectiveDate'].value ? moment(new Date(this.exchangeForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "Deductible": this.exchangeForm.controls['deductible'].value,
       "EffectiveDate": effectiveDate,
       "EndSuminsured": this.exchangeForm.controls['endingAmount'].value,

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { LocationStrategy } from '@angular/common';
-import { tinymce } from '../../../../typings.d';
+// import { tinymce } from '../../../../typings.d';
 
 @Component({
   selector: 'ngx-tiny-mce',

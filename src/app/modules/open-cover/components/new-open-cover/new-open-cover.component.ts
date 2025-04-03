@@ -252,7 +252,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetBusinessTypeDropdownList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/businesstype`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -267,7 +267,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetOpenCoverTypeDropdownList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/productdetails`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -297,7 +297,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetExcutiveDropdownList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/excutivedetails`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -313,7 +313,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetCurrencyDropdownList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/currency`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
       'CountryId': this.userDetails?.CountryId,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -330,7 +330,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetDeclarationDropdownList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/declarationtype`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
       'CountryId': this.userDetails?.CountryId,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -468,7 +468,7 @@ export class NewOpenCoverComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}quote/dropdown/title`;
 
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
       'pvType': 'title',
       'ProductId': this.productId,
     };
@@ -486,7 +486,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetCityDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'pvType': 'city',
       'OpenCoverNo': this.OpenCover?.value,
@@ -688,8 +688,7 @@ export class NewOpenCoverComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data?.Message === 'Success') {
-          this.columnHeader = [
-            {
+          this.columnHeader = [{
               key: 'CustomerId',
               display: 'Customer Id',
               config: {
@@ -865,7 +864,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetPremiumDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/premiumcurrency`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

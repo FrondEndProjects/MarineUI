@@ -88,7 +88,7 @@ export class TransportAppEditComponent implements OnInit {
 
   onSave() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "AmendId":'',
       "CoreApplicationCode": this.transportForm.controls['coreApplicationCode'].value,
       "DisplayOrder": this.transportForm.controls['displayorder'].value,

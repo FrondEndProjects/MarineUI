@@ -48,7 +48,7 @@ export class CoverageInfoComponent implements OnInit {
   onGetCurrencyDropdownList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/currency`;
     const reqData = {
-      'BranchCode': this.userDetails.BranchCode,
+      'BranchCode': this.userDetails.BelongingBranch,
       'CountryId': this.userDetails.CountryId,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -64,7 +64,7 @@ export class CoverageInfoComponent implements OnInit {
   onGetTransportList() {
     const urlLink = `${this.ApiUrl1}OpenCover/transport/edit`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
       'ProposalNo': this.proposalNo
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -96,7 +96,7 @@ export class CoverageInfoComponent implements OnInit {
           const element = list[index];
           let urlLink = `${this.ApiUrl1}OpenCover/covertype/list`;
           let reqData = {
-            'BranchCode': this.userDetails?.BranchCode,
+            'BranchCode': this.userDetails?.BelongingBranch,
             'ModeOfTransportCode': element?.ModeOfTransport
           }
           CoverTypeList.push(this.openCoverService.onPostMethodSync(urlLink, reqData));

@@ -55,7 +55,7 @@ public filterValue;
 
   getConstantList() {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch
     }
     this.msaterSer.onPostMethodSync(`${this.ApiUrl1}master/constant/list`, ReqObj).subscribe(
     (data: any) => {

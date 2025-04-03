@@ -51,7 +51,7 @@ export class PackageMasterAppEditComponent implements OnInit {
 
   getModeofTransportList() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails.Result.BelongingBranch,
       // "IncotermPercent": "string",
       // "OpenCoverNo": "string",
       "ProductId": "3"
@@ -122,7 +122,7 @@ export class PackageMasterAppEditComponent implements OnInit {
     // let effDate = this.packageForm.controls['effectiveDate'].value ? moment(new Date(this.packageForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "ModeOfTransportId": this.packageForm.controls['ModeOfTransportId'].value,
       "PackageDescription": this.packageForm.controls['packageDesc'].value,
       "PackageId": this.packageId,

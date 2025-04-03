@@ -110,7 +110,7 @@ export class SettlingAgentAppEditComponent implements OnInit {
         (err) => { },
       );*/
       let ReqObj = {
-        "BranchCode": this.branchCode,
+        "BranchCode": this.userDetails.Result.BelongingBranch,
         "ProductId": "3"
 
       }
@@ -134,7 +134,7 @@ export class SettlingAgentAppEditComponent implements OnInit {
     let reqObj=
        {
         "OriginationCountryCode":this.c,
-        'BranchCode':this.userDetails?.BranchCode,
+        'BranchCode':this.userDetails?.BelongingBranch,
       }
       this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/originationcity`, reqObj).subscribe(
         (data: any) => {
@@ -230,7 +230,7 @@ export class SettlingAgentAppEditComponent implements OnInit {
         //console.log('EEEEEEEEEE',effectiveDate);
        let ReqObj = {
         "AmendId":'',
-        "BranchCode": this.branchCode,
+        "BranchCode": this.userDetails?.Result.BelongingBranch,
         //"ConveyanId": this.conveyanceId,
         "CoreApplicationCode": this.settlingForm.controls['coreApplicationCode'].value,
         //"EffectiveDate": effectiveDate,

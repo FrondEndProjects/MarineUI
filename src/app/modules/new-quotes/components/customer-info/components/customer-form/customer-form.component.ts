@@ -106,7 +106,7 @@ export class CustomerFormComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}quote/dropdown/title`;
 
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
       'pvType': 'title',
       'ProductId': this.productId,
     };
@@ -125,7 +125,7 @@ export class CustomerFormComponent implements OnInit {
   onGetCityDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'pvType': 'city',
       'OpenCoverNo': this.openCoverNo,

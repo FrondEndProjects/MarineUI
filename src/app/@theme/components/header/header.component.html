@@ -3,9 +3,8 @@
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()" >
-      <img src="./assets/images/alliance-img-1.png" class="imgwid">
-    </a>
+    <a class="logo" href="#" (click)="navigateHome()" *ngIf="regionCode!='100020'"><img src="./assets/images/alliance-img-1.png" class="imgwid"></a>
+    <a href="#" (click)="navigateHome()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png" class="imgwid" ></a>
   </div>
   <!-- <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
@@ -17,9 +16,7 @@
     <nb-action class="control-item">
       <li class="dropdown" style="list-style-type: none !important;">
         <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
-        <ng-container >
-              &nbsp;&nbsp;&nbsp;&nbsp;
-        </ng-container>
+        <ng-container > &nbsp;&nbsp;&nbsp;&nbsp;</ng-container>
       </li>
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>

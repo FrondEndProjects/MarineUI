@@ -58,7 +58,7 @@ export class CountryCoverTableComponent implements OnInit {
 getCountryCoverList() {
  let ReqObj = {
    'CountryId': this.countryId,
-   "BranchCode": this.branchCode
+   "BranchCode": this.userDetails?.Result.BelongingBranch
  }
  this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/countrycover/list`, ReqObj).subscribe(
   (data: any) => {

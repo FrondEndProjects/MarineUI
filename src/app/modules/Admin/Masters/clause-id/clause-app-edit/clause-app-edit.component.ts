@@ -87,7 +87,7 @@ IntegrationCode:new FormControl(''),
    // get transport list
    public getModeOFtransportList() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId' : '3',
       OpenCoverNo : '',
     };
@@ -96,7 +96,7 @@ IntegrationCode:new FormControl(''),
       (data: any) => {
         if (data?.Message === 'Success') {
           this.transportList = data.Result;
-          //this.getCoverName();
+          this.getCoverName('direct');
           
         }
       },
@@ -110,7 +110,7 @@ IntegrationCode:new FormControl(''),
       this.ClausesIdForm.controls['CoverId'].setValue("");
     }
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId' : '3',
       'ModeOfTransportCode':this.ClausesIdForm.controls['ModeOfTransportId'].value,
       'OpenCoverNo':"",
@@ -194,7 +194,7 @@ IntegrationCode:new FormControl(''),
      let effectiveDate = this.ClausesIdForm.controls['effectiveDate'].value ? moment(new Date(this.ClausesIdForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
       console.log('EEEEEEEEEE',effectiveDate);
      let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
     "CoreApplicationCode": this.ClausesIdForm.controls['coreApplicationCode'].value,
       "EffectiveDate": effectiveDate,
       "ModeOfTransportId": this.ClausesIdForm.controls['ModeOfTransportId'].value,

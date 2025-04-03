@@ -456,6 +456,7 @@ return this.chargeOrRefund == check;
     const urlLink = `${this.ApiUrl1}OpenCover/premiumcalc/save`;
     const reqData = {
       'ProposalNo': this.proposalNo,
+      "BranchCode": this.userDetails.BranchCode
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

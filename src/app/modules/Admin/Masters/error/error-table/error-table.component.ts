@@ -69,7 +69,7 @@ export class ErrorTableComponent implements OnInit {
 
    getExistingBank() {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch
     }
      this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/error/list`,ReqObj).subscribe(
        (data: any) => {

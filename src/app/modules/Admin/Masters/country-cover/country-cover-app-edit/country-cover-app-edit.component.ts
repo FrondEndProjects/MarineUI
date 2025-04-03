@@ -109,7 +109,7 @@ export class CountryCoverAppEditComponent implements OnInit {
 
   getWarrantyList() {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/warranty`, ReqObj).subscribe(
       (data: any) => {
@@ -254,7 +254,7 @@ export class CountryCoverAppEditComponent implements OnInit {
     let effectiveDate = this.countryCoverForm.controls['effectiveDate'].value ? moment(new Date(this.countryCoverForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
      console.log('EEEEEEEEEE',effectiveDate);
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.countryCoverForm.controls['coreApplicationCode'].value,
       "CountryId": this.CountryCoverId,
       "CountryName": this.countryCoverForm.controls['countryName'].value,

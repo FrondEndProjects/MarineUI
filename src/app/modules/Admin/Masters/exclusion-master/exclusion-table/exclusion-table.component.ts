@@ -56,7 +56,7 @@ export class ExclusionTableComponent implements OnInit {
   
     getWarrantyList() {
       let ReqObj = {
-        "BranchCode": this.branchCode
+        "BranchCode":this.userDetails?.Result.BelongingBranch
       }
       this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/exclusion/list`, ReqObj).subscribe(
       (data: any) => {

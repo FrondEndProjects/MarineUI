@@ -111,7 +111,7 @@ export class WarrantyAppEditComponent implements OnInit {
     }
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails.Result.BelongingBranch,
       "CoreApplicationCode": this.warrantyForm.controls['coreApplicationCode'].value,
       "EffectiveDate": effDate,
       "Remarks": this.warrantyForm.controls['remarks'].value,

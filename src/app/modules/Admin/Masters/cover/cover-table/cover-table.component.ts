@@ -54,7 +54,7 @@ export class CoverTableComponent implements OnInit {
 
   getExistingConveyance() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails?.Result.BelongingBranch,
     };
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/cover/list`, ReqObj).subscribe(
       (data: any) => {

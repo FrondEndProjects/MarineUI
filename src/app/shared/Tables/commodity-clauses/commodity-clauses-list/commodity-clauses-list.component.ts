@@ -164,7 +164,7 @@ export class CommodityClausesListComponent implements OnInit {
 
     const reqData = {
       "ProposalNo": this.proposalNo,
-      "BranchCode": this.userDetails.BranchCode,
+      "BranchCode": this.userDetails.BelongingBranch,
       "CoverId": item.CoverId
     };
 

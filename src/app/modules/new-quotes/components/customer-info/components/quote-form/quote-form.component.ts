@@ -127,7 +127,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.subscription.unsubscribe();
   }
   omDropDownParallelCall (){
-    this.quoteF.originatingCountry.setValue(this.userDetails?.OrginationCountryId);
+    this.quoteF.originatingCountry.setValue(this.userDetails?.OriginationCountryId);
     this.quoteF.destinationCountry.setValue(this.userDetails?.DestinationCountryId);
     this.subscription=this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
       if (data) {
@@ -363,7 +363,7 @@ none(event){
   onGetTransportDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/modeoftransport`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails.BelongingBranch,
       'OpenCoverNo': this.openCoverNo,
       'pvType': 'mode',
       'ProductId': this.productId,
@@ -386,7 +386,7 @@ none(event){
 
     const urlLink = `${this.ApiUrl1}quote/dropdown/cover`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails.BelongingBranch,
       'ModeOfTransportCode': this.quoteF.modeOfTransport.value,
       'OpenCoverNo': this.openCoverNo,
       'pvType': 'cover',
@@ -409,7 +409,7 @@ none(event){
     this.onGetPackageDescDropdownList();
     const urlLink = `${this.ApiUrl1}quote/dropdown/modeofcarriage`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'ModeOfTransportCode': this.quoteF.modeOfTransport.value,
       'CoverId': this.quoteF.cover.value,
@@ -431,7 +431,7 @@ none(event){
   onGetOriginCountryDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/originationcountry`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'OriginationCountryCode': this.userDetails?.OrginationCountryId,
       'OpenCoverNo': this.openCoverNo,
@@ -454,7 +454,7 @@ none(event){
     const reqData = {
       'pvType': 'orgCity',
       'OriginationCountryCode': this.quoteF.originatingCountry.value,
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -472,7 +472,7 @@ none(event){
   onGetDestinaCountryDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/destinationcountry`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'DestinationCountryCode': this.userDetails?.DestinationCountryId,
       'OpenCoverNo': this.openCoverNo,
@@ -498,7 +498,7 @@ none(event){
     const urlLink = `${this.ApiUrl1}quote/dropdown/destinationcity`;
     const reqData = {
       'pvType': 'destCity',
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'DestinationCountryCode': this.quoteF.destinationCountry.value,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -541,7 +541,7 @@ none(event){
   onGetPackageDescDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/package`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'ModeOfTransportCode': this.quoteF.modeOfTransport.value,
       'pvType': 'package',
@@ -729,11 +729,11 @@ this.vesselSearchList=[];
   onGetIncotermsDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/incoterm`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'OpenCoverNo': this.openCoverNo,
       'pvType': 'saleTerm',
-    };
+    }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
 
@@ -750,7 +750,7 @@ this.vesselSearchList=[];
   onGetIncotermsPrecentDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/incotermpercentage`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'IncotermCode': this.quoteF.incoterms.value,
       'OpenCoverNo': this.openCoverNo,
@@ -773,7 +773,7 @@ this.vesselSearchList=[];
   onGetToleranceDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/tolerance`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'OpenCoverNo': this.openCoverNo,
       'pvType': 'tolerance',
@@ -796,7 +796,7 @@ this.vesselSearchList=[];
   onGetGoodsOfCategoryDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/goodscategory`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'OpenCoverNo': this.openCoverNo,
       'pvType': 'goodsCategory',
@@ -817,7 +817,7 @@ this.vesselSearchList=[];
   onGetCurrencyDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/currency`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
       'ProductId': this.productId,
       'pvType': 'currency',
     };
@@ -836,7 +836,7 @@ this.vesselSearchList=[];
   onGetPremiumDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/premiumcurrency`;
     const reqData = {
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

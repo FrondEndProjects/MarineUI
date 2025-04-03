@@ -53,7 +53,7 @@ export class ConveyanceTableComponent implements OnInit, AfterViewInit {
 
   getExistingConveyance() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails?.Result.BelongingBranch,
     };
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/conveyance/list`, ReqObj).subscribe(
       (data: any) => {

@@ -49,7 +49,7 @@ export class ExchangeAppEditComponent implements OnInit {
 
   getCurrencyList()  {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails.Result.BelongingBranch
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/currency`, ReqObj).subscribe(
       (data: any) => {
@@ -128,7 +128,7 @@ export class ExchangeAppEditComponent implements OnInit {
     let effectiveDate = this.exchangeForm.controls['effectiveDate'].value ? moment(new Date(this.exchangeForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.exchangeForm.controls['coreApplicationCode'].value,
       "CurrencyId": this.exchangeForm.controls['currencyId'].value,
       "EffectiveDate": effectiveDate,

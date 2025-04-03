@@ -51,7 +51,7 @@ export class ExtraAppEditComponent implements OnInit {
 
   getModeofTransportList() {
     let ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId': '3',
       OpenCoverNo: '',
     }
@@ -110,7 +110,7 @@ export class ExtraAppEditComponent implements OnInit {
   onSave() {
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.extraCoverForm.controls['coreApplicationCode'].value,
       "ExtraCoverId": this.extraId,
       "ExtraCoverName": this.extraCoverForm.controls['extraCoverName'].value,

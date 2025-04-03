@@ -20,6 +20,7 @@ export class CustomerRedirectComponent implements OnInit {
   branchcode: any;
   productId: any;
   public routerBaseLink:any='';
+  userType: any;
     constructor(private _formBuilder: FormBuilder,
         private loginService: LoginService,
         private authService: AuthService,
@@ -46,13 +47,38 @@ export class CustomerRedirectComponent implements OnInit {
         this.encryptedValue = encodeURIComponent(params.params.e);
        let storageData = CryptoJS.AES.decrypt(decodeURIComponent(this.encryptedValue), 'secret key 123'); 
         let decryptedInfo = JSON.parse(storageData.toString(CryptoJS.enc.Utf8));
+        console.log("Encrypted Info",decryptedInfo)
         if(decryptedInfo){
-          sessionStorage.setItem('storageData',JSON.stringify(decryptedInfo));
-          this.loginId = decryptedInfo?.Username;
-          this.insuranceId = decryptedInfo?.insuranceId;
-          this.branchcode = decryptedInfo?.BranchCode;
-          this.productId= decryptedInfo?.ProductId;
-          this.onLogin();
+          let Userdetails = decryptedInfo;
+          this.loginId = Userdetails.Result.LoginId;
+          this.insuranceId = Userdetails.Result.InsuranceId;
+          
+          //Userdetails.Result['BranchCode'] = Userdetails.Result.BelongingBranch;
+          this.branchcode = Userdetails.Result.BranchCode;
+          this.productId = Userdetails.Result['ProductId']
+          Userdetails['LoginResponse'] = Userdetails.Result;
+          Userdetails.LoginResponse['RegionCode'] = this.insuranceId;
+          Userdetails.LoginResponse.UserType = Userdetails.LoginResponse?.UserTypeAlt;
+          if(Userdetails.LoginResponse?.UserType == 'admin'){
+            Userdetails.LoginResponse['routerBaseLink'] = 'Marine';
+            this.routerBaseLink = 'Marine';
+          }else{
+            Userdetails.LoginResponse['routerBaseLink'] = 'marine-opencover';
+            this.routerBaseLink = 'marine-opencover';
+          }
+          sessionStorage.setItem('Userdetails',JSON.stringify(Userdetails))
+          sessionStorage.setItem('UserToken', Userdetails.Result.Token);
+          this.authService.login(Userdetails);
+          this.authService.UserToken(Userdetails.Result.Token);
+          this.userType = Userdetails.Result.UserType;
+          this.sessionStorageService.set('Userdetails',Userdetails);
+          this.onSelectProduct();
+          // sessionStorage.setItem('storageData',JSON.stringify(decryptedInfo));
+          // this.loginId = decryptedInfo?.Username;
+          // this.insuranceId = decryptedInfo?.insuranceId;
+          // this.branchcode = decryptedInfo?.BranchCode;
+          // this.productId= decryptedInfo?.ProductId;
+          // this.onLogin();
         }
         console.log('Cutomer Redirect',decryptedInfo);
        })
@@ -77,8 +103,10 @@ export class CustomerRedirectComponent implements OnInit {
                 console.log('NNNNNNNNNNNNN',data.LoginResponse?.Status)
               if(data.LoginResponse?.UserType == 'admin'){
                 data.LoginResponse['routerBaseLink'] = 'Marine';
+                this.routerBaseLink = 'Marine';
               }else{
                 data.LoginResponse['routerBaseLink'] = 'marine-opencover';
+                this.routerBaseLink = 'marine-opencover';
               }
               const Token = data?.LoginResponse?.Token;
               this.authService.login(data);
@@ -106,8 +134,6 @@ export class CustomerRedirectComponent implements OnInit {
         sessionStorage.removeItem('customerLoginId');
         sessionStorage.removeItem('OpenCoverNo');
         sessionStorage.setItem('quotesType', 'Without-Endo');
-      
-    
         if (this.productId=== '3') {
           sessionStorage.removeItem('ReferenceNo');
           this.sessionStorageService.remove('referral');
@@ -123,7 +149,13 @@ export class CustomerRedirectComponent implements OnInit {
         else if (this.productId === '11') {
           sessionStorage.setItem('productId','11');
           this.sessionStorageService.set('productId','11');
+          if(this.userType == 'admin'){
+            this.router.navigate([`${this.routerBaseLink}/dashboard`]);
+            //this.router.navigate([`${this.routerBaseLink}/new-open-cover/exist-opencover`]);
+           }else{
             this.router.navigate(['product-layout/opencover']);
+    
+           }
         }
       }
 

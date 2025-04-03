@@ -49,7 +49,7 @@ export class OrginCountryComponent implements OnInit {
   onGetCountryList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/country`;
     const reqData = {
-      'BranchCode': this.userDetails.BranchCode,
+      'BranchCode': this.userDetails.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -71,7 +71,7 @@ export class OrginCountryComponent implements OnInit {
   onGetCountryCodeList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/constant`;
     const reqData = {
-      'BranchCode': this.userDetails.BranchCode,
+      'BranchCode': this.userDetails.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

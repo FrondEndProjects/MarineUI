@@ -175,7 +175,7 @@ export class BankMasterAppEditComponent implements OnInit {
       "EffectiveDate": effectiveDate,
       "Remarks": this.bankForm.controls['remarks'].value,
       "Status": this.bankForm.controls['status'].value,
-      "BranchCode": this.branchCode
+      "BranchCode": this.Userdetails?.Result.BelongingBranch
     }
     console.log(ReqObj);
 

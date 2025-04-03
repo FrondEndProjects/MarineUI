@@ -66,7 +66,7 @@ export class CityAppEditComponent implements OnInit {
 
   getCountryList() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails.BelongingBranch,
       "ProductId": "3"
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/originationcountry`, ReqObj).subscribe(

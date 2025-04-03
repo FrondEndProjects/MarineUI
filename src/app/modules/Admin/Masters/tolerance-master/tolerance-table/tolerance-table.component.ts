@@ -56,7 +56,7 @@ public filterValue;
 
   getToleranceList() {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/tolerance/list`, ReqObj).subscribe(
     (data: any) => {

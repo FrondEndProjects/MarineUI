@@ -121,7 +121,7 @@ export class CurrencyAppEditComponent implements OnInit {
     }
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.currencyForm.controls['coreApplicationCode'].value,
       "CurrencyId": this.CurrencyId,
       "CurrencyName": this.currencyForm.controls['currencyType'].value,

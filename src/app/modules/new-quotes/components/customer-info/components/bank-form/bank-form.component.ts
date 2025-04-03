@@ -60,7 +60,7 @@ export class BankFormComponent implements OnInit {
     const reqData = {
       'ProductId': this.productId,
       'pvType': 'lcBank',
-      'BranchCode':this.userDetails?.BranchCode,
+      'BranchCode':this.userDetails?.BelongingBranch,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

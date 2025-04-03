@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentTheme = 'default';
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
-  routerBaseLink: any;
+  routerBaseLink: any;regionCode:any=null;
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userResponse = this.userDetails?.LoginResponse;
+    this.regionCode=this.userResponse.RegionCode;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
 
 

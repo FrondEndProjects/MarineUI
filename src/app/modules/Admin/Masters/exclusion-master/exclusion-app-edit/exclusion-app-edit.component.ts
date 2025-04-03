@@ -54,14 +54,12 @@ export class ExclusionAppEditComponent implements OnInit {
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/exclusion/edit`, ReqObj).subscribe(
     (data: any) => {
-      console.log(data);
-      
-    this.exclusionDetails = data.Result;
-    this.exclusionForm.controls['exclusionName'].setValue(this.exclusionDetails.ExclusionDescription);
-    this.exclusionForm.controls['coreApplicationCode'].setValue(this.exclusionDetails.CoreApplicationCode);
-    this.exclusionForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(this.exclusionDetails.EffectiveDate));
-    this.exclusionForm.controls['remarks'].setValue(this.exclusionDetails.Remarks);
-    this.exclusionForm.controls['status'].setValue(this.exclusionDetails.Status);
+      this.exclusionDetails = data.Result;
+      this.exclusionForm.controls['exclusionName'].setValue(this.exclusionDetails.ExclusionDescription);
+      this.exclusionForm.controls['coreApplicationCode'].setValue(this.exclusionDetails.CoreApplicationCode);
+      this.exclusionForm.controls['effectiveDate'].setValue(this.onDateFormatInEdit(this.exclusionDetails.EffectiveDate));
+      this.exclusionForm.controls['remarks'].setValue(this.exclusionDetails.Remarks);
+      this.exclusionForm.controls['status'].setValue(this.exclusionDetails.Status);
     }, (err) => { }
     )
   }
@@ -110,7 +108,7 @@ export class ExclusionAppEditComponent implements OnInit {
       effDate = "";
     }
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.exclusionForm.controls['coreApplicationCode'].value,
       "EffectiveDate": effDate,
       "ExclusionDescription": this.exclusionForm.controls['exclusionName'].value,

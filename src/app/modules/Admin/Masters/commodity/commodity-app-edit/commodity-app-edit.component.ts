@@ -851,7 +851,7 @@ export class CommodityAppEditComponent implements OnInit {
 
   getWarrantyList() {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/warranty`, ReqObj).subscribe(
       (data: any) => {
@@ -893,7 +893,7 @@ export class CommodityAppEditComponent implements OnInit {
 
   getWar(para:any){
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoverId":para
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/war`, ReqObj).subscribe(
@@ -1313,7 +1313,7 @@ else this.openDialogWithoutRef(type)
 
   getClauses(no){
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoverId":no
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/clauses`, ReqObj).subscribe(
@@ -2242,7 +2242,7 @@ else this.openDialogWithoutRef(type)
   }
   getCoverageList(){
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails?.Result.BelongingBranch,
     };
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/cover/list`, ReqObj).subscribe(
       (data: any) => {
@@ -2257,7 +2257,7 @@ else this.openDialogWithoutRef(type)
 
   getExistingConveyance() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails?.Result.BelongingBranch,
     };
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/cover/list`, ReqObj).subscribe(
       (data: any) => {
@@ -3495,7 +3495,7 @@ onFormSubmit(){
   }
   const ReqObj = {
   
-    'BranchCode': this.branchCode,
+    'BranchCode': this.userDetails?.Result.BelongingBranch,
       "CommodityName":this.commodityForm.controls['CommodityName'].value,
       "CommodityRate":this.commodityForm.controls['CommodityRate'].value,
       "CoreApplicationCode":this.commodityForm.controls['CoreApplicationCode'].value,
@@ -3659,7 +3659,7 @@ onFormSubmit(){
   // get transport list
   public getModeOFtransportList() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode':this.userDetails.Result.BelongingBranch,
       ProductId : '03',
       OpenCoverNo : '',
     };

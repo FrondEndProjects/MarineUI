@@ -57,7 +57,7 @@ export class SalesExeTableComponent implements OnInit {
  
    getExecutiveEdit() {
     let ReqObj={
-      "BranchCode":this.branchCode
+      "BranchCode":this.userDetails?.Result.BelongingBranch
     }
      this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/executive/list`,ReqObj).subscribe(
        (data: any) => {

@@ -57,7 +57,7 @@ export class ExtraTableComponent implements OnInit {
 
     getModeOfTransportList() {
       let ReqObj = {
-        "BranchCode": this.branchCode
+        "BranchCode": this.userDetails?.Result.BelongingBranch
       }
       this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/extracover/list`, ReqObj).subscribe(
         (data: any) => {

@@ -57,7 +57,7 @@ public filterValue;
 
   async getExistingBank() {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch
     }
     ;(await this.masterSer.onPostMethodAsync(`${this.ApiUrl1}master/bank/list`, ReqObj)).subscribe(
       (data: any) => {

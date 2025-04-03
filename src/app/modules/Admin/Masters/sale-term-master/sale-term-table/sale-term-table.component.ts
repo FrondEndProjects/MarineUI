@@ -57,7 +57,7 @@ public filterValue;
 
   getSaleTermList() {
     let ReqObj = {
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch
     }
    
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/saleTermMaster/list`, ReqObj).subscribe(

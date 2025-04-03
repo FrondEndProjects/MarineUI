@@ -106,7 +106,7 @@ export class RateCoverComponent implements OnInit {
 
   public getModeOFtransportList() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId' : '3',
       OpenCoverNo : '',
     };
@@ -176,7 +176,7 @@ export class RateCoverComponent implements OnInit {
     }
     console.log('NNNNNNNNN',this.transportcode);
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.BelongingBranch,
       'ProductId' : '3',
       'ModeOfTransportCode':this.transportcode,
       'OpenCoverNo':"",

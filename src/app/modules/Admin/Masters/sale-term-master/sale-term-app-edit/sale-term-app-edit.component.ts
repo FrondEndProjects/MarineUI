@@ -120,7 +120,7 @@ export class SaleTermAppEditComponent implements OnInit {
     }
 
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.saleTermForm.controls['coreApplicationCode'].value,
       "Remarks": this.saleTermForm.controls['remarks'].value,
       "SaleTermId": this.saleTermId,

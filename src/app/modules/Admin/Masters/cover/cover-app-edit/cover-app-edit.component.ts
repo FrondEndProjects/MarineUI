@@ -68,7 +68,7 @@ export class CoverAppEditComponent implements OnInit {
   // get transport list
   public getModeOFtransportList() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId': '3',
       OpenCoverNo: '',
     };
@@ -155,7 +155,7 @@ export class CoverAppEditComponent implements OnInit {
     console.log('EFFFFFFF',this.coverForm.controls['effectiveDate'])
     let effectiveDate = this.coverForm.controls['effectiveDate'].value ? moment(new Date(this.coverForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.coverForm.controls['coreApplicationCode'].value,
       "CoverId": this.CoverId,
       "CoverName": this.coverForm.controls['coverName'].value,

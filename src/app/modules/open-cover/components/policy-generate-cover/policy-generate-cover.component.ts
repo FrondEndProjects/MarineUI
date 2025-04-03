@@ -118,7 +118,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
 
   onGetInstallment() {
     let ReqObj={
-      "BranchCode": this.userDetails.BranchCode
+      "BranchCode": this.userDetails.BelongingBranch
     }
     const urlLink = `${this.ApiUrl1}OpenCover/installment`;
     this.openCoverService.onPostMethodSync(urlLink,ReqObj).subscribe(
@@ -313,7 +313,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
     const reqData = {
       "ProposalNo": this.proposalNo,
       "ProductId": this.productId,
-      "BranchCode": this.userDetails.BranchCode
+      "BranchCode": this.userDetails.BelongingBranch
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -370,7 +370,7 @@ export class PolicyGenerateCoverComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}opencover/report/conveyance`;
     const reqData = {
       "ProposalNo": this.proposalNo,
-      "BranchCode":this.userDetails.BranchCode
+      "BranchCode":this.userDetails.BelongingBranch
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

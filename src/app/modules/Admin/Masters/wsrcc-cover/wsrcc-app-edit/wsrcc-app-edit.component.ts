@@ -54,6 +54,7 @@ export class WsrccAppEditComponent implements OnInit {
   ngOnInit(): void {
     this.getModeOFtransportList();
     this.createForm();
+    this.getCoverName('direct');
   }
 
   public createForm() {
@@ -76,7 +77,7 @@ export class WsrccAppEditComponent implements OnInit {
   // get transport list
   public getModeOFtransportList() {
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId': '3',
       OpenCoverNo: '',
     };
@@ -97,7 +98,7 @@ export class WsrccAppEditComponent implements OnInit {
       this.wsrccForm.controls['CoverId'].setValue("");
     }
     const ReqObj = {
-      'BranchCode': this.branchCode,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId' : '3',
       'ModeOfTransportCode':this.wsrccForm.controls['ModeOfTransportId'].value,
       'OpenCoverNo':"",
@@ -192,7 +193,7 @@ export class WsrccAppEditComponent implements OnInit {
     }
     let effectiveDate = this.wsrccForm.controls['effectiveDate'].value ? moment(new Date(this.wsrccForm.controls['effectiveDate'].value)).format('DD/MM/YYYY') : "";
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoreApplicationCode": this.wsrccForm.controls['coreApplicationCode'].value,
       "CoverId": this.wsrccForm.controls['CoverId'].value,
       //"CoverName": this.wsrccForm.controls['coverName'].value,

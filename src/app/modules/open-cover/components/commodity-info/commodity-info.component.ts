@@ -151,7 +151,7 @@ export class CommodityInfoComponent implements OnInit {
     const reqData = {
       "ProposalNo": this.proposalNo,
       "CommodityCode": element.CommodityId,
-      "BranchCode": this.userDetails.BranchCode
+      "BranchCode": this.userDetails.BelongingBranch
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
