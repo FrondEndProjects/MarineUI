@@ -14,6 +14,10 @@ nb-layout.with-scroll .scrollable-container{
 //  height:100svh !important;
   // height: var(--doc-height) !important;
 }
+nb-layout-header.fixed ~ .layout-container {
+  padding-top: 100px;
+  min-height: var(--layout-min-height);
+}
 
 
   

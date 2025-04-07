@@ -101,7 +101,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (title === 'Log out') {
 
           this.sessionStorageService.clear();
-          this.authService.logout();
+          // this.authService.logout();
+          // let encryptInfo = encodeURIComponent(CryptoJS.AES.encrypt(JSON.stringify(userDetails), 'secret key 123').toString());
+           location.href=`http://192.168.1.48:4600/#/auth/login`;
           this.reloadCurrentRoute();
         }
       });
@@ -177,10 +179,15 @@ this.menuService.onItemSelect()
 
   navigateHome() {
     this.menuService.navigateHome();
+    location.href=`http://localhost:4600/#/auth/login/product`;
     return false;
   }
 
   reloadCurrentRoute() {
     this.router.navigate([`/login`]);
+  }
+
+  homeRoute(){
+    location.href=`http://localhost:4600/#/auth/login/product`;
   }
 }

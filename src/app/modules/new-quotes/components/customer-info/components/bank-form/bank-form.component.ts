@@ -9,6 +9,10 @@ import { CustomerInfoComponent } from '../../customer-info.component';
   styleUrls: ['./bank-form.component.scss'],
 })
 export class BankFormComponent implements OnInit {
+  showDialog = false;
+  showDialog1 = false;
+
+
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public userDetails: any;
@@ -73,5 +77,36 @@ export class BankFormComponent implements OnInit {
       (err) => { },
     );
   }
+  openDialog() {
+    this.showDialog = true;
+  }
 
+  closeDialog() {
+    this.showDialog = false;
+    this.bankForm.controls['blAwbLrRrNumber'].setValue(null)
+    this.bankForm.controls['blAwbLrRrDater'].setValue(null)
+    this.bankForm.controls['sailingDate'].setValue(null)
+    this.bankForm.controls['invoiceNumber'].setValue(null)
+    this.bankForm.controls['poPiNumber'].setValue(null)
+    this.bankForm.controls['consignedTo'].setValue(null)
+    this.bankForm.controls['consignedForm'].setValue(null)
+  
+  }
+  openDialog1(){
+    this.showDialog1 = true;
+
+  }
+  closeDialog1() {
+    this.showDialog1 = false;
+    this.bankForm.controls['lCBank'].setValue(null)
+    this.bankForm.controls['lcNumber'].setValue(null)
+    this.bankForm.controls['lcDate'].setValue(null)
+  }
+  saveDialog1(){
+    this.showDialog1 = false;
+  }
+  saveDialog(){
+    this.showDialog = false;
+
+  }
 }

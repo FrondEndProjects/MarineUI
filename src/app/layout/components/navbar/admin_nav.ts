@@ -50,34 +50,34 @@ export const adminNavItems: NbMenuItem[] = [
     ],
   },
   
-  {
-    title: 'Login Creation',
-    icon: 'icon-cursor',
-    children: [
-        {
-          title: 'Broker Management',
-          link: '/Marine/loginCreation/existingBrokers',
-          icon: 'icon-cursor',
-        },
-        {
+  // {
+  //   title: 'Login Creation',
+  //   icon: 'icon-cursor',
+  //   children: [
+  //       {
+  //         title: 'Broker Management',
+  //         link: '/Marine/loginCreation/existingBrokers',
+  //         icon: 'icon-cursor',
+  //       },
+  //       {
 
-          title: 'Admin',
-          link: '/Marine/loginCreation/admin',
-          icon: 'icon-cursor',
-        },
-        {
+  //         title: 'Admin',
+  //         link: '/Marine/loginCreation/admin',
+  //         icon: 'icon-cursor',
+  //       },
+  //       {
 
-          title: 'Issuer Management',
-          link: '/Marine/loginCreation/issuer',
-          icon: 'icon-cursor',
-        },
-      {
-        title: 'User Management',
-        link: '/Marine/loginCreation/existingUser',
-        icon: 'icon-cursor',
-      },
-    ]
-  },
+  //         title: 'Issuer Management',
+  //         link: '/Marine/loginCreation/issuer',
+  //         icon: 'icon-cursor',
+  //       },
+  //     {
+  //       title: 'User Management',
+  //       link: '/Marine/loginCreation/existingUser',
+  //       icon: 'icon-cursor',
+  //     },
+  //   ]
+  // },
 
 
   {

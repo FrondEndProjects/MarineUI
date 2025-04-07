@@ -41,7 +41,6 @@ export class CustomerGridComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    alert("Entered")
     this.onGetBrokerList();
     this.selectedBroker = sessionStorage.getItem('loginId');
   }

@@ -5,23 +5,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./one-column.layout.scss'],
   template: `
     <nb-layout windowMode>
-      <nb-layout-header>
-        <ngx-header></ngx-header>
-      </nb-layout-header>
-
-      <nb-sidebar class="menu-sidebar" tag="menu-sidebar" state="compacted" responsive>
+  <nb-layout-header fixed>
+    <ngx-header></ngx-header>
+    <!-- <div class="menu-container"> -->
       <ng-content select="nb-menu"></ng-content>
-      </nb-sidebar>
+    <!-- </div> -->
+  </nb-layout-header>
 
-      <nb-layout-column>
-        <ng-content select="app-opencover-header-info"></ng-content>
-        <ng-content select="router-outlet"></ng-content>
-      </nb-layout-column>
+  <nb-layout-column>
+    <ng-content select="app-opencover-header-info"></ng-content>
+    <ng-content select="router-outlet"></ng-content>
+  </nb-layout-column>
 
-      <nb-layout-footer fixed>
-        <ngx-footer></ngx-footer>
-      </nb-layout-footer>
-    </nb-layout>
+  <nb-layout-footer fixed>
+    <ngx-footer></ngx-footer>
+  </nb-layout-footer>
+</nb-layout>
+
   `,
 })
-export class OneColumnLayoutComponent {}
+export class OneColumnLayoutComponent { }

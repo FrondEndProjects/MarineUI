@@ -193,6 +193,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
     this.quoteF.goodsCategory.setValue(commodityDetails?.GoodsCategoryCode);
     this.quoteF.goodsDescript.setValue(commodityDetails?.GoodsCategoryDescription);
+    this.quoteF.UCRNumber.setValue(transportDetails?.UCRNumber);
     if(commodityDetails?.InsuredValue){
       this.CommaFormatted(commodityDetails?.InsuredValue)
     }
@@ -201,7 +202,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteF.invoiceDate.setValue(this.newQuotesService.ngbDateFormatt(commodityDetails?.InvoiceDate));
     this.quoteF.consignedTo.setValue(commodityDetails?.ConsignedTo);
     this.quoteF.consignedForm.setValue(commodityDetails?.ConsignedFrom);
-    this.quoteF.UCRNumber.setValue(commodityDetails?.UCRNumber);
+    // this.quoteF.UCRNumber.setValue(commodityDetails?.UCRNumber);
     this.quoteF.fragileYN.setValue(commodityDetails?.Fragile);
     this.quoteF.excessDescription.setValue(commodityDetails?.PolicyExcessDescription);
 

@@ -16,6 +16,7 @@ export class SessionRedirectComponent implements OnInit {
     setTimeout(() => {this.router.navigate(['/login'])},5*60*1000);
   }
   getLogin(){
-    this.router.navigate(['/login'])
+    // this.router.navigate(['/login'])
+    location.href=`http://192.168.1.48:4600/#/auth/login`;
   }
 }

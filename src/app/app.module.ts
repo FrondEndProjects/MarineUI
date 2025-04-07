@@ -65,6 +65,7 @@ import { SessionRedirectComponent } from './layout/components/session-redirect/s
 import { ErrorModalModule } from './shared/error/error-modal.module';
 import { LoginService } from './modules/login/login.service';
 import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRedirect.component';
+// import { MegaMenuModule } from 'primeng/megamenu';
 
 @NgModule({
   declarations: [
@@ -87,17 +88,11 @@ import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRe
     CustomerRedirectComponent
   ],
   imports: [
-    CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    NbDatepickerModule.forRoot(),
-    NbSidebarModule.forRoot(),
-    NbMenuModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbWindowModule.forRoot(),
+    CommonModule, BrowserModule, BrowserAnimationsModule,
+    HttpClientModule, AppRoutingModule,
+    ReactiveFormsModule, NbDatepickerModule.forRoot(),
+    NbSidebarModule.forRoot(), NbMenuModule.forRoot(),
+    NbDialogModule.forRoot(),  NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
@@ -126,7 +121,9 @@ import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRe
     NgbModule,
     NgSelectModule,
     ErrorModalModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    // MegaMenuModule,
+
   ],
   providers: [
     AuthService,LoginService,

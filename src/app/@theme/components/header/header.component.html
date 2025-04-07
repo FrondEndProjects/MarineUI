@@ -1,8 +1,8 @@
 <div class="header-container">
   <div class="logo-container">
-    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+    <!-- <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
-    </a>
+    </a> -->
     <a class="logo" href="#" (click)="navigateHome()" *ngIf="regionCode!='100020'"><img src="./assets/images/alliance-img-1.png" class="imgwid"></a>
     <a href="#" (click)="navigateHome()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png" class="imgwid" ></a>
   </div>
@@ -13,6 +13,7 @@
 
 <div class="header-container">
   <nb-actions size="small">
+    <nb-action class="control-items" icon="home-outline" (click)="homeRoute()"></nb-action>
     <nb-action class="control-item">
       <li class="dropdown" style="list-style-type: none !important;">
         <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>

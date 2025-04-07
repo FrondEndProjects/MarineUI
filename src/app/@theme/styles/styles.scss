@@ -31,6 +31,9 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
 .nb-theme-default [nbInput].status-basic {
   background-color: #fff !important;
   border-color: #e4e9f2;
@@ -136,8 +139,8 @@ mat-form-field{
 }
 
 .input-form-box .input-form-control {
-  min-width: 280px;
-  max-width: 280px;
+  min-width: 85%;
+  max-width: 85%;
   border: 1px solid #d9d9d9;
   border-radius: 5px !important;
   margin: 8px 0;
@@ -148,7 +151,7 @@ mat-form-field{
   height: 35px;
 }
 .input-form-box .input-form-control3 {
-  min-width: 280px;
+  min-width: 85%;
   border: 1px solid #d9d9d9;
   border-radius: 5px !important;
   margin: 8px 0;
@@ -174,7 +177,7 @@ mat-form-field{
   /* border-left: 5px solid dodgerblue */
 }
 .input-form-box .input-form-control2 {
-  width: 100%;
+  min-width: 100%;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   margin: 8px 0;
@@ -232,6 +235,7 @@ mat-form-field{
 }
 ng-select input {
   border: none !important;
+  width: 85%;
 }
 .input-control-container2 .ng-select.ng-select-single .ng-select-container {
   width: 100% !important;
@@ -243,7 +247,7 @@ ng-select input {
   transition: all .3s
 }
 .input-control-container .ng-select.ng-select-single .ng-select-container {
-  max-width: 280px !important;
+  max-width: 85% !important;
   height: 35px;
   border: 1px solid #d9d9d9 !important;
   margin: 8px 0;
@@ -285,7 +289,7 @@ ng-select input {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .input-form-box .input-form-select {
-  max-width: 280px !important;
+  max-width: 100% !important;
   border-radius: .7rem;
   box-sizing: border-box;
   transition: 0.3s;
@@ -299,6 +303,7 @@ ng-select input {
   border-radius: 0.7rem !important;
   padding: 5px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 86%;
 
 }
 .input-form-box .search-control{
@@ -395,7 +400,7 @@ ng-select input {
   display: flex;
   flex-direction: row;
   font-weight: 600;
-  color: var(--logo-color-2);
+  color: #e6823a;
   margin: 1rem 0;
 }
 
@@ -550,3 +555,72 @@ input[type=number] {
     font-size: 12px;
     line-height: 1.42857;
 }
+
+// nb-layout-header nav {
+//   align-items: center;
+//   justify-content: flex-start;
+//   display: flex;
+//   overflow-x: scroll;
+//   overflow-y: hidden;
+  
+// }
+
+nb-layout.window-mode .layout nb-layout-header nav {
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: auto;
+  display: initial;
+}
+
+.currrency-drop1{
+  width: 108%;
+}
+.currrency-drop2{
+  width: 281%;
+}
+.currrency-drop3{
+  width: 70%;
+}
+
+.input-form-box .input-form-control4 {
+  /* min-width: 100%; */
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  margin: 8px 0px 0px -48px;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  height: 35px;
+  width: 113px;
+}
+
+.input-form-box .input-form-control5 {
+  min-width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  margin: 8px 0px 0px 121px;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  height: 35px;
+}
+nb-layout-column {
+  padding-top: 60px; 
+}
+
+nb-layout .layout .layout-container .content .columns nb-layout-column {
+   padding:100px ; 
+}
+
+ .menu-items{
+  .menu-item.menu-items {
+    overflow-y: auto;
+    list-style-type: none;
+    overflow: hidden;
+    max-height: 200px !important;
+    
+  }
+  
+ } 

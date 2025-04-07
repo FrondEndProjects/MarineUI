@@ -276,7 +276,7 @@
             <div class="currrency-dollar">
               <div class="input-control-container">
                 <div class="input-form-box">
-                  <input type="text" class="input-form-control2 without-icon" formControlName="currencyValue"
+                  <input type="text" class="input-form-control4 without-icon" formControlName="currencyValue"
                     [value]="quoteF.currency.value | currency: dropCurrencyList">
                 </div>
               </div>
@@ -307,7 +307,7 @@
         <div class="input-control-container">
           <label class="input-form-label">Conveyance | Vessel name</label>
           <div class="currency-flex">
-            <div class="currrency-drop input-form-box">
+            <div class="currrency-drop2 input-form-box">
               <input type="text" class="input-form-control2 with-icon" disabled [ngModelOptions]="{standalone: true}" [(ngModel)]="vesselValue" placeholder="Enter Vessel Name"
                >
             </div>
@@ -315,8 +315,8 @@
               <button class="btn btn-secondary" (click)="vessel(myModal2)" style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
 
             </div>
-             <div class="input-form-box" style="margin-left:-20px!important;width:80px !important">
-                <input type="text" class="input-form-control2 with-icon" disabled [ngModelOptions]="{standalone: true}" [(ngModel)]="ManufactureYear" placeholder="Year">
+             <div class="input-form-box" style="margin-left:-20px!important;width:40px !important">
+                <input type="text" class="input-form-control5 with-icon" disabled [ngModelOptions]="{standalone: true}" [(ngModel)]="ManufactureYear" placeholder="Year">
                 <!--(keyup)="numberOnly($event)"-->
               </div>
           </div>
@@ -370,7 +370,7 @@
       </div>
       
      
-      <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='11' && productId!=11">
+      <!-- <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='11' && productId!=11">
         <div class="input-control-container">
           <label class="input-form-label">Partial shipment</label>
           <ng-select placeholder="Select" class="input-form-select" formControlName="partialShipment" [items]="dropPartialShipList"
@@ -407,7 +407,7 @@
           </div>
         </div>
       </div>
-     </ng-container>
+     </ng-container> -->
      <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Premium Currency<span class="text-required">*</span></label>
@@ -458,7 +458,14 @@
            Currency Details
         </div>
       </div> -->
-        
+      <div class="col-12 col-md-4 col-lg-4" *ngIf="userDetails.RegionCode=='100020'">
+        <div class="input-control-container">
+          <label class="input-form-label">UCR Number</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" formControlName="UCRNumber">
+          </div>
+        </div>
+      </div>
 
   </div>
 </form>

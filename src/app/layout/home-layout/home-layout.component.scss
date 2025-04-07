@@ -1,0 +1,58 @@
+.horizontal-menu {
+  display: flex;
+  overflow-x: scroll;
+  white-space: nowrap;
+  background: #fff;
+  padding: 10px 0;
+  max-width: 100%;
+  overflow-x: auto;
+  justify-content: space-around;
+}
+
+.horizontal-menu::-webkit-scrollbar {
+  height: 5px;
+}
+
+.horizontal-menu::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.horizontal-menu::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+nb-menu ::ng-deep .menu-items {
+  display: inherit;
+  gap: 0px;
+  padding: 0 0px;
+  overflow: visible;
+  position: absolute;
+  z-index: 1;
+  background-color: white;
+  width: fit-content;
+  justify-content: center;
+}
+
+nb-menu ::ng-deep .menu-items.extended { /* Add 'extended' class targeting */
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+nb-menu ::ng-deep .menu-items .menu-item {
+  display: inline !important;
+  max-inline-size: 200px;
+}
+
+nb-menu ::ng-deep nb-menu-item {
+  padding: 0px 0px;
+  flex-shrink: 0;
+}
+
+nb-layout-header nav {
+  align-items: center;
+  justify-content: flex-start;
+  display: flex;
+  overflow-x: auto;
+  width: 100% !important;
+}

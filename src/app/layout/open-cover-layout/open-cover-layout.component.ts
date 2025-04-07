@@ -7,6 +7,7 @@ import { borkerNavItems } from '../components/navbar/broker_nav';
 import * as Mydatas from '../../app-config.json';
 import { borkerOpencoverNavItems } from '../components/navbar/broker_opencover_nav';
 import { SessionStorageService } from '../../shared/storage/session-storage.service';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-open-cover-layout',
@@ -14,6 +15,7 @@ import { SessionStorageService } from '../../shared/storage/session-storage.serv
   styleUrls: ['./open-cover-layout.component.scss']
 })
 export class OpenCoverLayoutComponent implements OnInit {
+  isMenuCollapsed: boolean = true;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
 
@@ -41,6 +43,14 @@ export class OpenCoverLayoutComponent implements OnInit {
     this.setMenuSection();
     this.onHeaderDetails();
 
+  }
+  onMenuItemClick(e): void {
+    console.log(e);
+    
+    console.log(e.target.className== 'ng-tns-c78-8 ng-star-inserted active');
+if(e.target.className== 'ng-tns-c78-8 ng-star-inserted active')
+    this.isMenuCollapsed = false; 
+    // alert(event.target.attributes.aria-expanded.value)
   }
   setMenuSection() {
     if (this.userDetails.UserType == 'admin') {

@@ -27,6 +27,11 @@ export class HomeLayoutComponent implements OnInit {
   ngOnInit(): void {
 
     this.setMenuSection();
+    // this.menuService.onItemClick().subscribe((data) => {
+    //   if(data){
+        
+    //   }
+    // });
 
   }
   setMenuSection() {

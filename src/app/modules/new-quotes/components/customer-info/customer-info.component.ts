@@ -490,7 +490,7 @@ export class CustomerInfoComponent implements OnInit {
             'InvoiceNo': this.bankF.invoiceNumber.value,
             'PoDescription': this.bankF.poPiNumber.value,
             'PolicyExcessDescription': this.quoteF.excessDescription.value,
-            'UCRNumber':this.bankF.UCRNumber.value
+            
           },
         ],
         'CurrencyCode': this.quoteF.currency.value,
@@ -538,7 +538,8 @@ export class CustomerInfoComponent implements OnInit {
           'OriginWarehouseYn': this.quoteF.originatingWarehouse.value,
           'Via': this.quoteF.via.value,
           "StoragePeriodYn": this.quoteF.StoragePeriodYn.value,
-          "TranshipmentYn":this.quoteF.TranshipmentYN.value
+          "TranshipmentYn":this.quoteF.TranshipmentYN.value,
+          'UCRNumber':this.quoteF.UCRNumber.value
         },
         'VesselDetails': {
           'IHSLRORIMO': '',
