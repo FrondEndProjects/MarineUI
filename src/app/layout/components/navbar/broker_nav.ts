@@ -10,6 +10,7 @@ export const borkerNavItems: NbMenuItem[] = [
   {
     title: 'Quote Register',
     icon: 'grid-outline',
+    expanded: false,
     children: [
       {
         title: 'Existing Quote',
@@ -31,6 +32,7 @@ export const borkerNavItems: NbMenuItem[] = [
   {
     title: 'Referral Certificate',
     icon: 'grid-outline',
+    expanded: false,
     children: [
       {
         title: 'Referral Approved',
@@ -52,6 +54,7 @@ export const borkerNavItems: NbMenuItem[] = [
   {
     title: 'Portfoilo',
     icon: 'grid-outline',
+    expanded: false,
     children: [
       {
         title: 'Policies',

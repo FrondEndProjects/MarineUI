@@ -611,7 +611,7 @@ nb-layout-column {
 }
 
 nb-layout .layout .layout-container .content .columns nb-layout-column {
-   padding:100px ; 
+   padding:60px ; 
 }
 
  .menu-items{
@@ -624,3 +624,13 @@ nb-layout .layout .layout-container .content .columns nb-layout-column {
   }
   
  } 
+ .top-bar{
+  background: #042181 !important;
+  margin-top: -21px !important;
+  height: 60px;
+}
+nb-user .user-name {
+  color: #f2f2f2;
+  font-family: var(--user-name-text-font-family);
+  font-weight: var(--user-name-text-font-weight);
+}

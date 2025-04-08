@@ -6,6 +6,7 @@
   padding: 10px 0;
   max-width: 100%;
   overflow-x: auto;
+  height: 22px;
   justify-content: space-around;
 }
 
@@ -33,11 +34,6 @@ nb-menu ::ng-deep .menu-items {
   width: fit-content;
   justify-content: center;
 
-}
-
-nb-menu ::ng-deep .menu-items .menu-item {
-  display: inline !important;
-  color: #007bff !important; /* Replace with the desired color */
 }
 
 nb-menu ::ng-deep nb-menu-item {

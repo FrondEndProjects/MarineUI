@@ -4,7 +4,7 @@ import { NbMenuService } from '@nebular/theme';
 import { borkerNavItems } from '../components/navbar/broker_nav';
 import { adminNavItems } from '../components/navbar/admin_nav';
 import { SessionStorageService } from '../../shared/storage/session-storage.service';
-
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-home-layout',
   templateUrl: './home-layout.component.html',
@@ -19,6 +19,11 @@ export class HomeLayoutComponent implements OnInit {
     private sessionStorageService:SessionStorageService
   ) {
     this.menu = borkerNavItems;
+    this.menuService.onItemClick()
+      .pipe(filter(({ tag }) => tag === 'menu'))
+      .subscribe(({ item }) => {
+        this.toggleMenu(item);
+      });
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails?.LoginResponse;
@@ -43,6 +48,17 @@ export class HomeLayoutComponent implements OnInit {
 
 
   }
+  toggleMenu(clickedItem: any) {
+    const parent = this.menu.find(item => item.children && item.children.includes(clickedItem));
 
-
+    this.menu = this.menu.map(item => {
+      if (item === parent) {
+        return { ...item, expanded: true };
+      }
+      if (item.children) {
+        return { ...item, expanded: false };
+      }
+      return item;
+    });
+  }
 }

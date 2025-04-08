@@ -130,7 +130,7 @@ export class AdminReferralComponent implements OnInit {
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode':  this.sF.regions.value,
+      'RegionCode': '100020',
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

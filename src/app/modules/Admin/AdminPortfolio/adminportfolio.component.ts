@@ -110,7 +110,7 @@ uploadDocuments: any[]=[];
     this.TypeList=[{'Code':'1',"CodeDesc":"Pending Quotations"},
     {'Code':'2',"CodeDesc":"Policy Generated"},
     {'Code':'3',"CodeDesc":"Policy Cancelled"}]
-      //this.onGetBranchList()
+      this.onGetBranchList()
   }
 
   ngOnInit(): void {
@@ -382,7 +382,7 @@ uploadDocuments: any[]=[];
    
    const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
    const reqData = {
-     'RegionCode': this.RegionNo,
+     'RegionCode': '100020',
    };
    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
      (data: any) => {

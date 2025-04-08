@@ -32,6 +32,8 @@ export class OpenCoverLayoutComponent implements OnInit {
     private sessionStorageService: SessionStorageService
   ) {
     this.menu = borkerNavItems;
+    console.log(this.menu,"this.menu");
+    
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails?.LoginResponse;
