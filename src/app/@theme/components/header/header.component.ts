@@ -189,17 +189,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateHome() {
     this.menuService.navigateHome();
-    location.href = `http://192.168.1.48:4600/#/auth/login/product`;
+    location.href = `http://192.168.1.42:4600/#/auth/login/product`;
     return false;
   }
 
   reloadCurrentRoute() {
     // this.router.navigate([`/login`]);
-    location.href = `http://192.168.1.48:4600/#/auth/login`;
+    location.href = `http://192.168.1.42:4600/#/auth/login`;
   }
 
   homeRoute() {
-    location.href = `http://192.168.1.48:4600/#/auth/login/product`;
+    location.href = `http://192.168.1.42:4600/#/auth/login/product`;
   }
 
   setLogout() {
@@ -214,14 +214,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         sessionStorage.clear();
         localStorage.clear();
         this.authService.logout();
-        location.href = `http://192.168.1.48:4600/#/auth/login`;
+        location.href = `http://192.168.1.42:4600/#/auth/login`;
       },
       (err: any) => {
         console.log(err);
         sessionStorage.clear();
         localStorage.clear();
         this.authService.logout();
-        location.href = `http://192.168.1.48:4600/#/auth/login`;
+        location.href = `http://192.168.1.42:4600/#/auth/login`;
       },
     );
   }

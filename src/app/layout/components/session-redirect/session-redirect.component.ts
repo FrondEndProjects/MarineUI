@@ -15,12 +15,12 @@ export class SessionRedirectComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       // this.router.navigate(['/login'])
-      location.href=`http://192.168.1.48:4600/#/auth/login`;
+      location.href=`http://192.168.1.42:4600/#/auth/login`;
 
     },5*60*1000);
   }
   getLogin(){
     // this.router.navigate(['/login'])
-    location.href=`http://192.168.1.48:4600/#/auth/login`;
+    location.href=`http://192.168.1.42:4600/#/auth/login`;
   }
 }
