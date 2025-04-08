@@ -61,6 +61,7 @@ uploadDocuments: any[]=[];
     TypeValue:any;
     TypeList:any[]=[];
     QuoteNo: any;
+  InsuranceId: any;
   constructor(
     private openCoverService: OpenCoverService,
     private _formBuilder: FormBuilder,
@@ -84,6 +85,7 @@ uploadDocuments: any[]=[];
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.LoginId;
     this.searchForm = this.adminReferralService.searchForm;
+    this.InsuranceId = this.userDetails?.InsuranceId;  
     /*this.columnHeader = [
         //{key: 'S.No', display: 'S.No'},
         {key: 'ProposalNo', display: 'Proposal No'},
@@ -382,7 +384,7 @@ uploadDocuments: any[]=[];
    
    const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
    const reqData = {
-     'RegionCode': '100020',
+     'RegionCode': this.InsuranceId,
    };
    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
      (data: any) => {

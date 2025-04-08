@@ -6,6 +6,7 @@ import * as Mydatas from '../../app-config.json';
 import { SessionStorageService } from '../../shared/storage/session-storage.service';
 import { NbMenuService } from '@nebular/theme';
 import { LoginService } from '../login/login.service';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-admin-referral',
@@ -25,6 +26,7 @@ export class AdminReferralComponent implements OnInit {
   public regionList: any[] = [];
   public branchList: any[] = [];
   public routerBaseLink: any = '';
+  InsuranceId: any;
   constructor(
     private _formBuilder: FormBuilder,
     private adminReferralService: AdminReferralService,
@@ -39,7 +41,7 @@ export class AdminReferralComponent implements OnInit {
     this.userDetails = this.userDetails?.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.searchForm = this.adminReferralService.searchForm;
-    
+    this.InsuranceId = this.userDetails?.InsuranceId;    
   }
 
   ngOnInit(): void {
@@ -130,7 +132,7 @@ export class AdminReferralComponent implements OnInit {
   onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
-      'RegionCode': '100020',
+      'RegionCode': this.InsuranceId,
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -172,7 +174,7 @@ export class AdminReferralComponent implements OnInit {
       "LoginId": this.userDetails?.LoginId,
       "ProductId": this.sF.productName.value,
       "BranchCode": this.sF.branch.value,
-      "RegionCode":this.sF.regions.value
+      "RegionCode":this.InsuranceId
     };
     this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

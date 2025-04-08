@@ -4,7 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../../@theme/theme.module';
-import { NbAccordionModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbInputModule, NbListModule, NbPopoverModule, NbRouteTabsetModule, NbSearchModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbUserModule } from '@nebular/theme';
+import { NbAccordionModule, NbButtonModule, NbCalendarModule, NbCardModule, NbDatepickerModule, NbInputModule, NbListModule, NbPopoverModule, NbRouteTabsetModule, NbSearchModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbUserModule } from '@nebular/theme';
 import { DirectivesModule } from '../../../shared/Directives/directives.module';
 import { TablesModule } from '../../../shared/Tables/tables.module';
 import { PipesModule } from '../../../shared/pipes/pipes.module';
@@ -38,6 +38,8 @@ import { AdminPortfolioRoutingModule } from './adminportfolio-routing.module';
     NbListModule,
     NbAccordionModule,
     NbUserModule,
+    NbCalendarModule,
+    NbDatepickerModule.forRoot(),
     //RenewalPendingRoutingModule,
     NbInputModule,
     NbSelectModule,
