@@ -129,7 +129,7 @@ export class CustomerInfoComponent implements OnInit {
     this.customerForm = this.newQuotesService.customerForm;
 
     // Broker
-    if (this.userDetails?.UserType != "RSAIssuer") {
+    if (this.userDetails?.UserType != "Issuer") {
       this.loginId = this.userDetails?.LoginId;
       this.applicationId = '1';
       this.isIssuer = false;
@@ -137,7 +137,7 @@ export class CustomerInfoComponent implements OnInit {
     }
     // Issuer
 
-    if (this.userDetails?.UserType == "RSAIssuer") {
+    if (this.userDetails?.UserType == "Issuer") {
       this.loginId = this.endorsement?.LoginId || '';
       this.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;

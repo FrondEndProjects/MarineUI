@@ -505,14 +505,14 @@ export class NewOpenCoverComponent implements OnInit {
   onsubmit(){
     let valid = this.checkMandatories();
     if(valid){
-      if (this.userDetails?.UserType != "RSAIssuer") {
+      if (this.userDetails?.UserType != "Issuer") {
         this.loginId = this.userDetails?.LoginId;
         this.applicationId = '1';
   
       }
       // Issuer
   
-      if (this.userDetails?.UserType == "RSAIssuer"){
+      if (this.userDetails?.UserType == "Issuer"){
         this.loginId = this.endorsement?.LoginId || '';
         this.applicationId = this.userDetails.LoginId;
       }

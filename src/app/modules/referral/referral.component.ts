@@ -36,7 +36,7 @@ export class ReferralComponent implements OnInit {
       this.applicationId = this.userDetails?.LoginId;
     }
 
-    if (this.userDetails?.UserType != "RSAIssuer") {
+    if (this.userDetails?.UserType != "Issuer") {
       //this.loginId = this.userDetails?.LoginId;
       //this.applicationId = '1';
       this.isIssuer = false;
@@ -44,7 +44,7 @@ export class ReferralComponent implements OnInit {
     }
     // Issuer
 
-    if (this.userDetails?.UserType == "RSAIssuer"){
+    if (this.userDetails?.UserType == "Issuer"){
       //this.loginId = this.endorsement?.LoginId || '';
       //.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;

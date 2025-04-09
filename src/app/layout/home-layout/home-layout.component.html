@@ -1,13 +1,9 @@
 <ngx-one-column-layout>
   <!-- <nb-menu tag="menu" [items]="menu" appendTo="body" class="horizontal-menu mb-3"></nb-menu> -->
-  <nb-menu 
-  tag="menu"
-  [items]="menu"
-  [autoCollapse]="false"
-  appendTo="body"
-  class="horizontal-menu mb-3">
-</nb-menu>
-
+  <nb-menu  tag="menu" [items]="menu" [autoCollapse]="true" (click)="onMenuItemClick($event)" appendTo="body" class="horizontal-menu mb-3">
+    
+  </nb-menu>
   <router-outlet></router-outlet>
+  <h2>Collapse 5</h2>
 </ngx-one-column-layout>
 <!-- <ngx-one-column-layout> -->

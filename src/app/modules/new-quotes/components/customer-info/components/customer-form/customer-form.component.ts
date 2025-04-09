@@ -176,7 +176,7 @@ export class CustomerFormComponent implements OnInit {
   getCustomerAltList(modal){
    
     this.tableData = [];
-    // if (this.userDetails?.UserType == "RSAIssuer"){
+    // if (this.userDetails?.UserType == "Issuer"){
     //   this.loginId = this.userDetails.LoginId;
     //   this.applicationId = ''
     // }
@@ -257,7 +257,7 @@ export class CustomerFormComponent implements OnInit {
     let valid = this.checkMandatories();
     let LoginId:any
     if(valid){
-      if (this.userDetails?.UserType != "RSAIssuer") {
+      if (this.userDetails?.UserType != "Issuer") {
         this.loginId = this.userDetails?.LoginId;
         LoginId = this.userDetails?.LoginId;
         this.applicationId = '1';
@@ -266,7 +266,7 @@ export class CustomerFormComponent implements OnInit {
       }
       // Issuer
   
-      if (this.userDetails?.UserType == "RSAIssuer"){
+      if (this.userDetails?.UserType == "Issuer"){
         this.loginId = this.endorsement?.LoginId || '';
         //this.loginId = this.customerInfoComponent.brokercallcode;
         LoginId = this.customerInfoComponent.brokercallcode;

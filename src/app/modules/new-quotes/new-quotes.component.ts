@@ -57,7 +57,7 @@ export class NewQuotesComponent implements OnInit {
       this.applicationId = this.userDetails.LoginId;
     }
 
-    if (this.userDetails?.UserType =="RSAIssuer"){
+    if (this.userDetails?.UserType =="Issuer"){
       this.isIssuer = true;
     }
 

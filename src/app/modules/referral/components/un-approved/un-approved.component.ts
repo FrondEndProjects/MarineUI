@@ -46,7 +46,7 @@ export class UnApprovedComponent implements OnInit {
     this.routerBaseLink = this.userDetails?.routerBaseLink;
 
 
-    if (this.userDetails?.UserType != "RSAIssuer") {
+    if (this.userDetails?.UserType != "Issuer") {
       //this.loginId = this.userDetails?.LoginId;
       //this.applicationId = '1';
       this.isIssuer = false;
@@ -54,7 +54,7 @@ export class UnApprovedComponent implements OnInit {
     }
     // Issuer
 
-    if (this.userDetails?.UserType == "RSAIssuer"){
+    if (this.userDetails?.UserType == "Issuer"){
       //this.loginId = this.endorsement?.LoginId || '';
       //.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;

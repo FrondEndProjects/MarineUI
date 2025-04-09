@@ -109,7 +109,7 @@ export class SearchComponent implements OnInit {
 
       "OpenCoverNo":this.OpenCover?.value,
       "LoginId":this.loginId,
-      "Issuer":this.userDetails?.UserType == 'RSAIssuer'? this.userDetails?.LoginId : '',
+      "Issuer":this.userDetails?.UserType == 'Issuer'? this.userDetails?.LoginId : '',
       "SearchValue":this.sF.enterData?.value,
       "ProductId":this.productId,
       "SearchBy":this.sF.searchBy?.value,

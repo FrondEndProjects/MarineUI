@@ -20,7 +20,6 @@ export class HomeLayoutComponent implements OnInit {
   ) {
     this.menu = borkerNavItems;
     this.menuService.onItemClick()
-      .pipe(filter(({ tag }) => tag === 'menu'))
       .subscribe(({ item }) => {
         this.toggleMenu(item);
       });
@@ -38,6 +37,21 @@ export class HomeLayoutComponent implements OnInit {
     //   }
     // });
 
+  }
+  onMenuItemClick(e): void {
+    let entry = this.menu.find(ele=>ele.title==e.target.outerText);
+    if(entry){if(entry['expanded'] == true) entry['expanded'] = false;}
+    else{
+      for(let obj of this.menu){
+        if(obj.children){
+          let subEntry = obj.children.find(ele=>ele.title==e.target.outerText);
+          if(subEntry){obj['expanded'] = false;}
+        }
+      }
+    }
+    // for(let obj of this.menu){
+    //  if(obj['expanded'] == true) obj['expanded'] = false;
+    // }
   }
   setMenuSection() {
     if (this.userDetails.UserType == 'admin') {

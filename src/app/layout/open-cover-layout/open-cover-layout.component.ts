@@ -41,18 +41,24 @@ export class OpenCoverLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.setMenuSection();
     this.onHeaderDetails();
 
   }
   onMenuItemClick(e): void {
-    console.log(e);
-    
-    console.log(e.target.className== 'ng-tns-c78-8 ng-star-inserted active');
-if(e.target.className== 'ng-tns-c78-8 ng-star-inserted active')
-    this.isMenuCollapsed = false; 
-    // alert(event.target.attributes.aria-expanded.value)
+    let entry = this.menu.find(ele=>ele.title==e.target.outerText);
+    if(entry){if(entry['expanded'] == true) entry['expanded'] = false;}
+    else{
+      for(let obj of this.menu){
+        if(obj.children){
+          let subEntry = obj.children.find(ele=>ele.title==e.target.outerText);
+          if(subEntry){obj['expanded'] = false;}
+        }
+      }
+    }
+    // for(let obj of this.menu){
+    //  if(obj['expanded'] == true) obj['expanded'] = false;
+    // }
   }
   setMenuSection() {
     if (this.userDetails.UserType == 'admin') {

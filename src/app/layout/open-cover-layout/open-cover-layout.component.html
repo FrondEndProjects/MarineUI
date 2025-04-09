@@ -1,5 +1,6 @@
 <ngx-one-column-layout>
-    <nb-menu tag="menu" [items]="menu" [autoCollapse]="true"  appendTo="body" class="horizontal-menu mb-3"></nb-menu>
+    <nb-menu tag="menu" [items]="menu" [autoCollapse]="true" (click)="onMenuItemClick($event)" appendTo="body" class="horizontal-menu mb-3"></nb-menu>
+    
     <app-opencover-header-info *ngIf="productId != '3'" [headerDetails]="headerDetails" class="m-2"></app-opencover-header-info>
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </ngx-one-column-layout>
