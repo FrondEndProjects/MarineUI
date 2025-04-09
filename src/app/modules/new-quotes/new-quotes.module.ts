@@ -36,7 +36,6 @@ import { NbThemeModule, NbLayoutModule} from '@nebular/theme';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
-
 @NgModule({
   declarations: [
     NewQuotesComponent,
@@ -91,7 +90,6 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     CurrencyPipe,
     NewQuotesService,
     FilterPipe
-     
     // { provide: NgbDateAdapter, useClass: CustomAdapter },
     // { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
   ],

@@ -408,4 +408,27 @@ export class NewQuotesService {
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }
+
+  onPostDocumentMethodSync( UrlLink: string,file,): Observable<any[]> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    // formData.append('Req ', JSON.stringify(ReqObj));
+    // this.cookieService.set(
+    //     'XSRF-TOKEN',
+    //     this.getToken(),
+    //     1,
+    //     '/',
+    //     'localhost',
+    //     false,
+    //     'Strict',
+    // );
+    let headers = new HttpHeaders();
+    headers = headers.append(
+        'Cache-Control',
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+    );
+    return this.http
+        .post<any>(UrlLink, formData, { headers: headers })
+        .pipe(catchError(this.handleError));
+}
 }

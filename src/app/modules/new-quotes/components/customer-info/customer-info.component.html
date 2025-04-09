@@ -1,4 +1,3 @@
-
 <ng-container *ngIf="userDetails?.UserType =='admin' && opencoverno">
   <ul class="list-group">
     <li class="list-group-item list-group-item-primary">
@@ -18,31 +17,47 @@
   </ul>
 </ng-container>
 <div class="maan-card customPadding">
-  <div class="maan-card-header">
-      <!-- <div class="form-heading-number">
-        3
-      </div> -->
+  <!-- <ng-container>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+      <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
+      <div  class="imag-card my-3"  appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
+        (click)="doc.click()">
+        <div>
+          <div class="center">
+            <b class="text-dark">
+              <i class="far fa-images"></i> Drag or Click</b>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-md-3"></div>
+    </div>
+  </ng-container> -->
+  <ng-container>
+    <div class="maan-card-header">
       <div class="row">
         <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
-          <!-- Customer Information -->
         </div>
         <div class="col-md-4 col-lg-2 col-4 col-xl-4 offset-4 text-end" *ngIf="quoteNo">
           Quote No - {{quoteNo}}
         </div>
       </div>
-  </div>
-  <div class="maan-card-body">
-    <ng-container *ngIf="isIssuer && userDetails?.UserType !='admin'">
-      <app-broker-form></app-broker-form>
-    </ng-container>
+    </div>
+    <div class="maan-card-body">
+      <ng-container *ngIf="isIssuer && userDetails?.UserType !='admin'">
+        <app-broker-form></app-broker-form>
+      </ng-container>
       <app-customer-form></app-customer-form>
       <app-quote-form></app-quote-form>
       <app-bank-form></app-bank-form>
-  </div>
-  <div class="maan-card-footer">
-    <ng-container><!--*ngIf="userDetails?.UserType != 'RSAIssuer'"-->
-      <app-back-btn></app-back-btn>
-    </ng-container>
-    <button nbButton (click)="onSaveQuote()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
-  </div>
+    </div>
+    <div class="maan-card-footer">
+      <ng-container>
+        <app-back-btn></app-back-btn>
+      </ng-container>
+      <button nbButton (click)="onSaveQuote()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+    </div>
+  </ng-container>
 </div>

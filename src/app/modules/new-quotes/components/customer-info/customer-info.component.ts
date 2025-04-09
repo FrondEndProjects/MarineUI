@@ -16,6 +16,8 @@ import { BankFormComponent } from './components/bank-form/bank-form.component';
 import * as EnabledList from '../../../../enabledFields.json';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
+import Swal from 'sweetalert2';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-customer-info',
@@ -41,7 +43,7 @@ export class CustomerInfoComponent implements OnInit {
   public dropBankList: any[] = [];
   public dropGoodsOfCateList: any[] = [];
   public dropCurrencyList: any;
-  public dropPremiumCurrencyList :any;
+  public dropPremiumCurrencyList: any;
   public dropPackageDescList: any[] = [];
   public dropPartialShipList: any[] = [];
   public dropSettlingAgentList: any[] = [];
@@ -55,8 +57,8 @@ export class CustomerInfoComponent implements OnInit {
 
   public editQuoteData: any;
   public referenceNo: any = '';
-  public headerDetails:any;
-  public endorsementSelected:any;
+  public headerDetails: any;
+  public endorsementSelected: any;
   public premiumDetails: any;
   public submitted: boolean = false;
   public isFormGroub: boolean = false;
@@ -71,16 +73,19 @@ export class CustomerInfoComponent implements OnInit {
   @ViewChild(BrokerFormComponent) brokerFormComponent!: BrokerFormComponent;
 
 
-  public OpenCover:any='';
+  public OpenCover: any = '';
   public endorsement: any;
-  public quotesType:any='';
-  public WithCertifi:any='';
-  public routerBaseLink:any;
-  QuoteStatus: string ="QE";
-  broCode: any;quoteNo:any=null;
+  public quotesType: any = '';
+  public WithCertifi: any = '';
+  public routerBaseLink: any;
+  QuoteStatus: string = "QE";
+  broCode: any; quoteNo: any = null;
   brokercallcode: any;
   opencoverno: any;
-  editSection: boolean=false;
+  editSection: boolean = false;
+  imageUrl: any;
+  uploadDocuments: any;
+  quote: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -90,33 +95,33 @@ export class CustomerInfoComponent implements OnInit {
     private menuService: NbMenuService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private newQuotesComponent:NewQuotesComponent,
+    private newQuotesComponent: NewQuotesComponent,
     private dateAdapter: NgbDateAdapter<string>,
     private sessionStorageService: SessionStorageService
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-      
-    
+
+
     this.userDetails = this.userDetails?.LoginResponse;
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
     this.quotesType = sessionStorage.getItem('quotesType');
     this.referenceNo = sessionStorage.getItem('ReferenceNo');
-    if(this.referenceNo==null){
+    if (this.referenceNo == null) {
       sessionStorage.removeItem('QuoteStatus')
     }
     this.WithCertifi = sessionStorage.getItem('WithCertifi');
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
-    console.log('Opecover Product Ids',this.OpenCover)
-    if(this.OpenCover){
-      this.opencoverno =  this.OpenCover?.value;
+    console.log('Opecover Product Ids', this.OpenCover)
+    if (this.OpenCover) {
+      this.opencoverno = this.OpenCover?.value;
       console.log('Open COvers Testinggsss')
-      if(this.OpenCover?.name == 'adminReferral'){
-            this.productId = this.OpenCover?.productId;
-      } 
+      if (this.OpenCover?.name == 'adminReferral') {
+        this.productId = this.OpenCover?.productId;
+      }
     }
     this.routerBaseLink = this.userDetails?.routerBaseLink;
-    if(sessionStorage.getItem('QuoteStatus')) this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
+    if (sessionStorage.getItem('QuoteStatus')) this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
     this.customerForm = this.newQuotesService.customerForm;
     this.quoteForm = this.newQuotesService.quoteForm;
     this.bankForm = this.newQuotesService.bankForm;
@@ -132,17 +137,17 @@ export class CustomerInfoComponent implements OnInit {
     }
     // Issuer
 
-    if (this.userDetails?.UserType == "RSAIssuer"){
+    if (this.userDetails?.UserType == "RSAIssuer") {
       this.loginId = this.endorsement?.LoginId || '';
       this.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;
     }
 
     if (this.referenceNo) {
-      console.log('referenceNo',this.referenceNo)
+      console.log('referenceNo', this.referenceNo)
       this.onEditQuoteDetails();
     }
-    else{
+    else {
       this.brokerForm.reset();
       this.quoteForm.reset();
       this.customerForm.reset();
@@ -233,10 +238,10 @@ export class CustomerInfoComponent implements OnInit {
     });
     this.onHeaderDetails();
     this.onendorsementSelected();
-    if(this.userDetails.UserType =='Broker'){
+    if (this.userDetails.UserType == 'Broker') {
       this.brokerFormComponent?.onChangeBroker;
       this.customerFormComponent?.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
-      }
+    }
   }
 
 
@@ -255,9 +260,9 @@ export class CustomerInfoComponent implements OnInit {
   }
 
 
-  checkCustomerList(brokerCode){
+  checkCustomerList(brokerCode) {
     this.loginId = brokerCode;
-    this.brokercallcode =brokerCode;
+    this.brokercallcode = brokerCode;
     this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {
@@ -271,16 +276,16 @@ export class CustomerInfoComponent implements OnInit {
         if (data?.Message === 'Success') {
           this.editQuoteData = data?.Result;
           this.editSection = true;
-          if(this.editQuoteData?.OpenCoverNo){
+          if (this.editQuoteData?.OpenCoverNo) {
             const opencover = {
-              'name':'adminReferral',
-              'value':this.editQuoteData?.OpenCoverNo,
-              "productId":this.editQuoteData?.ProductCode
+              'name': 'adminReferral',
+              'value': this.editQuoteData?.OpenCoverNo,
+              "productId": this.editQuoteData?.ProductCode
             }
             this.OpenCover = opencover;
-             sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+            sessionStorage.setItem('OpenCover', JSON.stringify(opencover));
           }
-          this.sessionStorageService.set('coverId',this.editQuoteData?.QuoteDetails?.TransportDetails?.CoverCode);
+          this.sessionStorageService.set('coverId', this.editQuoteData?.QuoteDetails?.TransportDetails?.CoverCode);
 
           this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
           const customerDetails = this.editQuoteData?.CustomerDetails;
@@ -292,10 +297,10 @@ export class CustomerInfoComponent implements OnInit {
           //this.broCode=this.editQuoteData?.BrokerCode;
           //console.log('kkkkkkkkkkkkkk',this.broCode)
           this.brokerF.borker.setValue(this.editQuoteData?.BrokerCode);
-          if(this.userDetails.UserType !='Broker'){
+          if (this.userDetails.UserType != 'Broker') {
             this.brokerFormComponent?.onChangeBroker();
           }
-          
+
           //this.customerFormComponent.onGetCustomerList(this.broCode);
           this.customerF.title.setValue(customerDetails?.Title);
           this.customerF.name.setValue(customerDetails?.Name);
@@ -324,9 +329,9 @@ export class CustomerInfoComponent implements OnInit {
           this.bankF.blAwbLrRrDate.setValue(this.newQuotesService.ngbDateFormatt(lcBankDetails?.AwbDate));
           this.bankF.sailingDate.setValue(this.newQuotesService.ngbDateFormatt(lcBankDetails?.SailingDate));
 
-          console.log('EndTypeId to Know',this.editQuoteData.EndtTypeId )
+          console.log('EndTypeId to Know', this.editQuoteData.EndtTypeId)
 
-          if(this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral =='Approved'){
+          if (this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral == 'Approved') {
 
             for (var control in this.customerForm.controls) {
               this.customerForm.controls[control].disable();
@@ -335,16 +340,16 @@ export class CustomerInfoComponent implements OnInit {
             for (var control in this.quoteForm.controls) {
               this.quoteForm.controls[control].disable();
             }
-            if( this.sessionStorageService.sessionStorgaeModel.referral !='Approved'){
+            if (this.sessionStorageService.sessionStorgaeModel.referral != 'Approved') {
               for (var control in this.bankForm.controls) {
                 this.bankForm.controls[control].disable();
               }
             }
 
-            if(this.editQuoteData.EndtTypeId){
+            if (this.editQuoteData.EndtTypeId) {
               this.onCheckDisabledFileds(this.editQuoteData.EndtTypeId);
             }
-          }else{
+          } else {
             for (var control in this.customerForm.controls) {
               this.customerForm.controls[control].enable();
 
@@ -362,15 +367,15 @@ export class CustomerInfoComponent implements OnInit {
       (err) => { },
     );
   }
-  onendorsementSelected(){
-    var urlLink:any = `${this.ApiUrl1}api/endorsement/selected`;
+  onendorsementSelected() {
+    var urlLink: any = `${this.ApiUrl1}api/endorsement/selected`;
     const reqData = {
-      "ReferenceNo":this.referenceNo,
-      "Result":false
+      "ReferenceNo": this.referenceNo,
+      "Result": false
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log('header',data);
+        console.log('header', data);
         this.endorsementSelected = data?.Result;
       },
       (err) => { },
@@ -408,24 +413,24 @@ export class CustomerInfoComponent implements OnInit {
   }
   onSaveQuote() {
     this.submitted = true;
-    let issuerId:any = '',loginId=null;
+    let issuerId: any = '', loginId = null;
 
     // Broker
     if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
       this.brokerCode = this.userDetails.AgencyCode;
-      if(this.editSection) {
+      if (this.editSection) {
         loginId = this.editQuoteData?.LoginId;
         issuerId = '';
       }
       else {
         loginId = this.loginId;
-        issuerId ='';
+        issuerId = '';
       }
     }
     // Issuer
     if (this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User') {
       this.brokerCode = this.brokerF.borker.value;
-      if(this.editSection) {
+      if (this.editSection) {
         loginId = this.editQuoteData?.LoginId;
         issuerId = this.editQuoteData?.Issuer;
       }
@@ -436,8 +441,8 @@ export class CustomerInfoComponent implements OnInit {
 
     }
     let exposureValue = null;
-    if(this.quoteF.exposureOfShipment.value!=null && this.quoteF.exposureOfShipment.value!=''){
-      exposureValue = this.quoteF.exposureOfShipment.value.replace(',','');
+    if (this.quoteF.exposureOfShipment.value != null && this.quoteF.exposureOfShipment.value != '') {
+      exposureValue = this.quoteF.exposureOfShipment.value.replace(',', '');
     }
     const urlLink = `${this.ApiUrl1}quote/save`;
     const reqData = {
@@ -456,7 +461,7 @@ export class CustomerInfoComponent implements OnInit {
         'PoBox': this.customerF.poBox.value,
         'Title': this.customerF.title.value,
         'VatApplicable': null,
-        'Code':this.customerF.Code.value,
+        'Code': this.customerF.Code.value,
         'VatRegNo': this.customerF.customerVat.value,
       },
       'Executive': '5',
@@ -470,7 +475,7 @@ export class CustomerInfoComponent implements OnInit {
         'BankOthers': this.bankF.lcBankDesc.value,
         'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
         'LcNo': this.bankF.lcNumber.value,
-        'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/") ,
+        'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/"),
       },
       'LoginId': loginId,
       'LoginUserType': this.userDetails.UserType,
@@ -481,7 +486,7 @@ export class CustomerInfoComponent implements OnInit {
           {
             'ConsignedFrom': this.bankF.consignedForm.value,
             'ConsignedTo': this.bankF.consignedTo.value,
-            'Fragile': this.quoteF.fragileYN.value ,
+            'Fragile': this.quoteF.fragileYN.value,
             'GoodsCategoryCode': this.quoteF.goodsCategory.value,
             'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
             'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
@@ -490,13 +495,13 @@ export class CustomerInfoComponent implements OnInit {
             'InvoiceNo': this.bankF.invoiceNumber.value,
             'PoDescription': this.bankF.poPiNumber.value,
             'PolicyExcessDescription': this.quoteF.excessDescription.value,
-            
+
           },
         ],
         'CurrencyCode': this.quoteF.currency.value,
         'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
         'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
-        'PremiumCurrencyName':this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
+        'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
         'CurrencyValue': this.quoteF.currencyValue.value,
         'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
         'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
@@ -504,7 +509,7 @@ export class CustomerInfoComponent implements OnInit {
         'ExpiryDate': '',
         'ExposureOfShipment': exposureValue,
         'FinalizeYn': this.editQuoteData?.FinalizeYn,
-        'InceptionDate':this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
+        'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
         'IncoTerms': this.quoteF.incoterms.value,
         'PackageCode': this.quoteF.packageDescription.value,
         'PackageName': this.getCodeDescription(this.dropPackageDescList, this.quoteF.packageDescription.value),
@@ -538,33 +543,33 @@ export class CustomerInfoComponent implements OnInit {
           'OriginWarehouseYn': this.quoteF.originatingWarehouse.value,
           'Via': this.quoteF.via.value,
           "StoragePeriodYn": this.quoteF.StoragePeriodYn.value,
-          "TranshipmentYn":this.quoteF.TranshipmentYN.value,
-          'UCRNumber':this.quoteF.UCRNumber.value
+          "TranshipmentYn": this.quoteF.TranshipmentYN.value,
+          'UCRNumber': this.quoteF.UCRNumber.value
         },
         'VesselDetails': {
           'IHSLRORIMO': '',
           'ImoNumber': '',
           'NameString': '',
           'ShipsCategory': '',
-          'VesselCode':  this.quoteF.VesselId.value,
+          'VesselCode': this.quoteF.VesselId.value,
           'VesselDeclareYN': 'N',
           'VesselName': this.quoteF.conveyanceVesselName.value,
           'VesselSearchBy': '',
           'exNameString': '',
           'exshipsCategory': '',
           'ihslrorimo': '',
-          'VesselYear':this.quoteF.ManfctureYear.value
+          'VesselYear': this.quoteF.ManfctureYear.value
         },
-        'VoyageNo':this.quoteF.voyageNumber.value,
+        'VoyageNo': this.quoteF.voyageNumber.value,
         //'VoyageNo':"",
         'WarAndSrccYn': this.quoteF.warSrcc.value,
         'WarOnLandYn': this.quoteF.warOnLand.value,
-       
+
 
       },
       'ReferenceNo': this.referenceNo,
     };
-    console.log("Opencover Value",this.OpenCover?.value)
+    console.log("Opencover Value", this.OpenCover?.value)
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
@@ -605,12 +610,26 @@ export class CustomerInfoComponent implements OnInit {
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         this.headerDetails = data?.Result;
-        console.log('Header Details',this.headerDetails);
+        console.log('Header Details', this.headerDetails);
       },
       (err) => { },
     );
   }
 
+
+  onUploadDocument(event: any, eventType: string) {
+
+    const fileList = event.target.files;
+      let url = 'http://139.59.23.162:3434/extract'
+      this.newQuotesService.onPostDocumentMethodSync(url,fileList[0]).subscribe(
+        (data: any) => {
+          let d = data?.Result;
+         
+        },
+        (err) => { },
+      );
+
+  }
 
 
 }

@@ -5,8 +5,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./toolbar-columns.layout.scss'],
   template: `
     <nb-layout windowMode>
-      <nb-layout-header>
-        <ngx-header></ngx-header>
+      <nb-layout-header fixed>
+        <ngx-header class="top-bar"></ngx-header>
+        <ng-content select="nb-menu"></ng-content>
       </nb-layout-header>
 
       <nb-layout-column>
