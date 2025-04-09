@@ -435,7 +435,7 @@ export class CustomerInfoComponent implements OnInit {
         issuerId = this.editQuoteData?.Issuer;
       }
       else {
-        loginId = this.loginId
+        loginId = this.brokerF.borker.value
         issuerId = this.userDetails.LoginId;
       }
 
