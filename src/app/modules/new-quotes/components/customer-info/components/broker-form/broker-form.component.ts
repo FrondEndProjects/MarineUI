@@ -66,7 +66,9 @@ export class BrokerFormComponent implements OnInit {
     if(this.brokerF.channel.value!=null && this.brokerF.channel.value!='null'){
       this.onChangeChannel('direct');
       console.log('YYYYYYYYYYYYYYYYYYY',this.brokerF.channel.value);
-    } 
+    }
+    else{
+      this.brokerF.channel.setValue('Broker');this.onChangeChannel('direct');} 
    
   }
 
@@ -103,18 +105,19 @@ export class BrokerFormComponent implements OnInit {
           if(this.productId=='11' && type!='change'){
             //alert("Broker Change Function")
               this.headerDetails = this.opencoverComponent?.headerDetails;
+              console.log("Entry",this.headerDetails);
               if(this.headerDetails){
                   let entry = this.dropBrokerList.find(ele=>ele.CodeDescription==this.headerDetails?.BrokerName)
-                  console.log("Entry",entry);
+                  
                   if(this.productId=='11'){
                   this.brokerForm.controls['borker'].setValue(entry.Code);
-                  this.brokerForm.controls['channel'].setValue('broker');
+                  this.brokerForm.controls['channel'].setValue('Broker');
                   this.brokerForm.controls['channel'].disable();
-                  this.brokerForm.controls['borker'].disable();
+                  this.brokerForm.controls['borker'].disable(); 
                   }
                   else{
                     this.brokerForm.controls['borker'].setValue(entry.Code);
-                    this.brokerForm.controls['channel'].setValue('');
+                    //this.brokerForm.controls['channel'].setValue('');
                     this.brokerForm.controls['channel'].enable();
                     this.brokerForm.controls['borker'].enable();
                   }
