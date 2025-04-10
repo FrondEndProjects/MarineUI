@@ -89,6 +89,7 @@ export class CustomerInfoComponent implements OnInit {
   imageUrl: any;
   uploadDocuments: any;
   quote: any;
+  UploadReferenceNo: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -508,7 +509,7 @@ export class CustomerInfoComponent implements OnInit {
             'GoodsCategoryCode': this.quoteF.goodsCategory.value,
             'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
             'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
-            'InsuredValue': this.quoteF.insuredValue.value?.replace(/,/g, ''),
+            'InsuredValue': this.quoteF.insuredValue?.value?.toString().replace(/,/g, ''),
             'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
             'InvoiceNo': this.bankF.invoiceNumber.value,
             'PoDescription': this.bankF.poPiNumber.value,
@@ -586,6 +587,7 @@ export class CustomerInfoComponent implements OnInit {
 
       },
       'ReferenceNo': this.referenceNo,
+      "UploadReferenceNo":this.UploadReferenceNo
     };
     console.log("Opencover Value", this.OpenCover?.value)
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -703,8 +705,15 @@ export class CustomerInfoComponent implements OnInit {
             'remarks': ''
           }
           const urlLink = `${this.ApiUrl1}file/upload`;
-          this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe((data: any) => {
-            console.log(data);
+          this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe(
+            (data: any) => {
+                if (data) {
+                  this.UploadReferenceNo = data.Message
+
+                }
+              (err) => {
+                // Swal.fire('Error', 'Failed to upload document.', 'error');
+              }
             
           });
         }
