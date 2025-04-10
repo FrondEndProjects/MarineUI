@@ -424,10 +424,11 @@ export class CustomerInfoComponent implements OnInit {
   onSaveQuote() {
     this.submitted = true;
     let issuerId: any = '', loginId = null;
-
+    let brokerCode=null;
     // Broker
     if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
       this.brokerCode = this.userDetails.AgencyCode;
+      brokerCode =this.userDetails.AgencyCode;
       if (this.editSection) {
         loginId = this.editQuoteData?.LoginId;
         issuerId = '';
@@ -439,12 +440,19 @@ export class CustomerInfoComponent implements OnInit {
     }
     // Issuer
     if (this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User') {
-      this.brokerCode = this.brokerF.borker.value;
+      
       if (this.editSection) {
         loginId = this.editQuoteData?.LoginId;
         issuerId = this.editQuoteData?.Issuer;
+        let brokerList = this.newQuotesService.BrokerList;
+        let entry = brokerList.find(ele=>ele.Code==this.brokerF.borker.value)
+        if(entry){brokerCode = entry?.CodeValue}
       }
       else {
+        
+        let brokerList = this.newQuotesService.BrokerList;
+        let entry = brokerList.find(ele=>ele.Code==this.brokerF.borker.value)
+        if(entry){brokerCode = entry?.CodeValue}
         loginId = this.brokerF.borker.value
         issuerId = this.userDetails.LoginId;
       }
@@ -457,7 +465,7 @@ export class CustomerInfoComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}quote/save`;
     const reqData = {
       'BranchCode': this.userDetails?.BranchCode,
-      'BrokerCode': this.brokerCode,
+      'BrokerCode': brokerCode,
       'ChannelType': this.brokerF.channel.value,
       'CustomerDetails': {
         'Address1': this.customerF.Address1.value,

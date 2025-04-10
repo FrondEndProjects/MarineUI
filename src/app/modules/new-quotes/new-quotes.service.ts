@@ -61,7 +61,7 @@ export class NewQuotesService {
 
   public quoteEditData: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
   getQuoteEditData = this.quoteEditData.asObservable();
-
+  BrokerList:any[]=[];
 
   public customerForm: FormGroup;
   public quoteForm: FormGroup;
