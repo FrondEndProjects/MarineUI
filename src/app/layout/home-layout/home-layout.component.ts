@@ -39,24 +39,36 @@ export class HomeLayoutComponent implements OnInit {
 
   }
   onMenuItemClick(e): void {
-    console.log("Event",e,this.menu)
-    let entry = this.menu.find(ele=>ele.title==e.target.outerText);
-    if(entry){
-      if(entry['expanded'] == true) entry['expanded'] = false;
-      else entry['expanded'] = true;
-    }
-    else{
-      for(let obj of this.menu){
-        if(obj.children){
-          let subEntry = obj.children.find(ele=>ele.title==e.target.outerText);
-          if(subEntry){obj['expanded'] = false;}
-        }
+
+    for(let entry of this.menu){
+      if(entry.title==e.target.outerText){
+
+      }
+      else if(entry.children){
+          if(entry.children.some(ele=>ele.title==e.target.outerText)){
+            entry['expanded'] = false;
+          }
+          else  entry['expanded'] = false;
       }
     }
-    console.log("Event Last",e,this.menu)
-    // for(let obj of this.menu){
-    //  if(obj['expanded'] == true) obj['expanded'] = false;
+
+
+    // console.log("Event",e,this.menu)
+    // let entry = this.menu.find(ele=>ele.title==e.target.outerText);
+    // if(entry){
+    //   if(entry['expanded'] == true) entry['expanded'] = false;
+    //   else entry['expanded'] = true;
     // }
+    // else{
+    //   for(let obj of this.menu){
+    //     if(obj.children){
+    //       let subEntry = obj.children.find(ele=>ele.title==e.target.outerText);
+    //       if(subEntry){obj['expanded'] = false;}
+    //     }
+    //   }
+    // }
+    // console.log("Event Last",e,this.menu)
+   
   }
   setMenuSection() {
     if (this.userDetails.UserType == 'admin') {
