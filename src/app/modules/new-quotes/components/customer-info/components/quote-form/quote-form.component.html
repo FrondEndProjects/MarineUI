@@ -9,7 +9,7 @@
       <div class="input-control-container">
         <label class="input-form-label">Mode of transport<span class="text-required">*</span></label>
         <ng-select placeholder="Select" class="input-form-select" formControlName="modeOfTransport" [items]="dropTransportList"
-          bindValue="Code" bindLabel="CodeDescription" (change)="onGetCoverDropdownList()">
+          bindValue="Code" bindLabel="CodeDescription" (change)="onGetCoverDropdownList(1)">
         </ng-select>
         <div class="input-form-error" *ngIf="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
           <div *ngIf="quoteF.modeOfTransport.errors?.required" class="error-text">
@@ -22,7 +22,7 @@
       <div class="input-control-container">
         <label class="input-form-label">Cover<span class="text-required">*</span></label>
         <ng-select placeholder="Select" class="input-form-select" formControlName="cover" [items]="dropCoverList" bindValue="Code"
-          bindLabel="CodeDescription" (change)="onGetCarriageDropdownList()">
+          bindLabel="CodeDescription" (change)="onGetCarriageDropdownList(null,null)">
         </ng-select>
         <div class="input-form-error" *ngIf="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
           <div *ngIf="quoteF.cover.errors?.required" class="error-text">
@@ -338,7 +338,7 @@
         <div class="input-control-container">
           <label class="input-form-label">Incoterms<span class="text-required">*</span></label>
           <ng-select placeholder="Select" class="input-form-select" formControlName="incoterms" [items]="dropIncotermsList"
-            bindValue="Code" bindLabel="CodeDescription" (change)="onGetIncotermsPrecentDropdownList()">
+            bindValue="Code" bindLabel="CodeDescription" (change)="onGetIncotermsPrecentDropdownList(1)">
           </ng-select>
           <div class="input-form-error" *ngIf="(quoteF.incoterms.errors && submitted) || (!quoteF.incoterms.valid && quoteF.incoterms.touched)">
             <div *ngIf="quoteF.incoterms.errors?.required" class="error-text">
@@ -351,7 +351,7 @@
         <div class="input-control-container">
           <label class="input-form-label">Incoterms<i>(Percentage)</i><span class="text-required">*</span></label>
           <ng-select placeholder="Select" class="input-form-select" formControlName="incotermsPercentage"
-            [items]="dropIncotermsPrecentList" bindValue="Code" bindLabel="CodeDescription" (change)="onGetToleranceDropdownList()">
+            [items]="dropIncotermsPrecentList" bindValue="Code" bindLabel="CodeDescription" (change)="onGetToleranceDropdownList(1)">
           </ng-select>
           <div class="input-form-error" *ngIf="(quoteF.incotermsPercentage.errors && submitted) || (!quoteF.incotermsPercentage.valid && quoteF.incotermsPercentage.touched)">
             <div *ngIf="quoteF.incotermsPercentage.errors?.required" class="error-text">

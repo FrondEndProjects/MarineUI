@@ -855,7 +855,8 @@
     </ng-template>
   </div>
   <div class="maan-card-footer">
-    <app-back-btn></app-back-btn>
+    <!-- <app-back-btn></app-back-btn> -->
+    <button nbButton (click)="back('back')" shape="round" size="small" status="warning" class="mx-2">Back</button>
     <button nbButton (click)="onUpdatePremiumInformation()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
   </div>
 </div>

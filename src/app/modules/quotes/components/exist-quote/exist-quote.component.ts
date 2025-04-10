@@ -230,7 +230,8 @@ export class ExistQuoteComponent implements OnInit {
 
     // }
     //  sessionStorage.setItem('OpenCover',JSON.stringify(data));
-    this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+    let value ='edit'
+    this.router.navigate([`/${this.routerBaseLink}/new-quotes`],{ queryParams: { value } });
   }
   onGetReasonDropdown(){
     

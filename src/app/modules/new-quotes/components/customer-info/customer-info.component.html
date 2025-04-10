@@ -17,25 +17,80 @@
   </ul>
 </ng-container>
 <div class="maan-card customPadding">
-  <!-- <ng-container>
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-      <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
-      <div  class="imag-card my-3"  appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
-        (click)="doc.click()">
-        <div>
-          <div class="center">
-            <b class="text-dark">
-              <i class="far fa-images"></i> Drag or Click</b>
+  <ng-container *ngIf="showselectCard && setDocvalue!='back' && setDocvalue!='edit'">
+    <div class="row"></div>
+    <div class="row mt-3 mb-3">
+      <div class="col-md-2"></div>
+      <div class="col-md-4">
+        <div class="flex-center" style="margin-left: 125px;">
+          <div class="product-container" style="cursor: pointer;">
+            <div class="card text-center" style="max-width: fit-content; padding: 5px;" (click)="onSelectType(1)">
+              <img style="width: 176px; height: 116px;" src="../../../../../assets/images/fileUpload.png" alt="Card"
+                title="Card" />
+              <p class="m-2"><b>File Upload</b></p>
+            </div>
           </div>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="flex-center">
+          <div class="product-container" style="cursor: pointer;">
+            <div class="card text-center" style="max-width: fit-content; padding: 5px;" (click)="onSelectType(2)">
+              <img style="width: 176px; height: 116px;" src="../../../../../assets/images/manualFill.jpg" alt="Card"
+                title="Card" />
+              <p class="m-2"><b>New Quote</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+
     </div>
+
+  </ng-container>
+  <ng-container *ngIf="showFileUpload == true && showNewQuote==false">
+    <div class="row">
+      <div class="col-12">
+        <div class="middle-line">
+         File Upload
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-3"></div>
+      <!-- <div class="col-md-6">
+        <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
+        <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
+          (click)="doc.click()">
+          <div>
+            <div class="center">
+              <b class="text-dark">
+                <i class="far fa-images"></i> Drag or Click</b>
+            </div>
+          </div>
+        </div>
+      </div> -->
+     
+      <div class="col-md-6">
+        <input style="display: none;"  accept=".pdf"  type="file" (change)="onUploadDocument($event, 'click')" #doc>
+        <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event, 'drop')"
+          (click)="doc.click()">
+          <div>
+            <div class="center">
+              <b class="text-dark">
+                <i class="far fa-images"></i> Drag or Click
+              </b>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3 text-end">
+        <button mat-raised-button  style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
+      </div>
     </div>
-  </ng-container> -->
-  <ng-container>
+  </ng-container>
+  <ng-container  *ngIf="this.showNewQuote">
     <div class="maan-card-header">
       <div class="row">
         <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">

@@ -852,7 +852,9 @@ export class PremiumInfoComponent implements OnInit {
     }*/
     
   }
-
+  back(value: string): void {
+    this.router.navigate([`${this.routerBaseLink}/new-quotes/customer-info`], { queryParams: { value } });
+  }
   onNext() {
     this.router.navigate([`${this.routerBaseLink}/new-quotes/policy-generate`]);
   }

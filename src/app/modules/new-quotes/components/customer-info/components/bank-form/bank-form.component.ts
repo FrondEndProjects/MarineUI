@@ -28,6 +28,7 @@ export class BankFormComponent implements OnInit {
       pattern: new RegExp('\[a-zA-Z0-9]'),
     },
   };
+  docUploadedData: any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -40,6 +41,7 @@ export class BankFormComponent implements OnInit {
     this.loginId = this.customerInfoComponent?.loginId;
     this.applicationId = this.customerInfoComponent?.applicationId;
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
+    this.docUploadedData = JSON.parse(sessionStorage.getItem('docUploadData'));
     if(this.OpenCover?.name){
       if(this.OpenCover?.name == 'adminReferral'){
             this.productId = this.OpenCover?.productId;
@@ -59,6 +61,10 @@ export class BankFormComponent implements OnInit {
    this.onGetBankList();
   }
 
+  setDocUploadData(){
+    this.bankForm.controls['invoiceNumber']?.setValue(this.docUploadedData?.InvoiceNumber);
+    this.bankForm.controls['invoiceDate'].setValue(this.newQuotesService.ngbDateFormatt(this.docUploadedData?.InvoiceDate));
+  }
   onGetBankList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/lcbank`;
     const reqData = {
@@ -72,6 +78,7 @@ export class BankFormComponent implements OnInit {
         if (data?.Message === 'Success') {
           this.dropBankList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropBankList, 'bank');
+          this.setDocUploadData();
         }
       },
       (err) => { },
@@ -83,13 +90,13 @@ export class BankFormComponent implements OnInit {
 
   closeDialog() {
     this.showDialog = false;
-    this.bankForm.controls['blAwbLrRrNumber'].setValue(null)
-    this.bankForm.controls['blAwbLrRrDater'].setValue(null)
-    this.bankForm.controls['sailingDate'].setValue(null)
-    this.bankForm.controls['invoiceNumber'].setValue(null)
-    this.bankForm.controls['poPiNumber'].setValue(null)
-    this.bankForm.controls['consignedTo'].setValue(null)
-    this.bankForm.controls['consignedForm'].setValue(null)
+    this.bankForm.controls['blAwbLrRrNumber']?.setValue(null)
+    this.bankForm.controls['blAwbLrRrDater']?.setValue(null)
+    this.bankForm.controls['sailingDate']?.setValue(null)
+    this.bankForm.controls['invoiceNumber']?.setValue(null)
+    this.bankForm.controls['poPiNumber']?.setValue(null)
+    this.bankForm.controls['consignedTo']?.setValue(null)
+    this.bankForm.controls['consignedForm']?.setValue(null)
   
   }
   openDialog1(){
