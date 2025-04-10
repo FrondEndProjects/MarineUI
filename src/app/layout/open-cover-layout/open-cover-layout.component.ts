@@ -46,19 +46,32 @@ export class OpenCoverLayoutComponent implements OnInit {
 
   }
   onMenuItemClick(e): void {
-    let entry = this.menu.find(ele=>ele.title==e.target.outerText);
-    if(entry){if(entry['expanded'] == true) entry['expanded'] = false;}
-    else{
-      for(let obj of this.menu){
-        if(obj.children){
-          let subEntry = obj.children.find(ele=>ele.title==e.target.outerText);
-          if(subEntry){obj['expanded'] = false;}
-        }
+    // console.log("Event",e,e.target.outerText,this.menu)
+    for(let entry of this.menu){
+      if(entry.title==e.target.outerText){
+
+      }
+      else if(entry.children){
+          if(entry.children.some(ele=>ele.title==e.target.outerText)){
+            entry['expanded'] = false;
+          }
+          else  entry['expanded'] = false;
       }
     }
-    // for(let obj of this.menu){
-    //  if(obj['expanded'] == true) obj['expanded'] = false;
+    // let entry = this.menu.find(ele=>ele.title==e.target.outerText);
+    // if(entry){
+    //   if(entry.expanded){
+    //   }
     // }
+    // else{
+    //   for(let obj of this.menu){
+    //     if(obj.children){
+    //         obj['expanded'] = false;
+    //     }
+    //   }
+    // }
+    console.log("Event Last",e,this.menu)
+   
   }
   setMenuSection() {
     if (this.userDetails.UserType == 'admin') {

@@ -32,7 +32,10 @@ export class CustomerInfoComponent implements OnInit {
   public quoteForm: FormGroup;
   public bankForm: FormGroup;
   public brokerForm: FormGroup;
-
+  showFileUpload: boolean = false;
+  showNewQuote: boolean = false;
+  showselectCard: boolean = true;
+  setDocvalue: any;
   public userDetails: any;
   public productId: any;
   public loginId: any;
@@ -173,6 +176,13 @@ export class CustomerInfoComponent implements OnInit {
         this.bankForm.controls[control].enable();
       }
     }
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.setDocvalue = params['value'];
+      if(this.setDocvalue =='back' || this.setDocvalue=='edit'){
+        this.showNewQuote = true;
+      }
+      
+    });
   }
 
   ngOnInit(): void {
@@ -617,19 +627,78 @@ export class CustomerInfoComponent implements OnInit {
   }
 
 
+  
   onUploadDocument(event: any, eventType: string) {
+    let file: File;
 
-    const fileList = event.target.files;
-      let url = 'http://139.59.23.162:3434/extract'
-      this.newQuotesService.onPostDocumentMethodSync(url,fileList[0]).subscribe(
+    if (eventType === 'click') {
+      file = event.target.files[0];
+    } else if (eventType === 'drop') {
+      file = event[0]; // assuming drop returns an array of files
+    }
+
+    // Check if file exists and is a PDF
+    if (file && file.type === 'application/pdf') {
+      const url = 'http://139.59.23.162:3434/extract';
+      this.newQuotesService.onPostDocumentMethodSync(url, file).subscribe(
         (data: any) => {
-          let d = data?.Result;
-         
+          if (data.data) {
+            sessionStorage.setItem('docUploadData', JSON.stringify(data.data));
+            this.showFileUpload = false;
+            this.showNewQuote = true;
+            this.showselectCard = false;
+           this. onUploadSubmit(file)
+          }
         },
-        (err) => { },
+        (err) => {
+          Swal.fire('Error', 'Failed to upload document.', 'error');
+        }
       );
+    } else {
+      Swal.fire('Invalid File', 'Please upload a PDF file only.', 'error');
+    }
+  }
+
+  onSelectType(value) {
+    if (value == 1 || value == null || value == undefined) {
+      this.showFileUpload = true;
+      this.showNewQuote = false;
+    }
+    if (value == 2) {
+      this.showNewQuote = true;
+      this.showFileUpload = false;
+      sessionStorage.removeItem('docUploadData');
+    }
+    if (value) {
+      this.showselectCard = false
+    }
+
+
+  }
+  goBack() {
+    this.showFileUpload = false;
+    this.showNewQuote = false;
+    this.showselectCard = true;
 
   }
 
+  onUploadSubmit(doc) {
+    console.log(doc);
+
+          let ReqObj = {
+            "docType": '8',
+            "url": doc,
+            "fileName": doc.name,
+            'productid': this.sessionStorageService.sessionStorgaeModel.productId,
+            'loginid': this.userDetails?.LoginId,
+            'quoteNo': this.premiumDetails?.QuoteDetails?.QuoteNo ? this.premiumDetails?.QuoteDetails?.QuoteNo:null,
+            'remarks': ''
+          }
+          const urlLink = `${this.ApiUrl1}file/upload`;
+          this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe((data: any) => {
+            console.log(data);
+            
+          });
+        }
 
 }

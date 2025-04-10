@@ -39,8 +39,12 @@ export class HomeLayoutComponent implements OnInit {
 
   }
   onMenuItemClick(e): void {
+    console.log("Event",e,this.menu)
     let entry = this.menu.find(ele=>ele.title==e.target.outerText);
-    if(entry){if(entry['expanded'] == true) entry['expanded'] = false;}
+    if(entry){
+      if(entry['expanded'] == true) entry['expanded'] = false;
+      else entry['expanded'] = true;
+    }
     else{
       for(let obj of this.menu){
         if(obj.children){
@@ -49,6 +53,7 @@ export class HomeLayoutComponent implements OnInit {
         }
       }
     }
+    console.log("Event Last",e,this.menu)
     // for(let obj of this.menu){
     //  if(obj['expanded'] == true) obj['expanded'] = false;
     // }
@@ -63,16 +68,16 @@ export class HomeLayoutComponent implements OnInit {
 
   }
   toggleMenu(clickedItem: any) {
-    const parent = this.menu.find(item => item.children && item.children.includes(clickedItem));
+    // const parent = this.menu.find(item => item.children && item.children.includes(clickedItem));
 
-    this.menu = this.menu.map(item => {
-      if (item === parent) {
-        return { ...item, expanded: true };
-      }
-      if (item.children) {
-        return { ...item, expanded: false };
-      }
-      return item;
-    });
+    // this.menu = this.menu.map(item => {
+    //   if (item === parent) {
+    //     return { ...item, expanded: true };
+    //   }
+    //   if (item.children) {
+    //     return { ...item, expanded: false };
+    //   }
+    //   return item;
+    // });
   }
 }

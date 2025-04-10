@@ -38,6 +38,7 @@ export class CustomerFormComponent implements OnInit {
   poBoxError:boolean=false;customerVat:any=null;Address1:any=null;
   Address2:any=null;endorsement:any=null;emailIdError:boolean=false;
   isIssuer: boolean=false;emailId:any=null;mobileNoError:boolean=false;
+  docUploadedData:any;
   constructor(
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
@@ -57,7 +58,7 @@ export class CustomerFormComponent implements OnInit {
       } 
     }
     this.broCode=this.customerInfoComponent?.broCode
-
+    this.docUploadedData = JSON.parse(sessionStorage.getItem('docUploadData'));
     console.log('llllllllllllllll',this.loginId)
     this.applicationId = this.customerInfoComponent?.applicationId;
     if(sessionStorage.getItem('loginId')){
@@ -136,7 +137,9 @@ export class CustomerFormComponent implements OnInit {
         if (data?.Message === 'Success') {
           this.dropCityList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCityList, 'city');
-
+          if (this.docUploadedData) {
+            this.setDocUploadData();
+          }
         }
       },
       (err) => { },
@@ -335,6 +338,12 @@ export class CustomerFormComponent implements OnInit {
     if(this.mobileNo==null || this.mobileNo=='' || this.mobileNo==undefined){i+=1;this.mobileNoError=true;}
     if(this.emailId==null || this.emailId=='' || this.emailId==undefined){i+=1;this.emailIdError=true;}
     return i==0;
+  }
+  setDocUploadData() {
+    this.customerF.name.setValue(this.docUploadedData.ImporterContactName);
+    this.customerF.mobileNo.setValue(this.docUploadedData.ImporterTelephone.substring(3));
+    this.customerF.Address1.setValue(this.docUploadedData.ImporterAddress);
+    this.customerF.email.setValue(this.docUploadedData.ImporterEmail);
   }
 }
 
