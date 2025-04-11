@@ -270,8 +270,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     let d = this.docUploadedData?.ModeOfTransport == 'Sea transport' ? this.dropTransportList[0]?.Code : this.dropTransportList[1]?.Code
     this.quoteF.modeOfTransport.setValue(d);
     this.quoteF.UCRNumber.setValue(this.docUploadedData?.UCRNumber);
-    let Orgcountry = this.dropOriginCountryList.filter(e => e.ShortCode == this.docUploadedData.CountryOfSupply);
-    this.quoteF.originatingCountry.setValue(Orgcountry[0]?.CodeValue)
+    let Orgcountry = this.dropOriginCountryList.filter(e => e.ShortCode === this.docUploadedData.CountryOfSupply);
+    this.quoteF.originatingCountry.setValue(Orgcountry[0]?.Code)
     let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
     this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
     let curr = this.dropCurrencyList.filter(e => e.ShortCode == this.docUploadedData?.Currency)

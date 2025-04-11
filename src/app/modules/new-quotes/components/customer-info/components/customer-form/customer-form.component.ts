@@ -349,7 +349,7 @@ export class CustomerFormComponent implements OnInit {
     return i == 0;
   }
   setDocUploadData() {
-    this.customerF.name.setValue(this.docUploadedData.ImporterContactName);
+    this.customerF.name.setValue(this.docUploadedData.ImporterName);
     this.customerF.mobileNo.setValue(this.docUploadedData.ImporterTelephone.substring(3));
     this.customerF.Address1.setValue(this.docUploadedData.ImporterAddress);
     this.customerF.email.setValue(this.docUploadedData.ImporterEmail);
