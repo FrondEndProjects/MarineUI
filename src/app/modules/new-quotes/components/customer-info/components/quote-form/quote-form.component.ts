@@ -8,6 +8,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 import { Subscription } from 'rxjs';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { log } from 'node:console';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-quote-form',
@@ -44,6 +45,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public dropCurrencyList: any[] = [];
   public dropPremiumCurrencyList: any[] = [];
   public dropGoodsOfCateList: any[] = [];
+  editCover:any
+  editmodeOfCarriage:any
   vesselSearchList: any[] = [];
   public warStatus: any = ''; closeResult: any = null;
   subscription: Subscription; public tableData: any[] = [];
@@ -71,12 +74,14 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   manyr: any;
   vesselId: any;
   docUploadedData: any;
+  setDocvalue: any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
     private customerInfoComponent: CustomerInfoComponent,
     private dateAdapter: NgbDateAdapter<string>,
     private modalService: NgbModal,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.newQuotesService.getDropDownList(this.dropPartialShipList, 'partialShip');
     this.quoteForm = this.customerInfoComponent.quoteForm;
@@ -98,6 +103,12 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     }
     this.loginId = this.customerInfoComponent?.loginId;
     this.applicationId = this.customerInfoComponent?.applicationId;
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.setDocvalue = params['value'];
+      
+      
+    });
 
   }
 
@@ -171,6 +182,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.onGetCarriageDropdownList(null,null);
     this.quoteF.cover.setValue(transportDetails?.CoverCode);
     this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
+    this.editCover = transportDetails?.CoverCode;
+    this.editmodeOfCarriage = transportDetails?.ModeOfCarriageCode;
     this.quoteF.originatingCountry.setValue(transportDetails?.OriginCountryCode);
     this.onGetOriginCityDropdownList();
     this.quoteF.originatingCity.setValue(transportDetails?.OriginCityCode);
@@ -245,7 +258,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     if (this.dropDestinaCountryList.length == 0) this.onGetDestinaCountryDropdownList();
     if (this.dropIncotermsList.length == 0) this.onGetIncotermsDropdownList();
     if (this.dropToleranceList.length == 0) this.onGetToleranceDropdownList(1);
-    if (this.dropCurrencyList.length == 0) this.onGetCurrencyDropdownList();
+    if (this.dropCurrencyList.length == 0) this.onGetCurrencyDropdownList(1);
     if (this.dropPremiumCurrencyList.length == 0) this.onGetPremiumDropdownList(1);
     if (this.dropGoodsOfCateList.length == 0) this.onGetGoodsOfCategoryDropdownList(1);
     if (this.dropGoodsOfCateList.length == 0 && this.openCoverNo != null && this.quoteF.warSrcc.value == 'N') this.onCheckWarYesOrNo();
@@ -273,11 +286,15 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     if (cover.length != 0) {
       this.onGetCoverDropdownList(cover[0].Code)
     }
+    // this.quoteF.cover.setValue(transportDetails?.CoverCode);
+    // this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
     this.quoteF.goodsDescript.setValue(this.docUploadedData?.GoodsDescription);
+    let currency = this.dropCurrencyList.filter(e => e.ShortCode == this.docUploadedData?.Currency)
     this.onGetGoodsOfCategoryDropdownList(2);
     this.onGetToleranceDropdownList(2);
     this.onGetPremiumDropdownList(2);
     this.onGetPackageDescDropdownList(2);
+    this.onGetCurrencyDropdownList(currency[0].CodeValue);
     // let curDate = new Date();
     // this.quoteF.policyStartDate.setValue(this.newQuotesService.ngbDateFormatt(curDate))
   }
@@ -438,10 +455,12 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropCoverList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCoverList, 'cover');
-          // if(this.docUploadedData){
-          //   this.quoteF.cover.setValue(this.dropCoverList[0].Code)
-          //   this.onGetCarriageDropdownList(modeOfTransport,this.dropCoverList[0].Code)
-          // }
+          if(this.docUploadedData){
+            this.quoteF.cover.setValue(this.editCover)
+            
+    
+            this.onGetCarriageDropdownList(modeOfTransport,this.editCover)
+          }
         }
       },
       (err) => { },
@@ -477,7 +496,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
           this.dropCarriageList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCarriageList, 'carriage');
           if(this.docUploadedData && mode!=null && cover!=null){
-          this.quoteF.modeOfCarriage.setValue(this.dropCarriageList[0].Code)
+          this.quoteF.modeOfCarriage.setValue(this.editmodeOfCarriage)
+
           }
         }
       },
@@ -564,7 +584,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropDestinaCityList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
-          if(this.docUploadedData){
+          if(this.docUploadedData && this.setDocvalue !='back' && this.setDocvalue !='edit'){
             this.setDocUploadedData();
           }
 
@@ -893,7 +913,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     );
   }
 
-  onGetCurrencyDropdownList() {
+  onGetCurrencyDropdownList(value) {
     const urlLink = `${this.ApiUrl1}quote/dropdown/currency`;
     const reqData = {
       'BranchCode': this.userDetails?.BelongingBranch,
@@ -906,6 +926,9 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropCurrencyList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCurrencyList, 'currencyList');
+          if(this.docUploadedData && value !=1){
+            this.quoteF.currencyValue.setValue(value);
+          }
 
         }
       },
