@@ -431,12 +431,12 @@ export class CustomerInfoComponent implements OnInit {
       this.brokerCode = this.userDetails.AgencyCode;
       brokerCode =this.userDetails.AgencyCode;
       if (this.editSection) {
-        alert(0)
+   
         loginId = this.editQuoteData?.LoginId;
         issuerId = '';
       }
       else {
-        alert(1)
+      
         loginId = this.loginId;
         issuerId = '';
       }
@@ -445,7 +445,7 @@ export class CustomerInfoComponent implements OnInit {
     if (this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User') {
       
       if (this.editSection) {
-        alert(2)
+     
         loginId = this.brokerF.borker.value;
         issuerId = this.editQuoteData?.Issuer;
         let brokerList = this.newQuotesService.BrokerList;
@@ -453,7 +453,7 @@ export class CustomerInfoComponent implements OnInit {
         if(entry){brokerCode = entry?.CodeValue}
       }
       else {
-        alert(3)
+      
         let brokerList = this.newQuotesService.BrokerList;
         let entry = brokerList.find(ele=>ele.Code==this.brokerF.borker.value)
         if(entry){brokerCode = entry?.CodeValue}
@@ -466,8 +466,7 @@ export class CustomerInfoComponent implements OnInit {
     if (this.quoteF.exposureOfShipment.value != null && this.quoteF.exposureOfShipment.value != '') {
       exposureValue = this.quoteF.exposureOfShipment.value.replace(',', '');
     }
-    alert(loginId)
-    alert(issuerId)
+ 
     const urlLink = `${this.ApiUrl1}quote/save`;
     const reqData = {
       'BranchCode': this.userDetails?.BranchCode,
