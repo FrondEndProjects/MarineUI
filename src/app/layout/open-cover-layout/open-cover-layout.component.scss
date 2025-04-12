@@ -48,3 +48,16 @@ nb-layout-header nav {
   overflow-x: auto;
   width: 100% !important;
 }
+
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  padding-top: 1rem;
+  background-color: #f8f9fa;
+}
+.sidebar .nav-link {
+  color: #333;
+}
+.sidebar .nav-link:hover {
+  background-color: #e2e6ea;
+}

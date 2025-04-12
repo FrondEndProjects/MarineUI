@@ -282,10 +282,11 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     if (this.docUploadedData?.Incoterm) {
       this.onGetIncotermsPrecentDropdownList(e[0].Code);
     }
-    let cover = this.dropTransportList.filter(e => e.CodeDescription == this.docUploadedData?.ModeOfTransport)
-    if (cover.length != 0) {
-      this.onGetCoverDropdownList(cover[0].Code)
-    }
+    // let cover = this.dropTransportList.filter(e => e.CodeDescription == d)
+    // alert(cover[0].Code)
+    // if (cover.length != 0) {
+      this.onGetCoverDropdownList(this.quoteF.modeOfTransport?.value)
+    // }
     // this.quoteF.cover.setValue(transportDetails?.CoverCode);
     // this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
     this.quoteF.goodsDescript.setValue(this.docUploadedData?.GoodsDescription);

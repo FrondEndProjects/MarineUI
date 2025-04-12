@@ -6,6 +6,7 @@ export const borkerNavItems: NbMenuItem[] = [
     title: 'New Quote',
     link: '/marine-opencover/new-quotes',
     icon: 'edit-2-outline',
+    expanded: false,
   },
   {
     title: 'Quote Register',
@@ -77,26 +78,31 @@ export const borkerNavItems: NbMenuItem[] = [
     title: 'Endorsement',
     link: '/marine-opencover/endorsement',
     icon: 'person-outline',
+    expanded: false,
   },
   {
     title: 'Customer',
     link: '/marine-opencover/customer/customer-grid',
     icon: 'person-outline',
+    expanded: false,
   },
   {
     title: 'Report',
     link: '/marine-opencover/report',
     icon: 'message-square-outline',
+    expanded: false,
   },
   {
     title: 'Copy Quote',
     link: '/marine-opencover/copy-quote',
     icon: 'clipboard-outline',
+    expanded: false,
   },
   {
     title: 'Search',
     link: '/marine-opencover/search',
     icon: 'search-outline',
+    expanded: false,
   },
 
 ];

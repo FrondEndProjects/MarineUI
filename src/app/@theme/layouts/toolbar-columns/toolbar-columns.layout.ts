@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   template: `
     <nb-layout windowMode>
       <nb-layout-header fixed>
-        <ngx-header class="top-bar"></ngx-header>
+        <ngx-header></ngx-header>
         <ng-content select="nb-menu"></ng-content>
       </nb-layout-header>
 

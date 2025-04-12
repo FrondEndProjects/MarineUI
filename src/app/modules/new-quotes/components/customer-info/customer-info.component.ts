@@ -90,6 +90,7 @@ export class CustomerInfoComponent implements OnInit {
   uploadDocuments: any;
   quote: any;
   UploadReferenceNo: any;
+  brList: any[] = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -105,7 +106,12 @@ export class CustomerInfoComponent implements OnInit {
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
 
-
+    // if(this.setDocvalue=='back' || this.setDocvalue=='edit'){
+    //   this.brList=  JSON.parse(sessionStorage.getItem('dropBrokerList'));
+    //  }
+    //  else{
+    //   this.brList =[]
+    //  }
     this.userDetails = this.userDetails?.LoginResponse;
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
@@ -124,6 +130,7 @@ export class CustomerInfoComponent implements OnInit {
         this.productId = this.OpenCover?.productId;
       }
     }
+
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     if (sessionStorage.getItem('QuoteStatus')) this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
     this.customerForm = this.newQuotesService.customerForm;
@@ -179,14 +186,15 @@ export class CustomerInfoComponent implements OnInit {
     }
     this.activatedRoute.queryParams.subscribe(params => {
       this.setDocvalue = params['value'];
-      if(this.setDocvalue =='back' || this.setDocvalue=='edit'){
+      if (this.setDocvalue == 'back' || this.setDocvalue == 'edit') {
         this.showNewQuote = true;
       }
-      
+
     });
   }
 
   ngOnInit(): void {
+    this.onChangeChannel('Direct')
 
     combineLatest(
       [
@@ -277,6 +285,7 @@ export class CustomerInfoComponent implements OnInit {
     this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {
+    this.onChangeChannel('Direct')
     const urlLink = `${this.ApiUrl1}quote/edit`;
     const reqData = {
       ReferenceNo: this.referenceNo,
@@ -307,7 +316,9 @@ export class CustomerInfoComponent implements OnInit {
           this.brokerFormComponent?.onChangeChannel('direct');
           //this.broCode=this.editQuoteData?.BrokerCode;
           //console.log('kkkkkkkkkkkkkk',this.broCode)
-          this.brokerF.borker.setValue(this.editQuoteData?.BrokerCode);
+          let e = this.brList.filter(e => e.CodeValue == this.editQuoteData?.BrokerCode)
+          console.log(this.brList);
+          this.brokerF.borker.setValue(e[0]?.Code);
           if (this.userDetails.UserType != 'Broker') {
             this.brokerFormComponent?.onChangeBroker();
           }
@@ -425,38 +436,38 @@ export class CustomerInfoComponent implements OnInit {
   onSaveQuote() {
     this.submitted = true;
     let issuerId: any = '', loginId = null;
-    let brokerCode=null;
+    let brokerCode = null;
     // Broker
     if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
       this.brokerCode = this.userDetails.AgencyCode;
-      brokerCode =this.userDetails.AgencyCode;
+      brokerCode = this.userDetails.AgencyCode;
       if (this.editSection) {
-   
+
         loginId = this.editQuoteData?.LoginId;
         issuerId = '';
       }
       else {
-      
+
         loginId = this.loginId;
         issuerId = '';
       }
     }
     // Issuer
     if (this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User') {
-      
+
       if (this.editSection) {
-     
+
         loginId = this.brokerF.borker.value;
         issuerId = this.editQuoteData?.Issuer;
         let brokerList = this.newQuotesService.BrokerList;
-        let entry = brokerList.find(ele=>ele.Code==this.brokerF.borker.value)
-        if(entry){brokerCode = entry?.CodeValue}
+        let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
+        if (entry) { brokerCode = entry?.CodeValue }
       }
       else {
-      
+
         let brokerList = this.newQuotesService.BrokerList;
-        let entry = brokerList.find(ele=>ele.Code==this.brokerF.borker.value)
-        if(entry){brokerCode = entry?.CodeValue}
+        let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
+        if (entry) { brokerCode = entry?.CodeValue }
         loginId = this.brokerF.borker.value
         issuerId = this.userDetails.LoginId;
       }
@@ -466,7 +477,7 @@ export class CustomerInfoComponent implements OnInit {
     if (this.quoteF.exposureOfShipment.value != null && this.quoteF.exposureOfShipment.value != '') {
       exposureValue = this.quoteF.exposureOfShipment.value.replace(',', '');
     }
- 
+
     const urlLink = `${this.ApiUrl1}quote/save`;
     const reqData = {
       'BranchCode': this.userDetails?.BranchCode,
@@ -591,7 +602,7 @@ export class CustomerInfoComponent implements OnInit {
 
       },
       'ReferenceNo': this.referenceNo,
-      "UploadReferenceNo":this.UploadReferenceNo
+      "UploadReferenceNo": this.UploadReferenceNo
     };
     console.log("Opencover Value", this.OpenCover?.value)
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -641,7 +652,7 @@ export class CustomerInfoComponent implements OnInit {
   }
 
 
-  
+
   onUploadDocument(event: any, eventType: string) {
     let file: File;
 
@@ -661,7 +672,7 @@ export class CustomerInfoComponent implements OnInit {
             this.showFileUpload = false;
             this.showNewQuote = true;
             this.showselectCard = false;
-           this. onUploadSubmit(file)
+            this.onUploadSubmit(file)
           }
         },
         (err) => {
@@ -699,27 +710,66 @@ export class CustomerInfoComponent implements OnInit {
   onUploadSubmit(doc) {
     console.log(doc);
 
-          let ReqObj = {
-            "docType": '8',
-            "url": doc,
-            "fileName": doc.name,
-            'productid': this.sessionStorageService.sessionStorgaeModel.productId,
-            'loginid': this.userDetails?.LoginId,
-            'quoteNo': this.premiumDetails?.QuoteDetails?.QuoteNo ? this.premiumDetails?.QuoteDetails?.QuoteNo:null,
-            'remarks': ''
-          }
-          const urlLink = `${this.ApiUrl1}file/upload`;
-          this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe(
-            (data: any) => {
-                if (data) {
-                  this.UploadReferenceNo = data.Message
+    let ReqObj = {
+      "docType": '8',
+      "url": doc,
+      "fileName": doc.name,
+      'productid': this.sessionStorageService.sessionStorgaeModel.productId,
+      'loginid': this.userDetails?.LoginId,
+      'quoteNo': this.premiumDetails?.QuoteDetails?.QuoteNo ? this.premiumDetails?.QuoteDetails?.QuoteNo : null,
+      'remarks': ''
+    }
+    const urlLink = `${this.ApiUrl1}file/upload`;
+    this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data) {
+          this.UploadReferenceNo = data.Message
 
-                }
-              (err) => {
-                // Swal.fire('Error', 'Failed to upload document.', 'error');
-              }
-            
-          });
         }
+        (err) => {
+          // Swal.fire('Error', 'Failed to upload document.', 'error');
+        }
+
+      });
+  }
+
+  onChangeChannel(type) {
+    let d
+    if (this.setDocvalue == 'back' || this.setDocvalue == 'edit') {
+      d = this.editQuoteData?.ChannelType
+    }
+    else {
+      d = this.brokerF.channel.value
+    }
+    if (type == 'change') {
+      this.brokerForm.controls['borker'].setValue('');
+    }
+    var urlLink: any = this.brokerF.channel.value == 'cash' ? `${this.ApiUrl1}quote/dropdown/cash` : `${this.ApiUrl1}quote/dropdown/broker`;
+    const reqData = {
+      "BranchCode": this.userDetails.BranchCode,
+      "BrokerCode": "",
+      "OriginationCountryCode": "",
+      "DestinationCountryCode": "",
+      "LoginId": this.loginId,
+      "ModeOfTransportCode": "",
+      "OpenCoverNo": this.OpenCover?.value,
+      "ProductId": this.productId,
+      "IncotermCode": "",
+      "IncotermPercent": "",
+      "CoverCode": "",
+      "ChannelType": d
+    }
+
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data?.Message === 'Success') {
+          this.brList = data?.Result;
+          // this.newQuotesService.BrokerList = data?.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
 
 }

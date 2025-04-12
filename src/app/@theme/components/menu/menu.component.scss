@@ -3,12 +3,9 @@
 @import '../../styles/themes';
 
 @include nb-install-component() {
-  .top-bar{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  } 
-  
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 
   .logo-container {
     display: flex;

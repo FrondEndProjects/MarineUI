@@ -9,6 +9,9 @@ import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../Auth/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { borkerNavItems } from '../../../layout/components/navbar/broker_nav';
+import { adminNavItems } from '../../../layout/components/navbar/admin_nav';
+// import { borkerNavItems } from '../components/navbar/broker_nav';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -19,7 +22,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public userDetails: any;
-  public userResponse: any;
+  public userResponse: any; menu: any[] = [];
   public AppConfig: any = (Mydatas as any).default;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
 
@@ -53,6 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   routerBaseLink: any; regionCode: any = null;
   loginId: any;
   userPicture: string;
+  ProductId: any;userType:any;
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
@@ -65,14 +69,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private sessionStorageService: SessionStorageService,
     protected bpService: NbMediaBreakpointsService, private http: HttpClient
   ) {
+   
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userResponse = this.userDetails?.LoginResponse;
+    this.ProductId = this.userResponse?.ProductId;
     this.regionCode = this.userResponse.RegionCode;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.Result.LoginId;
-
+    this.userType =this.userResponse?.UserType;
     this.userPicture = 'assets/images/userIcon.png'
+    // if(this.ProductId =='3') {
 
+      if(this.userType!='admin') this.menu = borkerNavItems;
+      else this.menu = adminNavItems;
+
+    // }
+    // if(this.ProductId =='3')
   }
 
   ngOnInit() {
@@ -112,7 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.sessionStorageService.clear();
           // this.authService.logout();
           // let encryptInfo = encodeURIComponent(CryptoJS.AES.encrypt(JSON.stringify(userDetails), 'secret key 123').toString());
-          //  location.href=`http://192.168.1.48:4600/#/auth/login`;
+          //  location.href=`http://192.168.1.48:5200/#/auth/login`;
           this.setLogout();
           this.reloadCurrentRoute();
         }
@@ -166,9 +178,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   }
+  checkChildren(rowData) {
+    if (rowData.children) {
+      return rowData.children.length != 0
+    }
+    else return false;
+  }
   onRoute() {
     this.router.navigate(['product-layout/product']);
 
+  }
+  onRedirectMenu(rowData) {
+    this.router.navigate([rowData.link]);
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -189,17 +210,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateHome() {
     this.menuService.navigateHome();
-    location.href = `http://192.168.1.42:4600/#/auth/login/product`;
+    location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
     return false;
   }
 
   reloadCurrentRoute() {
     // this.router.navigate([`/login`]);
-    location.href = `http://192.168.1.42:4600/#/auth/login`;
+    location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
   }
 
   homeRoute() {
-    location.href = `http://192.168.1.42:4600/#/auth/login/product`;
+    location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
   }
 
   setLogout() {
@@ -214,14 +235,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         sessionStorage.clear();
         localStorage.clear();
         this.authService.logout();
-        location.href = `http://192.168.1.42:4600/#/auth/login`;
+        location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
       },
       (err: any) => {
         console.log(err);
         sessionStorage.clear();
         localStorage.clear();
         this.authService.logout();
-        location.href = `http://192.168.1.42:4600/#/auth/login`;
+        location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
       },
     );
   }
@@ -232,5 +253,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this.http
       .post<any>(UrlLink, ReqObj, { headers: headers })
       .pipe(shareReplay());
+  }
+  checkCurrentRouting(){
+    let url = this.router.url;
+    return url!='/product-layout/opencover';
   }
 }

@@ -1,34 +1,59 @@
-<div class="header-container">
-  <div class="logo-container">
-    <!-- <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
-      <nb-icon icon="menu-2-outline"></nb-icon>
-    </a> -->
-    <a class="logo" href="#" (click)="navigateHome()" *ngIf="regionCode!='100020'"><img src="./assets/images/alliance-img-1.png" class="imgwid"></a>
-    <a href="#" (click)="navigateHome()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png" class="imgwid" ></a>
+<div class="top-bar">
+  <div class="header-container">
+    <div class="logo-container">
+      <!-- <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+        <nb-icon icon="menu-2-outline"></nb-icon>
+      </a> -->
+      <a class="logo" href="#" (click)="navigateHome()" *ngIf="regionCode!='100020'"><img
+          src="./assets/images/alliance-img-1.png" class="imgwid"></a>
+      <a href="#" (click)="navigateHome()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png"
+          class="imgwid"></a>
+    </div>
   </div>
-  <!-- <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
-    <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
-  </nb-select> -->
-</div>
+  <div class="header-container">
+    <nb-actions size="small">
+      <nb-action class="control-items" style="color: #fff !important" icon="home-outline"
+        (click)="homeRoute()"></nb-action>
+      <nb-action class="control-item">
+        <li class="dropdown" style="list-style-type: none !important;">
+          <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
+          <ng-container> &nbsp;&nbsp;&nbsp;&nbsp;</ng-container>
+        </li>
+        <!-- <nb-search type="rotate-layout"></nb-search> -->
+      </nb-action>
+      <!-- <nb-action class="control-items" icon="grid-outline" (click)="onRoute()"></nb-action> -->
+      <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+        <nb-user class="info-container" [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly"
+          [name]="userResponse?.LoginId" [picture]="userPicture" nbContextMenuTag="my-context-menu">
+        </nb-user>
+      </nb-action>
+    </nb-actions>
 
-<div class="header-container">
-  <nb-actions size="small">
-    <nb-action class="control-items" style="color: #fff !important" icon="home-outline" (click)="homeRoute()"></nb-action>
-    <nb-action class="control-item">
-      <li class="dropdown" style="list-style-type: none !important;">
-        <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
-        <ng-container > &nbsp;&nbsp;&nbsp;&nbsp;</ng-container>
-      </li>
-      <!-- <nb-search type="rotate-layout"></nb-search> -->
-    </nb-action>
-    <!-- <nb-action class="control-items" icon="grid-outline" (click)="onRoute()"></nb-action> -->
-    <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
-      <nb-user class="info-container" [nbContextMenu]="userMenu"
-               [onlyPicture]="userPictureOnly"
-               [name]="userResponse?.LoginId"
-               [picture]="userPicture"
-               nbContextMenuTag="my-context-menu">
-      </nb-user>
-    </nb-action>
-  </nb-actions>
+
+
+  </div>
+</div>
+<div  class="d-flex align-items-center" *ngIf="checkCurrentRouting()">
+  <div class="container">
+    <nav class="navmenu">
+      <ul>
+        <ng-container *ngFor="let row of menu">
+          <li *ngIf="!checkChildren(row)" (click)="onRedirectMenu(row)">
+            <a routerLinkActive="active"><nb-icon [icon]="row.icon"></nb-icon>&nbsp;{{row.title}}</a>
+            
+          </li>
+          <li *ngIf="checkChildren(row)" class="dropdown"><a><span> <nb-icon [icon]="row.icon"></nb-icon>&nbsp;{{row.title}} <nb-icon icon="arrow-ios-downward-outline"></nb-icon></span> <i
+                class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <ng-container *ngFor="let sub of row.children">
+                <li (click)="onRedirectMenu(sub)"><a> <nb-icon [icon]="sub.icon"></nb-icon>&nbsp;{{sub.title}}</a></li>
+              </ng-container>
+            </ul>
+          </li>
+        </ng-container>
+
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+  </div>
 </div>
