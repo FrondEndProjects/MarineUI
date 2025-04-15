@@ -73,7 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userResponse = this.userDetails?.LoginResponse;
     this.ProductId = this.userResponse?.ProductId;
-    this.regionCode = this.userResponse.RegionCode;
+    this.regionCode = this.userResponse.InsuranceId;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.Result.LoginId;
     this.userType =this.userResponse?.UserType;

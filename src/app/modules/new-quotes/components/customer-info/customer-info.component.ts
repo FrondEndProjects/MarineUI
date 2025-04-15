@@ -772,4 +772,8 @@ export class CustomerInfoComponent implements OnInit {
     );
   }
 
+  back(){
+    this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
+  }
+
 }

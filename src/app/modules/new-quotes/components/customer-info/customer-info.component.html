@@ -109,9 +109,7 @@
       <app-bank-form></app-bank-form>
     </div>
     <div class="maan-card-footer">
-      <ng-container>
-        <app-back-btn></app-back-btn>
-      </ng-container>
+      <button nbButton (click)="back()" shape="round" size="small" status="warning" class="mx-2">Back</button>
       <button nbButton (click)="onSaveQuote()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
     </div>
   </ng-container>
