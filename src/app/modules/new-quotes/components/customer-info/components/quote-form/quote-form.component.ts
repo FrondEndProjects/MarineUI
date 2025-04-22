@@ -528,12 +528,16 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   }
   onGetOriginCityDropdownList() {
     this.quoteF.originatingCity.setValue('');
-    const urlLink = `${this.ApiUrl1}quote/dropdown/originationcity`;
-    const reqData = {
-      'pvType': 'orgCity',
-      'OriginationCountryCode': this.quoteF.originatingCountry.value,
-      'BranchCode': this.userDetails?.BelongingBranch,
-    };
+    // const urlLink = `${this.ApiUrl1}quote/dropdown/originationcity`;
+    // const reqData = {
+    //   'pvType': 'orgCity',
+    //   'OriginationCountryCode': this.quoteF.originatingCountry.value,
+    //   'BranchCode': this.userDetails?.BelongingBranch,
+    // };
+    const urlLink = `${this.ApiUrl1}master/countryport/list`;
+      const reqData = {
+        'countryID': this.quoteF.originatingCountry.value
+      };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
 
@@ -573,12 +577,16 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   onGetDestinaCityDropdownList() {
     this.quoteF.destinationCity.setValue('');
     this.onGetSettlingAgenDropdownList();
-    const urlLink = `${this.ApiUrl1}quote/dropdown/destinationcity`;
-    const reqData = {
-      'pvType': 'destCity',
-      'BranchCode': this.userDetails?.BelongingBranch,
-      'DestinationCountryCode': this.quoteF.destinationCountry.value,
-    };
+    // const urlLink = `${this.ApiUrl1}quote/dropdown/destinationcity`;
+    // const reqData = {
+    //   'pvType': 'destCity',
+    //   'BranchCode': this.userDetails?.BelongingBranch,
+    //   'DestinationCountryCode': this.quoteF.destinationCountry.value,
+    // };
+    const urlLink = `${this.ApiUrl1}master/countryport/list`;
+      const reqData = {
+        'countryID': this.quoteF.destinationCountry.value
+      };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
 
