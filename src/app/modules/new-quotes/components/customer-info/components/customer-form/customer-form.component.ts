@@ -133,13 +133,18 @@ export class CustomerFormComponent implements OnInit {
     );
   }
   onGetCityDropdownList() {
-    const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
+    let countryId = this.userDetails?.OriginationCountryId;
+    const urlLink = `${this.ApiUrl1}master/countryport/list`;
     const reqData = {
-      'BranchCode': this.userDetails?.BelongingBranch,
-      'ProductId': this.productId,
-      'pvType': 'city',
-      'OpenCoverNo': this.openCoverNo,
+      'countryID': countryId
     };
+    // const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
+    // const reqData = {
+    //   'BranchCode': this.userDetails?.BelongingBranch,
+    //   'ProductId': this.productId,
+    //   'pvType': 'city',
+    //   'OpenCoverNo': this.openCoverNo,
+    // };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
