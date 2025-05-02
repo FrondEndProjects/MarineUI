@@ -134,7 +134,7 @@ export class ProtfolioGridComponent implements OnInit {
   onmenu(row,rowData,template){
     console.log('jjjjjjjjjjj',row)
     console.log('kkkkkkkk',rowData)
-      if(rowData=='Schedule' || rowData=='Policy Wordings')  this.getSchedulePdf(row,rowData);
+      if(rowData=='Schedule' || rowData=='Policy Wordings' || rowData=='AKI Document')  this.getSchedulePdf(row,rowData);
 
       if(rowData=='Documents'){
         this.OpenDocument(template,row)
@@ -270,10 +270,20 @@ export class ProtfolioGridComponent implements OnInit {
   
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;
-    ReqObj = {
-      "BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo": rowData.data?.QuoteNo
+    
+    if(type == 'AKI Document'){
+      ReqObj = {
+        // "QuoteNo": '100707'
+        "QuoteNo": rowData.data?.QuoteNo
+      }
     }
+    else{
+      ReqObj = {
+        "BranchCode": this.userDetails?.BranchCode,
+        "QuoteNo": rowData.data?.QuoteNo
+      }
+    }
+   
     if(type=='Schedule'){
       
        UrlLink = `${this.ApiUrl1}pdf/portalcertificate`;
@@ -281,6 +291,10 @@ export class ProtfolioGridComponent implements OnInit {
     else if(type == 'Policy Wordings'){
       type = 'PolicyWordings'
        UrlLink = `${this.ApiUrl1}pdf/policywording`;
+    }
+    else if(type == 'AKI Document'){
+      // type = 'PolicyWordings'
+       UrlLink = `${this.ApiUrl1}Integration/get/certificate`;
     }
       this.portfolioBrokerService.onPostMethodSync(UrlLink, ReqObj).subscribe(
         (data: any) => {
@@ -323,17 +337,33 @@ export class ProtfolioGridComponent implements OnInit {
       "BranchCode": this.userDetails?.BranchCode,
       "QuoteNo":row.QuoteNo
     }*/
-      if(Results){
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', Results);
-        link.setAttribute('download',rowData);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-       
-      }
-      
+   if(rowData =='AKI Document'){
+    if(Results){
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', Results.rObj.blobDownloadURL);
+      link.setAttribute('download',rowData);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+     
+    }
+    
+   }
+   else{
+    if(Results){
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', Results);
+      link.setAttribute('download',rowData);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+     
+    }
+    
+   }
+    
 
    
   }
@@ -433,6 +463,7 @@ export class ProtfolioGridComponent implements OnInit {
                   { name: 'Schedule' },
                   { name: 'Debit Note' },
                   { name: 'Credit Note' },
+                  { name: 'AKI Document' },
                   { name: 'Policy Wordings' },
                   { name: 'Documents' },
                 ]

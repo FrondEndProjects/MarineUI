@@ -236,7 +236,8 @@ export class NewQuotesService {
       StoragePeriodYn:['N'],
       TranshipmentYN:['N'],
       warOnLand: ['NO'],
-      via: [''],
+      via: [null],
+      TranshippingVia:[null],
       settlingAgent: [null],
       others: [''],
 

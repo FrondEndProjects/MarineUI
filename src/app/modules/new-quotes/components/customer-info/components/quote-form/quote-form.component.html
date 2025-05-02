@@ -170,7 +170,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <div *ngIf="this.insurenceId!='100020'" class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Via</label>
         <div class="input-form-box">
@@ -207,6 +207,43 @@
         </div>
       </div>
     </div>
+
+
+
+    <!-- <div class="col-12 col-md-4 col-lg-4 mt-1" >
+      <div class="input-control-container">
+        <label class="input-form-label">Via<span></span></label>
+        <ng-select placeholder="Select" class="input-form-select" formControlName="via"
+          [items]="dropTranshippingList" bindValue="Code" bindLabel="CodeDescription">
+        </ng-select>
+
+      </div>
+    </div> -->
+
+    <div class="col-12 col-md-4 col-lg-4" *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y' ">
+      <div class="input-control-container">
+        <label class="input-form-label">Transhipping</label>
+        <div class="currency-flex">
+          <div class="currrency-drop-vss input-form-box">
+            <input type="text" class="input-form-control2 with-icon"
+            formControlName="via" placeholder="Enter Transhipping">
+          </div>
+          <div class="currrency-dollar">
+            <button class="btn btn-secondary" (click)="Transhipping(myModal3)"
+              style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
+          </div>
+          <div class="input-form-box" style="margin-left:-20px!important;width:40px !important">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
 
     <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
       <div class="input-control-container">
@@ -583,6 +620,33 @@
       <button type="button" class="btn btn-warning" *ngIf="vesselSearchList.length!=0"
         (click)="clearSearch()">Clear</button>
       <button type="button" class="btn btn-primary" (click)="submits(modal)">Submit</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #myModal3 let-modal>
+  <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Transhipping Search</h5>
+      <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+      <ng-container>
+        <div class="col-12 col-md-6 col-lg-6 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
+          <div class="input-control-container">
+            <label class="input-form-label">Transhipping<span></span></label>
+            <ng-select placeholder="Select" class="input-form-select" 
+              [items]="dropTranshippingList" [(ngModel)]="viaSearch" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="ShortCode">
+            </ng-select>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal"
+        (click)="modal.dismiss('Cross click')">Close</button>
+      <button type="button" class="btn btn-primary" (click)="submitsvia(modal)">Submit</button>
     </div>
   </div>
 </ng-template>

@@ -972,3 +972,10 @@ nb-user .user-name {
     display: block;
   }
 }
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: var(--bs-modal-padding);
+  height: 339px !important;
+}

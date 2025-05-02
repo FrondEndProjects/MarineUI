@@ -540,6 +540,28 @@ export class PolicyGenerateComponent implements OnInit {
 
     })
   }
+  onDownloadAKIDoc(){
+    const urlLink = `${this.ApiUrl1}Integration/get/certificate`;
+    const reqData = {
+      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo
+      // "QuoteNo": '100707'
+    }
+    
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      if(data?.Result){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.rObj.blobDownloadURL);
+        link.setAttribute('download', this.premiumDetails?.QuoteDetails?.QuoteNo);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+       
+      }
+      
+
+    })
+  }
   getBack(){
     this.policySection = false;this.draftSection=false;
     this.schedule=false;

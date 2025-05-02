@@ -431,10 +431,15 @@
               <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadCredit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
                 Credit Note Pdf</button>
             </ng-container>
-          <ng-container *ngIf="porttype != 'MOP'">
+          <ng-container>
+            <!-- <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+              AKI DOCUMENT</button> -->
           <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadDebit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
           Debit Note Pdf</button>
           </ng-container>
+          <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection"
+          (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+          AKI DOCUMENT</button>
         <button nbButton shape="round" size="small" status="success" class="mx-2"  *ngIf="draftSection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
         <button nbButton shape="round" size="small" status="primary" class="mx-2"  (click)="onNavigate()">Proceed</button>
       </div>

@@ -270,6 +270,10 @@ uploadDocuments: any[]=[];
       type = 'PolicyWordings'
        UrlLink = `${this.ApiUrl1}pdf/policywording`;
     }
+    else if(type == 'AKI Document'){
+      // type = 'PolicyWordings'
+       UrlLink = `${this.ApiUrl1}Integration/get/certificate`;
+    }
       this.newQuotesService.onPostMethodSync(UrlLink, ReqObj).subscribe(
         (data: any) => {
           let Results=data.Result

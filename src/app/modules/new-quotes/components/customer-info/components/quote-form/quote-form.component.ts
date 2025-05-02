@@ -45,8 +45,9 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public dropCurrencyList: any[] = [];
   public dropPremiumCurrencyList: any[] = [];
   public dropGoodsOfCateList: any[] = [];
-  editCover:any
-  editmodeOfCarriage:any
+  dropTranshippingList: any[] = [];
+  editCover: any
+  editmodeOfCarriage: any
   vesselSearchList: any[] = [];
   public warStatus: any = ''; closeResult: any = null;
   subscription: Subscription; public tableData: any[] = [];
@@ -71,8 +72,10 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   newshow: any = false;
   newVesselName: any = '';
   vesselid: any;
+  insurenceId: any
   manyr: any;
   vesselId: any;
+  viaSearch: any
   docUploadedData: any;
   setDocvalue: any;
   constructor(
@@ -87,6 +90,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     this.quoteForm = this.customerInfoComponent.quoteForm;
     this.userDetails = this.customerInfoComponent?.userDetails;
     this.productId = this.customerInfoComponent?.productId;
+    this.insurenceId = this.userDetails?.InsuranceId
     console.log('Productidssss', this.userDetails);
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.docUploadedData = JSON.parse(sessionStorage.getItem('docUploadData'));
@@ -106,8 +110,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
     this.activatedRoute.queryParams.subscribe(params => {
       this.setDocvalue = params['value'];
-      
-      
+
+
     });
 
   }
@@ -179,7 +183,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
     this.quoteF.modeOfTransport.setValue(transportDetails?.ModeOfTansportCode);
     this.onGetCoverDropdownList(1);
-    this.onGetCarriageDropdownList(null,null);
+    this.onGetCarriageDropdownList(null, null);
     this.quoteF.cover.setValue(transportDetails?.CoverCode);
     this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
     this.editCover = transportDetails?.CoverCode;
@@ -285,7 +289,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     // let cover = this.dropTransportList.filter(e => e.CodeDescription == d)
     // alert(cover[0].Code)
     // if (cover.length != 0) {
-      this.onGetCoverDropdownList(this.quoteF.modeOfTransport?.value)
+    this.onGetCoverDropdownList(this.quoteF.modeOfTransport?.value)
     // }
     // this.quoteF.cover.setValue(transportDetails?.CoverCode);
     // this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
@@ -456,11 +460,11 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropCoverList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCoverList, 'cover');
-          if(this.docUploadedData){
+          if (this.docUploadedData) {
             this.quoteF.cover.setValue(this.editCover)
-            
-    
-            this.onGetCarriageDropdownList(modeOfTransport,this.editCover)
+
+
+            this.onGetCarriageDropdownList(modeOfTransport, this.editCover)
           }
         }
       },
@@ -468,19 +472,19 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     );
   }
 
-  onGetCarriageDropdownList(mode,cover) {
+  onGetCarriageDropdownList(mode, cover) {
     this.quoteF.modeOfCarriage.setValue('');
     this.onGetPackageDescDropdownList(1);
     const urlLink = `${this.ApiUrl1}quote/dropdown/modeofcarriage`;
     let modeOfTransport
     let Cover
-    if(this.docUploadedData && mode!=null && cover!=null){
-      modeOfTransport =mode;
-      Cover =cover
+    if (this.docUploadedData && mode != null && cover != null) {
+      modeOfTransport = mode;
+      Cover = cover
     }
-    else{
-      modeOfTransport =this.quoteF.modeOfTransport.value;
-      Cover =this.quoteF.cover.value
+    else {
+      modeOfTransport = this.quoteF.modeOfTransport.value;
+      Cover = this.quoteF.cover.value
     }
     const reqData = {
       'BranchCode': this.userDetails?.BelongingBranch,
@@ -496,8 +500,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropCarriageList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCarriageList, 'carriage');
-          if(this.docUploadedData && mode!=null && cover!=null){
-          this.quoteF.modeOfCarriage.setValue(this.editmodeOfCarriage)
+          if (this.docUploadedData && mode != null && cover != null) {
+            this.quoteF.modeOfCarriage.setValue(this.editmodeOfCarriage)
 
           }
         }
@@ -520,6 +524,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
           this.dropOriginCountryList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropOriginCountryList, 'orgCountry');
           // this.setDocUploadedData()
+          // this.get_transhipping_list()
 
         }
       },
@@ -534,10 +539,15 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     //   'OriginationCountryCode': this.quoteF.originatingCountry.value,
     //   'BranchCode': this.userDetails?.BelongingBranch,
     // };
+    if(this.insurenceId =='100020'){
+      this.get_transhipping_list()
+
+    }
+
     const urlLink = `${this.ApiUrl1}master/countryport/list`;
-      const reqData = {
-        'countryID': this.quoteF.originatingCountry.value
-      };
+    const reqData = {
+      'countryID': this.quoteF.originatingCountry.value
+    };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
 
@@ -584,16 +594,16 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     //   'DestinationCountryCode': this.quoteF.destinationCountry.value,
     // };
     const urlLink = `${this.ApiUrl1}master/countryport/list`;
-      const reqData = {
-        'countryID': this.quoteF.destinationCountry.value
-      };
+    const reqData = {
+      'countryID': this.quoteF.destinationCountry.value
+    };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
 
         if (data?.Message === 'Success') {
           this.dropDestinaCityList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
-          if(this.docUploadedData && this.setDocvalue !='back' && this.setDocvalue !='edit'){
+          if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadedData();
           }
 
@@ -888,9 +898,9 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropToleranceList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropToleranceList, 'tolerance');
-            // if(this.docUploadedData && value !=1){
-            // this.quoteF.incotermsPercentage.setValue(this.dropToleranceList[0].Code) 
-            // }
+          // if(this.docUploadedData && value !=1){
+          // this.quoteF.incotermsPercentage.setValue(this.dropToleranceList[0].Code) 
+          // }
         }
       },
       (err) => { },
@@ -935,7 +945,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
         if (data?.Message === 'Success') {
           this.dropCurrencyList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCurrencyList, 'currencyList');
-          if(this.docUploadedData && value !=1){
+          if (this.docUploadedData && value != 1) {
             this.quoteF.currencyValue.setValue(value);
           }
 
@@ -1004,5 +1014,40 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  get_transhipping_list() {
+    const urlLink = `${this.ApiUrl1}master/transhipping/list`;
+    let d
+    if (this.quoteF.originatingCountry.value) {
+      d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
+    }
+    let obj = {
+      "CountryName": d[0]?.CodeDescription
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, obj).subscribe(
+      (data: any) => {
+        this.dropTranshippingList = data?.Result;
+      }
+    )
+
+  }
+
+  Transhipping(modal) {
+    this.open(modal);
+    this.get_transhipping_list();
+  }
+
+  submitsvia(model) {
+    if (this.viaSearch) {
+
+      // model.dismiss();
+      let via = this.dropTranshippingList.filter(e => e.Code == this.viaSearch);
+      if (via) {
+        this.quoteF.via.setValue(via[0].ShortCode);
+        model.dismiss();
+      }
+    }
+
   }
 }
