@@ -95,7 +95,6 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   onAction(element:any,name:any){
-    alert(element)
     element['btName'] = name || '';
     this.isActionBtn.emit(element)
   }

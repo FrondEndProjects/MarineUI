@@ -49,6 +49,7 @@ export class PolicyGenerateComponent implements OnInit {
   bankName: any=null;
   quoteNo: any=null;
   porttype: string;
+  certificateNo: any;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder:FormBuilder,
@@ -252,6 +253,7 @@ export class PolicyGenerateComponent implements OnInit {
     
   }
    onPolicyIntegrate() {
+   
     const urlLink = `${this.ApiUrl1}quote/policy/integrate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
@@ -270,6 +272,7 @@ export class PolicyGenerateComponent implements OnInit {
             this.policySection = true;
             this.draftSection = false;
             this.policyNo = data?.Result?.policyNo;
+            this.certificateNo =data?.Result?.certificateNo;
             //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
             // Swal.fire(
             //   'Policy Created!',
