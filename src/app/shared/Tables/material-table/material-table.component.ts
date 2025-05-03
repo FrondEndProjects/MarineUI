@@ -20,7 +20,7 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
   @Input('cols') columnHeader: any[] = [];
   @Input('filterValue') filterValue: any = '';
   @Input('btnConfig') btnConfig :any;
-  @Input('customerId') customerId :any;
+  @Input('customerId') customerId :any=null;
 
   @Output('onSelectCustomer') onSelectCustomer = new EventEmitter();
   @Output('onRemoveWar') onRemoveWar = new EventEmitter();

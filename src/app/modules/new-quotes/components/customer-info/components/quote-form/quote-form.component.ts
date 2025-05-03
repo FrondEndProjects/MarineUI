@@ -1,5 +1,5 @@
 import { CustomerInfoComponent } from './../../customer-info.component';
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import * as Mydatas from '../../../../../../app-config.json';
 import { NewQuotesService } from '../../../../new-quotes.service';
@@ -9,14 +9,19 @@ import { Subscription } from 'rxjs';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { log } from 'node:console';
 import { ActivatedRoute } from '@angular/router';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-quote-form',
   templateUrl: './quote-form.component.html',
   styleUrls: ['./quote-form.component.scss'],
 })
-export class QuoteFormComponent implements OnInit, OnChanges {
-  @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
+export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
+  // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource = new MatTableDataSource<any>();
+  initialLoadCount = 50;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public userDetails: any;
@@ -32,6 +37,7 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public filterValue: any; vesselValue: any = null;
   public dropTransportList: any[] = [];
   public dropCoverList: any[] = [];
+  secondarylist: any[] = [];
   public dropCarriageList: any[] = [];
   public dropOriginCountryList: any[] = [];
   public dropOriginCityList: any[] = [];
@@ -52,7 +58,9 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   public warStatus: any = ''; closeResult: any = null;
   subscription: Subscription; public tableData: any[] = [];
   ManufactureYear: any; manshow: any = false;
-
+  pageSize = 100;
+  currentPage = 0;
+  totalRecords = 0;
   public dropPartialShipList: any[] = [
     { Code: 'N', CodeDescription: 'None' },
     { Code: 'Y', CodeDescription: 'Partial' },
@@ -76,8 +84,10 @@ export class QuoteFormComponent implements OnInit, OnChanges {
   manyr: any;
   vesselId: any;
   viaSearch: any
+  displayedColumns: any[];
   docUploadedData: any;
   setDocvalue: any;
+  enableGrid: boolean = false;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -116,7 +126,32 @@ export class QuoteFormComponent implements OnInit, OnChanges {
 
   }
 
+  ngAfterViewInit() {
+    console.log('Paginator:', this.paginator);
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getTranshippingId() {
+    return this.quoteF.via.value
+  }
   ngOnInit(): void {
+    this.displayedColumns = [
+      {
+        key: 'ShortCode',
+        display: 'Port Code',
+        config: {
+          select: true,
+        },
+      },
+      {
+        key: 'CodeDescription',
+        display: 'Port Description'
+      },
+      // {
+      //   key: 'ShortCode',
+      //   display: 'Port Code'
+      // }
+    ];
     let newDate = new Date();
     newDate.setDate(newDate.getDate() + 45);
     const ngbDate = {
@@ -539,8 +574,8 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     //   'OriginationCountryCode': this.quoteF.originatingCountry.value,
     //   'BranchCode': this.userDetails?.BelongingBranch,
     // };
-    if(this.insurenceId =='100020'){
-      this.get_transhipping_list()
+    if (this.insurenceId == '100020') {
+      // this.get_transhipping_list()
 
     }
 
@@ -1016,38 +1051,116 @@ export class QuoteFormComponent implements OnInit, OnChanges {
     }
   }
 
-  get_transhipping_list() {
+  get_transhipping_list(modal) {
     const urlLink = `${this.ApiUrl1}master/transhipping/list`;
     let d
     if (this.quoteF.originatingCountry.value) {
       d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
     }
     let obj = {
-      "CountryName": d[0]?.CodeDescription
+      // "CountryName": d[0]?.CodeDescription
+      "CountryName": d[0]?.ShortCode
     }
     this.newQuotesService.onPostMethodSync(urlLink, obj).subscribe(
       (data: any) => {
-        this.dropTranshippingList = data?.Result;
-      }
+        this.secondarylist = data?.Result;
+        this.enableGrid = true;
+        this.setData(modal, 'direct')
+      },
+      (err) => { },
     )
 
   }
 
+  // get_transhipping_list(page: number = 0) {
+  //   const urlLink = `${this.ApiUrl1}master/transhipping/list`;
+  //   let d;
+  //   if (this.quoteF.originatingCountry.value) {
+  //     d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value);
+  //   }
+
+  //   const obj = {
+  //     "CountryName": d[0]?.CodeDescription,
+  //     "page": page,
+  //     "size": this.pageSize
+  //   };
+
+  //   this.newQuotesService.onPostMethodSync(urlLink, obj).subscribe((data: any) => {
+  //     this.dropTranshippingList = data?.Result;
+  //     this.totalRecords = data?.TotalCount || 0; // Optional if API returns total
+  //     this.dataSource.data = this.dropTranshippingList;
+  //   });
+  // }
+
   Transhipping(modal) {
-    this.open(modal);
-    this.get_transhipping_list();
+
+    // if (this.dropTranshippingList.length == 0) {
+      this.get_transhipping_list(modal);
+
+    // }
+    // else {
+
+      // this.setData(modal, 'change')
+      // this.open(modal);
+
+    // }
+
+
   }
+  setData(modal, type) {
 
-  submitsvia(model) {
-    if (this.viaSearch) {
+    const chunkSize = 5000;
+    let currentIndex = 0;
+    this.dropTranshippingList = [];
+    // this.dropTranshippingList = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
+    // currentIndex += chunkSize;
+    // const interval = setInterval(() => {
+    //   if (currentIndex >= this.secondarylist.length) {
+    //     this.enableGrid = (this.dropTranshippingList.length==this.secondarylist.length);
+    //     clearInterval(interval);
+    //     return;
+    //   }
+    //   else this.enableGrid = !this.enableGrid;
+    //   const nextChunk = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
+    //   this.dropTranshippingList.push(...nextChunk);
+    //   console.log(this.dropTranshippingList.length,"Length")
+    //   currentIndex += chunkSize;
 
-      // model.dismiss();
-      let via = this.dropTranshippingList.filter(e => e.Code == this.viaSearch);
-      if (via) {
-        this.quoteF.via.setValue(via[0].ShortCode);
-        model.dismiss();
+    // }, 2000);
+    this.dropTranshippingList = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
+    currentIndex += chunkSize;
+
+    const interval = setInterval(() => {
+      if (currentIndex >= this.secondarylist.length) {
+        clearInterval(interval);
+        this.enableGrid = true;
+        return;
       }
-    }
+      else{
+        this.enableGrid = false;
+      }
+
+      const nextChunk = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
+      this.dropTranshippingList.push(...nextChunk);
+      currentIndex += chunkSize;
+    }, 2000);
+
+    this.open(modal);
 
   }
+  onSelectTranshipping(event: any, modal) {
+    if (event.ShortCode) {
+      this.quoteF.via.setValue(event.ShortCode);
+    }
+    modal.close();
+
+
+  }
+
+  // handlePageChange(event: any) {
+
+  //   this.currentPage = event.pageIndex; // Or event.page if your table emits like that
+  //   this.get_transhipping_list(this.currentPage);
+  // }
+
 }

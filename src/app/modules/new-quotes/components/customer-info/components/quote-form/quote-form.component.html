@@ -220,13 +220,14 @@
       </div>
     </div> -->
 
-    <div class="col-12 col-md-4 col-lg-4" *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y' ">
+    <div class="col-12 col-md-4 col-lg-4"
+      *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y' ">
       <div class="input-control-container">
         <label class="input-form-label">Transhipping</label>
         <div class="currency-flex">
           <div class="currrency-drop-vss input-form-box">
-            <input type="text" class="input-form-control2 with-icon"
-            formControlName="via" placeholder="Enter Transhipping">
+            <input type="text" class="input-form-control2 with-icon" formControlName="via"
+              placeholder="Enter Transhipping">
           </div>
           <div class="currrency-dollar">
             <button class="btn btn-secondary" (click)="Transhipping(myModal3)"
@@ -628,25 +629,38 @@
   <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel">Transhipping Search</h5>
-      <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
+      <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
         (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
     </div>
     <div class="modal-body">
-      <ng-container>
-        <div class="col-12 col-md-6 col-lg-6 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
+      <div class="row">
+        <div class="col-md-4 col-lg-4"></div>
+        <div class="col-md-4 col-lg-4">
           <div class="input-control-container">
-            <label class="input-form-label">Transhipping<span></span></label>
-            <ng-select placeholder="Select" class="input-form-select" 
-              [items]="dropTranshippingList" [(ngModel)]="viaSearch" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="ShortCode">
-            </ng-select>
+            <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" placeholder="Search" [(ngModel)]="filterValue">
+            </div>
           </div>
         </div>
-      </ng-container>
+        <div class="col-md-4 col-lg-4 mt-1">
+        </div>
+      </div>
+
+
+      <app-material-table *ngIf="enableGrid" [cols]="displayedColumns" [customerId]="getTranshippingId()"
+        [data]="dropTranshippingList" [filterValue]="filterValue"
+        (onSelectCustomer)="onSelectTranshipping($event,modal)">
+      </app-material-table>
+      <h6 *ngIf="!enableGrid">Loading Data ........</h6>
+
+      <!-- <app-material-table [cols]="displayedColumns" [customerId]="getTranshippingId()" [data]="dataSource.data"
+        [filterValue]="filterValue" [pageSize]="pageSize" [totalRecords]="totalRecords"
+        (onPageChange)="handlePageChange($event)" (onSelectCustomer)="onSelectTranshipping($event, modal)">
+      </app-material-table> -->
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Close</button>
-      <button type="button" class="btn btn-primary" (click)="submitsvia(modal)">Submit</button>
     </div>
   </div>
 </ng-template>

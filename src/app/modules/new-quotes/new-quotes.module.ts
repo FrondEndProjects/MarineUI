@@ -35,7 +35,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { NbThemeModule, NbLayoutModule} from '@nebular/theme';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     NewQuotesComponent,
@@ -58,6 +58,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     ReactiveFormsModule,
     DirectivesModule,
     NgSelectModule,
+    MatPaginatorModule,
     // BrowserAnimationsModule,
     ThemeModule,
     NbTabsetModule,
