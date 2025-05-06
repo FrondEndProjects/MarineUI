@@ -434,191 +434,206 @@ export class CustomerInfoComponent implements OnInit {
     }
   }
   onSaveQuote() {
-    this.submitted = true;
-    let issuerId: any = '', loginId = null;
-    let brokerCode = null;
-    // Broker
-    if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
-      this.brokerCode = this.userDetails.AgencyCode;
-      brokerCode = this.userDetails.AgencyCode;
-      if (this.editSection) {
+    this.customerFormComponent.submitted = true;
+    this.quoteFormComponent.submitted = true;
+    // this. =
+    console.log(this.quoteForm);
+    
+    console.log(this.quoteForm.valid,this.customerForm.valid);
+    
+    if (this.quoteForm.valid && this.customerForm.valid) {
+    
+      this.customerFormComponent.submitted = false;
+      this.quoteFormComponent.submitted = false;
+      let issuerId: any = '', loginId = null;
+      let brokerCode = null;
+      // Broker
+      if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
+        this.brokerCode = this.userDetails.AgencyCode;
+        brokerCode = this.userDetails.AgencyCode;
+        if (this.editSection) {
 
-        loginId = this.editQuoteData?.LoginId;
-        issuerId = '';
-      }
-      else {
-
-        loginId = this.loginId;
-        issuerId = '';
-      }
-    }
-    // Issuer
-    if (this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User') {
-
-      if (this.editSection) {
-
-        loginId = this.brokerF.borker.value;
-        issuerId = this.editQuoteData?.Issuer;
-        let brokerList = this.newQuotesService.BrokerList;
-        let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
-        if (entry) { brokerCode = entry?.CodeValue }
-      }
-      else {
-
-        let brokerList = this.newQuotesService.BrokerList;
-        let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
-        if (entry) { brokerCode = entry?.CodeValue }
-        loginId = this.brokerF.borker.value
-        issuerId = this.userDetails.LoginId;
-      }
-
-    }
-    let exposureValue = null;
-    if (this.quoteF.exposureOfShipment.value != null && this.quoteF.exposureOfShipment.value != '') {
-      exposureValue = this.quoteF.exposureOfShipment.value.replace(',', '');
-    }
-
-    const urlLink = `${this.ApiUrl1}quote/save`;
-    const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
-      'BrokerCode': brokerCode,
-      'ChannelType': this.brokerF.channel.value,
-      'CustomerDetails': {
-        'Address1': this.customerF.Address1.value,
-        'Address2': this.customerF.Address2.value,
-        'CityCode': this.customerF.city.value,
-        'CityName': this.getCodeDescription(this.dropCityList, this.customerF.city.value),
-        'CoreAppCode': this.customerF.coreAppcode.value,
-        'EmailId': this.customerF.email.value,
-        'MobileNo': this.customerF.mobileNo.value,
-        'Name': this.customerF.name.value,
-        'PoBox': this.customerF.poBox.value,
-        'Title': this.customerF.title.value,
-        'VatApplicable': null,
-        'Code': this.customerF.Code.value,
-        'VatRegNo': this.customerF.customerVat.value,
-      },
-      'Executive': '5',
-      'Issuer': issuerId,
-      'LcBankDetails': {
-        'AwbDate': this.bankF.blAwbLrRrDate.value?.replace(/-/g, "/"),
-        'AwbNo': this.bankF.blAwbLrRrNumber.value,
-        'BankCode': this.bankF.lCBank.value,
-        'BankDescription': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
-        'BankName': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
-        'BankOthers': this.bankF.lcBankDesc.value,
-        'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
-        'LcNo': this.bankF.lcNumber.value,
-        'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/"),
-      },
-      'LoginId': loginId,
-      'LoginUserType': this.userDetails.UserType,
-      'OpenCoverNo': this.OpenCover?.value,
-      'ProductId': this.productId,
-      'QuoteDetails': {
-        'CommodityDetails': [
-          {
-            'ConsignedFrom': this.bankF.consignedForm.value,
-            'ConsignedTo': this.bankF.consignedTo.value,
-            'Fragile': this.quoteF.fragileYN.value,
-            'GoodsCategoryCode': this.quoteF.goodsCategory.value,
-            'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
-            'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
-            'InsuredValue': this.quoteF.insuredValue?.value?.toString().replace(/,/g, ''),
-            'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
-            'InvoiceNo': this.bankF.invoiceNumber.value,
-            'PoDescription': this.bankF.poPiNumber.value,
-            'PolicyExcessDescription': this.quoteF.excessDescription.value,
-
-          },
-        ],
-        'CurrencyCode': this.quoteF.currency.value,
-        'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
-        'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
-        'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
-        'CurrencyValue': this.quoteF.currencyValue.value,
-        'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
-        'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
-        'CurrencyOfExposureValue': this.quoteF.partialShipment.value === 'N' ? '' : this.currencyPipe.transform(this.quoteF.currency.value, this.dropCurrencyList),
-        'ExpiryDate': '',
-        'ExposureOfShipment': exposureValue,
-        'FinalizeYn': this.editQuoteData?.FinalizeYn,
-        'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
-        'IncoTerms': this.quoteF.incoterms.value,
-        'PackageCode': this.quoteF.packageDescription.value,
-        'PackageName': this.getCodeDescription(this.dropPackageDescList, this.quoteF.packageDescription.value),
-        'PartialShipmentCode': this.quoteF.partialShipment.value,
-        'PartialShipmentName': this.getCodeDescription(this.dropPartialShipList, this.quoteF.partialShipment.value),
-        'Percentage': this.quoteF.incotermsPercentage.value,
-        'QuoteStatus': this.QuoteStatus,
-        'SettlingAgentCode': this.quoteF.settlingAgent.value,
-        'SettlingAgentName': this.getCodeDescription(this.dropSettlingAgentList, this.quoteF.settlingAgent.value),
-        'Tolerance': this.quoteF.tolerance.value,
-        'TransportDetails': {
-          'CoverCode': this.quoteF.cover.value,
-          'CoverName': this.getCodeDescription(this.dropCoverList, this.quoteF.cover.value),
-          'DestinationCityCode': this.quoteF.destinationOtherYN.value ? '9999' : this.quoteF.destinationCity.value,
-          // tslint:disable-next-line: max-line-length
-          'DestinationCityName': this.quoteF.destinationOtherYN.value ? this.quoteF.destinationCityOther.value : this.getCodeDescription(this.dropDestinaCityList, this.quoteF.destinationCity.value),
-          'DestinationCountryCode': this.quoteF.destinationCountry.value,
-          // tslint:disable-next-line: max-line-length
-          'DestinationCountryName': this.getCodeDescription(this.dropDestinaCountryList, this.quoteF.destinationCountry.value),
-          'DestinationWarehouseYn': this.quoteF.destinationWarehouse.value,
-          'ModeOfCarriageCode': this.quoteF.modeOfCarriage.value,
-          'ModeOfCarriageName': this.getCodeDescription(this.dropCarriageList, this.quoteF.modeOfCarriage.value),
-          'ModeOfTansportCode': this.quoteF.modeOfTransport.value,
-          'ModeOfTransportName': this.getCodeDescription(this.dropTransportList, this.quoteF.modeOfTransport.value),
-          'OriginCityCode': this.quoteF.orginatingCityOtherYN.value ? '9999' : this.quoteF.originatingCity.value,
-          // tslint:disable-next-line: max-line-length
-          'OriginCityName': this.quoteF.orginatingCityOtherYN.value ? this.quoteF.orginatingCityOther.value : this.getCodeDescription(this.dropOriginCityList, this.quoteF.originatingCity.value),
-          'OriginCountryCode': this.quoteF.originatingCountry.value,
-          // tslint:disable-next-line: max-line-length
-          'OriginCountryName': this.getCodeDescription(this.dropOriginCountryList, this.quoteF.originatingCountry.value),
-          'OriginWarehouseYn': this.quoteF.originatingWarehouse.value,
-          'Via': this.quoteF.via.value,
-          "StoragePeriodYn": this.quoteF.StoragePeriodYn.value,
-          "TranshipmentYn": this.quoteF.TranshipmentYN.value,
-          "TranshipmentCountry": this.quoteF.transhippingCountry.value,
-          'UCRNumber': this.quoteF.UCRNumber.value
-        },
-        'VesselDetails': {
-          'IHSLRORIMO': '',
-          'ImoNumber': '',
-          'NameString': '',
-          'ShipsCategory': '',
-          'VesselCode': this.quoteF.VesselId.value,
-          'VesselDeclareYN': 'N',
-          'VesselName': this.quoteF.conveyanceVesselName.value,
-          'VesselSearchBy': '',
-          'exNameString': '',
-          'exshipsCategory': '',
-          'ihslrorimo': '',
-          'VesselYear': this.quoteF.ManfctureYear.value
-        },
-        'VoyageNo': this.quoteF.voyageNumber.value,
-        //'VoyageNo':"",
-        'WarAndSrccYn': this.quoteF.warSrcc.value,
-        'WarOnLandYn': this.quoteF.warOnLand.value,
-
-
-      },
-      'ReferenceNo': this.referenceNo,
-      "UploadReferenceNo": this.UploadReferenceNo
-    };
-    console.log("Opencover Value", this.OpenCover?.value)
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        if (data?.Message === 'Success') {
-          this.premiumDetails = data?.Result;
-          sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
-          //sessionStorage.removeItem('Item');
-          this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
-
+          loginId = this.editQuoteData?.LoginId;
+          issuerId = '';
         }
-      },
-      (err) => { },
-    );
+        else {
+
+          loginId = this.loginId;
+          issuerId = '';
+        }
+      }
+      // Issuer
+      if (this.userDetails.UserType !== 'Broker' && this.userDetails.UserType !== 'User') {
+
+        if (this.editSection) {
+
+          loginId = this.brokerF.borker.value;
+          issuerId = this.editQuoteData?.Issuer;
+          let brokerList = this.newQuotesService.BrokerList;
+          let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
+          if (entry) { brokerCode = entry?.CodeValue }
+        }
+        else {
+
+          let brokerList = this.newQuotesService.BrokerList;
+          let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
+          if (entry) { brokerCode = entry?.CodeValue }
+          loginId = this.brokerF.borker.value
+          issuerId = this.userDetails.LoginId;
+        }
+
+      }
+      let exposureValue = null;
+      if (this.quoteF.exposureOfShipment.value != null && this.quoteF.exposureOfShipment.value != '') {
+        exposureValue = this.quoteF.exposureOfShipment.value.replace(',', '');
+      }
+
+      const urlLink = `${this.ApiUrl1}quote/save`;
+      const reqData = {
+        'BranchCode': this.userDetails?.BranchCode,
+        'BrokerCode': brokerCode,
+        'ChannelType': this.brokerF.channel.value,
+        'CustomerDetails': {
+          'Address1': this.customerF.Address1.value,
+          'Address2': this.customerF.Address2.value,
+          'CityCode': this.customerF.city.value,
+          'CityName': this.getCodeDescription(this.dropCityList, this.customerF.city.value),
+          'CoreAppCode': this.customerF.coreAppcode.value,
+          'EmailId': this.customerF.email.value,
+          'MobileNo': this.customerF.mobileNo.value,
+          'Name': this.customerF.name.value,
+          'PoBox': this.customerF.poBox.value,
+          'Title': this.customerF.title.value,
+          'VatApplicable': null,
+          'Code': this.customerF.Code.value,
+          'VatRegNo': this.customerF.customerVat.value,
+        },
+        'Executive': '5',
+        'Issuer': issuerId,
+        'LcBankDetails': {
+          'AwbDate': this.bankF.blAwbLrRrDate.value?.replace(/-/g, "/"),
+          'AwbNo': this.bankF.blAwbLrRrNumber.value,
+          'BankCode': this.bankF.lCBank.value,
+          'BankDescription': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
+          'BankName': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
+          'BankOthers': this.bankF.lcBankDesc.value,
+          'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
+          'LcNo': this.bankF.lcNumber.value,
+          'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/"),
+        },
+        'LoginId': loginId,
+        'LoginUserType': this.userDetails.UserType,
+        'OpenCoverNo': this.OpenCover?.value,
+        'ProductId': this.productId,
+        'QuoteDetails': {
+          'CommodityDetails': [
+            {
+              'ConsignedFrom': this.bankF.consignedForm.value,
+              'ConsignedTo': this.bankF.consignedTo.value,
+              'Fragile': this.quoteF.fragileYN.value,
+              'GoodsCategoryCode': this.quoteF.goodsCategory.value,
+              'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
+              'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
+              'InsuredValue': this.quoteF.insuredValue?.value?.toString().replace(/,/g, ''),
+              'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
+              'InvoiceNo': this.bankF.invoiceNumber.value,
+              'PoDescription': this.bankF.poPiNumber.value,
+              'PolicyExcessDescription': this.quoteF.excessDescription.value,
+
+            },
+          ],
+          'CurrencyCode': this.quoteF.currency.value,
+          'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
+          'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
+          'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
+          'CurrencyValue': this.quoteF.currencyValue.value,
+          'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
+          'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
+          'CurrencyOfExposureValue': this.quoteF.partialShipment.value === 'N' ? '' : this.currencyPipe.transform(this.quoteF.currency.value, this.dropCurrencyList),
+          'ExpiryDate': '',
+          'ExposureOfShipment': exposureValue,
+          'FinalizeYn': this.editQuoteData?.FinalizeYn,
+          'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
+          'IncoTerms': this.quoteF.incoterms.value,
+          'PackageCode': this.quoteF.packageDescription.value,
+          'PackageName': this.getCodeDescription(this.dropPackageDescList, this.quoteF.packageDescription.value),
+          'PartialShipmentCode': this.quoteF.partialShipment.value,
+          'PartialShipmentName': this.getCodeDescription(this.dropPartialShipList, this.quoteF.partialShipment.value),
+          'Percentage': this.quoteF.incotermsPercentage.value,
+          'QuoteStatus': this.QuoteStatus,
+          'SettlingAgentCode': this.quoteF.settlingAgent.value,
+          'SettlingAgentName': this.getCodeDescription(this.dropSettlingAgentList, this.quoteF.settlingAgent.value),
+          'Tolerance': this.quoteF.tolerance.value,
+          'TransportDetails': {
+            'CoverCode': this.quoteF.cover.value,
+            'CoverName': this.getCodeDescription(this.dropCoverList, this.quoteF.cover.value),
+            'DestinationCityCode': this.quoteF.destinationOtherYN.value ? '9999' : this.quoteF.destinationCity.value,
+            // tslint:disable-next-line: max-line-length
+            'DestinationCityName': this.quoteF.destinationOtherYN.value ? this.quoteF.destinationCityOther.value : this.getCodeDescription(this.dropDestinaCityList, this.quoteF.destinationCity.value),
+            'DestinationCountryCode': this.quoteF.destinationCountry.value,
+            // tslint:disable-next-line: max-line-length
+            'DestinationCountryName': this.getCodeDescription(this.dropDestinaCountryList, this.quoteF.destinationCountry.value),
+            'DestinationWarehouseYn': this.quoteF.destinationWarehouse.value,
+            'ModeOfCarriageCode': this.quoteF.modeOfCarriage.value,
+            'ModeOfCarriageName': this.getCodeDescription(this.dropCarriageList, this.quoteF.modeOfCarriage.value),
+            'ModeOfTansportCode': this.quoteF.modeOfTransport.value,
+            'ModeOfTransportName': this.getCodeDescription(this.dropTransportList, this.quoteF.modeOfTransport.value),
+            'OriginCityCode': this.quoteF.orginatingCityOtherYN.value ? '9999' : this.quoteF.originatingCity.value,
+            // tslint:disable-next-line: max-line-length
+            'OriginCityName': this.quoteF.orginatingCityOtherYN.value ? this.quoteF.orginatingCityOther.value : this.getCodeDescription(this.dropOriginCityList, this.quoteF.originatingCity.value),
+            'OriginCountryCode': this.quoteF.originatingCountry.value,
+            // tslint:disable-next-line: max-line-length
+            'OriginCountryName': this.getCodeDescription(this.dropOriginCountryList, this.quoteF.originatingCountry.value),
+            'OriginWarehouseYn': this.quoteF.originatingWarehouse.value,
+            'Via': this.quoteF.via.value,
+            "StoragePeriodYn": this.quoteF.StoragePeriodYn.value,
+            "TranshipmentYn": this.quoteF.TranshipmentYN.value,
+            "TranshipmentCountry": this.quoteF.transhippingCountry.value,
+            'UCRNumber': this.quoteF.UCRNumber.value
+          },
+          'VesselDetails': {
+            'IHSLRORIMO': '',
+            'ImoNumber': '',
+            'NameString': '',
+            'ShipsCategory': '',
+            'VesselCode': this.quoteF.VesselId.value,
+            'VesselDeclareYN': 'N',
+            'VesselName': this.quoteF.conveyanceVesselName.value,
+            'VesselSearchBy': '',
+            'exNameString': '',
+            'exshipsCategory': '',
+            'ihslrorimo': '',
+            'VesselYear': this.quoteF.ManfctureYear.value
+          },
+          'VoyageNo': this.quoteF.voyageNumber.value,
+          //'VoyageNo':"",
+          'WarAndSrccYn': this.quoteF.warSrcc.value,
+          'WarOnLandYn': this.quoteF.warOnLand.value,
+
+
+        },
+        'ReferenceNo': this.referenceNo,
+        "UploadReferenceNo": this.UploadReferenceNo
+      };
+      console.log("Opencover Value", this.OpenCover?.value)
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data?.Message === 'Success') {
+            this.premiumDetails = data?.Result;
+            sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
+            //sessionStorage.removeItem('Item');
+            this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
+
+          }
+        },
+        (err) => { },
+      );
+    }
+    else {
+      // Swal.fire('Invalid Form');
+    }
+
   }
 
   getCodeDescription(list: any[], code: any) {
@@ -773,7 +788,7 @@ export class CustomerInfoComponent implements OnInit {
     );
   }
 
-  back(){
+  back() {
     this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
   }
 

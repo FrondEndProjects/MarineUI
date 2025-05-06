@@ -280,8 +280,8 @@
           (change)="onGetTranshippingCityDropdownList()">
         </ng-select>
         <div class="input-form-error"
-          *ngIf="(quoteF.destinationCountry.errors && submitted) || (!quoteF.destinationCountry.valid && quoteF.destinationCountry.touched)">
-          <div *ngIf="quoteF.destinationCountry.errors?.required" class="error-text">
+          *ngIf="(quoteF.transhippingCountry.errors && submitted) || (!quoteF.transhippingCountry.valid && quoteF.transhippingCountry.touched)">
+          <div *ngIf="quoteF.transhippingCountry.errors?.required" class="error-text">
             This field is required
           </div>
         </div>
@@ -308,7 +308,12 @@
               formControlName="transhippingCityOther">
           </ng-container>
         </div>
-
+        <div class="input-form-error"
+        *ngIf="(quoteF.via.errors && submitted) || (!quoteF.via.valid && quoteF.via.touched)">
+        <div *ngIf="quoteF.via.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
       </div>
     </div>
 

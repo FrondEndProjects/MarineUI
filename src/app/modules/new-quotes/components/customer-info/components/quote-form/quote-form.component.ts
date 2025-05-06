@@ -246,7 +246,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.quoteF.policyStartDate.setValue(this.newQuotesService.ngbDateFormatt(quoteDetails?.InceptionDate));
     this.quoteF.warSrcc.setValue(quoteDetails?.WarAndSrccYn);
     this.quoteF.warOnLand.setValue(quoteDetails?.WarOnLandYn);
-    this.get_transhipping_list('edit')
+    if(this.quoteF.TranshipmentYN.value =='Y'){
+      this.get_transhipping_list('edit')
+    }
     // this.quoteF.via.setValue(transportDetails?.Via);
     this.TranshippingCityEdit = transportDetails?.Via;
     this.quoteF.settlingAgent.setValue(quoteDetails?.SettlingAgentCode);
@@ -1117,8 +1119,18 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     if(event.target.value =='N'){
       this.quoteF.via.setValue(null);
       this.quoteF.transhippingCountry.setValue(null);
+      this.quoteForm.get('via')?.clearValidators();
+      this.quoteForm.get('transhippingCountry')?.clearValidators();
     }
-    
+    else{
+      this.quoteForm.updateValueAndValidity 
+      this.quoteForm.get('via')?.setValidators([Validators.required]);
+      this.quoteForm.get('transhippingCountry')?.setValidators([Validators.required]);
+      
+
+    }
+    this.quoteForm.get('via')?.updateValueAndValidity();
+    this.quoteForm.get('transhippingCountry')?.updateValueAndValidity();
   }
   // get_transhipping_list(page: number = 0) {
   //   const urlLink = `${this.ApiUrl1}master/transhipping/list`;
