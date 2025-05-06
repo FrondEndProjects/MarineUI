@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NewQuotesComponent } from './new-quotes.component';
 import { PremiumInfoComponent } from './components/premium-info/premium-info.component';
 import { EndorsementTypeComponent } from './components/endorsement-type/endorsement-type.component';
+import { AkiDocAdminComponent } from './components/customer-info/components/aki-doc-admin/aki-doc-admin.component';
 
 const routes: Routes = [
 
@@ -53,6 +54,13 @@ const routes: Routes = [
         data:{
           title:'policygenerate'
         }
+      },
+      {
+        path: 'aki-doc-admin',
+        component: AkiDocAdminComponent,
+        // data:{
+        //   title:'policygenerate'
+        // }
       },
     ]
   },

@@ -51,7 +51,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   public dropCurrencyList: any[] = [];
   public dropPremiumCurrencyList: any[] = [];
   public dropGoodsOfCateList: any[] = [];
-  dropTranshippingList: any[] = [];
+  dropTranshippingCountryList: any[] = [];
   editCover: any
   editmodeOfCarriage: any
   vesselSearchList: any[] = [];
@@ -86,8 +86,10 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   viaSearch: any
   displayedColumns: any[];
   docUploadedData: any;
+  TranshippingCountryEdit:any
   setDocvalue: any;
   enableGrid: boolean = false;
+  TranshippingCityEdit: any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -152,6 +154,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       //   display: 'Port Code'
       // }
     ];
+    this.get_transhipping_list(1)
     let newDate = new Date();
     newDate.setDate(newDate.getDate() + 45);
     const ngbDate = {
@@ -237,12 +240,15 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.quoteF.originatingWarehouse.setValue(transportDetails?.OriginWarehouseYn);
     this.quoteF.destinationCountry.setValue(transportDetails?.DestinationCountryCode);
     this.onGetDestinaCityDropdownList();
+    this.TranshippingCountryEdit = transportDetails?.TranshipmentCountry
     this.quoteF.destinationCity.setValue(transportDetails?.DestinationCityCode);
     this.quoteF.destinationWarehouse.setValue(transportDetails?.DestinationWarehouseYn);
     this.quoteF.policyStartDate.setValue(this.newQuotesService.ngbDateFormatt(quoteDetails?.InceptionDate));
     this.quoteF.warSrcc.setValue(quoteDetails?.WarAndSrccYn);
     this.quoteF.warOnLand.setValue(quoteDetails?.WarOnLandYn);
-    this.quoteF.via.setValue(transportDetails?.Via);
+    this.get_transhipping_list('edit')
+    // this.quoteF.via.setValue(transportDetails?.Via);
+    this.TranshippingCityEdit = transportDetails?.Via;
     this.quoteF.settlingAgent.setValue(quoteDetails?.SettlingAgentCode);
     //  this.quoteF.others.setValue('');
 
@@ -287,6 +293,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       this.ExposureCommaFormatted(quoteDetails?.ExposureOfShipment)
     }
     this.quoteF.currencyOfExposure.setValue(quoteDetails?.CurrencyOfExposureCode);
+    this.quoteF.transhippingCountry.setValue(quoteDetails?.TranshipmentCountry);
+
   }
 
 
@@ -1051,27 +1059,67 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  get_transhipping_list(modal) {
+  get_transhipping_list(type) {
     const urlLink = `${this.ApiUrl1}master/transhipping/list`;
     let d
-    if (this.quoteF.originatingCountry.value) {
-      d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
+    let obj
+    console.log(this.quoteF.transhippingCountry.value, "this.quoteF.transhippingCountry.value");
+
+    if (this.quoteF.transhippingCountry.value) {
+      d = this.dropTranshippingCountryList.filter(e => e.Code == this.quoteF.transhippingCountry.value)
     }
-    let obj = {
-      // "CountryName": d[0]?.CodeDescription
-      "CountryName": d[0]?.ShortCode
+    if (type == 1 || type == 'edit') {
+      obj = {
+        "Type": 'Country'
+      }
     }
+    else {
+      obj = {
+        "CountryName": d[0]?.Code
+
+      }
+    }
+
     this.newQuotesService.onPostMethodSync(urlLink, obj).subscribe(
       (data: any) => {
-        this.secondarylist = data?.Result;
-        this.enableGrid = true;
-        this.setData(modal, 'direct')
+
+        if (type == 1 || type == 'edit') {
+          this.dropTranshippingCountryList = data.Result;
+          if (type == 'edit') {
+
+            const countryList: any = this.dropTranshippingCountryList.find(ele => ele.Code == this.TranshippingCountryEdit);
+            this.quoteF.transhippingCountry.setValue(countryList?.Code);
+            this.get_transhipping_list(2);
+          }
+        }
+        else {
+          this.secondarylist = data?.Result;
+
+          if(type == 2 && this.quoteF.transhippingCountry.value ){
+            const cityList: any = this.secondarylist.find(ele => ele.ShortCode == this.TranshippingCityEdit);
+            
+            this.quoteF.via.setValue(cityList?.ShortCode);
+          }
+        }
+        // this.enableGrid = true;
+        // this.setData(modal, 'direct')
       },
       (err) => { },
     )
 
   }
+  onGetTranshippingCityDropdownList() {
+    this.get_transhipping_list(2);
+  }
 
+
+  onTranshipmentChange(event){
+    if(event.target.value =='N'){
+      this.quoteF.via.setValue(null);
+      this.quoteF.transhippingCountry.setValue(null);
+    }
+    
+  }
   // get_transhipping_list(page: number = 0) {
   //   const urlLink = `${this.ApiUrl1}master/transhipping/list`;
   //   let d;
@@ -1086,22 +1134,22 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   //   };
 
   //   this.newQuotesService.onPostMethodSync(urlLink, obj).subscribe((data: any) => {
-  //     this.dropTranshippingList = data?.Result;
+  //     this.dropTranshippingCountryList = data?.Result;
   //     this.totalRecords = data?.TotalCount || 0; // Optional if API returns total
-  //     this.dataSource.data = this.dropTranshippingList;
+  //     this.dataSource.data = this.dropTranshippingCountryList;
   //   });
   // }
 
   Transhipping(modal) {
 
-    // if (this.dropTranshippingList.length == 0) {
-      this.get_transhipping_list(modal);
+    // if (this.dropTranshippingCountryList.length == 0) {
+    // this.get_transhipping_list(modal);
 
     // }
     // else {
 
-      // this.setData(modal, 'change')
-      // this.open(modal);
+    // this.setData(modal, 'change')
+    // this.open(modal);
 
     // }
 
@@ -1111,23 +1159,23 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
 
     const chunkSize = 5000;
     let currentIndex = 0;
-    this.dropTranshippingList = [];
-    // this.dropTranshippingList = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
+    this.dropTranshippingCountryList = [];
+    // this.dropTranshippingCountryList = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
     // currentIndex += chunkSize;
     // const interval = setInterval(() => {
     //   if (currentIndex >= this.secondarylist.length) {
-    //     this.enableGrid = (this.dropTranshippingList.length==this.secondarylist.length);
+    //     this.enableGrid = (this.dropTranshippingCountryList.length==this.secondarylist.length);
     //     clearInterval(interval);
     //     return;
     //   }
     //   else this.enableGrid = !this.enableGrid;
     //   const nextChunk = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
-    //   this.dropTranshippingList.push(...nextChunk);
-    //   console.log(this.dropTranshippingList.length,"Length")
+    //   this.dropTranshippingCountryList.push(...nextChunk);
+    //   console.log(this.dropTranshippingCountryList.length,"Length")
     //   currentIndex += chunkSize;
 
     // }, 2000);
-    this.dropTranshippingList = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
+    this.dropTranshippingCountryList = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
     currentIndex += chunkSize;
 
     const interval = setInterval(() => {
@@ -1136,12 +1184,12 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         this.enableGrid = true;
         return;
       }
-      else{
+      else {
         this.enableGrid = false;
       }
 
       const nextChunk = this.secondarylist.slice(currentIndex, currentIndex + chunkSize);
-      this.dropTranshippingList.push(...nextChunk);
+      this.dropTranshippingCountryList.push(...nextChunk);
       currentIndex += chunkSize;
     }, 2000);
 

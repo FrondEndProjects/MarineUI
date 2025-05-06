@@ -23,38 +23,40 @@ export class PolicyGenerateComponent implements OnInit {
   public loginId: any;
   public applicationId: any;
   public ReferenceNo: any;
-  public premiumDetails:any;
-  public policyForm:FormGroup;
+  public premiumDetails: any;
+  aki_error: any
+  public policyForm: FormGroup;
 
-  public generateCerti:any='N';
-  public premium:any=false;
-  public nameOfBroker:any=false;
-  public foreignCurrency:any=false;
-  public darft:any=false;
-  public bankerAssured:any=false;
-  public excess:any=false;
-  public routerBaseLink:any='';
+  public generateCerti: any = 'N';
+  public premium: any = false;
+  public nameOfBroker: any = false;
+  public foreignCurrency: any = false;
+  public darft: any = false;
+  public bankerAssured: any = false;
+  public excess: any = false;
+  integrationErrorList:any[]=[];
+  public routerBaseLink: any = '';
   public premiumForm!: FormGroup;
-  public OpenCover:any;
+  public OpenCover: any;
   QuoteStatus: string;
-  uploadDocuments: any[]=[];
-  uploadedDocumentsList:any[]=[];
+  uploadDocuments: any[] = [];
+  uploadedDocumentsList: any[] = [];
   imageUrl: any;
   policyNo: any;
-  uploadId:any;docTypeList:any[]=[];
+  uploadId: any; docTypeList: any[] = [];
   policySection: boolean = false;
   draftSection: boolean = false;
-  schedule:boolean=false;
+  schedule: boolean = false;
   currencyName: any;
-  bankName: any=null;
-  quoteNo: any=null;
+  bankName: any = null;
+  quoteNo: any = null;
   porttype: string;
   certificateNo: any;
   constructor(
     private newQuotesService: NewQuotesService,
-    private _formBuilder:FormBuilder,
-    private router:Router,private sessionStorageService: SessionStorageService,
-    private newQuotesComponent:NewQuotesComponent,public dialogService: MatDialog,
+    private _formBuilder: FormBuilder,
+    private router: Router, private sessionStorageService: SessionStorageService,
+    private newQuotesComponent: NewQuotesComponent, public dialogService: MatDialog,
 
   ) {
     this.policyForm = this.newQuotesService.premiumForm;
@@ -66,8 +68,8 @@ export class PolicyGenerateComponent implements OnInit {
     this.OpenCover = this.newQuotesComponent.OpenCover;
     this.applicationId = this.newQuotesComponent.applicationId;
     this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
-    this.porttype= sessionStorage.getItem('openCOverType');
-    console.log('Tpes',this.porttype);
+    this.porttype = sessionStorage.getItem('openCOverType');
+    console.log('Tpes', this.porttype);
     console.log(this.QuoteStatus);
     //this.ongetUploadedDocument();
   }
@@ -80,7 +82,7 @@ export class PolicyGenerateComponent implements OnInit {
     return this.premiumForm?.controls;
   }
 
-  onCreateFormControl(){
+  onCreateFormControl() {
     this.policyForm = this._formBuilder.group({
       generateCerti: ['Y'],
       premium: ['N'],
@@ -116,7 +118,7 @@ export class PolicyGenerateComponent implements OnInit {
       (err) => { },
     );
   }
-  getdocTypeList(){
+  getdocTypeList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/getDocumentList`;
     const reqData = {
       "CompanyId": this.userDetails?.RegionCode,
@@ -124,52 +126,52 @@ export class PolicyGenerateComponent implements OnInit {
       "DocApplicable": "DOC_COMMODITY"
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-          if(data.Result){
-            if(data.Result.length!=0){
-              let i=0;
-              for(let doc of data.Result){
-                doc['DocAvailable'] = 'N';
-                i+=1;
-                if(i==data.Result.length){
-                  this.docTypeList = data.Result;
-                  this.ongetUploadedDocument();
-                }
-              }
+      if (data.Result) {
+        if (data.Result.length != 0) {
+          let i = 0;
+          for (let doc of data.Result) {
+            doc['DocAvailable'] = 'N';
+            i += 1;
+            if (i == data.Result.length) {
+              this.docTypeList = data.Result;
+              this.ongetUploadedDocument();
             }
-          } 
+          }
+        }
+      }
     });
   }
   onUploadDocuments(event, item) {
     var reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     var filename = event.target.files[0].name;
-    if(filename){
-      let typeList:any[] = filename.split('.');
-      if(typeList.length!=0){
+    if (filename) {
+      let typeList: any[] = filename.split('.');
+      if (typeList.length != 0) {
         let type = typeList[1];
         item['FileType'] = type;
       }
     }
     item['url'] = event.target.files[0];
-    console.log('Final Display',item);
+    console.log('Final Display', item);
     reader.onload = (event) => {
       let imageUrl: any;
       imageUrl = event.target.result;
-      item['urlPath']= imageUrl;
-     
-        item['FileName'] = filename;
-        item['DocAvailable'] = 'P';
+      item['urlPath'] = imageUrl;
+
+      item['FileName'] = filename;
+      item['DocAvailable'] = 'P';
 
     }
   }
-  checkUploadButton(){
-    return this.docTypeList.some(ele=>ele.DocAvailable=='P');
+  checkUploadButton() {
+    return this.docTypeList.some(ele => ele.DocAvailable == 'P');
   }
-  onDeleteDoc(item){
-        item.url = null;
-        item.DocAvailable = 'N';
+  onDeleteDoc(item) {
+    item.url = null;
+    item.DocAvailable = 'N';
   }
-  ongetUploadedDocument(){
+  ongetUploadedDocument() {
     const urlLink = `${this.ApiUrl1}file/upload/list`;
     const reqData = {
       "LoginId": this.userDetails?.LoginId,
@@ -177,20 +179,20 @@ export class PolicyGenerateComponent implements OnInit {
       "UploadId": null
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      console.log("Doc List",data);
-      console.log('llllllllllllll',this.uploadedDocumentsList);
-      this.uploadedDocumentsList=data.Result;
-      if(this.uploadedDocumentsList.length!=0){
-        for(let document of this.uploadedDocumentsList){
-              let entry = this.docTypeList.find(ele=>ele.Code==document.UploadType);
-              if(entry){
-                entry['DocAvailable'] = 'S';
-                entry['urlPath'] = null;
-                entry['FileName'] = document.OriginalFileName;
-                entry['url'] = null;
-                entry['FileType']= null;
-                entry['UploadId'] = document.UploadId;
-              }
+      console.log("Doc List", data);
+      console.log('llllllllllllll', this.uploadedDocumentsList);
+      this.uploadedDocumentsList = data.Result;
+      if (this.uploadedDocumentsList.length != 0) {
+        for (let document of this.uploadedDocumentsList) {
+          let entry = this.docTypeList.find(ele => ele.Code == document.UploadType);
+          if (entry) {
+            entry['DocAvailable'] = 'S';
+            entry['urlPath'] = null;
+            entry['FileName'] = document.OriginalFileName;
+            entry['url'] = null;
+            entry['FileType'] = null;
+            entry['UploadId'] = document.UploadId;
+          }
         }
       }
     })
@@ -223,20 +225,20 @@ export class PolicyGenerateComponent implements OnInit {
   }*/
 
 
-  onDownloadfile(item){
-    let entry = this.uploadedDocumentsList.find(ele=>ele.UploadId==item.UploadId);
-    if(entry){
+  onDownloadfile(item) {
+    let entry = this.uploadedDocumentsList.find(ele => ele.UploadId == item.UploadId);
+    if (entry) {
       const urlLink = `${this.ApiUrl1}file/download`;
       const reqData = {
         /*"BranchCode": this.userDetails?.BranchCode,
         "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
-         "LoginId": this.userDetails?.LoginId,
+        "LoginId": this.userDetails?.LoginId,
         "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
         "UploadId": entry.UploadId
       }
-      
+
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-        if(data?.Result){
+        if (data?.Result) {
           const link = document.createElement('a');
           link.setAttribute('target', '_blank');
           link.setAttribute('href', data?.Result);
@@ -244,121 +246,156 @@ export class PolicyGenerateComponent implements OnInit {
           document.body.appendChild(link);
           link.click();
           link.remove();
-         
+
         }
-        
-  
+
+
       })
     }
-    
+
   }
-   onPolicyIntegrate() {
-   
+  onPolicyIntegrate() {
+
     const urlLink = `${this.ApiUrl1}quote/policy/integrate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
     }
-    
+
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
       if (data.Message == "Success") {
-          if(data?.Result?.errorDesc){
-            Swal.fire(
-              'Policy Failed!',
-              `${data?.Result?.errorDesc}`,
-              'info'
-            )
-          }else{
-            this.policySection = true;
-            this.draftSection = false;
-            this.policyNo = data?.Result?.policyNo;
-            this.certificateNo =data?.Result?.certificateNo;
-            //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
-            // Swal.fire(
-            //   'Policy Created!',
-            //   `Policy Number : ${data?.Result?.policyNo}`,
-            //   'success'
-            // )
-          }
-          //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
-       //this.onNavigate();
+        // if(data?.Result?.errorDesc && !data?.Result?.certificateNo){
+        //   Swal.fire(
+        //     'Policy Failed!',
+        //     `${data?.Result?.errorDesc}`,
+        //     'info'
+        //   )
+        // }else{
+        this.policySection = true;
+        this.draftSection = false;
+        this.policyNo = data?.Result?.policyNo;
+        if (data?.Result?.certificateNo) {
+          this.certificateNo = data?.Result?.certificateNo;
+        }
+        else {
+          this.integrationErrorList = data?.Result?.integrationErrorList;
+          // const rawErrorDesc = data.Result.errorDesc;G
+
+          // const rawErrorDesc = data.Result.errorDesc;
+          // const errorDescString = data.Result.errorDesc;
+          // const errorList = errorDescString.replaceAll(', fieldValue=','');
+          // // console.log("Final",JSON.parse(errorList))
+          // let d =errorList.split('},')
+          // console.log("Final",JSON.parse(d))
+        }
+
+         
+
+        //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
+        // Swal.fire(
+        //   'Policy Created!',
+        //   `Policy Number : ${data?.Result?.policyNo}`,
+        //   'success'
+        // )
+        // }
+        //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
+        //this.onNavigate();
 
       }
     })
   }
-  onUploadSubmit(){
-    if(this.docTypeList.length!=0){
-      let i=0;
-        for(let doc of this.docTypeList){
-          if(doc.DocAvailable=='P'){
-            let ReqObj ={
-              "url": doc.url,
-              "docType": doc.Code,
-              "fileName":doc.FileName,
-              'productid':this.sessionStorageService.sessionStorgaeModel.productId,
-              'loginid':this.userDetails?.LoginId,
-              'quoteNo':this.premiumDetails?.QuoteDetails?.QuoteNo,
-              'remarks': doc.CodeDescription
-            }
-            const urlLink = `${this.ApiUrl1}file/upload`;
-            this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe((data: any) => {
-              console.log(data);
-              if (data) {
-                  i+=1;
-                  if(i==this.docTypeList.length){
-                        this.ongetUploadedDocument();
-                  }
-              }
-            });
+  convertErrorDescToList(errorDesc: string): any[] {
+    try {
+      // Step 1: Clean and transform to valid JSON
+      const fixed = errorDesc
+        .replace(/([{,]\s*)(\w+)=/g, '$1"$2":"')   // Wrap keys
+        .replace(/,\s*(\w+)=/g, ',"$1":"')         // More keys
+        .replace(/=([^,}\]]+)/g, '":"$1"')         // Wrap values
+        .replace(/,(\s*})/g, '"$1')                // End of object
+        .replace(/},\s*{/g, '}|{');                // Separate objects
+  
+      // Step 2: Split into object strings
+      const objectStrings = fixed.split('|');
+  
+      // Step 3: Parse each object
+      return objectStrings.map(str => JSON.parse(str));
+    } catch (err) {
+      console.error('❌ Failed to convert errorDesc to List:', err);
+      return [];
+    }
+  }
+  onUploadSubmit() {
+    if (this.docTypeList.length != 0) {
+      let i = 0;
+      for (let doc of this.docTypeList) {
+        if (doc.DocAvailable == 'P') {
+          let ReqObj = {
+            "url": doc.url,
+            "docType": doc.Code,
+            "fileName": doc.FileName,
+            'productid': this.sessionStorageService.sessionStorgaeModel.productId,
+            'loginid': this.userDetails?.LoginId,
+            'quoteNo': this.premiumDetails?.QuoteDetails?.QuoteNo,
+            'remarks': doc.CodeDescription
           }
-          else{
-            i+=1;
-            if(i==this.docTypeList.length){
-              this.ongetUploadedDocument();
+          const urlLink = `${this.ApiUrl1}file/upload`;
+          this.newQuotesService.onDocumentAltPostMethodSync(urlLink, ReqObj).subscribe((data: any) => {
+            console.log(data);
+            if (data) {
+              i += 1;
+              if (i == this.docTypeList.length) {
+                this.ongetUploadedDocument();
+              }
             }
+          });
+        }
+        else {
+          i += 1;
+          if (i == this.docTypeList.length) {
+            this.ongetUploadedDocument();
           }
         }
       }
-  }
-  onSubmit() {
-    if(this.uploadDocuments.length!=0){
-      let i=0;
-        for(let doc of this.uploadDocuments){
-          const urlLink = `${this.ApiUrl1}file/upload`;
-          this.newQuotesService.onDocumentPostMethodSync(urlLink, doc).subscribe((data: any) => {
-            console.log(data);
-            if (data) {
-                 i+=1;
-                 if(i==this.uploadDocuments.length)
-                  {
-                    this.uploadedDocumentsList = [];
-                    this.uploadDocuments=[];
-                    this.onFinalProceed();
-                    this.ongetUploadedDocument();
-                  }
-            }
-          })
-        }
     }
   }
-  onFinalProceed(){
+  onSubmit() {
+    if (this.uploadDocuments.length != 0) {
+      let i = 0;
+      for (let doc of this.uploadDocuments) {
+        const urlLink = `${this.ApiUrl1}file/upload`;
+        this.newQuotesService.onDocumentPostMethodSync(urlLink, doc).subscribe((data: any) => {
+          console.log(data);
+          if (data) {
+            i += 1;
+            if (i == this.uploadDocuments.length) {
+              this.uploadedDocumentsList = [];
+              this.uploadDocuments = [];
+              this.onFinalProceed();
+              this.ongetUploadedDocument();
+            }
+          }
+        })
+      }
+    }
+  }
+  onFinalProceed() {
     const urlLink = `${this.ApiUrl1}quote/policy/generate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
       "BasisValDesc": "ACTUAL AMOUNT",
-      "Both": this.bankerAssured?'Y':'N',
+      "Both": this.bankerAssured ? 'Y' : 'N',
       "BranchCode": this.userDetails?.BranchCode,
       "CertClausesYn": "N",
       "CustomerCode": this.premiumDetails?.CustomerDetails?.Code,
-      "Foreign": this.foreignCurrency?'Y':'N',
+      "Foreign": this.foreignCurrency ? 'Y' : 'N',
       "GeneratePolicyYn": this.generateCerti,
-      "LcBankDetail": this.nameOfBroker ? 'Y':'N',
+      "LcBankDetail": this.nameOfBroker ? 'Y' : 'N',
       "LoginUserType": this.userDetails.UserType,
       "ModeOfPayment": "CR",
       "NoteType": "",
       "OpenCoverNo": this.OpenCover?.value,
-      "PolicyExcess": this.excess?'Y':'N',
-      "PremiumYN": this.premium?'Y':'N',
+      "PolicyExcess": this.excess ? 'Y' : 'N',
+      "PremiumYN": this.premium ? 'Y' : 'N',
       "PrerecieptNo": "",
       "PrintClausesYn": "N",
       "ProductId": this.productId,
@@ -371,66 +408,66 @@ export class PolicyGenerateComponent implements OnInit {
       "SettlingAgent": this.premiumDetails?.SettlingAgentName,
       "ShowPremiumYn": "N",
       "TotalPremium": "",
-      "LoginId":this.userDetails?.LoginId
+      "LoginId": this.userDetails?.LoginId
     }
-    console.log(this.bankerAssured,this.foreignCurrency,this.premium,this.excess,reqData);
+    console.log(this.bankerAssured, this.foreignCurrency, this.premium, this.excess, reqData);
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
       if (data.Message == "Success") {
-        if(this.generateCerti == 'Y'){
+        if (this.generateCerti == 'Y') {
           this.onschedule();
         }
-        else if(this.generateCerti == 'Q'){
+        else if (this.generateCerti == 'Q') {
           this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
         }
-        else{
+        else {
           this.draftSection = true;
         }
       }
     })
   }
 
-  onschedule(){
-    this.schedule=true;
+  onschedule() {
+    this.schedule = true;
     this.onPolicyIntegrate();
   }
 
-  onNavigate(){
-    if(this.userDetails.UserType == 'admin'){
+  onNavigate() {
+    if (this.userDetails.UserType == 'admin') {
       this.router.navigate([`${this.routerBaseLink}/admin-referral/pending-quote`]);
     }
-    else{
+    else {
       let status = sessionStorage.getItem('QuoteStatus')
-      console.log('HHHHHHHHHHHHHHHHHH',status)
-      if(status=='E'){
+      console.log('HHHHHHHHHHHHHHHHHH', status)
+      if (status == 'E') {
         this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-grid`]);
       }
-      else{
-        if(this.generateCerti == 'Q' || this.generateCerti == 'N'){
+      else {
+        if (this.generateCerti == 'Q' || this.generateCerti == 'N') {
           this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
         }
-        else if(this.generateCerti == 'Y'){
+        else if (this.generateCerti == 'Y') {
           //this.schedule=true;
           //this.onPolicyIntegrate();
           this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
         }
       }
-      
-      
+
+
     }
 
   }
 
   onUploadDocument(event: any, eventType: string) {
     console.log(event);
-    console.log('hhhhhhh',eventType)
+    console.log('hhhhhhh', eventType)
     let fileList;
     if (eventType == 'click') {
-    let fileList = event.target.files;
-    for (let index = 0; index < fileList.length; index++) {
-      const element = fileList[index];
-      var reader:any = new FileReader();
-      reader.readAsDataURL(element);
+      let fileList = event.target.files;
+      for (let index = 0; index < fileList.length; index++) {
+        const element = fileList[index];
+        var reader: any = new FileReader();
+        reader.readAsDataURL(element);
         var filename = element.name;
 
         let imageUrl: any;
@@ -438,9 +475,9 @@ export class PolicyGenerateComponent implements OnInit {
           imageUrl = res.target.result;
           this.imageUrl = imageUrl;
           let Exist = this.uploadDocuments.some((ele: any) => ele.fileName == filename);
-          console.log("Element Exist",Exist)
+          console.log("Element Exist", Exist)
           if (!Exist) {
-            this.uploadDocuments.push({ 'url': element,"fileName":filename,'productid':this.sessionStorageService.sessionStorgaeModel.productId,'loginid':this.userDetails?.LoginId,'quoteNo':this.premiumDetails?.QuoteDetails?.QuoteNo});
+            this.uploadDocuments.push({ 'url': element, "fileName": filename, 'productid': this.sessionStorageService.sessionStorgaeModel.productId, 'loginid': this.userDetails?.LoginId, 'quoteNo': this.premiumDetails?.QuoteDetails?.QuoteNo });
 
           }
           else {
@@ -452,17 +489,17 @@ export class PolicyGenerateComponent implements OnInit {
 
         }
 
-    }
-      
+      }
+
     }
     if (eventType == 'drop') {
       fileList = event[0];
     }
-    
+
   }
-  onDeleteUploadedDoc(item){
-    let entry = this.uploadedDocumentsList.find(ele=>ele.UploadId==item.UploadId);
-    if(entry){
+  onDeleteUploadedDoc(item) {
+    let entry = this.uploadedDocumentsList.find(ele => ele.UploadId == item.UploadId);
+    if (entry) {
       const urlLink = `${this.ApiUrl1}file/delete`;
       const reqData = {
         /*"BranchCode": this.userDetails?.BranchCode,
@@ -472,30 +509,30 @@ export class PolicyGenerateComponent implements OnInit {
         "UploadId": entry.UploadId
       }
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-        if(data?.Result){
-        console.log('kkkkkkkkkk',this.uploadedDocumentsList);
-        this.getdocTypeList();
-        this.ongetUploadedDocument();
+        if (data?.Result) {
+          console.log('kkkkkkkkkk', this.uploadedDocumentsList);
+          this.getdocTypeList();
+          this.ongetUploadedDocument();
         }
-        
+
       })
       //this.uploadedDocumentsList.splice(index,1);
       //this.onSubmit(); 
     }
   }
-  onDeleteUploadDoc(index){
-    this.uploadDocuments.splice(index,1);
+  onDeleteUploadDoc(index) {
+    this.uploadDocuments.splice(index, 1);
   }
- 
-  onDownloadSchedule(){
+
+  onDownloadSchedule() {
     const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
     const reqData = {
       "BranchCode": this.userDetails?.BranchCode,
       "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo
     }
-    
+
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      if(data?.Result){
+      if (data?.Result) {
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', data?.Result);
@@ -503,16 +540,16 @@ export class PolicyGenerateComponent implements OnInit {
         document.body.appendChild(link);
         link.click();
         link.remove();
-       
+
       }
-      
+
 
     })
   }
-  onDownloadCredit(){
+  onDownloadCredit() {
     const urlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${this.policyNo}`;
     this.newQuotesService.onGetMethodSync(urlLink).subscribe((data: any) => {
-      if(data?.Result){
+      if (data?.Result) {
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', data?.Result);
@@ -520,16 +557,16 @@ export class PolicyGenerateComponent implements OnInit {
         document.body.appendChild(link);
         link.click();
         link.remove();
-       
+
       }
-      
+
 
     })
   }
-  onDownloadDebit(){
+  onDownloadDebit() {
     const urlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${this.policyNo}`;
     this.newQuotesService.onGetMethodSync(urlLink).subscribe((data: any) => {
-      if(data?.Result){
+      if (data?.Result) {
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', data?.Result);
@@ -537,36 +574,46 @@ export class PolicyGenerateComponent implements OnInit {
         document.body.appendChild(link);
         link.click();
         link.remove();
-       
+
       }
-      
+
 
     })
   }
-  onDownloadAKIDoc(){
-    const urlLink = `${this.ApiUrl1}Integration/get/certificate`;
-    const reqData = {
-      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo
-      // "QuoteNo": '100707'
+  onDownloadAKIDoc() {
+    if (this.certificateNo) {
+      const urlLink = `${this.ApiUrl1}Integration/get/certificate`;
+      const reqData = {
+        "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo
+        // "QuoteNo": '100707'
+      }
+
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+        if (data?.Result) {
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href', data?.Result.rObj.blobDownloadURL);
+          link.setAttribute('download', this.premiumDetails?.QuoteDetails?.QuoteNo);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+
+        }
+
+
+      })
     }
-    
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      if(data?.Result){
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', data?.Result.rObj.blobDownloadURL);
-        link.setAttribute('download', this.premiumDetails?.QuoteDetails?.QuoteNo);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-       
-      }
-      
+    // else{
+    //   Swal.fire(
+    //     'Document Generate Failed!',
+    //     // `${data?.Result?.Message}`,
+    //     'info'
+    //   )
+    // }
 
-    })
   }
-  getBack(){
-    this.policySection = false;this.draftSection=false;
-    this.schedule=false;
+  getBack() {
+    this.policySection = false; this.draftSection = false;
+    this.schedule = false;
   }
 }

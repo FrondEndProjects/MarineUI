@@ -282,7 +282,39 @@
             Information</ng-container>  
       </div>
      </div>
+     <!-- <p *ngIf="!certificateNo" class="text-danger mt-3">AKI Certificate Integration Failed</p>
+     <div *ngIf="!certificateNo" class="row mt-0">
+       <div class="col-md-3 text-danger" *ngFor="let item of integrationErrorList">*<small>{{item.errorText}}</small></div>
+     </div> -->
   </div>
+
+  <div *ngIf="!certificateNo && integrationErrorList" class="col-12 col-md-12 col-lg-12">
+    <div class="middle-line">
+      AKI Certificate Integration Failed Information
+    </div>
+  </div>
+  <div *ngIf="!certificateNo && integrationErrorList" class="row header-details">
+    <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+      
+      <div class="vision-grid-item-body">
+          <div class="row">
+            <div *ngFor="let item of integrationErrorList" class="col-12 col-md-12 col-lg-12"> 
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2 text-danger">
+                  <!-- Policy No -->
+                 - {{item.errorText}}*
+                </div>
+                <div class="p-2">
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          
+      </div>    
+    </div>
+  </div>
+
   <div class="maan-card-body">
     <div class="col-12 col-md-12 col-lg-12">
       <div class="middle-line">

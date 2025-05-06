@@ -116,14 +116,26 @@
         <div class="input-form-box">
           <input type="text" class="input-form-control without-icon" formControlName="customerVat">
         </div>
+        <div class="input-form-error"
+          *ngIf="(customerF.customerVat.errors && submitted) || (!customerF.customerVat.valid && customerF.customerVat.touched)">
+          <div *ngIf="customerF.customerVat.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">Email</label>
+        <label class="input-form-label">Email<span class="text-required">*</span></label>
         <div class="input-form-box">
           <input type="text" class="input-form-control without-icon" formControlName="email">
         </div>
+        <div class="input-form-error"
+        *ngIf="(customerF.email.errors && submitted) || (!customerF.email.valid && customerF.email.touched)">
+        <div *ngIf="customerF.email.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
       </div>
     </div>
 
@@ -147,7 +159,8 @@
             <div class="input-control-container">
               <!-- <label class="input-form-label">Search</label> -->
               <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" placeholder="Search" [(ngModel)]="filterValue">
+                <input type="text" class="input-form-control without-icon" placeholder="Search"
+                  [(ngModel)]="filterValue">
               </div>
             </div>
           </div>

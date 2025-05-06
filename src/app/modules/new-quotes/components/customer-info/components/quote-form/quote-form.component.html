@@ -83,7 +83,12 @@
               formControlName="orginatingCityOther">
           </ng-container>
         </div>
-
+        <div class="input-form-error"
+        *ngIf="(quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
+        <div *ngIf="quoteF.originatingCity.errors?.required" class="error-text">
+          This field is required
+        </div>
+      </div>
       </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
@@ -137,7 +142,18 @@
               formControlName="destinationCityOther">
           </ng-container>
         </div>
-
+        <div class="input-form-error"
+          *ngIf="(quoteF.destinationCity.errors && submitted) || (!quoteF.destinationCity.valid && quoteF.destinationCity.touched)">
+          <div *ngIf="quoteF.destinationCity.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+        <!-- <div class="input-form-error"
+          *ngIf="(quoteF.destinationCityOther.errors && submitted) || (!quoteF.destinationCityOther.valid && quoteF.destinationCityOther.touched)">
+          <div *ngIf="quoteF.destinationCityOther.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div> -->
       </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
@@ -170,14 +186,6 @@
         </div>
       </div>
     </div>
-    <div *ngIf="this.insurenceId!='100020'" class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Via</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="via">
-        </div>
-      </div>
-    </div>
 
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
@@ -193,15 +201,38 @@
         </div>
       </div>
     </div>
+    <div *ngIf="this.insurenceId!='100020'" class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label">Via</label>
+        <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" formControlName="via">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
+      <div class="input-control-container">
+        <label class="input-form-label">Storage Period (>60 days)</label>
+        <div class="input-form-radio-box">
+          <div class="radio-toolbar">
+            <input id="StoragePeriod_Yes" type="radio" name="StoragePeriod" value="Y" formControlName="StoragePeriodYn">
+            <label for="StoragePeriod_Yes">Yes</label>
+            <input type="radio" id="StoragePeriod_No" name="StoragePeriod" value="N" formControlName="StoragePeriodYn">
+            <label for="StoragePeriod_No">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
       <div class="input-control-container">
         <label class="input-form-label">Transhipment</label>
         <div class="input-form-radio-box">
           <div class="radio-toolbar">
-            <input id="Transhipment_Yes" type="radio" name="Transhipment" value="Y" formControlName="TranshipmentYN">
+            <input (change)="onTranshipmentChange($event)" id="Transhipment_Yes" type="radio" name="Transhipment"
+              value="Y" formControlName="TranshipmentYN">
             <label for="Transhipment_Yes">Yes</label>
-            <input type="radio" id="Transhipment_No" name="Transhipment" value="N" formControlName="TranshipmentYN">
+            <input (change)="onTranshipmentChange($event)" type="radio" id="Transhipment_No" name="Transhipment"
+              value="N" formControlName="TranshipmentYN">
             <label for="Transhipment_No">No</label>
           </div>
         </div>
@@ -220,7 +251,7 @@
       </div>
     </div> -->
 
-    <div class="col-12 col-md-4 col-lg-4"
+    <!-- <div class="col-12 col-md-4 col-lg-4"
       *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y' ">
       <div class="input-control-container">
         <label class="input-form-label">Transhipping</label>
@@ -237,28 +268,55 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
-
-
-
-
-
-
-    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
+    <div *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y'"
+      class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">Storage Period (>60 days)</label>
-        <div class="input-form-radio-box">
-          <div class="radio-toolbar">
-            <input id="StoragePeriod_Yes" type="radio" name="StoragePeriod" value="Y" formControlName="StoragePeriodYn">
-            <label for="StoragePeriod_Yes">Yes</label>
-            <input type="radio" id="StoragePeriod_No" name="StoragePeriod" value="N" formControlName="StoragePeriodYn">
-            <label for="StoragePeriod_No">No</label>
+        <label class="input-form-label">Transhipment Country<span class="text-required">*</span></label>
+        <ng-select placeholder="Select" class="input-form-select" formControlName="transhippingCountry"
+          [items]="dropTranshippingCountryList" bindValue="Code" bindLabel="CodeDescription"
+          (change)="onGetTranshippingCityDropdownList()">
+        </ng-select>
+        <div class="input-form-error"
+          *ngIf="(quoteF.destinationCountry.errors && submitted) || (!quoteF.destinationCountry.valid && quoteF.destinationCountry.touched)">
+          <div *ngIf="quoteF.destinationCountry.errors?.required" class="error-text">
+            This field is required
           </div>
         </div>
       </div>
     </div>
+    <div *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y'"
+      class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+        <label class="input-form-label d-flex">
+          <span class="mx-2">Transhipment City <span class="text-required">*</span></span>
+          <div class="custom-control custom-switch">
+            <!-- <input type="checkbox" class="custom-control-input" id="switch2" formControlName="transhippingOtherYN">
+            <label class="custom-control-label" for="switch2">Other City</label> -->
+          </div>
+        </label>
+        <div class="input-form-box">
+          <ng-container *ngIf="!quoteF.transhippingOtherYN.value">
+            <ng-select placeholder="Select" [clearable]="true" [closeOnSelect]="true" class="input-form-select"
+              formControlName="via" [items]="secondarylist" bindValue="ShortCode" bindLabel="CodeDescription">
+            </ng-select>
+          </ng-container>
+          <ng-container *ngIf="quoteF.transhippingOtherYN.value">
+            <input type="text" class="input-form-control without-icon" placeholder="Enter City here.."
+              formControlName="transhippingCityOther">
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
     <!-- <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">PVT on Land</label>
@@ -303,6 +361,12 @@
         <ng-select placeholder="Select" class="input-form-select" formControlName="goodsCategory"
           [items]="dropGoodsOfCateList" bindValue="Code" bindLabel="CodeDescription">
         </ng-select>
+        <div class="input-form-error"
+          *ngIf="(quoteF.goodsCategory.errors && submitted) || (!quoteF.goodsCategory.valid && quoteF.goodsCategory.touched)">
+          <div *ngIf="quoteF.goodsCategory.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
       </div>
     </div>
 
@@ -312,6 +376,12 @@
         <div class="input-form-box">
           <input type="text" class="input-form-control without-icon" (keyup)="CommaFormatteds()"
             formControlName="insuredValue" [value]="quoteF.insuredValue.value | commaseparator">
+        </div>
+        <div class="input-form-error"
+          *ngIf="(quoteF.insuredValue.errors && submitted) || (!quoteF.insuredValue.valid && quoteF.insuredValue.touched)">
+          <div *ngIf="quoteF.insuredValue.errors?.required" class="error-text">
+            This field is required
+          </div>
         </div>
       </div>
     </div>
@@ -487,6 +557,12 @@
         <label class="input-form-label">Goods Description<span class="text-required">*</span></label>
         <div class="input-form-box">
           <textarea class="input-form-control3 without-icon" rows="3" formControlName="goodsDescript"></textarea>
+        </div>
+        <div class="input-form-error"
+          *ngIf="(quoteF.goodsDescript.errors && submitted) || (!quoteF.goodsDescript.valid && quoteF.goodsDescript.touched)">
+          <div *ngIf="quoteF.goodsDescript.errors?.required" class="error-text">
+            This field is required
+          </div>
         </div>
       </div>
     </div>

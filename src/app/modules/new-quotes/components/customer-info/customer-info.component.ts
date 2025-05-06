@@ -578,6 +578,7 @@ export class CustomerInfoComponent implements OnInit {
           'Via': this.quoteF.via.value,
           "StoragePeriodYn": this.quoteF.StoragePeriodYn.value,
           "TranshipmentYn": this.quoteF.TranshipmentYN.value,
+          "TranshipmentCountry": this.quoteF.transhippingCountry.value,
           'UCRNumber': this.quoteF.UCRNumber.value
         },
         'VesselDetails': {

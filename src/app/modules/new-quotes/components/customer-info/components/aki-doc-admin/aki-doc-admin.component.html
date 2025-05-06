@@ -1,0 +1,352 @@
+<div class="card">
+    <div class="container">
+        <h5></h5>
+        <!-- <div class="col-12">
+            <div class="middle-line">AKI Certificate Admin</div>
+        </div> -->
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="row">
+            <div class="col-12">
+                <div class="middle-line">Customer Details</div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Policy Holder Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="policyHolderName"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Email</label>
+                        <div class="input-form-box">
+                            <input type="email" formControlName="email" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Mobile No</label>
+                        <div class="input-form-box">
+                            <input type="tel" formControlName="mobileNo" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Address</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="address" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">PO Box</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="poBox" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">City</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="city" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Country ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="countryId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Country Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="countryName" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">KRA PIN</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="kraPin" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12">
+                <div class="middle-line">Transport Details</div>
+            </div>
+            <!-- Transport & Trade Info -->
+            <div class="row mt-3">
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Mode of Transport ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="modeOfTransportId"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Mode of Transport</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="modeOfTransport"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Vessel Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="vesselName" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Flight No</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="flightNo" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voyage and Port Info -->
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Voyage From ID</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="voyageFromId" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Voyage From Name</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="voyageFromName" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Voyage To ID</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="voyageToId" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Voyage To Name</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="voyageToName" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Port From ID</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="portFromId" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Port From Name</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="portFromName" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Port From Short Code</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="portFromShortCode" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Port To ID</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="portToId" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Port To Name</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="portToName" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Port To Short Code</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="portToShortCode" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Transshipping At</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="tranShippingAt" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Transshipping Short Code</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="tranShippingShortCode"
+                            class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Trade ID</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="tradeId" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Trade Name</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="tradeName" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+            </div> <!-- Policy Info -->
+            <div class="col-12">
+                <div class="middle-line">Policy Info</div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Intermediary IRA No</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="intermediaryIraNo" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Policy No</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="policyNo" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Cover Type ID</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="coverTypeId" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Cover Type</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="coverType" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Open Cover Note No</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="openCoverNoteNo" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Currency ID</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="currencyId" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Currency Name</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="currencyName" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">UCR No</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="ucrNo" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Premium Percentage</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="premiumPercentage"
+                            class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Sum Insured</label>
+                    <div class="input-form-box">
+                        <input type="number" formControlName="sumInsured" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Description of Goods</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="descriptionOfGoods" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">IDF No</label>
+                    <div class="input-form-box">
+                        <input type="text" formControlName="idfNo" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">From Date</label>
+                    <div class="input-form-box">
+                        <input type="date" formControlName="fromDate" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="input-form-label">Entry Date</label>
+                    <div class="input-form-box">
+                        <input type="date" formControlName="entryDate" class="input-form-control without-icon">
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="col-12 mt-3 mb-3 text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</div>
