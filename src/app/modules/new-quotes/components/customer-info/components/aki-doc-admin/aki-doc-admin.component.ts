@@ -123,7 +123,7 @@ export class AkiDocAdminComponent {
       isPremiumDisplay: [''],
       idfNo: [''],
       county: [''],
-      entryDate: ['']
+      // entryDate: ['']  
     });
     // this.getList();
     const now = new Date();
@@ -205,7 +205,7 @@ export class AkiDocAdminComponent {
       "IsPremiumDisplay": formValues.isPremiumDisplay,
       "IdfNo": formValues.idfNo,
       "County": formValues.county,
-      "EntryDate": this.formatDate(formValues.entryDate),
+      // "EntryDate": this.formatDate(formValues.entryDate),
       "Status": this.viewData.Status
     }
 
@@ -216,6 +216,7 @@ export class AkiDocAdminComponent {
         if (data.Result.Status == true) {
           this.isEdit = false;
           this.isView = false;
+          this.getList();
         }
         // this.tableDataFailedList = data?.Result;
         // this.tableDataFailedList = data?.Result.filter(ele => ele.Status == 'P');
@@ -259,14 +260,14 @@ export class AkiDocAdminComponent {
     else {
       const urlLink = `${this.ApiUrl1}Integration/aki/call`;
       const reqData = {
-        "PolicyNo": event.QuoteNo,
-        "QuoteNo": event.PolicyNo,
+        "PolicyNo": event.PolicyNo,
+        "QuoteNo": event.QuoteNo,
         "ReintegrateStatus": 'N'
       };
       this.quoteService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
           console.log(data, "sdfsdfasdfs");
-
+          this.getList();
 
         },
         (err) => { },
@@ -292,9 +293,9 @@ export class AkiDocAdminComponent {
     if (this.viewData) {
       this.isEdit = true;
       this.isView = false;
-      const rawDate = this.viewData.EntryDate;
-      const parts = rawDate.split('/');
-      const formattedEntryDate = `${parts[2]}-${parts[1]?.padStart(2, '0')}-${parts[0]?.padStart(2, '0')}`;
+      // const rawDate = this.viewData.EntryDate;
+      // const parts = rawDate.split('/');
+      // const formattedEntryDate = `${parts[2]}-${parts[1]?.padStart(2, '0')}-${parts[0]?.padStart(2, '0')}`;
 
       const FromDate = this.viewData.FromDate;
       const FromDatepart = FromDate.split('/');
@@ -344,7 +345,7 @@ export class AkiDocAdminComponent {
         isPremiumDisplay: this.viewData.IsPremiumDisplay,
         idfNo: this.viewData.IdfNo,
         county: this.viewData.County,
-        entryDate: formattedEntryDate
+        // entryDate: formattedEntryDate
       });
     }
 

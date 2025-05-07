@@ -91,37 +91,37 @@ export const adminNavItems: NbMenuItem[] = [
     children: [
       {
         title: 'Bank Master',
-        link: 'masters/bank-master/view',
+        link: '/Marine/masters/bank-master/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Conveyance',
-        link: 'masters/conveyance/view',
+        link: '/Marine/masters/conveyance/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Country Master',
-        link: 'masters/country/view',
+        link: '/Marine/masters/country/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Country Cover',
-        link: 'masters/country-cover/view',
+        link: '/Marine/masters/country-cover/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Commodity',
-        link: 'masters/commodity/view',
+        link: '/Marine/masters/commodity/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Commodity Excess',
-        link: 'masters/commodity-excess/view',
+        link: '/Marine/masters/commodity-excess/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Cover',
-        link: 'masters/cover/view',
+        link: '/Marine/masters/cover/view',
         icon: 'icon-cursor',
       },
       {
@@ -132,94 +132,94 @@ export const adminNavItems: NbMenuItem[] = [
 
       {
         title: 'War Rate Master',
-        link: 'masters/war-rate/view',
+        link: '/Marine/masters/war-rate/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Package Master',
-        link: 'masters/package/view',
+        link: '/Marine/masters/package/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Sale Term Master',
-        link: 'masters/sale-term/view',
+        link: '/Marine/masters/sale-term/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Tolerance Master',
-        link: 'masters/tolerance/view',
+        link: '/Marine/masters/tolerance/view',
         icon: 'icon-cursor',
       },
 
       {
         title: 'Settling Agent',
-        link: 'masters/settling-agent/view',
+        link: '/Marine/masters/settling-agent/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Exchange Master',
-        link: 'masters/exchange-master/view',
+        link: '/Marine/masters/exchange-master/view',
         icon: 'icon-cursor',
       },
       // {
       //   title: 'Exchange Master Upload',
-      //   link: 'masters/exchange-master-upload/view',
+      //   link: '/Marine/masters/exchange-master-upload/view',
       //   icon: 'icon-cursor',
       // },
       {
         title: 'Currency Master',
-        link: 'masters/currency/view',
+        link: '/Marine/masters/currency/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Extra Cover',
-        link: 'masters/extra-cover/view',
+        link: '/Marine/masters/extra-cover/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Mode of Transport',
-        link: 'masters/transport/view',
+        link: '/Marine/masters/transport/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Warranty Master',
-        link: 'masters/warranty/view',
+        link: '/Marine/masters/warranty/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Constant Master',
-        link: 'masters/constant/view',
+        link: '/Marine/masters/constant/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Exclusion Master',
-        link: 'masters/exclusion/view',
+        link: '/Marine/masters/exclusion/view',
         icon: 'icon-cursor',
       },
       {
         title: 'City',
-        link: 'masters/city/view',
+        link: '/Marine/masters/city/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Clause ID',
-        link: 'masters/clause/view',
+        link: '/Marine/masters/clause/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Wsrcc Cover',
-        link: 'masters/wsrcc/view',
+        link: '/Marine/masters/wsrcc/view',
         icon: 'icon-cursor',
       },
 
       {
         title: 'Error',
-        link: 'masters/error/view',
+        link: '/Marine/masters/error/view',
         icon: 'icon-cursor',
       },
       {
         title: 'Sales Executive Master',
-        link: 'masters/sales-exe/view',
+        link: '/Marine/masters/sales-exe/view',
         icon: 'icon-cursor',
       },
     ],
