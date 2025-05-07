@@ -18,7 +18,9 @@ export class AkiDocAdminComponent {
   viewData: any
   to_date: any;
   isView: boolean = false;
+  showModify: boolean = false;
   columnHeader: any[] = [];
+  columnHeader1: any[] = [];
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   constructor(private fb: FormBuilder,
@@ -26,11 +28,40 @@ export class AkiDocAdminComponent {
 
   ) {
 
+    this.columnHeader1 = [
+      { key: 'QuoteNo', display: 'Quote No' },
+      { key: 'PolicyNo', display: 'Policy No' },
+      { key: 'PolicyHolderName', display: 'Customer Name' },
+      { key: 'FromDate', display: 'Policy Date' },
+      { key: 'KraPin', display: 'KRA PIN' },
+      {
+        key: "edit",
+        display: "Action",
+        // sticky: true,
+        config: {
+          isActionBtn: true,
+          isActionBtnName: "View",
+          isNgxIcon: "fas fa-eye",
+          bg: "primary",
+        },
+      },
+      {
+        key: "print",
+        display: "AKI Integration",
+        // sticky: true,
+        config: {
+          isActionBtn: true,
+          isActionBtnName: "Update",
+          isNgxIcon: "fas fa-upload",
+          bg: "secondary",
+        },
+      }
+    ];
     this.columnHeader = [
       { key: 'QuoteNo', display: 'Quote No' },
       { key: 'PolicyNo', display: 'Policy No' },
-      { key: 'PolicyHolderName', display: 'Name' },
-      { key: 'FromDate', display: 'From Date' },
+      { key: 'PolicyHolderName', display: 'Customer Name' },
+      { key: 'FromDate', display: 'Policy Date' },
       { key: 'KraPin', display: 'KRA PIN' },
       {
         key: "edit",
@@ -199,21 +230,49 @@ export class AkiDocAdminComponent {
   }
   isActionBtn(event) {
 
-    if (event.QuoteNo) {
-      const urlLink = `${this.ApiUrl1}Integration/getMarine/${event.QuoteNo}`;
+    if (event.btName == 'View' && event.btName != 'Update') {
+      if (event.QuoteNo) {
+        const urlLink = `${this.ApiUrl1}Integration/getMarine/${event.QuoteNo}`;
 
-      this.quoteService.onGetMethodSync(urlLink).subscribe(
+        this.quoteService.onGetMethodSync(urlLink).subscribe(
+          (data: any) => {
+
+            this.viewData = data.Response;
+            console.log(this.viewData, "this.viewDatathis.viewData");
+
+
+          },
+          (err) => { },
+        );
+      }
+      this.isView = true;
+      console.log(event.Status);
+
+      if (event.Status == 'P') {
+        this.showModify = true;
+
+      }
+      else {
+        this.showModify = false;
+      }
+    }
+    else {
+      const urlLink = `${this.ApiUrl1}Integration/aki/call`;
+      const reqData = {
+        "PolicyNo": event.QuoteNo,
+        "QuoteNo": event.PolicyNo,
+        "ReintegrateStatus": 'N'
+      };
+      this.quoteService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
-
-          this.viewData = data.Response;
-          console.log(this.viewData, "this.viewDatathis.viewData");
+          console.log(data, "sdfsdfasdfs");
 
 
         },
         (err) => { },
       );
     }
-    this.isView = true;
+
   }
 
   formatDate(dateString: string): string {
@@ -295,5 +354,14 @@ export class AkiDocAdminComponent {
     return key
       .replace(/_/g, ' ')
       .replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  onDateChange(event: any) {
+    // Optional: parse and store date
+    this.from_date = event.target.value;
+  }
+  onDateChange1(event: any) {
+    // Optional: parse and store date
+    this.to_date = event.target.value;
   }
 }

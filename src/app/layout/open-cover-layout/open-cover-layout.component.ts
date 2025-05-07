@@ -22,6 +22,7 @@ export class OpenCoverLayoutComponent implements OnInit {
   public userDetails: any;
   public productId: any;
   public menu: any;
+  OpenCoverHeasdingInfo:boolean = false;
   public endorsement: any;
   public headerDetails: any;
   public OpenCover: any;
@@ -32,8 +33,8 @@ export class OpenCoverLayoutComponent implements OnInit {
     private sessionStorageService: SessionStorageService
   ) {
     this.menu = borkerNavItems;
-    console.log(this.menu,"this.menu");
-    
+    console.log(this.menu, "this.menu");
+
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails?.LoginResponse;
@@ -43,19 +44,26 @@ export class OpenCoverLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.setMenuSection();
     this.onHeaderDetails();
+    const currentUrl = this.router.url;
+    if(currentUrl =='/marine-opencover/quotes/aki-doc-admin'){
+      this.OpenCoverHeasdingInfo = true;
+    }else{
+      this.OpenCoverHeasdingInfo = false;
+    }
+    console.log(currentUrl, "currentUrl");
 
   }
   onMenuItemClick(e): void {
     // console.log("Event",e,e.target.outerText,this.menu)
-    for(let entry of this.menu){
-      if(entry.title==e.target.outerText){
+    for (let entry of this.menu) {
+      if (entry.title == e.target.outerText) {
 
       }
-      else if(entry.children){
-          if(entry.children.some(ele=>ele.title==e.target.outerText)){
-            entry['expanded'] = false;
-          }
-          else  entry['expanded'] = false;
+      else if (entry.children) {
+        if (entry.children.some(ele => ele.title == e.target.outerText)) {
+          entry['expanded'] = false;
+        }
+        else entry['expanded'] = false;
       }
     }
     // let entry = this.menu.find(ele=>ele.title==e.target.outerText);
@@ -70,8 +78,8 @@ export class OpenCoverLayoutComponent implements OnInit {
     //     }
     //   }
     // }
-    console.log("Event Last",e,this.menu)
-   
+    console.log("Event Last", e, this.menu)
+
   }
   setMenuSection() {
     if (this.userDetails.UserType == 'admin') {

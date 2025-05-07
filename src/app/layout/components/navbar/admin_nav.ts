@@ -230,7 +230,7 @@ export const adminNavItems: NbMenuItem[] = [
     icon: 'icon-cursor',
   },
   {
-    title: 'AKI Update',
+    title: 'AKI Certificate Integration',
     link: '/marine-opencover/quotes/aki-doc-admin',
     icon: 'icon-cursor',
   },

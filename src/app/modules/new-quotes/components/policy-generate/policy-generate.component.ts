@@ -26,7 +26,7 @@ export class PolicyGenerateComponent implements OnInit {
   public premiumDetails: any;
   aki_error: any
   public policyForm: FormGroup;
-
+  policuNoGenerate: boolean = false;
   public generateCerti: any = 'N';
   public premium: any = false;
   public nameOfBroker: any = false;
@@ -34,7 +34,7 @@ export class PolicyGenerateComponent implements OnInit {
   public darft: any = false;
   public bankerAssured: any = false;
   public excess: any = false;
-  integrationErrorList:any[]=[];
+  integrationErrorList: any[] = [];
   public routerBaseLink: any = '';
   public premiumForm!: FormGroup;
   public OpenCover: any;
@@ -289,7 +289,7 @@ export class PolicyGenerateComponent implements OnInit {
           // console.log("Final",JSON.parse(d))
         }
 
-         
+
 
         //this.router.navigate([`${this.routerBaseLink}/portfolio/grid`]);
         // Swal.fire(
@@ -313,10 +313,10 @@ export class PolicyGenerateComponent implements OnInit {
         .replace(/=([^,}\]]+)/g, '":"$1"')         // Wrap values
         .replace(/,(\s*})/g, '"$1')                // End of object
         .replace(/},\s*{/g, '}|{');                // Separate objects
-  
+
       // Step 2: Split into object strings
       const objectStrings = fixed.split('|');
-  
+
       // Step 3: Parse each object
       return objectStrings.map(str => JSON.parse(str));
     } catch (err) {
@@ -414,6 +414,13 @@ export class PolicyGenerateComponent implements OnInit {
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       console.log(data);
       if (data.Message == "Success") {
+        if (data.Result.PolicyNo) {
+          this.policuNoGenerate = true;
+        }
+        else {
+          this.policuNoGenerate = false;
+
+        }
         if (this.generateCerti == 'Y') {
           this.onschedule();
         }

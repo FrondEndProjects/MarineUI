@@ -1,102 +1,104 @@
-
 <div class="maan-card" *ngIf="!draftSection && !policySection && !schedule">
   <div class="maan-card-header">
-      <!-- <div class="form-heading-number">
+    <!-- <div class="form-heading-number">
         5
       </div> -->
-        <div class="row">
-          <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
-            Policy Generation
-          </div>
-          <div class="col-md-2 col-lg-2 col-2 col-xl-2 offset-6" *ngIf="quoteNo">
-            Quote No - {{quoteNo}}
-          </div>
-        </div>
+    <div class="row">
+      <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
+        Policy Generation
+      </div>
+      <div class="col-md-2 col-lg-2 col-2 col-xl-2 offset-6" *ngIf="quoteNo">
+        Quote No - {{quoteNo}}
+      </div>
+    </div>
   </div>
   <div class="maan-card-body">
-      <div class="vision-grid vision-grid-column-2 policy-grid">
-        <div class="vision-grid-item">
-          <div class="vision-grid-item-title">
-            Document Upload
-          </div>
-          <div class="vision-grid-item-body">
-              <ng-container *ngIf="docTypeList.length!=0">
-                <div class="row">
-                  <ng-container *ngFor="let doc of docTypeList">
-                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 mb-2">
-                          <ng-container *ngIf="doc.DocAvailable=='N'">
-                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,doc)" #fileInput>
-                            <div id="Image_{{doc.Code}}" (click)="fileInput.click()" class="imag-card" style="
+    <div class="vision-grid vision-grid-column-2 policy-grid">
+      <div class="vision-grid-item">
+        <div class="vision-grid-item-title">
+          Document Upload
+        </div>
+        <div class="vision-grid-item-body">
+          <ng-container *ngIf="docTypeList.length!=0">
+            <div class="row">
+              <ng-container *ngFor="let doc of docTypeList">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6 mb-2">
+                  <ng-container *ngIf="doc.DocAvailable=='N'">
+                    <input style="display: none;" type="file" (change)="onUploadDocuments($event,doc)" #fileInput>
+                    <div id="Image_{{doc.Code}}" (click)="fileInput.click()" class="imag-card" style="
                                           background-position: center;
                                           background-repeat: no-repeat;
                                           background-size: cover;
                                           height: 150px;
                                           width: 100%;
                                           position: relative;">
-                                                  <div class="center">
-                                                      <b class="text-dark">
-                                    {{doc.CodeDescription}}
-                                    <ng-container *ngIf="doc.CodeValue == 'Y'">
-                                      <span class="text-danger">*</span>
-                                    </ng-container>
-                                    <br>
-                                    <i class="fa fa-plus-circle"></i>
-                                  </b>
-                                </div>
-                            </div>
+                      <div class="center">
+                        <b class="text-dark">
+                          {{doc.CodeDescription}}
+                          <ng-container *ngIf="doc.CodeValue == 'Y'">
+                            <span class="text-danger">*</span>
                           </ng-container>
-                          <ng-container *ngIf="doc.DocAvailable=='P'">
-                            <mat-card class="accident-gallery-photo">
-                              <ng-container *ngIf="doc.FileType!='pdf'">
-                                <img *ngIf="doc.FileType!='pdf'" class="img-fluid customImage" [src]="doc.urlPath">
-                                <div class="text-center">
-                                  <p class="text-center">{{doc.FileName}}</p>
-                                </div>
-                              </ng-container>
-                              
-                              <div class="imgbox" *ngIf="doc.FileType=='pdf'" style="
+                          <br>
+                          <i class="fa fa-plus-circle"></i>
+                        </b>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="doc.DocAvailable=='P'">
+                    <mat-card class="accident-gallery-photo">
+                      <ng-container *ngIf="doc.FileType!='pdf'">
+                        <img *ngIf="doc.FileType!='pdf'" class="img-fluid customImage" [src]="doc.urlPath">
+                        <div class="text-center">
+                          <p class="text-center">{{doc.FileName}}</p>
+                        </div>
+                      </ng-container>
+
+                      <div class="imgbox" *ngIf="doc.FileType=='pdf'" style="
                               background-size: cover;
                               height: 100px;
                               padding: 2px;">
-                                  <p class="text-center">{{doc.FileName}}
-                               
-                                  </p>
-                              </div>
-                              <div class="d-flex justify-content-center mt-1">
-                                  <!-- <a mat-raised-button class="mx-1" *ngIf="doc.FileType!='pdf'"><i
+                        <p class="text-center">{{doc.FileName}}
+
+                        </p>
+                      </div>
+                      <div class="d-flex justify-content-center mt-1">
+                        <!-- <a mat-raised-button class="mx-1" *ngIf="doc.FileType!='pdf'"><i
                                       class="far fa-eye mx-1"></i></a>
                                   <a mat-raised-button class="mx-1" download><i
                                       class="fas fa-download mx-1"></i></a> -->
-                                  <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteDoc(doc)"><i class="far fa-trash-alt"></i></a>
-                              </div>
-                          </mat-card>
-                          </ng-container>
-                          <ng-container *ngIf="doc.DocAvailable=='S'">
-                              <mat-card class="accident-gallery-photo customImageCard">
-                                <ng-container *ngIf="doc.FileType!='pdf'">
-                                  <div class="text-center mt-5">
-                                    <p >{{doc.FileName}}</p>
-                                  </div>
-                                </ng-container>
-                                
-                               
-                                <div class="d-flex justify-content-center mt-1">
-                                    <!-- <a mat-raised-button class="mx-1" *ngIf="doc.FileType!='pdf'"><i
-                                        class="far fa-eye mx-1"></i></a> -->
-                                    <a mat-raised-button class="mx-1" download><i
-                                        class="fas fa-download mx-1" (click)="onDownloadfile(doc)"></i></a>
-                                    <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteUploadedDoc(doc)"><i class="far fa-trash-alt"></i></a>
-                                </div>
-                              </mat-card>
-                          </ng-container>
+                        <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteDoc(doc)"><i
+                            class="far fa-trash-alt"></i></a>
+                      </div>
+                    </mat-card>
+                  </ng-container>
+                  <ng-container *ngIf="doc.DocAvailable=='S'">
+                    <mat-card class="accident-gallery-photo customImageCard">
+                      <ng-container *ngIf="doc.FileType!='pdf'">
+                        <div class="text-center mt-5">
+                          <p>{{doc.FileName}}</p>
                         </div>
+                      </ng-container>
+
+
+                      <div class="d-flex justify-content-center mt-1">
+                        <!-- <a mat-raised-button class="mx-1" *ngIf="doc.FileType!='pdf'"><i
+                                        class="far fa-eye mx-1"></i></a> -->
+                        <a mat-raised-button class="mx-1" download><i class="fas fa-download mx-1"
+                            (click)="onDownloadfile(doc)"></i></a>
+                        <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteUploadedDoc(doc)"><i
+                            class="far fa-trash-alt"></i></a>
+                      </div>
+                    </mat-card>
                   </ng-container>
                 </div>
-                <div class="d-flex justify-content-center mt-1" *ngIf="checkUploadButton()">
-                  <a mat-raised-button class="mx-1" (click)="onUploadSubmit()"><i class="fa fa-upload"></i>&nbsp;Upload Document</a>
-              </div>
               </ng-container>
-              <!-- <div>
+            </div>
+            <div class="d-flex justify-content-center mt-1" *ngIf="checkUploadButton()">
+              <a mat-raised-button class="mx-1" (click)="onUploadSubmit()"><i class="fa fa-upload"></i>&nbsp;Upload
+                Document</a>
+            </div>
+          </ng-container>
+          <!-- <div>
                 <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
                 <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
                   (click)="doc.click()">
@@ -108,8 +110,8 @@
                   </div>
                 </div>
               </div> -->
-            <!-- <div> -->
-              <!-- <div class="vision-grid-item-body" *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
+          <!-- <div> -->
+          <!-- <div class="vision-grid-item-body" *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
                 <div class="row">
                   <table class="table table-striped">
                     <thead>
@@ -147,69 +149,70 @@
                   </table>
                 </div>
               </div>  -->
-            <!-- </div> -->
-          </div>
+          <!-- </div> -->
         </div>
-        
-        <div class="vision-grid-item">
-          <div class="vision-grid-item-title">
-            Policy Generation
-          </div>
+      </div>
 
-          <div class="vision-grid-item-body">
-            <div class="left-line font-size-95">
-              Generate Certificate
-            </div>
-            <div class="input-control-container">
-              <div class="input-form-radio-box">
-                <div class="radio-toolbar">
-                  <input id="generateCerti_quote" type="radio" name="generateCerti" [(ngModel)]="generateCerti" value="Q">
-                  <label for="generateCerti_quote">QUOTE</label>
-                  <input type="radio" id="generateCerti_draft" name="generateCerti" [(ngModel)]="generateCerti" value="N">
-                  <label for="generateCerti_draft">DRAFT</label>
-                  <input type="radio" id="generateCerti_schedule" name="generateCerti" [(ngModel)]="generateCerti" value="Y">
-                  <label for="generateCerti_schedule">
-                          <ng-container *ngIf="productId!='11' && productId!=11">SCHEDULE</ng-container>
-                          <ng-container *ngIf="productId=='11' || productId==11">CERTIFICATE</ng-container>
-                  </label>
-                </div>
+      <div class="vision-grid-item">
+        <div class="vision-grid-item-title">
+          Policy Generation
+        </div>
+
+        <div class="vision-grid-item-body">
+          <div class="left-line font-size-95">
+            Generate Certificate
+          </div>
+          <div class="input-control-container">
+            <div class="input-form-radio-box">
+              <div class="radio-toolbar">
+                <input id="generateCerti_quote" type="radio" name="generateCerti" [(ngModel)]="generateCerti" value="Q">
+                <label for="generateCerti_quote">QUOTE</label>
+                <input type="radio" id="generateCerti_draft" name="generateCerti" [(ngModel)]="generateCerti" value="N">
+                <label for="generateCerti_draft">DRAFT</label>
+                <input type="radio" id="generateCerti_schedule" name="generateCerti" [(ngModel)]="generateCerti"
+                  value="Y">
+                <label for="generateCerti_schedule">
+                  <ng-container *ngIf="productId!='11' && productId!=11">SCHEDULE</ng-container>
+                  <ng-container *ngIf="productId=='11' || productId==11">CERTIFICATE</ng-container>
+                </label>
               </div>
             </div>
-            <div class="left-line font-size-95">
-              Print In 
-              <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
-                          <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container>
-            </div>
-            <div class="print-check">
-              <label class="custom-checkbox-container">
-                <input type="checkbox" [(ngModel)]="premium">
-                <span class="checkmark">
-                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                  <span class=""><i class="fas fa-minus-circle"></i></span>
-                </span>
-                <div class="description">
-                  <div class="description-name">
-                    <span>
-                      Premium
-                    </span>
-                  </div>
+          </div>
+          <div class="left-line font-size-95">
+            Print In
+            <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
+            <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container>
+          </div>
+          <div class="print-check">
+            <label class="custom-checkbox-container">
+              <input type="checkbox" [(ngModel)]="premium">
+              <span class="checkmark">
+                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                <span class=""><i class="fas fa-minus-circle"></i></span>
+              </span>
+              <div class="description">
+                <div class="description-name">
+                  <span>
+                    Premium
+                  </span>
                 </div>
-              </label>
-              <label class="custom-checkbox-container" *ngIf="bankName!=null && bankName!=undefined && bankName!=''">
-                <input type="checkbox" [(ngModel)]="nameOfBroker">
-                <span class="checkmark">
-                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                  <span class=""><i class="fas fa-minus-circle"></i></span>
-                </span>
-                <div class="description">
-                  <div class="description-name">
-                    <span>
-                      Name Of Banker
-                    </span>
-                  </div>
+              </div>
+            </label>
+            <label class="custom-checkbox-container" *ngIf="bankName!=null && bankName!=undefined && bankName!=''">
+              <input type="checkbox" [(ngModel)]="nameOfBroker">
+              <span class="checkmark">
+                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                <span class=""><i class="fas fa-minus-circle"></i></span>
+              </span>
+              <div class="description">
+                <div class="description-name">
+                  <span>
+                    Name Of Banker
+                  </span>
                 </div>
-              </label>
-              <!-- <label class="custom-checkbox-container">
+              </div>
+            </label>
+            <!-- <label class="custom-checkbox-container">
                 <input type="checkbox" [(ngModel)]="foreignCurrency">
                 <span class="checkmark">
                   <span class="text-light"><i class="fas fa-check-circle"></i></span>
@@ -223,46 +226,46 @@
                   </div>
                 </div>
               </label> -->
-              <label class="custom-checkbox-container">
-                <input type="checkbox" [(ngModel)]="darft">
-                <span class="checkmark">
-                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                  <span class=""><i class="fas fa-minus-circle"></i></span>
-                </span>
-                <div class="description">
-                  <div class="description-name">
-                    <span>DRAFT</span>
-                  </div>
+            <label class="custom-checkbox-container">
+              <input type="checkbox" [(ngModel)]="darft">
+              <span class="checkmark">
+                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                <span class=""><i class="fas fa-minus-circle"></i></span>
+              </span>
+              <div class="description">
+                <div class="description-name">
+                  <span>DRAFT</span>
                 </div>
-              </label>
-              <label class="custom-checkbox-container" *ngIf="bankName!=null && bankName!=undefined && bankName!=''">
-                <input type="checkbox" [(ngModel)]="bankerAssured">
-                <span class="checkmark">
-                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                  <span class=""><i class="fas fa-minus-circle"></i></span>
-                </span>
-                <div class="description">
-                  <div class="description-name">
-                    <span>Both Banker and Assured</span>
-                  </div>
+              </div>
+            </label>
+            <label class="custom-checkbox-container" *ngIf="bankName!=null && bankName!=undefined && bankName!=''">
+              <input type="checkbox" [(ngModel)]="bankerAssured">
+              <span class="checkmark">
+                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                <span class=""><i class="fas fa-minus-circle"></i></span>
+              </span>
+              <div class="description">
+                <div class="description-name">
+                  <span>Both Banker and Assured</span>
                 </div>
-              </label>
-              <label class="custom-checkbox-container">
-                <input type="checkbox" [(ngModel)]="excess">
-                <span class="checkmark">
-                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                  <span class=""><i class="fas fa-minus-circle"></i></span>
-                </span>
-                <div class="description">
-                  <div class="description-name">
-                    <span>Excess</span>
-                  </div>
+              </div>
+            </label>
+            <label class="custom-checkbox-container">
+              <input type="checkbox" [(ngModel)]="excess">
+              <span class="checkmark">
+                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                <span class=""><i class="fas fa-minus-circle"></i></span>
+              </span>
+              <div class="description">
+                <div class="description-name">
+                  <span>Excess</span>
                 </div>
-              </label>
-            </div>
+              </div>
+            </label>
           </div>
         </div>
       </div>
+    </div>
 
   </div>
   <div class="maan-card-footer my-2">
@@ -273,45 +276,45 @@
 <div class="maan-card" *ngIf="draftSection || policySection || schedule">
   <div class="maan-card-header">
     <div class="form-heading">
-        <div class="form-heading-text">
-          <!--<ng-container *ngIf="policySection">Policy Information</ng-container>-->
-          <ng-container *ngIf="draftSection">Draft Information</ng-container>
-          <ng-container *ngIf="schedule">
-            <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
-            <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container>
-            Information</ng-container>  
+      <div class="form-heading-text">
+        <!--<ng-container *ngIf="policySection">Policy Information</ng-container>-->
+        <ng-container *ngIf="draftSection">Draft Information</ng-container>
+        <ng-container *ngIf="schedule">
+          <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
+          <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container>
+          Information</ng-container>
       </div>
-     </div>
-     <!-- <p *ngIf="!certificateNo" class="text-danger mt-3">AKI Certificate Integration Failed</p>
+    </div>
+    <!-- <p *ngIf="!certificateNo" class="text-danger mt-3">AKI Certificate Integration Failed</p>
      <div *ngIf="!certificateNo" class="row mt-0">
        <div class="col-md-3 text-danger" *ngFor="let item of integrationErrorList">*<small>{{item.errorText}}</small></div>
      </div> -->
   </div>
 
-  <div *ngIf="!certificateNo && integrationErrorList" class="col-12 col-md-12 col-lg-12">
+  <div *ngIf="!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate" class="col-12 col-md-12 col-lg-12">
     <div class="middle-line">
       AKI Certificate Integration Failed Information
     </div>
   </div>
-  <div *ngIf="!certificateNo && integrationErrorList" class="row header-details">
+  <div *ngIf="!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate" class="row header-details">
     <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
-      
+
       <div class="vision-grid-item-body">
-          <div class="row">
-            <div *ngFor="let item of integrationErrorList" class="col-12 col-md-12 col-lg-12"> 
-              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                <div class="p-2 text-danger">
-                  <!-- Policy No -->
-                 - {{item.errorText}}*
-                </div>
-                <div class="p-2">
-                 
-                </div>
+        <div class="row">
+          <div *ngFor="let item of integrationErrorList" class="col-12 col-md-12 col-lg-12">
+            <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+              <div class="p-2 text-danger">
+                <!-- Policy No -->
+                - {{item.errorText}}*
+              </div>
+              <div class="p-2">
+
               </div>
             </div>
           </div>
-          
-      </div>    
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -323,10 +326,10 @@
     </div>
     <div class="row header-details">
       <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
-        
+
         <div class="vision-grid-item-body">
-            <div class="row">
-              <!--<div class="col-12 col-md-12 col-lg-12" *ngIf="schedule"> 
+          <div class="row">
+            <!--<div class="col-12 col-md-12 col-lg-12" *ngIf="schedule"> 
                 <div class="d-sm-flex flex-sm-row justify-content-sm-between">
                   <div class="p-2">
                     Policy No
@@ -336,39 +339,39 @@
                   </div>
                 </div>
               </div>-->
-              <div class="col-12 col-md-12 col-lg-12"> 
-                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                  <div class="p-2">
-                    Quote No
-                  </div>
-                  <div class="p-2">
-                    <b>{{premiumDetails?.QuoteDetails?.QuoteNo}}</b> 
-                  </div>
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">
+                  Quote No
                 </div>
-              </div>
-              <div class="col-12 col-md-12 col-lg-12">
-                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                  <div class="p-2">
-                    Customer Name
-                  </div>
-                  <div class="p-2">
-                    <b>{{premiumDetails?.CustomerDetails?.Name}}</b>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-12 col-lg-12">
-                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                  <div class="p-2">
-                    Policy Start Date
-                  </div>
-                  <div class="p-2">
-                    <b>{{premiumDetails?.QuoteDetails?.InceptionDate}}</b> 
-                  </div>
+                <div class="p-2">
+                  <b>{{premiumDetails?.QuoteDetails?.QuoteNo}}</b>
                 </div>
               </div>
             </div>
-            
-        </div>    
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">
+                  Customer Name
+                </div>
+                <div class="p-2">
+                  <b>{{premiumDetails?.CustomerDetails?.Name}}</b>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">
+                  Policy Start Date
+                </div>
+                <div class="p-2">
+                  <b>{{premiumDetails?.QuoteDetails?.InceptionDate}}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
     <!-- <div class="header-details">
@@ -405,75 +408,81 @@
         </div>
       </div>
     </div> -->
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="middle-line">
-          Premium Information
-        </div>
+    <div class="col-12 col-md-12 col-lg-12">
+      <div class="middle-line">
+        Premium Information
       </div>
-      <div class="row header-details">
-        <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
-          
-          <div class="vision-grid-item-body">
-              <div class="row">
-                <div class="col-12 col-md-12 col-lg-12" *ngIf="policySection"> 
-                  <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                    <div class="p-2">
-                      Policy No
-                    </div>
-                    <div class="p-2">
-                      <b>{{policyNo}}</b> 
-                    </div>
-                  </div>
+    </div>
+    <div class="row header-details">
+      <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+
+        <div class="vision-grid-item-body">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-12" *ngIf="policySection">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">
+                  Policy No
                 </div>
-                <div class="col-12 col-md-12 col-lg-12">
-                  <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                    <div class="p-2">
-                      Total SumInsured
-                    </div>
-                    <div class="p-2">
-                      <!--<b>
-                        {{premiumDetails?.PremiumDetails.PremiumInsuredValue | commaseparator}}</b> &nbsp;({{premiumDetails?.PremiumDetails.PremiumCurrency}}) -->
-                      <b>{{premiumDetails?.TotalInsuredValue  | commaseparator}}</b> &nbsp;({{premiumDetails?.QuoteDetails?.CurrencyName}})
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-12 col-lg-12">
-                  <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                    <div class="p-2">
-                      Premium
-                    </div>
-                    <div class="p-2">
-                      <b>{{premiumDetails?.PremiumDetails?.NetPremium | commaseparator}}</b> &nbsp;
-                      ({{premiumDetails?.PremiumDetails?.PremiumCurrency}})
-                    </div>
-                  </div>
+                <div class="p-2">
+                  <b>{{policyNo}}</b>
                 </div>
               </div>
-              
-          </div>    
+            </div>
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">
+                  Total SumInsured
+                </div>
+                <div class="p-2">
+                  <!--<b>
+                        {{premiumDetails?.PremiumDetails.PremiumInsuredValue | commaseparator}}</b> &nbsp;({{premiumDetails?.PremiumDetails.PremiumCurrency}}) -->
+                  <b>{{premiumDetails?.TotalInsuredValue | commaseparator}}</b>
+                  &nbsp;({{premiumDetails?.QuoteDetails?.CurrencyName}})
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">
+                  Premium
+                </div>
+                <div class="p-2">
+                  <b>{{premiumDetails?.PremiumDetails?.NetPremium | commaseparator}}</b> &nbsp;
+                  ({{premiumDetails?.PremiumDetails?.PremiumCurrency}})
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="text-center mx-1">
-        <button nbButton shape="round" size="small" status="danger" class="mx-2" *ngIf="!policySection" (click)="getBack()">Back</button>
-       
-        <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-          <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
-            <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container> Pdf</button>
-            <ng-container *ngIf="porttype != 'MOP'">
-              <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadCredit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-                Credit Note Pdf</button>
-            </ng-container>
-          <ng-container>
-            <!-- <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+    </div>
+    <div class="text-center mx-1">
+      <button nbButton shape="round" size="small" status="danger" class="mx-2" *ngIf="!policySection"
+        (click)="getBack()">Back</button>
+
+      <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection"
+        (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+        <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
+        <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container> Pdf</button>
+      <ng-container *ngIf="porttype != 'MOP'">
+        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection"
+          (click)="onDownloadCredit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+          Credit Note Pdf</button>
+      </ng-container>
+      <ng-container>
+        <!-- <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
               AKI DOCUMENT</button> -->
-          <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadDebit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection"
+          (click)="onDownloadDebit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
           Debit Note Pdf</button>
-          </ng-container>
-          <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && certificateNo"
-          (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-          AKI DOCUMENT</button>
-        <button nbButton shape="round" size="small" status="success" class="mx-2"  *ngIf="draftSection" (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
-        <button nbButton shape="round" size="small" status="primary" class="mx-2"  (click)="onNavigate()">Proceed</button>
-      </div>
+      </ng-container>
+      <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && certificateNo"
+        (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+        AKI DOCUMENT</button>
+      <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="draftSection"
+        (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
+      <button nbButton shape="round" size="small" status="primary" class="mx-2" (click)="onNavigate()">Proceed</button>
+    </div>
   </div>
 </div>

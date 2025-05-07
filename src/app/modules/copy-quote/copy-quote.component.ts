@@ -50,7 +50,7 @@ export class CopyQuoteComponent implements OnInit {
       this.loginId = '';
       this.applicationId = this.userDetails.LoginId;
     }
-    this.currencycode= this.userDetails?.CurrencyAbbreviation
+    this.currencycode= this.userDetails?.CurrencyId
   }
 
   ngOnInit(): void {

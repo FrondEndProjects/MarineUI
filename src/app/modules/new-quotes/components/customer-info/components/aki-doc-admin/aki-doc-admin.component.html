@@ -1,7 +1,7 @@
 <div class="maan-card customPadding">
     <div class="col-12">
         <div class="middle-line">
-            Update AKI Certificate
+            AKI Certificate Integration
         </div>
     </div>
     <div *ngIf="!isEdit && !isView" class="row">
@@ -39,7 +39,7 @@
                 </div>
 
                 <ng-container>
-                    <app-material-table [cols]="columnHeader" [data]="tableDataFailedList" [filterValue]="filterValue"
+                    <app-material-table [cols]="columnHeader1" [data]="tableDataFailedList" [filterValue]="filterValue"
                         (isActionBtn)="isActionBtn($event)">
                     </app-material-table>
                 </ng-container>
@@ -131,8 +131,7 @@
 
                     <div class="col-12 col-md-4 col-lg-4">
                         <div class="input-control-container">
-                            <label class="input-form-label">Country<span
-                                    class="text-required"></span></label>
+                            <label class="input-form-label">Country<span class="text-required"></span></label>
                             <div class="currency-flex">
                                 <div class="currrency-dollar">
                                     <div class="input-control-container">
@@ -198,8 +197,7 @@
 
                     <div class="col-12 col-md-4 col-lg-4">
                         <div class="input-control-container">
-                            <label class="input-form-label">Mode of Transport<span
-                                    class="text-required"></span></label>
+                            <label class="input-form-label">Mode of Transport<span class="text-required"></span></label>
                             <div class="currency-flex">
                                 <div class="currrency-dollar">
                                     <div class="input-control-container">
@@ -688,7 +686,7 @@
                 </div>
                 <div class="col-4 text-end">
                     <button mat-raised-button color="accent" (click)="back()">Back</button>&nbsp;&nbsp;
-                    <button mat-raised-button color="primary" (click)="modify()">Modify</button>
+                    <button *ngIf="showModify" mat-raised-button color="primary" (click)="modify()">Modify</button>
                 </div>
             </div>
 
