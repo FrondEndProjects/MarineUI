@@ -46,10 +46,10 @@ export const adminNavItems: NbMenuItem[] = [
         link: '/Marine/lappsedpolicy',
         icon: 'icon-cursor',
       },
-      
+
     ],
   },
-  
+
   // {
   //   title: 'Login Creation',
   //   icon: 'icon-cursor',
@@ -129,7 +129,7 @@ export const adminNavItems: NbMenuItem[] = [
         icon: 'icon-cursor',
         link: '/Marine/deposit-master/view',
       },
-      
+
       {
         title: 'War Rate Master',
         link: 'masters/war-rate/view',
@@ -150,7 +150,7 @@ export const adminNavItems: NbMenuItem[] = [
         link: 'masters/tolerance/view',
         icon: 'icon-cursor',
       },
-      
+
       {
         title: 'Settling Agent',
         link: 'masters/settling-agent/view',
@@ -211,7 +211,7 @@ export const adminNavItems: NbMenuItem[] = [
         link: 'masters/wsrcc/view',
         icon: 'icon-cursor',
       },
-     
+
       {
         title: 'Error',
         link: 'masters/error/view',
@@ -229,6 +229,11 @@ export const adminNavItems: NbMenuItem[] = [
     link: '/Marine/adminportfolio',
     icon: 'icon-cursor',
   },
+  {
+    title: 'AKI Update',
+    link: '/marine-opencover/quotes/aki-doc-admin',
+    icon: 'icon-cursor',
+  },
 
   {
     title: 'Reports',
@@ -240,18 +245,18 @@ export const adminNavItems: NbMenuItem[] = [
         link: '/Marine/branchreport',
         icon: 'icon-cursor',
       },
-        {
+      {
 
-          title: 'Reports',
-          link: '/Marine/adminreport',
-          icon: 'icon-cursor',
-        },
-        {
+        title: 'Reports',
+        link: '/Marine/adminreport',
+        icon: 'icon-cursor',
+      },
+      {
 
-          title: 'Open Cover Reports',
-          link: '/Marine/opencoverreport',
-          icon: 'icon-cursor',
-        },
+        title: 'Open Cover Reports',
+        link: '/Marine/opencoverreport',
+        icon: 'icon-cursor',
+      },
 
     ]
   },

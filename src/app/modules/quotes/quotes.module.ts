@@ -19,6 +19,9 @@ import { LapsedQuoteComponent } from './components/lapsed-quote/lapsed-quote.com
 import { QuotesService } from './quotes.service';
 import { RejectedQuoteComponent } from './components/rejected-quote/rejected-quote.component';
 import { ConfirmPromptComponent } from './components/confirm-prompt/confirm-prompt.component';
+import { AkiDocAdminComponent } from '../new-quotes/components/customer-info/components/aki-doc-admin/aki-doc-admin.component';
+import { NewQuotesService } from '../new-quotes/new-quotes.service';
+
 
 
 
@@ -30,11 +33,12 @@ import { ConfirmPromptComponent } from './components/confirm-prompt/confirm-prom
     ExistQuoteComponent,
     LapsedQuoteComponent,
     RejectedQuoteComponent,
-    ConfirmPromptComponent
+    ConfirmPromptComponent,
+    AkiDocAdminComponent
   ],
   imports: [
     CommonModule,
-    FormsModule,
+    FormsModule, 
     ReactiveFormsModule,
     DirectivesModule,
     NgSelectModule,
@@ -64,6 +68,7 @@ import { ConfirmPromptComponent } from './components/confirm-prompt/confirm-prom
   providers: [
     CurrencyPipe,
     QuotesService,
+    NewQuotesService,
   ],
 })
 export class QuotesModule { }

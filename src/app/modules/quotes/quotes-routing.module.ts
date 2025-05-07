@@ -4,6 +4,7 @@ import { ExistQuoteComponent } from './components/exist-quote/exist-quote.compon
 import { QuotesComponent } from './quotes.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AkiDocAdminComponent } from '../new-quotes/components/customer-info/components/aki-doc-admin/aki-doc-admin.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'rejected-quote',
     component: RejectedQuoteComponent,
+  },
+  {
+    path: 'aki-doc-admin',
+    component: AkiDocAdminComponent,
   },
 ];
 

@@ -1,352 +1,801 @@
-<div class="card">
-    <div class="container">
-        <h5></h5>
-        <!-- <div class="col-12">
-            <div class="middle-line">AKI Certificate Admin</div>
-        </div> -->
-        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="row">
-            <div class="col-12">
-                <div class="middle-line">Customer Details</div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Policy Holder Name</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="policyHolderName"
-                                class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Email</label>
-                        <div class="input-form-box">
-                            <input type="email" formControlName="email" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Mobile No</label>
-                        <div class="input-form-box">
-                            <input type="tel" formControlName="mobileNo" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Address</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="address" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">PO Box</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="poBox" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">City</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="city" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Country ID</label>
-                        <div class="input-form-box">
-                            <input type="number" formControlName="countryId" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Country Name</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="countryName" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">KRA PIN</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="kraPin" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-12">
-                <div class="middle-line">Transport Details</div>
-            </div>
-            <!-- Transport & Trade Info -->
-            <div class="row mt-3">
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Mode of Transport ID</label>
-                        <div class="input-form-box">
-                            <input type="number" formControlName="modeOfTransportId"
-                                class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Mode of Transport</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="modeOfTransport"
-                                class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Vessel Name</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="vesselName" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Flight No</label>
-                        <div class="input-form-box">
-                            <input type="text" formControlName="flightNo" class="input-form-control without-icon">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Voyage and Port Info -->
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Voyage From ID</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="voyageFromId" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Voyage From Name</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="voyageFromName" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Voyage To ID</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="voyageToId" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Voyage To Name</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="voyageToName" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Port From ID</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="portFromId" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Port From Name</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="portFromName" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Port From Short Code</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="portFromShortCode" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Port To ID</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="portToId" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Port To Name</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="portToName" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Port To Short Code</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="portToShortCode" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Transshipping At</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="tranShippingAt" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Transshipping Short Code</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="tranShippingShortCode"
-                            class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Trade ID</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="tradeId" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Trade Name</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="tradeName" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-            </div> <!-- Policy Info -->
-            <div class="col-12">
-                <div class="middle-line">Policy Info</div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Intermediary IRA No</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="intermediaryIraNo" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Policy No</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="policyNo" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Cover Type ID</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="coverTypeId" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Cover Type</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="coverType" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Open Cover Note No</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="openCoverNoteNo" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Currency ID</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="currencyId" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Currency Name</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="currencyName" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">UCR No</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="ucrNo" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Premium Percentage</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="premiumPercentage"
-                            class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Sum Insured</label>
-                    <div class="input-form-box">
-                        <input type="number" formControlName="sumInsured" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Description of Goods</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="descriptionOfGoods" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">IDF No</label>
-                    <div class="input-form-box">
-                        <input type="text" formControlName="idfNo" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">From Date</label>
-                    <div class="input-form-box">
-                        <input type="date" formControlName="fromDate" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <label class="input-form-label">Entry Date</label>
-                    <div class="input-form-box">
-                        <input type="date" formControlName="entryDate" class="input-form-control without-icon">
-                    </div>
-                </div>
-
-                <!-- Submit -->
-                <div class="col-12 mt-3 mb-3 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-
-
-            </div>
-        </form>
+<div class="maan-card customPadding">
+    <div class="col-12">
+        <div class="middle-line">
+            Update AKI Certificate
+        </div>
     </div>
+    <div *ngIf="!isEdit && !isView" class="row">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <label class="input-form-label">From Date</label>
+                <div class="input-form-box">
+                    <input type="date" [(ngModel)]="from_date" class="input-form-control without-icon">
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <label class="input-form-label"> To Date</label>
+                <div class="input-form-box">
+                    <input type="date" [(ngModel)]="to_date" class="input-form-control without-icon">
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 mt-4">
+                <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="getList()">Get
+                    Data</button>
+            </div>
+        </div>
+        <nb-tabset>
+            <nb-tab tabTitle="Failed">
+                <div class="row">
+                    <div class="col-12 col-md-8 col-lg-8">
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Search</label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" [(ngModel)]="filterValue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container>
+                    <app-material-table [cols]="columnHeader" [data]="tableDataFailedList" [filterValue]="filterValue"
+                        (isActionBtn)="isActionBtn($event)">
+                    </app-material-table>
+                </ng-container>
+
+            </nb-tab>
+            <nb-tab tabTitle="Success">
+                <div class="row">
+                    <div class="col-12 col-md-8 col-lg-8">
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Search</label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" [(ngModel)]="filterValue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-container>
+                    <app-material-table [cols]="columnHeader" [data]="tableDataSuccessList" [filterValue]="filterValue"
+                        (isActionBtn)="isActionBtn($event)">
+                    </app-material-table>
+                </ng-container>
+            </nb-tab>
+        </nb-tabset>
+    </div>
+</div>
+<div *ngIf="isEdit && !isView" class="card">
+    <div class="row">
+        <div class="col-12" style="margin-left: 30px;">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+                <div class="row mt-3 p-5">
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Policy Holder Name</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="policyHolderName"
+                                    class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Email</label>
+                            <div class="input-form-box">
+                                <input type="email" formControlName="email" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Mobile No</label>
+                            <div class="input-form-box">
+                                <input type="tel" formControlName="mobileNo" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Address</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="address" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">PO Box</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="poBox" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">City</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="city" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Country<span
+                                    class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="countryId" placeholder="ID"
+                                                class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="countryName" placeholder="Name"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Country ID</label>
+                            <div class="input-form-box">
+                                <input type="number" formControlName="countryId"
+                                    class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Country Name</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="countryName"
+                                    class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">KRA PIN</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="kraPin" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12">
+                    <div class="middle-line">Transport Details</div>
+                </div>
+                <!-- Transport & Trade Info -->
+                <div class="row mt-3  p-5">
+
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Mode of Transport<span
+                                    class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="modeOfTransportId" placeholder="ID"
+                                                class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="modeOfTransport" placeholder="Name"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+
+
+                    <!-- <div class="col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Mode of Transport ID</label>
+                            <div class="input-form-box">
+                                <input type="number" formControlName="modeOfTransportId"
+                                    class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Mode of Transport</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="modeOfTransport"
+                                    class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Vessel Name</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="vesselName" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Flight No</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="flightNo" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voyage and Port Info -->
+
+
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Voyage From<span class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="voyageFromId" placeholder="ID"
+                                                class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="voyageFromName" placeholder="Name"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Voyage From ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="voyageFromId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Voyage From Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="voyageFromName" class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Voyage To<span class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="voyageToId" placeholder="ID"
+                                                class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="voyageToName" placeholder="Name"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Voyage To ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="voyageToId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Voyage To Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="voyageToName" class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Port From<span class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="portFromId" placeholder="ID"
+                                                class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="portFromName" placeholder="Name"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Port From ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="portFromId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Port From Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="portFromName" class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Port From Short Code</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="portFromShortCode"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Port To<span class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="portToId" placeholder="ID"
+                                                class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="portToName" placeholder="Name"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Port To ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="portToId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Port To Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="portToName" class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Port To Short Code</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="portToShortCode"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Transshipping<span class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="tranShippingShortCode"
+                                                placeholder="Short Code" class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="tranShippingAt"
+                                                placeholder="tranShipping At"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Transshipping At</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="tranShippingAt" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Transshipping Short Code</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="tranShippingShortCode"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Trade<span class="text-required"></span></label>
+                            <div class="currency-flex">
+                                <div class="currrency-dollar">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="tradeId" placeholder="ID"
+                                                class="input-form-control-aki2 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="currrency-drop">
+                                    <div class="input-control-container">
+                                        <div class="input-form-box">
+                                            <input type="text" formControlName="tradeName" placeholder="Name"
+                                                class="input-form-control-aki1 without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-form-error"
+                                *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+                                <div *ngIf="quoteF.currency.errors?.required" class="error-text">
+                                    This field is required
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                        <label class="input-form-label">Trade ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="tradeId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Trade Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="tradeName" class="input-form-control without-icon">
+                        </div>
+                    </div> -->
+
+                </div> <!-- Policy Info -->
+                <div class="col-12">
+                    <div class="middle-line">Policy Info</div>
+                </div>
+                <div class="row mt-3  p-5 ">
+                    <div class="col-md-4">
+                        <label class="input-form-label">Intermediary IRA No</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="intermediaryIraNo"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Policy No</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="policyNo" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Cover Type ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="coverTypeId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Cover Type</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="coverType" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Open Cover Note No</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="openCoverNoteNo"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Currency ID</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="currencyId" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Currency Name</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="currencyName" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">UCR No</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="ucrNo" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Premium Percentage</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="premiumPercentage"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Sum Insured</label>
+                        <div class="input-form-box">
+                            <input type="number" formControlName="sumInsured" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Description of Goods</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="descriptionOfGoods"
+                                class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">IDF No</label>
+                        <div class="input-form-box">
+                            <input type="text" formControlName="idfNo" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">From Date</label>
+                        <div class="input-form-box">
+                            <input type="date" formControlName="fromDate" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="input-form-label">Entry Date</label>
+                        <div class="input-form-box">
+                            <input type="date" formControlName="entryDate" class="input-form-control without-icon">
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3 mb-3 text-center">
+                        <button mat-raised-button color="accent" (click)="back()">Back</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+
+
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="isView && viewData" class="card">
+    <nb-card class="summary-card">
+        <nb-card-header>
+            <!-- <div class="header-container"> -->
+            <div class="row">
+                <div class="col-8">
+                    <div class="header-title">
+                        <nb-icon icon="file-text-outline" status="primary"></nb-icon>
+                        <strong>Summary</strong>
+                    </div>
+                </div>
+                <div class="col-4 text-end">
+                    <button mat-raised-button color="accent" (click)="back()">Back</button>&nbsp;&nbsp;
+                    <button mat-raised-button color="primary" (click)="modify()">Modify</button>
+                </div>
+            </div>
+
+            <!-- </div> -->
+            <!-- <div class="row">
+                <div class="col-6 text-start"><strong>Quote No: &nbsp;&nbsp;</strong> {{ viewData.QuoteNo }}</div>
+                <div class="col-6 text-end"><strong>Name:&nbsp;&nbsp;</strong>{{ viewData.PolicyHolderName }}</div>
+            </div> -->
+        </nb-card-header>
+
+        <nb-card-body>
+            <!-- <div class="col-12">
+                <div class="middle-line">
+                    Policy Details
+                </div>
+            </div> -->
+            <!-- <div class="row">
+                <div class="col-3"><strong>Policy No:</strong></div>
+                <div class="col-3">{{ viewData.PolicyNo }}</div>
+                <div class="col-3"><strong>Open Cover Note No:</strong></div>
+                <div class="col-3">{{ viewData.OpenCoverNoteNo.trim() }}</div>
+            </div> -->
+            <section class="section-block">
+                <div class="section-title">Quote & Policy Details</div>
+                <div class="field-pair">
+                    <div><strong>Quote No:</strong> {{ viewData.QuoteNo }}</div>
+                    <div><strong>Policy No:</strong> {{ viewData.PolicyNo }}</div>
+                    <div><strong>Policy Holder:</strong> {{ viewData.PolicyHolderName }}</div>
+                    <div><strong>Open Cover Note No:</strong> {{ viewData.OpenCoverNoteNo.trim() }}</div>
+                </div>
+            </section>
+            <!-- <div class="row w-full mt-3">
+                <ng-container *ngFor="let field of viewData | keyvalue">
+                    <ng-container>
+                        <div *ngIf="field?.key && field?.key !== 'OpenCoverNoteNo' && field?.key !== 'PolicyHolderName'"
+                            class="col-md-3 p-1 mt-1 mb-1">
+                            <div class="card card-style">
+                                <strong>{{ formatLabel(field?.key) }}</strong>
+                                <p class="label">{{ field?.value || 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div> -->
+            <section class="section-block">
+                <div class="section-title">Trade & Intermediary</div>
+                <div class="field-pair">
+                    <div><strong>Trade Name:</strong> {{ viewData.TradeName }}</div>
+                    <div><strong>Trade ID:</strong> {{ viewData.TradeId }}</div>
+                    <div><strong>Intermediary IRA No:</strong> {{ viewData.IntermediaryIraNo }}</div>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="section-title">Insured Party</div>
+                <div class="field-pair">
+                    <div><strong>Name:</strong> {{ viewData.PolicyHolderName }}</div>
+                    <div><strong>Email:</strong> {{ viewData.Email }}</div>
+                    <div><strong>Mobile:</strong> {{ viewData.MobileNo }}</div>
+                    <div><strong>Address:</strong> {{ viewData.Address }}</div>
+                    <div><strong>City:</strong> {{ viewData.City }}</div>
+                    <div><strong>Country:</strong> {{ viewData.CountryName }}</div>
+                    <div><strong>KRA PIN:</strong> {{ viewData.KraPin }}</div>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="section-title">Voyage & Transport</div>
+                <div class="field-pair">
+                    <div><strong>Mode:</strong> {{ viewData.ModeOfTransport }} ({{ viewData.ModeOfTransportId }})</div>
+                    <div><strong>Vessel:</strong> {{ viewData.VesselName }}</div>
+                    <div><strong>Flight No:</strong> {{ viewData.FlightNo }}</div>
+                    <div><strong>From:</strong> {{ viewData.VoyageFromName }} / {{ viewData.PortFromName }}</div>
+                    <div><strong>To:</strong> {{ viewData.VoyageToName }} / {{ viewData.PortToName }}</div>
+                    <div><strong>Transhipping At:</strong> {{ viewData.TranShippingShortCode }}</div>
+                    <div><strong>UCR No:</strong> {{ viewData.UcrNo}}</div>
+                    <div class="view-style"><strong>IDF No:</strong> {{ viewData.IdfNo }}</div>
+                </div>
+            </section>
+
+            <section class="section-block">
+                <div class="section-title">Goods & Coverage</div>
+                <div class="field-pair">
+                    <div><strong>Description:</strong> {{ viewData.DescriptionOfGoods }}</div>
+                    <div><strong>Cover Type:</strong> {{ viewData.CoverType }}</div>
+                    <div><strong>Currency:</strong> {{ viewData.CurrencyName }}</div>
+                    <div><strong>Sum Insured:</strong> ₹{{ viewData.SumInsured }}</div>
+                    <div><strong>Premium:</strong> {{ viewData.PremiumPercentage }}%</div>
+                    <div><strong>Is Premium Display:</strong> {{ viewData.IsPremiumDisplay }}</div>
+                    <div><strong>Status:</strong> {{ viewData.Status }}</div>
+
+                </div>
+            </section>
+
+            <!-- <section class="section-block">
+                <div class="section-title">System Info</div>
+                <div class="field-pair">
+                    <div><strong>Entry Date:</strong> {{ viewData.EntryDate }}</div>
+                    <div><strong>From Date:</strong> {{ viewData.FromDate }}</div>
+
+
+                    <div><strong>Request:</strong> {{ viewData.Request }}</div>
+                    <div><strong>Response:</strong> {{ viewData.Response }}</div>
+                </div>
+            </section> -->
+        </nb-card-body>
+    </nb-card>
+
+
 </div>

@@ -36,7 +36,7 @@ import { NbThemeModule, NbLayoutModule} from '@nebular/theme';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { AkiDocAdminComponent } from './components/customer-info/components/aki-doc-admin/aki-doc-admin.component';
+
 @NgModule({
   declarations: [
     NewQuotesComponent,
@@ -50,7 +50,7 @@ import { AkiDocAdminComponent } from './components/customer-info/components/aki-
     EndorsementGridComponent,
     BrokerFormComponent,
     ClausesComponent,
-    AkiDocAdminComponent,
+ 
   ],
   imports: [
     CommonModule,
