@@ -259,6 +259,7 @@ export class PolicyGenerateComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}quote/policy/integrate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
+       "ReintegrateStatus": 'N'
     }
 
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {

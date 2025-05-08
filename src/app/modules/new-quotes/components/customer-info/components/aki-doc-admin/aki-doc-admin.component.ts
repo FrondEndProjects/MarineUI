@@ -264,7 +264,7 @@ export class AkiDocAdminComponent {
       const reqData = {
         "PolicyNo": event.PolicyNo,
         "QuoteNo": event.QuoteNo,
-        "ReintegrateStatus": 'N'
+        "ReintegrateStatus": 'Y'
       };
       this.quoteService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
