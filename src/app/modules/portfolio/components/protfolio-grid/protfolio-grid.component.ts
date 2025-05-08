@@ -280,7 +280,9 @@ export class ProtfolioGridComponent implements OnInit {
     else{
       ReqObj = {
         "BranchCode": this.userDetails?.BranchCode,
-        "QuoteNo": rowData.data?.QuoteNo
+        "QuoteNo": rowData.data?.QuoteNo,
+         "PrintQuoteYn": "N"
+        
       }
     }
    

@@ -259,7 +259,7 @@ export class PolicyGenerateComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}quote/policy/integrate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
-       "ReintegrateStatus": 'N'
+      "ReintegrateStatus": 'N'
     }
 
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
@@ -536,7 +536,8 @@ export class PolicyGenerateComponent implements OnInit {
     const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
     const reqData = {
       "BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo
+      "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,
+      "PrintQuoteYn": "N"
     }
 
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
@@ -598,6 +599,17 @@ export class PolicyGenerateComponent implements OnInit {
 
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
         if (data?.Result) {
+          if (data.Result.rmsg.length !== 0) {
+            const errorMessages = data.Result.rmsg
+              .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
+              .join('<br>');
+
+            Swal.fire({
+              icon: 'error',
+              title: 'Validation Errors',
+              html: errorMessages
+            });
+          }
           const link = document.createElement('a');
           link.setAttribute('target', '_blank');
           link.setAttribute('href', data?.Result.rObj.blobDownloadURL);

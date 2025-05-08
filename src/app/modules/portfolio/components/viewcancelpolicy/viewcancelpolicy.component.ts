@@ -150,7 +150,8 @@ export class ViewcancelpolicyComponent  implements OnInit{
       const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
       const reqData = {
         "BranchCode":this.userDetails.LoginResponse.BranchCode,
-         "QuoteNo":row.QuoteNo
+         "QuoteNo":row.QuoteNo,
+         "PrintQuoteYn": "N"
 
         //"PolicyNo":row.data.OriginalPolicyNo,
     //"ApplicationNo":row.ApplicationNo,
@@ -191,7 +192,8 @@ export class ViewcancelpolicyComponent  implements OnInit{
     let ReqObj:any,UrlLink:any;
     ReqObj = {
       "BranchCode":this.userDetails.LoginResponse.BranchCode,
-      "QuoteNo": rowData.data?.QuoteNo
+      "QuoteNo": rowData.data?.QuoteNo,
+      "PrintQuoteYn": "N"
     }
     if(type=='Schedule'){
       

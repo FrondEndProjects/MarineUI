@@ -1,6 +1,6 @@
 import { OpenCoverService } from './../../open-cover.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as Mydatas from '../../../../app-config.json';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -37,19 +37,19 @@ export class NewOpenCoverComponent implements OnInit {
   customerId: any;
   public loginId: any = '';
   public submitted: boolean = false;
-  public btnConfig ={
-    btnName:'Add New',
-    btnStatus:'primary',
-    btnShow:true
+  public btnConfig = {
+    btnName: 'Add New',
+    btnStatus: 'primary',
+    btnShow: true
   }
   RefNo: any;
   MissippiCode: any;
-  public routerBaseLink:any='';
-  public OpenCover:any;
+  public routerBaseLink: any = '';
+  public OpenCover: any;
   minDate: { year: number; month: number; day: number; };
-  editSection: boolean=false;
-  closeResult: string;endorsement:any=null;
-  applicationId:any=null;brokerCode:any=null;
+  editSection: boolean = false;
+  closeResult: string; endorsement: any = null;
+  applicationId: any = null; brokerCode: any = null;
   titleError: boolean;
   customerNameError: boolean;
   coreAppcodeError: boolean;
@@ -57,20 +57,21 @@ export class NewOpenCoverComponent implements OnInit {
   poBoxError: boolean;
   emailIdError: boolean;
   mobileNoError: boolean;
-  title: any=null;customerName: any=null;
-  dropPremiumCurrencyList:any;
-  coreAppcode: any=null;cityValue: any=null;
-  poBox: any=null;mobileNo: any=null;emailId: any=null;
-  dropCityList: any[]=[];
-  Address1: any=null;
-  Address2: any=null;
-  customerVat: any=null;
-  dropTitleList: any[]=[];
+  title: any = null; customerName: any = null;
+  dropPremiumCurrencyList: any;
+  coreAppcode: any = null; cityValue: any = null;
+  poBox: any = null; mobileNo: any = null; emailId: any = null;
+  dropCityList: any[] = [];
+  Address1: any = null;
+  Address2: any = null;
+  customerVat: any = null;
+  dropTitleList: any[] = [];
   constructor(
     private modalService: NgbModal,
     private openCoverService: OpenCoverService,
-    private router: Router,private menuService: NbMenuService,
+    private router: Router, private menuService: NbMenuService,
     private _formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
     private currencyPipe: CurrencyPipe,
     private sessionStorageService: SessionStorageService,
     private dateAdapter: NgbDateAdapter<string>
@@ -81,28 +82,33 @@ export class NewOpenCoverComponent implements OnInit {
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.LoginId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
-    
+
   }
 
   ngOnInit(): void {
-    
-    
+
+
     this.menuService.onItemClick().subscribe((data) => {
-      console.log("Current Route",data.item.link)
-      if (data.item.link === `/${this.routerBaseLink}/new-open-cover/new-open-cover-form` || data.item.link===`/Marine/new-open-cover/new-open-cover-form`) {
+      console.log("Current Route", data.item.link)
+      if (data.item.link === `/${this.routerBaseLink}/new-open-cover/new-open-cover-form` || data.item.link === `/Marine/new-open-cover/new-open-cover-form`) {
         sessionStorage.removeItem("OpenCoverEdit");
         this.reloadCurrentRoute();
 
       }
     });
     let openCoverData = JSON.parse(sessionStorage.getItem('OpenCoverEdit'))
-    if(openCoverData){
+    if (openCoverData) {
       this.onCreateFormControl();
       this.onLoadDropdownList();
-      this.onEdit();
+      this.activatedRoute.queryParams.subscribe(params => {
+        let d = params['ProposalNo'];
+        if (d) {
+          this.onEdit();
+        }
+      });
       this.onGetPremiumDropdownList();
     }
-    else{
+    else {
       this.onCreateFormControl();
       this.onLoadDropdownList();
       this.newQuoteF.customer.disable();
@@ -119,16 +125,16 @@ export class NewOpenCoverComponent implements OnInit {
     //     this.onGetCustomerList('direct');
     //   }
     // });
-    
+
 
     this.newQuoteF.utilizedAmount.valueChanges.subscribe(x => {
-      console.log('kkkkkkkkkk',x);
+      console.log('kkkkkkkkkk', x);
       var annualEstimate = this.newQuoteF.annualEstimate.value;
       var removecomma: any = annualEstimate.toString().replace(/,/g, '');
       var number: any = Number(removecomma);
-      console.log('sssssssssssssssss',number);
+      console.log('sssssssssssssssss', number);
       if (x > number) {
-        console.log('hhhhhhhhhhhhh',number);
+        console.log('hhhhhhhhhhhhh', number);
         // setTimeout(() => {
         this.newQuoteF.utilizedAmount.setErrors({ message: 'amount should be lessthan annual mount' })
         // });
@@ -145,13 +151,13 @@ export class NewOpenCoverComponent implements OnInit {
     this.minDate = ngbDate;
   }
   reloadCurrentRoute() {
-   
+
     window.location.reload();
   }
-  checkSearchDisable(){
-    return (this.newQuoteF.selectBroker.value=='' || this.newQuoteF.selectBroker.value==null || this.newQuoteF.selectBroker.value==undefined);
+  checkSearchDisable() {
+    return (this.newQuoteF.selectBroker.value == '' || this.newQuoteF.selectBroker.value == null || this.newQuoteF.selectBroker.value == undefined);
   }
-  getCustomerId(){return this.customerId}
+  getCustomerId() { return this.customerId }
   onCreateFormControl() {
     this.newQuoteForm = this._formBuilder.group({
       businessType: [null, Validators.required],
@@ -186,7 +192,7 @@ export class NewOpenCoverComponent implements OnInit {
       policyFee: ['0', Validators.required],
       voyageRemarks: [''],
       effectiveDate: [null],
-      premiumCurrency:[null, Validators.required],
+      premiumCurrency: [null, Validators.required],
     });
 
 
@@ -230,7 +236,7 @@ export class NewOpenCoverComponent implements OnInit {
     );
   }
 
-  onSelectCustomer(item: any,modal) {
+  onSelectCustomer(item: any, modal) {
     this.newQuoteF.customer.enable();
     this.newQuoteF.customer.setValue(item?.FirstName);
     this.newQuoteF.customer.disable();
@@ -354,7 +360,7 @@ export class NewOpenCoverComponent implements OnInit {
   onChangeStartDate(event: any) {
     console.log(event);
     let StartDate = event;
-    const startDateformt:any = `${StartDate?.year}-${StartDate?.month}-${StartDate?.day}`;
+    const startDateformt: any = `${StartDate?.year}-${StartDate?.month}-${StartDate?.day}`;
     let newDate = new Date(startDateformt);
     newDate.setDate(newDate.getDate() + 364);
     const ngbDate = {
@@ -362,73 +368,73 @@ export class NewOpenCoverComponent implements OnInit {
       "month": newDate.getMonth() + 1,
       "day": newDate.getDate()
     }
-    const endDate:any = this.dateAdapter.toModel(ngbDate)!;
+    const endDate: any = this.dateAdapter.toModel(ngbDate)!;
     this.newQuoteF.openCoverEndDate.setValue(endDate);
   }
 
   CommaFormatted(tableData) {
-    let i=0;
-    console.log('hhhhhhhhhhhhhhh',tableData)
-          let entry = tableData;
-          console.log("Entry Came")
-          if(entry.length!=0){
-            //for(let build of this.tableData){
-              if(entry!=null||entry!=undefined){
-              console.log("Entry Came 1",entry)
-            let value = entry.replace(/\D/g, "")
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            this.newQuoteF.annualEstimate.setValue(value);
-              }
-            console.log('Esctimtaed Amount', this.newQuoteF.annualEstimate.value)
-            //}    //this.getTotalSICost('building');
-          } 
-          //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-   
+    let i = 0;
+    console.log('hhhhhhhhhhhhhhh', tableData)
+    let entry = tableData;
+    console.log("Entry Came")
+    if (entry.length != 0) {
+      //for(let build of this.tableData){
+      if (entry != null || entry != undefined) {
+        console.log("Entry Came 1", entry)
+        let value = entry.replace(/\D/g, "")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        this.newQuoteF.annualEstimate.setValue(value);
+      }
+      console.log('Esctimtaed Amount', this.newQuoteF.annualEstimate.value)
+      //}    //this.getTotalSICost('building');
+    }
+    //this.secondcommaseporator(this.tableData);     //return tableData.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
   }
-  CommaFormattedUtilizedAmount(tableData,type) {
-    let i=0;
-    console.log('hhhhhhhhhhhhhhh',tableData)
-    if(tableData!=null && type=="UtilizedAmt"){
-          let entry = String(tableData);
-          console.log("Entry Came")
-          if(entry.length!=0){
-              if(entry!=null||entry!=undefined){
-              console.log("Entry Came 1",entry)
-            let value = entry.replace(/\D/g, "")
+  CommaFormattedUtilizedAmount(tableData, type) {
+    let i = 0;
+    console.log('hhhhhhhhhhhhhhh', tableData)
+    if (tableData != null && type == "UtilizedAmt") {
+      let entry = String(tableData);
+      console.log("Entry Came")
+      if (entry.length != 0) {
+        if (entry != null || entry != undefined) {
+          console.log("Entry Came 1", entry)
+          let value = entry.replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            this.newQuoteF.utilizedAmount.setValue(value);
-              }
-            console.log('Esctimtaed Amount', this.newQuoteF.utilizedAmount.value)
-          } 
+          this.newQuoteF.utilizedAmount.setValue(value);
         }
-        else if(tableData!=null && type=="policyfee"){
-          let entry = String(tableData);
-          console.log("Entry Came")
-          if(entry.length!=0){
-              if(entry!=null||entry!=undefined){
-              console.log("Entry Came 1",entry)
-            let value = entry.replace(/\D/g, "")
+        console.log('Esctimtaed Amount', this.newQuoteF.utilizedAmount.value)
+      }
+    }
+    else if (tableData != null && type == "policyfee") {
+      let entry = String(tableData);
+      console.log("Entry Came")
+      if (entry.length != 0) {
+        if (entry != null || entry != undefined) {
+          console.log("Entry Came 1", entry)
+          let value = entry.replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            this.newQuoteF.policyFee.setValue(value);
-              }
-            console.log('Esctimtaed Amount', this.newQuoteF.policyFee.value)
-          } 
+          this.newQuoteF.policyFee.setValue(value);
         }
-        else if(tableData!=null && type=="MinPremium"){
-          let entry = String(tableData);
-          console.log("Entry Came")
-          if(entry.length!=0){
-              if(entry!=null||entry!=undefined){
-              console.log("Entry Came 1",entry)
-            let value = entry.replace(/\D/g, "")
+        console.log('Esctimtaed Amount', this.newQuoteF.policyFee.value)
+      }
+    }
+    else if (tableData != null && type == "MinPremium") {
+      let entry = String(tableData);
+      console.log("Entry Came")
+      if (entry.length != 0) {
+        if (entry != null || entry != undefined) {
+          console.log("Entry Came 1", entry)
+          let value = entry.replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            this.newQuoteF.minimumPremium.setValue(value);
-              }
-            console.log('Esctimtaed Amount', this.newQuoteF.minimumPremium.value)
-          } 
+          this.newQuoteF.minimumPremium.setValue(value);
         }
+        console.log('Esctimtaed Amount', this.newQuoteF.minimumPremium.value)
+      }
+    }
   }
- 
+
   onEdit() {
     this.proposalNo = sessionStorage.getItem('ProposalNo');
     const urlLink = `${this.ApiUrl1}OpenCover/quote/edit`;
@@ -437,31 +443,31 @@ export class NewOpenCoverComponent implements OnInit {
       'BranchCode': user?.BranchCode,
       'ProposalNo': this.proposalNo,
     };
-    sessionStorage.setItem('OpenCover',JSON.stringify(reqData));
+    sessionStorage.setItem('OpenCover', JSON.stringify(reqData));
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log('editData', data);
-        if(data?.Result?.OpenCoverNo){
+        if (data?.Result?.OpenCoverNo) {
           const opencover = {
-            'name':'adminReferral',
-            'value':data?.Result?.OpenCoverNo
+            'name': 'adminReferral',
+            'value': data?.Result?.OpenCoverNo
           }
           this.OpenCover = opencover;
-           sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
-           
+          sessionStorage.setItem('OpenCover', JSON.stringify(opencover));
+
         }
         if (data?.Result?.ProposalNo) {
-          
+
           this.editData = data?.Result;
-             this.setFormValues();
+          this.setFormValues();
           //this.openCoverService.onGetCoverEditData(data?.Result);
-          sessionStorage.setItem('MissippiCode',data?.Result?.MissippiCode);
+          sessionStorage.setItem('MissippiCode', data?.Result?.MissippiCode);
 
         }
       },
       (err) => { },
     );
-    
+
 
   }
   onGetTitleDropdownList() {
@@ -502,25 +508,25 @@ export class NewOpenCoverComponent implements OnInit {
       (err) => { },
     );
   }
-  onsubmit(){
+  onsubmit() {
     let valid = this.checkMandatories();
-    if(valid){
+    if (valid) {
       if (this.userDetails?.UserType != "Issuer") {
         this.loginId = this.userDetails?.LoginId;
         this.applicationId = '1';
-  
+
       }
       // Issuer
-  
-      if (this.userDetails?.UserType == "Issuer"){
+
+      if (this.userDetails?.UserType == "Issuer") {
         this.loginId = this.endorsement?.LoginId || '';
         this.applicationId = this.userDetails.LoginId;
       }
-      let cityName=null;
-      if(this.cityValue!=null && this.cityValue!='' && this.cityValue!=undefined){
-        let entry = this.dropCityList.find(ele=>ele.Code==this.cityValue);
-        console.log('Entry',entry)
-        if(entry) cityName = entry.CodeDescription;
+      let cityName = null;
+      if (this.cityValue != null && this.cityValue != '' && this.cityValue != undefined) {
+        let entry = this.dropCityList.find(ele => ele.Code == this.cityValue);
+        console.log('Entry', entry)
+        if (entry) cityName = entry.CodeDescription;
       }
       let ReqObj = {
         "Address1": this.Address1,
@@ -544,7 +550,7 @@ export class NewOpenCoverComponent implements OnInit {
         "Fax": null,
         "Gender": null,
         "LoginBranchCode": this.userDetails?.BranchCode,
-        "LoginId":this.newQuoteF.selectBroker.value,
+        "LoginId": this.newQuoteF.selectBroker.value,
         "MobileNo": this.mobileNo,
         "Nationality": null,
         "Occupation": null,
@@ -552,34 +558,34 @@ export class NewOpenCoverComponent implements OnInit {
         "TelephoneNo": null,
         "Title": this.title
       }
-      console.log("Final obj",ReqObj)
+      console.log("Final obj", ReqObj)
       let urlLink = `${this.ApiUrl1}OpenCover/customer/save`;
       this.openCoverService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           console.log(data);
           if (data?.Status) {
-              this.customerName=null;this.mobileNo=null;this.emailId=null;this.title=null;
-              this.coreAppcode=null;this.cityValue=null;this.customerVat = null;this.Address1=null;
-              this.Address2=null;this.editSection=false;this.getCustomerAltList(null);
+            this.customerName = null; this.mobileNo = null; this.emailId = null; this.title = null;
+            this.coreAppcode = null; this.cityValue = null; this.customerVat = null; this.Address1 = null;
+            this.Address2 = null; this.editSection = false; this.getCustomerAltList(null);
           }
         },
         (err) => { },
       );
     }
   }
-  checkMandatories(){
-    let i=0;this.titleError=false;this.customerNameError=false;this.coreAppcodeError=false;this.cityNameError=false;this.poBoxError=false;
-    this.mobileNoError=false;this.emailIdError=false;
-    if(this.title==null || this.title=='' || this.title==undefined){i+=1;this.titleError=true;}
-    if(this.customerName==null || this.customerName=='' || this.customerName==undefined){i+=1;this.customerNameError=true;}
-    if(this.coreAppcode==null || this.coreAppcode=='' || this.coreAppcode==undefined){i+=1;this.coreAppcodeError=true;}
-    if(this.cityValue==null || this.cityValue=='' || this.cityValue==undefined){i+=1;this.cityNameError=true;}
-    if(this.poBox==null || this.poBox=='' || this.poBox==undefined){i+=1;this.poBoxError=true;}
-    if(this.mobileNo==null || this.mobileNo=='' || this.mobileNo==undefined){i+=1;this.mobileNoError=true;}
-    if(this.emailId==null || this.emailId=='' || this.emailId==undefined){i+=1;this.emailIdError=true;}
-    return i==0;
+  checkMandatories() {
+    let i = 0; this.titleError = false; this.customerNameError = false; this.coreAppcodeError = false; this.cityNameError = false; this.poBoxError = false;
+    this.mobileNoError = false; this.emailIdError = false;
+    if (this.title == null || this.title == '' || this.title == undefined) { i += 1; this.titleError = true; }
+    if (this.customerName == null || this.customerName == '' || this.customerName == undefined) { i += 1; this.customerNameError = true; }
+    if (this.coreAppcode == null || this.coreAppcode == '' || this.coreAppcode == undefined) { i += 1; this.coreAppcodeError = true; }
+    if (this.cityValue == null || this.cityValue == '' || this.cityValue == undefined) { i += 1; this.cityNameError = true; }
+    if (this.poBox == null || this.poBox == '' || this.poBox == undefined) { i += 1; this.poBoxError = true; }
+    if (this.mobileNo == null || this.mobileNo == '' || this.mobileNo == undefined) { i += 1; this.mobileNoError = true; }
+    if (this.emailId == null || this.emailId == '' || this.emailId == undefined) { i += 1; this.emailIdError = true; }
+    return i == 0;
   }
-  setFormValues(){
+  setFormValues() {
     this.proposalNo = this.editData?.ProposalNo;
     this.customerId = this.editData?.CustomerId;
     this.newQuoteF.businessType.setValue(this.editData?.BusinessType.toString());
@@ -592,22 +598,22 @@ export class NewOpenCoverComponent implements OnInit {
     this.newQuoteF.customer.disable();
     this.newQuoteF.openCoverStartDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyStartDate));
     this.newQuoteF.openCoverEndDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.PolicyEndDate));
-    if(this.editData?.EstimateAmount!=null && this.editData?.EstimateAmount!=undefined && this.editData?.EstimateAmount!='' && this.editData?.EstimateAmount!='0'){
+    if (this.editData?.EstimateAmount != null && this.editData?.EstimateAmount != undefined && this.editData?.EstimateAmount != '' && this.editData?.EstimateAmount != '0') {
       let amount = this.editData?.EstimateAmount.split('.')[0];
       this.CommaFormatted(amount)
-    //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+      //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
     }
-    else{
+    else {
       this.newQuoteF.annualEstimate.setValue('0')
     }
     //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
-    console.log('MMMMMMMMMMMMMMMMMMM',this.newQuoteF.annualEstimate);
-    if(this.editData?.UtilizedAmount!=null && this.editData?.UtilizedAmount!=undefined && this.editData?.UtilizedAmount!='' && this.editData?.UtilizedAmount!='0'){
+    console.log('MMMMMMMMMMMMMMMMMMM', this.newQuoteF.annualEstimate);
+    if (this.editData?.UtilizedAmount != null && this.editData?.UtilizedAmount != undefined && this.editData?.UtilizedAmount != '' && this.editData?.UtilizedAmount != '0') {
       let amount = this.editData?.UtilizedAmount.split('.')[0];
-      this.CommaFormattedUtilizedAmount(amount,'UtilizedAmt')
-    //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+      this.CommaFormattedUtilizedAmount(amount, 'UtilizedAmt')
+      //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
     }
-    else{
+    else {
       this.newQuoteF.utilizedAmount.setValue('0')
     }
     //this.newQuoteF.utilizedAmount.setValue(this.editData?.UtilizedAmount);
@@ -622,12 +628,12 @@ export class NewOpenCoverComponent implements OnInit {
     this.newQuoteF.noOfCoInsuComp.setValue(this.editData?.NoOfCompany);
     this.newQuoteF.existingCore.setValue(this.editData?.PolicyNo);
     this.newQuoteF.commissiomPrecnt.setValue(this.editData?.Commission);
-    if(this.editData?.MinPremium!=null && this.editData?.MinPremium!=undefined && this.editData?.MinPremium!='' && this.editData?.MinPremium!='0'){
+    if (this.editData?.MinPremium != null && this.editData?.MinPremium != undefined && this.editData?.MinPremium != '' && this.editData?.MinPremium != '0') {
       let amount = parseInt(this.editData?.MinPremium);
-      this.CommaFormattedUtilizedAmount(amount,'MinPremium');
-    //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+      this.CommaFormattedUtilizedAmount(amount, 'MinPremium');
+      //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
     }
-    else{
+    else {
       this.newQuoteF.minimumPremium.setValue('');
     }
     //this.newQuoteF.minimumPremium.setValue(this.editData?.MinPremium);
@@ -641,30 +647,30 @@ export class NewOpenCoverComponent implements OnInit {
     this.newQuoteF.hauilerType.setValue(this.editData?.HaulierType == null ? 'N' : this.editData?.HaulierType);
     this.newQuoteF.war.setValue(this.editData['W&Srcc']);
     this.newQuoteF.fac.setValue(this.editData?.FacYN);
-    if(this.editData?.PolicyFee!=null && this.editData?.PolicyFee!=undefined && this.editData?.PolicyFee!='' && this.editData?.PolicyFee!='0'){
+    if (this.editData?.PolicyFee != null && this.editData?.PolicyFee != undefined && this.editData?.PolicyFee != '' && this.editData?.PolicyFee != '0') {
       let amount = parseInt(this.editData?.PolicyFee);
-      this.CommaFormattedUtilizedAmount(amount,'policyfee')
-    //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
+      this.CommaFormattedUtilizedAmount(amount, 'policyfee')
+      //this.newQuoteF.annualEstimate.setValue(this.editData?.EstimateAmount);
     }
-    else{
+    else {
       this.newQuoteF.policyFee.setValue('0')
     }
     //this.newQuoteF.policyFee.setValue(this.editData?.PolicyFee);
     this.newQuoteF.effectiveDate.setValue(this.openCoverService.ngbDateFormatt(this.editData?.EffectiveDate));
     this.newQuoteF.voyageRemarks.setValue(this.editData?.CountryRemarks);
-   this.RefNo =  this.editData?.RefNo;
-   this.MissippiCode = this.editData?.MissippiCode;
+    this.RefNo = this.editData?.RefNo;
+    this.MissippiCode = this.editData?.MissippiCode;
 
     this.onCheckCrossVoyage();
   }
-  onCheckCrossVoyage(){
+  onCheckCrossVoyage() {
     console.log(this.newQuoteF.crossVoyage.value);
 
     const crossVoyage = this.newQuoteF.crossVoyage;
     if (this.newQuoteF.crossVoyage.value == 'N') {
       crossVoyage.clearValidators();
       console.log('remove')
-    crossVoyage.updateValueAndValidity();
+      crossVoyage.updateValueAndValidity();
 
     }
 
@@ -672,12 +678,12 @@ export class NewOpenCoverComponent implements OnInit {
     else {
       crossVoyage.setValidators([Validators.required]);
       console.log('add')
-    crossVoyage.updateValueAndValidity();
+      crossVoyage.updateValueAndValidity();
 
     }
   }
-  getCustomerAltList(modal){
-    
+  getCustomerAltList(modal) {
+
     this.tableData = [];
     const urlLink = `${this.ApiUrl1}opencover/dropdown/customerlist`;
     const reqData = {
@@ -689,27 +695,27 @@ export class NewOpenCoverComponent implements OnInit {
         console.log(data);
         if (data?.Message === 'Success') {
           this.columnHeader = [{
-              key: 'CustomerId',
-              display: 'Customer Id',
-              config: {
-                select: true,
-              },
+            key: 'CustomerId',
+            display: 'Customer Id',
+            config: {
+              select: true,
             },
-            { key: 'FirstName', display: 'Customer Name' },
-            { key: 'Email', display: 'Email' },
-            { key: 'PoBox', display: 'P.O.Box' },
-            { key: 'EmirateName', display: 'Emirate Name' },
+          },
+          { key: 'FirstName', display: 'Customer Name' },
+          { key: 'Email', display: 'Email' },
+          { key: 'PoBox', display: 'P.O.Box' },
+          { key: 'EmirateName', display: 'Emirate Name' },
           ];
           this.tableData = data?.Result?.CustomerResponse;
           // if (this.customerF.name.status == "DISABLED" || data?.Result == null) {
-            if( this.productId == '3' ||  this.productId == '11'){
-              this.titleError=false;this.customerNameError=false;this.coreAppcodeError=false;this.cityNameError=false;this.poBoxError=false;
-              this.mobileNoError=false;this.emailIdError=false;
-              this.customerName=null;this.mobileNo=null;this.emailId=null;this.title=null;
-              this.coreAppcode=null;this.cityValue=null;this.customerVat = null;this.Address1=null;
-              this.Address2=null;this.editSection=false;
-              if(modal) this.open(modal)
-            } 
+          if (this.productId == '3' || this.productId == '11') {
+            this.titleError = false; this.customerNameError = false; this.coreAppcodeError = false; this.cityNameError = false; this.poBoxError = false;
+            this.mobileNoError = false; this.emailIdError = false;
+            this.customerName = null; this.mobileNo = null; this.emailId = null; this.title = null;
+            this.coreAppcode = null; this.cityValue = null; this.customerVat = null; this.Address1 = null;
+            this.Address2 = null; this.editSection = false;
+            if (modal) this.open(modal)
+          }
           // else {
           //   this.isCustomerTable = true;
           // }
@@ -720,7 +726,7 @@ export class NewOpenCoverComponent implements OnInit {
     );
   }
   open(content) {
-    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static', ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -732,7 +738,7 @@ export class NewOpenCoverComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
   getCodeDescription(list: any[], code: any) {
@@ -749,20 +755,20 @@ export class NewOpenCoverComponent implements OnInit {
   }
   onSubmitData() {
     this.submitted = true;
-    let utilizedAmount:any,policyFee:any;
-    if(this.newQuoteF.utilizedAmount.value!=null && this.newQuoteF.utilizedAmount.value!=0){
-      if(this.newQuoteF.utilizedAmount.value.includes(',')){ utilizedAmount= this.newQuoteF.utilizedAmount.value.replace(/,/g, '')}
-      else { utilizedAmount = this.newQuoteF.utilizedAmount.value};
+    let utilizedAmount: any, policyFee: any;
+    if (this.newQuoteF.utilizedAmount.value != null && this.newQuoteF.utilizedAmount.value != 0) {
+      if (this.newQuoteF.utilizedAmount.value.includes(',')) { utilizedAmount = this.newQuoteF.utilizedAmount.value.replace(/,/g, '') }
+      else { utilizedAmount = this.newQuoteF.utilizedAmount.value };
     }
-    
+
     else {
       utilizedAmount = this.newQuoteF.utilizedAmount.value;
     }
-    if(this.newQuoteF.policyFee.value!=null && this.newQuoteF.policyFee.value!=0){
-      if(this.newQuoteF.policyFee.value.includes(',')){ policyFee= this.newQuoteF.policyFee.value.replace(/,/g, '')}
-      else { policyFee = this.newQuoteF.policyFee.value};
+    if (this.newQuoteF.policyFee.value != null && this.newQuoteF.policyFee.value != 0) {
+      if (this.newQuoteF.policyFee.value.includes(',')) { policyFee = this.newQuoteF.policyFee.value.replace(/,/g, '') }
+      else { policyFee = this.newQuoteF.policyFee.value };
     }
-    
+
     else {
       policyFee = this.newQuoteF.policyFee.value;
     }
@@ -824,14 +830,14 @@ export class NewOpenCoverComponent implements OnInit {
       'PolicyStartDate': this.newQuoteF.openCoverStartDate.value?.replace(/-/g, '/'),
       'PolicyEndDate': this.newQuoteF.openCoverEndDate.value?.replace(/-/g, '/'),
 
-      'ProductId':'11',
+      'ProductId': '11',
       'ProposalNo': this.proposalNo,
       'ProposalStatus': '',
       'RefNo': this.RefNo,
       'Remarks': '',
       'RsaValue': this.newQuoteF.sharedPercentage.value,
       'SumInsuredLmit': '',
-      'Type':this.newQuoteF.openCoverType.value ,
+      'Type': this.newQuoteF.openCoverType.value,
       'UserId': '',
       'UserType': this.userDetails.UserType,
       'UtilizedAmount': Number(utilizedAmount),
@@ -840,31 +846,31 @@ export class NewOpenCoverComponent implements OnInit {
       'W&Srcc': this.newQuoteF.war.value,
       'Warland': '',
       'PremiumCurrencyCode': this.newQuoteF.premiumCurrency.value,
-      'PremiumCurrencyName':this.getCodeDescription(this.dropPremiumCurrencyList, this.newQuoteF.premiumCurrency.value),
+      'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.newQuoteF.premiumCurrency.value),
     };
     console.log(this.newQuoteForm.valid, this.newQuoteForm)
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         if (data?.Result?.Status) {
           sessionStorage.setItem('ProposalNo', data?.Result?.ProposalNo);
-          sessionStorage.setItem('ReportNo',this.newQuoteF.openCoverType.value);
+          sessionStorage.setItem('ReportNo', this.newQuoteF.openCoverType.value);
           this.router.navigate([`${this.routerBaseLink}/new-open-cover/country-commodity-info`]);
         }
-        else{ this.newQuoteF.customer.disable();}
+        else { this.newQuoteF.customer.disable(); }
       },
       (err) => { },
     );
   }
 
   onChangeCurrencyDropdown() {
-    console.log('hhhhhhhhh',this.newQuoteF.premiumCurrency.value)
+    console.log('hhhhhhhhh', this.newQuoteF.premiumCurrency.value)
     const countryList: any = this.dropPremiumCurrencyList.find(ele => ele.Code === this.newQuoteF.premiumCurrency.value);
     this.newQuoteF.premiumCurrency.setValue(countryList?.Code);
   }
   onGetPremiumDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/premiumcurrency`;
     const reqData = {
-      'BranchCode':this.userDetails?.BelongingBranch,
+      'BranchCode': this.userDetails?.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -894,7 +900,7 @@ export class NewOpenCoverComponent implements OnInit {
     const joinDate = reverseDate.join('-');
     return new Date(joinDate);
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.openCoverService.openCoverEdit.next(null);
   }
 }

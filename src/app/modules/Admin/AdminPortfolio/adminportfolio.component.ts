@@ -260,7 +260,8 @@ uploadDocuments: any[]=[];
     let ReqObj:any,UrlLink:any;
     ReqObj = {
       "BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo": rowData.data?.QuoteNo
+      "QuoteNo": rowData.data?.QuoteNo,
+      "PrintQuoteYn": "N"
     }
     if(type=='Schedule'){
       

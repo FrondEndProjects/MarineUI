@@ -58,7 +58,7 @@ export class WarComponent implements OnInit {
 
 
   onCreateWarFormList() {
-    const urlLink = `${this.ApiUrl1}opencover/dropdown/city/${this.userDetails.BranchCode}`;
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/city/${this.userDetails.BelongingBranch}`;
     const urlLink1 = `${this.ApiUrl1}OpenCover/modeoftransport/edit/list`;
     const urlLink2 = `${this.ApiUrl1}OpenCover/warrate/list`;
     const reqData = {

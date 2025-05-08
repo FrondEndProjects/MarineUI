@@ -110,12 +110,12 @@ export class EndorsementComponent implements OnInit {
             { key: 'Premium', display: 'Premium' },
             { key: 'PremiumCurrencyName', display: 'Currency' },
             { key: 'PolicyNo', display: 'Policy No' },
-            { key: 'Username', display: 'Username' },
-            { key: 'GoodsDescription', display: 'Goods' },
-            { key: 'LcDate', display: 'LC Date' },
-            { key: 'LcNumber', display: 'LC Number' },
-            { key: 'BlAwbNo', display: 'Bill No' },
-            { key: 'BlAwbDate', display: 'Bill Date' },
+            // { key: 'Username', display: 'Username' },
+            // { key: 'GoodsDescription', display: 'Goods' },
+            // { key: 'LcDate', display: 'LC Date' },
+            // { key: 'LcNumber', display: 'LC Number' },
+            // { key: 'BlAwbNo', display: 'Bill No' },
+            // { key: 'BlAwbDate', display: 'Bill Date' },
 
             /*{
               key: 'endorse',
@@ -170,7 +170,9 @@ export class EndorsementComponent implements OnInit {
       let ReqObj:any,UrlLink:any;
       ReqObj = {
         "BranchCode": this.userDetails?.BranchCode,
-        "QuoteNo": rowData.data?.QuoteNo
+        "QuoteNo": rowData.data?.QuoteNo,
+        "PrintQuoteYn": "N"
+        
       }
       if(type=='Schedule'){
         

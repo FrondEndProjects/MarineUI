@@ -85,7 +85,8 @@ public loginType:any[]=[];
     const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
     const reqData = {
       "BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo":row.QuoteNo
+      "QuoteNo":row.QuoteNo,
+      "PrintQuoteYn": "N"
     }
     
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {

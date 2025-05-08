@@ -241,7 +241,6 @@ export class NewQuotesService {
       transhippingOtherYN: [null],
       transhippingCity: [null],
       transhippingCityOther: [null],
-      TranshippingVia:[null],
       settlingAgent: [null],
       others: [''],
 

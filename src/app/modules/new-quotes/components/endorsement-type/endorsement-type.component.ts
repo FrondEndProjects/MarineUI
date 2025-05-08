@@ -21,7 +21,7 @@ export class EndorsementTypeComponent implements OnInit {
   public productId: any;
   public loginId: any;
   public applicationId: any;
-  searchText:any;searchTexts:any;
+  searchText: any; searchTexts: any;
   public nonFinancial: any[] = [];
   public financial: any[] = [];
   public QuoteNo: any = '';
@@ -31,21 +31,21 @@ export class EndorsementTypeComponent implements OnInit {
   public isCancelRemarks: boolean = false;
 
   public endorsement: any;
-  public issueDate:any;
-  public OpenCover:any;
-  public routerBaseLink:any='';
-  searchtext:any;
+  public issueDate: any;
+  public OpenCover: any;
+  public routerBaseLink: any = '';
+  searchtext: any;
 
   constructor(
     private newQuotesService: NewQuotesService,
     private router: Router,
-    private newQuotesComponent:NewQuotesComponent
+    private newQuotesComponent: NewQuotesComponent
 
   ) {
     this.userDetails = this.newQuotesComponent?.userDetails;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
 
-    console.log('hhhhhhhhh',this.routerBaseLink);
+    console.log('hhhhhhhhh', this.routerBaseLink);
 
     this.productId = this.newQuotesComponent?.productId;
     this.loginId = this.newQuotesComponent.loginId;
@@ -57,10 +57,10 @@ export class EndorsementTypeComponent implements OnInit {
   }
   ngOnInit(): void {
     this.QuoteNo = this.endorsement?.QuoteNo;
-    console.log('Enodorsement Quote Nos',this.endorsement);
+    console.log('Enodorsement Quote Nos', this.endorsement);
     this.PolicyNo = this.endorsement?.PolicyNo;
     this.onGetEndorsements();
-    
+
   }
 
   onChangeType(event: any) {
@@ -76,19 +76,19 @@ export class EndorsementTypeComponent implements OnInit {
   }
 
   onGetEndorsements() {
-    let quoteno:any
+    let quoteno: any
     const urlLink = `${this.ApiUrl1}menu/endorsementtype/list`;
     const urlLink2 = `${this.ApiUrl1}menu/endorsement/edit`;
 
     const reqData = {
       "ProductId": '3',
     };
-    let s= sessionStorage.getItem('Edit');
-    if(s!='NewEdit'){
-      quoteno=this.QuoteNo 
+    let s = sessionStorage.getItem('Edit');
+    if (s != 'NewEdit') {
+      quoteno = this.QuoteNo
     }
-    else{
-      quoteno='';
+    else {
+      quoteno = '';
     }
     const reqData2 = {
       "QuoteNo": quoteno
@@ -131,6 +131,7 @@ export class EndorsementTypeComponent implements OnInit {
       isCheckCancle = true;
     } else {
       url = `${this.routerBaseLink}/new-quotes/customer-info`;
+
     }
 
     console.log(EndorsementInfo, isCheckEnt, EndorsementInfo.length)
@@ -147,7 +148,7 @@ export class EndorsementTypeComponent implements OnInit {
       "PolicyNo": this.PolicyNo,
       "QuoteNo": this.QuoteNo,
       "EndorsementInfo": EndorsementInfo,
-      "EffectiveDate": this.issueDate? this.issueDate?.replace(/-/g, '/'):'',
+      "EffectiveDate": this.issueDate ? this.issueDate?.replace(/-/g, '/') : '',
     }
 
     if (isCheckEnt && EndorsementInfo.length != 1) {
@@ -173,8 +174,17 @@ export class EndorsementTypeComponent implements OnInit {
               console.log(data);
               if (data.Message == "Success") {
                 sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
-                this.router.navigate([url]);
-                console.log('ggggggg', this.router.navigate([url]))
+                if (url == 'marine-opencover/new-quotes/customer-info') {
+                  // let value = 'endors'
+                  // this.router.navigate([url], { queryParams: { value } });
+                  sessionStorage.setItem('Endors', 'Endors');
+                  this.router.navigate([url]);
+                }
+                else {
+                  sessionStorage.setItem('Endors', 'NotEndors');
+                  this.router.navigate([url]);
+                }
+
               }
             })
           }
@@ -190,7 +200,16 @@ export class EndorsementTypeComponent implements OnInit {
             };
             sessionStorage.setItem("endorsement", JSON.stringify(datas));
             sessionStorage.removeItem('Edit');
-            this.router.navigate([url]);
+            if (url == 'marine-opencover/new-quotes/customer-info') {
+              // let value = 'endors'
+              // this.router.navigate([url], { queryParams: { value } });
+              sessionStorage.setItem('Endors', 'Endors');
+              this.router.navigate([url]);
+            }
+            else {
+              sessionStorage.setItem('Endors', 'NotEndors');
+              this.router.navigate([url]);
+            }
           }
         })
       }
