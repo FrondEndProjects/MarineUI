@@ -68,6 +68,19 @@
     </div>
 </div>
 <div *ngIf="isEdit && !isView" class="card">
+    <div class="background">
+        <div class="row mt-2" *ngIf="rmsg.length !=0">
+            <div class="col-12 text-center">
+                <h6>Integration Error</h6>
+            </div>
+        </div>
+        <div *ngIf="rmsg.length !=0" class="row container p-2" style="margin-left: 50px;">
+            <div class="col-md-4 text-danger mt-2" *ngFor="let item of rmsg;let i = index">
+                {{i + 1}}. {{item.errorText}}
+            </div>
+        </div>
+    </div>
+    <hr *ngIf="rmsg.length !=0">
     <div class="row">
         <div class="col-12" style="margin-left: 30px;">
             <form [formGroup]="myForm" (ngSubmit)="onSubmit()">

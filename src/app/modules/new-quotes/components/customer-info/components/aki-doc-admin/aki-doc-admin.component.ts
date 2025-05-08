@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as Mydatas from '../../../../../../app-config.json';
 import { QuotesService } from '../../../../../quotes/quotes.service'
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-aki-doc-admin',
   templateUrl: './aki-doc-admin.component.html',
@@ -15,6 +16,7 @@ export class AkiDocAdminComponent {
   tableDataSuccessList: any[] = [];
   filterValue: any
   from_date: any;
+  rmsg: any[] = [];
   viewData: any
   to_date: any;
   isView: boolean = false;
@@ -230,7 +232,7 @@ export class AkiDocAdminComponent {
 
   }
   isActionBtn(event) {
-
+    this.rmsg = [];
     if (event.btName == 'View' && event.btName != 'Update') {
       if (event.QuoteNo) {
         const urlLink = `${this.ApiUrl1}Integration/getMarine/${event.QuoteNo}`;
@@ -239,8 +241,8 @@ export class AkiDocAdminComponent {
           (data: any) => {
 
             this.viewData = data.Response;
-            console.log(this.viewData, "this.viewDatathis.viewData");
-
+            let res = JSON.parse(data.Response.Response);
+            this.rmsg = res.rmsg
 
           },
           (err) => { },
@@ -267,8 +269,20 @@ export class AkiDocAdminComponent {
       this.quoteService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
           console.log(data, "sdfsdfasdfs");
-          this.getList();
+          if (data.Result.rmsg.length !== 0) {
+            const errorMessages = data.Result.rmsg
+              .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
+              .join('<br>');
 
+            Swal.fire({
+              icon: 'error',
+              title: 'Validation Errors',
+              html: errorMessages
+            });
+          }
+          else {
+            this.getList();
+          }
         },
         (err) => { },
       );
