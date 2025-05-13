@@ -189,7 +189,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
   onRedirectMenu(rowData) {
-    this.router.navigate([rowData.link]);
+    console.log("RowData",rowData);
+    if((this.router.url=='/marine-opencover/new-quotes/customer-info' || this.router.url=='/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link=='/marine-opencover/new-quotes'){
+        sessionStorage.removeItem('ReferenceNo');
+        window.location.reload()
+    }
+    else this.router.navigate([rowData.link]);
   }
   ngOnDestroy() {
     this.destroy$.next();

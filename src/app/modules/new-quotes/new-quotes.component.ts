@@ -63,26 +63,27 @@ export class NewQuotesComponent implements OnInit {
 
     this.onReloadMenu();
     this.menuService.onItemClick().subscribe((data) => {
-      console.log("Current Route on Quote",data.item.link,this.routerBaseLink  )
-      if (data.item.link === `/${this.routerBaseLink}/new-quotes` || data.item.link==`/${this.routerBaseLink}/new-quotes/customerinfo`) {
-        this.newQuotesService.quoteEditData.next(null)
-        this.sessionStorageService.remove('referral');
-        sessionStorage.setItem('quotesType', 'Without-Endo');
-        //sessionStorage.removeItem('quotesType')
-        sessionStorage.removeItem("endorsement");
-        sessionStorage.removeItem("ReferenceNo");
-        sessionStorage.removeItem('QuoteStatus');
-        //this.reloadCurrentRoute();
-        /*sessionStorage.removeItem('OpenCover');
-        sessionStorage.removeItem('quotesType');
-        sessionStorage.removeItem('MissippiCode');
-        sessionStorage.removeItem('ProposalNo');
-        sessionStorage.removeItem('loginId');
-        sessionStorage.removeItem('WithCertifi');  
-        sessionStorage.removeItem('customerLoginId');
-        sessionStorage.removeItem('OpenCoverNo');*/
-        this.reloadCurrentRoute();
-      }
+      
+        console.log("Current Route on Quote",data.item.link,this.routerBaseLink  )
+        if (data.item.link === `${this.routerBaseLink}/new-quotes` || data.item.link==`${this.routerBaseLink}/new-quotes/customerinfo`) {
+          this.newQuotesService.quoteEditData.next(null)
+          this.sessionStorageService.remove('referral');
+          sessionStorage.setItem('quotesType', 'Without-Endo');
+          //sessionStorage.removeItem('quotesType')
+          sessionStorage.removeItem("endorsement");
+          sessionStorage.removeItem("ReferenceNo");
+          sessionStorage.removeItem('QuoteStatus');
+          //this.reloadCurrentRoute();
+          /*sessionStorage.removeItem('OpenCover');
+          sessionStorage.removeItem('quotesType');
+          sessionStorage.removeItem('MissippiCode');
+          sessionStorage.removeItem('ProposalNo');
+          sessionStorage.removeItem('loginId');
+          sessionStorage.removeItem('WithCertifi');  
+          sessionStorage.removeItem('customerLoginId');
+          sessionStorage.removeItem('OpenCoverNo');*/
+          this.reloadCurrentRoute();
+        }
     });
   }
 

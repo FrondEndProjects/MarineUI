@@ -103,9 +103,15 @@
 
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">Mobile Number</label>
+        <label class="input-form-label">Mobile Number <span class="text-required">*</span></label>
         <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="mobileNo">
+          <input type="text" class="input-form-control without-icon" maxlength="10" formControlName="mobileNo">
+        </div>
+        <div class="input-form-error"
+          *ngIf="(customerF.mobileNo.errors && submitted) || (!customerF.mobileNo.valid && customerF.mobileNo.touched)">
+          <div *ngIf="customerF.mobileNo.errors?.required" class="error-text">
+            This field is required
+          </div>
         </div>
       </div>
     </div>
