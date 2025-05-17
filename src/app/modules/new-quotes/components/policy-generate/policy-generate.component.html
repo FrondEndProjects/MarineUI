@@ -165,12 +165,14 @@
           <div class="input-control-container">
             <div class="input-form-radio-box">
               <div class="radio-toolbar">
-                <input id="generateCerti_quote" type="radio" name="generateCerti" [(ngModel)]="generateCerti" value="Q">
+                <input id="generateCerti_quote" type="radio" (change)="onGenerateCertificateTypeChange()"
+                  name="generateCerti" [(ngModel)]="generateCerti" value="Q">
                 <label for="generateCerti_quote">QUOTE</label>
-                <input type="radio" id="generateCerti_draft" name="generateCerti" [(ngModel)]="generateCerti" value="N">
+                <input type="radio" id="generateCerti_draft" (change)="onGenerateCertificateTypeChange()"
+                  name="generateCerti" [(ngModel)]="generateCerti" value="N">
                 <label for="generateCerti_draft">DRAFT</label>
-                <input type="radio" id="generateCerti_schedule" name="generateCerti" [(ngModel)]="generateCerti"
-                  value="Y">
+                <input type="radio" id="generateCerti_schedule" (change)="onGenerateCertificateTypeChange()"
+                  name="generateCerti" [(ngModel)]="generateCerti" value="Y">
                 <label for="generateCerti_schedule">
                   <ng-container *ngIf="productId!='11' && productId!=11">SCHEDULE</ng-container>
                   <ng-container *ngIf="productId=='11' || productId==11">CERTIFICATE</ng-container>
@@ -263,6 +265,133 @@
               </div>
             </label>
           </div>
+          <!-- <div *ngIf="generateCerti =='Y'" class="row">
+            <div class="col-md-12 left-line font-size-95">
+              Payment Type
+            </div>
+            <div class="input-control-container">
+              <div class="input-form-radio-box">
+                <div class="radio-toolbar">
+                  <input id="payment_type_cash" (change)="onPaymentTypeChange($event)" type="radio" name="payment_type"
+                    [(ngModel)]="payment_type" value="cash">
+                  <label for="payment_type_cash">CASH</label>
+                  <input type="radio" id="payment_type_online" (change)="onPaymentTypeChange($event)"
+                    name="payment_type" [(ngModel)]="payment_type" value="online">
+                  <label for="payment_type_online">ONLINE</label>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div *ngIf="generateCerti == 'Y'" class="row">
+            <div class="col-md-12 left-line font-size-95">
+              Payment Type
+            </div>
+            <div class="input-control-container">
+              <div class="input-form-radio-box">
+                <div class="radio-toolbar">
+                  <ng-container *ngFor="let pt of payment_type_list">
+                    <input type="radio" [id]="'payment_type_' + pt.Code" name="payment_type" [value]="pt.Code"
+                      [(ngModel)]="payment_type" (change)="onPaymentTypeChange(pt)" />
+                    <label [for]="'payment_type_' + pt.Code">{{ pt.CodeDesc }}</label>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-continer *ngIf="payment_type=='1'">
+            <div class="input-control-container">
+              <label class="input-form-label">Payee Name<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" name="payee_name" #payeeName="ngModel"
+                  [(ngModel)]="payee_name">
+              </div>
+              <div *ngIf="payeeName.invalid && payeeName.touched" class="text-danger">
+                This field is required
+              </div>
+            </div>
+            <div class="input-control-container">
+              <label class="input-form-label">Amount<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" name="pay_amount" #payAmount="ngModel"
+                  [(ngModel)]="pay_amount">
+              </div>
+              <div *ngIf="payAmount.invalid && payAmount.touched" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </ng-continer>
+          <ng-continer *ngIf="payment_type=='2'">
+            <div class="input-control-container">
+              <label class="input-form-label">Bank Name<span class="text-required">*</span></label>
+              <ng-select placeholder="Select" class="input-form-select" name="bank_name" #BankName="ngModel"
+                [(ngModel)]="bank_name" [items]="bank_list" bindValue="Code" bindLabel="CodeDescription">
+              </ng-select>
+              <div *ngIf="BankName.invalid && BankName.touched" class="text-danger">
+                This field is required
+              </div>
+            </div>
+            <div class="input-control-container">
+              <label class="input-form-label">MICR Number<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" name="micr_number" #micrNumber="ngModel"
+                  [(ngModel)]="micr_number">
+              </div>
+              <div *ngIf="micrNumber.invalid && micrNumber.touched" class="text-danger">
+                This field is required
+              </div>
+            </div>
+            <div class="input-control-container">
+              <label class="input-form-label">Cheque Number<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" name="cheque_number" #chequeNumber="ngModel"
+                  [(ngModel)]="cheque_number">
+              </div>
+              <div *ngIf="chequeNumber.invalid && chequeNumber.touched" class="text-danger">
+                This field is required
+              </div>
+            </div>
+            <div class="input-control-container">
+              <label class="input-form-label">Cheque Date<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
+                  formname="cheque_date" #chequeDate="ngModel" [(ngModel)]="cheque_date" (click)="d2.toggle()" readonly
+                  [maxDate]="maxDate">
+              </div>
+              <div *ngIf="chequeDate.invalid && chequeDate.touched" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </ng-continer>
+          <ng-continer *ngIf="payment_type=='5'">
+            <div class="row">
+              <div class="col-3">
+                <div class="input-control-container">
+                  <label class="input-form-label">Mobile Code<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" name="pay_mobile_code" #payMobileCode="ngModel"
+                      [(ngModel)]="pay_mobile_code">
+                  </div>
+                  <div *ngIf="payMobileCode.invalid && payMobileCode.touched" class="text-danger">
+                    This field is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-9">
+                <div class="input-control-container">
+                  <label class="input-form-label">Mobile Number<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" name="pay_mobile_number" #payMobileNumber="ngModel"
+                      [(ngModel)]="pay_mobile_number">
+                  </div>
+                  <div *ngIf="payMobileNumber.invalid && payMobileNumber.touched" class="text-danger">
+                    This field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </ng-continer>
         </div>
       </div>
     </div>
@@ -270,7 +399,7 @@
   </div>
   <div class="maan-card-footer my-2">
     <app-back-btn></app-back-btn>
-    <button nbButton shape="round" size="small" status="primary" class="mx-2" (click)="onFinalProceed()">Submit</button>
+    <button nbButton shape="round" size="small" status="primary" class="mx-2" (click)="generateCertiCheck()">Submit</button>
   </div>
 </div>
 <div class="maan-card" *ngIf="draftSection || policySection || schedule">
@@ -291,12 +420,14 @@
      </div> -->
   </div>
 
-  <div *ngIf="!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate" class="col-12 col-md-12 col-lg-12">
+  <div *ngIf="!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate"
+    class="col-12 col-md-12 col-lg-12">
     <div class="middle-line">
       AKI Certificate Integration Failed Information
     </div>
   </div>
-  <div *ngIf="!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate" class="row header-details">
+  <div *ngIf="!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate"
+    class="row header-details">
     <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 
       <div class="vision-grid-item-body">

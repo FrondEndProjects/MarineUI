@@ -2,7 +2,7 @@ import { NewQuotesService } from './../../new-quotes.service';
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import * as Mydatas from '../../../../app-config.json';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NewQuotesComponent } from '../../new-quotes.component';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
@@ -18,6 +18,7 @@ export class PolicyGenerateComponent implements OnInit {
 
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   public userDetails: any;
   public productId: any;
   public loginId: any;
@@ -28,6 +29,7 @@ export class PolicyGenerateComponent implements OnInit {
   public policyForm: FormGroup;
   policuNoGenerate: boolean = false;
   public generateCerti: any = 'N';
+  public payment_type: any;
   public premium: any = false;
   public nameOfBroker: any = false;
   public foreignCurrency: any = false;
@@ -35,6 +37,8 @@ export class PolicyGenerateComponent implements OnInit {
   public bankerAssured: any = false;
   public excess: any = false;
   integrationErrorList: any[] = [];
+  bank_list: any[] = [];
+  payment_type_list: any[] = [];
   public routerBaseLink: any = '';
   public premiumForm!: FormGroup;
   public OpenCover: any;
@@ -52,9 +56,21 @@ export class PolicyGenerateComponent implements OnInit {
   quoteNo: any = null;
   porttype: string;
   certificateNo: any;
+  PaymentId: any;
+  payee_name: any;
+  pay_amount: any;
+  micr_number: any;
+  bank_name: any;
+  cheque_number: any;
+  cheque_date: any;
+  QuoteNo: any;
+  redirectUrl: any;
+  pay_mobile_number: any;
+  pay_mobile_code: any;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router, private sessionStorageService: SessionStorageService,
     private newQuotesComponent: NewQuotesComponent, public dialogService: MatDialog,
 
@@ -70,13 +86,26 @@ export class PolicyGenerateComponent implements OnInit {
     this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
     this.porttype = sessionStorage.getItem('openCOverType');
     console.log('Tpes', this.porttype);
-    console.log(this.QuoteStatus);
+    console.log(this.userDetails, "ddddddddddd");
     //this.ongetUploadedDocument();
   }
 
   ngOnInit(): void {
     this.onCreateFormControl();
     this.onGetPremiumInformation();
+    this.getpaymentType();
+    this.route.queryParamMap.subscribe((params: any) => {
+      console.log("Params", params.params)
+      let quoteNo = params?.params?.QuoteNo;
+      let type = params?.params?.type;
+      if (quoteNo) {
+        this.quoteNo = quoteNo;
+        this.QuoteNo = quoteNo;
+        this.checkStatus();
+        // this.paramSection = true;
+        // if(type!='cancel') this.successSection = true;
+      }
+    })
   }
   get premiumF() {
     return this.premiumForm?.controls;
@@ -371,7 +400,14 @@ export class PolicyGenerateComponent implements OnInit {
             if (i == this.uploadDocuments.length) {
               this.uploadedDocumentsList = [];
               this.uploadDocuments = [];
-              this.onFinalProceed();
+              // if (this.payment_type != '4') {
+              // this.onFinalProceed('submit');
+
+              // }
+              // else {
+              // this.onschedule();
+              // }
+              this.onFinalProceed('submit');
               this.ongetUploadedDocument();
             }
           }
@@ -379,7 +415,17 @@ export class PolicyGenerateComponent implements OnInit {
       }
     }
   }
-  onFinalProceed() {
+
+  generateCertiCheck() {
+    if (this.generateCerti == 'Y' && this.payment_type != null && this.payment_type != '') {
+      this.onschedule();
+    }
+    else {
+      this.onFinalProceed('submit');
+    }
+  }
+
+  onFinalProceed(type) {
     const urlLink = `${this.ApiUrl1}quote/policy/generate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
@@ -423,7 +469,22 @@ export class PolicyGenerateComponent implements OnInit {
 
         }
         if (this.generateCerti == 'Y') {
-          this.onschedule();
+          sessionStorage.setItem('quotePaymentId', data.Result.PaymentId);
+          if (data.Result) {
+            this.pay_amount = data.Result.Premium;
+            this.PaymentId = data.Result.PaymentId;
+            this.QuoteNo = data.Result.QuoteNo;
+            // this.inserPyment(data.Result)
+
+          }
+          // this.PaymentId = data.Result.PaymentId
+          // }
+          // else {
+          // alert(this.payment_type)
+          if (type != 'payment' && this.payment_type != '' && this.payment_type != null) {
+            this.onschedule();
+          }
+
         }
         else if (this.generateCerti == 'Q') {
           this.router.navigate([`${this.routerBaseLink}/quotes/exist-quote`]);
@@ -436,8 +497,50 @@ export class PolicyGenerateComponent implements OnInit {
   }
 
   onschedule() {
-    this.schedule = true;
-    this.onPolicyIntegrate();
+    // this.schedule = true;
+    if (this.payment_type == '1') {
+      if (this.payee_name != '' && this.pay_amount != '' && this.payee_name != null && this.pay_amount != null) {
+        this.inserPyment()
+
+      }
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Validation Errors',
+          html: 'Payment Deatil is Required'
+        });
+      }
+    }
+    if (this.payment_type == '2') {
+      if (this.bank_name != '' && this.micr_number != '' && this.cheque_number != '' && this.cheque_date != '' && this.bank_name != null && this.micr_number != null && this.cheque_number != null && this.cheque_date != null) {
+        this.inserPyment()
+
+      }
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Validation Errors',
+          html: 'Payment Deatil is Required'
+        });
+      }
+    }
+    if (this.payment_type == '4' || this.payment_type == '3') {
+      this.inserPyment()
+    }
+    if (this.payment_type == '5') {
+      if (this.pay_mobile_code != '' && this.pay_mobile_number != '' && this.pay_mobile_code != null && this.pay_mobile_number != null) {
+        this.inserPyment()
+
+      }
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Validation Errors',
+          html: 'Payment Deatil is Required'
+        });
+      }
+    }
+    // this.onPolicyIntegrate();
   }
 
   onNavigate() {
@@ -599,7 +702,7 @@ export class PolicyGenerateComponent implements OnInit {
 
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
         if (data?.Result) {
-          if (data.Result.rmsg.length !== 0) {
+          if (data.Result.rmsg.length !== 0 && (data.Result.rmsg != 'Sucess' || data.Result.rmsg != 'sucess')) {
             const errorMessages = data.Result.rmsg
               .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
               .join('<br>');
@@ -636,4 +739,170 @@ export class PolicyGenerateComponent implements OnInit {
     this.policySection = false; this.draftSection = false;
     this.schedule = false;
   }
+
+  inserPyment() {
+
+    const urlLink = `${this.ApiUrl1}quote/policy/insertPayment`;
+    const reqData = {
+      "CreatedBy": this.userDetails?.LoginId,
+      "InsuranceId": this.userDetails?.InsuranceId,
+      "Premium": this.pay_amount,
+      "QuoteNo": this.QuoteNo,
+      "Remarks": "None",
+      "PayeeName": this.payee_name,
+      "SubUserType": this.userDetails?.SubUserType,
+      "UserType": this.userDetails?.UserType,
+      "MICRNo": this.micr_number,
+      "BankName": this.bank_name,
+      "ChequeNo": this.cheque_number,
+      "ChequeDate": this.cheque_date,
+      "PaymentType": this.payment_type,
+      "Payments": "",
+      "PaymentId": this.PaymentId,
+      "AccountNumber": null,
+      "IbanNumber": null,
+      "WhatsappNo": null,
+      "WhatsappCode": null,
+      "MobileCode1": this.pay_mobile_code,
+      "MobileNo1": this.pay_mobile_number
+    }
+    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      alert(this.payment_type)
+      console.log(data.Result.paymentUrl != null && data.Result.paymentUrl != '');
+      console.log(data.Message == 'Success');
+
+
+
+      if (data.Message == 'Success') {
+        // if (data.Result != null) {
+        if (data.Result != null && data.Result.paymentUrl != null && data.Result.paymentUrl != '') {
+          // alert(1)
+          this.redirectUrl = data.Result.paymentUrl;
+          const absoluteURL =
+            new URL(this.redirectUrl, window.location.href);
+
+          window.location.href = absoluteURL.href;
+
+        }
+        else if (this.payment_type == '1' || this.payment_type == '2' || this.payment_type == '3' && data.IsError == false && data.Result.paymentStatus =='COMPLETED') {
+          // alert(2)
+          this.schedule = true;
+          this.onPolicyIntegrate()
+        }
+        else {
+          // alert(3)
+          Swal.fire({
+            icon: 'error',
+            title: 'Validation Errors',
+            html: 'Error'
+          });
+        }
+        // }
+      }
+    })
+  }
+
+  getpaymentType() {
+    // const urlLink = `${this.ApiUrl1}quote/dropdown/paymenttypes`;
+    // const reqData = {
+    //   "BranchCode": this.userDetails?.BelongingBranch,
+    //   "InsuranceId": this.userDetails?.InsuranceId,
+    //   "UserType": this.userDetails?.UserType,
+    //   "SubUserType": this.userDetails?.SubUserType,
+    //   "ProductId": "46",
+    //   "CreatedBy": this.userDetails?.LoginId,
+    //   "AgencyCode": "12887"
+    // }
+
+    // this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+    //   console.log(data);
+    //   if (data.Result) {
+
+    //   }
+    // })
+    this.payment_type_list = [
+      {
+        "Code": "1",
+        "CodeDesc": "Cash",
+        "CodeDescLocal": "Cash",
+        "Type": null
+      },
+      {
+        "Code": "3",
+        "CodeDesc": "Credit",
+        "CodeDescLocal": "Credit",
+        "Type": null
+      },
+      {
+        "Code": "2",
+        "CodeDesc": "Cheque",
+        "CodeDescLocal": "Cheque",
+        "Type": null
+      },
+      {
+        "Code": "4",
+        "CodeDesc": "Online Payment",
+        "CodeDescLocal": "Online Payment",
+        "Type": null
+      },
+      {
+        "Code": "5",
+        "CodeDesc": "Pay BY Mobile Money",
+        "CodeDescLocal": "Pay BY Mobile Money",
+        "Type": null
+      },
+      {
+        "Code": "6",
+        "CodeDesc": "Debit Card",
+        "CodeDescLocal": "Debit Card",
+        "Type": null
+      }
+    ]
+  }
+
+  onPaymentTypeChange(event: any) {
+    // console.log(event, "event");
+    // if (event.Code == '1') {
+    this.onFinalProceed('payment');
+    // }
+    // const selectedValue = (event.target as HTMLInputElement).value;
+    // this.onFinalProceed('payment');
+
+    // if (selectedValue === 'cash') {
+
+    // } else if (selectedValue === 'online') {
+
+    // }
+  }
+
+  checkStatus() {
+
+    let ReqObj = {
+      "InsuranceId": this.userDetails?.InsuranceId
+    }
+    let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${this.QuoteNo}`;
+
+    this.newQuotesService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data, "dataaaaaaaaaaaaaaaaaaaaaa");
+
+        if (data.result == 'FAIL') {
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Payment',
+            html: 'FAIL'
+          });
+
+        }
+        else {
+          this.schedule = true;
+          this.onPolicyIntegrate()
+        }
+      });
+  }
+  onGenerateCertificateTypeChange() {
+    this.payment_type = null
+  }
 }
+

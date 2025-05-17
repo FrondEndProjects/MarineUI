@@ -154,7 +154,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       //   display: 'Port Code'
       // }
     ];
-    this.get_transhipping_list(1)
+    // this.get_transhipping_list(1)
     let newDate = new Date();
     newDate.setDate(newDate.getDate() + 45);
     const ngbDate = {
@@ -1123,6 +1123,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       this.quoteForm.get('transhippingCountry')?.clearValidators();
     }
     else{
+      this.get_transhipping_list(1);
       this.quoteForm.updateValueAndValidity 
       this.quoteForm.get('via')?.setValidators([Validators.required]);
       this.quoteForm.get('transhippingCountry')?.setValidators([Validators.required]);
