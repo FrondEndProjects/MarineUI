@@ -767,7 +767,7 @@ export class PolicyGenerateComponent implements OnInit {
       "MobileNo1": this.pay_mobile_number
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      alert(this.payment_type)
+      // alert(this.payment_type)
       console.log(data.Result.paymentUrl != null && data.Result.paymentUrl != '');
       console.log(data.Message == 'Success');
 
