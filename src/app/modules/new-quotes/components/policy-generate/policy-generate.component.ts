@@ -702,7 +702,7 @@ export class PolicyGenerateComponent implements OnInit {
 
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
         if (data?.Result) {
-          if (data.Result.rmsg.length !== 0 && (data.Result.rmsg != 'Sucess' || data.Result.rmsg != 'sucess')) {
+          if (data.Result.rmsg.length !== 0 &&  data.Result.rcode !=200) {
             const errorMessages = data.Result.rmsg
               .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
               .join('<br>');
