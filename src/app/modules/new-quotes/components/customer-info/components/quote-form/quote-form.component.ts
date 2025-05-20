@@ -86,7 +86,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   viaSearch: any
   displayedColumns: any[];
   docUploadedData: any;
-  TranshippingCountryEdit:any
+  TranshippingCountryEdit: any
   setDocvalue: any;
   enableGrid: boolean = false;
   TranshippingCityEdit: any;
@@ -246,7 +246,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.quoteF.policyStartDate.setValue(this.newQuotesService.ngbDateFormatt(quoteDetails?.InceptionDate));
     this.quoteF.warSrcc.setValue(quoteDetails?.WarAndSrccYn);
     this.quoteF.warOnLand.setValue(quoteDetails?.WarOnLandYn);
-    if(this.quoteF.TranshipmentYN.value =='Y'){
+    if (this.quoteF.TranshipmentYN.value == 'Y') {
       this.get_transhipping_list('edit')
     }
     // this.quoteF.via.setValue(transportDetails?.Via);
@@ -589,9 +589,23 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
 
     }
 
+    let d: any
+    d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
+    let Codevalue: any = null;
+    if (this.quoteF.modeOfTransport?.value == '1') {
+
+      Codevalue = d[0]?.CodeValue
+    }
+    else if (this.quoteF.modeOfTransport?.value == null) {
+      Codevalue = this.quoteF.originatingCountry.value
+
+    }
+    else {
+      Codevalue = d[0]?.CodeValue2
+    }
     const urlLink = `${this.ApiUrl1}master/countryport/list`;
     const reqData = {
-      'countryID': this.quoteF.originatingCountry.value
+      'countryID': Codevalue
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -638,9 +652,24 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     //   'BranchCode': this.userDetails?.BelongingBranch,
     //   'DestinationCountryCode': this.quoteF.destinationCountry.value,
     // };
+    let d: any
+    d = this.dropDestinaCountryList.filter(e => e.Code == this.quoteF.destinationCountry.value)
+    let Codevalue: any = null;
+    if (this.quoteF.modeOfTransport?.value == '1') {
+
+      Codevalue = d[0]?.CodeValue
+    }
+    else if (this.quoteF.modeOfTransport?.value == null) {
+      Codevalue = this.quoteF.destinationCountry.value
+
+    }
+    else {
+      Codevalue = d[0]?.CodeValue2
+    }
+
     const urlLink = `${this.ApiUrl1}master/countryport/list`;
     const reqData = {
-      'countryID': this.quoteF.destinationCountry.value
+      'countryID': Codevalue
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -1097,9 +1126,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         else {
           this.secondarylist = data?.Result;
 
-          if(type == 2 && this.quoteF.transhippingCountry.value ){
+          if (type == 2 && this.quoteF.transhippingCountry.value) {
             const cityList: any = this.secondarylist.find(ele => ele.ShortCode == this.TranshippingCityEdit);
-            
+
             this.quoteF.via.setValue(cityList?.ShortCode);
           }
         }
@@ -1115,19 +1144,19 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
 
-  onTranshipmentChange(event){
-    if(event.target.value =='N'){
+  onTranshipmentChange(event) {
+    if (event.target.value == 'N') {
       this.quoteF.via.setValue(null);
       this.quoteF.transhippingCountry.setValue(null);
       this.quoteForm.get('via')?.clearValidators();
       this.quoteForm.get('transhippingCountry')?.clearValidators();
     }
-    else{
+    else {
       this.get_transhipping_list(1);
-      this.quoteForm.updateValueAndValidity 
+      this.quoteForm.updateValueAndValidity
       this.quoteForm.get('via')?.setValidators([Validators.required]);
       this.quoteForm.get('transhippingCountry')?.setValidators([Validators.required]);
-      
+
 
     }
     this.quoteForm.get('via')?.updateValueAndValidity();

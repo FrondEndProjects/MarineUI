@@ -741,7 +741,16 @@ export class PolicyGenerateComponent implements OnInit {
   }
 
   inserPyment() {
-
+    let bankName = null;
+    if (this.payment_type == '2') {
+      if (this.bank_list.length != 0) {
+        let e = this.bank_list.filter(e => e.Code == this.bank_name)
+        bankName = e[0].CodeDesc
+      }
+      else {
+        bankName = null;
+      }
+    }
     const urlLink = `${this.ApiUrl1}quote/policy/insertPayment`;
     const reqData = {
       "CreatedBy": this.userDetails?.LoginId,
@@ -753,7 +762,7 @@ export class PolicyGenerateComponent implements OnInit {
       "SubUserType": this.userDetails?.SubUserType,
       "UserType": this.userDetails?.UserType,
       "MICRNo": this.micr_number,
-      "BankName": this.bank_name,
+      "BankName": bankName,
       "ChequeNo": this.cheque_number,
       "ChequeDate": this.cheque_date,
       "PaymentType": this.payment_type,
@@ -784,7 +793,7 @@ export class PolicyGenerateComponent implements OnInit {
           window.location.href = absoluteURL.href;
 
         }
-        else if (this.payment_type == '1' || this.payment_type == '2' || this.payment_type == '3' && data.IsError == false && data.Result.paymentStatus =='COMPLETED') {
+        else if (this.payment_type == '1' || this.payment_type == '2' || this.payment_type == '3' && data.IsError == false && data.Result.paymentStatus == 'COMPLETED') {
           // alert(2)
           this.schedule = true;
           this.onPolicyIntegrate()
@@ -864,6 +873,10 @@ export class PolicyGenerateComponent implements OnInit {
     // console.log(event, "event");
     // if (event.Code == '1') {
     this.onFinalProceed('payment');
+    this.getbankList();
+    console.log(event, "event");
+
+    // if(event =='')
     // }
     // const selectedValue = (event.target as HTMLInputElement).value;
     // this.onFinalProceed('payment');
@@ -899,6 +912,23 @@ export class PolicyGenerateComponent implements OnInit {
           this.schedule = true;
           this.onPolicyIntegrate()
         }
+      });
+  }
+
+  getbankList() {
+
+    let ReqObj = {
+      "InsuranceId": this.userDetails?.InsuranceId,
+      "BranchCode": this.userDetails?.BelongingBranch
+
+    }
+    let urlLink = `${this.CommonApiUrl}master/dropdown/bankmaster`;
+
+    this.newQuotesService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        // console.log(data, "bank_list");
+        this.bank_list = data.Result
+
       });
   }
   onGenerateCertificateTypeChange() {

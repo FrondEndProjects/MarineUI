@@ -324,7 +324,7 @@
             <div class="input-control-container">
               <label class="input-form-label">Bank Name<span class="text-required">*</span></label>
               <ng-select placeholder="Select" class="input-form-select" name="bank_name" #BankName="ngModel"
-                [(ngModel)]="bank_name" [items]="bank_list" bindValue="Code" bindLabel="CodeDescription">
+                [(ngModel)]="bank_name" [items]="bank_list" bindValue="Code" bindLabel="CodeDesc">
               </ng-select>
               <div *ngIf="BankName.invalid && BankName.touched" class="text-danger">
                 This field is required
@@ -419,7 +419,7 @@
        <div class="col-md-3 text-danger" *ngFor="let item of integrationErrorList">*<small>{{item.errorText}}</small></div>
      </div> -->
   </div>
-
+{{!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate}}
   <div *ngIf="!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate"
     class="col-12 col-md-12 col-lg-12">
     <div class="middle-line">

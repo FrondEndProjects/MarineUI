@@ -213,7 +213,7 @@ export class NewQuotesService {
       mobileNo: ['',Validators.required],
       email: ['',Validators.required],
       customerVat: ['',Validators.required],
-      Address1: [''],
+      Address1: ['',Validators.required],
       Address2: [''],
       Code:[''],
     });
