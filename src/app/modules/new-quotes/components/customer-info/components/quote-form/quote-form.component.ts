@@ -199,8 +199,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     });
 
 
-    this.onGetOriginCityDropdownList();
-    this.onGetDestinaCityDropdownList();
+    // this.onGetOriginCityDropdownList();
+    // this.onGetDestinaCityDropdownList();
 
   }
 
@@ -482,6 +482,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onGetCoverDropdownList(value) {
+    this.onGetOriginCityDropdownList();
+    this.onGetDestinaCityDropdownList();
     this.quoteF.cover.setValue('');
     this.quoteF.modeOfCarriage.setValue('');
     let modeOfTransport
@@ -570,7 +572,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
           this.newQuotesService.getDropDownList(this.dropOriginCountryList, 'orgCountry');
           // this.setDocUploadedData()
           // this.get_transhipping_list()
-
+          this.onGetOriginCityDropdownList();
         }
       },
       (err) => { },
@@ -605,8 +607,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
     const urlLink = `${this.ApiUrl1}master/countryport/list`;
     const reqData = {
-      'countryID': Codevalue
+      'countryID': Codevalue,
+      "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
     };
+    console.log(reqData, "reqData");
+
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
 
@@ -634,6 +639,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         if (data?.Message === 'Success') {
           this.dropDestinaCountryList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropDestinaCountryList, 'destCounty');
+          this.onGetDestinaCityDropdownList();
 
         }
       },
@@ -669,7 +675,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
 
     const urlLink = `${this.ApiUrl1}master/countryport/list`;
     const reqData = {
-      'countryID': Codevalue
+      'countryID': Codevalue,
+      "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {

@@ -134,7 +134,7 @@ export class CustomerFormComponent implements OnInit {
   }
   onGetCityDropdownList() {
     let countryId = this.userDetails?.OriginationCountryId;
-    const urlLink = `${this.ApiUrl1}master/countryport/list`;
+    const urlLink = `${this.ApiUrl1}master/countrycity/list`;
     const reqData = {
       'countryID': countryId
     };
@@ -150,6 +150,8 @@ export class CustomerFormComponent implements OnInit {
         console.log(data);
         if (data?.Message === 'Success') {
           this.dropCityList = data?.Result;
+          console.log(this.dropCityList);
+          
           this.newQuotesService.getDropDownList(this.dropCityList, 'city');
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadData();
