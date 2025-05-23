@@ -898,6 +898,16 @@ export class CustomerInfoComponent implements OnInit {
   }
 
   onSelectType(value) {
+
+    this.customerForm.reset();
+    this.quoteForm.reset();
+    this.bankForm.reset();
+    this.quoteF.warSrcc.setValue('NO');
+    this.quoteF.StoragePeriodYn.setValue('N');
+    this.quoteF.TranshipmentYN.setValue('N');
+    this.quoteF.warOnLand.setValue('NO');
+    this.quoteF.destinationWarehouse.setValue('NO');
+    this.quoteF.originatingWarehouse.setValue('NO');
     if (value == 1 || value == null || value == undefined) {
       this.showFileUpload = true;
       this.showNewQuote = false;
