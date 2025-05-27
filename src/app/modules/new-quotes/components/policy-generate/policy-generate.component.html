@@ -430,7 +430,7 @@
   <div *ngIf="!certificateNo && integrationErrorList.length !=0 && generateCerti=='Y'"
     class="col-12 col-md-12 col-lg-12">
     <div class="middle-line">
-      AKI Certificate Integration Failed Information
+      Marine Certificate Integration Failed Information
     </div>
   </div>
   <div *ngIf="!certificateNo && integrationErrorList.length !=0  && generateCerti=='Y'" class="row header-details">
@@ -616,7 +616,7 @@
       </ng-container>
       <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && certificateNo"
         (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-        AKI DOCUMENT</button>
+        Marine Certificate</button>
       <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="draftSection"
         (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
       <button nbButton shape="round" size="small" status="primary" class="mx-2" (click)="onNavigate()">Proceed</button>

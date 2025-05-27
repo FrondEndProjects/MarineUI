@@ -1,16 +1,16 @@
 <div class="maan-card">
   <div class="maan-card-header">
-      <!-- <div class="form-heading-number">
+    <!-- <div class="form-heading-number">
         4
       </div> -->
-      <div class="row">
-        <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
-          Premium Information
-        </div>
-        <div class="col-md-2 col-lg-2 col-2 col-xl-2 offset-6" *ngIf="quoteNo">
-          Quote No - {{quoteNo}}
-        </div>
+    <div class="row">
+      <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
+        Premium Information
       </div>
+      <div class="col-md-2 col-lg-2 col-2 col-xl-2 offset-6" *ngIf="quoteNo">
+        Quote No - {{quoteNo}}
+      </div>
+    </div>
   </div>
   <div class="maan-card-body">
     <div class="header-details">
@@ -69,7 +69,8 @@
                   <li class="list-group-item">
                     <div>Originating Country</div>
                     <div>
-                      <ng-container *ngIf="premiumDetails?.QuoteDetails?.TransportDetails?.OriginCityName">{{premiumDetails?.QuoteDetails?.TransportDetails?.OriginCityName}},</ng-container>
+                      <ng-container
+                        *ngIf="premiumDetails?.QuoteDetails?.TransportDetails?.OriginCityName">{{premiumDetails?.QuoteDetails?.TransportDetails?.OriginCityName}},</ng-container>
                       {{premiumDetails?.QuoteDetails?.TransportDetails?.OriginCountryName}}
 
                     </div>
@@ -86,10 +87,10 @@
                   <li class="list-group-item">
                     <ng-container *ngIf="userDetails?.RegionCode == '100019'">
                       <div>PVT Cover Option</div>
-                      </ng-container>
-                      <ng-container *ngIf="userDetails?.RegionCode != '100019'">
-                        <div>War Cover Option</div>
-                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="userDetails?.RegionCode != '100019'">
+                      <div>War Cover Option</div>
+                    </ng-container>
                     <div>{{premiumDetails?.QuoteDetails?.WarAndSrccYn}}</div>
                   </li>
                   <li class="list-group-item">
@@ -158,15 +159,17 @@
                   <label class="input-form-label">Do you want to edit the clauses?</label>
                   <div class="input-form-radio-box">
                     <div class="radio-toolbar">
-                      <input id="isEditClauses-y" type="radio" name="isEditClauses" value="Y" formControlName="isEditClauses">
+                      <input id="isEditClauses-y" type="radio" name="isEditClauses" value="Y"
+                        formControlName="isEditClauses">
                       <label for="isEditClauses-y">Yes</label>
-                      <input type="radio" id="isEditClauses-n" name="isEditClauses" value="N" formControlName="isEditClauses">
+                      <input type="radio" id="isEditClauses-n" name="isEditClauses" value="N"
+                        formControlName="isEditClauses">
                       <label for="isEditClauses-n">No</label>
                     </div>
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
             <ng-container *ngIf="userDetails?.UserType =='admin' || premiumF.isEditClauses.value =='Y'">
               <div class="left-line">
                 Edit And Add Clauses
@@ -219,7 +222,7 @@
                 <div *ngIf="viewClausesInfo?.Wars!=null && premiumDetails?.QuoteDetails?.WarAndSrccYn=='YES'">
                   <button nbButton status="warning" [nbPopover]="tabs" ghost
                     (click)="viewClausesByClick = viewClausesInfo?.Wars || [];">War</button><!--viewClausesByClick = viewClausesInfo?.Wars || [];-->
-                </div> 
+                </div>
 
 
               </div>
@@ -229,15 +232,17 @@
                 Referral Information
               </div>
               <div class="row my-2">
-               
+
                 <div class="col-12" *ngIf="userDetails?.UserType != 'Broker'">
                   <div class="input-control-container">
                     <label class="input-form-label">Are You finalizing this Quote?</label>
                     <div class="input-form-radio-box">
                       <div class="radio-toolbar">
-                        <input id="isFinalizeQuote-y" type="radio" name="isFinalizeQuote" value="Y" formControlName="isFinalizeQuote">
+                        <input id="isFinalizeQuote-y" type="radio" name="isFinalizeQuote" value="Y"
+                          formControlName="isFinalizeQuote">
                         <label for="isFinalizeQuote-y">Yes</label>
-                        <input type="radio" id="isFinalizeQuote-n" name="isFinalizeQuote" value="N" formControlName="isFinalizeQuote">
+                        <input type="radio" id="isFinalizeQuote-n" name="isFinalizeQuote" value="N"
+                          formControlName="isFinalizeQuote">
                         <label for="isFinalizeQuote-n">No</label>
                       </div>
                     </div>
@@ -245,12 +250,15 @@
                 </div>
                 <div class="col-12">
                   <div class="input-control-container">
-                    <label class="input-form-label">Would you like to get in touch with under writer for getting better quote?</label>
+                    <label class="input-form-label">Would you like to get in touch with under writer for getting better
+                      quote?</label>
                     <div class="input-form-radio-box">
                       <div class="radio-toolbar">
-                        <input id="referralUpdateYn-y" type="radio" name="ReferralUpdateYn" value="Y" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
+                        <input id="referralUpdateYn-y" type="radio" name="ReferralUpdateYn" value="Y"
+                          formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
                         <label for="referralUpdateYn-y">Yes</label>
-                        <input type="radio" id="referralUpdateYn-n" name="ReferralUpdateYn" value="N" formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
+                        <input type="radio" id="referralUpdateYn-n" name="ReferralUpdateYn" value="N"
+                          formControlName="ReferralUpdateYn" (change)="onChangeBetterQuote()">
                         <label for="referralUpdateYn-n">No</label>
                       </div>
                     </div>
@@ -260,7 +268,8 @@
                   <div class="input-control-container">
                     <label class="input-form-label">Comments<span class="text-required">*</span></label>
                     <div class="input-form-box">
-                      <textarea type="text" class="input-form-control without-icon" row="3"   formControlName="comments"></textarea>
+                      <textarea type="text" class="input-form-control without-icon" row="3"
+                        formControlName="comments"></textarea>
                     </div>
                   </div>
                 </div>
@@ -273,9 +282,11 @@
                     <label class="input-form-label">Would you like to give Commission for this quote?</label>
                     <div class="input-form-radio-box">
                       <div class="radio-toolbar">
-                        <input id="commision-y" type="radio" name="commissionCheck" value="Y" formControlName="commissionCheck">
+                        <input id="commision-y" type="radio" name="commissionCheck" value="Y"
+                          formControlName="commissionCheck">
                         <label for="commision-y">Yes</label>
-                        <input type="radio" id="commision-n" name="commissionCheck" value="N" formControlName="commissionCheck">
+                        <input type="radio" id="commision-n" name="commissionCheck" value="N"
+                          formControlName="commissionCheck">
                         <label for="commision-n">No</label>
                       </div>
                     </div>
@@ -285,7 +296,7 @@
                   <div class="input-control-container">
                     <label class="input-form-label">Commission (%)<span class="text-required">*</span></label>
                     <div class="input-form-box">
-                      <input type="text" class="input-form-control without-icon"  formControlName="commission">
+                      <input type="text" class="input-form-control without-icon" formControlName="commission">
                     </div>
                   </div>
                 </div>
@@ -294,11 +305,14 @@
                     <label class="input-form-label">Referral Status</label>
                     <div class="input-form-radio-box">
                       <div class="radio-toolbar">
-                        <input id="referral-a" type="radio" name="referralStatus" value="A" formControlName="referralStatus">
+                        <input id="referral-a" type="radio" name="referralStatus" value="A"
+                          formControlName="referralStatus">
                         <label for="referral-a">Approved</label>
-                        <input type="radio" id="referral-r" name="referralStatus" value="R" formControlName="referralStatus">
+                        <input type="radio" id="referral-r" name="referralStatus" value="R"
+                          formControlName="referralStatus">
                         <label for="referral-r">Reject</label>
-                        <input type="radio" id="referral-n" name="referralStatus" value="N" formControlName="referralStatus">
+                        <input type="radio" id="referral-n" name="referralStatus" value="N"
+                          formControlName="referralStatus">
                         <label for="referral-n">None</label>
                       </div>
                     </div>
@@ -309,7 +323,7 @@
                   <div class="input-control-container">
                     <label class="input-form-label">Admin Remarks<span class="text-required">*</span></label>
                     <div class="input-form-box">
-                      <input type="text" class="input-form-control without-icon"  formControlName="adminRemarks">
+                      <input type="text" class="input-form-control without-icon" formControlName="adminRemarks">
                     </div>
                   </div>
                 </div>
@@ -335,20 +349,20 @@
               </ul>
             </ng-container>
             <ng-template #showpremium>
-                <nb-tabset fullWidth>
-                  <nb-tab tabTitle="Premium Details">
-                    <ul class="list-group list-group-flush premium-inform">
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-4 col-md-4">Description</div>
-                          <div class="col-4 col-md-3">Rate</div>
-                          <div class="col-4 col-md-4 offset-lg-1">
-                            {{premiumDetails?.PremiumDetails?.PremiumCurrency}}
-                            <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                          </div>
+              <nb-tabset fullWidth>
+                <nb-tab tabTitle="Premium Details">
+                  <ul class="list-group list-group-flush premium-inform">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-4 col-md-4">Description</div>
+                        <div class="col-4 col-md-3">Rate</div>
+                        <div class="col-4 col-md-4 offset-lg-1">
+                          {{premiumDetails?.PremiumDetails?.PremiumCurrency}}
+                          <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
                         </div>
-                      </li>
-                      <!-- <li class="list-group-item">
+                      </div>
+                    </li>
+                    <!-- <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
                             Sum insured
@@ -364,38 +378,41 @@
                           </div>
                         </div>
                       </li> -->
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                            Marine Premium
-                          </div>
-                          <div class="col-4 col-md-3">
-                            <input type="text" class="form-control form-control-sm" formControlName="marineRate">
-                          </div>
-                          <div class="col-4 col-md-5">
-                            <input type="text" class="form-control form-control-sm" (keyup)="CommaFormatted(premiumF.marinePremium.value,'marinepremium')" formControlName="marinePremium">
-                          </div>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Marine Premium
                         </div>
-                      </li>
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                            <ng-container *ngIf="userDetails?.RegionCode == '100019'">
-                              <div>  PVT Premium</div>
-                              </ng-container>
-                              <ng-container *ngIf="userDetails?.RegionCode != '100019'">
-                                <div>  War Premium</div>
-                                </ng-container>
-                          </div>
-                          <div class="col-4 col-md-3">
-                            <input type="text" class="form-control form-control-sm" formControlName="warRate">
-                          </div>
-                          <div class="col-4 col-md-5">
-                            <input type="text" class="form-control form-control-sm" formControlName="warPremium" (keyup)="CommaFormatted(premiumF.warPremium.value,'warPremium')">
-                          </div>
+                        <div class="col-4 col-md-3">
+                          <input type="text" class="form-control form-control-sm" formControlName="marineRate">
                         </div>
-                      </li>
-                      <!-- <li class="list-group-item">
+                        <div class="col-4 col-md-5">
+                          <input type="text" class="form-control form-control-sm"
+                            (keyup)="CommaFormatted(premiumF.marinePremium.value,'marinepremium')"
+                            formControlName="marinePremium">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          <ng-container *ngIf="userDetails?.RegionCode == '100019'">
+                            <div> PVT Premium</div>
+                          </ng-container>
+                          <ng-container *ngIf="userDetails?.RegionCode != '100019'">
+                            <div> War Premium</div>
+                          </ng-container>
+                        </div>
+                        <div class="col-4 col-md-3">
+                          <input type="text" class="form-control form-control-sm" formControlName="warRate">
+                        </div>
+                        <div class="col-4 col-md-5">
+                          <input type="text" class="form-control form-control-sm" formControlName="warPremium"
+                            (keyup)="CommaFormatted(premiumF.warPremium.value,'warPremium')">
+                        </div>
+                      </div>
+                    </li>
+                    <!-- <li class="list-group-item">
                         <div class="row">
                           <div class="col-4 col-md-4">
                             PVT On Land Premium
@@ -408,399 +425,417 @@
                           </div>
                         </div>
                       </li> -->
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                            Additional Premium
-                          </div>
-                          <div class="col-4 col-md-3">
-                            <select class="form-control form-control-sm" (change)="Minus(additionalSelect)" formControlName="additionalSelect">
-                              <option value="+">+</option>
-                              <option value="-">-</option>
-                            </select>
-                          </div>
-                          <div class="col-4 col-md-5">
-                            <input type="text" class="form-control form-control-sm" formControlName="additionalPremium" (keyup)="CommaFormatted(premiumF.additionalPremium.value,'additionalPremium')">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Additional Premium
+                        </div>
+                        <div class="col-4 col-md-3">
+                          <select class="form-control form-control-sm" (change)="Minus(additionalSelect)"
+                            formControlName="additionalSelect">
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                          </select>
+                        </div>
+                        <div class="col-4 col-md-5">
+                          <input type="text" class="form-control form-control-sm" formControlName="additionalPremium"
+                            (keyup)="CommaFormatted(premiumF.additionalPremium.value,'additionalPremium')">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode!='100020'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Policy Issuance Fee
+                        </div>
+                        <div class="col-4 col-md-3">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="switch1"
+                              formControlName="policyInsuAedEdit">
+                            <label class="custom-control-label" for="switch1">Edit</label>
                           </div>
                         </div>
-                      </li>
-                      <li class="list-group-item" *ngIf="regionCode!='100020'">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                            Policy Issuance Fee
-                          </div>
-                          <div class="col-4 col-md-3">
-                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="switch1"
-                                formControlName="policyInsuAedEdit">
-                              <label class="custom-control-label" for="switch1">Edit</label>
-                            </div>
-                          </div>
-                          <div class="col-4 col-md-5">
-                            <input type="text" class="form-control form-control-sm" formControlName="policyInsuAedPremium" (keyup)="CommaFormatted(premiumF.policyInsuAedPremium.value,'policyInsuAedPremium')">
-                          </div>
+                        <div class="col-4 col-md-5">
+                          <input type="text" class="form-control form-control-sm" formControlName="policyInsuAedPremium"
+                            (keyup)="CommaFormatted(premiumF.policyInsuAedPremium.value,'policyInsuAedPremium')">
                         </div>
-                      </li>
-                      <li class="list-group-item" *ngIf="regionCode =='100019'">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode =='100019'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
                           Premium Levy
-                          </div>
-                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
-                            {{levyPercent}}
-                          </div>
-                          <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
-                            <!--smallpixel -->
-                            <span class="px-1" *ngIf="premiumLevy!='0.0' || premiumLevy!=0">
-                              {{premiumLevy}}
-                            </span>
-                            <span class="px-1" *ngIf="premiumLevy=='0.0' || premiumLevy==0">
-                               0
-                            </span>
-                          </div>
                         </div>
-                      </li>
-                    
-                      <div class="left-line">
-                        Taxes
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          {{levyPercent}}
+                        </div>
+                        <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
+                          <!--smallpixel -->
+                          <span class="px-1" *ngIf="premiumLevy!='0.0' || premiumLevy!=0">
+                            {{premiumLevy}}
+                          </span>
+                          <span class="px-1" *ngIf="premiumLevy=='0.0' || premiumLevy==0">
+                            0
+                          </span>
+                        </div>
                       </div>
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                            Premium Without Tax
-                          </div>
-                          <div class="col-4 col-md-3">
-                          </div>
-                          <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
-                            <span class="px-1" *ngIf="premiumF.premiumWithOutVat.value!=0 || premiumF.premiumWithOutVat.value!='0.0'">{{premiumF.premiumWithOutVat.value | commaseparator}}</span>
-                            <span class="px-1" *ngIf="premiumF.premiumWithOutVat.value==0 || premiumF.premiumWithOutVat.value=='0.0'">0</span>
-                          </div>
+                    </li>
+
+                    <div class="left-line">
+                      Taxes
+                    </div>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Premium Without Tax
                         </div>
-                      </li>
-                      <li class="list-group-item" *ngIf="regionCode!='100020'">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                            VAT
-                          </div>
-                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
-                            {{premiumF.vatTaxPrecentage.value}}%
-                          </div>
-                          <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
-                            <span class="px-1" *ngIf="premiumF.vatTaxAmount.value!=0">{{premiumF.vatTaxAmount.value | commaseparator}}</span>
-                            <span class="px-1" *ngIf="premiumF.vatTaxAmount.value==0">0</span>
-                           
-                          </div>
+                        <div class="col-4 col-md-3">
                         </div>
-                      </li>
-                      <li class="list-group-item" *ngIf="regionCode =='100020'">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
+                        <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
+                          <span class="px-1"
+                            *ngIf="premiumF.premiumWithOutVat.value!=0 || premiumF.premiumWithOutVat.value!='0.0'">{{premiumF.premiumWithOutVat.value
+                            | commaseparator}}</span>
+                          <span class="px-1"
+                            *ngIf="premiumF.premiumWithOutVat.value==0 || premiumF.premiumWithOutVat.value=='0.0'">0</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode!='100020'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          VAT
+                        </div>
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          {{premiumF.vatTaxPrecentage.value}}%
+                        </div>
+                        <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
+                          <span class="px-1" *ngIf="premiumF.vatTaxAmount.value!=0">{{premiumF.vatTaxAmount.value |
+                            commaseparator}}</span>
+                          <span class="px-1" *ngIf="premiumF.vatTaxAmount.value==0">0</span>
+
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode =='100020'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
                           Training Levy
-                          </div>
-                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
-                            {{levyPercent}}
-                          </div>
-                          <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
-                            <!--smallpixel -->
-                            <span class="px-1" *ngIf="premiumLevy!='0.0' || premiumLevy!=0">
-                              {{premiumLevy}}
-                            </span>
-                            <span class="px-1" *ngIf="premiumLevy=='0.0' || premiumLevy==0">
-                               0
-                            </span>
-                          </div>
                         </div>
-                      </li>
-                      <li class="list-group-item" *ngIf="regionCode =='100020'">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                          PolicyHolder Fee
-                          </div>
-                          <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
-                            {{policyHolderPercent}}
-                          </div>
-                          <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
-                            <!--smallpixel -->
-                            <span class="px-1" *ngIf="policyHolderPremium!='0.0' || policyHolderPremium!=0">
-                              {{policyHolderPremium}}
-                            </span>
-                            <span class="px-1" *ngIf="policyHolderPremium=='0.0' || policyHolderPremium==0">
-                               0
-                            </span>
-                          </div>
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          {{levyPercent}}
                         </div>
-                      </li>
-                      <li class="list-group-item" *ngIf="(regionCode =='100019' || regionCode=='100020') && stampDutyYN=='Y'">
-                        <div class="row">
-                          <div class="col-4 col-md-4">
-                           Stamp Duty
-                          </div>
-                          <div class="smallpixel col-4 col-md-3">
-                           
-                          </div>
-                          <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
-                            <span class="px-1" *ngIf="stampDuty!=0">
-                              {{stampDuty | commaseparator}}
-                            </span>
-                            <span class="px-1" *ngIf="stampDuty==0">
-                              0
-                            </span>
-                           
-                          </div>
+                        <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
+                          <!--smallpixel -->
+                          <span class="px-1" *ngIf="premiumLevy!='0.0' || premiumLevy!=0">
+                            {{premiumLevy}}
+                          </span>
+                          <span class="px-1" *ngIf="premiumLevy=='0.0' || premiumLevy==0">
+                            0
+                          </span>
                         </div>
-                      </li>
-
-                      <div class="left-line">
-                        Total
                       </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode =='100020'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          PolicyHolder Fee
+                        </div>
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          {{policyHolderPercent}}
+                        </div>
+                        <div class="col-4 col-md-5 text-right" style="text-align: right !important;">
+                          <!--smallpixel -->
+                          <span class="px-1" *ngIf="policyHolderPremium!='0.0' || policyHolderPremium!=0">
+                            {{policyHolderPremium}}
+                          </span>
+                          <span class="px-1" *ngIf="policyHolderPremium=='0.0' || policyHolderPremium==0">
+                            0
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item"
+                      *ngIf="(regionCode =='100019' || regionCode=='100020') && stampDutyYN=='Y'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Stamp Duty
+                        </div>
+                        <div class="smallpixel col-4 col-md-3">
+
+                        </div>
+                        <div class="smallpixel col-4 col-md-5" style="text-align: right !important;"><!--text-right-->
+                          <span class="px-1" *ngIf="stampDuty!=0">
+                            {{stampDuty | commaseparator}}
+                          </span>
+                          <span class="px-1" *ngIf="stampDuty==0">
+                            0
+                          </span>
+
+                        </div>
+                      </div>
+                    </li>
+
+                    <div class="left-line">
+                      Total
+                    </div>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-6 col-md-6">
+                          Total Premium Payable
+                        </div>
+                        <div class="col-3 col-md-1">
+                        </div>
+                        <div class="col-3 col-md-5" style="text-align:right !important;"><!--smallpixel-->
+                          <span class="px-1">
+                            <ng-container
+                              *ngIf="premiumF.totalPremium.value!=0 || premiumF.totalPremium.value!='0.0'">{{premiumF.totalPremium.value
+                              | commaseparator}}</ng-container>
+                            <ng-container
+                              *ngIf="premiumF.totalPremium.value==0 || premiumF.totalPremium.value=='0.0'">0</ng-container>
+                            <ng-container *ngIf="quotesType =='With-Endo'">
+                              <button nbButton size="tiny" status="warning" [nbPopover]="premium"
+                                nbPopoverPlacement="left">
+                                <i class="fas fa-question"></i>
+                              </button>
+                            </ng-container>
+
+                          </span>
+                        </div>
+                      </div>
+
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-12 text-right">
+                          <button nbButton status="success" size="small"
+                            (click)="onPremiumCalculate()">Calculate</button>&nbsp;
+                          <button nbButton status="warning" size="small" *ngIf="rateShowSection"
+                            [nbPopover]="rateTab">View Rate Details</button> &nbsp;
+                          <button *ngIf="this.quoteNo" nbButton status="primary" size="small"
+                            (click)="DownloadQuote()">Quote &nbsp; <i class="fas fa-download"></i></button>
+
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <ng-template #rateTab>
+                    <ul class="list-group list-group-flush premium-inform"
+                      style="min-width: 400px;border: 1px solid lightgrey;">
                       <li class="list-group-item">
                         <div class="row">
-                          <div class="col-6 col-md-6">
-                            Total Premium Payable
-                          </div>
-                          <div class="col-3 col-md-1">
-                          </div>
-                          <div class="col-3 col-md-5" style="text-align:right !important;"><!--smallpixel-->
-                            <span class="px-1">
-                              <ng-container *ngIf="premiumF.totalPremium.value!=0 || premiumF.totalPremium.value!='0.0'">{{premiumF.totalPremium.value | commaseparator}}</ng-container>
-                              <ng-container *ngIf="premiumF.totalPremium.value==0 || premiumF.totalPremium.value=='0.0'">0</ng-container>
-                              <ng-container *ngIf="quotesType =='With-Endo'">
-                                <button nbButton size="tiny" status="warning" [nbPopover]="premium" nbPopoverPlacement="left">
-                                  <i class="fas fa-question"></i>
-                                </button>
-                              </ng-container>
-
-                            </span>
-                          </div>
-                        </div>
-
-                      </li>
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-12 text-right">
-                            <button nbButton status="success" size="small" (click)="onPremiumCalculate()">Calculate</button>&nbsp;
-                            <button nbButton status="warning" size="small" *ngIf="rateShowSection"  [nbPopover]="rateTab">View Rate Details</button>
+                          <div class="col-4 col-md-4">Description</div>
+                          <div class="col-4 col-md-3"></div>
+                          <div class="col-4 col-md-4 offset-lg-1">
+                            Rate
+                            <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
                           </div>
                         </div>
                       </li>
-                    </ul>
-                    <ng-template #rateTab>
-                      <ul class="list-group list-group-flush premium-inform" style="min-width: 400px;border: 1px solid lightgrey;">
-                        <li class="list-group-item">
+                      <ng-container *ngIf="regionCode!='100020' && regionCode!='04'">
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
                           <div class="row">
-                            <div class="col-4 col-md-4">Description</div>
-                            <div class="col-4 col-md-3"></div>
+                            <div class="col-8 col-md-7">Commodity Rate</div>
                             <div class="col-4 col-md-4 offset-lg-1">
-                              Rate
+                              <ng-container *ngIf="rateDetails.CommodityFactorRate">
+                                {{rateDetails?.CommodityRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.CommodityFactorRate">0.0</ng-container>
                               <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
                             </div>
                           </div>
                         </li>
-                        <ng-container *ngIf="regionCode!='100020' && regionCode!='04'" >
-                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                            <div class="row">
-                              <div class="col-8 col-md-7">Commodity Rate</div>
-                              <div class="col-4 col-md-4 offset-lg-1">
-                                <ng-container *ngIf="rateDetails.CommodityFactorRate">
-                                  {{rateDetails?.CommodityRate}}
-                                </ng-container>
-                                <ng-container *ngIf="!rateDetails.CommodityFactorRate">0.0</ng-container>
-                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                              </div>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">SumInsured Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.SumInsuredRate">
+                                {{rateDetails?.SumInsuredRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.SumInsuredRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
                             </div>
-                          </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">SumInsured Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.SumInsuredRate">
-                                    {{rateDetails?.SumInsuredRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.SumInsuredRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Geo Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.GeoRate">
-                                    {{rateDetails?.GeoRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.GeoRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Conveyance Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.ConvRate">
-                                    {{rateDetails?.ConvRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.ConvRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Cover Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.CoverRate">
-                                    {{rateDetails?.CoverRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.CoverRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Package Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.PackageRate">
-                                    {{rateDetails?.PackageRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.PackageRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">InLand/Cross Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.InlandRate">
-                                    {{rateDetails?.InlandRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.InlandRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Marine Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.Rate">
-                                    {{rateDetails?.Rate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.Rate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">War Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.WarRate">
-                                    {{rateDetails?.WarRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.WarRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            
-                        </ng-container>
-                        <ng-container *ngIf="regionCode=='100020' || regionCode=='04'" >
-                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                            <div class="row">
-                              <div class="col-8 col-md-7">Commodity Rate</div>
-                              <div class="col-4 col-md-4 offset-lg-1 text-start">
-                                <ng-container *ngIf="rateDetails.CommodityRate">
-                                  {{rateDetails?.CommodityFactorRate}}
-                                </ng-container>
-                                <ng-container *ngIf="!rateDetails.CommodityRate">0.0</ng-container>
-                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                              </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">Geo Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.GeoRate">
+                                {{rateDetails?.GeoRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.GeoRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
                             </div>
-                          </li>
-                          <ng-container *ngIf="regionCode=='100020'">
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Storage Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.StorageRate">
-                                    {{rateDetails?.StorageRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.StorageRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Transhipment Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.TranshipmentRate">
-                                    {{rateDetails?.TranshipmentRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.TranshipmentRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Warehouse Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.WarehouseRate">
-                                    {{rateDetails?.WarehouseRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.WarehouseRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                            <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
-                              <div class="row">
-                                <div class="col-8 col-md-7">Vessel Rate</div>
-                                <div class="col-4 col-md-4 offset-lg-1">
-                                  <ng-container *ngIf="rateDetails.VesselRate">
-                                    {{rateDetails?.VesselRate}}
-                                  </ng-container>
-                                  <ng-container *ngIf="!rateDetails.VesselRate">0.0</ng-container>
-                                  <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
-                                </div>
-                              </div>
-                            </li>
-                          </ng-container>
-                          
-                          
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">Conveyance Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.ConvRate">
+                                {{rateDetails?.ConvRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.ConvRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">Cover Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.CoverRate">
+                                {{rateDetails?.CoverRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.CoverRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">Package Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.PackageRate">
+                                {{rateDetails?.PackageRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.PackageRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">InLand/Cross Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.InlandRate">
+                                {{rateDetails?.InlandRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.InlandRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">Marine Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.Rate">
+                                {{rateDetails?.Rate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.Rate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">War Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.WarRate">
+                                {{rateDetails?.WarRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.WarRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+
+                      </ng-container>
+                      <ng-container *ngIf="regionCode=='100020' || regionCode=='04'">
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">Commodity Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1 text-start">
+                              <ng-container *ngIf="rateDetails.CommodityRate">
+                                {{rateDetails?.CommodityFactorRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.CommodityRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <ng-container *ngIf="regionCode=='100020'">
                           <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
                             <div class="row">
-                              <div class="col-8 col-md-7">Marine Rate</div>
+                              <div class="col-8 col-md-7">Storage Rate</div>
                               <div class="col-4 col-md-4 offset-lg-1">
-                                <ng-container *ngIf="rateDetails.Rate">
-                                  {{rateDetails?.Rate}}
+                                <ng-container *ngIf="rateDetails.StorageRate">
+                                  {{rateDetails?.StorageRate}}
                                 </ng-container>
-                                <ng-container *ngIf="!rateDetails.Rate">0.0</ng-container>
+                                <ng-container *ngIf="!rateDetails.StorageRate">0.0</ng-container>
                                 <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
                               </div>
                             </div>
                           </li>
                           <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
                             <div class="row">
-                              <div class="col-8 col-md-7">War Rate</div>
+                              <div class="col-8 col-md-7">Transhipment Rate</div>
                               <div class="col-4 col-md-4 offset-lg-1">
-                                <ng-container *ngIf="rateDetails.WarRate">
-                                  {{rateDetails?.WarRate}}
+                                <ng-container *ngIf="rateDetails.TranshipmentRate">
+                                  {{rateDetails?.TranshipmentRate}}
                                 </ng-container>
-                                <ng-container *ngIf="!rateDetails.WarRate">0.0</ng-container>
+                                <ng-container *ngIf="!rateDetails.TranshipmentRate">0.0</ng-container>
+                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                            <div class="row">
+                              <div class="col-8 col-md-7">Warehouse Rate</div>
+                              <div class="col-4 col-md-4 offset-lg-1">
+                                <ng-container *ngIf="rateDetails.WarehouseRate">
+                                  {{rateDetails?.WarehouseRate}}
+                                </ng-container>
+                                <ng-container *ngIf="!rateDetails.WarehouseRate">0.0</ng-container>
+                                <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                            <div class="row">
+                              <div class="col-8 col-md-7">Vessel Rate</div>
+                              <div class="col-4 col-md-4 offset-lg-1">
+                                <ng-container *ngIf="rateDetails.VesselRate">
+                                  {{rateDetails?.VesselRate}}
+                                </ng-container>
+                                <ng-container *ngIf="!rateDetails.VesselRate">0.0</ng-container>
                                 <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
                               </div>
                             </div>
                           </li>
                         </ng-container>
-                      </ul>
-                    </ng-template>
-                  </nb-tab>
-                </nb-tabset>
+
+
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">Marine Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.Rate">
+                                {{rateDetails?.Rate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.Rate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: 1px solid lightgrey;">
+                          <div class="row">
+                            <div class="col-8 col-md-7">War Rate</div>
+                            <div class="col-4 col-md-4 offset-lg-1">
+                              <ng-container *ngIf="rateDetails.WarRate">
+                                {{rateDetails?.WarRate}}
+                              </ng-container>
+                              <ng-container *ngIf="!rateDetails.WarRate">0.0</ng-container>
+                              <!-- {{premiumDetails?.QuoteDetails?.CurrencyName}} -->
+                            </div>
+                          </div>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </ng-template>
+                </nb-tab>
+              </nb-tabset>
             </ng-template>
 
           </div>
@@ -816,10 +851,10 @@
             <th>Marine Premium</th>
             <ng-container *ngIf="userDetails?.RegionCode == '100019'">
               <th>PVT Premium</th>
-              </ng-container>
-              <ng-container *ngIf="userDetails?.RegionCode != '100019'">
-                <th>War Premium</th>
-                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="userDetails?.RegionCode != '100019'">
+              <th>War Premium</th>
+            </ng-container>
             <th>Additional Premium</th>
             <th>PremiumLevy</th>
             <th>Total Premium</th>
@@ -828,7 +863,7 @@
         <tbody>
           <tr>
             <td>Previous</td>
-             <td>{{beforeEndorsement?.MarinePremium}}</td>
+            <td>{{beforeEndorsement?.MarinePremium}}</td>
             <td>{{beforeEndorsement?.WarPremium}}</td>
             <td>{{beforeEndorsement?.ExcessPremium}}</td>
             <td>{{beforeEndorsement?.PremiumLevy}}</td>
@@ -836,7 +871,7 @@
           </tr>
           <tr>
             <td>Actual</td>
-             <td>{{afterEndorsement?.MarinePremium}}</td>
+            <td>{{afterEndorsement?.MarinePremium}}</td>
             <td>{{afterEndorsement?.WarPremium}}</td>
             <td>{{afterEndorsement?.ExcessPremium}}</td>
             <td>{{afterEndorsement?.PremiumLevy}}</td>
@@ -857,6 +892,7 @@
   <div class="maan-card-footer">
     <!-- <app-back-btn></app-back-btn> -->
     <button nbButton (click)="back('back')" shape="round" size="small" status="warning" class="mx-2">Back</button>
-    <button nbButton (click)="onUpdatePremiumInformation()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+    <button nbButton (click)="onUpdatePremiumInformation()" shape="round" size="small" status="primary"
+      class="mx-2">Submit</button>
   </div>
 </div>

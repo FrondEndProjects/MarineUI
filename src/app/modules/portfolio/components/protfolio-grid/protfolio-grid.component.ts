@@ -134,7 +134,7 @@ export class ProtfolioGridComponent implements OnInit {
   onmenu(row,rowData,template){
     console.log('jjjjjjjjjjj',row)
     console.log('kkkkkkkk',rowData)
-      if(rowData=='Schedule' || rowData=='Policy Wordings' || rowData=='AKI Document')  this.getSchedulePdf(row,rowData);
+      if(rowData=='Schedule' || rowData=='Policy Wordings' || rowData=='Marine Certificate')  this.getSchedulePdf(row,rowData);
 
       if(rowData=='Documents'){
         this.OpenDocument(template,row)
@@ -271,7 +271,7 @@ export class ProtfolioGridComponent implements OnInit {
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;
     
-    if(type == 'AKI Document'){
+    if(type == 'Marine Certificate'){
       ReqObj = {
         // "QuoteNo": '100707'
         "QuoteNo": rowData.data?.QuoteNo
@@ -294,7 +294,7 @@ export class ProtfolioGridComponent implements OnInit {
       type = 'PolicyWordings'
        UrlLink = `${this.ApiUrl1}pdf/policywording`;
     }
-    else if(type == 'AKI Document'){
+    else if(type == 'Marine Certificate'){
       // type = 'PolicyWordings'
        UrlLink = `${this.ApiUrl1}Integration/get/certificate`;
     }
@@ -339,7 +339,7 @@ export class ProtfolioGridComponent implements OnInit {
       "BranchCode": this.userDetails?.BranchCode,
       "QuoteNo":row.QuoteNo
     }*/
-   if(rowData =='AKI Document'){
+   if(rowData =='Marine Certificate'){
     if(Results){
       const link = document.createElement('a');
       link.setAttribute('target', '_blank');
@@ -465,7 +465,7 @@ export class ProtfolioGridComponent implements OnInit {
                   { name: 'Schedule' },
                   { name: 'Debit Note' },
                   { name: 'Credit Note' },
-                  { name: 'AKI Document' },
+                  { name: 'Marine Certificate' },
                   { name: 'Policy Wordings' },
                   { name: 'Documents' },
                 ]
