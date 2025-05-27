@@ -16,7 +16,12 @@
     <div class="vision-grid vision-grid-column-2 policy-grid">
       <div class="vision-grid-item">
         <div class="vision-grid-item-title">
-          Document Upload
+          <label class="form-label">
+            Document Upload
+            <!-- <span class="text-danger ms-1">
+              <small>(Upload at least Invoice or IDF)</small>
+            </span> -->
+          </label>
         </div>
         <div class="vision-grid-item-body">
           <ng-container *ngIf="docTypeList.length!=0">
@@ -36,6 +41,7 @@
                         <b class="text-dark">
                           {{doc.CodeDescription}}
                           <ng-container *ngIf="doc.CodeValue == 'Y'">
+                          <!-- <ng-container *ngIf="doc.CodeValue == 'Y' ||doc.CodeDescription =='IDF'"> -->
                             <span class="text-danger">*</span>
                           </ng-container>
                           <br>
@@ -312,8 +318,8 @@
             <div class="input-control-container">
               <label class="input-form-label">Amount<span class="text-required">*</span></label>
               <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" name="pay_amount" #payAmount="ngModel"
-                  [(ngModel)]="pay_amount">
+                <input type="text" class="input-form-control without-icon" readonly name="pay_amount"
+                  #payAmount="ngModel" [(ngModel)]="pay_amount">
               </div>
               <div *ngIf="payAmount.invalid && payAmount.touched" class="text-danger">
                 This field is required

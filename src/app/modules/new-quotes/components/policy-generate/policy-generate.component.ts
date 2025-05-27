@@ -28,7 +28,7 @@ export class PolicyGenerateComponent implements OnInit {
   aki_error: any
   public policyForm: FormGroup;
   policuNoGenerate: boolean = false;
-  public generateCerti: any = 'N';
+  public generateCerti: any = 'Y';
   public payment_type: any;
   public premium: any = false;
   public nameOfBroker: any = false;
@@ -426,6 +426,7 @@ export class PolicyGenerateComponent implements OnInit {
   }
 
   onFinalProceed(type) {
+    this.pay_amount = null;
     const urlLink = `${this.ApiUrl1}quote/policy/generate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
@@ -702,7 +703,7 @@ export class PolicyGenerateComponent implements OnInit {
 
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
         if (data?.Result) {
-          if (data.Result.rmsg.length !== 0 &&  data.Result.rcode !=200) {
+          if (data.Result.rmsg.length !== 0 && data.Result.rcode != 200) {
             const errorMessages = data.Result.rmsg
               .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
               .join('<br>');

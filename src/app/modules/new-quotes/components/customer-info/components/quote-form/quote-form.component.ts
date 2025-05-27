@@ -328,8 +328,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.quoteF.UCRNumber.setValue(this.docUploadedData?.UCRNumber);
     // let Orgcountry = this.dropOriginCountryList.filter(e => e.ShortCode === this.docUploadedData.CountryOfSupply);
     // this.quoteF.originatingCountry.setValue(Orgcountry[0]?.Code)
-    let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
-    this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
+    // let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
+    // this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
     // let curr = this.dropCurrencyList.filter(e => e.ShortCode == this.docUploadedData?.Currency)
     // this.quoteF.currency.setValue(curr[0]?.Code);
     this.quoteF.insuredValue.setValue(this.docUploadedData?.FOBValue);
@@ -631,8 +631,10 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         if (data?.Message === 'Success') {
           this.dropOriginCityList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropOriginCityList, 'orgCity');
-          if (this.setDocvalue == 'edit' || this.setDocvalue == 'back') {
+          const isIncluded = this.dropOriginCityList.some(item => item.Code == this.editOrginCity);
+          if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
             this.quoteF.originatingCity.setValue(this.editOrginCity);
+
           }
           else {
             this.quoteF.originatingCity.setValue(null);
@@ -702,11 +704,16 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         if (data?.Message === 'Success') {
           this.dropDestinaCityList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
-          if (this.setDocvalue == 'edit' || this.setDocvalue == 'back') {
+          const isIncluded = this.dropDestinaCityList.some(item => item.Code == this.editDesinationCity);
+          if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
             this.quoteF.destinationCity.setValue(this.editDesinationCity);
           }
           else {
             this.quoteF.destinationCity.setValue(null);
+          }
+          if (this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
+            let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
+            this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
           }
 
         }

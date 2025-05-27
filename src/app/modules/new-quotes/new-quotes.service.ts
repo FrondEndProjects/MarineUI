@@ -263,7 +263,7 @@ export class NewQuotesService {
       packageDescription: [null, Validators.required],
       incoterms: [null, Validators.required],
       incotermsPercentage: [null, Validators.required],
-      tolerance: ['4'],
+      tolerance: ['4',Validators.required],
       conveyanceVesselName: [''],
       ManfctureYear: [null,[
        

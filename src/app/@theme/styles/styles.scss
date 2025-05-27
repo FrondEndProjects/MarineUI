@@ -1005,3 +1005,15 @@ nb-user .user-name {
   height: 35px;
   width: 111px;
 }
+
+.ng-dropdown-panel {
+  max-width: 100% !important;
+  min-width: 250px; /* or whatever suits your layout */
+  word-wrap: break-word !important;
+  white-space: normal !important;
+}
+
+.ng-option {
+  white-space: normal !important;
+  word-break: break-word !important;
+}

@@ -84,11 +84,11 @@
           </ng-container>
         </div>
         <div class="input-form-error"
-        *ngIf="(quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
-        <div *ngIf="quoteF.originatingCity.errors?.required" class="error-text">
-          This field is required
+          *ngIf="(quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
+          <div *ngIf="quoteF.originatingCity.errors?.required" class="error-text">
+            This field is required
+          </div>
         </div>
-      </div>
       </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
@@ -309,11 +309,11 @@
           </ng-container>
         </div>
         <div class="input-form-error"
-        *ngIf="(quoteF.via.errors && submitted) || (!quoteF.via.valid && quoteF.via.touched)">
-        <div *ngIf="quoteF.via.errors?.required" class="error-text">
-          This field is required
+          *ngIf="(quoteF.via.errors && submitted) || (!quoteF.via.valid && quoteF.via.touched)">
+          <div *ngIf="quoteF.via.errors?.required" class="error-text">
+            This field is required
+          </div>
         </div>
-      </div>
       </div>
     </div>
 
@@ -496,10 +496,16 @@
     </div>
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">Tolerance</label>
+        <label class="input-form-label">Tolerance<span class="text-required">*</span></label>
         <ng-select placeholder="Select" class="input-form-select" formControlName="tolerance"
           [items]="dropToleranceList" bindValue="Code" bindLabel="CodeDescription">
         </ng-select>
+        <div class="input-form-error"
+          *ngIf="(quoteF.tolerance.errors && submitted) || (!quoteF.tolerance.valid && quoteF.tolerance.touched)">
+          <div *ngIf="quoteF.tolerance.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
       </div>
     </div>
 
