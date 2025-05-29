@@ -215,6 +215,7 @@ export class NewQuotesService {
       customerVat: ['',Validators.required],
       Address1: ['',Validators.required],
       Address2: [''],
+      customerType: ['2'],
       Code:[''],
     });
     this.quoteForm = this._formBuilder.group({

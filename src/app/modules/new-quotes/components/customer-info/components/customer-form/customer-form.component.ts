@@ -101,7 +101,7 @@ export class CustomerFormComponent implements OnInit {
     this.onGetTitleDropdownList();
     this.onGetCityDropdownList();
     console.log('FFFFFFFFFFFF', this.brokerCode)
-
+   this.customerF.customerType.setValue('2');
     /*if(this.broCode){
       this.onGetCustomerList(this.broCode);
       console.log('jjjjjjjjjjjj',this.broCode)
@@ -151,7 +151,7 @@ export class CustomerFormComponent implements OnInit {
         if (data?.Message === 'Success') {
           this.dropCityList = data?.Result;
           console.log(this.dropCityList);
-          
+
           this.newQuotesService.getDropDownList(this.dropCityList, 'city');
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadData();
@@ -357,10 +357,13 @@ export class CustomerFormComponent implements OnInit {
   }
   setDocUploadData() {
     this.customerF.name.setValue(this.docUploadedData?.ImporterName);
-    this.customerF.mobileNo.setValue(this.docUploadedData?.ImporterTelephone.substring(3));
+    // this.customerF.mobileNo.setValue(this.docUploadedData?.ImporterTelephone.substring(3));
     this.customerF.Address1.setValue(this.docUploadedData?.ImporterAddress);
     this.customerF.email.setValue(this.docUploadedData?.ImporterEmail);
     this.customerF.customerVat.setValue(this.docUploadedData?.ImporterPIN);
+    const tel = this.docUploadedData?.ImporterTelephone;
+    const mobile = tel?.startsWith("254") ? tel.substring(3) : tel;
+    this.customerF.mobileNo.setValue(mobile);
   }
 }
 

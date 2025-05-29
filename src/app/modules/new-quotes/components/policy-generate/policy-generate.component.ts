@@ -714,16 +714,17 @@ export class PolicyGenerateComponent implements OnInit {
               html: errorMessages
             });
           }
-          const link = document.createElement('a');
-          link.setAttribute('target', '_blank');
-          link.setAttribute('href', data?.Result.rObj.blobDownloadURL);
-          link.setAttribute('download', this.premiumDetails?.QuoteDetails?.QuoteNo);
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
+          else {
+            const link = document.createElement('a');
+            link.setAttribute('target', '_blank');
+            link.setAttribute('href', data?.Result.rObj.blobDownloadURL);
+            link.setAttribute('download', this.premiumDetails?.QuoteDetails?.QuoteNo);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+          }
 
         }
-
 
       })
     }

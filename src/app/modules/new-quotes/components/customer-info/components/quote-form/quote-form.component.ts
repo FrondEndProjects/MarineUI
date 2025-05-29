@@ -194,7 +194,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         }
       }
       else {
-        if (this.dropOriginCountryList.length == 0) {
+        if (this.dropOriginCountryList.length == 0 ) {
           this.onLoadDropdownList();
         }
       }
@@ -307,13 +307,13 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   onLoadDropdownList() {
     this.onGetTransportDropdownList();
-    if (this.dropOriginCountryList.length == 0) this.onGetOriginCountryDropdownList(1);
+    if (this.dropOriginCountryList.length == 0 && !this.docUploadedData) this.onGetOriginCountryDropdownList(1);
     if (this.dropDestinaCountryList.length == 0) this.onGetDestinaCountryDropdownList();
     if (this.dropIncotermsList.length == 0) this.onGetIncotermsDropdownList(1);
-    if (this.dropToleranceList.length == 0) this.onGetToleranceDropdownList(1);
-    if (this.dropCurrencyList.length == 0) this.onGetCurrencyDropdownList(1);
-    if (this.dropPremiumCurrencyList.length == 0) this.onGetPremiumDropdownList(1);
-    if (this.dropGoodsOfCateList.length == 0) this.onGetGoodsOfCategoryDropdownList(1);
+    if (this.dropToleranceList.length == 0 && !this.docUploadedData) this.onGetToleranceDropdownList(1);
+    if (this.dropCurrencyList.length == 0 && !this.docUploadedData) this.onGetCurrencyDropdownList(1);
+    if (this.dropPremiumCurrencyList.length == 0 && !this.docUploadedData) this.onGetPremiumDropdownList(1);
+    if (this.dropGoodsOfCateList.length == 0 && !this.docUploadedData) this.onGetGoodsOfCategoryDropdownList(1);
     if (this.dropGoodsOfCateList.length == 0 && this.openCoverNo != null && this.quoteF.warSrcc.value == 'N') this.onCheckWarYesOrNo();
 
   }
@@ -1086,9 +1086,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         if (data?.Message === 'Success') {
           this.dropPremiumCurrencyList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropPremiumCurrencyList, 'PremiumcurrencyList');
-          if (this.docUploadedData && value != 1) {
+          // if (this.docUploadedData && value != 1) {
             this.quoteF.premiumCurrency.setValue(this.dropPremiumCurrencyList[0].Code)
-          }
+          // }
 
         }
       },
