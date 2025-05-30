@@ -70,7 +70,9 @@ export class CustomerFormComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe(params => {
       this.setDocvalue = params['value'];
-
+      if (this.setDocvalue == 'back' || this.setDocvalue == 'edit') {
+        this.docUploadedData = null
+      }
 
     });
 
@@ -101,7 +103,7 @@ export class CustomerFormComponent implements OnInit {
     this.onGetTitleDropdownList();
     this.onGetCityDropdownList();
     console.log('FFFFFFFFFFFF', this.brokerCode)
-   this.customerF.customerType.setValue('2');
+    this.customerF.customerType.setValue('Individual');
     /*if(this.broCode){
       this.onGetCustomerList(this.broCode);
       console.log('jjjjjjjjjjjj',this.broCode)

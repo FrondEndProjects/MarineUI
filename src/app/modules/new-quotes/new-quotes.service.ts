@@ -215,7 +215,7 @@ export class NewQuotesService {
       customerVat: ['',Validators.required],
       Address1: ['',Validators.required],
       Address2: [''],
-      customerType: ['2'],
+      customerType: ['Individual'],
       Code:[''],
     });
     this.quoteForm = this._formBuilder.group({
@@ -260,7 +260,7 @@ export class NewQuotesService {
       commodity: [''],
       currency: [null, Validators.required],
       currencyValue: [null, Validators.required],
-      premiumCurrency: ['',Validators.required],
+      // premiumCurrency: ['',Validators.required],
       packageDescription: [null, Validators.required],
       incoterms: [null, Validators.required],
       incotermsPercentage: [null, Validators.required],

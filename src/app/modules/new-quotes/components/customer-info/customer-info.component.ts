@@ -326,8 +326,11 @@ export class CustomerInfoComponent implements OnInit {
           }
 
           //this.customerFormComponent.onGetCustomerList(this.broCode);
+          this.customerF.customerType.setValue(customerDetails?.CustomerType);
           this.customerF.title.setValue(customerDetails?.Title);
-          this.customerF.name.setValue(customerDetails?.Name);
+          setTimeout(() => {
+            this.customerF.name.setValue(customerDetails?.Name);
+          }, 100);
           if (this.editQuoteData?.BrokerCode) {
             console.log(this.editQuoteData?.BrokerCode);
 
@@ -339,6 +342,7 @@ export class CustomerInfoComponent implements OnInit {
           this.customerF.mobileNo.setValue(customerDetails?.MobileNo);
           this.customerF.email.setValue(customerDetails?.EmailId);
           this.customerF.customerVat.setValue(customerDetails?.VatRegNo);
+
           this.customerF.Address1.setValue(customerDetails?.Address1);
           this.customerF.Address2.setValue(customerDetails?.Address2);
           this.customerF.Code.setValue(customerDetails?.Code);
@@ -513,6 +517,7 @@ export class CustomerInfoComponent implements OnInit {
             'VatApplicable': null,
             'Code': this.customerF.Code.value,
             'VatRegNo': this.customerF.customerVat.value,
+            'CustomerType': this.customerF.customerType.value,
           },
           'Executive': '5',
           'Issuer': issuerId,
@@ -550,8 +555,10 @@ export class CustomerInfoComponent implements OnInit {
             ],
             'CurrencyCode': this.quoteF.currency.value,
             'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
-            'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
-            'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
+            // 'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
+            // 'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
+            'PremiumCurrencyCode': '1',
+            'PremiumCurrencyName': 'KES',
             'CurrencyValue': this.quoteF.currencyValue.value,
             'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
             'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
@@ -629,6 +636,8 @@ export class CustomerInfoComponent implements OnInit {
               this.premiumDetails = data?.Result;
               sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
               //sessionStorage.removeItem('Item');
+              sessionStorage.removeItem('docUploadData')
+              sessionStorage.setItem('CustomerType', this.customerF.customerType.value);
               this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
 
             }
@@ -705,6 +714,7 @@ export class CustomerInfoComponent implements OnInit {
           'VatApplicable': null,
           'Code': this.customerF.Code.value,
           'VatRegNo': this.customerF.customerVat.value,
+          'CustomerType': this.customerF.customerType.value,
         },
         'Executive': '5',
         'Issuer': issuerId,
@@ -742,8 +752,10 @@ export class CustomerInfoComponent implements OnInit {
           ],
           'CurrencyCode': this.quoteF.currency.value,
           'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
-          'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
-          'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
+          // 'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
+          // 'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
+          'PremiumCurrencyCode': '1',
+          'PremiumCurrencyName': 'KES',
           'CurrencyValue': this.quoteF.currencyValue.value,
           'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
           'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
@@ -820,6 +832,8 @@ export class CustomerInfoComponent implements OnInit {
           if (data?.Message === 'Success') {
             this.premiumDetails = data?.Result;
             sessionStorage.setItem('ReferenceNo', data?.Result?.ReferenceNo);
+            sessionStorage.removeItem('docUploadData')
+            sessionStorage.setItem('CustomerType', this.customerF.customerType.value);
             //sessionStorage.removeItem('Item');
             this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
 

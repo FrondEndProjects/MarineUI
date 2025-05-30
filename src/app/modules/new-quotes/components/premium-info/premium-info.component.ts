@@ -58,7 +58,7 @@ export class PremiumInfoComponent implements OnInit {
     this.userDetails = this.newQuotesComponent?.userDetails;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     console.log("UserDetails", this.userDetails)
-    this.currencyName = this.userDetails?.CurrencyAbbreviation;
+    this.currencyName = this.userDetails?.CurrencyId;
     this.productId = this.newQuotesComponent?.productId;
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.ReferenceNo = sessionStorage.getItem('ReferenceNo');

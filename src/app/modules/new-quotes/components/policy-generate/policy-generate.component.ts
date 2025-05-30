@@ -67,6 +67,7 @@ export class PolicyGenerateComponent implements OnInit {
   redirectUrl: any;
   pay_mobile_number: any;
   pay_mobile_code: any;
+  CustomerType: string;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -85,8 +86,9 @@ export class PolicyGenerateComponent implements OnInit {
     this.applicationId = this.newQuotesComponent.applicationId;
     this.QuoteStatus = sessionStorage.getItem('QuoteStatus');
     this.porttype = sessionStorage.getItem('openCOverType');
+    this.CustomerType = sessionStorage.getItem('CustomerType');
     console.log('Tpes', this.porttype);
-    console.log(this.userDetails, "ddddddddddd");
+    console.log(this.CustomerType, "ddddddddddd");
     //this.ongetUploadedDocument();
   }
 
@@ -149,10 +151,11 @@ export class PolicyGenerateComponent implements OnInit {
   }
   getdocTypeList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/getDocumentList`;
+
     const reqData = {
       "CompanyId": this.userDetails?.RegionCode,
       "ProductId": this.productId,
-      "DocApplicable": "DOC_COMMODITY"
+      "DocApplicable": this.CustomerType ? this.CustomerType : null
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       if (data.Result) {
@@ -478,7 +481,10 @@ export class PolicyGenerateComponent implements OnInit {
             // this.inserPyment(data.Result)
 
           }
-          // this.PaymentId = data.Result.PaymentId
+          this.PaymentId = data.Result.PaymentId
+          if (this.PaymentId && this.payment_type != '1' && this.payment_type != '2' && this.payment_type != '5') {
+            this.onschedule();
+          }
           // }
           // else {
           // alert(this.payment_type)

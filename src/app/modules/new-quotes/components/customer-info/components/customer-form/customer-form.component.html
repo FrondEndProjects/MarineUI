@@ -5,6 +5,21 @@
         Customer Details
       </div>
     </div>
+    <div class="row mb-3">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Cutomer Type</label>
+          <div class="input-form-radio-box">
+            <div class="radio-toolbar">
+              <input id="Individual" type="radio" name="customerType" value="Individual" formControlName="customerType">
+              <label for="Individual">Individual</label>
+              <input type="radio" id="Corporate" name="customerType" value="Corporate" formControlName="customerType">
+              <label for="Corporate">Corporate</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Title<span class="text-required">*</span></label>
@@ -19,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <!-- <div class="col-12 col-md-4 col-lg-4">
       <div class="customer-search-container">
         <div class="input-control-container">
           <label class="input-form-label">Name<span class="text-required">*</span></label>
@@ -29,6 +44,37 @@
                 placeholder="Enter Customer Name">
             </div>
             <div class="currrency-dollar">
+              <button class="btn btn-secondary" (click)="getCustomerAltList(myModal2)"
+                style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+          <div class="input-form-error"
+            *ngIf="(customerF.name.errors && submitted) || (!customerF.name.valid && customerF.name.touched)">
+            <div *ngIf="customerF.name.errors?.required" class="error-text">
+              This field is required
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div> -->
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="customer-search-container">
+        <div class="input-control-container">
+          <label *ngIf="this.customerForm.controls.customerType.value=='Individual'" class="input-form-label">Name<span
+              class="text-required">*</span></label>
+          <label *ngIf="this.customerForm.controls.customerType.value=='Corporate'" class="input-form-label">Company Name<span
+              class="text-required">*</span></label>
+          <div class="currency-flex">
+            <div class="currrency-drop1 input-form-box">
+              <input *ngIf="this.customerForm.controls.customerType.value=='Individual'" type="text"
+                class="input-form-control2 with-icon" [(ngModel)]="filterValue" formControlName="name"
+                placeholder="Enter Customer Name">
+              <input *ngIf="this.customerForm.controls.customerType.value=='Corporate'" type="text"
+                class="input-form-control with-icon" [(ngModel)]="filterValue" formControlName="name" placeholder="">
+            </div>
+            <div *ngIf="this.customerForm.controls.customerType.value=='Individual'" class="currrency-dollar">
               <button class="btn btn-secondary" (click)="getCustomerAltList(myModal2)"
                 style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
             </div>
@@ -143,11 +189,11 @@
           <input type="text" class="input-form-control without-icon" formControlName="email">
         </div>
         <div class="input-form-error"
-        *ngIf="(customerF.email.errors && submitted) || (!customerF.email.valid && customerF.email.touched)">
-        <div *ngIf="customerF.email.errors?.required" class="error-text">
-          This field is required
+          *ngIf="(customerF.email.errors && submitted) || (!customerF.email.valid && customerF.email.touched)">
+          <div *ngIf="customerF.email.errors?.required" class="error-text">
+            This field is required
+          </div>
         </div>
-      </div>
       </div>
     </div>
 
