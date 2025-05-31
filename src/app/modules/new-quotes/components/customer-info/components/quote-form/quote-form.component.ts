@@ -279,7 +279,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.quoteF.poPiNumber.setValue(commodityDetails?.PoDescription);
     this.quoteF.currency.setValue(quoteDetails?.CurrencyCode);
     this.quoteF.currencyValue.setValue(quoteDetails?.CurrencyValue);
-    this.quoteF.premiumCurrency.setValue(quoteDetails?.PremiumCurrencyCode);
+    // this.quoteF.premiumCurrency.setValue(quoteDetails?.PremiumCurrencyCode);
     this.quoteF.packageDescription.setValue(quoteDetails?.PackageCode);
     this.quoteF.incoterms.setValue(quoteDetails?.IncoTerms);
     this.onGetIncotermsPrecentDropdownList(1);
@@ -324,7 +324,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   setDocUploadedData() {
     let d = this.docUploadedData?.ModeOfTransport == 'Sea transport' ? this.dropTransportList[0]?.Code : this.dropTransportList[1]?.Code
     this.quoteF.modeOfTransport.setValue(d);
-    this.onGetDestinaCityDropdownList();
+    // this.onGetDestinaCityDropdownList();
     this.onGetIncotermsDropdownList(2);
     this.onGetCoverDropdownList(this.quoteF.modeOfTransport?.value)
     this.quoteF.UCRNumber.setValue(this.docUploadedData?.UCRNumber);
@@ -626,25 +626,27 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
     };
     console.log(reqData, "reqData");
+    if (Codevalue && this.quoteF.modeOfTransport.value) {
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+        (data: any) => {
 
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
+          if (data?.Message === 'Success') {
+            this.dropOriginCityList = data?.Result;
+            this.newQuotesService.getDropDownList(this.dropOriginCityList, 'orgCity');
+            const isIncluded = this.dropOriginCityList.some(item => item.Code == this.editOrginCity);
+            if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
+              this.quoteF.originatingCity.setValue(this.editOrginCity);
 
-        if (data?.Message === 'Success') {
-          this.dropOriginCityList = data?.Result;
-          this.newQuotesService.getDropDownList(this.dropOriginCityList, 'orgCity');
-          const isIncluded = this.dropOriginCityList.some(item => item.Code == this.editOrginCity);
-          if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
-            this.quoteF.originatingCity.setValue(this.editOrginCity);
-
+            }
+            else {
+              this.quoteF.originatingCity.setValue(null);
+            }
           }
-          else {
-            this.quoteF.originatingCity.setValue(null);
-          }
-        }
-      },
-      (err) => { },
-    );
+        },
+        (err) => { },
+      );
+    }
+
   }
 
   onGetDestinaCountryDropdownList() {
@@ -700,28 +702,31 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       'countryID': Codevalue,
       "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
     };
-    this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
+    if (Codevalue && this.quoteF.modeOfTransport.value) {
+      this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+        (data: any) => {
 
-        if (data?.Message === 'Success') {
-          this.dropDestinaCityList = data?.Result;
-          this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
-          const isIncluded = this.dropDestinaCityList.some(item => item.Code == this.editDesinationCity);
-          if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
-            this.quoteF.destinationCity.setValue(this.editDesinationCity);
-          }
-          else {
-            this.quoteF.destinationCity.setValue(null);
-          }
-          if (this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
-            let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
-            this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
-          }
+          if (data?.Message === 'Success') {
+            this.dropDestinaCityList = data?.Result;
+            this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
+            const isIncluded = this.dropDestinaCityList.some(item => item.Code == this.editDesinationCity);
+            if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
+              this.quoteF.destinationCity.setValue(this.editDesinationCity);
+            }
+            else {
+              this.quoteF.destinationCity.setValue(null);
+            }
+            if (this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
+              let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
+              this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
+            }
 
-        }
-      },
-      (err) => { },
-    );
+          }
+        },
+        (err) => { },
+      );
+    }
+
   }
   onGetSettlingAgenDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/settlingagent`;
@@ -1041,14 +1046,14 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
           this.dropGoodsOfCateList = data?.Result;
 
           // Corrected key name
-          let defaultObj = [{ CodeDescription: '-Select-', Code: null }];
-          this.dropGoodsOfCateList = [...defaultObj, ...this.dropGoodsOfCateList];
+          // let defaultObj = [{ CodeDescription: '-Select-', Code: null }];
+          // this.dropGoodsOfCateList = [...defaultObj, ...this.dropGoodsOfCateList];
 
           this.newQuotesService.getDropDownList(this.dropGoodsOfCateList, 'goodesofCat');
 
-          if (!this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
-            this.quoteF.goodsCategory.setValue(this.dropGoodsOfCateList[0].Code);
-          }
+          // if (!this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
+          //   this.quoteF.goodsCategory.setValue(this.dropGoodsOfCateList[0].Code);
+          // }
         }
       },
       (err) => { },
