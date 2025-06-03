@@ -188,7 +188,7 @@ export class CustomerInfoComponent implements OnInit {
     }
     this.activatedRoute.queryParams.subscribe(params => {
       this.setDocvalue = params['value'];
-      if (this.setDocvalue == 'back' || this.setDocvalue == 'edit' || this.Endors == 'Endors') {
+      if (this.setDocvalue == 'back' || this.setDocvalue == 'edit' || this.Endors == 'Endors' || this.setDocvalue == 'openCover') {
         this.showNewQuote = true;
       }
 
@@ -444,6 +444,9 @@ export class CustomerInfoComponent implements OnInit {
     }
   }
   onSaveQuote() {
+    if(this.quoteF.goodsCategory.value =='9999'){
+      this.quoteF.goodsCategory.setValue(null);
+    }
     this.customerFormComponent.submitted = true;
     this.quoteFormComponent.submitted = true;
 

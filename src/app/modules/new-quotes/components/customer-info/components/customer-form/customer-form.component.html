@@ -72,7 +72,7 @@
                 class="input-form-control2 with-icon" [(ngModel)]="filterValue" formControlName="name"
                 placeholder="Enter Customer Name">
               <input *ngIf="this.customerForm.controls.customerType.value=='Corporate'" type="text"
-                class="input-form-control with-icon" [(ngModel)]="filterValue" formControlName="name" placeholder="">
+                class="input-form-control with-icon1" placeholder="Enter Customer Name" [(ngModel)]="filterValue" formControlName="name" placeholder="">
             </div>
             <div *ngIf="this.customerForm.controls.customerType.value=='Individual'" class="currrency-dollar">
               <button class="btn btn-secondary" (click)="getCustomerAltList(myModal2)"

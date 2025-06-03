@@ -30,13 +30,13 @@ export class OpenCoverComponent implements OnInit {
 
   ) {
     this.stepperList = [
-      { isActive:false, name: '1', title: 'newopencover', url: '/Marine/new-open-cover/new-open-cover-form'},
-      { isActive:false, name: '2', title: 'countryandcommodity', url: '/Marine/new-open-cover/country-commodity-info'},
-      { isActive:false, name: '3', title: 'coverageinfo', url: '/Marine/new-open-cover/coverage-info'},
-      { isActive:false, name: '4', title: 'commoodityinfo', url: '/Marine/new-open-cover/commodity-info'},
-      { isActive:false, name: '5', title: 'premiumcomputation', url: '/Marine/new-open-cover/premium-computation'},
-      { isActive:false, name: '6', title: 'policygenerate', url: '/Marine/new-open-cover/policy-generate-cover'},
-      { isActive:false, name: '7', title: 'confirmation', url: '/Marine/new-open-cover/confirmation'},
+      { isActive: false, name: '1', title: 'newopencover', url: '/Marine/new-open-cover/new-open-cover-form' },
+      { isActive: false, name: '2', title: 'countryandcommodity', url: '/Marine/new-open-cover/country-commodity-info' },
+      { isActive: false, name: '3', title: 'coverageinfo', url: '/Marine/new-open-cover/coverage-info' },
+      { isActive: false, name: '4', title: 'commoodityinfo', url: '/Marine/new-open-cover/commodity-info' },
+      { isActive: false, name: '5', title: 'premiumcomputation', url: '/Marine/new-open-cover/premium-computation' },
+      { isActive: false, name: '6', title: 'policygenerate', url: '/Marine/new-open-cover/policy-generate-cover' },
+      { isActive: false, name: '7', title: 'confirmation', url: '/Marine/new-open-cover/confirmation' },
     ];
 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -46,49 +46,63 @@ export class OpenCoverComponent implements OnInit {
       console.log(data);
 
       if (data.item.link === '/Marine/new-open-cover/new-open-cover-form') {
-      sessionStorage.removeItem('ProposalNo');
-        
-       // this.reloadCurrentRoute();
+        sessionStorage.removeItem('ProposalNo');
+
+        // this.reloadCurrentRoute();
       }
     });
     this.router
-    .events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .pipe(map(() => {
-      let child = this.activatedRoute.firstChild;
-      while (child) {
-        if (child.firstChild) {
-          child = child.firstChild;
-        } else if (child.snapshot.data && child.snapshot.data['title']) {
-          return child.snapshot.data['title'];
-        } else {
+      .events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(map(() => {
+        let child = this.activatedRoute.firstChild;
+        while (child) {
+          if (child.firstChild) {
+            child = child.firstChild;
+          } else if (child.snapshot.data && child.snapshot.data['title']) {
+            return child.snapshot.data['title'];
+          } else {
+          }
         }
-      }
-    })).subscribe((customData: any) => {
-      console.log(customData);
-      const index = this.stepperList.findIndex((ele: any) => ele.title === customData );
-      console.log(index);
-      const name:any = this.stepperList[index].name;
+      })).subscribe((customData: any) => {
+        console.log(customData);
+        const index = this.stepperList.findIndex((ele: any) => ele.title === customData);
+        console.log(index);
+        const name: any = this.stepperList[index].name;
 
-      this.stepperList.map((el:any)=>{
-        if(el.name < name){
-          el.isActive = true;
-        }else{
-          el.isActive = false;
+        this.stepperList.map((el: any) => {
+          if (el.name < name) {
+            el.isActive = true;
+          } else {
+            el.isActive = false;
 
-        }
-      })
-      this.ProposalNo = sessionStorage.getItem('ProposalNo');
-      if(this.ProposalNo){
-        this.onEditOpenCoverForm();
-      }
-      console.log(this.stepperList);
+          }
+        })
+        // this.ProposalNo = sessionStorage.getItem('ProposalNo');
+        // ProposalNo
 
-    });
+        this.activatedRoute.queryParams.subscribe(params => {
+          this.ProposalNo = params['ProposalNo'];
+          if (this.ProposalNo) {
+            this.onEditOpenCoverForm();
+          }
+          else {
+            
+            this.ngOnDestroy();
+            sessionStorage.removeItem('OpenCoverEdit');
+          }
+
+        });
+        // if(this.ProposalNo){
+        //   this.onEditOpenCoverForm();
+        // }
+        console.log(this.stepperList);
+
+      });
 
 
 
-   }
+  }
 
   ngOnInit(): void {
 
@@ -99,7 +113,7 @@ export class OpenCoverComponent implements OnInit {
       'BranchCode': user?.BranchCode,
       'ProposalNo': this.ProposalNo,
     };
-    sessionStorage.setItem('OpenCoverEdit',JSON.stringify(reqData));
+    sessionStorage.setItem('OpenCoverEdit', JSON.stringify(reqData));
     // const urlLink = `${this.ApiUrl1}OpenCover/quote/edit`;
     // const user = this.userDetails?.LoginResponse;
     // const reqData = {

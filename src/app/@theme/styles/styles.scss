@@ -230,6 +230,11 @@ mat-form-field {
   padding-right: 10px;
   /* border-left: 5px solid dodgerblue */
 }
+.input-form-box .input-form-control.with-icon1 {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
 
 .input-form-box {
   position: relative;
@@ -1016,4 +1021,17 @@ nb-user .user-name {
 .ng-option {
   white-space: normal !important;
   word-break: break-word !important;
+}
+
+.customStyleCard{
+    border: red solid 1px !important;
+    height: fit-content !important;
+    padding: 1rem !important;
+    background-color: #fff !important;
+    color: red !important;
+    font-weight: 600 !important;
+}
+
+.customListStyle{
+  font-size: x-small ;
 }

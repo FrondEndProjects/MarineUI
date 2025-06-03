@@ -41,6 +41,7 @@ export class CountryCommodityInfoComponent implements OnInit {
     private router: Router,
   ) {
     this.proposalNo = sessionStorage.getItem('ProposalNo');
+
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
@@ -175,7 +176,7 @@ export class CountryCommodityInfoComponent implements OnInit {
   }
   onMoveBack() {
     this.openCoverService.onMoveNext('Back');
-    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`],{ queryParams: {ProposalNo: this.proposalNo}});
   }
 }
 

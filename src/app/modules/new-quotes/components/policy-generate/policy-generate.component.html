@@ -41,7 +41,7 @@
                         <b class="text-dark">
                           {{doc.CodeDescription}}
                           <ng-container *ngIf="doc.CodeValue == 'Y'">
-                          <!-- <ng-container *ngIf="doc.CodeValue == 'Y' ||doc.CodeDescription =='IDF'"> -->
+                            <!-- <ng-container *ngIf="doc.CodeValue == 'Y' ||doc.CodeDescription =='IDF'"> -->
                             <span class="text-danger">*</span>
                           </ng-container>
                           <br>
@@ -104,58 +104,6 @@
                 Document</a>
             </div>
           </ng-container>
-          <!-- <div>
-                <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
-                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
-                  (click)="doc.click()">
-                  <div>
-                    <div class="center">
-                      <b class="text-dark">
-                        <i class="far fa-images"></i> Drag or Click</b>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-          <!-- <div> -->
-          <!-- <div class="vision-grid-item-body" *ngIf="uploadDocuments?.length!=0 || uploadedDocumentsList">
-                <div class="row">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Filename</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <ng-container>
-                        <tr *ngFor="let UPdocuments of uploadedDocumentsList;let i=index">
-                          <td>{{UPdocuments.OriginalFileName}}</td>
-                          <td>
-                        
-                            <button class="circle btn btn-danger btn-sm" (click)="onDownloadfile(i)">
-                              <i class="fas fa-download"></i>
-                            </button>&nbsp; 
-                            <button class="circle btn btn-success btn-sm" (click)="onDeleteUploadedDoc(i)">
-                              <i class="fas fa-trash"></i>
-                            </button>&nbsp; 
-                          </td>
-                        </tr>
-                      </ng-container>
-                          <ng-container  *ngIf="uploadDocuments?.length!=0">
-                            <tr *ngFor="let doc of uploadDocuments;let i=index">
-                              <td>{{doc.fileName}}</td>
-                              <td>
-                                <button class="circle btn btn-danger btn-sm" (click)="onDeleteUploadDoc(i)">
-                                  <i class="fas fa-trash"></i>
-                                </button>&nbsp; 
-                              </td>
-                            </tr>
-                          </ng-container>
-                    </tbody>
-                  </table>
-                </div>
-              </div>  -->
-          <!-- </div> -->
         </div>
       </div>
 
@@ -220,20 +168,6 @@
                 </div>
               </div>
             </label>
-            <!-- <label class="custom-checkbox-container">
-                <input type="checkbox" [(ngModel)]="foreignCurrency">
-                <span class="checkmark">
-                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                  <span class=""><i class="fas fa-minus-circle"></i></span>
-                </span>
-                <div class="description">
-                  <div class="description-name">
-                    <span>
-                      Foreign Currency
-                    </span>
-                  </div>
-                </div>
-              </label> -->
             <label class="custom-checkbox-container">
               <input type="checkbox" [(ngModel)]="darft">
               <span class="checkmark">
@@ -271,24 +205,7 @@
               </div>
             </label>
           </div>
-          <!-- <div *ngIf="generateCerti =='Y'" class="row">
-            <div class="col-md-12 left-line font-size-95">
-              Payment Type
-            </div>
-            <div class="input-control-container">
-              <div class="input-form-radio-box">
-                <div class="radio-toolbar">
-                  <input id="payment_type_cash" (change)="onPaymentTypeChange($event)" type="radio" name="payment_type"
-                    [(ngModel)]="payment_type" value="cash">
-                  <label for="payment_type_cash">CASH</label>
-                  <input type="radio" id="payment_type_online" (change)="onPaymentTypeChange($event)"
-                    name="payment_type" [(ngModel)]="payment_type" value="online">
-                  <label for="payment_type_online">ONLINE</label>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <div *ngIf="generateCerti == 'Y'" class="row">
+          <div *ngIf="generateCerti == 'Y' && !termsSection" class="row">
             <div class="col-md-12 left-line font-size-95">
               Payment Type
             </div>
@@ -623,3 +540,63 @@
     </div>
   </div>
 </div>
+
+<ng-template #myModal3 let-modal>
+  <div class="modal-dialog modal-dialog-scrollable custom-modal-height modal-content m-0 p-0" role="document">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+      <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+     <div class="card grid customStyleCard mt-2" *ngIf="termsSection">
+            <!-- <div class="col-12 col-md-12 col-lg-12 text-center">
+              <h6 class="m-0 p-0">Terms & Conditions</h6>
+            </div> -->
+            <div class="col-12 col-md-12 col-lg-12">
+              <ol type="I">
+                <li class="customListStyle">I/We confirm that the information and documents provided are accurate and
+                  true. I/We
+                  understand that failure to do so may lead to the decline, termination or suspension of cover
+                  by First Assurance Company Limited. </li>
+                <li class="customListStyle">I/We understand that First Assurance Company Limited is part of a global
+                  financial institution
+                  and is obligated to comply with national and international laws, regulations, policies, and
+                  requirements to prevent criminal activities, money laundering, terrorist financing, sanctions
+                  violations and prohibited business activities. </li>
+                <li class="customListStyle">I/We consent to the collection, use, storage, processing, and sharing of our
+                  personal data by
+                  First Assurance Company Ltd and its affiliates in accordance with applicable data protection
+                  laws and the company’s privacy policy. This includes sharing information with third parties for
+                  due diligence, regulatory compliance, and risk assessment purposes.</li>
+                <li class="customListStyle">I /We, understand First Assurance Company Ltd will initially screen, verify
+                  and process all new
+                  and related information and thereafter monitor all information, instructions and transactions
+                  by and on behalf of my/ourselves in relation to all transactions and the business relationship
+                  on a continuous basis. This may result in the prohibition, limitation, and/or delay in the
+                  execution of instructions or transactions. It may further lead to the decline or termination of
+                  any transaction or business relationship with yourself(s) and to the extent permitted, we shall
+                  notify you of any such intended action. </li>
+                <li class="customListStyle">
+                  I/We acknowledge and confirm that neither First Assurance Company Ltd, nor its respective
+                  affiliates, employees, officers or directors, shall be liable for any direct or consequential loss,
+                  damage, costs or expenses whatsoever that may be suffered or incurred because of any such
+                  prohibition, limitation, delay, decline or termination due to the implementation of these
+                  conditions.
+                </li>
+              </ol>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12" style="font-size: 15px;">
+
+              <input type="checkbox" (change)="onChangeCheckBox($event)">&nbsp;<span>I have read the terms and conditions and
+              I hereby accept and agree to the terms and conditions as stated
+              above</span>
+            </div>
+          </div>
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal"
+        (click)="modal.dismiss('Cross click')">Close</button>
+    </div> -->
+  </div>
+</ng-template>

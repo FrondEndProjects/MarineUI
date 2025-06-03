@@ -1,5 +1,5 @@
 import { NewQuotesService } from './../../new-quotes.service';
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import * as Mydatas from '../../../../app-config.json';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { NewQuotesComponent } from '../../new-quotes.component';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 //import { ViewDocumentComponent } from '../viewDocument/viewDocument.component';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-policy-generate',
   templateUrl: './policy-generate.component.html',
@@ -15,7 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 })
 export class PolicyGenerateComponent implements OnInit {
-
+  @ViewChild('myModal3') myModal3: any;
+  modalRef!: NgbModalRef;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
@@ -68,10 +70,12 @@ export class PolicyGenerateComponent implements OnInit {
   pay_mobile_number: any;
   pay_mobile_code: any;
   CustomerType: string;
+  termsSection: boolean = false;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private modalService: NgbModal,
     private router: Router, private sessionStorageService: SessionStorageService,
     private newQuotesComponent: NewQuotesComponent, public dialogService: MatDialog,
 
@@ -108,6 +112,17 @@ export class PolicyGenerateComponent implements OnInit {
         // if(type!='cancel') this.successSection = true;
       }
     })
+    if (this.generateCerti === 'Y') {
+      this.termsSection = true;
+      setTimeout(() => {
+        this.modalRef = this.modalService.open(this.myModal3, {
+          backdrop: 'static',
+          keyboard: false,
+          centered: true,
+          size: 'lg'
+        });
+      });
+    }
   }
   get premiumF() {
     return this.premiumForm?.controls;
@@ -941,6 +956,14 @@ export class PolicyGenerateComponent implements OnInit {
   }
   onGenerateCertificateTypeChange() {
     this.payment_type = null
+  }
+
+  onChangeCheckBox(event) {
+    console.log("Event", event)
+    if (event.target.checked) {
+       this.modalRef.close();
+      this.termsSection = false;
+    }
   }
 }
 

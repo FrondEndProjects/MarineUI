@@ -1,6 +1,6 @@
 import { CustomerInfoComponent } from './../../customer-info.component';
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, NgForm, ValidationErrors, Validators } from '@angular/forms';
 import * as Mydatas from '../../../../../../app-config.json';
 import { NewQuotesService } from '../../../../new-quotes.service';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
@@ -1045,15 +1045,16 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         if (data?.Message === 'Success') {
           this.dropGoodsOfCateList = data?.Result;
 
-          // Corrected key name
-          // let defaultObj = [{ CodeDescription: '-Select-', Code: null }];
-          // this.dropGoodsOfCateList = [...defaultObj, ...this.dropGoodsOfCateList];
+          let defaultObj = [{ CodeDescription: '-Select-', Code: '9999' }];
+          this.dropGoodsOfCateList = [...defaultObj, ...this.dropGoodsOfCateList];
 
           this.newQuotesService.getDropDownList(this.dropGoodsOfCateList, 'goodesofCat');
-
-          // if (!this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
-          //   this.quoteF.goodsCategory.setValue(this.dropGoodsOfCateList[0].Code);
-          // }
+          if (!this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
+            setTimeout(() => {
+                this.quoteF.goodsCategory.setValue(this.dropGoodsOfCateList[0].Code);
+            this.quoteF.goodsCategory.updateValueAndValidity();
+            }, 100);
+          }
         }
       },
       (err) => { },
@@ -1317,5 +1318,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   //   this.currentPage = event.pageIndex; // Or event.page if your table emits like that
   //   this.get_transhipping_list(this.currentPage);
   // }
+
+  invalidDefaultSelectValidator(control: AbstractControl): ValidationErrors | null {
+  return control.value === '9999' ? { invalidDefault: true } : null;
+}
 
 }

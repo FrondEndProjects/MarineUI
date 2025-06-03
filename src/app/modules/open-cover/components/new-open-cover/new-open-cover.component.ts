@@ -44,6 +44,7 @@ export class NewOpenCoverComponent implements OnInit {
   }
   RefNo: any;
   MissippiCode: any;
+ProposalNo:any
   public routerBaseLink: any = '';
   public OpenCover: any;
   minDate: { year: number; month: number; day: number; };
@@ -57,6 +58,7 @@ export class NewOpenCoverComponent implements OnInit {
   poBoxError: boolean;
   emailIdError: boolean;
   mobileNoError: boolean;
+  customerType: any = 'Individual';
   title: any = null; customerName: any = null;
   dropPremiumCurrencyList: any;
   coreAppcode: any = null; cityValue: any = null;
@@ -82,10 +84,18 @@ export class NewOpenCoverComponent implements OnInit {
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.LoginId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
+   
 
   }
 
   ngOnInit(): void {
+
+     this.activatedRoute.queryParams.subscribe(params => {
+      this.ProposalNo = params['ProposalNo'];
+      if (!this.ProposalNo) {
+       this.onCreateFormControl();
+      }
+    });
 
 
     this.menuService.onItemClick().subscribe((data) => {
@@ -542,8 +552,8 @@ export class NewOpenCoverComponent implements OnInit {
         "CustVatRegNo": this.customerVat,
         "CustomerArNo": null,
         "CustomerArabicName": null,
-        "CustomerCode": null,
-        "CustomerId": null,
+        "CustomerCode": this.coreAppcode ? this.coreAppcode : null,
+        "CustomerId": this.customerId ? this.customerId : null,
         "CustomerName": this.customerName,
         "DateOfBirth": null,
         "Email": this.emailId,
@@ -556,7 +566,8 @@ export class NewOpenCoverComponent implements OnInit {
         "Occupation": null,
         "PoBox": this.poBox,
         "TelephoneNo": null,
-        "Title": this.title
+        "Title": this.title,
+        "CustomerType": this.customerType
       }
       console.log("Final obj", ReqObj)
       let urlLink = `${this.ApiUrl1}OpenCover/customer/save`;
@@ -564,6 +575,7 @@ export class NewOpenCoverComponent implements OnInit {
         (data: any) => {
           console.log(data);
           if (data?.Status) {
+            this.customerId = null;
             this.customerName = null; this.mobileNo = null; this.emailId = null; this.title = null;
             this.coreAppcode = null; this.cityValue = null; this.customerVat = null; this.Address1 = null;
             this.Address2 = null; this.editSection = false; this.getCustomerAltList(null);
@@ -705,6 +717,18 @@ export class NewOpenCoverComponent implements OnInit {
           { key: 'Email', display: 'Email' },
           { key: 'PoBox', display: 'P.O.Box' },
           { key: 'EmirateName', display: 'Emirate Name' },
+          {
+            key: "edit",
+            display: "Edit",
+            // sticky: true,
+            config: {
+              isActionBtn: true,
+              isActionBtnName: "Edit",
+              isNgxIcon: "fas fa-pen-alt",
+              bg: "primary",
+            },
+          }
+
           ];
           this.tableData = data?.Result?.CustomerResponse;
           // if (this.customerF.name.status == "DISABLED" || data?.Result == null) {
@@ -902,5 +926,50 @@ export class NewOpenCoverComponent implements OnInit {
   }
   ngOnDestroy() {
     this.openCoverService.openCoverEdit.next(null);
+  }
+
+  isActionBtn(event: any) {
+    console.log(event);
+    if (event?.btName === 'Edit') {
+      this.onEditCustomer(event);
+    }
+  }
+  onEditCustomer(event) {
+    this.editSection = true;
+    // this.customerType
+    // this.title
+    // this.customerName
+    // this.coreAppcode
+    // this.cityValue
+    // this.poBox
+    // this.mobileNo
+    // this.emailId
+    // this.customerVat
+    // this.Address1
+    // this.Address2
+    let ReqObj = {
+      "CustomerId": event.CustomerId
+    }
+    let urlLink = `${this.ApiUrl1}OpenCover/customer/edit`;
+    this.openCoverService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data.Result) {
+          this.customerId = data.Result.CustomerId
+          this.customerType = data.Result.CustomerType
+          this.title = data.Result.Title
+          this.customerName = data.Result.CustomerName
+          this.coreAppcode = data.Result.CustomerCode
+          this.cityValue = data.Result.CityCode
+          this.poBox = data.Result.PoBox
+          this.mobileNo = data.Result.MobileNo
+          this.emailId = data.Result.Email
+          this.customerVat = data.Result.CustVatRegNo
+          this.Address1 = data.Result.Address1
+          this.Address2 = data.Result.Address2
+        }
+      },
+      (err) => { },
+    );
   }
 }

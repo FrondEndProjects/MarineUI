@@ -279,7 +279,8 @@ export class OpenCoverGridComponent implements OnInit {
          sessionStorage.setItem('quotesType', 'Without-Endo');
          sessionStorage.setItem('WithCertifi', 'true');
          sessionStorage.setItem('openCOverType',type);
-         this.router.navigate([`${this.routerBaseLink}/new-quotes`]);
+         let value ='openCover'
+         this.router.navigate([`${this.routerBaseLink}/new-quotes`] , {queryParams: { value } });
     }
     if(event.name=='Schedule' || event.name=='PolicyWording')  this.getSchedulePdf(event,event.name);
     if(event.name == 'Debit Note'){

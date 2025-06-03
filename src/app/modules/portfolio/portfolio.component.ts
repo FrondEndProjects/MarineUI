@@ -349,7 +349,7 @@ export class PortfolioComponent implements OnInit {
   console.log('EEEEEEEEEEEEEEEEEE',event);
 if(event.Status=='Y'){
     sessionStorage.setItem('ProposalNo',event.ProposalNo);
-    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`]);
+    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`],{ queryParams: {ProposalNo: event.ProposalNo}});
   }
   else if(event.Status!='Y' && event.EndtStatus!='N'){
     this.onEndorse(event);
