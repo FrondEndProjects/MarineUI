@@ -44,7 +44,7 @@ export class NewOpenCoverComponent implements OnInit {
   }
   RefNo: any;
   MissippiCode: any;
-ProposalNo:any
+  ProposalNo: any
   public routerBaseLink: any = '';
   public OpenCover: any;
   minDate: { year: number; month: number; day: number; };
@@ -84,16 +84,16 @@ ProposalNo:any
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.LoginId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
-   
+
 
   }
 
   ngOnInit(): void {
 
-     this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe(params => {
       this.ProposalNo = params['ProposalNo'];
       if (!this.ProposalNo) {
-       this.onCreateFormControl();
+        this.onCreateFormControl();
       }
     });
 
@@ -500,18 +500,38 @@ ProposalNo:any
     );
   }
   onGetCityDropdownList() {
-    const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
+    // const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
+    // const reqData = {
+    //   'BranchCode': this.userDetails?.BelongingBranch,
+    //   'ProductId': this.productId,
+    //   'pvType': 'city',
+    //   'OpenCoverNo': this.OpenCover?.value,
+    // };
+    // this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+    //   (data: any) => {
+    //     console.log(data);
+    //     if (data?.Message === 'Success') {
+    //       this.dropCityList = data?.Result;
+
+    //     }
+    //   },
+    //   (err) => { },
+    // );
+    console.log( this.userDetails," this.userDetails");
+    
+    let countryId = this.userDetails?.LoginBranchDetails[0]?.OriginationCountryId
+    const urlLink = `${this.ApiUrl1}master/countrycity/list`;
     const reqData = {
-      'BranchCode': this.userDetails?.BelongingBranch,
-      'ProductId': this.productId,
-      'pvType': 'city',
-      'OpenCoverNo': this.OpenCover?.value,
+      'countryID': countryId
     };
+
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
         if (data?.Message === 'Success') {
           this.dropCityList = data?.Result;
+          console.log(this.dropCityList);
+
 
         }
       },
