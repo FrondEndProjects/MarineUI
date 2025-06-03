@@ -14,7 +14,7 @@
     <nb-actions size="small">
       <nb-action class="control-items" style="color: #fff !important" icon="home-outline"
         (click)="homeRoute()"></nb-action>
-      <nb-action class="control-item">
+      <nb-action *ngIf="CommonApiUrl =='http://192.168.1.42:8086/' || CommonApiUrl =='http://197.254.65.234:8080/EwayCommonApi/' " class="control-item">
         <li class="dropdown" style="list-style-type: none !important;">
           <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
           <ng-container> &nbsp;&nbsp;&nbsp;&nbsp;</ng-container>
