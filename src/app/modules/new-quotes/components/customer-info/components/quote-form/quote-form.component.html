@@ -67,7 +67,8 @@
         <label class="input-form-label d-flex">
           <span class="mx-2">Originating city <span class="text-required">*</span></span>
           <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="switch1" formControlName="orginatingCityOtherYN">
+            <input type="checkbox" class="custom-control-input" id="switch1" (change)="OrgincityChange($event)"
+              formControlName="orginatingCityOtherYN">
             <label class="custom-control-label" for="switch1">Other City</label>
           </div>
         </label>
@@ -83,12 +84,34 @@
               formControlName="orginatingCityOther">
           </ng-container>
         </div>
+        <!-- <div class="input-form-error"
+          *ngIf="(quoteF.orginatingCityOther.errors && submitted) || (!quoteF.orginatingCityOther.valid && quoteF.orginatingCityOther.touched)">
+          <div *ngIf="quoteF.orginatingCityOther.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
         <div class="input-form-error"
           *ngIf="(quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
           <div *ngIf="quoteF.originatingCity.errors?.required" class="error-text">
             This field is required
           </div>
+        </div> -->
+        <span *ngIf="quoteF.orginatingCityOtherYN.value ==true">
+         <div class="input-form-error"
+          *ngIf="(quoteF.orginatingCityOther.errors && submitted) || (!quoteF.orginatingCityOther.valid && quoteF.orginatingCityOther.touched)">
+          <div *ngIf="quoteF.orginatingCityOther.errors?.required" class="error-text">
+            This field is required
+          </div>
         </div>
+        </span>
+        <span *ngIf="quoteF.orginatingCityOtherYN.value !=true">
+           <div class="input-form-error"
+          *ngIf="(quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
+          <div *ngIf="quoteF.originatingCity.errors?.required" class="error-text">
+            This field is required
+          </div>
+        </div>
+        </span>
       </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4">
@@ -126,7 +149,8 @@
         <label class="input-form-label d-flex">
           <span class="mx-2">Destination city <span class="text-required">*</span></span>
           <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="switch2" formControlName="destinationOtherYN">
+            <input type="checkbox" class="custom-control-input" id="switch2" (change)="DestinationcityChange($event)"
+              formControlName="destinationOtherYN">
             <label class="custom-control-label" for="switch2">Other City</label>
           </div>
         </label>
@@ -142,12 +166,22 @@
               formControlName="destinationCityOther">
           </ng-container>
         </div>
-        <div class="input-form-error"
-          *ngIf="(quoteF.destinationCity.errors && submitted) || (!quoteF.destinationCity.valid && quoteF.destinationCity.touched)">
-          <div *ngIf="quoteF.destinationCity.errors?.required" class="error-text">
-            This field is required
+        <span *ngIf="quoteF.destinationOtherYN.value ==true">
+          <div class="input-form-error"
+            *ngIf="(quoteF.destinationCityOther.errors && submitted) || (!quoteF.destinationCityOther.valid && quoteF.destinationCityOther.touched)">
+            <div *ngIf="quoteF.destinationCityOther.errors?.required" class="error-text">
+              This field is required
+            </div>
           </div>
-        </div>
+        </span>
+        <span *ngIf="quoteF.destinationOtherYN.value !=true">
+          <div class="input-form-error"
+            *ngIf="(quoteF.destinationCity.errors && submitted) || (!quoteF.destinationCity.valid && quoteF.destinationCity.touched)">
+            <div *ngIf="quoteF.destinationCity.errors?.required" class="error-text">
+              This field is required
+            </div>
+          </div>
+        </span>
         <!-- <div class="input-form-error"
           *ngIf="(quoteF.destinationCityOther.errors && submitted) || (!quoteF.destinationCityOther.valid && quoteF.destinationCityOther.touched)">
           <div *ngIf="quoteF.destinationCityOther.errors?.required" class="error-text">

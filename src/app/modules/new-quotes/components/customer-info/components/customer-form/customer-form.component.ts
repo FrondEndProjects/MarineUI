@@ -13,12 +13,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./customer-form.component.scss'],
 })
 export class CustomerFormComponent implements OnInit {
+  @ViewChild('myModal4') myModal4: any;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public AdminUrl: any = this.AppConfig.AdminUrl;
   public userDetails: any;
   public productId: any;
   public openCoverNo: any = '';
   public filterValue: any;
+  customerType:any ='Individual'
+  columnHeader1: any[] = [];
+  searchList: any[] = [];
   public loginId: any;
   public applicationId: any; brokerCode: any = null;
 
@@ -135,7 +140,7 @@ export class CustomerFormComponent implements OnInit {
     );
   }
   onGetCityDropdownList() {
-    let countryId = this.userDetails?.OriginationCountryId;
+    let countryId = this.userDetails?.OriginationCountryId ? this.userDetails?.OriginationCountryId : this.userDetails?.LoginBranchDetails[0]?.OriginationCountryId;
     const urlLink = `${this.ApiUrl1}master/countrycity/list`;
     const reqData = {
       'countryID': countryId
@@ -256,7 +261,7 @@ export class CustomerFormComponent implements OnInit {
   }
   onSelectCustomer(event: any, modal) {
 
-    console.log('kkkkkkkkkk', this.tableData)
+    console.log('kkkkkkkkkk', event)
     this.customerF.title.setValue(event?.Title);
     this.customerF.name.setValue(event?.CustomerName);
     this.customerF.coreAppcode.setValue(event?.MissippiCustomerCode);
@@ -268,6 +273,7 @@ export class CustomerFormComponent implements OnInit {
     this.customerF.Address1.setValue(event?.Address1);
     this.customerF.Address2.setValue(event?.Address2);
     this.customerF.Code.setValue(event.CustomerId);
+    this.customerF.customerType.setValue(event.CustomerType);
     modal.close();
 
   }
@@ -313,6 +319,7 @@ export class CustomerFormComponent implements OnInit {
         "CustLastName": null,
         "CustVatRegNo": this.customerVat,
         "CustomerArNo": null,
+       'CustomerType': this.customerType,
         "CustomerArabicName": null,
         "CustomerCode": this.coreAppcode,
         "CustomerId": null,
@@ -367,5 +374,57 @@ export class CustomerFormComponent implements OnInit {
     const mobile = tel?.startsWith("254") ? tel.substring(3) : tel;
     this.customerF.mobileNo.setValue(mobile);
   }
-}
 
+  onSearchCustomer(value) {
+    this.columnHeader1 = [
+      {
+        key: 'CustomerId',
+        display: 'Customer Id',
+        config: {
+          select: true,
+        },
+      },
+      { key: 'BROKER_CODE', display: 'Customer Name' },
+      { key: 'BROKER_NAME', display: 'Customer Name' },
+    ];
+
+    this.modalService.open(this.myModal4, { size: 'lg', scrollable: true });
+
+    let ReqObj = {
+      "BranchCode": null,
+      "InsuranceId": this.userDetails.InsuranceId,
+      "SearchValue": value ? value : null,
+      "SourceType": this.userDetails.SubUserType
+    }
+    let urlLink = `${this.AdminUrl}api/search/premiabrokercustomercode`;
+    this.newQuotesService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log("Searched Data", data);
+
+        if (data.Result.length != 0) {
+          if (data.Result.length == 1) {
+            if (data.Result[0].BROKER_CODE != null) {
+              this.searchList = data.Result;
+              // this.dataSource.data = this.searchList;
+              // this.dataSource = new MatTableDataSource(this.searchList);
+              // this.dataSource.paginator = this.paginator;
+            }
+          }
+          else {
+            this.searchList = data.Result;
+            // this.dataSource.data = this.searchList;
+            // this.dataSource = new MatTableDataSource(this.searchList);
+            // this.dataSource.paginator = this.paginator; // <-- Important!
+          }
+        }
+      },
+      (err) => { },
+    );
+
+  }
+  selectProduct(customer: any, modal) {
+    this.coreAppcode = customer.BROKER_CODE
+    this.customerName = customer.BROKER_NAME
+    modal.close();
+  }
+}

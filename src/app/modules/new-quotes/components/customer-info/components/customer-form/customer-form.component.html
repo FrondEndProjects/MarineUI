@@ -64,15 +64,16 @@
         <div class="input-control-container">
           <label *ngIf="this.customerForm.controls.customerType.value=='Individual'" class="input-form-label">Name<span
               class="text-required">*</span></label>
-          <label *ngIf="this.customerForm.controls.customerType.value=='Corporate'" class="input-form-label">Company Name<span
-              class="text-required">*</span></label>
+          <label *ngIf="this.customerForm.controls.customerType.value=='Corporate'" class="input-form-label">Company
+            Name<span class="text-required">*</span></label>
           <div class="currency-flex">
             <div class="currrency-drop1 input-form-box">
               <input *ngIf="this.customerForm.controls.customerType.value=='Individual'" type="text"
                 class="input-form-control2 with-icon" [(ngModel)]="filterValue" formControlName="name"
                 placeholder="Enter Customer Name">
               <input *ngIf="this.customerForm.controls.customerType.value=='Corporate'" type="text"
-                class="input-form-control with-icon1" placeholder="Enter Customer Name" [(ngModel)]="filterValue" formControlName="name" placeholder="">
+                class="input-form-control with-icon1" placeholder="Enter Customer Name" [(ngModel)]="filterValue"
+                formControlName="name" placeholder="">
             </div>
             <div *ngIf="this.customerForm.controls.customerType.value=='Individual'" class="currrency-dollar">
               <button class="btn btn-secondary" (click)="getCustomerAltList(myModal2)"
@@ -245,6 +246,21 @@
         </div>
       </ng-container>
       <ng-container *ngIf="editSection">
+        <div class="row mb-3">
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <label class="input-form-label">Cutomer Type<span class="text-required">*</span></label>
+              <div class="input-form-radio-box">
+                <div class="radio-toolbar">
+                  <input id="Individual1" type="radio" name="customerType" value="Individual" [(ngModel)]="customerType">
+                  <label for="Individual1">Individual</label>
+                  <input type="radio" id="Corporate1" name="customerType" value="Corporate" [(ngModel)]="customerType">
+                  <label for="Corporate1">Corporate</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12 col-md-4 col-lg-4">
             <div class="input-control-container">
@@ -259,12 +275,38 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
+          <!-- <div class="col-12 col-md-4 col-lg-4">
             <div class="input-control-container">
               <label class="input-form-label">Name<span class="text-required">*</span></label>
               <div class="input-form-box">
                 <input type="text" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="customerName"
                   placeholder="Enter Customer Name">
+              </div>
+
+              <div class="input-form-error" *ngIf="customerNameError">
+                <div class="error-text">
+                  This field is required
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <label *ngIf="customerType!='Corporate'" class="input-form-label">Name<span
+                  class="text-required">*</span></label>
+              <label *ngIf="customerType=='Corporate'" class="input-form-label">Company Name<span
+                  class="text-required">*</span></label>
+              <div class="currency-flex">
+                <div class="currrency-drop1 input-form-box">
+                  <input *ngIf="customerType!='Corporate'" type="text" class="input-form-control2 with-icon"
+                    maxlength="100" [(ngModel)]="customerName" placeholder="Enter Customer Name">
+                  <input *ngIf="customerType=='Corporate'" type="text" class="input-form-control with-icon1"
+                    [(ngModel)]="filterValue" placeholder="">
+                </div>
+                <div *ngIf="customerType!='Corporate'" class="currrency-dollar">
+                  <button class="btn btn-secondary" (click)="onSearchCustomer()"
+                    style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
+                </div>
               </div>
 
               <div class="input-form-error" *ngIf="customerNameError">
@@ -379,6 +421,53 @@
       <button type="button" class="btn btn-secondary" data-dismiss="modal"
         (click)="modal.dismiss('Cross click')">Close</button>
       <button type="button" class="btn btn-primary" *ngIf="editSection" (click)="onsubmit()">Submit</button>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<ng-template #myModal4 let-modal>
+  <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Cusotmer Search</h5>
+      <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+      <ng-container>
+        <div class="row">
+          <div class="col-md-4 col-lg-4"></div>
+          <div class="col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" placeholder="Search"
+                  [(ngModel)]="filterValue">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4 mt-1" *ngIf="productId!='11' && productId!=11">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-12 col-md-12 col-xl-12">
+            <ng-container *ngIf="searchList.length!=0">
+              <app-material-table [cols]="columnHeader1" [customerId]="getCustomerId()" [data]="searchList"
+                [filterValue]="filterValue" (onSelectCustomer)="selectProduct($event,modal)">
+              </app-material-table>
+            </ng-container>
+            <ng-container *ngIf="searchList.length==0">
+              <div class="text-center">
+                No Customer Available
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+    <div class="modal-footer">
     </div>
   </div>
 </ng-template>

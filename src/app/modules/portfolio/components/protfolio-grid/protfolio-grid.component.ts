@@ -245,8 +245,8 @@ export class ProtfolioGridComponent implements OnInit {
       /*"BranchCode": this.userDetails?.BranchCode,
       "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
        "LoginId": this.userDetails?.LoginId,
-      "QuoteNo": this.quote,
-      "UploadId": this.uploadedDocumentsList[index].UploadId
+      "QuoteNo": index.QuoteNo,
+      "UploadId": index.UploadId
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       if(data?.Result){
@@ -267,7 +267,37 @@ export class ProtfolioGridComponent implements OnInit {
       this.dialog.closeAll();
     }
   
-  
+    onDownloadfile(item) {
+      console.log(item,"item");
+      
+    let entry = this.uploadedDocumentsList.find(ele => ele.UploadId == item.UploadId);
+    if (entry) {
+      const urlLink = `${this.ApiUrl1}file/download`;
+      const reqData = {
+        /*"BranchCode": this.userDetails?.BranchCode,
+        "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
+        "LoginId": this.userDetails?.LoginId,
+        "QuoteNo": item?.QuoteNo,
+        "UploadId": entry.UploadId
+      }
+
+      this.portfolioBrokerService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+        if (data?.Result) {
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href', data?.Result);
+          link.setAttribute('download', entry.OriginalFileName);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+
+        }
+
+
+      })
+    }
+
+  }
   getSchedulePdf(rowData,type){
     let ReqObj:any,UrlLink:any;
     

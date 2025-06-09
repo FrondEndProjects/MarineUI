@@ -170,7 +170,7 @@ export class PolicyGenerateComponent implements OnInit {
     const reqData = {
       "CompanyId": this.userDetails?.RegionCode,
       "ProductId": this.productId,
-      "DocApplicable": this.CustomerType ? this.CustomerType : null
+      "DocApplicable": this.productId != '11' ? this.CustomerType : 'DOC_COMMODITY'
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
       if (data.Result) {
@@ -514,6 +514,9 @@ export class PolicyGenerateComponent implements OnInit {
         else {
           this.draftSection = true;
         }
+      }
+      else {
+        this.payment_type = null;
       }
     })
   }
@@ -961,7 +964,7 @@ export class PolicyGenerateComponent implements OnInit {
   onChangeCheckBox(event) {
     console.log("Event", event)
     if (event.target.checked) {
-       this.modalRef.close();
+      this.modalRef.close();
       this.termsSection = false;
     }
   }

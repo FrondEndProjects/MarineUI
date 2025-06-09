@@ -38,6 +38,11 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomDateParserFormatter } from '../../shared/date-formatt/custom-date-parser-formatter';
 import { CustomAdapter } from '../../shared/date-formatt/custom-adapter';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 
@@ -66,11 +71,16 @@ import { CustomAdapter } from '../../shared/date-formatt/custom-adapter';
    LandTrasitComponent,
   ],
   imports: [
+    MatTableModule,
     CommonModule,
     FormsModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
     DirectivesModule,
     NgSelectModule,
+    MatRadioModule,
     ThemeModule,
     NbTabsetModule,
     NbRouteTabsetModule,

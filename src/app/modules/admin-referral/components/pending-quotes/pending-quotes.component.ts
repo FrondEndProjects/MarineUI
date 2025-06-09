@@ -64,6 +64,8 @@ export class PendingQuotesComponent implements OnInit {
       }
        sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
     }
-    this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+    // this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+     let value ='referral'
+    this.router.navigate([`/${this.routerBaseLink}/new-quotes`],{ queryParams: { value } });
   }
 }

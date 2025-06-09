@@ -20,3 +20,13 @@ label.disabled {
   pointer-events: none;
   background-color: #fff;
 }
+.table-container {
+  width: 100%;
+  overflow: auto;
+}
+
+.search-box {
+  margin-bottom: 10px;
+  width: 300px;
+  display: block;
+}

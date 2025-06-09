@@ -5,50 +5,53 @@
         Policies
       </div>
     </div>
-  <div class="row">
-    <div class="col-12 col-md-4 col-lg-4"  *ngIf="userDetails.UserType!='User' && userDetails?.UserType !='admin'">
-      <div class="input-control-container">
-        <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="selectedBroker" [items]="brokerList" bindValue="LoginId"
-          bindLabel="UserName" (change)="onChangeBroker()">
-        </ng-select>
+    <div class="row">
+      <div class="col-12 col-md-4 col-lg-4" *ngIf="userDetails.UserType!='User' && userDetails?.UserType !='admin'">
+        <div class="input-control-container">
+          <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
+          <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="selectedBroker" [items]="brokerList"
+            bindValue="LoginId" bindLabel="UserName" (change)="onChangeBroker()">
+          </ng-select>
+        </div>
       </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Filter</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" placeholder="Enter Any Key To Filter" [(ngModel)]="FilterValue">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Filter</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" placeholder="Enter Any Key To Filter"
+              [(ngModel)]="FilterValue">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4" *ngIf="userType=='Issuer'">
+        <div class="input-control-container">
+          <label class="input-form-label">Search For Other Policy</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" placeholder="Enter Any PolicyNo" maxlength="30"
+              [(ngModel)]="otherPolicyNo">
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4" *ngIf="userType=='Issuer'">
-      <div class="input-control-container">
-        <label class="input-form-label">Search For Other Policy</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" placeholder="Enter Any PolicyNo" maxlength="30" [(ngModel)]="otherPolicyNo">
-        </div>
+    <div class="row" *ngIf="otherPolicyNo">
+      <div class="col-12 col-md-4 col-lg-4 offset-8 text-center">
+        <button nbButton (click)="onLoadGrid()" shape="round" size="small" status="success" class="mx-2">Search</button>
       </div>
     </div>
-  </div>
-  <div class="row" *ngIf="otherPolicyNo">
-    <div class="col-12 col-md-4 col-lg-4 offset-8 text-center">
-      <button nbButton (click)="onLoadGrid()" shape="round" size="small" status="success" class="mx-2">Search</button> 
-    </div>
-  </div>
-  <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue" (isActionBtn)="isActionBtn($event)" (onMenu)="onmenu($event,$event.name,template)" >
-  </app-material-table>
-  <!-- <div class="maan-card-footer">
+    <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue"
+      (isActionBtn)="isActionBtn($event)" (onMenu)="onmenu($event,$event.name,template)">
+    </app-material-table>
+    <!-- <div class="maan-card-footer">
     <app-back-btn></app-back-btn>
   </div> -->
-</div>
+  </div>
 
 
 
-<ng-template #template>
-    
-  <div class="mt-4">
-  
+  <ng-template #template>
+
+    <div class="mt-4">
+
       <div style="text-align:center">
         <div style="color:black;font-size: 19px;">PolicyNo:<span>{{policy}}</span></div>
         <div>
@@ -57,7 +60,7 @@
         <div>
           <div>
             <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
-            <div  class="imag-card my-3"  appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
+            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
               (click)="doc.click()">
               <div>
                 <div class="center">
@@ -82,34 +85,42 @@
                       <tr *ngFor="let UPdocuments of uploadedDocumentsList;let i=index">
                         <td>{{UPdocuments.OriginalFileName}}</td>
                         <td>
-                          <button class="circle btn btn-success btn-sm" (click)="onDeleteUploadedDoc(i)">
+                          <button class="circle btn btn-success btn-sm" (click)="onDeleteUploadedDoc(UPdocuments)">
                             <i class="fas fa-trash"></i>
+                          </button>&nbsp;
+                          <button class="circle btn btn-secondary btn-sm" (click)="onDownloadfile(UPdocuments)">
+                            <i class="fas fa-download"></i>
                           </button>&nbsp;
                         </td>
                       </tr>
                     </ng-container>
-                        <ng-container  *ngIf="uploadDocuments?.length!=0">
-                          <tr *ngFor="let doc of uploadDocuments;let i=index">
-                            <td>{{doc.fileName}}</td>
-                            <td>
-                              <button class="circle btn btn-danger btn-sm" (click)="onDeleteUploadDoc(i)">
+                    <ng-container *ngIf="uploadDocuments?.length!=0">
+                      <tr *ngFor="let doc of uploadDocuments;let i=index">
+                        <td>{{doc.fileName}}</td>
+                        <td>
+                          <button class="circle btn btn-danger btn-sm" (click)="onDeleteUploadDoc(i)">
+                            <i class="fas fa-trash"></i>
+                          </button>&nbsp;
+                        </td>
+                        <!-- <td>
+                              <button class="circle btn btn-danger btn-sm" (click)="onDownloadfile(doc)">
                                 <i class="fas fa-trash"></i>
                               </button>&nbsp; 
-                            </td>
-                          </tr>
-                        </ng-container>
+                            </td> -->
+                      </tr>
+                    </ng-container>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
           <div style="text-align:center;" class="mt-4">
-              <button class="btn btn-danger" (click)="close()">Close</button>
-              <button class="btn btn-success" style="margin-left:10px;" (click)="submit()">Submit</button>
+            <button class="btn btn-danger" (click)="close()">Close</button>
+            <button class="btn btn-success" style="margin-left:10px;" (click)="submit()">Submit</button>
           </div>
         </div>
       </div>
-      
+
     </div>
 
- </ng-template>
+  </ng-template>

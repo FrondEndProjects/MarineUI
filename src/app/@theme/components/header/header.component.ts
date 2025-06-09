@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   routerBaseLink: any; regionCode: any = null;
   loginId: any;
   userPicture: string;
-  ProductId: any;userType:any;
+  ProductId: any; userType: any;
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
@@ -69,19 +69,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private sessionStorageService: SessionStorageService,
     protected bpService: NbMediaBreakpointsService, private http: HttpClient
   ) {
-   
+
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userResponse = this.userDetails?.LoginResponse;
     this.ProductId = this.userResponse?.ProductId;
     this.regionCode = this.userResponse.InsuranceId;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.loginId = this.userDetails.Result.LoginId;
-    this.userType =this.userResponse?.UserType;
+    this.userType = this.userResponse?.UserType;
     this.userPicture = 'assets/images/userIcon.png'
     // if(this.ProductId =='3') {
 
-      if(this.userType!='admin') this.menu = borkerNavItems;
-      else this.menu = adminNavItems;
+    if (this.userType != 'admin') this.menu = borkerNavItems;
+    else this.menu = adminNavItems;
 
     // }
     // if(this.ProductId =='3')
@@ -189,10 +189,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
   onRedirectMenu(rowData) {
-    console.log("RowData",rowData);
-    if((this.router.url=='/marine-opencover/new-quotes/customer-info' || this.router.url=='/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link=='/marine-opencover/new-quotes'){
-        sessionStorage.removeItem('ReferenceNo');
-        window.location.reload()
+    console.log("RowData", rowData);
+    if (rowData.title == "Referral") {
+      this.userDetails.UserType = 'Issuer'
+    }
+    else {
+      this.userDetails.UserType = 'admin'
+    }
+    if ((this.router.url == '/marine-opencover/new-quotes/customer-info' || this.router.url == '/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link == '/marine-opencover/new-quotes') {
+      sessionStorage.removeItem('ReferenceNo');
+      window.location.reload()
     }
     else this.router.navigate([rowData.link]);
   }
@@ -259,8 +265,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .post<any>(UrlLink, ReqObj, { headers: headers })
       .pipe(shareReplay());
   }
-  checkCurrentRouting(){
+  checkCurrentRouting() {
     let url = this.router.url;
-    return url!='/product-layout/opencover';
+    return url != '/product-layout/opencover';
   }
 }

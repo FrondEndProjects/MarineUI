@@ -1051,8 +1051,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
           this.newQuotesService.getDropDownList(this.dropGoodsOfCateList, 'goodesofCat');
           if (!this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
             setTimeout(() => {
-                this.quoteF.goodsCategory.setValue(this.dropGoodsOfCateList[0].Code);
-            this.quoteF.goodsCategory.updateValueAndValidity();
+              this.quoteF.goodsCategory.setValue(this.dropGoodsOfCateList[0].Code);
+              this.quoteF.goodsCategory.updateValueAndValidity();
             }, 100);
           }
         }
@@ -1320,7 +1320,38 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   // }
 
   invalidDefaultSelectValidator(control: AbstractControl): ValidationErrors | null {
-  return control.value === '9999' ? { invalidDefault: true } : null;
-}
+    return control.value === '9999' ? { invalidDefault: true } : null;
+  }
+  DestinationcityChange(event) {
+    if (this.quoteF.destinationOtherYN.value == true) {
+      this.quoteF.destinationCityOther.setValidators(Validators.required);
+      this.quoteF.destinationCityOther.updateValueAndValidity();
+      this.quoteF.destinationCity.clearValidators();
+      this.quoteF.destinationCity.updateValueAndValidity();
+    }
+    else {
+      this.quoteF.destinationCity.setValidators(Validators.required);
+      this.quoteF.destinationCity.updateValueAndValidity();
+      this.quoteF.destinationCityOther.clearValidators();
+      this.quoteF.destinationCityOther.updateValueAndValidity();
 
+    }
+
+  }
+  OrgincityChange(event) {
+    if (this.quoteF.orginatingCityOtherYN.value == true) {
+      this.quoteF.orginatingCityOther.setValidators(Validators.required);
+      this.quoteF.orginatingCityOther.updateValueAndValidity();
+      this.quoteF.originatingCity.clearValidators();
+      this.quoteF.originatingCity.updateValueAndValidity();
+    }
+    else {
+      this.quoteF.originatingCity.setValidators(Validators.required);
+      this.quoteF.originatingCity.updateValueAndValidity();
+      this.quoteF.orginatingCityOther.clearValidators();
+      this.quoteF.orginatingCityOther.updateValueAndValidity();
+
+    }
+
+  }
 }

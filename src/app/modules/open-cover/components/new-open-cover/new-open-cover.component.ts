@@ -1,5 +1,5 @@
 import { OpenCoverService } from './../../open-cover.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Mydatas from '../../../../app-config.json';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +9,8 @@ import { SessionStorageService } from '../../../../shared/storage/session-storag
 import { ModalDismissReasons, NgbDateAdapter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { table } from 'console';
 import { NbMenuService } from '@nebular/theme';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-new-open-cover',
@@ -17,7 +19,12 @@ import { NbMenuService } from '@nebular/theme';
 })
 export class NewOpenCoverComponent implements OnInit {
   public AppConfig: any = (Mydatas as any).default;
+  @ViewChild('myModal4') myModal4: any;
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  displayedColumns: string[] = ['select', 'BROKER_CODE', 'BROKER_NAME'];
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public AdminUrl: any = this.AppConfig.AdminUrl;
   public userDetails: any;
   public productId: any;
   public newQuoteForm!: FormGroup;
@@ -33,7 +40,9 @@ export class NewOpenCoverComponent implements OnInit {
 
   public filterValue: any;
   public tableData: any[] = [];
+  public searchList: any[] = [];
   public columnHeader: any[] = [];
+  public columnHeader1: any[] = [];
   customerId: any;
   public loginId: any = '';
   public submitted: boolean = false;
@@ -160,6 +169,18 @@ export class NewOpenCoverComponent implements OnInit {
     }
     this.minDate = ngbDate;
   }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+
+    }, 2000);
+  }
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   reloadCurrentRoute() {
 
     window.location.reload();
@@ -229,6 +250,17 @@ export class NewOpenCoverComponent implements OnInit {
       { key: 'EmirateName', display: 'Emirate Name' },
       { key: 'MissippiCustomerCode', display: 'Flag' },
     ];
+    // this.columnHeader1 = [
+    //   {
+    //     key: 'CustomerId',
+    //     display: 'Customer Id',
+    //     config: {
+    //       select: true,
+    //     },
+    //   },
+    //   { key: 'BROKER_CODE', display: 'Customer Name' },
+    //   { key: 'BROKER_NAME', display: 'Customer Name' },
+    // ];
     const urlLink = `${this.ApiUrl1}opencover/dropdown/customerlist`;
     const reqData = {
       'BranchCode': this.userDetails?.BranchCode,
@@ -517,8 +549,8 @@ export class NewOpenCoverComponent implements OnInit {
     //   },
     //   (err) => { },
     // );
-    console.log( this.userDetails," this.userDetails");
-    
+    console.log(this.userDetails, " this.userDetails");
+
     let countryId = this.userDetails?.LoginBranchDetails[0]?.OriginationCountryId
     const urlLink = `${this.ApiUrl1}master/countrycity/list`;
     const reqData = {
@@ -992,4 +1024,58 @@ export class NewOpenCoverComponent implements OnInit {
       (err) => { },
     );
   }
+
+  onSearchCustomer(value) {
+    this.columnHeader1 = [
+      {
+        key: 'CustomerId',
+        display: 'Customer Id',
+        config: {
+          select: true,
+        },
+      },
+      { key: 'BROKER_CODE', display: 'Customer Name' },
+      { key: 'BROKER_NAME', display: 'Customer Name' },
+    ];
+
+    this.modalService.open(this.myModal4, { size: 'lg', scrollable: true });
+
+    let ReqObj = {
+      "BranchCode": null,
+      "InsuranceId": this.userDetails.InsuranceId,
+      "SearchValue": value ? value : null,
+      "SourceType": this.userDetails.SubUserType
+    }
+    let urlLink = `${this.AdminUrl}api/search/premiabrokercustomercode`;
+    this.openCoverService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log("Searched Data", data);
+
+        if (data.Result.length != 0) {
+          if (data.Result.length == 1) {
+            if (data.Result[0].BROKER_CODE != null) {
+              this.searchList = data.Result;
+              // this.dataSource.data = this.searchList;
+              // this.dataSource = new MatTableDataSource(this.searchList);
+              // this.dataSource.paginator = this.paginator;
+            }
+          }
+          else {
+            this.searchList = data.Result;
+            // this.dataSource.data = this.searchList;
+            // this.dataSource = new MatTableDataSource(this.searchList);
+            // this.dataSource.paginator = this.paginator; // <-- Important!
+          }
+        }
+      },
+      (err) => { },
+    );
+
+  }
+  selectProduct(customer: any, modal) {
+    this.coreAppcode = customer.BROKER_CODE
+    this.customerName = customer.BROKER_NAME
+    modal.close();
+  }
+
 }

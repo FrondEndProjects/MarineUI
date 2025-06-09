@@ -169,7 +169,9 @@ export class ApprovedComponent implements OnInit {
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item?.ApplicationNo);
     sessionStorage.setItem('QuoteStatus',item?.QuoteStatus);
-    this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+     let value ='referral'
+    this.router.navigate([`/${this.routerBaseLink}/new-quotes`],{ queryParams: { value } });
+    // this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
   }
 
   onReject(item:any){
