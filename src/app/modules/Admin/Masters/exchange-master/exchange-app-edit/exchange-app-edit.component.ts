@@ -49,7 +49,8 @@ export class ExchangeAppEditComponent implements OnInit {
 
   getCurrencyList()  {
     let ReqObj = {
-      "BranchCode": this.userDetails.Result.BelongingBranch
+      // "BranchCode": this.userDetails.Result.BelongingBranch
+      'BranchCode': this.userDetails?.BranchCode,
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/currency`, ReqObj).subscribe(
       (data: any) => {

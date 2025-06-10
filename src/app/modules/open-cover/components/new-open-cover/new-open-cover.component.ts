@@ -361,7 +361,8 @@ export class NewOpenCoverComponent implements OnInit {
   onGetCurrencyDropdownList() {
     const urlLink = `${this.ApiUrl1}opencover/dropdown/currency`;
     const reqData = {
-      'BranchCode': this.userDetails?.BelongingBranch,
+      // 'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.BranchCode,
       'CountryId': this.userDetails?.CountryId,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
