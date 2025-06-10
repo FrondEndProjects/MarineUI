@@ -950,6 +950,7 @@ export class NewOpenCoverComponent implements OnInit {
   onGetPremiumDropdownList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/premiumcurrency`;
     const reqData = {
+      'CompanyId': this.userDetails?.RegionCode,
       'BranchCode': this.userDetails?.BelongingBranch,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
