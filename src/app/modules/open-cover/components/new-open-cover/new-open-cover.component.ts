@@ -532,43 +532,47 @@ export class NewOpenCoverComponent implements OnInit {
     );
   }
   onGetCityDropdownList() {
-    // const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
-    // const reqData = {
-    //   'BranchCode': this.userDetails?.BelongingBranch,
-    //   'ProductId': this.productId,
-    //   'pvType': 'city',
-    //   'OpenCoverNo': this.OpenCover?.value,
-    // };
-    // this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
-    //   (data: any) => {
-    //     console.log(data);
-    //     if (data?.Message === 'Success') {
-    //       this.dropCityList = data?.Result;
 
-    //     }
-    //   },
-    //   (err) => { },
-    // );
     console.log(this.userDetails, " this.userDetails");
+    if (this.userDetails.InsuranceId == '100020') {
+      let countryId = this.userDetails?.LoginBranchDetails[0]?.OriginationCountryId
+      const urlLink = `${this.ApiUrl1}master/countrycity/list`;
+      const reqData = {
+        'countryID': countryId
+      };
 
-    let countryId = this.userDetails?.LoginBranchDetails[0]?.OriginationCountryId
-    const urlLink = `${this.ApiUrl1}master/countrycity/list`;
-    const reqData = {
-      'countryID': countryId
-    };
-
-    this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        console.log(data);
-        if (data?.Message === 'Success') {
-          this.dropCityList = data?.Result;
-          console.log(this.dropCityList);
+      this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data?.Message === 'Success') {
+            this.dropCityList = data?.Result;
+            console.log(this.dropCityList);
 
 
-        }
-      },
-      (err) => { },
-    );
+          }
+        },
+        (err) => { },
+      );
+    }
+    else {
+      const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
+      const reqData = {
+        'BranchCode': this.userDetails?.BranchCode,
+        'ProductId': this.productId,
+        'pvType': 'city',
+        'OpenCoverNo': this.OpenCover?.value,
+      };
+      this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data?.Message === 'Success') {
+            this.dropCityList = data?.Result;
+
+          }
+        },
+        (err) => { },
+      );
+    }
   }
   onsubmit() {
     let valid = this.checkMandatories();

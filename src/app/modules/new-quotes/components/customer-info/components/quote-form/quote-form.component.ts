@@ -1081,7 +1081,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
 
     const urlLink = `${this.ApiUrl1}quote/dropdown/currency`;
     const reqData = {
-      'BranchCode': this.userDetails?.BelongingBranch,
+      // 'BranchCode': this.userDetails?.BelongingBranch,
+      'BranchCode': this.userDetails?.BranchCode,
       'ProductId': this.productId,
       'pvType': 'currency',
     };

@@ -21,7 +21,7 @@ export class CustomerFormComponent implements OnInit {
   public productId: any;
   public openCoverNo: any = '';
   public filterValue: any;
-  customerType:any ='Individual'
+  customerType: any = 'Individual'
   columnHeader1: any[] = [];
   searchList: any[] = [];
   public loginId: any;
@@ -140,18 +140,25 @@ export class CustomerFormComponent implements OnInit {
     );
   }
   onGetCityDropdownList() {
-    let countryId = this.userDetails?.OriginationCountryId ? this.userDetails?.OriginationCountryId : this.userDetails?.LoginBranchDetails[0]?.OriginationCountryId;
-    const urlLink = `${this.ApiUrl1}master/countrycity/list`;
-    const reqData = {
-      'countryID': countryId
-    };
-    // const urlLink = `${this.ApiUrl1}quote/dropdown/city`;
-    // const reqData = {
-    //   'BranchCode': this.userDetails?.BelongingBranch,
-    //   'ProductId': this.productId,
-    //   'pvType': 'city',
-    //   'OpenCoverNo': this.openCoverNo,
-    // };
+    let urlLink
+    let reqData
+    if (this.userDetails.InsuranceId == '100020') {
+      let countryId = this.userDetails?.OriginationCountryId ? this.userDetails?.OriginationCountryId : this.userDetails?.LoginBranchDetails[0]?.OriginationCountryId;
+      urlLink = `${this.ApiUrl1}master/countrycity/list`;
+      reqData = {
+        'countryID': countryId
+      };
+    }
+    else {
+      urlLink = `${this.ApiUrl1}quote/dropdown/city`;
+      reqData = {
+        'BranchCode': this.userDetails?.BelongingBranch,
+        'ProductId': this.productId,
+        'pvType': 'city',
+        'OpenCoverNo': this.openCoverNo,
+      };
+    }
+
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
@@ -319,7 +326,7 @@ export class CustomerFormComponent implements OnInit {
         "CustLastName": null,
         "CustVatRegNo": this.customerVat,
         "CustomerArNo": null,
-       'CustomerType': this.customerType,
+        'CustomerType': this.customerType,
         "CustomerArabicName": null,
         "CustomerCode": this.coreAppcode,
         "CustomerId": null,
