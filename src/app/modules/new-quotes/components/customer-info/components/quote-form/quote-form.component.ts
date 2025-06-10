@@ -203,8 +203,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     });
 
 
-    // this.onGetOriginCityDropdownList();
-    // this.onGetDestinaCityDropdownList();
+    //  this.onGetOriginCityDropdownList();
+    //  this.onGetDestinaCityDropdownList();
 
   }
 
@@ -314,7 +314,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     if (this.dropIncotermsList.length == 0 && !this.docUploadedData) this.onGetIncotermsDropdownList(1);
     if (this.dropToleranceList.length == 0 && !this.docUploadedData) this.onGetToleranceDropdownList(1);
     if (this.dropCurrencyList.length == 0 && !this.docUploadedData) this.onGetCurrencyDropdownList(1);
-    // if (this.dropPremiumCurrencyList.length == 0 && !this.docUploadedData) this.onGetPremiumDropdownList(1);
+     if (this.dropPremiumCurrencyList.length == 0 && !this.docUploadedData) this.onGetPremiumDropdownList(1);
     if (this.dropGoodsOfCateList.length == 0 && !this.docUploadedData) this.onGetGoodsOfCategoryDropdownList(1);
     if (this.dropGoodsOfCateList.length == 0 && this.openCoverNo != null && this.quoteF.warSrcc.value == 'N') this.onCheckWarYesOrNo();
 
@@ -351,7 +351,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     // let currency = this.dropCurrencyList.filter(e => e.ShortCode == this.docUploadedData?.Currency)
     this.onGetGoodsOfCategoryDropdownList(2);
     this.onGetToleranceDropdownList(2);
-    // this.onGetPremiumDropdownList(2);
+     this.onGetPremiumDropdownList(2);
     // this.onGetPackageDescDropdownList(2);
     this.onGetCurrencyDropdownList(2);
     this.onGetOriginCountryDropdownList(2)
@@ -494,8 +494,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onGetCoverDropdownList(value) {
-    this.onGetOriginCityDropdownList();
-    this.onGetDestinaCityDropdownList();
+    if(this.insurenceId=='100020'){
+        this.onGetOriginCityDropdownList();
+        this.onGetDestinaCityDropdownList();
+    }
+    
     this.quoteF.cover.setValue('');
     this.quoteF.modeOfCarriage.setValue('');
     let modeOfTransport
@@ -594,39 +597,41 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     );
   }
   onGetOriginCityDropdownList() {
+   
     this.quoteF.originatingCity.setValue('');
-    // const urlLink = `${this.ApiUrl1}quote/dropdown/originationcity`;
-    // const reqData = {
-    //   'pvType': 'orgCity',
-    //   'OriginationCountryCode': this.quoteF.originatingCountry.value,
-    //   'BranchCode': this.userDetails?.BelongingBranch,
-    // };
+     let d: any
+      d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
+      let Codevalue: any = null;
+      if (this.quoteF.modeOfTransport?.value == '1' && this.insurenceId == '100020') {
+        Codevalue = d[0]?.CodeValue
+      }
+      else if (this.quoteF.modeOfTransport?.value == null && this.insurenceId == '100020') {
+        Codevalue = this.quoteF.originatingCountry.value
+
+      }
+      else {
+        if(this.insurenceId == '100020') Codevalue = d[0]?.CodeValue2
+        else Codevalue = this.quoteF.originatingCountry.value
+      }
+    let urlLink=null,reqData=null;
     if (this.insurenceId == '100020') {
       // this.get_transhipping_list()
-
+      urlLink = `${this.ApiUrl1}master/countryport/list`;
+      reqData = {
+        'countryID': Codevalue,
+        "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
+      };
     }
-
-    let d: any
-    d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
-    let Codevalue: any = null;
-    if (this.quoteF.modeOfTransport?.value == '1') {
-
-      Codevalue = d[0]?.CodeValue
+    else{
+       urlLink = `${this.ApiUrl1}quote/dropdown/originationcity`;
+       reqData = {
+        'pvType': 'orgCity',
+        'OriginationCountryCode': this.quoteF.originatingCountry.value,
+        'BranchCode': this.userDetails?.BelongingBranch,
+      };
     }
-    else if (this.quoteF.modeOfTransport?.value == null) {
-      Codevalue = this.quoteF.originatingCountry.value
-
-    }
-    else {
-      Codevalue = d[0]?.CodeValue2
-    }
-    const urlLink = `${this.ApiUrl1}master/countryport/list`;
-    const reqData = {
-      'countryID': Codevalue,
-      "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
-    };
     console.log(reqData, "reqData");
-    if (Codevalue && this.quoteF.modeOfTransport.value) {
+    if (Codevalue && (this.quoteF.modeOfTransport.value || this.insurenceId!='100020')) {
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
 
@@ -684,25 +689,35 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     // };
     let d: any
     d = this.dropDestinaCountryList.filter(e => e.Code == this.quoteF.destinationCountry.value)
-    let Codevalue: any = null;
-    if (this.quoteF.modeOfTransport?.value == '1') {
+    let Codevalue: any = null,urlLink=null,reqData=null;
+    if (this.quoteF.modeOfTransport?.value == '1' && this.insurenceId=='100020') {
 
       Codevalue = d[0]?.CodeValue
     }
-    else if (this.quoteF.modeOfTransport?.value == null) {
+    else if (this.quoteF.modeOfTransport?.value == null && this.insurenceId=='100020') {
       Codevalue = this.quoteF.destinationCountry.value
 
     }
     else {
-      Codevalue = d[0]?.CodeValue2
+     if(this.insurenceId=='100020') Codevalue = d[0]?.CodeValue2
+     else Codevalue =this.quoteF.destinationCountry.value
     }
-
-    const urlLink = `${this.ApiUrl1}master/countryport/list`;
-    const reqData = {
-      'countryID': Codevalue,
-      "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
-    };
-    if (Codevalue && this.quoteF.modeOfTransport.value) {
+    if(this.insurenceId=='100020'){
+        urlLink = `${this.ApiUrl1}master/countryport/list`;
+        reqData = {
+          'countryID': Codevalue,
+          "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
+        };
+    }
+    else{
+      urlLink = `${this.ApiUrl1}quote/dropdown/destinationcity`;
+      reqData = {
+        'pvType': 'destCity',
+        'BranchCode': this.userDetails?.BelongingBranch,
+        'DestinationCountryCode': this.quoteF.destinationCountry.value,
+      };
+    }
+    if (Codevalue && (this.quoteF.modeOfTransport.value || this.insurenceId!='100020')) {
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
 
@@ -1097,6 +1112,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   onGetPremiumDropdownList(value) {
     const urlLink = `${this.ApiUrl1}quote/dropdown/premiumcurrency`;
     const reqData = {
+      'CompanyId': this.userDetails?.RegionCode,
       'BranchCode': this.userDetails?.BelongingBranch,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(

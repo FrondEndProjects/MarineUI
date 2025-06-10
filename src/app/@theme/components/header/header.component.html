@@ -4,7 +4,24 @@
       <!-- <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
         <nb-icon icon="menu-2-outline"></nb-icon>
       </a> -->
-      <a class="logo" href="#" (click)="navigateHome()" *ngIf="regionCode!='100020'"><img
+      <ng-container *ngIf="regionCode==='100046'">
+        <a class="logo" href="#" (click)="navigateHome()"><img
+          src="./assets/images/phoenixAlt.png" class="imgwid"></a>
+        </ng-container>
+        <ng-container *ngIf="regionCode==='100047'">
+           <a class="logo" href="#" (click)="navigateHome()"><img
+          src="./assets/images/cropped-botwa.png" class="imgwid"></a>
+        </ng-container>
+        <ng-container *ngIf="regionCode==='100048'">
+           <a class="logo" href="#" (click)="navigateHome()"><img src="./assets/images/PhoenixMozambique.png" class="imgwid"></a>
+        </ng-container>
+        <ng-container *ngIf="regionCode==='100049'">
+          <a class="logo" href="#" (click)="navigateHome()"><img src="./assets/images/cropped-swaziland.png" class="imgwid"></a>            
+        </ng-container>
+        <ng-container *ngIf="regionCode==='100050'">
+          <a class="logo" href="#" (click)="navigateHome()"><img src="./assets/images/cropped-NAMIBIA-LOGO-1.png" class="imgwid"></a>
+        </ng-container>
+      <a class="logo" href="#" (click)="navigateHome()" *ngIf="regionCode=='100002'"><img
           src="./assets/images/alliance-img-1.png" class="imgwid"></a>
       <a href="#" (click)="navigateHome()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png"
           class="imgwid"></a>
