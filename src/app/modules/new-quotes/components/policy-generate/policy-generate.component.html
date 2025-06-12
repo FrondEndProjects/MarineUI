@@ -350,7 +350,7 @@
       Marine Certificate Integration Failed Information
     </div>
   </div>
-  <div *ngIf="!certificateNo && integrationErrorList.length !=0  && generateCerti=='Y'" class="row header-details">
+  <div *ngIf="!certificateNo && integrationErrorList?.length !=0  && generateCerti=='Y'" class="row header-details">
     <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 
       <div class="vision-grid-item-body">
@@ -472,7 +472,7 @@
 
         <div class="vision-grid-item-body">
           <div class="row">
-            <div class="col-12 col-md-12 col-lg-12" *ngIf="policySection">
+            <div class="col-12 col-md-12 col-lg-12" *ngIf="policySection && policyNo">
               <div class="d-sm-flex flex-sm-row justify-content-sm-between">
                 <div class="p-2">
                   Policy No
@@ -515,19 +515,19 @@
       <button nbButton shape="round" size="small" status="danger" class="mx-2" *ngIf="!policySection"
         (click)="getBack()">Back</button>
 
-      <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection"
+      <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection && policyNo"
         (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
         <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
         <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container> Pdf</button>
       <ng-container *ngIf="porttype != 'MOP'">
-        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection"
+        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && policyNo"
           (click)="onDownloadCredit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
           Credit Note Pdf</button>
       </ng-container>
       <ng-container>
         <!-- <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
               AKI DOCUMENT</button> -->
-        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection"
+        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && policyNo"
           (click)="onDownloadDebit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
           Debit Note Pdf</button>
       </ng-container>
@@ -549,50 +549,51 @@
         (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button> -->
     </div>
     <div class="modal-body">
-     <div class="card grid customStyleCard mt-2" *ngIf="termsSection">
-            <!-- <div class="col-12 col-md-12 col-lg-12 text-center">
+      <div class="card grid customStyleCard mt-2" *ngIf="termsSection">
+        <!-- <div class="col-12 col-md-12 col-lg-12 text-center">
               <h6 class="m-0 p-0">Terms & Conditions</h6>
             </div> -->
-            <div class="col-12 col-md-12 col-lg-12">
-              <ol type="I">
-                <li class="customListStyle">I/We confirm that the information and documents provided are accurate and
-                  true. I/We
-                  understand that failure to do so may lead to the decline, termination or suspension of cover
-                  by First Assurance Company Limited. </li>
-                <li class="customListStyle">I/We understand that First Assurance Company Limited is part of a global
-                  financial institution
-                  and is obligated to comply with national and international laws, regulations, policies, and
-                  requirements to prevent criminal activities, money laundering, terrorist financing, sanctions
-                  violations and prohibited business activities. </li>
-                <li class="customListStyle">I/We consent to the collection, use, storage, processing, and sharing of our
-                  personal data by
-                  First Assurance Company Ltd and its affiliates in accordance with applicable data protection
-                  laws and the company’s privacy policy. This includes sharing information with third parties for
-                  due diligence, regulatory compliance, and risk assessment purposes.</li>
-                <li class="customListStyle">I /We, understand First Assurance Company Ltd will initially screen, verify
-                  and process all new
-                  and related information and thereafter monitor all information, instructions and transactions
-                  by and on behalf of my/ourselves in relation to all transactions and the business relationship
-                  on a continuous basis. This may result in the prohibition, limitation, and/or delay in the
-                  execution of instructions or transactions. It may further lead to the decline or termination of
-                  any transaction or business relationship with yourself(s) and to the extent permitted, we shall
-                  notify you of any such intended action. </li>
-                <li class="customListStyle">
-                  I/We acknowledge and confirm that neither First Assurance Company Ltd, nor its respective
-                  affiliates, employees, officers or directors, shall be liable for any direct or consequential loss,
-                  damage, costs or expenses whatsoever that may be suffered or incurred because of any such
-                  prohibition, limitation, delay, decline or termination due to the implementation of these
-                  conditions.
-                </li>
-              </ol>
-            </div>
-            <div class="col-12 col-md-12 col-lg-12" style="font-size: 15px;">
+        <div class="col-12 col-md-12 col-lg-12">
+          <ol type="I">
+            <li class="customListStyle">I/We confirm that the information and documents provided are accurate and
+              true. I/We
+              understand that failure to do so may lead to the decline, termination or suspension of cover
+              by First Assurance Company Limited. </li>
+            <li class="customListStyle">I/We understand that First Assurance Company Limited is part of a global
+              financial institution
+              and is obligated to comply with national and international laws, regulations, policies, and
+              requirements to prevent criminal activities, money laundering, terrorist financing, sanctions
+              violations and prohibited business activities. </li>
+            <li class="customListStyle">I/We consent to the collection, use, storage, processing, and sharing of our
+              personal data by
+              First Assurance Company Ltd and its affiliates in accordance with applicable data protection
+              laws and the company’s privacy policy. This includes sharing information with third parties for
+              due diligence, regulatory compliance, and risk assessment purposes.</li>
+            <li class="customListStyle">I /We, understand First Assurance Company Ltd will initially screen, verify
+              and process all new
+              and related information and thereafter monitor all information, instructions and transactions
+              by and on behalf of my/ourselves in relation to all transactions and the business relationship
+              on a continuous basis. This may result in the prohibition, limitation, and/or delay in the
+              execution of instructions or transactions. It may further lead to the decline or termination of
+              any transaction or business relationship with yourself(s) and to the extent permitted, we shall
+              notify you of any such intended action. </li>
+            <li class="customListStyle">
+              I/We acknowledge and confirm that neither First Assurance Company Ltd, nor its respective
+              affiliates, employees, officers or directors, shall be liable for any direct or consequential loss,
+              damage, costs or expenses whatsoever that may be suffered or incurred because of any such
+              prohibition, limitation, delay, decline or termination due to the implementation of these
+              conditions.
+            </li>
+          </ol>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12" style="font-size: 15px;">
 
-              <input type="checkbox" (change)="onChangeCheckBox($event)">&nbsp;<span>I have read the terms and conditions and
-              I hereby accept and agree to the terms and conditions as stated
-              above</span>
-            </div>
-          </div>
+          <input type="checkbox" (change)="onChangeCheckBox($event)">&nbsp;<span>I have read the terms and conditions
+            and
+            I hereby accept and agree to the terms and conditions as stated
+            above</span>
+        </div>
+      </div>
     </div>
     <!-- <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal"

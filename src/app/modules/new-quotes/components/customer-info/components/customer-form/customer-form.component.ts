@@ -152,7 +152,7 @@ export class CustomerFormComponent implements OnInit {
     else {
       urlLink = `${this.ApiUrl1}quote/dropdown/city`;
       reqData = {
-        'BranchCode': this.userDetails?.BelongingBranch,
+        'BranchCode': this.userDetails?.BranchCode,
         'ProductId': this.productId,
         'pvType': 'city',
         'OpenCoverNo': this.openCoverNo,

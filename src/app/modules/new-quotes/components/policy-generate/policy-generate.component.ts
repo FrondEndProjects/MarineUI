@@ -326,7 +326,17 @@ export class PolicyGenerateComponent implements OnInit {
           this.certificateNo = data?.Result?.certificateNo;
         }
         else {
-          this.integrationErrorList = data?.Result?.integrationErrorList;
+          if (data?.Result?.integrationErrorList) {
+            this.integrationErrorList = data?.Result?.integrationErrorList;
+          }
+
+          if (data?.Result?.integStatus == "Failed" && data?.Result?.errorDesc != '' && data?.Result?.errorDesc != null) {
+            Swal.fire(
+              'Integrate Failed!',
+              `${data?.Result?.errorDesc}`,
+              'info'
+            )
+          }
           // const rawErrorDesc = data.Result.errorDesc;G
 
           // const rawErrorDesc = data.Result.errorDesc;
