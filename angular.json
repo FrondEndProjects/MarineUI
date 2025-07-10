@@ -80,6 +80,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "aot": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -99,7 +100,8 @@
           "configurations": {
             "directories": { "output": "release/" },
             "production": {
-              "browserTarget": "ngx-admin-demo:build:production"
+              
+              "browserTarget": "your-project-name:build:production"
             }
           }
         },
