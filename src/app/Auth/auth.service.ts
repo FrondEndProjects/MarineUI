@@ -12,6 +12,9 @@ export class AuthService {
 
   private loggedToken: BehaviorSubject<any> = new BehaviorSubject<any>('');
 
+  private branchCodeSubject = new BehaviorSubject<string | null>(null);
+  branchCode$ = this.branchCodeSubject.asObservable();
+
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
@@ -27,6 +30,10 @@ export class AuthService {
     @Inject(DOCUMENT) private _document: Document,
   ) {
 
+  }
+
+  setBranchCode(code: any) {
+    this.branchCodeSubject.next(code);
   }
 
   login(userDetails: any) {

@@ -344,13 +344,13 @@
      </div> -->
   </div>
   <!-- {{!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate}} -->
-  <div *ngIf="!certificateNo && integrationErrorList.length !=0 && generateCerti=='Y'"
+  <div *ngIf="!certificateNo && integrationErrorList.length !=0 && generateCerti=='Y' && userDetails?.RegionCode =='100020'"
     class="col-12 col-md-12 col-lg-12">
     <div class="middle-line">
       Marine Certificate Integration Failed Information
     </div>
   </div>
-  <div *ngIf="!certificateNo && integrationErrorList?.length !=0  && generateCerti=='Y'" class="row header-details">
+  <div *ngIf="!certificateNo && integrationErrorList?.length !=0  && generateCerti=='Y' && userDetails?.RegionCode =='100020'" class="row header-details">
     <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 
       <div class="vision-grid-item-body">
@@ -531,8 +531,9 @@
           (click)="onDownloadDebit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
           Debit Note Pdf</button>
       </ng-container>
-      <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && certificateNo"
-        (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+      <button  nbButton shape="round" size="small" status="warning"
+        class="mx-2" *ngIf="policySection && certificateNo && userDetails?.RegionCode =='100020'" (click)="onDownloadAKIDoc()"><i class="fa fa-download"
+          aria-hidden="true"></i>&nbsp;
         Marine Certificate</button>
       <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="draftSection"
         (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>

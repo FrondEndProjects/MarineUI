@@ -171,7 +171,8 @@
 
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
-        <label class="input-form-label">KRA PIN<span class="text-required">*</span></label>
+        <label *ngIf="this.userDetails.InsuranceId =='100020'" class="input-form-label">KRA PIN<span class="text-required">*</span></label>
+        <label *ngIf="this.userDetails.InsuranceId !='100020'" class="input-form-label">VAT Registraion No<span class="text-required">*</span></label>
         <div class="input-form-box">
           <input type="text" class="input-form-control without-icon" formControlName="customerVat">
         </div>

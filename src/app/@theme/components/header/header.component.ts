@@ -29,7 +29,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  branch
   private alive = true;
+  branchList: any[] = [];
+  selectedBranch: string;
 
   themes = [
     {
@@ -71,7 +74,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {
 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    console.log(this.userDetails, "userDetails");
+
     this.userResponse = this.userDetails?.LoginResponse;
+    this.branchList = this.userDetails?.Result?.LoginBranchDetails;
     this.ProductId = this.userResponse?.ProductId;
     this.regionCode = this.userResponse.InsuranceId;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
@@ -79,17 +85,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userType = this.userResponse?.UserType;
     this.userPicture = 'assets/images/userIcon.png'
     // if(this.ProductId =='3') {
-
-    if (this.userType != 'admin') this.menu = borkerNavItems;
-    else this.menu = adminNavItems;
-
+    if (this.userType != 'admin') {
+      this.menu = borkerNavItems;
+    }
+    else {
+      // this.menu = adminNavItems;
+      if (this.regionCode != '100020') {
+        this.menu = adminNavItems.filter(item => item.title != 'Marine Certificate Integration');
+      }
+      else {
+        this.menu = adminNavItems
+      }
+    }
     // }
     // if(this.ProductId =='3')
+  }
+  ngAfterViewInit(): void {
+    this.selectedBranch = this.userResponse?.BranchCode;
+
+  }
+
+  onBranchChange(branchCode: any) {
+    this.authService.setBranchCode(branchCode);
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
-
 
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
@@ -221,17 +242,72 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateHome() {
     this.menuService.navigateHome();
-    location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+    if (this.userDetails?.Result?.SubUserType != 'b2c') {
+      // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login/product`;
+      location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+      // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
+      // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login/product`;
+      // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login/product`;
+      // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login/product`;
+      // location.href = `http://192.168.1.48:4900/#/auth/login/product`;
+
+
+    }
+    else {
+      // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
+      // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+      // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
+      // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
+      // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
+      location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+
+    }
     return false;
   }
 
   reloadCurrentRoute() {
     // this.router.navigate([`/login`]);
-    location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+    if (this.userDetails?.Result?.SubUserType != 'b2c') {
+      // // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
+      location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+      // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
+      // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+      // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
+      // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
+      // location.href = `http://192.168.1.48:4900/#/auth/login`;
+
+    }
+    else {
+      // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
+      location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
+      // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+      // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
+      // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
+
+    }
   }
 
   homeRoute() {
-    location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+    if (this.userDetails?.Result?.SubUserType != 'b2c') {
+      // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
+      location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+      // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
+      // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+      // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
+      // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
+      // location.href = `http://192.168.1.48:4900/#/auth/login`;
+
+    }
+    else {
+      // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
+      location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
+      // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+      // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
+      // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
+
+    }
   }
 
   setLogout() {
@@ -246,14 +322,51 @@ export class HeaderComponent implements OnInit, OnDestroy {
         sessionStorage.clear();
         localStorage.clear();
         this.authService.logout();
-        location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+
+        if (this.userDetails?.Result?.SubUserType != 'b2c') {
+          // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
+          location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+          // location.href = `http://192.168.1.48:4900/#/auth/login`;
+          // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+          // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
+          // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
+          // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
+
+        }
+        else {
+          // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
+          location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+          // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+          // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
+          // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
+          // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
+
+        }
       },
       (err: any) => {
         console.log(err);
         sessionStorage.clear();
         localStorage.clear();
         this.authService.logout();
-        location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+        if (this.userDetails?.Result?.SubUserType != 'b2c') {
+          // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
+          location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+          // location.href = `http://192.168.1.48:4900/#/auth/login`;
+          // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+          // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
+          // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
+          // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
+
+        }
+        else {
+          // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
+          location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+          // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+          // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
+          // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
+          // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
+
+        }
       },
     );
   }

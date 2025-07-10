@@ -54,6 +54,7 @@ export class CustomerFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) {
     this.userDetails = this.customerInfoComponent?.userDetails;
+    
     this.productId = this.customerInfoComponent?.productId;
     this.openCoverNo = this.customerInfoComponent.OpenCover?.value;
     this.customerForm = this.customerInfoComponent.customerForm;

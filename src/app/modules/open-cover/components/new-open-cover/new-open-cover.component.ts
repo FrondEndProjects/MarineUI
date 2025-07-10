@@ -11,6 +11,7 @@ import { table } from 'console';
 import { NbMenuService } from '@nebular/theme';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { AuthService } from '../../../../Auth/auth.service';
 
 @Component({
   selector: 'app-new-open-cover',
@@ -77,6 +78,7 @@ export class NewOpenCoverComponent implements OnInit {
   Address2: any = null;
   customerVat: any = null;
   dropTitleList: any[] = [];
+  branchList: any[] = [];
   constructor(
     private modalService: NgbModal,
     private openCoverService: OpenCoverService,
@@ -84,6 +86,7 @@ export class NewOpenCoverComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private currencyPipe: CurrencyPipe,
+        private authService: AuthService,
     private sessionStorageService: SessionStorageService,
     private dateAdapter: NgbDateAdapter<string>
   ) {
@@ -91,6 +94,8 @@ export class NewOpenCoverComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userDetails = this.userDetails?.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
+    this.branchList = this.userDetails?.LoginBranchDetails;
+
     this.loginId = this.userDetails.LoginId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
 
@@ -106,6 +111,11 @@ export class NewOpenCoverComponent implements OnInit {
       }
     });
 
+    this.authService.branchCode$.subscribe((branchCode) => {
+      if (branchCode) {
+        this.onGetBrokerDetailsDropdownList(branchCode); 
+      }
+    });
 
     this.menuService.onItemClick().subscribe((data) => {
       console.log("Current Route", data.item.link)
@@ -172,11 +182,13 @@ export class NewOpenCoverComponent implements OnInit {
   ngAfterViewInit() {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
-
+      this.newQuoteF.selectBranch.setValue(this.userDetails?.BranchCode);
     }, 2000);
   }
 
-
+  // onChangeBranch() {
+  //   this.onGetBrokerDetailsDropdownList();
+  // }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -194,6 +206,7 @@ export class NewOpenCoverComponent implements OnInit {
       businessType: [null, Validators.required],
       openCoverType: [null, Validators.required],
       selectBroker: [null, Validators.required],
+      selectBranch: [null, Validators.required],
       salesExective: [null, Validators.required],
       customer: ['', Validators.required],
       debitTo: ['Customer', Validators.required],
@@ -289,7 +302,7 @@ export class NewOpenCoverComponent implements OnInit {
   onLoadDropdownList() {
     this.onGetBusinessTypeDropdownList();
     this.onGetOpenCoverTypeDropdownList();
-    this.onGetBrokerDetailsDropdownList();
+    this.onGetBrokerDetailsDropdownList(this.userDetails?.BranchCode);
     this.onGetExcutiveDropdownList();
     this.onGetCurrencyDropdownList();
     this.onGetDeclarationDropdownList();
@@ -327,16 +340,19 @@ export class NewOpenCoverComponent implements OnInit {
       (err) => { },
     );
   }
-  onGetBrokerDetailsDropdownList() {
+  onGetBrokerDetailsDropdownList(code) {
+ 
     const urlLink = `${this.ApiUrl1}opencover/dropdown/brokerdetails`;
     const reqData = {
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': code,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         console.log(data);
         if (data?.Message === 'Success') {
           this.brokerList = data?.Result;
+          this.newQuoteF.selectBroker.setValue(this.editData?.BrokerId);
+          this.onChangeBroker();
         }
       },
       (err) => { },
@@ -659,8 +675,10 @@ export class NewOpenCoverComponent implements OnInit {
     this.customerId = this.editData?.CustomerId;
     this.newQuoteF.businessType.setValue(this.editData?.BusinessType.toString());
     this.newQuoteF.openCoverType.setValue(this.editData?.Type.toString());
-    this.newQuoteF.selectBroker.setValue(this.editData?.BrokerId);
-    this.onChangeBroker();
+    this.newQuoteF.selectBranch.setValue(this.editData?.LoginBranchCode);
+    this.onGetBrokerDetailsDropdownList(this.userDetails?.BranchCode);
+    // this.newQuoteF.selectBroker.setValue(this.editData?.BrokerId);
+    // this.onChangeBroker();
     this.newQuoteF.salesExective.setValue(this.editData?.ExecutiveId.toString());
     this.newQuoteF.customer.setValue(this.editData?.InsuredName);
     this.newQuoteF.premiumCurrency.setValue(this.editData?.PremiumCurrencyCode);
@@ -890,6 +908,7 @@ export class NewOpenCoverComponent implements OnInit {
       'InsuredName': this.newQuoteF.customer.value,
       'IssuanceFee': this.newQuoteF.issuanceFeePrecnt.value,
       'LoginBranchCode': this.userDetails?.BranchCode,
+      // 'LoginBranchCode': this.newQuoteF.selectBranch.value,
       'LoginId': this.userDetails?.LoginId,
       'LossDetail': '',
       'MarginPercent': '',

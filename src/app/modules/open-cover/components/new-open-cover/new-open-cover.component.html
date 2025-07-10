@@ -34,6 +34,20 @@
           </div>
         </div>
       </div>
+      <!-- <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+          <label class="input-form-label">Select Branch<span class="text-required">*</span></label>
+          <ng-select placeholder="Select" class="input-form-select" formControlName="selectBranch" [items]="branchList"
+            bindValue="BranchCode" bindLabel="BranchName" (change)="onChangeBranch()">
+          </ng-select>
+          <div class="input-form-error"
+            *ngIf="(newQuoteF.selectBranch.errors && submitted) || (!newQuoteF.selectBranch.valid && newQuoteF.selectBranch.touched)">
+            <div *ngIf="newQuoteF.selectBranch.errors?.required" class="error-text">
+              This field is required
+            </div>
+          </div>
+        </div>
+      </div> -->
       <div class="col-12 col-md-4 col-lg-4">
         <div class="input-control-container">
           <label class="input-form-label">Select Broker<span class="text-required">*</span></label>

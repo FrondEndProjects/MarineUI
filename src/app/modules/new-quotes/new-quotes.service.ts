@@ -61,7 +61,7 @@ export class NewQuotesService {
 
   public quoteEditData: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
   getQuoteEditData = this.quoteEditData.asObservable();
-  BrokerList:any[]=[];
+  BrokerList: any[] = [];
 
   public customerForm: FormGroup;
   public quoteForm: FormGroup;
@@ -73,7 +73,7 @@ export class NewQuotesService {
   routerBaseLink: any;
 
   constructor(
-    private router:Router,
+    private router: Router,
     private http: HttpClient,
     private authService: AuthService,
     private _formBuilder: FormBuilder,
@@ -90,61 +90,61 @@ export class NewQuotesService {
     this.quoteEditData.complete();
   }
   getDropDownList(list: any[], name: string) {
-    if ( name === 'bank' ) {
+    if (name === 'bank') {
       this.BankDropdown.next(list);
     }
-    if ( name === 'title' ) {
+    if (name === 'title') {
       this.TitleDropdown.next(list);
     }
-    if ( name === 'city' ) {
+    if (name === 'city') {
       this.CityDropdown.next(list);
     }
-    if ( name === 'transport' ) {
+    if (name === 'transport') {
       this.TransporDropdown.next(list);
     }
-    if ( name === 'cover' ) {
+    if (name === 'cover') {
       this.CoverDropdown.next(list);
     }
-    if ( name === 'carriage' ) {
+    if (name === 'carriage') {
       this.CarriageDropdown.next(list);
     }
-    if ( name === 'orgCountry' ) {
+    if (name === 'orgCountry') {
       this.OrginCountryDropdown.next(list);
     }
-    if ( name === 'orgCity' ) {
+    if (name === 'orgCity') {
       this.OrginCityDropdown.next(list);
     }
-    if ( name === 'destCounty' ) {
+    if (name === 'destCounty') {
       this.DestCountryDropdown.next(list);
     }
-    if ( name === 'destCity' ) {
+    if (name === 'destCity') {
       this.DestCityDropdown.next(list);
     }
-    if ( name === 'settlingAgent' ) {
+    if (name === 'settlingAgent') {
       this.SettlingAgentDropdown.next(list);
     }
-    if ( name === 'packageDesc' ) {
+    if (name === 'packageDesc') {
       this.PackageDescDropdown.next(list);
     }
-    if ( name === 'incoterms' ) {
+    if (name === 'incoterms') {
       this.IncotermsDropdown.next(list);
     }
-    if ( name === 'incotermsPrec' ) {
+    if (name === 'incotermsPrec') {
       this.IncotermsPrecDropdown.next(list);
     }
-    if ( name === 'tolerance' ) {
+    if (name === 'tolerance') {
       this.ToleranceDropdown.next(list);
     }
-    if ( name === 'goodesofCat' ) {
+    if (name === 'goodesofCat') {
       this.CatgOfGoodDropdown.next(list);
     }
-    if ( name === 'currencyList' ) {
+    if (name === 'currencyList') {
       this.CurrencyDropdown.next(list);
     }
-    if ( name === 'partialShip' ) {
+    if (name === 'partialShip') {
       this.PartialShipDropdown.next(list);
     }
-    if ( name === 'PremiumcurrencyList' ) {
+    if (name === 'PremiumcurrencyList') {
       this.PremiumDropdown.next(list);
     }
 
@@ -152,9 +152,9 @@ export class NewQuotesService {
 
   onEditQuoteDetails(item: any) {
     this.quoteEditData.next(item);
-    console.log("Showing Item Data",item)
+    console.log("Showing Item Data", item)
   }
-  redirectQuotePage(){
+  redirectQuotePage() {
     this.sessionStorageService.remove('referral');
     sessionStorage.setItem('quotesType', 'Without-Endo');
     //sessionStorage.removeItem('quotesType')
@@ -173,15 +173,15 @@ export class NewQuotesService {
     this.reloadCurrentRoute();
   }
   reloadCurrentRoute() {
-   
+
     this.router.navigate([`${this.routerBaseLink}/new-quotes/customer-info`]);
   }
-  ngbDateFormatt(data:any){
-    let d:any = data;
-    if(d != null && d != undefined && d != ''){
+  ngbDateFormatt(data: any) {
+    let d: any = data;
+    if (d != null && d != undefined && d != '') {
       d = new Date(data);
     }
-    if(d instanceof Date && !isNaN(d.valueOf())){
+    if (d instanceof Date && !isNaN(d.valueOf())) {
       const ngbDate = {
         "year": d.getFullYear(),
         "month": d.getMonth() + 1,
@@ -189,20 +189,20 @@ export class NewQuotesService {
       }
       return this.toModel(ngbDate)!;
     }
-    else{
+    else {
       return null;
     }
   }
 
   toModel(date: NgbDateStruct | null): string | null {
-		return date ? date.day + '-' + date.month + '-' + date.year : null;
-	}
+    return date ? date.day + '-' + date.month + '-' + date.year : null;
+  }
 
   onCreateFormControl() {
 
     this.brokerForm = this._formBuilder.group({
-      channel:[null],
-      borker:[null]
+      channel: [null],
+      borker: [null]
     })
     this.customerForm = this._formBuilder.group({
       title: [null, Validators.required],
@@ -210,20 +210,20 @@ export class NewQuotesService {
       coreAppcode: [''],
       city: [null, Validators.required],
       poBox: ['', Validators.required],
-      mobileNo: ['',Validators.required],
-      email: ['',Validators.required],
-      customerVat: ['',Validators.required],
-      Address1: ['',Validators.required],
+      mobileNo: ['', Validators.required],
+      email: ['', Validators.required],
+      customerVat: ['', Validators.required],
+      Address1: ['', Validators.required],
       Address2: [''],
       customerType: ['Individual'],
-      Code:[''],
+      Code: [''],
     });
     this.quoteForm = this._formBuilder.group({
       modeOfTransport: [null, Validators.required],
       cover: [null, Validators.required],
       modeOfCarriage: [null, Validators.required],
       originatingCountry: [null, Validators.required],
-      originatingCity: [null,Validators.required],
+      originatingCity: [null, Validators.required],
       orginatingCityOtherYN: [false],
       orginatingCityOther: [''],
       originatingWarehouse: ['NO'],
@@ -234,8 +234,8 @@ export class NewQuotesService {
       destinationWarehouse: ['NO'],
       policyStartDate: [null, Validators.required],
       warSrcc: ['NO'],
-      StoragePeriodYn:['N'],
-      TranshipmentYN:['N'],
+      StoragePeriodYn: ['N'],
+      TranshipmentYN: ['N'],
       warOnLand: ['NO'],
       via: [null],
       transhippingCountry: [null],
@@ -264,10 +264,10 @@ export class NewQuotesService {
       packageDescription: [null, Validators.required],
       incoterms: [null, Validators.required],
       incotermsPercentage: [null, Validators.required],
-      tolerance: ['4',Validators.required],
+      tolerance: ['4', Validators.required],
       conveyanceVesselName: [''],
-      ManfctureYear: [null,[
-       
+      ManfctureYear: [null, [
+
         // // Validators.min(-90),
         // // Validators.max(90),
         // Validators.pattern("^[0-9]*$")
@@ -276,9 +276,9 @@ export class NewQuotesService {
       partialShipment: ['N'],
       exposureOfShipment: [null],
       currencyOfExposure: [null],
-      fragileYN:['off'],
-      excessDescription:[''],
-      VesselId:['']
+      fragileYN: ['off'],
+      excessDescription: [''],
+      VesselId: ['']
 
     });
     this.bankForm = this._formBuilder.group({
@@ -315,10 +315,10 @@ export class NewQuotesService {
       vatTaxPrecentage: [''],
       vatTaxAmount: [''],
       totalPremium: [''],
-      isEditClauses:['N'],
-      ReferralUpdateYn:['N'],
-      comments:[''],
-      isFinalizeQuote:['N'],
+      isEditClauses: ['N'],
+      ReferralUpdateYn: ['N'],
+      comments: [''],
+      isFinalizeQuote: ['N'],
       commissionCheck: ['N'],
       commission: [''],
       referralStatus: ['N'],
@@ -351,7 +351,7 @@ export class NewQuotesService {
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return await this.http
       .post<any>(UrlLink, ReqObj, { headers: headers })
-      .pipe(catchError(this.handleError),shareReplay());
+      .pipe(catchError(this.handleError), shareReplay());
   }
   async onGetMethodAsync(UrlLink: any): Promise<Observable<any[]>> {
     let headers = new HttpHeaders();
@@ -375,8 +375,8 @@ export class NewQuotesService {
     formData.append('files', ReqObj.url);
     formData.append('filename', ReqObj.fileName);
     formData.append('docType', ReqObj.docType);
-    formData.append('loginid',ReqObj?.loginid);
-    formData.append('productid',ReqObj?.productid);
+    formData.append('loginid', ReqObj?.loginid);
+    formData.append('productid', ReqObj?.productid);
     formData.append('quoteno', ReqObj.quoteNo);
     formData.append('remarks', ReqObj.remarks);
     let headers = new HttpHeaders();
@@ -388,9 +388,9 @@ export class NewQuotesService {
   onDocumentPostMethodSync(UrlLink: string, ReqObj: any): Observable<any[]> {
     const formData: FormData = new FormData();
     formData.append('files', ReqObj.url);
-    formData.append('docType','1');
-    formData.append('loginid',ReqObj?.loginid);
-    formData.append('productid',ReqObj?.productid);
+    formData.append('docType', '1');
+    formData.append('loginid', ReqObj?.loginid);
+    formData.append('productid', ReqObj?.productid);
     formData.append('quoteno', ReqObj.quoteNo);
     formData.append('remarks', 'None');
     let headers = new HttpHeaders();
@@ -413,9 +413,10 @@ export class NewQuotesService {
     return throwError(error);
   }
 
-  onPostDocumentMethodSync( UrlLink: string,file,): Observable<any[]> {
+  onPostDocumentMethodSync(UrlLink: string, file,): Observable<any[]> {
     const formData: FormData = new FormData();
     formData.append('file', file);
+    // formData.append('method', 'multipart/form-data;');
     // formData.append('Req ', JSON.stringify(ReqObj));
     // this.cookieService.set(
     //     'XSRF-TOKEN',
@@ -427,12 +428,14 @@ export class NewQuotesService {
     //     'Strict',
     // );
     let headers = new HttpHeaders();
+    //  headers = headers.append('Content-Type',  'multipart/form-data;');
+      headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     headers = headers.append(
-        'Cache-Control',
-        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Cache-Control',
+      'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
     );
     return this.http
-        .post<any>(UrlLink, formData, { headers: headers })
-        .pipe(catchError(this.handleError));
-}
+      .post<any>(UrlLink, formData, { headers: headers })
+      .pipe(catchError(this.handleError));
+  }
 }

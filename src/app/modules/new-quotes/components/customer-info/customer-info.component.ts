@@ -18,6 +18,7 @@ import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
 import Swal from 'sweetalert2';
 import { log } from 'node:console';
+import { CustomLoadingService } from '../../../../shared/custom-loading.service';
 
 @Component({
   selector: 'app-customer-info',
@@ -35,6 +36,7 @@ export class CustomerInfoComponent implements OnInit {
   showFileUpload: boolean = false;
   showNewQuote: boolean = false;
   showselectCard: boolean = true;
+  showCommissionPopup: boolean = false;
   setDocvalue: any;
   public userDetails: any;
   public productId: any;
@@ -92,6 +94,8 @@ export class CustomerInfoComponent implements OnInit {
   Endors: any;
   UploadReferenceNo: any;
   brList: any[] = [];
+  shoAImesage: boolean = false;
+  shwoFilemesage: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -99,6 +103,7 @@ export class CustomerInfoComponent implements OnInit {
     private currencyPipe: CurrencyPipe,
     private activatedRoute: ActivatedRoute,
     private menuService: NbMenuService,
+    private loader: CustomLoadingService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private newQuotesComponent: NewQuotesComponent,
@@ -560,7 +565,7 @@ export class CustomerInfoComponent implements OnInit {
             'CurrencyCode': this.quoteF.currency.value,
             'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
             'PremiumCurrencyCode': this.dropPremiumCurrencyList[0]?.Code,
-             'PremiumCurrencyName': this.dropPremiumCurrencyList[0]?.CodeDescription,
+            'PremiumCurrencyName': this.dropPremiumCurrencyList[0]?.CodeDescription,
             // 'PremiumCurrencyCode': '1',
             // 'PremiumCurrencyName': 'KES',
             'CurrencyValue': this.quoteF.currencyValue.value,
@@ -758,8 +763,10 @@ export class CustomerInfoComponent implements OnInit {
           'CurrencyName': this.getCodeDescription(this.dropCurrencyList, this.quoteF.currency.value),
           // 'PremiumCurrencyCode': this.quoteF.premiumCurrency.value,
           // 'PremiumCurrencyName': this.getCodeDescription(this.dropPremiumCurrencyList, this.quoteF.premiumCurrency.value),
-          'PremiumCurrencyCode': '1',
-          'PremiumCurrencyName': 'KES',
+          // 'PremiumCurrencyCode': '1',
+          // 'PremiumCurrencyName': 'KES',
+          'PremiumCurrencyCode': this.dropPremiumCurrencyList[0]?.Code,
+          'PremiumCurrencyName': this.dropPremiumCurrencyList[0]?.CodeDescription,
           'CurrencyValue': this.quoteF.currencyValue.value,
           'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
           'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
@@ -885,33 +892,46 @@ export class CustomerInfoComponent implements OnInit {
 
 
   onUploadDocument(event: any, eventType: string) {
+    this.showCommissionPopup = true;
+    this.shwoFilemesage = true;
+    this.shoAImesage = false;
+    setTimeout(() => {
+      this.shoAImesage = true;
+
+    }, 3000);
     let file: File;
 
     if (eventType === 'click') {
       file = event.target.files[0];
     } else if (eventType === 'drop') {
-      file = event[0]; // assuming drop returns an array of files
+      file = event[0];
     }
 
-    // Check if file exists and is a PDF
     if (file && file.type === 'application/pdf') {
-      const url = 'http://139.59.23.162:3434/extract';
+      const url = `${this.ApiUrl1}marine/document/analyze`;
+      // const url = 'http://139.59.23.162:3434/extract';
       this.newQuotesService.onPostDocumentMethodSync(url, file).subscribe(
         (data: any) => {
           if (data.data) {
             sessionStorage.setItem('docUploadData', JSON.stringify(data.data));
             this.showFileUpload = false;
             this.showNewQuote = true;
+            this.shoAImesage = false;
+            this.shwoFilemesage = false
             this.showselectCard = false;
+            this.showCommissionPopup = false;
             this.onUploadSubmit(file)
           }
         },
         (err) => {
-          Swal.fire('Error', 'Failed to upload document.', 'error');
+          Swal.fire('Error', 'Invalid Document, Please upload correct one.', 'error');
+          this.showCommissionPopup = false;
         }
       );
     } else {
       Swal.fire('Invalid File', 'Please upload a PDF file only.', 'error');
+      this.showCommissionPopup = false;
+
     }
   }
 
@@ -965,7 +985,8 @@ export class CustomerInfoComponent implements OnInit {
       (data: any) => {
         if (data) {
           this.UploadReferenceNo = data.Message
-
+          this.shoAImesage = false;
+          this.shwoFilemesage = false
         }
         (err) => {
           // Swal.fire('Error', 'Failed to upload document.', 'error');

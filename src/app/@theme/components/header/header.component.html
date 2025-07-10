@@ -5,25 +5,26 @@
         <nb-icon icon="menu-2-outline"></nb-icon>
       </a> -->
       <ng-container *ngIf="regionCode==='100046'">
-        <a class="logo" href="#" (click)="navigateHome()"><img
-          src="./assets/images/phoenixAlt.png" class="imgwid"></a>
-        </ng-container>
-        <ng-container *ngIf="regionCode==='100047'">
-           <a class="logo" href="#" (click)="navigateHome()"><img
-          src="./assets/images/cropped-botwa.png" class="imgwid"></a>
-        </ng-container>
-        <ng-container *ngIf="regionCode==='100048'">
-           <a class="logo" href="#" (click)="navigateHome()"><img src="./assets/images/PhoenixMozambique.png" class="imgwid"></a>
-        </ng-container>
-        <ng-container *ngIf="regionCode==='100049'">
-          <a class="logo" href="#" (click)="navigateHome()"><img src="./assets/images/cropped-swaziland.png" class="imgwid"></a>            
-        </ng-container>
-        <ng-container *ngIf="regionCode==='100050'">
-          <a class="logo" href="#" (click)="navigateHome()"><img src="./assets/images/cropped-NAMIBIA-LOGO-1.png" class="imgwid"></a>
-        </ng-container>
-      <a class="logo" href="#" (click)="navigateHome()" *ngIf="regionCode=='100002'"><img
+        <a class="logo" href="#" (click)="homeRoute()"><img src="./assets/images/phoenixAlt.png" class="imgwid"></a>
+      </ng-container>
+      <ng-container *ngIf="regionCode==='100047'">
+        <a class="logo" href="#" (click)="homeRoute()"><img src="./assets/images/cropped-botwa.png" class="imgwid"></a>
+      </ng-container>
+      <ng-container *ngIf="regionCode==='100048'">
+        <a class="logo" href="#" (click)="homeRoute()"><img src="./assets/images/PhoenixMozambique.png"
+            class="imgwid"></a>
+      </ng-container>
+      <ng-container *ngIf="regionCode==='100049'">
+        <a class="logo" href="#" (click)="homeRoute()"><img src="./assets/images/cropped-swaziland.png"
+            class="imgwid"></a>
+      </ng-container>
+      <ng-container *ngIf="regionCode==='100050'">
+        <a class="logo" href="#" (click)="homeRoute()"><img src="./assets/images/cropped-NAMIBIA-LOGO-1.png"
+            class="imgwid"></a>
+      </ng-container>
+      <a class="logo" href="#" (click)="homeRoute()" *ngIf="regionCode=='100002'"><img
           src="./assets/images/alliance-img-1.png" class="imgwid"></a>
-      <a href="#" (click)="navigateHome()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png"
+      <a href="#" (click)="homeRoute()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png"
           class="imgwid"></a>
     </div>
   </div>
@@ -31,7 +32,15 @@
     <nb-actions size="small">
       <nb-action class="control-items" style="color: #fff !important" icon="home-outline"
         (click)="homeRoute()"></nb-action>
-      <nb-action *ngIf="CommonApiUrl =='http://192.168.1.42:8086/' || CommonApiUrl =='http://197.254.65.234:8080/EwayCommonApi/' " class="control-item">
+      <nb-action class="control-items broker-dropdown" *ngIf="ProductId =='11' && userType=='admin'">
+        <nb-select [(selected)]="selectedBranch" (selectedChange)="onBranchChange($event)" placeholder="Select Branch">
+          <nb-option *ngFor="let branch of branchList" [value]="branch.BranchCode">{{ branch.BranchName }}</nb-option>
+        </nb-select>
+      </nb-action>
+
+      <nb-action
+        *ngIf="CommonApiUrl =='http://192.168.1.42:8086/' || CommonApiUrl =='http://197.254.65.234:8080/EwayCommonApi/' "
+        class="control-item">
         <li class="dropdown" style="list-style-type: none !important;">
           <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
           <ng-container> &nbsp;&nbsp;&nbsp;&nbsp;</ng-container>
@@ -50,16 +59,18 @@
 
   </div>
 </div>
-<div  class="d-flex align-items-center" *ngIf="checkCurrentRouting()">
+<div class="d-flex align-items-center" *ngIf="checkCurrentRouting()">
   <div class="container">
     <nav class="navmenu">
       <ul>
         <ng-container *ngFor="let row of menu">
           <li *ngIf="!checkChildren(row)" (click)="onRedirectMenu(row)">
             <a routerLinkActive="active"><nb-icon [icon]="row.icon"></nb-icon>&nbsp;{{row.title}}</a>
-            
+
           </li>
-          <li *ngIf="checkChildren(row)" class="dropdown"><a><span> <nb-icon [icon]="row.icon"></nb-icon>&nbsp;{{row.title}} <nb-icon icon="arrow-ios-downward-outline"></nb-icon></span> <i
+          <li *ngIf="checkChildren(row)" class="dropdown"><a><span> <nb-icon
+                  [icon]="row.icon"></nb-icon>&nbsp;{{row.title}} <nb-icon
+                  icon="arrow-ios-downward-outline"></nb-icon></span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <ng-container *ngFor="let sub of row.children">
