@@ -870,74 +870,74 @@ export class PolicyGenerateComponent implements OnInit {
           this.payment_type_list = [
       {
         "Code": "1",
-        "CodeDesc": "Cash",
+        "CodeDesc": "On Account",
         "CodeDescLocal": "Cash",
         "Type": null
       },
-      {
-        "Code": "3",
-        "CodeDesc": "Credit",
-        "CodeDescLocal": "Credit",
-        "Type": null
-      },
-      {
-        "Code": "2",
-        "CodeDesc": "Cheque",
-        "CodeDescLocal": "Cheque",
-        "Type": null
-      },
+      // {
+      //   "Code": "3",
+      //   "CodeDesc": "Credit",
+      //   "CodeDescLocal": "Credit",
+      //   "Type": null
+      // },
+      // {
+      //   "Code": "2",
+      //   "CodeDesc": "Cheque",
+      //   "CodeDescLocal": "Cheque",
+      //   "Type": null
+      // },
       {
         "Code": "4",
         "CodeDesc": "Online Payment",
         "CodeDescLocal": "Online Payment",
         "Type": null
       },
-      {
-        "Code": "5",
-        "CodeDesc": "Pay BY Mobile Money",
-        "CodeDescLocal": "Pay BY Mobile Money",
-        "Type": null
-      },
-      {
-        "Code": "6",
-        "CodeDesc": "Debit Card",
-        "CodeDescLocal": "Debit Card",
-        "Type": null
-      }
+      // {
+      //   "Code": "5",
+      //   "CodeDesc": "Pay BY Mobile Money",
+      //   "CodeDescLocal": "Pay BY Mobile Money",
+      //   "Type": null
+      // },
+      // {
+      //   "Code": "6",
+      //   "CodeDesc": "Debit Card",
+      //   "CodeDescLocal": "Debit Card",
+      //   "Type": null
+      // }
     ]
     }
     else{
                 this.payment_type_list = [
-      {
-        "Code": "3",
-        "CodeDesc": "Credit",
-        "CodeDescLocal": "Credit",
-        "Type": null
-      },
-      {
-        "Code": "2",
-        "CodeDesc": "Cheque",
-        "CodeDescLocal": "Cheque",
-        "Type": null
-      },
+      // {
+      //   "Code": "3",
+      //   "CodeDesc": "Credit",
+      //   "CodeDescLocal": "Credit",
+      //   "Type": null
+      // },
+      // {
+      //   "Code": "2",
+      //   "CodeDesc": "Cheque",
+      //   "CodeDescLocal": "Cheque",
+      //   "Type": null
+      // },
       {
         "Code": "4",
         "CodeDesc": "Online Payment",
         "CodeDescLocal": "Online Payment",
         "Type": null
       },
-      {
-        "Code": "5",
-        "CodeDesc": "Pay BY Mobile Money",
-        "CodeDescLocal": "Pay BY Mobile Money",
-        "Type": null
-      },
-      {
-        "Code": "6",
-        "CodeDesc": "Debit Card",
-        "CodeDescLocal": "Debit Card",
-        "Type": null
-      }
+      // {
+      //   "Code": "5",
+      //   "CodeDesc": "Pay BY Mobile Money",
+      //   "CodeDescLocal": "Pay BY Mobile Money",
+      //   "Type": null
+      // },
+      // {
+      //   "Code": "6",
+      //   "CodeDesc": "Debit Card",
+      //   "CodeDescLocal": "Debit Card",
+      //   "Type": null
+      // }
     ]
     }
   }
