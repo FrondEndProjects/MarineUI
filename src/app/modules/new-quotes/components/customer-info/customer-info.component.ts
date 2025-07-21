@@ -338,8 +338,12 @@ export class CustomerInfoComponent implements OnInit {
           }, 100);
           if (this.editQuoteData?.BrokerCode) {
             console.log(this.editQuoteData?.BrokerCode);
+            setTimeout(() => {
+              if (this.brokerFormComponent.dropBrokerList.length != 0) {
+                this.customerFormComponent.brokerCode = this.editQuoteData?.BrokerCode;
+              }
 
-            this.customerFormComponent.brokerCode = this.editQuoteData?.BrokerCode;
+            }, 200);
           }
           this.customerF.coreAppcode.setValue(customerDetails?.CoreAppCode);
           this.customerF.city.setValue(customerDetails?.CityCode);
@@ -466,6 +470,14 @@ export class CustomerInfoComponent implements OnInit {
         this.quoteFormComponent.submitted = false;
         let issuerId: any = '', loginId = null;
         let brokerCode = null;
+        let branchCode = null;
+        if (this.setDocvalue != 'referral' && this.setDocvalue != 'back' && this.setDocvalue != 'edit' ) {
+          branchCode = this.userDetails?.BranchCode
+
+        }
+        else {
+          branchCode = this.editQuoteData?.BranchCode
+        }
         // Broker
         if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
           this.brokerCode = this.userDetails.AgencyCode;
@@ -486,11 +498,19 @@ export class CustomerInfoComponent implements OnInit {
 
           if (this.editSection) {
 
-            loginId = this.brokerF.borker.value;
+
             issuerId = this.editQuoteData?.Issuer;
             let brokerList = this.newQuotesService.BrokerList;
             let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
-            if (entry) { brokerCode = entry?.CodeValue }
+            if (this.setDocvalue != 'referral' && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
+              if (entry) { brokerCode = entry?.CodeValue }
+              loginId = this.brokerF.borker.value;
+            }
+            else {
+              brokerCode = this.editQuoteData?.BrokerCode
+              loginId = this.editQuoteData?.LoginId
+
+            }
           }
           else {
 
@@ -509,7 +529,7 @@ export class CustomerInfoComponent implements OnInit {
 
         const urlLink = `${this.ApiUrl1}quote/save`;
         const reqData = {
-          'BranchCode': this.userDetails?.BranchCode,
+          'BranchCode': branchCode,
           'BrokerCode': brokerCode,
           'ChannelType': this.brokerF.channel.value,
           'CustomerDetails': {
@@ -663,6 +683,16 @@ export class CustomerInfoComponent implements OnInit {
       this.quoteFormComponent.submitted = false;
       let issuerId: any = '', loginId = null;
       let brokerCode = null;
+      let branchCode = null;
+      if (this.setDocvalue != 'referral' && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
+        branchCode = this.userDetails?.BranchCode
+
+      }
+      else {
+
+        branchCode = this.editQuoteData?.BranchCode
+
+      }
       // Broker
       if (this.userDetails.UserType === 'Broker' || this.userDetails.UserType === 'User') {
         this.brokerCode = this.userDetails.AgencyCode;
@@ -683,11 +713,18 @@ export class CustomerInfoComponent implements OnInit {
 
         if (this.editSection) {
 
-          loginId = this.brokerF.borker.value;
+
           issuerId = this.editQuoteData?.Issuer;
           let brokerList = this.newQuotesService.BrokerList;
           let entry = brokerList.find(ele => ele.Code == this.brokerF.borker.value)
-          if (entry) { brokerCode = entry?.CodeValue }
+          if (this.setDocvalue != 'referral' && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
+            if (entry) { brokerCode = entry?.CodeValue }
+            loginId = this.brokerF.borker.value;
+          }
+          else {
+            brokerCode = this.editQuoteData?.BrokerCode
+            loginId = this.editQuoteData?.LoginId
+          }
         }
         else {
 
@@ -706,7 +743,7 @@ export class CustomerInfoComponent implements OnInit {
 
       const urlLink = `${this.ApiUrl1}quote/save`;
       const reqData = {
-        'BranchCode': this.userDetails?.BranchCode,
+        'BranchCode': branchCode,
         'BrokerCode': brokerCode,
         'ChannelType': this.brokerF.channel.value,
         'CustomerDetails': {

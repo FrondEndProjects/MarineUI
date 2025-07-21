@@ -13,13 +13,13 @@ export class ApprovedQuotesComponent implements OnInit {
   public searchForm!: FormGroup;
   public tableData: any[] = [];
   public columnHeader: any[] = [];
-  public FilterValue:any='';
+  public FilterValue: any = '';
   public userDetails: any;
-  public routerBaseLink:any='';
+  public routerBaseLink: any = '';
 
   constructor(
-    private adminReferralService:AdminReferralService,
-    private router:Router
+    private adminReferralService: AdminReferralService,
+    private router: Router
   ) {
     this.searchForm = this.adminReferralService.searchForm;
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -29,11 +29,11 @@ export class ApprovedQuotesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sF.productName.valueChanges.subscribe(data=>console.log(data));
-    this.adminReferralService.tableData.subscribe((data:any[])=>{
+    this.sF.productName.valueChanges.subscribe(data => console.log(data));
+    this.adminReferralService.tableData.subscribe((data: any[]) => {
       this.tableData = data;
     });
-    this.adminReferralService.columnHeader.subscribe((data:any[])=>{
+    this.adminReferralService.columnHeader.subscribe((data: any[]) => {
       this.columnHeader = data;
     });
 
@@ -46,27 +46,29 @@ export class ApprovedQuotesComponent implements OnInit {
   isActionBtn(item: any) {
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item?.ApplicationNo);
-    sessionStorage.setItem('QuoteStatus',item?.QuoteStatus);
-    let productid=sessionStorage.getItem('productId');
-    console.log('ProductIdsssssss',productid);
-    if(item?.OpenCoverNo){
+    sessionStorage.setItem('QuoteStatus', item?.QuoteStatus);
+    let productid = sessionStorage.getItem('productId');
+    console.log('ProductIdsssssss', productid);
+    if (item?.OpenCoverNo) {
       const opencover = {
-        'name':'adminReferral',
-        'value':item?.OpenCoverNo,
+        'name': 'adminReferral',
+        'value': item?.OpenCoverNo,
         "productId": productid
         //item?.ProductId
       }
-       sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+      sessionStorage.setItem('OpenCover', JSON.stringify(opencover));
     }
-    else{
+    else {
       const opencover = {
-        'name':'adminReferral',
-        'value':null,
-        "productId":productid
+        'name': 'adminReferral',
+        'value': null,
+        "productId": productid
       }
-       sessionStorage.setItem('OpenCover',JSON.stringify(opencover));
+      sessionStorage.setItem('OpenCover', JSON.stringify(opencover));
     }
-    this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+    // this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+    let value = 'referral'
+    this.router.navigate([`/${this.routerBaseLink}/new-quotes`], { queryParams: { value } });
   }
 
 }

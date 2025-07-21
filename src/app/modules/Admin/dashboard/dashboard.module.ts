@@ -14,6 +14,7 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { BrokerDashboradComponent } from './broker-dashborad/broker-dashborad.component';
 
 
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
@@ -21,7 +22,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    BrokerDashboradComponent
   ],
   imports: [
     CommonModule,

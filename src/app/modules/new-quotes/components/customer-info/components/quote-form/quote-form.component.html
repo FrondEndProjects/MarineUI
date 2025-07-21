@@ -65,7 +65,7 @@
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label d-flex">
-          <span class="mx-2">Originating city <span class="text-required">*</span></span>
+          <span class="mx-2">Originating city <span *ngIf="insurenceId=='100020'" class="text-required">*</span></span>
           <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="switch1" (change)="OrgincityChange($event)"
               formControlName="orginatingCityOtherYN">
@@ -147,7 +147,7 @@
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label d-flex">
-          <span class="mx-2">Destination city <span class="text-required">*</span></span>
+          <span class="mx-2">Destination city <span *ngIf="insurenceId=='100020'" class="text-required">*</span></span>
           <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="switch2" (change)="DestinationcityChange($event)"
               formControlName="destinationOtherYN">

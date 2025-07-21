@@ -25,16 +25,16 @@ export class UnApprovedComponent implements OnInit {
 
   public brokerList: any[] = [];
   public selectedBroker: any = '';
-  public OpenCover:any='';
-  public routerBaseLink:any='';
+  public OpenCover: any = '';
+  public routerBaseLink: any = '';
   isIssuer: boolean;
 
   constructor(
     private referralService: ReferralService,
     private router: Router,
-    private referralComponent:ReferralComponent,
+    private referralComponent: ReferralComponent,
     public dialog: MatDialog,
-    public sessionStorageService:SessionStorageService
+    public sessionStorageService: SessionStorageService
 
   ) {
     this.ApiUrl1 = this.referralComponent.ApiUrl1;
@@ -54,7 +54,7 @@ export class UnApprovedComponent implements OnInit {
     }
     // Issuer
 
-    if (this.userDetails?.UserType == "Issuer"){
+    if (this.userDetails?.UserType == "Issuer") {
       //this.loginId = this.endorsement?.LoginId || '';
       //.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;
@@ -78,7 +78,7 @@ export class UnApprovedComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.brokerList = data?.Result;
-        this.selectedBroker = this.selectedBroker?this.selectedBroker:this.brokerList[0].LoginId;
+        this.selectedBroker = this.selectedBroker ? this.selectedBroker : this.brokerList[0].LoginId;
         this.onChangeBroker();
       },
       (err) => { },
@@ -87,7 +87,7 @@ export class UnApprovedComponent implements OnInit {
 
 
   onChangeBroker() {
-    if(this.selectedBroker){
+    if (this.selectedBroker) {
       this.loginId = this.selectedBroker;
     }
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
@@ -98,11 +98,11 @@ export class UnApprovedComponent implements OnInit {
   onLoadGrid() {
     const urlLink = `${this.ApiUrl1}menu/referral/unapprovedquote`;
     const reqData = {
-      "LoginId":this.loginId,
-      "ApplicationId":this.applicationId,
-      "BranchCode":this.userDetails.BranchCode,
-      "OpenCoverNo":this.OpenCover?.value,
-      "ProductId":this.productId,
+      "LoginId": this.loginId,
+      "ApplicationId": this.applicationId,
+      "BranchCode": this.userDetails.BranchCode,
+      "OpenCoverNo": this.OpenCover?.value,
+      "ProductId": this.productId,
     }
     this.referralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -143,12 +143,12 @@ export class UnApprovedComponent implements OnInit {
     );
   }
 
-  isActionBtn(event:any){
+  isActionBtn(event: any) {
     console.log(event);
-    if(event.btName === 'Edit'){
+    if (event.btName === 'Edit') {
       this.onEdit(event);
     }
-    if(event.btName === 'Reject'){
+    if (event.btName === 'Reject') {
       this.onReject(event);
     }
   }
@@ -157,24 +157,26 @@ export class UnApprovedComponent implements OnInit {
     this.sessionStorageService.remove('referral');
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item?.ApplicationNo);
-    sessionStorage.setItem('QuoteStatus',item?.QuoteStatus);
-    this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+    sessionStorage.setItem('QuoteStatus', item?.QuoteStatus);
+    let value = 'referral'
+    this.router.navigate([`/${this.routerBaseLink}/new-quotes`], { queryParams: { value } });
+    // this.router.navigate([`/${this.routerBaseLink}/new-quotes`] );
   }
 
-  onReject(item:any){
-    const reasonList:any[] = this.referralService.getReasonList();
-     const dialogRef = this.dialog.open(ConfirmPromptComponent, {
-       width: '400px',
-       data: {items:reasonList,row:item},
-     });
+  onReject(item: any) {
+    const reasonList: any[] = this.referralService.getReasonList();
+    const dialogRef = this.dialog.open(ConfirmPromptComponent, {
+      width: '400px',
+      data: { items: reasonList, row: item },
+    });
 
-     dialogRef.afterClosed().subscribe(result => {
-       if(result){
-         this.onLoadGrid();
-       }
-     });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.onLoadGrid();
+      }
+    });
 
-   }
+  }
 
 }
 

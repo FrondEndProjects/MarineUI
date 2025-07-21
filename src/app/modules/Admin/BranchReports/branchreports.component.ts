@@ -29,27 +29,27 @@ export class BranchCoverComponent implements OnInit {
   public tabActive: number = 2;
   public productNameList: any[] = [];
   public regionList: any[] = [];
-  RegionNo:any;
+  RegionNo: any;
   public branchList: any[] = [];
-  effectiveDate:any;
+  effectiveDate: any;
   public routerBaseLink: any = '';
   public tableSection: boolean = false;
-public tableData: any;
-public columnHeader: any[] = [];
-branchValue:any;
-minDate:any;
-public filterValue;  
-innerColumnHeader:any[]=[];
-public loginTypeList: any[] = [];
-public loginType:any[]=[];
-    usertype: any;
-    show: boolean=false;
+  public tableData: any;
+  public columnHeader: any[] = [];
+  branchValue: any;
+  minDate: any;
+  public filterValue;
+  innerColumnHeader: any[] = [];
+  public loginTypeList: any[] = [];
+  public loginType: any[] = [];
+  usertype: any;
+  show: boolean = false;
   endeffectiveDate: any;
-  status: any="Y";
+  status: any = "Y";
   product: any;
-  innerTableData:any[]=[];
-  Results:any;
-  t:any;s:any;
+  innerTableData: any[] = [];
+  Results: any;
+  t: any; s: any;
   RegionCode: any;
   constructor(
     private openCoverService: OpenCoverService,
@@ -60,46 +60,46 @@ public loginType:any[]=[];
     private menuService: NbMenuService,
     private masterSer: MastersService,
     private loginService: LoginService,
-    private datePipe:DatePipe,
+    private datePipe: DatePipe,
     private newQuotesService: NewQuotesService,
   ) {
-    this.minDate=new Date();
+    this.minDate = new Date();
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.userDetails = this.userDetails?.LoginResponse;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.searchForm = this.adminReferralService.searchForm;
-    console.log('kkkkkkkk',this.userDetails)
+    console.log('kkkkkkkk', this.userDetails)
     this.loginId = this.userDetails.LoginId;
     this.RegionCode = this.userDetails.RegionCode;
-  
-    this.usertype=this.userDetails.UserType
+
+    this.usertype = this.userDetails.UserType
     this.columnHeader = [
-        {key: 'S.No', display: 'S.No'},
-        {key: 'ProposalNumber', display: 'Proposal No'},
-        {key: 'CustomerName', display: 'Customer Name'},
-        {key: 'PolicyStartDate', display: 'Policy Start Date'},
-        {key: 'PolicyEndDate', display: 'Policy End Date'},
-       //{key: 'EffectiveDate', display: 'Effective Date'},
-        {key: 'Draft', display: 'Draft'},
-        {
-          key: 'actions',
-          display: 'Edit',
-          config: {
-            isEdit: true,
-          }
+      { key: 'S.No', display: 'S.No' },
+      { key: 'ProposalNumber', display: 'Proposal No' },
+      { key: 'CustomerName', display: 'Customer Name' },
+      { key: 'PolicyStartDate', display: 'Policy Start Date' },
+      { key: 'PolicyEndDate', display: 'Policy End Date' },
+      //{key: 'EffectiveDate', display: 'Effective Date'},
+      { key: 'Draft', display: 'Draft' },
+      {
+        key: 'actions',
+        display: 'Edit',
+        config: {
+          isEdit: true,
         }
-      ];
-      this.onGetLoginTypeDropdownList();
-      this.onGetRegionList();  
-      this.onGetBranchList();
-      this.onGetProductList();
-      this.branchValue=this.userDetails.BranchCode;
-      //this.onGetBranchList();
+      }
+    ];
+    this.onGetLoginTypeDropdownList();
+    this.onGetRegionList();
+    this.onGetBranchList();
+    this.onGetProductList();
+    this.branchValue = this.userDetails.BranchCode;
+    //this.onGetBranchList();
   }
 
   ngOnInit(): void {
-   
+
   }
   /*onGetBranchList() {
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
@@ -115,8 +115,8 @@ public loginType:any[]=[];
       (err) => { },
     );
   }*/
-  goback(){
-    this.show=false;
+  goback() {
+    this.show = false;
   }
 
 
@@ -148,9 +148,9 @@ public loginType:any[]=[];
     });
   }
 
-  
+
   onGetBranchList() {
-   
+
     const urlLink = `${this.ApiUrl1}login/getBranchDetail`;
     const reqData = {
       'RegionCode': this.RegionCode
@@ -159,236 +159,305 @@ public loginType:any[]=[];
       (data: any) => {
         console.log(data);
         this.branchList = data || [];
-         
+
       },
       (err) => { },
     );
   }
- 
 
 
-  getExistingAdmin(){
+
+  getExistingAdmin() {
 
     let ReqObj = {
-       "BranchCode": this.branchValue,
-  "LoginId": this.loginType,
-  "Status": "A",
-  "UserType": this.usertype
-   }
+      "BranchCode": this.branchValue,
+      "LoginId": this.loginType,
+      "Status": "A",
+      "UserType": this.usertype
+    }
 
     let urlLink = `${this.ApiUrl1}OpenCover/pendingtoapproved`;
- this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
-   (data: any) => {
-     if (data?.Result) {
-       console.log(data);
-       this.tableData = data?.Result;
-     }
-   }, (err) => { }
- );
-}
+    this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Result) {
+          console.log(data);
+          this.tableData = data?.Result;
+        }
+      }, (err) => { }
+    );
+  }
 
-public applyFilter(event: Event) {
-  this.filterValue = (event.target as HTMLInputElement).value;
-}
+  public applyFilter(event: Event) {
+    this.filterValue = (event.target as HTMLInputElement).value;
+  }
 
   get sF() {
     return this.searchForm?.controls;
   }
-onEdit(row:any){}
+  onEdit(row: any) { }
 
 
-onGetProductList() {
-  
-  const urlLink = `${this.ApiUrl1}opencover/dropdown/referral/quoteproduct`;
-  const reqData = {
-    "LoginId":this.userDetails.LoginId,
-    "BranchCode":this.userDetails.BranchCode
-  };
-  this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
-    (data: any) => {
-      console.log(data);
-      this.productNameList = data?.Result?.ProductionDetails || [];
-    },
-    (err) => { },
-  );
-}
+  onGetProductList() {
+
+    const urlLink = `${this.ApiUrl1}opencover/dropdown/referral/quoteproduct`;
+    const reqData = {
+      "LoginId": this.userDetails.LoginId,
+      "BranchCode": this.userDetails.BranchCode
+    };
+    this.adminReferralService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.productNameList = data?.Result?.ProductionDetails || [];
+      },
+      (err) => { },
+    );
+  }
 
 
-pdf(type){
+  pdf(type) {
 
-  let typelist:any;
-    typelist=type;
-  let ReqObj = {
+    let typelist: any;
+    typelist = type;
+    let ReqObj = {
 
-    "BranchCode":this.branchValue,
-  "EndDate":this.s,
-  "LoginId":"ALL",
-  "ProductId":this.product,
-  "ReportStatus":this.status,
-  "StartDate":this.t,
-  "Type": typelist
-}
-
-let urlLink = `${this.ApiUrl1}pdf/branchreport`;
-this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
-  (data: any) => {
-    if (data) {
-      console.log('kkkkkkkkk',data);
-      this.Results=data.Result;
-      this.onDownloadSchedule(this.Results)
-    }
-  }, (err) => { }
-);
-}
-
-getAdmin() {
-
-   
-      /*this.columnHeader = [
-          //{key: 'S.No', display: 'S.No'},
-          {
-            key: "more",
-            display: "More View",
-            config: {
-                isMoreView: true,
-            }
-          },
-            {key: 'S.No', display: 'S.No'},
-          {key: 'EntryDate', display: 'Entry Date'},
-          {key: 'BranchName', display: 'Branch Name'},
-          {key: 'LoginId', display: 'Login Id'},
-          {key: 'ApplicationId', display: 'Application Id'},
-         {key: 'QuoteNo', display: 'Quote No'},
-         
-        ];
-        this.innerColumnHeader = [
-            //{key: 'S.No', display: 'S.No'},
-            {key: 'PolicyNo', display: 'Policy No'},
-            {key: 'InceptionDate', display: 'Inception Date'},
-            {key: 'EffectiveDate', display: 'Effective Date'},
-            {key: 'ProductId', display: 'ProductId'},
-            {key: 'CustomerName', display: 'Customer Name'},
-            {key: 'TrasportDesc', display: 'Trasport Desc'},
-            {key: 'Cover Name', display: 'CoverName'},
-           
-          ];*/
-
-          let t:any,s:any;
-          if(this.effectiveDate!=null){
-            this.t=  this.datePipe.transform(this.effectiveDate, "dd/MM/yyyy");
-           console.log('efffffffffff',t);
-           //this.brokerList[0].EffectiveDateStart=t;
-         }
-         if(this.endeffectiveDate!=null){
-            this.s=  this.datePipe.transform(this.endeffectiveDate, "dd/MM/yyyy");
-            console.log('efffffffffff',s);
-         }
-
-      let ReqObj = {
-          "BranchCode": this.branchValue,
-          "FromDate":this.t,
-          "LoginId":"ALL",
-          "ProductId":this.product,
-          "Status":this.status,
-          "ToDate":this.s
-        
-     }
-  
-      let urlLink = `${this.ApiUrl1}admin/getBranchReportList`;
-      this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
-        (data: any) => {
-          if (data) {
-            console.log(data);
-          this.columnHeader = [
-          //{key: 'S.No', display: 'S.No'},
-          {
-            key: "more",
-            display: "More View",
-            config: {
-                isMoreView: true,
-            }
-          },
-            //{key: 'S.No', display: 'S.No'},
-          {key: 'EntryDate', display: 'Entry Date'},
-          {key: 'BranchName', display: 'Branch Name'},
-          {key: 'LoginId', display: 'Login Id'},
-          {key: 'ApplicationId', display: 'Application Id'},
-         {key: 'QuoteNo', display: 'Quote No'},
-         
-        ];
-        this.innerColumnHeader = [
-            //{key: 'S.No', display: 'S.No'},
-            {key: 'PolicyNo', display: 'Policy No'},
-            {key: 'InceptionDate', display: 'Inception Date'},
-            {key: 'EffectiveDate', display: 'Effective Date'},
-            {key: 'ProductId', display: 'ProductId'},
-            {key: 'CustomerName', display: 'Customer Name'},
-            {key: 'TransportDesc', display: 'Trasport Desc'},
-            {key: 'Cover Name', display: 'CoverName'},
-           
-          ];
-
-          this.tableData=data.Result;
-
-          if(this.tableData.length!=0){
-            this.show=true;
-          }
-          }
-        }, (err) => { }
-      );
+      "BranchCode": this.branchValue,
+      "EndDate": this.s,
+      "LoginId": "ALL",
+      "ProductId": this.product,
+      "ReportStatus": this.status,
+      "StartDate": this.t,
+      "Type": typelist
     }
 
-    vechileInnerdata(rowData:any){
-      //this.pass=true;
-  
-      console.log('vvvvvvvvvv',rowData)
-      this.innerTableData =[{
-        "ismore":true,
-        "CustomerName":rowData.CustomerName,
-        "TransportDesc":rowData.TransportDesc,
-        "PolicyNo":rowData.PolicyNo,
-        "CoverName":rowData.CoverName,
-        "ProductId":rowData.ProductId,
-        "InceptionDate":rowData.InceptionDate,
-        "EffectiveDate":rowData.EffectiveDate
-
-      }];
-      rowData.innerTableData=[{
-          "ismore":true,
-          "CustomerName":rowData.CustomerName,
-          "TransportDesc":rowData.TransportDesc,
-          "PolicyNo":rowData.PolicyNo,
-          "CoverName":rowData.CoverName,
-        "ProductId":rowData.ProductId,
-        "InceptionDate":rowData.InceptionDate,
-        "EffectiveDate":rowData.EffectiveDate
-
-      }]
-     }
-
-
-     onDownloadSchedule(Results){
-
-      console.log('jjjjjjjj',this.Results)
-     /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
-      const reqData = {
-        "BranchCode": this.userDetails?.BranchCode,
-        "QuoteNo":row.QuoteNo
-      }*/
-        if(this.Results){
-          const link = document.createElement('a');
-          link.setAttribute('target', '_blank');
-          link.setAttribute('href', this.Results);
-          link.setAttribute('download',this.Results);
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-         
+    let urlLink = `${this.ApiUrl1}pdf/branchreport`;
+    this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data) {
+          console.log('kkkkkkkkk', data);
+          this.Results = data.Result;
+          this.onDownloadSchedule(this.Results)
         }
-        
-  
-     
-    }
-  
+      }, (err) => { }
+    );
+  }
 
+  getAdmin() {
+
+
+    /*this.columnHeader = [
+        //{key: 'S.No', display: 'S.No'},
+        {
+          key: "more",
+          display: "More View",
+          config: {
+              isMoreView: true,
+          }
+        },
+          {key: 'S.No', display: 'S.No'},
+        {key: 'EntryDate', display: 'Entry Date'},
+        {key: 'BranchName', display: 'Branch Name'},
+        {key: 'LoginId', display: 'Login Id'},
+        {key: 'ApplicationId', display: 'Application Id'},
+       {key: 'QuoteNo', display: 'Quote No'},
+       
+      ];
+      this.innerColumnHeader = [
+          //{key: 'S.No', display: 'S.No'},
+          {key: 'PolicyNo', display: 'Policy No'},
+          {key: 'InceptionDate', display: 'Inception Date'},
+          {key: 'EffectiveDate', display: 'Effective Date'},
+          {key: 'ProductId', display: 'ProductId'},
+          {key: 'CustomerName', display: 'Customer Name'},
+          {key: 'TrasportDesc', display: 'Trasport Desc'},
+          {key: 'Cover Name', display: 'CoverName'},
+         
+        ];*/
+
+    let t: any, s: any;
+    if (this.effectiveDate != null) {
+      // this.t = this.datePipe.transform(this.effectiveDate, "dd/MM/yyyy");
+      this.t = this.getFormattedDate(this.effectiveDate);
+      console.log('efffffffffff', t);
+      //this.brokerList[0].EffectiveDateStart=t;
+    }
+    if (this.endeffectiveDate != null) {
+      // this.s = this.datePipe.transform(this.endeffectiveDate, "dd/MM/yyyy");
+      this.s = this.getFormattedDate(this.endeffectiveDate);
+      console.log('efffffffffff', s);
+    }
+    console.log();
+
+    let ReqObj = {
+      "BranchCode": this.branchValue,
+      "FromDate": this.t,
+      "LoginId": "ALL",
+      "ProductId": this.product,
+      "Status": this.status,
+      "ToDate": this.s
+
+    }
+
+    let urlLink = `${this.ApiUrl1}admin/getBranchReportList`;
+    this.masterSer.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data) {
+          console.log(data);
+          // this.columnHeader = [
+          //   {
+          //     key: "more",
+          //     display: "More View",
+          //     config: {
+          //       isMoreView: true,
+          //     }
+          //   },
+          //   { key: 'EntryDate', display: 'Entry Date' },
+          //   { key: 'BranchName', display: 'Branch Name' },
+          //   { key: 'LoginId', display: 'Login Id' },
+          //   { key: 'ApplicationId', display: 'Application Id' },
+          //   { key: 'QuoteNo', display: 'Quote No' },
+
+          // ];
+          this.columnHeader = [
+            {
+              key: "more",
+              display: "More View",
+              config: {
+                isMoreView: true,
+              }
+            },
+            // { key: 'EntryDate', display: 'Entry Date' },
+            // { key: 'LoginId', display: 'Login Id' },
+            // { key: 'ApplicationId', display: 'Application Id' },
+            { key: 'QuoteNo', display: 'Quote No' },
+            { key: 'BranchName', display: 'Branch Name' },
+            { key: 'CustomerName', display: 'Customer Name' },
+            { key: 'CompanyName', display: 'Company Name' },
+            { key: 'InceptionDate', display: 'Inception Date' },
+            // { key: 'TransportDesc', display: 'Trasport Desc' },
+            // { key: 'GoodsDesc', display: 'Goods Desc' },
+            // { key: 'CoverName', display: 'Cover Name' },
+            // { key: 'Suminsured', display: 'SumInsured' },
+
+
+          ];
+          if (this.status != 'Y') {
+            this.innerColumnHeader = [
+              //{key: 'S.No', display: 'S.No'},
+              { key: 'PolicyNo', display: 'Policy No' },
+              { key: 'InceptionDate', display: 'Inception Date' },
+              { key: 'EffectiveDate', display: 'Effective Date' },
+              { key: 'ProductId', display: 'ProductId' },
+              { key: 'CustomerName', display: 'Customer Name' },
+              { key: 'TransportDesc', display: 'Trasport Desc' },
+              { key: 'CoverName', display: 'Cover Name' },
+
+            ];
+          }
+          else {
+            this.innerColumnHeader = [
+
+              // { key: 'InceptionDate', display: 'Inception Date' },
+              { key: 'EffectiveDate', display: 'Effective Date' },
+              // { key: 'ProductId', display: 'Product' },
+              // { key: 'CustomerName', display: 'Customer Name' },
+              { key: 'TransportDesc', display: 'Trasport Desc' },
+              { key: 'GoodsDesc', display: 'Goods Desc' },
+              { key: 'CoverName', display: 'Cover Name' },
+              { key: 'Suminsured', display: 'SumInsured' },
+              { key: 'TotalPremiumLocal', display: 'Total Premium' },
+
+            ];
+          }
+
+
+
+
+          this.tableData = data.Result;
+
+          if (this.tableData.length != 0) {
+            this.show = true;
+          }
+        }
+      }, (err) => { }
+    );
+  }
+
+  vechileInnerdata(rowData: any) {
+    //this.pass=true;
+
+    console.log('vvvvvvvvvv', rowData)
+    this.innerTableData = [{
+      "ismore": true,
+      "CustomerName": rowData.CustomerName,
+      "TransportDesc": rowData.TransportDesc,
+      "PolicyNo": rowData.PolicyNo,
+      "CoverName": rowData.CoverName,
+      "ProductId": rowData.ProductId,
+      "GoodsDesc": rowData.GoodsDesc,
+      "Suminsured": Number(rowData.Suminsured).toLocaleString(),
+      "TotalPremiumLocal": Number(rowData.TotalPremiumLocal).toLocaleString(),
+      "InceptionDate": rowData.InceptionDate,
+      "EffectiveDate": rowData.EffectiveDate
+
+    }];
+    rowData.innerTableData = [{
+      "ismore": true,
+      "CustomerName": rowData.CustomerName,
+      "TransportDesc": rowData.TransportDesc,
+      "PolicyNo": rowData.PolicyNo,
+      "CoverName": rowData.CoverName,
+      "ProductId": rowData.ProductId,
+      "GoodsDesc": rowData.GoodsDesc,
+      "Suminsured": Number(rowData.Suminsured).toLocaleString(),
+      "TotalPremiumLocal": Number(rowData.TotalPremiumLocal).toLocaleString(),
+      "InceptionDate": rowData.InceptionDate,
+      "EffectiveDate": rowData.EffectiveDate
+
+    }]
+  }
+
+
+  onDownloadSchedule(Results) {
+
+    console.log('jjjjjjjj', this.Results)
+    /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+     const reqData = {
+       "BranchCode": this.userDetails?.BranchCode,
+       "QuoteNo":row.QuoteNo
+     }*/
+    if (this.Results) {
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', this.Results);
+      link.setAttribute('download', 'Branch Report');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+    }
+
+
+
+  }
+
+  getFormattedDate(dateStr: string | null | undefined): string | null {
+    if (!dateStr || typeof dateStr !== 'string') {
+      return null;
+    }
+
+    // Expecting format like "1-6-2025"
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return null;
+
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+
+    const jsDate = new Date(year, month - 1, day);
+    if (isNaN(jsDate.getTime())) return null;
+
+    return this.datePipe.transform(jsDate, 'dd/MM/yyyy');
+  }
 }

@@ -5,6 +5,7 @@
         "EndtTypeId": "1",
         "EndtTypeCategory": "Non Financial",
         "EnabledIds":[
+          "customerType",
           "title",
           "name",
           "coreAppcode",

@@ -92,6 +92,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   TranshippingCityEdit: any;
   editOrginCity: any;
   editDesinationCity: any;
+  Endors: any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
@@ -108,6 +109,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     console.log('Productidssss', this.userDetails);
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.docUploadedData = JSON.parse(sessionStorage.getItem('docUploadData'));
+    this.Endors = sessionStorage.getItem('Endors');
 
     if (this.OpenCover?.name) {
       if (this.OpenCover?.name == 'adminReferral') {
@@ -125,7 +127,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.setDocvalue = params['value'];
 
-      if (this.setDocvalue == 'back' || this.setDocvalue == 'edit') {
+      if (this.setDocvalue == 'back' || this.setDocvalue == 'edit' || this.setDocvalue == 'referral') {
         this.docUploadedData = null
       }
     });
@@ -135,6 +137,18 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit() {
     console.log('Paginator:', this.paginator);
     this.dataSource.paginator = this.paginator;
+    if (this.insurenceId != '100020') {
+      this.quoteF.orginatingCityOther.clearValidators();
+      this.quoteF.orginatingCityOther.updateValueAndValidity();
+      this.quoteF.originatingCity.clearValidators();
+      this.quoteF.originatingCity.updateValueAndValidity();
+
+      this.quoteF.destinationCityOther.clearValidators();
+      this.quoteF.destinationCityOther.updateValueAndValidity();
+      this.quoteF.destinationCity.clearValidators();
+      this.quoteF.destinationCity.updateValueAndValidity();
+    }
+
   }
 
   getTranshippingId() {
@@ -314,7 +328,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     if (this.dropIncotermsList.length == 0 && !this.docUploadedData) this.onGetIncotermsDropdownList(1);
     if (this.dropToleranceList.length == 0 && !this.docUploadedData) this.onGetToleranceDropdownList(1);
     if (this.dropCurrencyList.length == 0 && !this.docUploadedData) this.onGetCurrencyDropdownList(1);
-     if (this.dropPremiumCurrencyList.length == 0 && !this.docUploadedData) this.onGetPremiumDropdownList(1);
+    if (this.dropPremiumCurrencyList.length == 0 && !this.docUploadedData) this.onGetPremiumDropdownList(1);
     if (this.dropGoodsOfCateList.length == 0 && !this.docUploadedData) this.onGetGoodsOfCategoryDropdownList(1);
     if (this.dropGoodsOfCateList.length == 0 && this.openCoverNo != null && this.quoteF.warSrcc.value == 'N') this.onCheckWarYesOrNo();
 
@@ -351,7 +365,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     // let currency = this.dropCurrencyList.filter(e => e.ShortCode == this.docUploadedData?.Currency)
     this.onGetGoodsOfCategoryDropdownList(2);
     this.onGetToleranceDropdownList(2);
-     this.onGetPremiumDropdownList(2);
+    this.onGetPremiumDropdownList(2);
     // this.onGetPackageDescDropdownList(2);
     this.onGetCurrencyDropdownList(2);
     this.onGetOriginCountryDropdownList(2)
@@ -494,11 +508,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onGetCoverDropdownList(value) {
-    if(this.insurenceId=='100020'){
-        this.onGetOriginCityDropdownList();
-        this.onGetDestinaCityDropdownList();
+    if (this.insurenceId == '100020') {
+      this.onGetOriginCityDropdownList();
+      this.onGetDestinaCityDropdownList();
     }
-    
+
     this.quoteF.cover.setValue('');
     this.quoteF.modeOfCarriage.setValue('');
     let modeOfTransport
@@ -597,23 +611,23 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     );
   }
   onGetOriginCityDropdownList() {
-   
-    this.quoteF.originatingCity.setValue('');
-     let d: any
-      d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
-      let Codevalue: any = null;
-      if (this.quoteF.modeOfTransport?.value == '1' && this.insurenceId == '100020') {
-        Codevalue = d[0]?.CodeValue
-      }
-      else if (this.quoteF.modeOfTransport?.value == null && this.insurenceId == '100020') {
-        Codevalue = this.quoteF.originatingCountry.value
 
-      }
-      else {
-        if(this.insurenceId == '100020') Codevalue = d[0]?.CodeValue2
-        else Codevalue = this.quoteF.originatingCountry.value
-      }
-    let urlLink=null,reqData=null;
+    this.quoteF.originatingCity.setValue('');
+    let d: any
+    d = this.dropOriginCountryList.filter(e => e.Code == this.quoteF.originatingCountry.value)
+    let Codevalue: any = null;
+    if (this.quoteF.modeOfTransport?.value == '1' && this.insurenceId == '100020') {
+      Codevalue = d[0]?.CodeValue
+    }
+    else if (this.quoteF.modeOfTransport?.value == null && this.insurenceId == '100020') {
+      Codevalue = this.quoteF.originatingCountry.value
+
+    }
+    else {
+      if (this.insurenceId == '100020') Codevalue = d[0]?.CodeValue2
+      else Codevalue = this.quoteF.originatingCountry.value
+    }
+    let urlLink = null, reqData = null;
     if (this.insurenceId == '100020') {
       // this.get_transhipping_list()
       urlLink = `${this.ApiUrl1}master/countryport/list`;
@@ -622,16 +636,16 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
       };
     }
-    else{
-       urlLink = `${this.ApiUrl1}quote/dropdown/originationcity`;
-       reqData = {
+    else {
+      urlLink = `${this.ApiUrl1}quote/dropdown/originationcity`;
+      reqData = {
         'pvType': 'orgCity',
         'OriginationCountryCode': this.quoteF.originatingCountry.value,
         'BranchCode': this.userDetails?.BelongingBranch,
       };
     }
     console.log(reqData, "reqData");
-    if (Codevalue && (this.quoteF.modeOfTransport.value || this.insurenceId!='100020')) {
+    if (Codevalue && (this.quoteF.modeOfTransport.value || this.insurenceId != '100020')) {
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
 
@@ -639,9 +653,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
             this.dropOriginCityList = data?.Result;
             this.newQuotesService.getDropDownList(this.dropOriginCityList, 'orgCity');
             const isIncluded = this.dropOriginCityList.some(item => item.Code == this.editOrginCity);
-            if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
-              this.quoteF.originatingCity.setValue(this.editOrginCity);
 
+            if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back' || this.setDocvalue == 'referral' || this.Endors == 'Endors')) {
+              this.quoteF.originatingCity.setValue(this.editOrginCity);
             }
             else {
               this.quoteF.originatingCity.setValue(null);
@@ -689,27 +703,27 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     // };
     let d: any
     d = this.dropDestinaCountryList.filter(e => e.Code == this.quoteF.destinationCountry.value)
-    let Codevalue: any = null,urlLink=null,reqData=null;
-    if (this.quoteF.modeOfTransport?.value == '1' && this.insurenceId=='100020') {
+    let Codevalue: any = null, urlLink = null, reqData = null;
+    if (this.quoteF.modeOfTransport?.value == '1' && this.insurenceId == '100020') {
 
       Codevalue = d[0]?.CodeValue
     }
-    else if (this.quoteF.modeOfTransport?.value == null && this.insurenceId=='100020') {
+    else if (this.quoteF.modeOfTransport?.value == null && this.insurenceId == '100020') {
       Codevalue = this.quoteF.destinationCountry.value
 
     }
     else {
-     if(this.insurenceId=='100020') Codevalue = d[0]?.CodeValue2
-     else Codevalue =this.quoteF.destinationCountry.value
+      if (this.insurenceId == '100020') Codevalue = d[0]?.CodeValue2
+      else Codevalue = this.quoteF.destinationCountry.value
     }
-    if(this.insurenceId=='100020'){
-        urlLink = `${this.ApiUrl1}master/countryport/list`;
-        reqData = {
-          'countryID': Codevalue,
-          "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
-        };
+    if (this.insurenceId == '100020') {
+      urlLink = `${this.ApiUrl1}master/countryport/list`;
+      reqData = {
+        'countryID': Codevalue,
+        "modeOfTransport": this.quoteF.modeOfTransport.value ? this.quoteF.modeOfTransport.value : null
+      };
     }
-    else{
+    else {
       urlLink = `${this.ApiUrl1}quote/dropdown/destinationcity`;
       reqData = {
         'pvType': 'destCity',
@@ -717,7 +731,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         'DestinationCountryCode': this.quoteF.destinationCountry.value,
       };
     }
-    if (Codevalue && (this.quoteF.modeOfTransport.value || this.insurenceId!='100020')) {
+    if (Codevalue && (this.quoteF.modeOfTransport.value || this.insurenceId != '100020')) {
       this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
         (data: any) => {
 
@@ -725,13 +739,13 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
             this.dropDestinaCityList = data?.Result;
             this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
             const isIncluded = this.dropDestinaCityList.some(item => item.Code == this.editDesinationCity);
-            if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back')) {
+            if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back' || this.setDocvalue == 'referral' || this.Endors == 'Endors')) {
               this.quoteF.destinationCity.setValue(this.editDesinationCity);
             }
             else {
               this.quoteF.destinationCity.setValue(null);
             }
-            if (this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
+            if (this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back' && this.setDocvalue != 'referral') {
               let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
               this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
             }
@@ -1064,7 +1078,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
           this.dropGoodsOfCateList = [...defaultObj, ...this.dropGoodsOfCateList];
 
           this.newQuotesService.getDropDownList(this.dropGoodsOfCateList, 'goodesofCat');
-          if (!this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back') {
+          if (!this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back' && this.setDocvalue != 'referral' && this.Endors != 'Endors') {
             setTimeout(() => {
               this.quoteF.goodsCategory.setValue(this.dropGoodsOfCateList[0].Code);
               this.quoteF.goodsCategory.updateValueAndValidity();

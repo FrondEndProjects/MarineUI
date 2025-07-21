@@ -160,7 +160,8 @@ export class CustomerRedirectComponent implements OnInit {
       }
 
       reloadCurrentRoute() {
-        this.router.navigate([`/marine-opencover/new-quotes/customer-info`]);
+        // this.router.navigate([`/marine-opencover/new-quotes/customer-info`]);
+        this.router.navigate([`/Marine/dashboard/broker-dashborad`]);
         //window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
       }
 }

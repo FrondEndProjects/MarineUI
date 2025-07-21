@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-  First Assurance  
+  <!-- First Assurance   -->
     </span>
     <div class="socials">
       <a href="#" target="_blank" class="ion ion-social-github"></a>
@@ -16,4 +16,9 @@ import { Component } from '@angular/core';
   `,
 })
 export class FooterComponent {
+  userDetails: any;
+  constructor(){
+     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+     this.userDetails?.InsuranceId
+  }
 }

@@ -24,7 +24,7 @@ export class RejectedComponent implements OnInit {
 
   public brokerList: any[] = [];
   public selectedBroker: any = '';
-  public OpenCover:any='';
+  public OpenCover: any = '';
   routerBaseLink: any;
   isIssuer: boolean;
 
@@ -32,8 +32,8 @@ export class RejectedComponent implements OnInit {
   constructor(
     private referralService: ReferralService,
     private router: Router,
-    private referralComponent:ReferralComponent,
-    private sessionStorageService:SessionStorageService
+    private referralComponent: ReferralComponent,
+    private sessionStorageService: SessionStorageService
   ) {
     this.ApiUrl1 = this.referralComponent.ApiUrl1;
     this.userDetails = this.referralComponent.userDetails;
@@ -51,7 +51,7 @@ export class RejectedComponent implements OnInit {
     }
     // Issuer
 
-    if (this.userDetails?.UserType == "Issuer"){
+    if (this.userDetails?.UserType == "Issuer") {
       //this.loginId = this.endorsement?.LoginId || '';
       //.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;
@@ -76,7 +76,7 @@ export class RejectedComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.brokerList = data?.Result;
-        this.selectedBroker = this.selectedBroker?this.selectedBroker:this.brokerList[0].LoginId;
+        this.selectedBroker = this.selectedBroker ? this.selectedBroker : this.brokerList[0].LoginId;
         this.onChangeBroker();
       },
       (err) => { },
@@ -85,9 +85,9 @@ export class RejectedComponent implements OnInit {
 
 
   onChangeBroker() {
-    if(this.selectedBroker){
+    if (this.selectedBroker) {
       this.loginId = this.selectedBroker;
-      console.log('jjjjjjjj',this.loginId);
+      console.log('jjjjjjjj', this.loginId);
     }
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.onLoadGrid();
@@ -96,11 +96,11 @@ export class RejectedComponent implements OnInit {
   onLoadGrid() {
     const urlLink = `${this.ApiUrl1}menu/referral/rejectedquote`;
     const reqData = {
-      "LoginId":this.loginId,
-      "ApplicationId":this.applicationId,
-      "BranchCode":this.userDetails.BranchCode,
-      "OpenCoverNo":this.OpenCover?.value,
-      "ProductId":this.productId,
+      "LoginId": this.loginId,
+      "ApplicationId": this.applicationId,
+      "BranchCode": this.userDetails.BranchCode,
+      "OpenCoverNo": this.OpenCover?.value,
+      "ProductId": this.productId,
     }
     this.referralService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -121,12 +121,12 @@ export class RejectedComponent implements OnInit {
     );
   }
 
-  isActionBtn(event:any){
+  isActionBtn(event: any) {
     console.log(event);
-    if(event.btName === 'Edit'){
+    if (event.btName === 'Edit') {
       this.onEdit(event);
     }
-    if(event.btName === 'Reject'){
+    if (event.btName === 'Reject') {
       this.onReject(event);
     }
   }
@@ -135,11 +135,13 @@ export class RejectedComponent implements OnInit {
     this.sessionStorageService.remove('referral');
     sessionStorage.setItem('quotesType', 'Without-Endo');
     sessionStorage.setItem('ReferenceNo', item?.ApplicationNo);
-    sessionStorage.setItem('QuoteStatus',item?.QuoteStatus);
-    this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+    sessionStorage.setItem('QuoteStatus', item?.QuoteStatus);
+    // this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
+    let value = 'referral'
+    this.router.navigate([`/${this.routerBaseLink}/new-quotes`], { queryParams: { value } });
   }
 
-  onReject(item:any){
+  onReject(item: any) {
 
   }
 

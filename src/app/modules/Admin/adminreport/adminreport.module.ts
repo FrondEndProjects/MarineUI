@@ -15,6 +15,7 @@ import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { AdminReportComponent } from './adminreport.component';
 import { AdminReportRoutingModule } from './adminreport-routing.module';
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -47,7 +48,9 @@ import { AdminReportRoutingModule } from './adminreport-routing.module';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
-    BackBtnModule
+    BackBtnModule,
+    NgbDatepickerModule,
+    NbDatepickerModule.forRoot(),
   ],
   bootstrap: [AdminReportComponent],
   providers: [

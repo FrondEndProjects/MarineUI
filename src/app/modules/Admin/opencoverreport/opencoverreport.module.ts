@@ -14,6 +14,7 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { OpenCoverComponent } from './opencoverreport.component';
 import { OpenCoverRoutingModule } from './opencoverreport-routing.module';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
 
@@ -37,7 +38,7 @@ import { OpenCoverRoutingModule } from './opencoverreport-routing.module';
     NbListModule,
     NbAccordionModule,
     NbUserModule,
-    OpenCoverRoutingModule ,
+    OpenCoverRoutingModule,
     NbInputModule,
     NbSelectModule,
     NbPopoverModule,
@@ -48,7 +49,9 @@ import { OpenCoverRoutingModule } from './opencoverreport-routing.module';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
-    BackBtnModule
+    BackBtnModule,
+    NgbDatepickerModule,
+    NbDatepickerModule.forRoot(),
   ],
   bootstrap: [OpenCoverComponent],
   providers: [

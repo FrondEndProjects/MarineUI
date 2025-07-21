@@ -69,8 +69,8 @@
     <!-- </div> -->
     <!-- <div class="bg-white container"> -->
     <!-- <div class="card-body">/ -->
-    <div class="row">
-      <div class="col-12 col-md-4">
+    <div class="row mt-2">
+      <!-- <div class="col-12 col-md-4">
         <div class="input-control-container">
           <label class="input-form-label">From Date<span class="text-required">*</span></label>
           <mat-form-field appearance="fill">
@@ -88,28 +88,32 @@
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
-          <!-- <label class="input-form-label">To Date<span class="text-required">*</span></label> -->
-          <!-- <label class="input-form-label">
-            To Date<span class="text-required">*</span>
-          </label>
-          <input
-            nbInput
-            fullWidth
-            placeholder="Select date"
-            [nbDatepicker]="picker"
-            [(ngModel)]="endeffectiveDate"
-          />
-          <nb-datepicker #picker></nb-datepicker> -->
-          <!-- <nb-calendar [(date)]="date"></nb-calendar>
-<nb-calendar [date]="date" (dateChange)="handleDateChange($event)"></nb-calendar> -->
+
+        </div>
+      </div> -->
+      <div class="col-12 col-md-4">
+        <div class="input-control-container">
+          <label class="input-form-label">From Date<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" ngbDatepicker #startPicker="ngbDatepicker" class="input-form-control without-icon"
+              [(ngModel)]="effectiveDate" (click)="startPicker.toggle()" readonly>
+          </div>
         </div>
       </div>
+
+      <div class="col-12 col-md-4">
+        <div class="input-control-container">
+          <label class="input-form-label">To Date<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" ngbDatepicker #endPicker="ngbDatepicker" class="input-form-control without-icon"
+             [(ngModel)]="endeffectiveDate" (click)="endPicker.toggle()" readonly
+              >
+ 
+          </div>
+        </div>
+      </div>
+
       <div class="col-12 col-md-4 col-lg-4">
-        <!-- <div class="input-control-container">
-                <label class="input-form-label">Region <span class="text-required">*</span></label>
-                <ng-select class="input-form-select"  [items]="regionList"  [(ngModel)]="RegionNo" (change)="onGetBranchList()"
-                   bindValue="RegionId" bindLabel="RegionName"> </ng-select>
-            </div> -->
         <div class="input-control-container">
           <label class="input-form-label">Branch <span class="text-required">*</span></label>
           <ng-select class="input-form-select" [items]="branchList" [(ngModel)]="branchValue" bindValue="BranchCode"

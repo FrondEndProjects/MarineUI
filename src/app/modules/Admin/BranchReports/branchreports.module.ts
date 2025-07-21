@@ -14,13 +14,13 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { BranchCoverComponent } from './branchreports.component';
 import { BranchCoverRoutingModule } from './branchreports-routing.module';
-
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
 
 
 @NgModule({
   declarations: [
-    BranchCoverComponent 
+    BranchCoverComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +48,9 @@ import { BranchCoverRoutingModule } from './branchreports-routing.module';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
-    BackBtnModule
+    BackBtnModule,
+    NgbDatepickerModule,
+    NbDatepickerModule.forRoot(),
   ],
   bootstrap: [BranchCoverComponent],
   providers: [

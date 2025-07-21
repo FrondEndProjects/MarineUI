@@ -2,153 +2,181 @@
     <div class="title-container bg-white p-4" style="color: #194d8b;">
         <span style="color: #194d8b;">Open Cover Report</span>
         <!--<button  mat-raised-button color="primary" *ngIf="branchValue" (click)="goToAddNewPage()">Add new</button>-->
-      </div>
-    <div class="bg-white container">
-        <div class="card-body">
-           <div class="row" *ngIf="!show">
-            <div class="col-12 col-md-4">
-            <div class="input-control-container">
-                <label class="input-form-label">Start Date<span class="text-required">*</span></label>
-                <mat-form-field appearance="fill">
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="effectiveDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="input-control-container">
-                <label class="input-form-label">End Date<span class="text-required">*</span></label>
-                <mat-form-field appearance="fill">
-                    <input matInput [matDatepicker]="picker1" [(ngModel)]="endeffectiveDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-        <!--<div class="col-12 col-md-4 col-lg-4">
+
+        <div class="bg-white container mt-3">
+            <div class="card-body">
+                <div class="row" *ngIf="!show">
+                    <!-- <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Start Date<span class="text-required">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="effectiveDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">End Date<span class="text-required">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker1" [(ngModel)]="endeffectiveDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div> -->
+
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Start Date<span class="text-required">*</span></label>
+                            <div class="input-form-box">
+                                <input type="text" ngbDatepicker #startPicker="ngbDatepicker"
+                                    class="input-form-control without-icon" [(ngModel)]="effectiveDate"
+                                    (click)="startPicker.toggle()" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">End Date<span class="text-required">*</span></label>
+                            <div class="input-form-box">
+                                <input type="text" ngbDatepicker #endPicker="ngbDatepicker"
+                                    class="input-form-control without-icon" [(ngModel)]="endeffectiveDate"
+                                    (click)="endPicker.toggle()" readonly>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-12 col-md-4 col-lg-4">
             <div class="input-control-container">
                 <label class="input-form-label">Product<span class="text-required">*</span></label>
                 <ng-select class="input-form-select"  [items]="productNameList"  [(ngModel)]="product" 
                    bindValue="ProductId" bindLabel="ProductName"> </ng-select>
             </div>
         </div>-->
-        <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
-              <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="loginType" [items]="loginTypeList" bindValue="Code" bindLabel="CodeDescription">
-              </ng-select>
-            </div>
-          </div>
-           </div>
-           <div class="row" *ngIf="!show">
-           </div>
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
+                            <ng-select placeholder="Select" class="input-form-select" [(ngModel)]="loginType"
+                                [items]="loginTypeList" bindValue="Code" bindLabel="CodeDescription">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!show">
+                </div>
 
-           <div style="text-align: center;" class="mt-2" *ngIf="!show">
-            <button class="btn btn-success" style="width:100px" (click)="getAdmin()">Submit</button>
-          
-           </div>
+                <div style="text-align: center;" class="mt-2" *ngIf="!show">
+                    <button class="btn btn-success" style="width:100px" (click)="getAdmin()">Submit</button>
+
+                </div>
 
 
-           <div *ngIf="show && !brokero">
+                <div *ngIf="show && !brokero">
 
-                <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <!--<ng-container *ngIf="tableData">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <!--<ng-container *ngIf="tableData">
                             <app-grid-table [cols]="columnHeader" [data]="tableData">
                             </app-grid-table>
                         </ng-container>-->
-    <div class="row mt-1 table table_expand">
-        <div class="col-md-12 col-lg-12 col-xl-12">
-            <table class="table">
-                <thead style="background-color:lightcoral">
-                    <tr class="table_row">
-                        <th class="tbl-header spancommon span_font_size">BrokerName</th>
-                        <th class="tbl-header spancommon span_font_size">CustomerName</th>
-                        <th class="tbl-header spancommon span_font_size">Open Cover Number</th>
-                        <th class="tbl-header spancommon span_font_size">No of Policies</th>
-                        <th class="tbl-header spancommon span_font_size">Total Premium</th>
-                        <th class="tbl-header spancommon span_font_size">Total Commission</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let t of tableData">
-                       
-                        <td class="tbl-content">
-                            <div class="input-form-box input-data-hover">
-                                <!--<input type="text" class="input-form-control without-icon" [(ngModel)]="t.BrokerName" maxlength="50">-->
-                                {{t.BrokerName}}
+                            <div class="row mt-1 table table_expand">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <table class="table">
+                                        <thead style="background-color:lightcoral">
+                                            <tr class="table_row">
+                                                <th class="tbl-header spancommon span_font_size">BrokerName</th>
+                                                <th class="tbl-header spancommon span_font_size">CustomerName</th>
+                                                <th class="tbl-header spancommon span_font_size">Open Cover Number</th>
+                                                <th class="tbl-header spancommon span_font_size">No of Policies</th>
+                                                <th class="tbl-header spancommon span_font_size">Total Premium</th>
+                                                <th class="tbl-header spancommon span_font_size">Total Commission</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let t of tableData">
+
+                                                <td class="tbl-content">
+                                                    <div class="input-form-box input-data-hover">
+                                                        <!--<input type="text" class="input-form-control without-icon" [(ngModel)]="t.BrokerName" maxlength="50">-->
+                                                        {{t.BrokerName}}
+                                                    </div>
+                                                </td>
+                                                <td class="tbl-content">
+                                                    <div class="input-form-box input-data-hover">
+                                                        <!--<input type="text" class="input-form-control without-icon"  [(ngModel)]="t.CustomerName" maxlength="50">-->
+                                                        {{t.CustomerName}}
+                                                    </div>
+                                                </td>
+                                                <td class="tbl-content">
+                                                    <div class="input-form-box input-data-hover">
+                                                        <!--<input type="text" class="input-form-control without-icon"  [(ngModel)]="t.OpenCoverNo" maxlength="50">-->
+                                                        {{t.OpenCoverNo}}
+                                                    </div>
+                                                </td>
+                                                <td class="tbl-content">
+                                                    <div class="input-form-box input-data-hover">
+                                                        <button class="btn btn-primary input-form-control without-icon"
+                                                            (click)="brokeropen(t.OpenCoverNo,t.LoginId)">{{t.PolicyCount}}</button>
+                                                    </div>
+                                                </td>
+                                                <td class="tbl-content">
+                                                    <div class="input-form-box input-data-hover">
+                                                        <!--<input type="text" class="input-form-control without-icon" [(ngModel)]="t.Premium" maxlength="50">-->
+                                                        {{t.Premium}}
+                                                    </div>
+                                                </td>
+                                                <td class="tbl-content">
+                                                    <div class="input-form-box input-data-hover">
+                                                        <!--<input type="text" class="input-form-control without-icon" [(ngModel)]="t.Commission" maxlength="50">-->
+                                                        {{t.Commission}}
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+
+
+                                    </table>
+
+                                </div>
                             </div>
-                        </td>
-                        <td class="tbl-content">
-                            <div class="input-form-box input-data-hover">
-                                <!--<input type="text" class="input-form-control without-icon"  [(ngModel)]="t.CustomerName" maxlength="50">-->
-                                {{t.CustomerName}}
-                            </div>
-                        </td>
-                        <td class="tbl-content">
-                            <div class="input-form-box input-data-hover">
-                                <!--<input type="text" class="input-form-control without-icon"  [(ngModel)]="t.OpenCoverNo" maxlength="50">-->
-                                {{t.OpenCoverNo}}
-                            </div>
-                        </td>
-                        <td class="tbl-content">
-                            <div class="input-form-box input-data-hover">
-                                <button class="btn btn-primary input-form-control without-icon" (click)="brokeropen(t.OpenCoverNo,t.LoginId)">{{t.PolicyCount}}</button>
-                            </div>
-                        </td>
-                        <td class="tbl-content">
-                            <div class="input-form-box input-data-hover">
-                                <!--<input type="text" class="input-form-control without-icon" [(ngModel)]="t.Premium" maxlength="50">-->
-                                {{t.Premium}}
-                            </div>
-                        </td>
-                        <td class="tbl-content">
-                            <div class="input-form-box input-data-hover">
-                                <!--<input type="text" class="input-form-control without-icon" [(ngModel)]="t.Commission" maxlength="50">-->
-                                 {{t.Commission}}
-                            </div>
-                        </td>
-                       
-                    </tr>
-                </tbody>
-                  
-               
-            </table>
-           
-        </div>
-    </div>
 
 
 
-                      
-                       
+
+
+                        </div>
                     </div>
+
+                    <div style="text-align: center;" class="mt-2" *ngIf="show">
+                        <button class="btn btn-success" style="width:100px" (click)="pdf('excel')">Excel</button>
+                        <button class="btn btn-primary ml-2" style="width:100px" (click)="pdf('pdf')">PDF</button>
+                        <button class="btn btn-danger ml-2" (click)="goback()" style="width:100px">Back</button>
+                    </div>
+
+
                 </div>
 
-                <div style="text-align: center;" class="mt-2" *ngIf="show">
-                    <button class="btn btn-success" style="width:100px" (click)="pdf('excel')">Excel</button>
-                    <button class="btn btn-primary ml-2" style="width:100px" (click)="pdf('pdf')">PDF</button>
-                    <button class="btn btn-danger ml-2"  (click)="goback()" style="width:100px">Back</button>   
-              </div>
-        
-           
+
+                <div *ngIf="show && brokero">
+
+                    <ng-container *ngIf="branchData">
+                        <app-commodity-table [cols]="columnHeader" [data]="branchData" [innerCols]="innerColumnHeader"
+                            [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)">
+                        </app-commodity-table>
+                    </ng-container>
+                    <div style="text-align: center;" class="mt-2" *ngIf="show">
+                        <button class="btn btn-success" style="width:100px" (click)="pdfs('excel')">Excel</button>
+                        <button class="btn btn-primary ml-2" style="width:100px" (click)="pdfs('pdf')">PDF</button>
+                        <button class="btn btn-danger ml-2" (click)="gobacks()" style="width:100px">Back</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-
-        <div *ngIf="show && brokero">
-            
-            <ng-container *ngIf="branchData">
-                <app-commodity-table [cols]="columnHeader" [data]="branchData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="vechileInnerdata($event)">
-                </app-commodity-table>
-            </ng-container>
-            <div style="text-align: center;" class="mt-2" *ngIf="show">
-                <button class="btn btn-success" style="width:100px" (click)="pdfs('excel')">Excel</button>
-                <button class="btn btn-primary ml-2" style="width:100px" (click)="pdfs('pdf')">PDF</button>
-                <button class="btn btn-danger ml-2"  (click)="gobacks()" style="width:100px">Back</button>   
-          </div>
-
-           </div>
-    </div>
     </div>
 </div>

@@ -590,8 +590,14 @@ export class PremiumInfoComponent implements OnInit {
         policyInsuAedPremium = this.premiumF?.policyInsuAedPremium.value;
         console.log('this.premiumF', this.premiumF?.policyInsuAedPremium.value)
       }
-
-
+      console.log(this.premiumDetails?.Referral, "this.premiumDetails?.Referralthis.premiumDetails?.Referralthis.premiumDetails?.Referral");
+      let referralStatus = null
+      if (this.userDetails?.UserType != 'admin' && this.premiumDetails?.Referral.length != 0) {
+        referralStatus = 'Y'
+      }
+      else {
+        referralStatus = this.premiumF.referralStatus.value
+      }
       // console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
       // console.log('ppppppppp',this.premiumF?.warRate.value)
 
@@ -645,7 +651,7 @@ export class PremiumInfoComponent implements OnInit {
         "QuoteStatus": this.QuoteStatus,
         "ReferenceNo": this.ReferenceNo,
         "ReferralRemarks": this.premiumF.comments.value,
-        "ReferralStatus": this.premiumF.referralStatus.value,
+        "ReferralStatus": referralStatus,
         "ReferralUpdateYn": this.premiumF.ReferralUpdateYn.value,
         "Status": this.premiumDetails?.Status,
 
@@ -877,7 +883,7 @@ export class PremiumInfoComponent implements OnInit {
   }
 
   onDownloadSchedule(Results, rowData) {
- 
+
     /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
      const reqData = {
        "BranchCode": this.userDetails?.BranchCode,
