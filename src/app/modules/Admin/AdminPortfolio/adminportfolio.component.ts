@@ -15,6 +15,7 @@ import { NewQuotesComponent } from '../../new-quotes/new-quotes.component';
 import { NewQuotesService } from '../../new-quotes/new-quotes.service';
 import Swal from 'sweetalert2';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../../Auth/auth.service';
 
 @Component({
   selector: 'app-adminportfolio',
@@ -53,6 +54,7 @@ export class AdminPortfolioComponent implements OnInit {
   endeffectiveDate: any;
   uploadedDocumentsList: any[] = [];
   uploadDocuments: any[] = [];
+  branchCode: any
 
 
   minDate: any;
@@ -69,6 +71,7 @@ export class AdminPortfolioComponent implements OnInit {
     private adminReferralService: AdminReferralService,
     private router: Router,
     private sessionStorageService: SessionStorageService,
+    private authService: AuthService,
     private menuService: NbMenuService,
     private masterSer: MastersService,
     private dialog: MatDialog,
@@ -117,7 +120,12 @@ export class AdminPortfolioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.branchCode = this.userDetails?.BranchCode
+    this.authService.branchCode$.subscribe((code) => {
+      if (code) {
+        this.branchCode = code
+      }
+    });
   }
 
 
@@ -404,7 +412,8 @@ export class AdminPortfolioComponent implements OnInit {
   QuoteList() {
     let ReqObj =
     {
-      "QuoteNo": this.searchValue
+      "QuoteNo": this.searchValue,
+      "BranchCode": this.branchCode
     }
 
     let urlLink = `${this.ApiUrl1}admin/getPortFolioSearchByQuoteNo`;
@@ -478,9 +487,11 @@ export class AdminPortfolioComponent implements OnInit {
   }
 
   customerList() {
+
     let ReqObj =
     {
-      "CustomerName": this.searchValue
+      "CustomerName": this.searchValue,
+      "BranchCode": this.branchCode
     }
 
     let urlLink = `${this.ApiUrl1}admin/getPortFolioSearchByCustomer`;
@@ -537,7 +548,8 @@ export class AdminPortfolioComponent implements OnInit {
   policyList() {
     let ReqObj =
     {
-      "PolicyNo": this.searchValue
+      "PolicyNo": this.searchValue,
+      "BranchCode": this.branchCode
     }
 
     let urlLink = `${this.ApiUrl1}admin/getPortFolioSearchByPolicyNo`;
@@ -919,25 +931,25 @@ export class AdminPortfolioComponent implements OnInit {
   onViewQuotes(row: any) {
 
   }
-getFormattedDate(dateStr: string | null | undefined): string | null {
-  if (!dateStr || typeof dateStr !== 'string') {
-    return null;
+  getFormattedDate(dateStr: string | null | undefined): string | null {
+    if (!dateStr || typeof dateStr !== 'string') {
+      return null;
+    }
+
+    // Expecting format like "1-6-2025"
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return null;
+
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+
+    const jsDate = new Date(year, month - 1, day);
+    if (isNaN(jsDate.getTime())) return null;
+
+    return this.datePipe.transform(jsDate, 'dd/MM/yyyy');
   }
-
-  // Expecting format like "1-6-2025"
-  const parts = dateStr.split('-');
-  if (parts.length !== 3) return null;
-
-  const day = parseInt(parts[0], 10);
-  const month = parseInt(parts[1], 10);
-  const year = parseInt(parts[2], 10);
-
-  if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
-
-  const jsDate = new Date(year, month - 1, day);
-  if (isNaN(jsDate.getTime())) return null;
-
-  return this.datePipe.transform(jsDate, 'dd/MM/yyyy');
-}
 
 }

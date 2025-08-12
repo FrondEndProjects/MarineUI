@@ -137,17 +137,20 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit() {
     console.log('Paginator:', this.paginator);
     this.dataSource.paginator = this.paginator;
-    if (this.insurenceId != '100020') {
-      this.quoteF.orginatingCityOther.clearValidators();
-      this.quoteF.orginatingCityOther.updateValueAndValidity();
-      this.quoteF.originatingCity.clearValidators();
-      this.quoteF.originatingCity.updateValueAndValidity();
+    setTimeout(() => {
+      if (this.insurenceId != '100020') {
+        this.quoteF.orginatingCityOther.clearValidators();
+        this.quoteF.orginatingCityOther.updateValueAndValidity();
+        this.quoteF.originatingCity.clearValidators();
+        this.quoteF.originatingCity.updateValueAndValidity();
 
-      this.quoteF.destinationCityOther.clearValidators();
-      this.quoteF.destinationCityOther.updateValueAndValidity();
-      this.quoteF.destinationCity.clearValidators();
-      this.quoteF.destinationCity.updateValueAndValidity();
-    }
+        this.quoteF.destinationCityOther.clearValidators();
+        this.quoteF.destinationCityOther.updateValueAndValidity();
+        this.quoteF.destinationCity.clearValidators();
+        this.quoteF.destinationCity.updateValueAndValidity();
+      }
+    }, 100);
+
 
   }
 

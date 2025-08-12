@@ -11,25 +11,24 @@
         <a class="logo" (click)="homeRoute()"><img src="./assets/images/cropped-botwa.png" class="imgwid"></a>
       </ng-container>
       <ng-container *ngIf="regionCode==='100048'">
-        <a class="logo" (click)="homeRoute()"><img src="./assets/images/PhoenixMozambique.png"
-            class="imgwid"></a>
+        <a class="logo" (click)="homeRoute()"><img src="./assets/images/PhoenixMozambique.png" class="imgwid"></a>
       </ng-container>
       <ng-container *ngIf="regionCode==='100049'">
-        <a class="logo" (click)="homeRoute()"><img src="./assets/images/cropped-swaziland.png"
-            class="imgwid"></a>
+        <a class="logo" (click)="homeRoute()"><img src="./assets/images/cropped-swaziland.png" class="imgwid"></a>
       </ng-container>
       <ng-container *ngIf="regionCode==='100050'">
-        <a class="logo" (click)="homeRoute()"><img src="./assets/images/cropped-NAMIBIA-LOGO-1.png"
-            class="imgwid"></a>
+        <a class="logo" (click)="homeRoute()"><img src="./assets/images/cropped-NAMIBIA-LOGO-1.png" class="imgwid"></a>
       </ng-container>
-      <a class="logo" (click)="homeRoute()" *ngIf="regionCode=='100002'"><img
-          src="./assets/images/alliance-img-1.png" class="imgwid"></a>
+      <a class="logo" (click)="homeRoute()" *ngIf="regionCode=='100002'"><img src="./assets/images/alliance-img-1.png"
+          class="imgwid"></a>
       <a (click)="homeRoute()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png"
           class="imgwid"></a>
     </div>
   </div>
   <div class="header-container">
     <nb-actions size="small">
+      <nb-action class="control-items" nbTooltip="Dashboard" style="color: #fff !important" icon="pie-chart-outline" (click)="DashbordRoute()">
+      </nb-action>
       <nb-action class="control-items" style="color: #fff !important" icon="home-outline"
         (click)="homeRoute()"></nb-action>
       <nb-action class="control-items broker-dropdown" *ngIf="ProductId =='11' && userType=='admin'">

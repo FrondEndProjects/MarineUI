@@ -500,7 +500,8 @@
                         </div>
                       </div>
                     </li>
-                    <li class="list-group-item" *ngIf="regionCode!='100020'">
+                    <li class="list-group-item"
+                      *ngIf="regionCode!='100020' && regionCode!='100049'&& regionCode!='100048'">
                       <div class="row">
                         <div class="col-4 col-md-4">
                           VAT
@@ -512,6 +513,78 @@
                           <span class="px-1" *ngIf="premiumF.vatTaxAmount.value!=0">{{premiumF.vatTaxAmount.value |
                             commaseparator}}</span>
                           <span class="px-1" *ngIf="premiumF.vatTaxAmount.value==0">0</span>
+
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode=='100049' || regionCode=='100048'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Admin Fee
+                        </div>
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          {{premiumDetails.PremiumDetails.AdminFeePercent}}%
+                        </div>
+                        <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
+                          <span class="px-1"
+                            *ngIf="premiumDetails.PremiumDetails.AdminFee!=0">{{premiumDetails.PremiumDetails.AdminFee |
+                            commaseparator}}</span>
+                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.AdminFee==0">0</span>
+
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode=='100050'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          NAMFISA Levy
+                        </div>
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          {{premiumDetails.PremiumDetails.LevyPercent}}%
+                        </div>
+                        <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
+                          <span class="px-1"
+                            *ngIf="premiumDetails.PremiumDetails.PremiumLevy!=0">{{premiumDetails.PremiumDetails.PremiumLevy
+                            |
+                            commaseparator}}</span>
+                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.PremiumLevy==0">0</span>
+
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item"
+                      *ngIf="regionCode=='100049' || regionCode=='100048'|| regionCode=='100050'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Stamp Duty
+                        </div>
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          -
+                        </div>
+                        <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
+                          <span class="px-1"
+                            *ngIf="premiumDetails.PremiumDetails.StampDuty!=0">{{premiumDetails.PremiumDetails.StampDuty
+                            |
+                            commaseparator}}</span>
+                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.StampDuty==0">0</span>
+
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="regionCode=='100048'">
+                      <div class="row">
+                        <div class="col-4 col-md-4">
+                          Surtax(ISSM)
+                        </div>
+                        <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
+                          {{premiumDetails.PremiumDetails.surFeePercent}}%
+                        </div>
+                        <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
+                          <span class="px-1"
+                            *ngIf="premiumDetails.PremiumDetails.surFee!=0">{{premiumDetails.PremiumDetails.surFee
+                            |
+                            commaseparator}}</span>
+                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.surFee==0">0</span>
 
                         </div>
                       </div>

@@ -79,7 +79,7 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
 
 
   get keys() {
-    return this.columnHeader.map(({ key }) => key);
+    return this.columnHeader?.map(({ key }) => key);
   }
 
   applyFilter() {

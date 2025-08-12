@@ -106,9 +106,8 @@
           <label class="input-form-label">To Date<span class="text-required">*</span></label>
           <div class="input-form-box">
             <input type="text" ngbDatepicker #endPicker="ngbDatepicker" class="input-form-control without-icon"
-             [(ngModel)]="endeffectiveDate" (click)="endPicker.toggle()" readonly
-              >
- 
+              [(ngModel)]="endeffectiveDate" (click)="endPicker.toggle()" readonly>
+
           </div>
         </div>
       </div>
@@ -172,11 +171,11 @@
 
     <div>
       <div style="text-align: center">
-        <div>
+        <div *ngIf="uploadedDocumentsList">
           Document Upload
         </div>
         <div>
-          <div>
+          <div *ngIf="userDetails?.UserType !='admin'">
             <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
             <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
               (click)="doc.click()">
@@ -186,6 +185,11 @@
                     <i class="far fa-images"></i> Drag or Click</b>
                 </div>
               </div>
+            </div>
+          </div>
+          <div *ngIf="userDetails?.UserType =='admin' && !uploadedDocumentsList">
+            <div class="mt-5">
+              No data Found
             </div>
           </div>
           <div>

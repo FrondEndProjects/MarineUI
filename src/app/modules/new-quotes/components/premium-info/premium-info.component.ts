@@ -592,7 +592,7 @@ export class PremiumInfoComponent implements OnInit {
       }
       console.log(this.premiumDetails?.Referral, "this.premiumDetails?.Referralthis.premiumDetails?.Referralthis.premiumDetails?.Referral");
       let referralStatus = null
-      if (this.userDetails?.UserType != 'admin' && this.premiumDetails?.Referral.length != 0) {
+      if (this.userDetails?.UserType != 'admin' && (this.premiumDetails?.Referral?.length != 0 || this.premiumDetails?.Referral == null)) {
         referralStatus = 'Y'
       }
       else {

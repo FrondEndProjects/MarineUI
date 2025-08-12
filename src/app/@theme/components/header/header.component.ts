@@ -210,18 +210,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
   onRedirectMenu(rowData) {
-    console.log("RowData", rowData);
-    if (rowData.title == "Referral") {
-      this.userDetails.UserType = 'Issuer'
+    if (this.ProductId == '11' && rowData.title == 'New Quote') {
+      let value = 'openCover'
+      this.router.navigate([`/marine-opencover/new-quotes/customer-info`], { queryParams: { value } });
     }
     else {
-      this.userDetails.UserType = 'admin'
+      if (rowData.title == "Referral") {
+        this.userDetails.UserType = 'Issuer'
+      }
+      else {
+        this.userDetails.UserType = 'admin'
+      }
+      if ((this.router.url == '/marine-opencover/new-quotes/customer-info' || this.router.url == '/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link == '/marine-opencover/new-quotes') {
+        sessionStorage.removeItem('ReferenceNo');
+        window.location.reload()
+      }
+      else this.router.navigate([rowData.link]);
     }
-    if ((this.router.url == '/marine-opencover/new-quotes/customer-info' || this.router.url == '/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link == '/marine-opencover/new-quotes') {
-      sessionStorage.removeItem('ReferenceNo');
-      window.location.reload()
-    }
-    else this.router.navigate([rowData.link]);
+
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -244,7 +250,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     if (this.userDetails?.Result?.SubUserType != 'b2c') {
       // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login/product`;
-      location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+      // location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+      location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
       // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login/product`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login/product`;
@@ -259,7 +266,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
       // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
-      location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
 
     }
     return false;
@@ -269,7 +277,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.router.navigate([`/login`]);
     if (this.userDetails?.Result?.SubUserType != 'b2c') {
       // // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
-      location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+      // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+      location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
       // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
@@ -279,7 +288,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     else {
       // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
-      location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
       // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
@@ -291,7 +301,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   homeRoute() {
     if (this.userDetails?.Result?.SubUserType != 'b2c') {
       // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
-      location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+      // location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
+      location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
       // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
@@ -301,7 +312,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     else {
       // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
-      location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+      location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
       // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
@@ -325,8 +337,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
         if (this.userDetails?.Result?.SubUserType != 'b2c') {
           // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
-          location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
-          // location.href = `http://192.168.1.48:4900/#/auth/login`;
+          // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+          location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
+          // location.href = `http://192.168.1.48:4600/#/auth/login`;
           // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
           // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
           // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
@@ -335,7 +348,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         else {
           // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
-          location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+          // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+          location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
           // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
           // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
           // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
@@ -350,8 +364,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.authService.logout();
         if (this.userDetails?.Result?.SubUserType != 'b2c') {
           // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
-          location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+          // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
+          location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
           // location.href = `http://192.168.1.48:4900/#/auth/login`;
+          // location.href = `http://192.168.1.48:4600/#/auth/login`;
           // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
           // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
           // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
@@ -360,7 +376,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         else {
           // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
-          location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+          // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
+          location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
           // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
           // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
           // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
@@ -381,5 +398,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   checkCurrentRouting() {
     let url = this.router.url;
     return url != '/product-layout/opencover';
+  }
+
+  DashbordRoute() {
+    this.router.navigate([`/Marine/dashboard`]);
   }
 }

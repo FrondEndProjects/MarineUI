@@ -32,12 +32,12 @@ export class OpenCoverGridComponent implements OnInit {
 
   public mocFilterValue: any = '';
   public brokerList: any[] = [];
-  public selectedBroker:any = null;
-  public searchBy:any = null;
+  public selectedBroker: any = null;
+  public searchBy: any = null;
 
-  public isIssuer:boolean = false;
-  public routerBaseLink:any='';
-  public OpenCover:any
+  public isIssuer: boolean = false;
+  public routerBaseLink: any = '';
+  public OpenCover: any
 
 
 
@@ -60,7 +60,7 @@ export class OpenCoverGridComponent implements OnInit {
       this.applicationId = this.userDetails.LoginId;
     }
 
-    if(this.userDetails.UserType =='Issuer'){
+    if (this.userDetails.UserType == 'Issuer') {
       this.isIssuer = true;
       this.onGetBrokerListDrop();
     }
@@ -74,7 +74,7 @@ export class OpenCoverGridComponent implements OnInit {
       { key: 'InceptionDate', display: 'OpenCover Date' },
       { key: 'CurrencyName', display: 'Currency' },
       { key: 'Voyage', display: 'Balance Sum Insured' },
-      
+
       { key: 'ExpiryDate', display: 'Validity Period' },
       {
         key: 'actions',
@@ -92,12 +92,12 @@ export class OpenCoverGridComponent implements OnInit {
 
     this.onLoadData();
   }
-  onGetBrokerListDrop(){
+  onGetBrokerListDrop() {
     const urlLink = `${this.ApiUrl1}api/login/brokerlist`;
     const reqData = {
-      "LoginId":this.userDetails?.LoginId,
+      "LoginId": this.userDetails?.LoginId,
       'ProductId': this.productId,
-      "BranchCode":this.userDetails?.BranchCode
+      "BranchCode": this.userDetails?.BranchCode
     };
     this.sharedService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
@@ -105,98 +105,98 @@ export class OpenCoverGridComponent implements OnInit {
       });
 
   }
-  onmenu(row,rowData){
-    console.log('jjjjjjjjjjj',row)
-    console.log('kkkkkkkk',rowData)
-      if(rowData=='Schedule' || rowData=='PolicyWording')  this.getSchedulePdf(row,rowData);
-      if(rowData == 'Debit Note'){
-        this.getDebitPdf(row,rowData);
-      }
-      if(rowData=='Credit Note'){
-        this.getCreditPdf(row,rowData);
-      }
-  }
-  getCreditPdf(rowData,type){
-    let ReqObj:any,UrlLink:any;
-    // ReqObj = {
-    //   "BranchCode": this.userDetails?.BranchCode,
-    //   "QuoteNo": rowData.data?.QuoteNo
-    // }
-       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
-      this.sharedService.onGetMethodSync(UrlLink).subscribe(
-        (data: any) => {
-          let Results=data.Result
-          this.onDownloadSchedule(Results,type)
-        });
-  }
-  getDebitPdf(rowData,type){
-    let ReqObj:any,UrlLink:any;
-    // ReqObj = {
-    //   "BranchCode": this.userDetails?.BranchCode,
-    //   "QuoteNo": rowData.data?.QuoteNo
-    // }
-       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
-      this.sharedService.onGetMethodSync(UrlLink).subscribe(
-        (data: any) => {
-          let Results=data.Result
-          this.onDownloadSchedule(Results,type)
-        });
-  }
-  getSchedulePdf(rowData,type){
-    let ReqObj:any,UrlLink:any;
-    console.log('SSSSSSSSSSSSSSSSSSSSSS',type)
-    if(type=='Schedule'){
-      ReqObj = {
-        "BranchCode":this.userDetails.BranchCode,
-        //"PolicyNo":row.data.OriginalPolicyNo,
-          "EndtStatus":"Y",
-          "ImageStatus": "Y",
-          "OpenCoverNo": rowData.data.OpenCoverNo,
-          "ProposalNo": rowData.data.ProposalNo,
-          "Status":"Y"
-  
-      };
-       UrlLink = `${this.ApiUrl1}pdf/opencover`;
+  onmenu(row, rowData) {
+    console.log('jjjjjjjjjjj', row)
+    console.log('kkkkkkkk', rowData)
+    if (rowData == 'Schedule' || rowData == 'PolicyWording') this.getSchedulePdf(row, rowData);
+    if (rowData == 'Debit Note') {
+      this.getDebitPdf(row, rowData);
     }
-    else if(type == 'PolicyWording'){
-      type = 'PolicyWordings'
-      UrlLink = `${this.ApiUrl1}pdf/opencover/policywording`;
+    if (rowData == 'Credit Note') {
+      this.getCreditPdf(row, rowData);
+    }
+  }
+  getCreditPdf(rowData, type) {
+    let ReqObj: any, UrlLink: any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+    UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+    this.sharedService.onGetMethodSync(UrlLink).subscribe(
+      (data: any) => {
+        let Results = data.Result
+        this.onDownloadSchedule(Results, type)
+      });
+  }
+  getDebitPdf(rowData, type) {
+    let ReqObj: any, UrlLink: any;
+    // ReqObj = {
+    //   "BranchCode": this.userDetails?.BranchCode,
+    //   "QuoteNo": rowData.data?.QuoteNo
+    // }
+    UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+    this.sharedService.onGetMethodSync(UrlLink).subscribe(
+      (data: any) => {
+        let Results = data.Result
+        this.onDownloadSchedule(Results, type)
+      });
+  }
+  getSchedulePdf(rowData, type) {
+    let ReqObj: any, UrlLink: any;
+    console.log('SSSSSSSSSSSSSSSSSSSSSS', type)
+    if (type == 'Schedule') {
       ReqObj = {
-        "BranchCode":this.userDetails.BranchCode,
+        "BranchCode": this.userDetails.BranchCode,
         //"PolicyNo":row.data.OriginalPolicyNo,
-        "EndtStatus":"Y",
+        "EndtStatus": "Y",
         "ImageStatus": "Y",
         "OpenCoverNo": rowData.data.OpenCoverNo,
         "ProposalNo": rowData.data.ProposalNo,
-        "Status":"Y"
+        "Status": "Y"
+
+      };
+      UrlLink = `${this.ApiUrl1}pdf/opencover`;
+    }
+    else if (type == 'PolicyWording') {
+      type = 'PolicyWordings'
+      UrlLink = `${this.ApiUrl1}pdf/opencover/policywording`;
+      ReqObj = {
+        "BranchCode": this.userDetails.BranchCode,
+        //"PolicyNo":row.data.OriginalPolicyNo,
+        "EndtStatus": "Y",
+        "ImageStatus": "Y",
+        "OpenCoverNo": rowData.data.OpenCoverNo,
+        "ProposalNo": rowData.data.ProposalNo,
+        "Status": "Y"
 
       };
     }
-      this.sharedService.onPostMethodSync(UrlLink, ReqObj).subscribe(
-        (data: any) => {
-          let Results=data.Result
-          this.onDownloadSchedule(Results,type)
-        });
+    this.sharedService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        let Results = data.Result
+        this.onDownloadSchedule(Results, type)
+      });
   }
-  onDownloadSchedule(Results,rowData){
-   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
-    const reqData = {
-      "BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo":row.QuoteNo
-    }*/
-      if(Results){
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', Results);
-        link.setAttribute('download',rowData);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-       
-      }
-      
+  onDownloadSchedule(Results, rowData) {
+    /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+     const reqData = {
+       "BranchCode": this.userDetails?.BranchCode,
+       "QuoteNo":row.QuoteNo
+     }*/
+    if (Results) {
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', Results);
+      link.setAttribute('download', rowData);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
-   
+    }
+
+
+
   }
   onChangeBroker() {
     this.loginId = this.selectedBroker;
@@ -267,27 +267,28 @@ export class OpenCoverGridComponent implements OnInit {
     );
   }
 
-  onOpenCoverActions(event: any,type) {
-    console.log('RRRRRRRRR',event)
+  onOpenCoverActions(event: any, type) {
+    console.log('RRRRRRRRR', event)
     if (event.name === 'Certificate') {
-        const data = {
-          'name':event.name,
-          'value':event?.data?.MissippiOpenCoverNo
-        }
-         sessionStorage.setItem('OpenCover',JSON.stringify(data));
-         sessionStorage.setItem('loginId', this.loginId);
-         sessionStorage.setItem('quotesType', 'Without-Endo');
-         sessionStorage.setItem('WithCertifi', 'true');
-         sessionStorage.setItem('openCOverType',type);
-         let value ='openCover'
-         this.router.navigate([`${this.routerBaseLink}/new-quotes`] , {queryParams: { value } });
+      const data = {
+        'name': event.name,
+        'value': event?.data?.MissippiOpenCoverNo
+      }
+      sessionStorage.setItem('OpenCover', JSON.stringify(data));
+      sessionStorage.setItem('loginId', this.loginId);
+      sessionStorage.setItem('quotesType', 'Without-Endo');
+      sessionStorage.setItem('WithCertifi', 'true');
+      sessionStorage.setItem('openCOverType', type);
+      //  let value ='openCover'
+      //  this.router.navigate([`${this.routerBaseLink}/new-quotes`] , {queryParams: { value } });
+      this.router.navigate([`/Marine/dashboard`]);
     }
-    if(event.name=='Schedule' || event.name=='PolicyWording')  this.getSchedulePdf(event,event.name);
-    if(event.name == 'Debit Note'){
-      this.getDebitPdf(event,event.name);
+    if (event.name == 'Schedule' || event.name == 'PolicyWording') this.getSchedulePdf(event, event.name);
+    if (event.name == 'Debit Note') {
+      this.getDebitPdf(event, event.name);
     }
-    if(event.name=='Credit Note'){
-      this.getCreditPdf(event,event.name);
+    if (event.name == 'Credit Note') {
+      this.getCreditPdf(event, event.name);
     }
   }
 

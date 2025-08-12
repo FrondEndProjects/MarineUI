@@ -1,8 +1,162 @@
-<div class="card">
-    <div class="card-header">
-        Dash Board Page
+<div class="container-fluid card p-2 py-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h6 class="fw-bold">Dashboard Overview</h6>
+        </div>
     </div>
-    <div class="card-body">
-            
-    </div>
+
+    <ng-container>
+        <div class="row gy-3">
+
+            <div class="col-12 col-sm-12yy col-md-4">
+                <div class="card h-100 card-style1 d-flex flex-column">
+                    <p class="heading">Production</p>
+                    <h6 *ngIf="brokerProductPolicyListData?.length > 0" class="text-center text-wrap">{{
+                        brokerProductPolicyListData[0]?.Name }}</h6>
+                    <div class="card-body">
+
+                        <div class="card-item">
+                            <span class="label">Count:</span>
+                            <span class="value">{{ brokerProductPolicyListData[0]?.Count || 0 }}</span>
+                        </div>
+                        <div class="card-item">
+                            <span class="label">Premium:</span>
+                            <span class="value">{{ formatNumberWithCommas(brokerProductPolicyListData[0]?.Premium)
+                                }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="heading">Quotation</p>
+                    <h6 *ngIf="brokerProductQuoteListData?.length > 0" class="text-center text-wrap">{{
+                        brokerProductQuoteListData[0]?.Name }}</h6>
+                    <div class="card-body">
+
+                        <div class="card-item">
+                            <span class="label">Count:</span>
+                            <span class="value">{{ brokerProductQuoteListData[0]?.Count || 0 }}</span>
+                        </div>
+                        <div class="card-item">
+                            <span class="label">Premium:</span>
+                            <span class="value">{{ formatNumberWithCommas(brokerProductQuoteListData[0]?.Premium)
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-4">
+                <div class="card h-100 card-style d-flex flex-column">
+                    <p class="heading">Broker Policy</p>
+                    <!-- <h6 *ngIf="brokerPlocyListData?.length > 0" class="text-center text-wrap">{{
+                        brokerPlocyListData[0]?.Name }}</h6> -->
+                    <div #chartContainer id="chart-container" style="height: 250px; width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-4">
+                <div class="card h-100 card-style d-flex flex-column">
+                    <p class="heading">Broker Quotation</p>
+                    <!-- <h6 *ngIf="brokerQuoteListData?.length > 0" class="text-center text-wrap">{{
+                        brokerQuoteListData[0]?.Name }}</h6> -->
+                    <div #chartContainer1 id="chart-container1" style="height: 250px; width: 100%;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row gy-3 mt-3">
+
+            <div class="col-12 col-sm-12yy col-md-4">
+                <div class="card h-100 card-style1 d-flex flex-column">
+                    <p class="heading">Referral Approved</p>
+                    <div id="approvedChart" style="height: 250px;"></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-4">
+                <div class="card h-100 card-style d-flex flex-column">
+                    <p class="heading">Referral Pending</p>
+                    <div id="pendingChart" style="height: 250px;"></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-4">
+                <div class="card h-100 card-style d-flex flex-column">
+                    <p class="heading">Referral Rejected</p>
+
+                    <div id="rejectedChart" style="height: 250px;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- <div class="card h-100 p-2 mt-3">
+            <div class="row">
+                <div class="container mt-4">
+                    <div class="row">
+                        <h6>
+                            Referral
+                        </h6>
+                    </div>
+                    <div class="row text-center">
+
+                        <div class="col-md-4 mb-4">
+
+                            <div id="approvedChart" style="height: 250px;"></div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+
+                            <div id="pendingChart" style="height: 250px;"></div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+
+                            <div id="rejectedChart" style="height: 250px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> -->
+
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="card h-100 p-2">
+                    <h6 class="text-center text-wrap">Top Broker
+                    </h6>
+                    <ng-container *ngIf="topBrokerList">
+                        <app-material-table [cols]="columnHeader1" [data]="topBrokerList">
+                        </app-material-table>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 p-2">
+                    <h6 class="text-center text-wrap">Top Customers
+                    </h6>
+                    <ng-container *ngIf="topCustomerList">
+                        <app-material-table [cols]="columnHeader1" [data]="topCustomerList">
+                        </app-material-table>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row mb-2 mt-2">
+            <!-- <div class="col-md-3"></div> -->
+            <div class="col-md-12">
+            <div class="card h-100 p-2 mt-3">
+
+                <h6 class="text-center text-wrap">Top Referral
+                </h6>
+                <ng-container *ngIf="topReferralList">
+                    <app-material-table [cols]="columnHeader2" [data]="topReferralList">
+                    </app-material-table>
+                </ng-container>
+            </div>
+            <!-- <div class="col-md-3"></div> -->
+            </div>
+        </div>
+    </ng-container>
 </div>
