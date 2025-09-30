@@ -86,7 +86,7 @@ export class ConveyanceAddAditComponent implements OnInit {
 
   getConveyanceEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "ConveyanId": this.conveyanceId,
       "ModeOfTransportId": this.conveyanceTransport
     }

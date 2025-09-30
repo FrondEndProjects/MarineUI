@@ -50,7 +50,7 @@ export class ToleranceAppEditComponent implements OnInit {
 
   getToleranceList() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "ToleranceId": this.toleranceId
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/tolerance/edit`, ReqObj).subscribe(

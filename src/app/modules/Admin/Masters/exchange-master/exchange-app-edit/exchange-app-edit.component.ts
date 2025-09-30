@@ -50,7 +50,7 @@ export class ExchangeAppEditComponent implements OnInit {
   getCurrencyList()  {
     let ReqObj = {
       // "BranchCode": this.userDetails.Result.BelongingBranch
-      'BranchCode': this.userDetails?.BranchCode,
+      'BranchCode': this.userDetails?.Result.BranchCode,
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}quote/dropdown/currency`, ReqObj).subscribe(
       (data: any) => {
@@ -62,7 +62,7 @@ export class ExchangeAppEditComponent implements OnInit {
 
   getExchangeEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "ExchangeId": this.ExchangeId
     }
     console.log(ReqObj);

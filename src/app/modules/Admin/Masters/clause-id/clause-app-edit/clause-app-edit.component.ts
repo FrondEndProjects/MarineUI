@@ -129,7 +129,7 @@ IntegrationCode:new FormControl(''),
 
   getConveyanceEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "ClausesId":this.ClausesId,
       "CoverId": this.CoverId
 
@@ -154,7 +154,7 @@ IntegrationCode:new FormControl(''),
           this.ClausesIdForm.controls['CoverId'].setValue(conveyanceDetails.CoverId);
           this.ClausesIdForm.controls['status'].setValue(conveyanceDetails.Status);
         }
-        else alert('Null Response')
+        // else alert('Null Response')
 
       }
     )

@@ -150,7 +150,7 @@ export class SettlingAgentAppEditComponent implements OnInit {
   }
     getConveyanceEdit() {
       let ReqObj = {
-        "BranchCode": this.branchCode,
+        "BranchCode": this.userDetails?.Result.BelongingBranch,
         "SettlingAgentId":this.SettlingAgentId
 
       }

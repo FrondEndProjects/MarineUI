@@ -48,7 +48,7 @@ export class ConstantAppEditComponent implements OnInit {
 
   getConstantList() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "CategoryId": this.ConstantId
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/constant/edit`, ReqObj).subscribe(

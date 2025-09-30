@@ -49,7 +49,7 @@ export class SaleTermAppEditComponent implements OnInit {
 
   getSaleTermDetails() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode":this.Userdetails?.Result.BelongingBranch,
       "SaleTermId": this.saleTermId
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/saleTermMaster/edit`, ReqObj).subscribe(

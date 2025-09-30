@@ -62,7 +62,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.brokerPieChart();
+    setTimeout(() => {
+      this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
+      this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
+      this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
+      this.brokerPolicyAndQuodation();
+
+    }, 1000);
   }
 
   ngOnInit(): void {
@@ -195,10 +201,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     );
 
     setTimeout(() => {
-      this.brokerPolicyAndQuodation();
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
+      this.brokerPolicyAndQuodation();
+
     }, 1000);
   }
   getIssuerList() {
@@ -312,10 +319,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     );
 
     setTimeout(() => {
-      this.brokerPolicyAndQuodation();
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
+      this.brokerPolicyAndQuodation();
+
     }, 1000);
   }
   getUserList() {
@@ -431,10 +439,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     );
 
     setTimeout(() => {
-      this.brokerPolicyAndQuodation();
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
+      this.brokerPolicyAndQuodation();
+
     }, 1000);
   }
   getAdminList() {
@@ -548,10 +557,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     );
 
     setTimeout(() => {
-      this.brokerPolicyAndQuodation();
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
+      this.brokerPolicyAndQuodation();
+
     }, 1000);
   }
 
@@ -824,7 +834,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     let policyCountData1: number[] = [];
     let premiumData1: number[] = [];
 
-    if (this.brokerQuoteListData?.length != 0 && this.brokerQuoteListData !=null) {
+    if (this.brokerQuoteListData?.length != 0 && this.brokerQuoteListData != null) {
       xAxisData1 = this.brokerQuoteListData.map((item: { Name: string }) =>
         (item.Name || 'Unnamed').replace(/\s+/g, '\n')
       );

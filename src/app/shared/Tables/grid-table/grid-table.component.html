@@ -51,7 +51,7 @@
                 <i class="fas fa-marker" >&nbsp;Endorse </i>
                 
               </button>
-              <button class="btn btn-warning btn-sm" *ngIf="element.Status == 'Y'"  (click)="onEdit.emit(element)">
+              <button class="btn btn-primary btn-sm" *ngIf="element.Status == 'Y'"  (click)="onEdit.emit(element)">
                 <i class="fa-solid fa-pen-to-square">&nbsp;Edit</i>
               </button>
               <!--<button class="circle btn btn-warning btn-sm" *ngIf="element.Status == 'Y'" (click)="onView.emit(element)">
@@ -70,7 +70,7 @@
           </ng-container>-->
             <!--newlyAdded-->
             <ng-container *ngIf="col.config.isView">
-              <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+              <button class="circle btn btn-primary btn-sm" (click)="onView.emit(element)">
                   <!--<i class="fas fa-eye" style='color: blue'></i>-->
                   <i class="fa fa-file" aria-hidden="true"></i>
               </button>&nbsp;
@@ -78,7 +78,7 @@
 
           <ng-container *ngIf="element.Status == 'Y'">
             <ng-container *ngIf="col.config.isViewn" >
-              <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+              <button class="circle btn btn-primary btn-sm" (click)="onView.emit(element)">
                   <!--<i class="fas fa-eye" style='color: blue'></i>-->
                   <i class="fa fa-file" aria-hidden="true"></i>
               </button>&nbsp;
@@ -86,13 +86,13 @@
           </ng-container>
         
           <ng-container *ngIf="col.config.isViews">
-            <button class="circle btn btn-warning btn-sm" (click)="onViews.emit(element)">
-                <i class="fas fa-eye" style='color: blue'></i>
+            <button class="circle btn btn-primary btn-sm" (click)="onViews.emit(element)">
+                <i class="fas fa-eye"></i>
             </button>&nbsp;
         </ng-container>
         <ng-container *ngIf="col.config.isRating">
-          <button class="circle btn btn-warning btn-sm" (click)="onRating.emit(element)">
-            <i class="fa fa-star" style='color: blue'></i>
+          <button class="circle btn btn-primary btn-sm" (click)="onRating.emit(element)">
+            <i class="fa fa-star"></i>
           </button>&nbsp;
       </ng-container>
         <ng-container *ngIf="col.config.isChecked">
@@ -150,7 +150,7 @@
                   <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
                 </div>
                 <div class="col-6">
-                  <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
+                  <button class="text-primary" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
                   <mat-menu #menus="matMenu">

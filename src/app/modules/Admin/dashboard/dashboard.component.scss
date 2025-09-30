@@ -1,6 +1,6 @@
 .heading {
   font-weight: bold;
-  font-size: 1.2rem;
+  // font-size: 1rem;
   color: #000;
   margin-bottom: 0.5rem;
 }
@@ -11,7 +11,7 @@
   color: #000;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  padding: 1.2rem;
+  padding: 0.5rem;
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 
 .card-style h6,
 .card-style1 h6 {
-  font-size: 1rem;
+  font-size: medium;
   margin-bottom: 0.5rem;
   text-align: center;
   color: #011b79;
@@ -41,7 +41,7 @@
 .card-item {
   display: flex;
   justify-content: space-between;
-  font-size: 1rem;
+  // font-size: 1rem;
 }
 
 .label {

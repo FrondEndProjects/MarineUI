@@ -91,7 +91,7 @@ export class CommodityAppEditComponent implements OnInit {
   getCommodityEdit() {
     let ReqObj = {
       "CommodityId": this.commodityId,
-      "BranchCode": this.branchCode
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/edit`, ReqObj).subscribe(
       (data: any) => {

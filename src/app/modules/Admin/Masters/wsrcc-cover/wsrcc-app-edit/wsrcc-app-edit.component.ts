@@ -118,7 +118,7 @@ export class WsrccAppEditComponent implements OnInit {
 
   getCoverEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "ClausesId": this.clausesId,
       "CoverId": this.CoverId
     }

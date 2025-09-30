@@ -82,7 +82,7 @@ this.getCoverName();
 
   getCommodityExcessEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "Sno": this.commoditySno
     }
     console.log(ReqObj);

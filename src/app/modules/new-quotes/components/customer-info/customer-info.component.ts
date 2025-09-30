@@ -371,6 +371,7 @@ export class CustomerInfoComponent implements OnInit {
           this.bankF.sailingDate.setValue(this.newQuotesService.ngbDateFormatt(lcBankDetails?.SailingDate));
 
           console.log('EndTypeId to Know', this.editQuoteData.EndtTypeId)
+console.log(this.editQuoteData,"this.editQuoteDatathis.editQuoteData");
 
           if (this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral == 'Approved') {
 
@@ -453,6 +454,20 @@ export class CustomerInfoComponent implements OnInit {
     }
   }
   onSaveQuote() {
+
+    if (this.sessionStorageService.sessionStorgaeModel.referral == 'Approved') {
+      for (var control in this.customerForm.controls) {
+        this.customerForm.controls[control].enable();
+
+      }
+      for (var control in this.quoteForm.controls) {
+        this.quoteForm.controls[control].enable();
+      }
+      for (var control in this.bankForm.controls) {
+        this.bankForm.controls[control].enable();
+      }
+    }
+
     if (this.quoteF.goodsCategory.value == '9999') {
       this.quoteF.goodsCategory.setValue(null);
     }
@@ -471,7 +486,7 @@ export class CustomerInfoComponent implements OnInit {
         let issuerId: any = '', loginId = null;
         let brokerCode = null;
         let branchCode = null;
-        if (this.setDocvalue != 'referral' && this.setDocvalue != 'back' && this.setDocvalue != 'edit' ) {
+        if (this.setDocvalue != 'referral' && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
           branchCode = this.userDetails?.BranchCode
 
         }
@@ -1087,5 +1102,22 @@ export class CustomerInfoComponent implements OnInit {
 
     return invalidControls;
   }
-
+  makeFormReadOnly(form: FormGroup) {
+    Object.keys(form.controls).forEach(controlName => {
+      const element = document.querySelector(`[formControlName="${controlName}"]`) as HTMLInputElement;
+      if (element) {
+        element.setAttribute('readonly', 'true');
+      }
+    });
+  }
+  removeReadonly(form: FormGroup) {
+    Object.keys(form.controls).forEach(controlName => {
+      const element = document.querySelector(
+        `[formControlName="${controlName}"]`
+      ) as HTMLInputElement;
+      if (element) {
+        element.removeAttribute('readonly');
+      }
+    });
+  }
 }

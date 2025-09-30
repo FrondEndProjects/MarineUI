@@ -6,12 +6,11 @@
     </div>
 
     <ng-container>
-        <div class="row gy-3">
-
+        <div class="row gy-2">
             <div class="col-12 col-sm-12yy col-md-4">
-                <div class="card h-100 card-style1 d-flex flex-column">
+                <div class="card h-auto card-style1 d-flex flex-column">
                     <p class="heading">Production</p>
-                    <h6 *ngIf="brokerProductPolicyListData?.length > 0" class="text-center text-wrap">{{
+                    <h6 *ngIf="brokerProductPolicyListData?.length > 0" style="font-size: 12px !important;" class="text-center text-wrap">{{
                         brokerProductPolicyListData[0]?.Name }}</h6>
                     <div class="card-body">
 
@@ -27,7 +26,7 @@
                     </div>
                     <hr>
                     <p class="heading">Quotation</p>
-                    <h6 *ngIf="brokerProductQuoteListData?.length > 0" class="text-center text-wrap">{{
+                    <h6 *ngIf="brokerProductQuoteListData?.length > 0" style="font-size: 12px !important;" class="text-center text-wrap">{{
                         brokerProductQuoteListData[0]?.Name }}</h6>
                     <div class="card-body">
 
@@ -47,8 +46,6 @@
             <div class="col-12 col-sm-12 col-md-4">
                 <div class="card h-100 card-style d-flex flex-column">
                     <p class="heading">Broker Policy</p>
-                    <!-- <h6 *ngIf="brokerPlocyListData?.length > 0" class="text-center text-wrap">{{
-                        brokerPlocyListData[0]?.Name }}</h6> -->
                     <div #chartContainer id="chart-container" style="height: 250px; width: 100%;"></div>
                 </div>
             </div>
@@ -56,73 +53,36 @@
             <div class="col-12 col-sm-12 col-md-4">
                 <div class="card h-100 card-style d-flex flex-column">
                     <p class="heading">Broker Quotation</p>
-                    <!-- <h6 *ngIf="brokerQuoteListData?.length > 0" class="text-center text-wrap">{{
-                        brokerQuoteListData[0]?.Name }}</h6> -->
                     <div #chartContainer1 id="chart-container1" style="height: 250px; width: 100%;"></div>
                 </div>
             </div>
 
         </div>
-
         <div class="row gy-3 mt-3">
-
             <div class="col-12 col-sm-12yy col-md-4">
                 <div class="card h-100 card-style1 d-flex flex-column">
                     <p class="heading">Referral Approved</p>
                     <div id="approvedChart" style="height: 250px;"></div>
                 </div>
             </div>
-
             <div class="col-12 col-sm-12 col-md-4">
                 <div class="card h-100 card-style d-flex flex-column">
                     <p class="heading">Referral Pending</p>
                     <div id="pendingChart" style="height: 250px;"></div>
                 </div>
             </div>
-
             <div class="col-12 col-sm-12 col-md-4">
                 <div class="card h-100 card-style d-flex flex-column">
                     <p class="heading">Referral Rejected</p>
-
                     <div id="rejectedChart" style="height: 250px;"></div>
                 </div>
             </div>
 
         </div>
-
-        <!-- <div class="card h-100 p-2 mt-3">
-            <div class="row">
-                <div class="container mt-4">
-                    <div class="row">
-                        <h6>
-                            Referral
-                        </h6>
-                    </div>
-                    <div class="row text-center">
-
-                        <div class="col-md-4 mb-4">
-
-                            <div id="approvedChart" style="height: 250px;"></div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-
-                            <div id="pendingChart" style="height: 250px;"></div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-
-                            <div id="rejectedChart" style="height: 250px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div> -->
-
         <div class="row mt-2">
             <div class="col-md-6">
                 <div class="card h-100 p-2">
-                    <h6 class="text-center text-wrap">Top Broker
-                    </h6>
+                     <p class=" text-center text-wrap heading">Top Broker</p>
                     <ng-container *ngIf="topBrokerList">
                         <app-material-table [cols]="columnHeader1" [data]="topBrokerList">
                         </app-material-table>
@@ -131,8 +91,7 @@
             </div>
             <div class="col-md-6">
                 <div class="card h-100 p-2">
-                    <h6 class="text-center text-wrap">Top Customers
-                    </h6>
+                     <p class=" text-center text-wrap heading">Top Customers</p>
                     <ng-container *ngIf="topCustomerList">
                         <app-material-table [cols]="columnHeader1" [data]="topCustomerList">
                         </app-material-table>
@@ -144,7 +103,6 @@
 
 
         <div class="row mb-2 mt-2">
-            <!-- <div class="col-md-3"></div> -->
             <div class="col-md-12">
             <div class="card h-100 p-2 mt-3">
 
@@ -155,7 +113,6 @@
                     </app-material-table>
                 </ng-container>
             </div>
-            <!-- <div class="col-md-3"></div> -->
             </div>
         </div>
     </ng-container>

@@ -50,7 +50,7 @@ export class CurrencyAppEditComponent implements OnInit {
 
   getCurrencyEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CurrencyId": this.CurrencyId
     }
     console.log(ReqObj);

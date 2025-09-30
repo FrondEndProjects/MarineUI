@@ -49,7 +49,7 @@ export class TransportAppEditComponent implements OnInit {
 
   getTransportDetails() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "ModeOfTransportId": this.transportId
     }
     

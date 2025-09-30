@@ -69,7 +69,7 @@ export class WarRateAppEditComponent implements OnInit {
 
   getWarRateEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "WarId": this.warId
     }
     console.log(ReqObj);

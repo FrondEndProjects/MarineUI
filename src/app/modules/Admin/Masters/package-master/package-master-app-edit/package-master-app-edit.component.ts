@@ -69,7 +69,7 @@ export class PackageMasterAppEditComponent implements OnInit {
   
   getpackageEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "ModeOfTransportId": this.packageTransportId,
       "PackageId": this.packageId
     }

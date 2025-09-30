@@ -49,7 +49,7 @@ export class ExclusionAppEditComponent implements OnInit {
 
   getExclusionList() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "ExclusionId": this.ExclusionId
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/exclusion/edit`, ReqObj).subscribe(

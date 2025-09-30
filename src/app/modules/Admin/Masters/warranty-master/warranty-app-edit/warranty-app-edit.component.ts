@@ -48,7 +48,7 @@ export class WarrantyAppEditComponent implements OnInit {
 
   getWarrantyEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "WarrantyId": this.WarrantyId
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/warranty/edit`, ReqObj).subscribe(

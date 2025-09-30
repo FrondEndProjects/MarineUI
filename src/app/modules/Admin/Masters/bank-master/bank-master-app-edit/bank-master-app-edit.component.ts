@@ -89,7 +89,7 @@ export class BankMasterAppEditComponent implements OnInit {
 
     let ReqObj = {
       "BankId": this.bankId,
-      "BranchCode": this.branchCode
+      "BranchCode": this.Userdetails?.Result.BelongingBranch
     }
     console.log(ReqObj);
 

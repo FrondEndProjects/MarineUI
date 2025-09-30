@@ -403,7 +403,7 @@ export class AdminReportComponent implements OnInit {
       "EndDate": this.s,
       "LoginId": this.log,
       "ProductId": this.product,
-      "ReportStatus": "Y",
+      "ReportStatus": "P",
       "StartDate": this.t,
       "Type": typelist
     }

@@ -9,3 +9,10 @@
     transition: all .3s;
     height: 35px;
 }
+
+.active-btn {
+  background-color: #011b79 !important;  /* Primary highlight */
+  color: #fff !important;               /* White text */
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}

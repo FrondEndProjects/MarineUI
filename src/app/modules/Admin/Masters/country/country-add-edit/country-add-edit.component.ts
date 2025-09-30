@@ -72,7 +72,7 @@ export class CountryAddEditComponent implements OnInit {
   getCountryDetails() {
     let ReqObj = {
       "CountryId": this.countryId,
-      "BranchCode": this.branchCode
+      "BranchCode": this.Userdetails?.Result.BelongingBranch
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/country/edit`, ReqObj).subscribe(
       (data: any) => {

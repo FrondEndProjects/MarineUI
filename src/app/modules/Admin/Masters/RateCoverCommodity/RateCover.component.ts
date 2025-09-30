@@ -176,7 +176,7 @@ export class RateCoverComponent implements OnInit {
     }
     console.log('NNNNNNNNN',this.transportcode);
     const ReqObj = {
-      'BranchCode': this.userDetails.BelongingBranch,
+      'BranchCode': this.userDetails.Result.BelongingBranch,
       'ProductId' : '3',
       'ModeOfTransportCode':this.transportcode,
       'OpenCoverNo':"",

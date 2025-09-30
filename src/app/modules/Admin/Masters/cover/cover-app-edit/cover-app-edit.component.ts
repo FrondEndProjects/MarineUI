@@ -85,7 +85,7 @@ export class CoverAppEditComponent implements OnInit {
 
   getCoverEdit() {
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.userDetails?.Result.BelongingBranch,
       "CoverId": this.coverId
     }
     console.log(ReqObj);
