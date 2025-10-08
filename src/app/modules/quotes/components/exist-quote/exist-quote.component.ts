@@ -134,17 +134,17 @@ export class ExistQuoteComponent implements OnInit {
                 bg: "success",
               },
             },
-            {
-              key: "mail",
-              display: "Mail",
-              // sticky: true,
-              config: {
-                isActionBtn: true,
-                isActionBtnName: "Mail",
-                isNgxIcon: "fas fa-envelope",
-                bg: "warning",
-              },
-            },
+            // {
+            //   key: "mail",
+            //   display: "Mail",
+            //   // sticky: true,
+            //   config: {
+            //     isActionBtn: true,
+            //     isActionBtnName: "Mail",
+            //     isNgxIcon: "fas fa-envelope",
+            //     bg: "warning",
+            //   },
+            // },
             {
               key: "reject",
               display: "Reject",
@@ -170,9 +170,9 @@ export class ExistQuoteComponent implements OnInit {
     if(event?.btName ==='Edit'){
       this.onEdit(event);
     }
-    if(event?.btName === 'Mail'){
+    // if(event?.btName === 'Mail'){
 
-    }
+    // }
     if(event?.btName === 'Reject'){
       this.onReject(event);
     }

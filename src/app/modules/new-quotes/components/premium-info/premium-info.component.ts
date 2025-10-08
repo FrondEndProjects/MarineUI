@@ -46,6 +46,7 @@ export class PremiumInfoComponent implements OnInit {
   policyHolderPremium: any;
   rateDetails: any = null;
   rateShowSection: boolean = false;
+  isCommision: boolean = true;
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -897,6 +898,18 @@ export class PremiumInfoComponent implements OnInit {
       document.body.appendChild(link);
       link.click();
       link.remove();
+
+    }
+  }
+
+  onChangeCommsion() {
+    this.premiumF.commission.setValue(0)
+    if (this.premiumF.commissionCheck.value == 'N') {
+      this.isCommision = true;
+
+    }
+    else {
+      this.isCommision = false;
 
     }
   }

@@ -48,6 +48,7 @@ export class ProtfolioGridComponent implements OnInit {
   quote: any;
   policy: any;
   porttype: string;
+  InsuranceId: any;
 
 
   constructor(
@@ -64,6 +65,7 @@ export class ProtfolioGridComponent implements OnInit {
     this.userType = this.userDetails?.UserType;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.OpenCover = this.portfolioComponent?.OpenCover;
+    this.InsuranceId = this.userDetails?.Result?.InsuranceId
     console.log(this.OpenCover);
     this.porttype= sessionStorage.getItem('openCOverType');
 
@@ -134,6 +136,7 @@ export class ProtfolioGridComponent implements OnInit {
   onmenu(row,rowData,template){
     console.log('jjjjjjjjjjj',row)
     console.log('kkkkkkkk',rowData)
+    
       if(rowData=='Schedule' || rowData=='Policy Wordings' || rowData=='Marine Certificate')  this.getSchedulePdf(row,rowData);
 
       if(rowData=='Documents'){
@@ -460,7 +463,8 @@ export class ProtfolioGridComponent implements OnInit {
           ];
         }
         else{
-          this.columnHeader = [
+          if(this.InsuranceId =='100020'){
+                this.columnHeader = [
 
             { key: 'QuoteNo', display: 'Quote No', sticky: false, },
             { key: 'CustomerName', display: 'Customer Name' },
@@ -502,6 +506,51 @@ export class ProtfolioGridComponent implements OnInit {
               },
             },
           ];
+          }
+          else{
+                this.columnHeader = [
+
+            { key: 'QuoteNo', display: 'Quote No', sticky: false, },
+            { key: 'CustomerName', display: 'Customer Name' },
+            { key: 'QuotationDate', display: 'Policy Date' },
+            { key: 'Premium', display: 'Premium' },
+            { key: 'PremiumCurrencyName', display: 'Currency' },
+            { key: 'PolicyNo', display: 'Policy No' },
+            { key: 'Username', display: 'Username' },
+            { key: 'GoodsDescription', display: 'Goods' },
+            { key: 'LcDate', display: 'LC Date' },
+            { key: 'LcNumber', display: 'LC Number' },
+            { key: 'BlAwbNo', display: 'Bill No' },
+            { key: 'BlAwbDate', display: 'Bill Date' },
+            {
+              key: 'endorse',
+              display: 'Endorse',
+              sticky: true,
+              config: {
+                isActionBtn: true,
+                isActionBtnName: 'add',
+                isNgxIcon:'fas fa-plus-circle',
+                bg: 'primary'
+              }
+            },
+            {
+              key: 'actions',
+              display: 'Action',
+              sticky: true,
+              config: {
+                isMenuAction: true,
+                menuList: [
+                  { name: 'Schedule' },
+                  { name: 'Debit Note' },
+                  { name: 'Credit Note' },
+                  { name: 'Policy Wordings' },
+                  { name: 'Documents' },
+                ]
+              },
+            },
+          ];
+          }
+      
         }
           this.tableData = data?.Result.map(x => ({
             ...x,

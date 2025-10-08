@@ -68,7 +68,8 @@ export class ApprovedQuotesComponent implements OnInit {
     }
     // this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
     let value = 'referral'
-    this.router.navigate([`/${this.routerBaseLink}/new-quotes`], { queryParams: { value } });
+    let sts = 'Approved'
+    this.router.navigate([`/${this.routerBaseLink}/new-quotes`], { queryParams: { value ,sts: sts } });
   }
 
 }

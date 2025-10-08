@@ -283,10 +283,10 @@
                     <div class="input-form-radio-box">
                       <div class="radio-toolbar">
                         <input id="commision-y" type="radio" name="commissionCheck" value="Y"
-                          formControlName="commissionCheck">
+                          formControlName="commissionCheck" (change)="onChangeCommsion()">
                         <label for="commision-y">Yes</label>
                         <input type="radio" id="commision-n" name="commissionCheck" value="N"
-                          formControlName="commissionCheck">
+                          formControlName="commissionCheck" (change)="onChangeCommsion()">
                         <label for="commision-n">No</label>
                       </div>
                     </div>
@@ -296,11 +296,11 @@
                   <div class="input-control-container">
                     <label class="input-form-label">Commission (%)<span class="text-required">*</span></label>
                     <div class="input-form-box">
-                      <input type="text" class="input-form-control without-icon" formControlName="commission">
+                      <input type="text" [readOnly]="isCommision" class="input-form-control without-icon" formControlName="commission">
                     </div>
                   </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12">  
                   <div class="input-control-container">
                     <label class="input-form-label">Referral Status</label>
                     <div class="input-form-radio-box">

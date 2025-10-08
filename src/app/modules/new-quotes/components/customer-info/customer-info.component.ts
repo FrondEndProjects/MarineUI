@@ -96,6 +96,7 @@ export class CustomerInfoComponent implements OnInit {
   brList: any[] = [];
   shoAImesage: boolean = false;
   shwoFilemesage: boolean = false;
+  referralStatus: string;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -371,9 +372,13 @@ export class CustomerInfoComponent implements OnInit {
           this.bankF.sailingDate.setValue(this.newQuotesService.ngbDateFormatt(lcBankDetails?.SailingDate));
 
           console.log('EndTypeId to Know', this.editQuoteData.EndtTypeId)
-console.log(this.editQuoteData,"this.editQuoteDatathis.editQuoteData");
+          console.log(this.editQuoteData, "this.editQuoteDatathis.editQuoteData");
+          this.referralStatus =''
+          this.activatedRoute.queryParams.subscribe(params => {
+            this.referralStatus = params['sts'];
+          });
 
-          if (this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral == 'Approved') {
+          if (this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus =='Approved') {
 
             for (var control in this.customerForm.controls) {
               this.customerForm.controls[control].disable();
@@ -455,7 +460,7 @@ console.log(this.editQuoteData,"this.editQuoteDatathis.editQuoteData");
   }
   onSaveQuote() {
 
-    if (this.sessionStorageService.sessionStorgaeModel.referral == 'Approved') {
+    if (this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus =='Approved') {
       for (var control in this.customerForm.controls) {
         this.customerForm.controls[control].enable();
 
