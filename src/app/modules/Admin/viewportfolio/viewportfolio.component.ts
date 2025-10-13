@@ -409,7 +409,7 @@ export class ViewPortfolioComponent implements OnInit {
     );
   }
 
-  onGetCustomerList() {
+  onGetCustomerList() { 
     const urlLink2 = `${this.ApiUrl1}OpenCover/insured/edit`;
     const reqData2 = {
       'BranchCode': this.userDetails.BranchCode,
