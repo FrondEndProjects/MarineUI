@@ -87,6 +87,7 @@ export class CustomerInfoComponent implements OnInit {
   broCode: any; quoteNo: any = null;
   brokercallcode: any;
   opencoverno: any;
+  isOpneCover: boolean = false
   editSection: boolean = false;
   imageUrl: any;
   uploadDocuments: any;
@@ -133,10 +134,14 @@ export class CustomerInfoComponent implements OnInit {
     console.log('Opecover Product Ids', this.OpenCover)
     if (this.OpenCover) {
       this.opencoverno = this.OpenCover?.value;
+      this.isOpneCover = true
       console.log('Open COvers Testinggsss')
       if (this.OpenCover?.name == 'adminReferral') {
         this.productId = this.OpenCover?.productId;
       }
+    }
+    else {
+      this.isOpneCover = false
     }
 
     this.routerBaseLink = this.userDetails?.routerBaseLink;
@@ -269,6 +274,19 @@ export class CustomerInfoComponent implements OnInit {
       this.brokerFormComponent?.onChangeBroker;
       this.customerFormComponent?.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
     }
+
+    if (this.isOpneCover){
+    for (var control in this.customerForm.controls) {
+        this.customerForm.controls[control].disable();
+
+      }
+    }
+  else{
+    for (var control in this.customerForm.controls) {
+        this.customerForm.controls[control].enable();
+
+      }
+  }
   }
 
 
@@ -373,12 +391,12 @@ export class CustomerInfoComponent implements OnInit {
 
           console.log('EndTypeId to Know', this.editQuoteData.EndtTypeId)
           console.log(this.editQuoteData, "this.editQuoteDatathis.editQuoteData");
-          this.referralStatus =''
+          this.referralStatus = ''
           this.activatedRoute.queryParams.subscribe(params => {
             this.referralStatus = params['sts'];
           });
 
-          if (this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus =='Approved') {
+          if (this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') {
 
             for (var control in this.customerForm.controls) {
               this.customerForm.controls[control].disable();
@@ -460,7 +478,7 @@ export class CustomerInfoComponent implements OnInit {
   }
   onSaveQuote() {
 
-    if (this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus =='Approved') {
+    if ((this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') || this.isOpneCover) {
       for (var control in this.customerForm.controls) {
         this.customerForm.controls[control].enable();
 

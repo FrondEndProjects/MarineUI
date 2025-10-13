@@ -112,7 +112,7 @@ export class BrokerFormComponent implements OnInit {
                   sessionStorage.setItem('dropBrokerList', JSON.stringify(this.dropBrokerList));
                   if(this.productId=='11'){
                   this.brokerForm.controls['borker'].setValue(entry.Code);
-                  this.brokerForm.controls['channel'].setValue('Broker');
+                  this.brokerForm.controls['channel'].setValue('broker');
                   this.brokerForm.controls['channel'].disable();
                   this.brokerForm.controls['borker'].disable(); 
                   }

@@ -45,6 +45,7 @@
 }
 .input-control-container{
   padding-bottom: 5px !important;
+  margin-left: 100px;
 }
 
 .input-control-container .input-form-radio-box {
@@ -64,4 +65,22 @@
   align-items: center;
   letter-spacing: normal;
   outline: 0;
+}
+.country-list {
+  max-height: 300px; /* adjust as needed */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+/* Optional: add nice hover effect for items */
+.country-list div {
+  padding: 4px 6px;
+  cursor: default;
+}
+
+.country-list div:hover {
+  background-color: #e0e0e0;
 }

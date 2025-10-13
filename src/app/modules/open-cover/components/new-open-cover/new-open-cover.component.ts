@@ -52,7 +52,7 @@ export class NewOpenCoverComponent implements OnInit {
     btnStatus: 'primary',
     btnShow: true
   }
-  RefNo: any;
+  RefNo: any =null;
   MissippiCode: any;
   ProposalNo: any
   public routerBaseLink: any = '';
@@ -108,6 +108,10 @@ export class NewOpenCoverComponent implements OnInit {
       this.ProposalNo = params['ProposalNo'];
       if (!this.ProposalNo) {
         this.onCreateFormControl();
+        sessionStorage.removeItem('ProposalNo');
+        this.RefNo = null;
+        this.proposalNo =null;
+        this.MissippiCode =null;
       }
     });
 
@@ -215,8 +219,19 @@ export class NewOpenCoverComponent implements OnInit {
       annualEstimate: ['', Validators.required],
       utilizedAmount: ['0'],
       currency: [null, Validators.required],
-      sharedPercentage: ['100', Validators.required],
-      noOfCoInsuComp: ['0'],
+      // sharedPercentage: ['100', Validators.required],
+      // noOfCoInsuComp: ['0'],
+      sharedPercentage: ['100',  [
+        Validators.required,
+        Validators.maxLength(3),
+        Validators.max(100),
+        Validators.pattern(/^\d{1,3}$/)
+      ] ],
+      noOfCoInsuComp: ['0',[
+        Validators.maxLength(3),
+        Validators.max(100),
+        Validators.pattern(/^\d{1,3}$/)
+      ]],
       freeTextAllowed: ['N', Validators.required],
       crossVoyage: ['N'],
       crossVoyagePrecnt: ['0'],
@@ -672,6 +687,12 @@ export class NewOpenCoverComponent implements OnInit {
   }
   setFormValues() {
     this.proposalNo = this.editData?.ProposalNo;
+    if(this.proposalNo){
+      this.RefNo = this.editData?.RefNo
+    }
+    else{ 
+      this.RefNo =''
+    }
     this.customerId = this.editData?.CustomerId;
     this.newQuoteF.businessType.setValue(this.editData?.BusinessType.toString());
     this.newQuoteF.openCoverType.setValue(this.editData?.Type.toString());

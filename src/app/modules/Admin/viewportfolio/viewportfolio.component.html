@@ -1,685 +1,769 @@
 <div class="bg-white p-3 ml-3">
-    <!--<div class="d-flex justify-content-between ml-3" style="text-align:center;">
-        <div>
-
-            <div class="d-flex justify-content-between ml-2" style="text-align:center;">
-                <button mat-raised-button value="View" (click)="onRedirect('View')">Open Cover Info</button><br>
-                <button mat-raised-button value="ChangePassword" class="ml-2" (click)="onRedirect('ChangePassword')">Country Of Origin</button><br>
-                <button mat-raised-button class="ml-2" value="UserDetails" (click)="onRedirect('UserDetails')">User Details</button><br>
-                <button mat-raised-button class="ml-2" value="Product" (click)="onRedirect('Product')">Product Details</button><br>
-                <button mat-raised-button class="ml-2" value="OpenCover" (click)="onRedirect('OpenCover')">OpenCover</button><br>
-                <button mat-raised-button class="ml-2" value="Referral" (click)="onRedirect('Referral')">Referral</button><br>
-            </div>
-        </div>
-        </div>-->
-
-      
-          <mat-tab-group dynamicHeight>
-            <mat-tab label="OpenCoverInfo" class="customer"> 
-              <div>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="middle-line">
-                      Open Cover Information
-                    </div>
-                  </div>
-                  
-                  <div class="col-12 col-md-4 col-lg-4">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Business Type<span class="text-required">*</span></label>
-                      <div class="mt-2">{{bussiness}}</div>
-                      <!--<ng-select  class="input-form-select" [(ngModel)]="viewlist.BusinessType" [items]="bussinesTypeList" bindValue="Code" bindLabel="CodeDescription">
-                      </ng-select>-->
-                     
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Open Cover Type<span class="text-required">*</span></label>
-                       <div class="mt-2">{{opproduct}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Select Broker<span class="text-required">*</span></label>
-                      <div class="mt-2">{{brokerid}}</div>
-                    </div>
-                  </div>
-                 
-                 
-                    <div class="col-12 col-md-4 col-lg-4 mt-3">
-                        <div class="input-control-container">
-                          <label class="input-form-label" style="color:lightslategrey">Sales Executive<span class="text-required">*</span></label>
-                           <div class="mt-2">{{Executiveid}}</div>
-                        </div>
-                      </div>
-                      <div class="col-12 col-md-4 col-lg-4 mt-3">
-                        <div class="customer-search-container">
-                        <div class="input-control-container">
-                          <label class="input-form-label" style="color:lightslategrey">Customer<span class="text-required">*</span></label>
-                          <div class="mt-2">{{viewlist.InsuredName}}</div>
-                        </div>
-                      </div>
-                      </div>
-                      <div class="col-12 col-md-4 col-lg-4 mt-3">
-                        <div class="input-control-container">
-                          <label class="input-form-label" style="color:lightslategrey">Debit To<span class="text-required">*</span></label>
-                           <div class="mt-2">{{viewlist.DebitType}}</div>
-                        </div>
-                      </div>
-                 
-                      
-                   
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Open Cover Start Date<span class="text-required">*</span></label>
-                      <div class="mt-2">{{viewlist.PolicyStartDate}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Open Cover End Date<span class="text-required">*</span></label>
-                      <div class="mt-2">{{viewlist.PolicyEndDate}}</div>
-                    </div>
-                  </div>
-               
-                  <div class="col-12">
-                    <div class="middle-line">
-                      Extra Information
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Annual Estimated Turnover</label>
-                      <div class="mt-2">{{viewlist.EstimateAmount}}</div>
-                     
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Utilized Amount</label>
-                       <div>{{viewlist.UtilizedAmount}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Currency<span class="text-required">*</span></label>
-                       <div>{{currencyid}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Shared Percentage<span class="text-required">*</span></label>
-                      <div>{{viewlist.RsaValue}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">No.of Co-Insurance Company</label>
-                       <div>{{viewlist.NoOfCompany}}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Free Text Allowed<span class="text-required">*</span></label>
-                       <div>{{viewlist.FreeText}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Cross Voyage<span class="text-required">*</span></label>
-                      <div>{{viewlist.CrossVoyage}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Cross Voyage(%)<span class="text-required">*</span></label>
-                      <div>{{viewlist.VoyageValue}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Existing Core Application Policy No</label>
-                      <div>{{viewlist.PolicyNo}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Certificate No Start From<span class="text-required">*</span></label>
-                      <div>{{viewlist.CertNo}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Commission(%)<span class="text-required">*</span></label>
-                       <div>{{viewlist.Commission}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Minimum Premium<span class="text-required">*</span></label>
-                       <div>{{viewlist.MinPremium}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Endorsement fee<span class="text-required">*</span></label>
-                     <div>{{viewlist.EndorsementFee}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Issuance Fee(%)<span class="text-required">*</span></label>
-                      <div>{{viewlist.IssuanceFee}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Minimum Premium Issuance Fee<span class="text-required">*</span></label>
-                       <div>{{viewlist.MinPremiumIssuance}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">No of Back Days<span class="text-required">*</span></label>
-                       <div>{{viewlist.BackDays}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Default Clauses<span class="text-required">*</span></label>
-                        <div>{{viewlist.DefaultClauses}}
-                        </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Declaration Type<span class="text-required">*</span></label>
-                           <div>{{viewlist.Decid}}</div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Hauliers Type<span class="text-required">*</span></label>
-                    
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">War YN<span class="text-required">*</span></label>
-                    
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Fac YN<span class="text-required">*</span></label>
-                     
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Policy Fee<span class="text-required">*</span></label>
-                  
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Voyage Remarks</label>
-                    
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4 col-lg-4 mt-3">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Effective Date</label>
-                      
-                    </div>
-                  </div>
-                
-                 
-                </div>
-                
-        </div>
-              </mat-tab>
-
-
-              <mat-tab label="CountryOrgin">
-                <!--<div>
-                  <div class="row">
-                   <div class="col-12">
-                       <div class="middle-line">
-                           Country Information
-                       </div>
-                     </div>
-                     <div class="d-flex justify-content-between">
-                     <div class="col-12 col-md-8 col-lg-8">
-                       <div class="input-control-container">
-                         <label class="input-form-label" style="color:lightslategrey">Country Of Orgin<span class="text-required">*</span></label>
-                         <div class="mt-2">UNITED ARAB EMIRATES,KUWAIT,QATAR,SAUDHI ARABIA</div>
-                        
-                       </div>
-                     </div>
-                   
-                     <div class="col-12 col-md-8 col-lg-8">
-                       <div class="input-control-container">
-                         <label class="input-form-label" style="color:lightslategrey">Country Of Destination <span class="text-required">*</span></label>
-                         <div class="mt-2">UNITED ARAB EMIRATES,KUWAIT,QATAR,SAUDHI ARABIA</div>
-                        
-                       </div>
-                     </div>
-                    </div>
-                    
-                      <div class="col-12 mt-3">
-                        <div class="middle-line">
-                            Customer Selection
-                        </div>
-                      </div>
-                      <div class="ml-2">
-                      <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
-                    </app-grid-table>
-                    </div>
-                  
-
-                   <div class="col-12">
-                       <div class="middle-line">
-                           Commodity Selection
-                       </div>
-                     </div>
-                    
-                     <div class="col-12 col-md-12 col-lg-12 ml-2">
-                      <div class="col-12 col-md-4 col-lg-4">
-                        <div class="input-control-container">
-                          <label class="input-form-label" style="color:lightslategrey">Commodity Name<span class="text-required">*</span></label>
-                          <div class="mt-2 input-form-radio-box">Aluminium Products</div>
-                         
-                        </div>
-                      </div>
-                      <div class="col-12 col-md-4 col-lg-4">
-                        <div class="input-control-container">
-                          <label class="input-form-label" style="color:lightslategrey">Commodity Description<span class="text-required">*</span></label>
-                          <div class="mt-2 input-form-radio-box">Aluminium Products</div>
-                         
-                        </div>
-                      </div>
-                      <div class="col-12 col-md-4 col-lg-4">
-                        <div class="input-control-container">
-                          <label class="input-form-label" style="color:lightslategrey">Fragile<span class="text-required">*</span></label>
-                          <div class="mt-2 input-form-radio-box">OFF</div>
-                         
-                        </div>
-                      </div>
-                      </div>
-                   
-                    
-                   
-
-                     <div class="col-12">
-                       <div class="middle-line">
-                           Commodity Selection
-                       </div>
-                     </div>
-                     <div class="col-12 col-md-6 col-lg-6">
-                       <div class="input-control-container">
-                         <label class="input-form-label" style="color:lightslategrey">SaleTerm Name<span class="text-required">*</span></label>
-                         <div class="mt-2">C&F+0%</div>
-                        
-                       </div>
-                     </div>
-                     <div class="col-12 col-md-6 col-lg-6">
-                       <div class="input-control-container">
-                         <label class="input-form-label" style="color:lightslategrey">Commodity Description<span class="text-required">*</span></label>
-                         <div class="mt-2">Aluminium Products</div>
-                        
-                       </div>
-                     </div>
-                    
-                  </div>
-           </div>-->
-           <div class="container">
-            <div class="col-12">
-              <div class="middle-line">
-                  Country Information
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="input-control-container">
-                  <label class="input-form-label" style="color:lightslategrey">Country Of Orgin<span class="text-required">*</span></label>
-                  <div class="mt-2" *ngFor="let item of editCountryList">{{item.CountryName}}</div>
-                 
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="input-control-container">
-                  <label class="input-form-label" style="color:lightslategrey">Country Of Destination <span class="text-required">*</span></label>
-                  <div class="mt-2" *ngFor="let item of destCountryList">{{item.CountryName}}</div>
-                 
-                </div>
-              </div>
-            </div>
-
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="OpenCoverInfo" class="customer">
+      <div>
+        <div class="row">
+          <div class="col-12">
             <div class="middle-line">
-              Customer Selection
+              Open Cover Information
+            </div>
           </div>
-      
+
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Business Type<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">{{bussiness}}</div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Open Cover Type<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">{{opproduct}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Select Broker<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">{{brokerid}}</div>
+            </div>
+          </div>
+
+
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Sales Executive<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">{{Executiveid}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="customer-search-container">
+              <div class="input-control-container">
+                <label class="input-form-label" style="color:lightslategrey">Customer<span
+                    class="text-required">*</span></label>
+                <div class="mt-2">{{viewlist?.InsuredName}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Debit To<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">{{viewlist?.DebitType}}</div>
+            </div>
+          </div>
+
+
+
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Open Cover Start Date<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">{{viewlist?.PolicyStartDate}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Open Cover End Date<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">{{viewlist?.PolicyEndDate}}</div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="middle-line">
+              Open Cover Turnover
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Annual Estimated Turnover</label>
+              <div class="mt-2">{{viewlist?.EstimateAmount}}</div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Currency<span
+                  class="text-required">*</span></label>
+              <div>{{currencyid}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Utilized Amount</label>
+              <div>{{viewlist?.UtilizedAmount}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Shared Percentage<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.RsaValue}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">No.of Co-Insurance Company</label>
+              <div>{{viewlist?.NoOfCompany}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="middle-line">
+              Open Cover Limits
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">No of Back Days<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.BackDays}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Minimum Premium<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.MinPremium}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Cross Voyage<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.CrossVoyage}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Cross Voyage(%)<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.VoyageValue}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">War YN<span
+                  class="text-required">*</span></label>
+ <div>{{viewlist?.Warland}}</div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="middle-line">
+              Open Cover Other
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Default Clauses<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.DefaultClauses}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Declaration Type<span
+                  class="text-required">*</span></label>
+              <div>{{Decid}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Fac YN<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.FacYN}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Existing Core Application Policy No</label>
+              <div>{{viewlist?.PolicyNo}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Certificate No Start From<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.CertNo}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Voyage Remarks</label>
+              <div>{{viewlist?.Remarks}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Free Text Allowed<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.FreeText}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Commission(%)<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.Commission}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Effective Date</label>
+               <div>{{viewlist?.EffectiveDate}}</div>
+            </div>
+          </div>
+          <!-- <div class="col-12">
+            <div class="middle-line">
+              Extra Information
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Annual Estimated Turnover</label>
+              <div class="mt-2">{{viewlist?.EstimateAmount}}</div>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Utilized Amount</label>
+              <div>{{viewlist?.UtilizedAmount}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Currency<span
+                  class="text-required">*</span></label>
+              <div>{{currencyid}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Shared Percentage<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.RsaValue}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">No.of Co-Insurance Company</label>
+              <div>{{viewlist?.NoOfCompany}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Free Text Allowed<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.FreeText}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Cross Voyage<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.CrossVoyage}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Cross Voyage(%)<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.VoyageValue}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Existing Core Application Policy No</label>
+              <div>{{viewlist?.PolicyNo}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Certificate No Start From<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.CertNo}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Commission(%)<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.Commission}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Minimum Premium<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.MinPremium}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Endorsement fee<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.EndorsementFee}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Issuance Fee(%)<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.IssuanceFee}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Minimum Premium Issuance Fee<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.MinPremiumIssuance}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">No of Back Days<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.BackDays}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Default Clauses<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.DefaultClauses}}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Declaration Type<span
+                  class="text-required">*</span></label>
+              <div>{{viewlist?.Decid}}</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Hauliers Type<span
+                  class="text-required">*</span></label>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">War YN<span
+                  class="text-required">*</span></label>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Fac YN<span
+                  class="text-required">*</span></label>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Policy Fee<span
+                  class="text-required">*</span></label>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Voyage Remarks</label>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 mt-3">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Effective Date</label>
+
+            </div>
+          </div> -->
+
+
+        </div>
+
+      </div>
+    </mat-tab>
+
+
+    <mat-tab label="CountryOrgin">
+      <div class="container">
+        <div class="col-12">
+          <div class="middle-line">
+            Country Information
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">
+                Country Of Origin<span class="text-required">*</span>
+              </label>
+              <input type="text" class="form-control country-search" placeholder="Search country..."
+                [(ngModel)]="originSearch" />
+              <div class="country-list mt-2">
+                <div *ngFor="let item of filteredOriginList" class="country-item">
+                  {{ item.CountryName }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">
+                Country Of Destination<span class="text-required">*</span>
+              </label>
+              <input type="text" class="form-control country-search" placeholder="Search destination..."
+                [(ngModel)]="destSearch" />
+              <div class="country-list mt-2">
+                <div *ngFor="let item of filteredDestList" class="country-item">
+                  {{ item.CountryName }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="middle-line">
+          Customer Selection
+        </div>
+
         <div class="col-11">
-        <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" >
-      </app-grid-table>
-      </div>
+           <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" >
+      </app-material-table>
+        </div>
 
-      <div class="middle-line">
-        Commodity Selection
-    </div>
+        <div class="middle-line">
+          Commodity Selection
+        </div>
 
-    <div class="mat-sort-header-container">
-      <div class="col-md-5">
-        <div class="input-control-container">
-          <label class="input-form-label" style="color:lightslategrey">Commodity Name<span class="text-required">*</span></label>
-          <div class="mt-2">Aluminium Products</div>
-         
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="input-control-container">
-          <label class="input-form-label" style="color:lightslategrey">Commodity Description<span class="text-required">*</span></label>
-          <div class="mt-2">Aluminium Products</div>
-         
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="input-control-container">
-          <label class="input-form-label" style="color:lightslategrey">Fragile<span class="text-required">*</span></label>
-          <div class="mt-2">No</div>
-         
-        </div>
-      </div>
-    </div>
-    <div class="middle-line">
-      Tolerance Selection
-  </div>
-    <div class="mat-sort-header-container">
-      <div class="col-md-6">
-        <div class="input-control-container">
-          <label class="input-form-label" style="color:lightslategrey">SaleTerm Name<span class="text-required">*</span></label>
-          <div class="mt-2">C&F+0%</div>
-         
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="input-control-container">
-          <label class="input-form-label" style="color:lightslategrey">ToleranceList<span class="text-required">*</span></label>
-          <div class="mt-2">10%</div>
-         
-        </div>
-      </div>
-    </div>
+        <div class="mat-sort-header-container">
+          <div class="col-md-5">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Commodity Name<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">Aluminium Products</div>
 
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Commodity Description<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">Aluminium Products</div>
+
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Fragile<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">No</div>
+
+            </div>
+          </div>
         </div>
-              </mat-tab>
+        <div class="middle-line">
+          Tolerance Selection
+        </div>
+        <div class="mat-sort-header-container">
+          <div class="col-md-6">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">SaleTerm Name<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">C&F+0%</div>
 
-              <mat-tab label="Coverage Information">
-                <div class="vision-grid">
-                  <div class="vision-grid-item">
-                 
-                    <div class="vision-grid-item-body">
-                      <div class="row">
-                        <div class="col-12 col-md-4 col-lg-4">
-                          <div class="input-control-container">
-                            <div class="input-form-box">
-                              <span class="input-form-icon">
-                                <i class="fas fa-search"></i>
-                              </span>
-                              <input type="text" class="input-form-control with-icon search-input" 
-                                placeholder="search...">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <app-trans-cover-table [cols]="columnHeader">
-                      </app-trans-cover-table>
-                    </div>
-                  </div>
-                </div>
-              </mat-tab>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">ToleranceList<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">10%</div>
 
-              <mat-tab label="Commodity Info">
-                <div class="vision-card">
-                  <div class="vision-card-header">
-                   Commodity Rate Info
-                  </div>
-                  <div class="vision-card-body">
-                   <ng-container>
-                     <app-commodity-table
-                     [cols]="comodityHeader">
-                     </app-commodity-table>
-                   </ng-container>
-                  </div>
-               </div>
-               <div class="vision-card">
-                <div class="vision-card-header">
-                  Commodity Clauses Info
-                </div>
-                <div class="vision-card-body">
-                 <ng-container>
-                   <app-commodity-table
-                   [cols]="columnHeader">
-                   </app-commodity-table>
-                 </ng-container>
-                </div>
-             </div>
-             <div class="vision-card">
-              <div class="vision-card-header">
-                War Information
-              </div>
-              <div class="vision-card-body">
-                <div class="mat-sort-header-container">
-                  <div class="col-md-5">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Mode of Transport<span class="text-required">*</span></label>
-                      <div class="mt-2">By SEA</div>
-                     
-                    </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">City<span class="text-required">*</span></label>
-                      <div class="mt-2">ABU DHABI</div>
-                     
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">War Rate<span class="text-required">*</span></label>
-                      <div class="mt-2">0.05</div>
-                     
-                    </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Coverage Information">
+      <div class="vision-grid">
+        <div class="vision-grid-item">
+
+          <div class="vision-grid-item-body">
+            <div class="row">
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                  <div class="input-form-box">
+                    <span class="input-form-icon">
+                      <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" class="input-form-control with-icon search-input" placeholder="search...">
                   </div>
                 </div>
               </div>
-           </div>
-           <div class="middle-line">
-            Share Percentage Information
+            </div>
+            <app-trans-cover-table [cols]="columnHeader">
+            </app-trans-cover-table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Commodity Info">
+      <div class="vision-card">
+        <div class="vision-card-header">
+          Commodity Rate Info
+        </div>
+        <div class="vision-card-body">
+          <ng-container>
+            <app-commodity-table [cols]="comodityHeader">
+            </app-commodity-table>
+          </ng-container>
+        </div>
+      </div>
+      <div class="vision-card">
+        <div class="vision-card-header">
+          Commodity Clauses Info
+        </div>
+        <div class="vision-card-body">
+          <ng-container>
+            <app-commodity-table [cols]="columnHeader">
+            </app-commodity-table>
+          </ng-container>
+        </div>
+      </div>
+      <div class="vision-card">
+        <div class="vision-card-header">
+          War Information
         </div>
         <div class="vision-card-body">
           <div class="mat-sort-header-container">
-            <div class="col-md-7">
+            <div class="col-md-5">
               <div class="input-control-container">
-                <label class="input-form-label" style="color:lightslategrey">Insurance Company Name<span class="text-required">*</span></label>
-                <div class="mt-2">AIRajhi Insurance</div>
-               
+                <label class="input-form-label" style="color:lightslategrey">Mode of Transport<span
+                    class="text-required">*</span></label>
+                <div class="mt-2">By SEA</div>
+
               </div>
             </div>
             <div class="col-md-5">
               <div class="input-control-container">
-                <label class="input-form-label" style="color:lightslategrey">Shared Percentage<span class="text-required">*</span></label>
-                <div class="mt-2">100.0</div>
-               
+                <label class="input-form-label" style="color:lightslategrey">City<span
+                    class="text-required">*</span></label>
+                <div class="mt-2">ABU DHABI</div>
+
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-control-container">
+                <label class="input-form-label" style="color:lightslategrey">War Rate<span
+                    class="text-required">*</span></label>
+                <div class="mt-2">0.05</div>
+
               </div>
             </div>
           </div>
         </div>
-             
-              </mat-tab>
+      </div>
+      <div class="middle-line">
+        Share Percentage Information
+      </div>
+      <div class="vision-card-body">
+        <div class="mat-sort-header-container">
+          <div class="col-md-7">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Insurance Company Name<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">AIRajhi Insurance</div>
 
-              <mat-tab label="Premium Computation">
-                <div class="vision-grid">
-                  <div class="vision-grid-item">
-                     <div class="row">
-                        <div class="col-12 col-md-3 col-lg-3">
-                           <div class="premium-lable">Total Suminsured</div>
-                           <div class="premium-val">11234</div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                          <div class="premium-lable">Marine Rate</div>
-                          <div class="premium-val">232334</div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                          <div class="premium-lable">War Rate</div>
-                          <div class="premium-val">434355</div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                          <div class="premium-lable">Received Deposit Premium</div>
-                          <div class="premium-val">12344</div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="vision-grid-item">
-                    <div class="vision-grid-item-body">
-                        <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Premium</th>
-                          <th>Policy Fee</th>
-                          <th>Inspection Fee</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Actual</td>
-                          <td>1234</td>
-                          <td>3243</td>
-                          <td>24345</td>
-                          <td>4536</td>
-                        </tr>
-                        <tr>
-                          <td>Received Payment</td>
-                          <td>1234</td>
-                          <td>3243</td>
-                          <td>24345</td>
-                          <td>4536</td>
-                        </tr>
-                        <tr>
-                          <td>Balance</td>
-                          <td>1234</td>
-                          <td>3243</td>
-                          <td>24345</td>
-                          <td>4536</td>
-                          
-                        </tr>
-                        <tr>
-                          <td>Received/Refund</td>
-                          <td>1234</td>
-                          <td>3243</td>
-                          <td>24345</td>
-                          <td>4536</td>
-                          
-                        </tr>
-                
-                      </tbody>
-                       </table>
-                    
-                
-                    </div>
-                   
-                  </div>
-                </div>
-                
-              </mat-tab>
-
-              <mat-tab label="New OpenCover Info">
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Do You want to Generate Open Cover</label>
-                      <div class="mt-2">No</div>
-                     
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Policy Effective Date</label>
-                      <div class="mt-2">3/05/2023</div>
-                     
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="input-control-container">
-                      <label class="input-form-label" style="color:lightslategrey">Remarks</label>
-                      <div class="mt-2">Open Cover Set Up</div>
-                     
-                    </div>
-                  </div>
-                </div>
-                <div class="middle-line">
-                  Conveyance
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="input-control-container">
-                    <label class="input-form-label" style="color:lightslategrey">Do You want to Generate Open Cover</label>
-                    <div class="mt-2">No</div>
-                   
-                  </div>
-                </div>
-              </div>
-              <div class="middle-line">
-                Print in Schedule
             </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="input-control-container">
-                  <label class="input-form-label" style="color:lightslategrey">Cancellation Clauses</label>
-                  <div class="mt-2">0</div>
-                 
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="input-control-container">
-                  <label class="input-form-label" style="color:lightslategrey">Schedule</label>
-                  <div class="mt-2">As Aggreed</div>
-                 
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="input-control-container">
-                  <label class="input-form-label" style="color:lightslategrey">Do You want to print Amended Insolvency Exclusion Clause</label>
-                  <div class="mt-2">No</div>
-                 
-                </div>
-              </div>
+          </div>
+          <div class="col-md-5">
+            <div class="input-control-container">
+              <label class="input-form-label" style="color:lightslategrey">Shared Percentage<span
+                  class="text-required">*</span></label>
+              <div class="mt-2">100.0</div>
+
             </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="input-control-container">
-                  <label class="input-form-label" style="color:lightslategrey">PPW days</label>
-                  <div class="mt-2">0</div>
-                 
-                </div>
-              </div>
-            </div>
-
-              </mat-tab>
-           
-
-            </mat-tab-group>
-
-            <div style="text-align: center;" class="mt-2">
-              <button class="btn btn-danger ml-2" (click)="goback()" style="width:100px">Back</button>   
+          </div>
         </div>
-              
-           
+      </div>
+
+    </mat-tab>
+
+    <mat-tab label="Premium Computation">
+      <div class="vision-grid mt-3">
+        <div class="vision-grid-item">
+          <div class="row">
+            <div class="col-12 col-md-3 col-lg-3">
+              <div class="premium-lable">Total Suminsured</div>
+              <div class="premium-val">11234</div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+              <div class="premium-lable">Marine Rate</div>
+              <div class="premium-val">232334</div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+              <div class="premium-lable">War Rate</div>
+              <div class="premium-val">434355</div>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+              <div class="premium-lable">Received Deposit Premium</div>
+              <div class="premium-val">12344</div>
+            </div>
+          </div>
+        </div>
+        <div class="vision-grid-item">
+          <div class="vision-grid-item-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Premium</th>
+                  <th>Policy Fee</th>
+                  <th>Inspection Fee</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Actual</td>
+                  <td>1234</td>
+                  <td>3243</td>
+                  <td>24345</td>
+                  <td>4536</td>
+                </tr>
+                <tr>
+                  <td>Received Payment</td>
+                  <td>1234</td>
+                  <td>3243</td>
+                  <td>24345</td>
+                  <td>4536</td>
+                </tr>
+                <tr>
+                  <td>Balance</td>
+                  <td>1234</td>
+                  <td>3243</td>
+                  <td>24345</td>
+                  <td>4536</td>
+
+                </tr>
+                <tr>
+                  <td>Received/Refund</td>
+                  <td>1234</td>
+                  <td>3243</td>
+                  <td>24345</td>
+                  <td>4536</td>
+
+                </tr>
+
+              </tbody>
+            </table>
+
+
+          </div>
 
         </div>
+      </div>
+
+    </mat-tab>
+
+    <mat-tab label="New OpenCover Info">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">Do You want to Generate Open Cover</label>
+            <div class="mt-2">No</div>
+
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">Policy Effective Date</label>
+            <div class="mt-2">3/05/2023</div>
+
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">Remarks</label>
+            <div class="mt-2">Open Cover Set Up</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="middle-line">
+        Conveyance
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">Do You want to Generate Open Cover</label>
+            <div class="mt-2">No</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="middle-line">
+        Print in Schedule
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">Cancellation Clauses</label>
+            <div class="mt-2">0</div>
+
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">Schedule</label>
+            <div class="mt-2">As Aggreed</div>
+
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">Do You want to print Amended Insolvency
+              Exclusion Clause</label>
+            <div class="mt-2">No</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-control-container">
+            <label class="input-form-label" style="color:lightslategrey">PPW days</label>
+            <div class="mt-2">0</div>
+
+          </div>
+        </div>
+      </div>
+
+    </mat-tab>
+
+
+  </mat-tab-group>
+
+  <div style="text-align: center;" class="mt-2">
+    <button class="btn btn-danger ml-2" (click)="goback()" style="width:100px">Back</button>
+  </div>
+
+
+
+</div>

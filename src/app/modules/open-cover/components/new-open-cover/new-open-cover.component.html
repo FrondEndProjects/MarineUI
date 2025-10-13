@@ -231,13 +231,29 @@
         <div class="input-control-container">
           <label class="input-form-label">Shared Percentage<span class="text-required">*</span></label>
           <div class="input-form-box">
-            <input type="text" [attr.disabled]="true" class="input-form-control without-icon"
+            <input type="text" [attr.disabled]="true" maxlength="3" class="input-form-control without-icon"
               formControlName="sharedPercentage">
           </div>
-          <div class="input-form-error"
+          <!-- <div class="input-form-error"
             *ngIf="(newQuoteF.sharedPercentage.errors && submitted) || (!newQuoteF.sharedPercentage.valid && newQuoteF.sharedPercentage.touched)">
             <div *ngIf="newQuoteF.sharedPercentage.errors?.required" class="error-text">
               This field is required
+            </div>
+          </div> -->
+          <div class="input-form-error" *ngIf="(newQuoteF.sharedPercentage.errors && submitted) || 
+          (!newQuoteF.sharedPercentage.valid && newQuoteF.sharedPercentage.touched)">
+
+            <div *ngIf="newQuoteF.sharedPercentage.errors?.required" class="error-text">
+              This field is required
+            </div>
+            <div *ngIf="newQuoteF.sharedPercentage.errors?.maxlength" class="error-text">
+              Maximum 3 digits allowed
+            </div>
+            <div *ngIf="newQuoteF.sharedPercentage.errors?.max" class="error-text">
+              Value cannot exceed 100
+            </div>
+            <div *ngIf="newQuoteF.sharedPercentage.errors?.pattern" class="error-text">
+              Only numeric values are allowed
             </div>
           </div>
         </div>
@@ -246,13 +262,25 @@
         <div class="input-control-container">
           <label class="input-form-label">No.of Co-Insurance Company</label>
           <div class="input-form-box">
-            <input type="text" [attr.disabled]="true" class="input-form-control without-icon"
+            <input type="text" [attr.disabled]="true" maxlength="3" class="input-form-control without-icon"
               formControlName="noOfCoInsuComp">
           </div>
           <div class="input-form-error"
             *ngIf="(newQuoteF.noOfCoInsuComp.errors && submitted) || (!newQuoteF.noOfCoInsuComp.valid && newQuoteF.noOfCoInsuComp.touched)">
             <div *ngIf="newQuoteF.noOfCoInsuComp.errors?.required" class="error-text">
               This field is required
+            </div>
+            <div *ngIf="newQuoteF.noOfCoInsuComp.errors?.required" class="error-text">
+              This field is required
+            </div>
+            <div *ngIf="newQuoteF.noOfCoInsuComp.errors?.maxlength" class="error-text">
+              Maximum 3 digits allowed
+            </div>
+            <div *ngIf="newQuoteF.noOfCoInsuComp.errors?.max" class="error-text">
+              Value cannot exceed 100
+            </div>
+            <div *ngIf="newQuoteF.noOfCoInsuComp.errors?.pattern" class="error-text">
+              Only numeric values are allowed
             </div>
           </div>
         </div>
@@ -284,8 +312,8 @@
               [value]="newQuoteF.minimumPremium.value | commaseparator" formControlName="minimumPremium">
           </div>
           <div class="input-form-error"
-            *ngIf="(newQuoteF.commissiomPrecnt.errors && submitted) || (!newQuoteF.commissiomPrecnt.valid && newQuoteF.commissiomPrecnt.touched)">
-            <div *ngIf="newQuoteF.commissiomPrecnt.errors?.required" class="error-text">
+            *ngIf="(newQuoteF.minimumPremium.errors && submitted) || (!newQuoteF.minimumPremium.valid && newQuoteF.minimumPremium.touched)">
+            <div *ngIf="newQuoteF.minimumPremium.errors?.required" class="error-text">
               This field is required
             </div>
           </div>
@@ -433,7 +461,9 @@
               <div class="input-control-container">
                 <div class="input-form-box">
                   <input type="text" class="input-form-control4 without-icon"
-                    [value]="editData?.RefNo? editData?.RefNo:''">
+                    [value]="RefNo">
+                  <!-- <input type="text" class="input-form-control4 without-icon"
+                    [value]="editData?.RefNo? editData?.RefNo:''"> -->
                 </div>
               </div>
             </div>
