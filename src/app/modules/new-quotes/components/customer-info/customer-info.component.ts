@@ -478,7 +478,7 @@ export class CustomerInfoComponent implements OnInit {
   }
   onSaveQuote() {
 
-    if ((this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') || this.isOpneCover) {
+    if ((this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') || this.isOpneCover || this.editQuoteData?.FinalizeYn == 'Y') {
       for (var control in this.customerForm.controls) {
         this.customerForm.controls[control].enable();
 
