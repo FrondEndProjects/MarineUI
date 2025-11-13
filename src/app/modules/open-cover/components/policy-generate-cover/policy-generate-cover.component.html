@@ -138,7 +138,7 @@
           <div class="input-control-container">
             <label class="input-form-label">Cancellation Clauses<span class="text-required">*</span></label>
             <div class="input-form-box">
-              <input type="text" digitOnly class="input-form-control without-icon" formControlName="cancelClauses" >
+              <input type="text"  class="input-form-control without-icon" formControlName="cancelClauses" >
             </div>
             <div class="input-form-error" *ngIf="(pG.cancelClauses.errors && submitted) || (!pG.cancelClauses.valid && pG.cancelClauses.touched)">
               <div *ngIf="pG.cancelClauses.errors?.required" class="error-text">
@@ -177,7 +177,7 @@
           <div class="input-control-container">
             <label class="input-form-label">PPW days<span class="text-required">*</span></label>
             <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="pwwDays">
+              <input type="text" digitOnly class="input-form-control without-icon" maxlength="3" formControlName="pwwDays">
             </div>
             <div class="input-form-error" *ngIf="(pG.pwwDays.errors && submitted) || (!pG.pwwDays.valid && pG.pwwDays.touched)">
               <div *ngIf="pG.pwwDays.errors?.required" class="error-text">
