@@ -59,7 +59,8 @@ export class CurrencyTableComponent implements OnInit {
 
  getCurrencyList() {
   let ReqObj = {
-    'BranchCode': this.userDetails?.Result.BelongingBranch
+    // 'BranchCode': this.userDetails?.Result.BelongingBranch
+    'BranchCode': this.branchCode
   }
   this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/currency/list`, ReqObj).subscribe(
     (data: any) => {

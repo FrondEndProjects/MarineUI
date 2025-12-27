@@ -205,7 +205,7 @@
               </div>
             </label>
           </div>
-          <div *ngIf="generateCerti == 'Y' && !termsSection" class="row">
+          <div *ngIf="generateCerti == 'Y' && !termsSection && pay_amount!=0 && pay_amount!='0' && pay_amount!=null" class="row">
             <div class="col-md-12 left-line font-size-95">
               Payment Type
             </div>
@@ -221,7 +221,7 @@
               </div>
             </div>
           </div>
-          <ng-continer *ngIf="payment_type=='1'">
+          <ng-continer *ngIf="payment_type=='1' && pay_amount!=0 && pay_amount!='0' && pay_amount!=null">
             <div class="input-control-container">
               <label class="input-form-label">Payee Name<span class="text-required">*</span></label>
               <div class="input-form-box">

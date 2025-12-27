@@ -182,10 +182,12 @@ export class CustomerFormComponent implements OnInit {
     this.tableData = [];
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if (this.productId == '3') this.openCoverNo = null;
+    let loginId=this.loginId;
+    if(loginId==undefined || loginId==null || loginId==''){loginId=code;}
     const reqData = {
       "BrokerCode": code,
       'ApplicationId': this.applicationId,
-      'LoginId': this.loginId,
+      'LoginId': loginId,
       'OpenCoverNo': this.openCoverNo,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -220,11 +222,13 @@ export class CustomerFormComponent implements OnInit {
     console.log('GCOdesssss', code);
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if (this.productId == '3') this.openCoverNo = null;
+    let loginId=this.loginId;
+    if(loginId==undefined || loginId==null || loginId==''){loginId=code;}
     const reqData = {
       "BrokerCode": code,
       //this.brokerCode,
       'ApplicationId': this.applicationId,
-      'LoginId': this.loginId,
+      'LoginId': loginId,
       'OpenCoverNo': this.openCoverNo,
     };
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(

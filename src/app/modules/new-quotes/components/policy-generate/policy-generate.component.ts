@@ -71,6 +71,8 @@ export class PolicyGenerateComponent implements OnInit {
   pay_mobile_code: any;
   CustomerType: string;
   termsSection: boolean = false;
+  quoteDetails: any;
+  isFinancialEndt: any='N';
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -163,8 +165,11 @@ export class PolicyGenerateComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.premiumDetails = data?.Result;
+        this.quoteDetails = data?.Result?.QuoteDetails;
+        if(this.quoteDetails?.FinancialEndt) this.isFinancialEndt = this.quoteDetails?.FinancialEndt
         this.quoteNo = this.premiumDetails?.QuoteDetails?.QuoteNo;
         this.bankName = this.premiumDetails?.LcBankDetails?.BankName;
+        this.payment_type='1';this.onFinalProceed('direct');
         this.getdocTypeList();
         //this.ongetUploadedDocument();
       },
@@ -248,7 +253,9 @@ export class PolicyGenerateComponent implements OnInit {
             entry['UploadId'] = document.UploadId;
           }
         }
+
       }
+
     })
   }
   /*onDownloadfile(index:any){
@@ -452,8 +459,11 @@ export class PolicyGenerateComponent implements OnInit {
   }
 
   generateCertiCheck() {
-    if (this.generateCerti == 'Y' && this.payment_type != null && this.payment_type != '') {
+    if (this.generateCerti == 'Y' && (this.payment_type != null && this.payment_type != '' && this.pay_amount!='0' && this.pay_amount!=0)) {
       this.onschedule();
+    }
+    else if(this.pay_amount=='0' || this.pay_amount==0){
+      this.payee_name="None";this.payment_type='1';this.pay_amount=0;this.inserPyment()
     }
     else {
       this.onFinalProceed('submit');
@@ -504,7 +514,16 @@ export class PolicyGenerateComponent implements OnInit {
           this.policuNoGenerate = false;
 
         }
-        if (this.generateCerti == 'Y') {
+        if(type=='direct'){
+          if (data.Result) {
+            this.pay_amount = data.Result.Premium;
+            this.PaymentId = data.Result.PaymentId;
+            this.QuoteNo = data.Result.QuoteNo;
+            // this.inserPyment(data.Result)
+
+          }
+        }
+        else if (this.generateCerti == 'Y') {
           sessionStorage.setItem('quotePaymentId', data.Result.PaymentId);
           if (data.Result) {
             this.pay_amount = data.Result.Premium;
@@ -549,7 +568,7 @@ export class PolicyGenerateComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Validation Errors',
-          html: 'Payment Deatil is Required'
+          html: 'Payment Detail is Required'
         });
       }
     }
@@ -562,7 +581,7 @@ export class PolicyGenerateComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Validation Errors',
-          html: 'Payment Deatil is Required'
+          html: 'Payment Detail is Required'
         });
       }
     }
@@ -578,7 +597,7 @@ export class PolicyGenerateComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Validation Errors',
-          html: 'Payment Deatil is Required'
+          html: 'Payment Detail is Required'
         });
       }
     }
@@ -795,11 +814,14 @@ export class PolicyGenerateComponent implements OnInit {
       }
     }
     const urlLink = `${this.ApiUrl1}quote/policy/insertPayment`;
+    let quoteNo=this.QuoteNo;
+    if(quoteNo==undefined) quoteNo=this.quoteNo
+    if(this.PaymentId==undefined){this.PaymentId=sessionStorage.getItem('quotePaymentId')}
     const reqData = {
       "CreatedBy": this.userDetails?.LoginId,
       "InsuranceId": this.userDetails?.InsuranceId,
       "Premium": this.pay_amount,
-      "QuoteNo": this.QuoteNo,
+      "QuoteNo": quoteNo,
       "Remarks": "None",
       "PayeeName": this.payee_name,
       "SubUserType": this.userDetails?.SubUserType,
