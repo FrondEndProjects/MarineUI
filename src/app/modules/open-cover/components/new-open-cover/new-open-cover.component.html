@@ -460,8 +460,7 @@
             <div class="currrency-dollar">
               <div class="input-control-container">
                 <div class="input-form-box">
-                  <input type="text" class="input-form-control4 without-icon"
-                    [value]="RefNo">
+                  <input type="text" class="input-form-control4 without-icon" [value]="RefNo">
                   <!-- <input type="text" class="input-form-control4 without-icon"
                     [value]="editData?.RefNo? editData?.RefNo:''"> -->
                 </div>
@@ -973,7 +972,7 @@
                   <input *ngIf="customerType!='Corporate'" type="text" class="input-form-control2 with-icon"
                     maxlength="100" [(ngModel)]="customerName" placeholder="Enter Customer Name">
                   <input *ngIf="customerType=='Corporate'" type="text" class="input-form-control with-icon1"
-                    [(ngModel)]="filterValue" placeholder="">
+                    [(ngModel)]="customerName" placeholder="Enter Company Name">
                 </div>
                 <div *ngIf="customerType!='Corporate'" class="currrency-dollar">
                   <button class="btn btn-secondary" (click)="onSearchCustomer()"
@@ -1061,7 +1060,9 @@
           </div>
           <div class="col-12 col-md-4 col-lg-4">
             <div class="input-control-container">
-              <label class="input-form-label">Customer VAT <i>(Registration No)</i> </label>
+              <label *ngIf="userDetails.InsuranceId !='100020'" class="input-form-label">Customer VAT <i>(Registration
+                  No)</i> </label>
+              <label *ngIf="userDetails.InsuranceId =='100020'" class="input-form-label">KRA PIN <span class="text-required">*</span> </label>
               <div class="input-form-box">
                 <input type="text" class="input-form-control2 without-icon" [(ngModel)]="customerVat"
                   placeholder="Enter Customer VAt Number">

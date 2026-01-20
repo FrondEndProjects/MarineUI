@@ -54,7 +54,7 @@ export class CustomerFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) {
     this.userDetails = this.customerInfoComponent?.userDetails;
-    
+
     this.productId = this.customerInfoComponent?.productId;
     this.openCoverNo = this.customerInfoComponent.OpenCover?.value;
     this.customerForm = this.customerInfoComponent.customerForm;
@@ -118,6 +118,7 @@ export class CustomerFormComponent implements OnInit {
       this.onGetCustomerList(this.brokerCode);
     }*/
     //this.onGetCustomerList(this.brokerCode);
+
   }
 
   onGetTitleDropdownList() {
@@ -171,6 +172,10 @@ export class CustomerFormComponent implements OnInit {
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadData();
           }
+          // setTimeout(() => {
+          this.getCustomerAltList(null)
+
+          // }, 0);
         }
       },
       (err) => { },
@@ -182,8 +187,8 @@ export class CustomerFormComponent implements OnInit {
     this.tableData = [];
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if (this.productId == '3') this.openCoverNo = null;
-    let loginId=this.loginId;
-    if(loginId==undefined || loginId==null || loginId==''){loginId=code;}
+    let loginId = this.loginId;
+    if (loginId == undefined || loginId == null || loginId == '') { loginId = code; }
     const reqData = {
       "BrokerCode": code,
       'ApplicationId': this.applicationId,
@@ -222,8 +227,8 @@ export class CustomerFormComponent implements OnInit {
     console.log('GCOdesssss', code);
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if (this.productId == '3') this.openCoverNo = null;
-    let loginId=this.loginId;
-    if(loginId==undefined || loginId==null || loginId==''){loginId=code;}
+    let loginId = this.loginId;
+    if (loginId == undefined || loginId == null || loginId == '') { loginId = code; }
     const reqData = {
       "BrokerCode": code,
       //this.brokerCode,
@@ -231,27 +236,64 @@ export class CustomerFormComponent implements OnInit {
       'LoginId': loginId,
       'OpenCoverNo': this.openCoverNo,
     };
+    // this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
+    //   (data: any) => {
+    //     console.log(data);
+    //     if (data?.Message === 'Success') {
+    //       if (this.productId == '3' || this.productId == '11') {
+    //         this.editSection = false;
+    //         if (modal) this.open(modal)
+    //       }
+    //       this.tableData = data?.Result;
+    //     }
+    //   },
+    //   (err) => { },
+    // );
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        console.log(data);
         if (data?.Message === 'Success') {
-          // if (this.customerF.name.status == "DISABLED" || data?.Result == null) {
-          if (this.productId == '3' || this.productId == '11') {
-            this.editSection = false;
-            if (modal) this.open(modal)
+
+          this.tableData = data?.Result || [];
+          if (this.tableData.length === 1) {
+            const customer = this.tableData[0];
+
+            this.setCustomerFormValues(customer);
+            if (modal) {
+              modal.close();
+            }
+
+            return;
           }
-          // else {
-          //   this.isCustomerTable = true;
-          // }
-          this.tableData = data?.Result;
 
-          console.log('kkkkkkkkkkkkkkkkkkkkkkk', this.tableData, this.isCustomerTable)
-
+          if (this.productId === '3' || this.productId === '11') {
+            this.editSection = false;
+            if (modal) this.open(modal);
+          }
         }
       },
-      (err) => { },
+      (err) => { }
     );
+
   }
+  setCustomerFormValues(event: any): void {
+    if (!event) return;
+
+    this.customerF.title.setValue(event?.Title);
+    this.customerF.name.setValue(event?.CustomerName);
+    this.customerF.coreAppcode.setValue(event?.MissippiCustomerCode);
+    setTimeout(() => {
+      this.customerF.city.setValue(event?.CityCode);
+    }, 100);
+    this.customerF.poBox.setValue(event?.PoBox);
+    this.customerF.mobileNo.setValue(event?.Mobile);
+    this.customerF.email.setValue(event?.Email);
+    this.customerF.customerVat.setValue(event?.VatRegNo);
+    this.customerF.Address1.setValue(event?.Address1);
+    this.customerF.Address2.setValue(event?.Address2);
+    this.customerF.Code.setValue(event?.CustomerId);
+    this.customerF.customerType.setValue(event?.CustomerType);
+  }
+
   open(content) {
     this.modalService.open(content, { size: 'lg', backdrop: 'static', ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

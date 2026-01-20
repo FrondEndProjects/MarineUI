@@ -277,7 +277,7 @@ export class CustomerInfoComponent implements OnInit {
 
     if (this.isOpneCover){
     for (var control in this.customerForm.controls) {
-        this.customerForm.controls[control].disable();
+        this.customerForm.controls[control].enable();
 
       }
     }
