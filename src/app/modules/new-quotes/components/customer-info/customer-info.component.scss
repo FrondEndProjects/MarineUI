@@ -41,3 +41,10 @@
     transform: translateY(0);
   }
 }
+.product-container .card {
+  transition: transform 0.2s ease-in-out;
+}
+.product-container .card:hover {
+  transform: translateY(-5px);
+  border-color: #007bff;
+}

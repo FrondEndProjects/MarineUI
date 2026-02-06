@@ -105,6 +105,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
+  isMobileMenuOpen = false;
+  activeDropdown: number | null = null;
+
+  // toggleMobileMenu() {
+  //   this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  //   this.activeDropdown = null;
+  // }
+
+
+  // toggleDropdown(index: number): void {
+  //   this.activeDropdown = this.activeDropdown === index ? null : index;
+  // }
+
   onBranchChange(branchCode: any) {
     this.authService.setBranchCode(branchCode);
   }
@@ -199,35 +212,61 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   }
-  checkChildren(rowData) {
-    if (rowData.children) {
-      return rowData.children.length != 0
-    }
-    else return false;
-  }
+  // checkChildren(rowData) {
+  //   if (rowData.children) {
+  //     return rowData.children.length != 0
+  //   }
+  //   else return false;
+  // }
   onRoute() {
     this.router.navigate(['product-layout/product']);
 
   }
-  onRedirectMenu(rowData) {
-    if (this.ProductId == '11' && rowData.title == 'New Quote') {
-      let value = 'openCover'
-      this.router.navigate([`/marine-opencover/new-quotes/customer-info`], { queryParams: { value } });
-    }
-    else {
-      if (rowData.title == "Referral") {
-        this.userDetails.UserType = 'Issuer'
-      }
-      else {
-        this.userDetails.UserType = 'admin'
-      }
-      if ((this.router.url == '/marine-opencover/new-quotes/customer-info' || this.router.url == '/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link == '/marine-opencover/new-quotes') {
-        sessionStorage.removeItem('ReferenceNo');
-        window.location.reload()
-      }
-      else this.router.navigate([rowData.link]);
-    }
+  // onRedirectMenu(rowData) {
+  //       this.isMobileMenuOpen = false;
+  //   this.activeDropdown = null;
+  //   if (this.ProductId == '11' && rowData.title == 'New Quote') {
+  //     let value = 'openCover'
+  //     this.router.navigate([`/marine-opencover/new-quotes/customer-info`], { queryParams: { value } });
+  //   }
+  //   else {
+  //     if (rowData.title == "Referral") {
+  //       this.userDetails.UserType = 'Issuer'
+  //     }
+  //     else {
+  //       this.userDetails.UserType = 'admin'
+  //     }
+  //     if ((this.router.url == '/marine-opencover/new-quotes/customer-info' || this.router.url == '/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link == '/marine-opencover/new-quotes') {
+  //       sessionStorage.removeItem('ReferenceNo');
+  //       window.location.reload()
+  //     }
+  //     else this.router.navigate([rowData.link]);
+  //   }
 
+  // }
+   toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  checkCurrentRouting() {
+    return this.router.url !== '/product-layout/opencover';
+  }
+
+  checkChildren(rowData: any) {
+    return rowData?.children && rowData.children.length > 0;
+  }
+
+  onRedirectMenu(rowData: any) {
+    this.isMobileMenuOpen = false;
+
+    if (this.ProductId === '11' && rowData.title === 'New Quote') {
+      this.router.navigate(
+        ['/marine-opencover/new-quotes/customer-info'],
+        { queryParams: { value: 'openCover' } }
+      );
+    } else {
+      this.router.navigate([rowData.link]);
+    }
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -251,12 +290,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.userDetails?.Result?.SubUserType != 'b2c') {
       // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login/product`;
       // location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
-      location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
+      //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
+      location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
       // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login/product`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login/product`;
       // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login/product`;
-      // location.href = `http://192.168.1.48:4900/#/auth/login/product`;
+      //  location.href = `http://192.168.1.48:4900/#/auth/login/product`;
 
 
     }
@@ -267,7 +307,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
       // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
-      location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+      //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+      // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
+      location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
 
     }
     return false;
@@ -278,18 +320,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.userDetails?.Result?.SubUserType != 'b2c') {
       // // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
       // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
-      location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
+      //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
+      location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
       // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
       // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
-      // location.href = `http://192.168.1.48:4900/#/auth/login`;
+      //  location.href = `http://192.168.1.48:4900/#/auth/login`;
 
     }
     else {
       // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
       // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
-      location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+      //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+      location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
       // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
@@ -300,20 +344,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   homeRoute() {
     if (this.userDetails?.Result?.SubUserType != 'b2c') {
+      // sessionStorage.clear();
+      // localStorage.clear();
+      if (this.userDetails?.Result?.UserType == 'admin') {
+        this.userDetails.Result['UserTypeAlt'] = 'Issuer'
+        this.userDetails.Result['UserType'] = 'Issuer'
+        localStorage.setItem('Userdetails', JSON.stringify(this.userDetails));
+      }
       // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
       // location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
-      location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
+      // location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
+      // location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
+      location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
       // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
       // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
-      // location.href = `http://192.168.1.48:4900/#/auth/login`;
+      //  window.location.href = `http://192.168.1.48:4600/#/auth/login/product`;
 
     }
     else {
+      // sessionStorage.clear();
+      // localStorage.clear();
       // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
       // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
-      location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+      //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+      location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
       // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
@@ -338,8 +394,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (this.userDetails?.Result?.SubUserType != 'b2c') {
           // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
           // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
-          location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
-          // location.href = `http://192.168.1.48:4600/#/auth/login`;
+          //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
+          location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
+          //  location.href = `http://192.168.1.48:4600/#/auth/login`;
           // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
           // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
           // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
@@ -349,7 +406,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         else {
           // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
           // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
-          location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+          //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+          location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
           // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
           // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
           // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
@@ -365,8 +423,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (this.userDetails?.Result?.SubUserType != 'b2c') {
           // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
           // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
-          location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
-          // location.href = `http://192.168.1.48:4900/#/auth/login`;
+          //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
+          location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
+          //  location.href = `http://192.168.1.48:4600/#/auth/login`;
           // location.href = `http://192.168.1.48:4600/#/auth/login`;
           // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
           // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
@@ -377,7 +436,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         else {
           // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
           // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
-          location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+          //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
+          location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
           // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
           // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
           // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
@@ -395,10 +455,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .post<any>(UrlLink, ReqObj, { headers: headers })
       .pipe(shareReplay());
   }
-  checkCurrentRouting() {
-    let url = this.router.url;
-    return url != '/product-layout/opencover';
-  }
+  // checkCurrentRouting() {
+  //   let url = this.router.url;
+  //   return url != '/product-layout/opencover';
+  // }
 
   DashbordRoute() {
     this.router.navigate([`/Marine/dashboard`]);

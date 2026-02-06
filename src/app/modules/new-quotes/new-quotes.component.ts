@@ -136,9 +136,10 @@ export class NewQuotesComponent implements OnInit {
     this.quotesType = sessionStorage.getItem('quotesType');
     if (this.quotesType == 'Without-Endo') {
       this.stepperList = [
-        { isActive: false, name: '1', title: 'customerinfo', url: `${this.routerBaseLink}/new-quotes/customer-info` },
-        { isActive: false, name: '2', title: 'premiuminfo', url: `${this.routerBaseLink}/new-quotes/premium-info` },
-        { isActive: false, name: '3', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate` },
+        { isActive: false, name: 'Risk', title: 'customerinfo', url: `${this.routerBaseLink}/new-quotes/customer-info` },
+        { isActive: false, name: 'Premium', title: 'premiuminfo', url: `${this.routerBaseLink}/new-quotes/premium-info` },
+        { isActive: false, name: 'Document', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate` },
+        { isActive: false, name: 'Policy', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate` },
       ];
     } else {
       this.stepperList = [

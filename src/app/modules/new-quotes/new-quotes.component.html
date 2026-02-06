@@ -1,7 +1,7 @@
 <ul class="mynav">
   <ng-container *ngFor="let item of stepperList;let i = index;let lastitem = last;">
     <li class="mynav-item"
-    [style.width]="i !== stepperList.length - 1 ? '14%' : '0'"
+    [style.width]="i !== stepperList.length - 1 ? '14%' : '-9'"
     [ngClass]="[i !== stepperList.length - 1 ? 'progress-line' : '', item.isActive ? 'menuactive' : '']"
     >
       <a class="mynav-link">

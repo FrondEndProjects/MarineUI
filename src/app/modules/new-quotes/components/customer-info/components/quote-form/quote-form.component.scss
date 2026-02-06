@@ -47,3 +47,108 @@ table {
     white-space: nowrap !important;
     padding: 8px 10px !important;
 }
+.maan-card1 {
+  background-color: white !important;
+  padding: 1rem !important;;
+  border-radius: 0.6rem !important;;
+}
+/* Styling for the section titles inside the cards */
+.card-header-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f4f8; /* Soft underline for the title */
+}
+
+.card-header-custom nb-icon {
+  font-size: 1.5rem;
+  color: #3366ff; /* Primary Blue */
+}
+
+.header-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222b45;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Ensure the wrapper doesn't have duplicate padding if parent also has it */
+.modern-card-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  padding-left: 4rem;
+  border: 1px solid #1e3a8a;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  // margin-bottom: 1.5rem;
+}
+
+/* Radio toolbar modern look */
+.radio-toolbar input[type="radio"] {
+  display: none;
+}
+
+.radio-toolbar label {
+  display: inline-block;
+  padding: 6px 20px;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+// .radio-toolbar input[type="radio"]:checked + label {
+//   background-color: #3366ff;
+//   color: white;
+//   border-color: #3366ff;
+// }
+.currency-70-30 {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.currency-70-30 .currency-drop {
+  flex: 0 0 70%;
+  max-width: 70%;
+}
+
+.currency-70-30 .currency-input {
+  flex: 0 0 30%;
+  max-width: 30%;
+}
+
+/* Ensure full-width inside */
+.currency-70-30 ng-select,
+.currency-70-30 input {
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .currency-70-30 {
+    flex-direction: column;
+  }
+
+  .currency-70-30 .currency-drop,
+  .currency-70-30 .currency-input {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+}
+
+  /* MOBILE */
+@media (max-width: 1199px) {
+  .modern-card-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1rem;
+    /* padding-left: 4rem; */
+    border: 1px solid #1e3a8a;
+    /* width: 90%; */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+}

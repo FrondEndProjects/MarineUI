@@ -1,14 +1,15 @@
 <form [formGroup]="customerForm" #formDirective="ngForm">
   <div class="row">
-    <div class="col-12">
-      <div class="middle-line">
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="start-line">
+        <nb-icon icon="person-outline"></nb-icon>
         Customer Details
       </div>
     </div>
-    <div class="row mb-3">
-      <div class="col-12 col-md-4 col-lg-4">
+    <!-- <div class="row mb-3"> -->
+      <div class="col-12 col-md-8 col-lg-8 text-end">
         <div class="input-control-container">
-          <label class="input-form-label">Cutomer Type<span class="text-required">*</span></label>
+          <!-- <label class="input-form-label">Cutomer Type<span class="text-required">*</span></label> -->
           <div class="input-form-radio-box">
             <div class="radio-toolbar">
               <input id="Individual" type="radio" name="customerType" value="Individual" formControlName="customerType">
@@ -19,7 +20,9 @@
           </div>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
+  </div>
+  <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
       <div class="input-control-container">
         <label class="input-form-label">Title<span class="text-required">*</span></label>
@@ -102,7 +105,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4 mt-2">
       <div class="input-control-container">
         <label class="input-form-label">Address 1<span class="text-required">*</span></label>
         <div class="input-form-box">
@@ -116,7 +119,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4 mt-2">
       <div class="input-control-container">
         <label class="input-form-label">Address 2</label>
         <div class="input-form-box">
@@ -124,7 +127,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4 mt-2">
       <div class="input-control-container">
         <label class="input-form-label">P.O Box<span class="text-required">*</span></label>
         <div class="input-form-box">
@@ -139,7 +142,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4 mt-2">
       <div class="input-control-container">
         <label class="input-form-label">City<span class="text-required">*</span></label>
         <ng-select placeholder="Select" class="input-form-select" [items]="dropCityList" bindValue="Code"
@@ -154,7 +157,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4 mt-2">
       <div class="input-control-container">
         <label class="input-form-label">Mobile Number <span class="text-required">*</span></label>
         <div class="input-form-box">
@@ -169,10 +172,12 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4 mt-2">
       <div class="input-control-container">
-        <label *ngIf="this.userDetails.InsuranceId =='100020'" class="input-form-label">KRA PIN<span class="text-required">*</span></label>
-        <label *ngIf="this.userDetails.InsuranceId !='100020'" class="input-form-label">VAT Registraion No<span class="text-required">*</span></label>
+        <label *ngIf="this.userDetails.InsuranceId =='100020'" class="input-form-label">KRA PIN<span
+            class="text-required">*</span></label>
+        <label *ngIf="this.userDetails.InsuranceId !='100020'" class="input-form-label">VAT Registraion No<span
+            class="text-required">*</span></label>
         <div class="input-form-box">
           <input type="text" class="input-form-control without-icon" formControlName="customerVat">
         </div>
@@ -184,7 +189,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
+    <div class="col-12 col-md-4 col-lg-4 mt-2">
       <div class="input-control-container">
         <label class="input-form-label">Email<span class="text-required">*</span></label>
         <div class="input-form-box">
@@ -198,7 +203,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </form>
 
@@ -253,7 +257,8 @@
               <label class="input-form-label">Cutomer Type<span class="text-required">*</span></label>
               <div class="input-form-radio-box">
                 <div class="radio-toolbar">
-                  <input id="Individual1" type="radio" name="customerType" value="Individual" [(ngModel)]="customerType">
+                  <input id="Individual1" type="radio" name="customerType" value="Individual"
+                    [(ngModel)]="customerType">
                   <label for="Individual1">Individual</label>
                   <input type="radio" id="Corporate1" name="customerType" value="Corporate" [(ngModel)]="customerType">
                   <label for="Corporate1">Corporate</label>

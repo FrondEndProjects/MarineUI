@@ -13,7 +13,7 @@
   .logo-container {
     display: flex;
     align-items: center;
-    width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
+    // width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
   }
  
   nb-action {
@@ -101,7 +101,7 @@
     //   padding: 0 1.25rem !important;
     // }
     .imgwid{
-      width:260px !important;
+      width:160px !important;
       height: 85px !important;
     }
    }
@@ -115,7 +115,7 @@
       padding: 0 !important;
     }
     .imgwid{
-      width:190px !important;
+      width:160px !important;
       height: 60px !important;
     }
    }
@@ -125,7 +125,7 @@
       padding: 2px !important;
     }
     .imgwid{
-      width:190px !important;
+      width:160px !important;
       height: 60px !important;
     }
   }

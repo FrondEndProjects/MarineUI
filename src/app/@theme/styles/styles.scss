@@ -230,6 +230,7 @@ mat-form-field {
   padding-right: 10px;
   /* border-left: 5px solid dodgerblue */
 }
+
 .input-form-box .input-form-control.with-icon1 {
   padding-left: 10px;
   padding-right: 10px;
@@ -453,6 +454,13 @@ ng-select input {
   margin: 1rem 0;
 }
 
+.start-line {
+  flex-direction: row;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 1rem 0;
+}
+
 .middle-line:before,
 .middle-line:after {
   content: "";
@@ -573,6 +581,12 @@ input[type=number] {
 
 .maan-card {
   background-color: white;
+  padding: 1rem;
+  border-radius: 0.6rem;
+}
+
+.maan-card1 {
+  background-color: rgba(255, 255, 255, 0.664);
   padding: 1rem;
   border-radius: 0.6rem;
 }
@@ -750,7 +764,7 @@ nb-user .user-name {
     font-size: 14px;
     padding: 0 2px;
     font-family: var(--nav-font);
-    font-weight: var(--menu-text-font-weight);
+    font-weight: 500;
     display: flex;
     align-items: center;
     white-space: nowrap;
@@ -813,11 +827,12 @@ nb-user .user-name {
 
   .navmenu .dropdown ul li {
     min-width: 200px;
+    padding-bottom: 0%;
   }
 
   .navmenu .dropdown ul a {
-    padding: 10px 20px;
-    font-size: 15px;
+    // padding: 10px 20px;
+    font-size: 14px;
     text-transform: none;
     color: var(--nav-dropdown-color);
   }
@@ -959,10 +974,12 @@ nb-user .user-name {
     color: #fff;
     position: absolute;
     font-size: 32px;
-    top: 15px;
-    right: 15px;
+    top: 47px;
+    right: 0px;
     margin-right: 0;
-    z-index: 9999;
+    z-index: 10002;
+    // background: white;
+    border-radius: 27px;
   }
 
   .mobile-nav-active .navmenu {
@@ -974,6 +991,10 @@ nb-user .user-name {
   }
 
   .mobile-nav-active .navmenu>ul {
+    display: block;
+  }
+
+  .navmenu .dropdown ul.dropdown-active {
     display: block;
   }
 }
@@ -1013,7 +1034,8 @@ nb-user .user-name {
 
 .ng-dropdown-panel {
   max-width: 100% !important;
-  min-width: 250px; /* or whatever suits your layout */
+  min-width: 250px;
+  /* or whatever suits your layout */
   word-wrap: break-word !important;
   white-space: normal !important;
 }
@@ -1023,15 +1045,334 @@ nb-user .user-name {
   word-break: break-word !important;
 }
 
-.customStyleCard{
-    border: red solid 1px !important;
-    height: fit-content !important;
-    padding: 1rem !important;
-    background-color: #fff !important;
-    color: red !important;
-    font-weight: 600 !important;
+.customStyleCard {
+  border: red solid 1px !important;
+  height: fit-content !important;
+  padding: 1rem !important;
+  background-color: #fff !important;
+  color: red !important;
+  font-weight: 600 !important;
 }
 
-.customListStyle{
-  font-size: x-small ;
+.customListStyle {
+  font-size: x-small;
+}
+
+/* Container Spacing */
+.modern-container {
+  padding: 10px;
+  // background-color: #f8f9fc;
+  /* Light neutral background to make cards pop */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 10%;
+  /* Consistent spacing between cards */
+}
+
+/* The Modern Card Style */
+.modern-card-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  padding-left: 4rem;
+  border: 1px solid #1e3a8a;
+  width: 90%;
+  // border: 1px solid rgb(235 96 9 / 50%);
+  /* Very light border */
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect for a premium feel */
+.modern-card-wrapper:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+/* Specific styling for the footer area */
+.modern-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #edf2f7;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Button Refinement */
+.action-btn {
+  min-width: 100px;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.save-btn {
+  box-shadow: 0 4px 11px rgba(51, 102, 255, 0.3);
+  /* Soft glow on primary button */
+}
+
+@media (min-width: 1200px) {
+  .navmenu ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+
+  .navmenu li {
+    position: relative;
+    padding: 15px;
+  }
+
+  .navmenu a {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .navmenu .dropdown ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .navmenu .dropdown:hover>ul {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 1199px) {
+
+  .mobile-toggle {
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10001;
+  }
+
+  .navmenu ul {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    padding: 70px 20px 20px;
+    overflow-y: auto;
+    z-index: 10000;
+  }
+
+  /* THIS WAS MISSING */
+  .navmenu.mobile-nav-active ul {
+    display: block;
+  }
+
+  .navmenu li {
+    border-bottom: 1px solid #eee;
+  }
+
+  .navmenu a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* DROPDOWN */
+  .navmenu .dropdown ul {
+    display: none;
+    padding-left: 15px;
+    background: #f7f7f7;
+  }
+
+  .navmenu .dropdown ul.show {
+    display: block;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+    transition: 0.3s;
+  }
+
+  .modern-card-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1rem;
+    /* padding-left: 4rem; */
+    border: 1px solid #1e3a8a;
+    /* width: 90%; */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+}
+
+.dropdown-toggle {
+  all: unset;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+}
+
+.dropdown ul {
+  display: none;
+}
+
+.dropdown ul.show {
+  display: block;
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  background: #003366;
+  padding: 6px 10px;
+}
+
+.logo img {
+  height: 52px;
+}
+
+/* NAV MENU */
+.navmenu {
+  background: #fff;
+}
+
+.navmenu ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+.navmenu li {
+  position: relative;
+  // padding: 14px 16px;
+  cursor: pointer;
+}
+
+.navmenu a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+/* DESKTOP DROPDOWN */
+.navmenu .dropdown ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  min-width: 200px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+  z-index: 99;
+}
+
+.navmenu .dropdown:hover ul {
+  display: block;
+}
+
+/* MOBILE */
+@media (max-width: 1199px) {
+
+  .navmenu ul {
+    display: none;
+  }
+
+  .navmenu.mobile-nav-active ul {
+    display: block;
+    position: fixed;
+    inset: 60px 10px 10px;
+    background: #fff;
+    border-radius: 6px;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+
+  .navmenu ul li {
+    border-bottom: 1px solid #eee;
+  }
+
+  .mobile-nav-toggle {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .mobile-menu-icon {
+    font-size: 28px;
+    color: #333;
+  }
+
+  /* MOBILE DROPDOWN */
+  .navmenu .dropdown ul {
+    position: static;
+    box-shadow: none;
+  }
+  .input-form-box .input-form-control4 {
+    /* min-width: 100%; */
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    margin: -1px 0px 0px -1px;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    height: 35px;
+    width: 113px;
+}
+}
+
+@media (max-width: 767px) {
+  .input-control-container .ng-select.ng-select-single .ng-select-container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .radio-toolbar label {
+    margin-left: 0px;
+    display: inline-block;
+    background-color: white;
+    padding: 2px 2px;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+  }
+
+  .input-form-box .input-form-control {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .currrency-drop1 {
+    width: 88%;
+  }
+
+  .input-form-box .input-form-control {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .input-form-box .input-form-control2 {
+    width: 88%;
+  }
 }

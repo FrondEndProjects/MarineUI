@@ -1,6 +1,5 @@
 {
-  "ApiUrl1": "http://192.168.1.5:2122/",
-  "CommonApiUrl": "http://192.168.1.5:8086/",
-  "AdminUrl": "http://192.168.1.42:8084/"
-
+  "ApiUrl1": "https://wecoreuat.wecorephoenixgroup.com/MarineApi/",
+  "CommonApiUrl": "https://wecoreuat.wecorephoenixgroup.com/EwayCommonApi/",
+  "AdminUrl": "https://wecoreuat.wecorephoenixgroup.com/EwayAdminApi/"
 }
