@@ -72,7 +72,7 @@ export class PolicyGenerateComponent implements OnInit {
   CustomerType: string;
   termsSection: boolean = false;
   quoteDetails: any;
-  isFinancialEndt: any='N';
+  isFinancialEndt: any = 'N';
   constructor(
     private newQuotesService: NewQuotesService,
     private _formBuilder: FormBuilder,
@@ -166,10 +166,12 @@ export class PolicyGenerateComponent implements OnInit {
         console.log(data);
         this.premiumDetails = data?.Result;
         this.quoteDetails = data?.Result?.QuoteDetails;
-        if(this.quoteDetails?.FinancialEndt) this.isFinancialEndt = this.quoteDetails?.FinancialEndt
+        if (this.quoteDetails?.FinancialEndt) this.isFinancialEndt = this.quoteDetails?.FinancialEndt
         this.quoteNo = this.premiumDetails?.QuoteDetails?.QuoteNo;
         this.bankName = this.premiumDetails?.LcBankDetails?.BankName;
-        this.payment_type='1';this.onFinalProceed('direct');
+        this.payment_type = '1';
+        this.pay_amount = data?.Result?.PremiumDetails?.NetPremium
+        // this.onFinalProceed('direct');
         this.getdocTypeList();
         //this.ongetUploadedDocument();
       },
@@ -241,7 +243,7 @@ export class PolicyGenerateComponent implements OnInit {
       console.log("Doc List", data);
       console.log('llllllllllllll', this.uploadedDocumentsList);
       this.uploadedDocumentsList = data.Result;
-      if (this.uploadedDocumentsList.length != 0) {
+      if (this.uploadedDocumentsList?.length != 0) {
         for (let document of this.uploadedDocumentsList) {
           let entry = this.docTypeList.find(ele => ele.Code == document.UploadType);
           if (entry) {
@@ -439,7 +441,7 @@ export class PolicyGenerateComponent implements OnInit {
           console.log(data);
           if (data) {
             i += 1;
-            if (i == this.uploadDocuments.length) {
+            if (i == this.uploadDocuments?.length) {
               this.uploadedDocumentsList = [];
               this.uploadDocuments = [];
               // if (this.payment_type != '4') {
@@ -459,19 +461,28 @@ export class PolicyGenerateComponent implements OnInit {
   }
 
   generateCertiCheck() {
-    if (this.generateCerti == 'Y' && (this.payment_type != null && this.payment_type != '' && this.pay_amount!='0' && this.pay_amount!=0)) {
-      this.onschedule();
-    }
-    else if(this.pay_amount=='0' || this.pay_amount==0){
-      this.payee_name="None";this.payment_type='1';this.pay_amount=0;this.inserPyment()
-    }
-    else {
+    // if (this.generateCerti == 'Y' && (this.payment_type != null && this.payment_type != '' && this.pay_amount != '0' && this.pay_amount != 0)) {
+    //   this.onschedule();
+    // }
+    // else if (this.pay_amount == '0' || this.pay_amount == 0) {
+    //   this.payee_name = "None"; this.payment_type = '1'; this.pay_amount = 0; this.inserPyment()
+    // }
+    // else {
       this.onFinalProceed('submit');
-    }
+    // }
+    // if (this.generateCerti == 'Y' && (this.payment_type != null && this.payment_type != '' && this.pay_amount != '0' && this.pay_amount != 0)) {
+    //   this.onschedule();
+    // }
+    // else if (this.pay_amount == '0' || this.pay_amount == 0) {
+    //   this.payee_name = "None"; this.payment_type = '1'; this.pay_amount = 0; this.inserPyment()
+    // }
+    // else {
+    //   this.onFinalProceed('submit');
+    // }
   }
 
   onFinalProceed(type) {
-    this.pay_amount = null;
+    // this.pay_amount = null;
     const urlLink = `${this.ApiUrl1}quote/policy/generate`;
     const reqData = {
       "ApplicationNo": this.ReferenceNo,
@@ -482,6 +493,7 @@ export class PolicyGenerateComponent implements OnInit {
       "CustomerCode": this.premiumDetails?.CustomerDetails?.Code,
       "Foreign": this.foreignCurrency ? 'Y' : 'N',
       "GeneratePolicyYn": this.generateCerti,
+      // "GeneratePolicyYn": this.generateCerti,
       "LcBankDetail": this.nameOfBroker ? 'Y' : 'N',
       "LoginUserType": this.userDetails.UserType,
       "ModeOfPayment": "CR",
@@ -514,25 +526,26 @@ export class PolicyGenerateComponent implements OnInit {
           this.policuNoGenerate = false;
 
         }
-        if(type=='direct'){
-          if (data.Result) {
-            this.pay_amount = data.Result.Premium;
-            this.PaymentId = data.Result.PaymentId;
-            this.QuoteNo = data.Result.QuoteNo;
-            // this.inserPyment(data.Result)
+        // if(type=='direct'){
+        //   if (data.Result) {
+        //     this.pay_amount = data.Result.Premium;
+        //     this.PaymentId = data.Result.PaymentId;
+        //     this.QuoteNo = data.Result.QuoteNo;
+        //     // this.inserPyment(data.Result)
 
-          }
-        }
-        else if (this.generateCerti == 'Y') {
+        //   }
+        // }
+        // else
+        if (this.generateCerti == 'Y') {
           sessionStorage.setItem('quotePaymentId', data.Result.PaymentId);
-          if (data.Result) {
-            this.pay_amount = data.Result.Premium;
-            this.PaymentId = data.Result.PaymentId;
-            this.QuoteNo = data.Result.QuoteNo;
-            // this.inserPyment(data.Result)
+          // if (data.Result) {
+          //   this.pay_amount = data.Result.Premium;
+          //   this.PaymentId = data.Result.PaymentId;
+          //   this.QuoteNo = data.Result.QuoteNo;
+          //   // this.inserPyment(data.Result)
 
-          }
-          this.PaymentId = data.Result.PaymentId
+          // }
+          // this.PaymentId = data.Result.PaymentId
           if (this.PaymentId && this.payment_type != '1' && this.payment_type != '2' && this.payment_type != '5') {
             this.onschedule();
           }
@@ -552,7 +565,7 @@ export class PolicyGenerateComponent implements OnInit {
         }
       }
       else {
-        this.payment_type = null;
+        // this.payment_type = null;
       }
     })
   }
@@ -814,9 +827,9 @@ export class PolicyGenerateComponent implements OnInit {
       }
     }
     const urlLink = `${this.ApiUrl1}quote/policy/insertPayment`;
-    let quoteNo=this.QuoteNo;
-    if(quoteNo==undefined) quoteNo=this.quoteNo
-    if(this.PaymentId==undefined){this.PaymentId=sessionStorage.getItem('quotePaymentId')}
+    let quoteNo = this.QuoteNo;
+    if (quoteNo == undefined) quoteNo = this.quoteNo
+    if (this.PaymentId == undefined) { this.PaymentId = sessionStorage.getItem('quotePaymentId') }
     const reqData = {
       "CreatedBy": this.userDetails?.LoginId,
       "InsuranceId": this.userDetails?.InsuranceId,

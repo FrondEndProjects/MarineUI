@@ -48,3 +48,8 @@
   transform: translateY(-5px);
   border-color: #007bff;
 }
+
+.modern-card-wrapper:has(.overlay) {
+  transform: none !important;
+  transition: none !important;
+}

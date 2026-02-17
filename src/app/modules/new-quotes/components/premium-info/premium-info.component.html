@@ -523,13 +523,13 @@
                           Admin Fee
                         </div>
                         <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
-                          {{premiumDetails.PremiumDetails.AdminFeePercent}}%
+                          {{premiumDetails?.PremiumDetails?.AdminFeePercent}}%
                         </div>
                         <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
                           <span class="px-1"
-                            *ngIf="premiumDetails.PremiumDetails.AdminFee!=0">{{premiumDetails.PremiumDetails.AdminFee |
+                            *ngIf="premiumDetails?.PremiumDetails?.AdminFee!=0">{{premiumDetails?.PremiumDetails?.AdminFee |
                             commaseparator}}</span>
-                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.AdminFee==0">0</span>
+                          <span class="px-1" *ngIf="premiumDetails?.PremiumDetails?.AdminFee==0">0</span>
 
                         </div>
                       </div>
@@ -540,14 +540,14 @@
                           NAMFISA Levy
                         </div>
                         <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
-                          {{premiumDetails.PremiumDetails.LevyPercent}}%
+                          {{premiumDetails?.PremiumDetails?.LevyPercent}}%
                         </div>
                         <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
                           <span class="px-1"
-                            *ngIf="premiumDetails.PremiumDetails.PremiumLevy!=0">{{premiumDetails.PremiumDetails.PremiumLevy
+                            *ngIf="premiumDetails?.PremiumDetails?.PremiumLevy!=0">{{premiumDetails?.PremiumDetails?.PremiumLevy
                             |
                             commaseparator}}</span>
-                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.PremiumLevy==0">0</span>
+                          <span class="px-1" *ngIf="premiumDetails?.PremiumDetails?.PremiumLevy==0">0</span>
 
                         </div>
                       </div>
@@ -563,10 +563,10 @@
                         </div>
                         <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
                           <span class="px-1"
-                            *ngIf="premiumDetails.PremiumDetails.StampDuty!=0">{{premiumDetails.PremiumDetails.StampDuty
+                            *ngIf="premiumDetails?.PremiumDetails?.StampDuty!=0">{{premiumDetails?.PremiumDetails?.StampDuty
                             |
                             commaseparator}}</span>
-                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.StampDuty==0">0</span>
+                          <span class="px-1" *ngIf="premiumDetails?.PremiumDetails?.StampDuty==0">0</span>
 
                         </div>
                       </div>
@@ -577,14 +577,14 @@
                           Surtax(ISSM)
                         </div>
                         <div class="col-4 col-md-3" style="text-align: right !important;"><!--smallpixel-->
-                          {{premiumDetails.PremiumDetails.surFeePercent}}%
+                          {{premiumDetails?.PremiumDetails?.surFeePercent}}%
                         </div>
                         <div class="col-4 col-md-5" style="text-align: right !important;"><!--smallpixel text-right-->
                           <span class="px-1"
-                            *ngIf="premiumDetails.PremiumDetails.surFee!=0">{{premiumDetails.PremiumDetails.surFee
+                            *ngIf="premiumDetails?.PremiumDetails?.surFee!=0">{{premiumDetails?.PremiumDetails?.surFee
                             |
                             commaseparator}}</span>
-                          <span class="px-1" *ngIf="premiumDetails.PremiumDetails.surFee==0">0</span>
+                          <span class="px-1" *ngIf="premiumDetails?.PremiumDetails?.surFee==0">0</span>
 
                         </div>
                       </div>

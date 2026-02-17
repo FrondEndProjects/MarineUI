@@ -212,12 +212,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     const urlLink = `${this.ApiUrl1}menu/dashbord/quote/product/issuerlist`;
     let ApplicationId = null;
-    if (this.userDetails?.Result?.UserType != 'admin') {
-      ApplicationId = '1';
-    }
-    else {
+    // if (this.userDetails?.Result?.UserType != 'admin') {
+    //   ApplicationId = '1';
+    // }
+    // else {
       ApplicationId = this.userDetails?.Result?.LoginId;
-    }
+    // }
     const reqData = {
       "ProductId": this.ProductId,
       "ApplicationId": ApplicationId,

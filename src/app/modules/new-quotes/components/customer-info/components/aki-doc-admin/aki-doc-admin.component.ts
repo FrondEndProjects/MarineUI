@@ -39,7 +39,7 @@ export class AkiDocAdminComponent {
       {
         key: "edit",
         display: "Action",
-        // sticky: true,
+
         config: {
           isActionBtn: true,
           isActionBtnName: "View",
@@ -50,7 +50,6 @@ export class AkiDocAdminComponent {
       {
         key: "print",
         display: "AKI Integration",
-        // sticky: true,
         config: {
           isActionBtn: true,
           isActionBtnName: "Update",
@@ -66,14 +65,13 @@ export class AkiDocAdminComponent {
       { key: 'FromDate', display: 'Policy Date' },
       { key: 'KraPin', display: 'KRA PIN' },
       {
-        key: "edit",
+        key: "print",
         display: "Action",
-        // sticky: true,
         config: {
           isActionBtn: true,
           isActionBtnName: "",
-          isNgxIcon: "fas fa-eye",
-          bg: "primary",
+          isNgxIcon: "fas fa-download",
+          bg: "secondary",
         },
       }
     ];
@@ -136,6 +134,43 @@ export class AkiDocAdminComponent {
 
   }
 
+  onDownloadAKIDoc(event) {
+
+    const urlLink = `${this.ApiUrl1}Integration/get/certificate`;
+    const reqData = {
+      "QuoteNo": event.QuoteNo,
+      // "QuoteNo": '100707'
+    }
+
+    this.quoteService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      if (data?.Result) {
+        if (data.Result.rmsg.length !== 0 && data.Result.rcode != 200) {
+          const errorMessages = data.Result.rmsg
+            .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
+            .join('<br>');
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Validation Errors',
+            html: errorMessages
+          });
+        }
+        else {
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href', data?.Result.rObj.blobDownloadURL);
+          link.setAttribute('download', event.QuoteNo,);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
+
+      }
+
+    })
+
+
+  }
   getList() {
     let formDate
     let toDate
@@ -232,6 +267,8 @@ export class AkiDocAdminComponent {
 
   }
   isActionBtn(event) {
+    console.log(event, "sdfsdfsd");
+
     this.rmsg = [];
     if (event.btName == 'View' && event.btName != 'Update') {
       if (event.QuoteNo) {
@@ -260,32 +297,41 @@ export class AkiDocAdminComponent {
       }
     }
     else {
-      const urlLink = `${this.ApiUrl1}Integration/aki/call`;
-      const reqData = {
-        "PolicyNo": event.PolicyNo,
-        "QuoteNo": event.QuoteNo,
-        "ReintegrateStatus": 'Y'
-      };
-      this.quoteService.onPostMethodSync(urlLink, reqData).subscribe(
-        (data: any) => {
-          console.log(data, "sdfsdfasdfs");
-          if (data.Result.rmsg.length !== 0) {
-            const errorMessages = data.Result.rmsg
-              .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
-              .join('<br>');
+      if (event.Status == 'P') {
+        const urlLink = `${this.ApiUrl1}Integration/aki/call`;
+        const reqData = {
+          "PolicyNo": event.PolicyNo,
+          "QuoteNo": event.QuoteNo,
+          "ReintegrateStatus": 'Y'
+        };
+        this.quoteService.onPostMethodSync(urlLink, reqData).subscribe(
+          (data: any) => {
+            console.log(data, "sdfsdfasdfs");
+            if (data.Result.rmsg.length !== 0) {
+              const errorMessages = data.Result.rmsg
+                .map((item: any, index: number) => `${index + 1}. ${item.errorText}`)
+                .join('<br>');
 
-            Swal.fire({
-              icon: 'error',
-              title: 'Validation Errors',
-              html: errorMessages
-            });
-          }
-          else {
-            this.getList();
-          }
-        },
-        (err) => { },
-      );
+              Swal.fire({
+                icon: 'error',
+                title: 'Validation Errors',
+                html: errorMessages
+              });
+            }
+            else {
+              this.getList();
+            }
+          },
+          (err) => { },
+        );
+      }
+      else {
+        this.onDownloadAKIDoc(event);
+
+      }
+
+
+
     }
 
   }

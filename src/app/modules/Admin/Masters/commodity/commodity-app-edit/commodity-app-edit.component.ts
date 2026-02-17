@@ -872,7 +872,8 @@ export class CommodityAppEditComponent implements OnInit {
 
   getExclusion(){
     let ReqObj = {
-      "BranchCode": this.branchCode
+      // "BranchCode": this.branchCode
+      "BranchCode":  this.userDetails?.Result.BelongingBranch
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/commodity/exclusion`, ReqObj).subscribe(
       (data: any) => {

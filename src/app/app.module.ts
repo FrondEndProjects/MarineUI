@@ -65,6 +65,7 @@ import { SessionRedirectComponent } from './layout/components/session-redirect/s
 import { ErrorModalModule } from './shared/error/error-modal.module';
 import { LoginService } from './modules/login/login.service';
 import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRedirect.component';
+import { NonMotorClaimComponent } from './components/non-motor-claim/non-motor-claim.component';
 // import { MegaMenuModule } from 'primeng/megamenu';
 
 @NgModule({
@@ -85,7 +86,8 @@ import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRe
     EndorsementComponent,
     OpenCoverDocument,
     SessionRedirectComponent,
-    CustomerRedirectComponent
+    CustomerRedirectComponent,
+    NonMotorClaimComponent
   ],
   imports: [
     CommonModule, BrowserModule, BrowserAnimationsModule,

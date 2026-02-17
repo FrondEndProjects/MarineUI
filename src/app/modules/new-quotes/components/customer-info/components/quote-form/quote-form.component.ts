@@ -7,7 +7,7 @@ import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { Subscription } from 'rxjs';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { log } from 'node:console';
+
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -239,14 +239,14 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     const commodityDetails = data?.QuoteDetails?.CommodityDetails[0];
     const transportDetails = data?.QuoteDetails?.TransportDetails;
     const vesselDetails = data?.QuoteDetails?.VesselDetails;
-
+    this.editCover = transportDetails?.CoverCode;
+    this.editmodeOfCarriage = transportDetails?.ModeOfCarriageCode;
     this.quoteF.modeOfTransport.setValue(transportDetails?.ModeOfTansportCode);
     this.onGetCoverDropdownList(1);
     this.onGetCarriageDropdownList(null, null);
     this.quoteF.cover.setValue(transportDetails?.CoverCode);
     this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
-    this.editCover = transportDetails?.CoverCode;
-    this.editmodeOfCarriage = transportDetails?.ModeOfCarriageCode;
+
     this.quoteF.originatingCountry.setValue(transportDetails?.OriginCountryCode);
     this.onGetOriginCityDropdownList();
     // this.quoteF.originatingCity.setValue(transportDetails?.OriginCityCode);
@@ -955,8 +955,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     console.log('GCOdesssss', code);
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if (this.productId == '3') this.openCoverNo = null;
-    let loginId=this.loginId;
-    if(loginId==undefined || loginId==null || loginId==''){loginId=code;}
+    let loginId = this.loginId;
+    if (loginId == undefined || loginId == null || loginId == '') { loginId = code; }
     const reqData = {
       "BrokerCode": code,
       'ApplicationId': this.applicationId,

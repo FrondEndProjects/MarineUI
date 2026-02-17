@@ -350,6 +350,7 @@ ng-select input {
   padding: 5px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   width: 86%;
+   z-index: 999999 !important;
 
 }
 
@@ -1038,6 +1039,7 @@ nb-user .user-name {
   /* or whatever suits your layout */
   word-wrap: break-word !important;
   white-space: normal !important;
+  z-index: 999999 !important;
 }
 
 .ng-option {
@@ -1078,9 +1080,6 @@ nb-user .user-name {
   padding-left: 4rem;
   border: 1px solid #1e3a8a;
   width: 90%;
-  // border: 1px solid rgb(235 96 9 / 50%);
-  /* Very light border */
-
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -1329,6 +1328,7 @@ nb-user .user-name {
     position: static;
     box-shadow: none;
   }
+
   .input-form-box .input-form-control4 {
     /* min-width: 100%; */
     border: 1px solid #d9d9d9;
@@ -1340,7 +1340,7 @@ nb-user .user-name {
     transition: all 0.3s;
     height: 35px;
     width: 113px;
-}
+  }
 }
 
 @media (max-width: 767px) {
@@ -1375,4 +1375,8 @@ nb-user .user-name {
   .input-form-box .input-form-control2 {
     width: 88%;
   }
+}
+.modern-card-wrapper:has(.ng-dropdown-panel,.input-form-box .input-form-control) {
+  transform: none !important;
+  transition: none !important;
 }

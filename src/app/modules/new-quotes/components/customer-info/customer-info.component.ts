@@ -17,7 +17,6 @@ import * as EnabledList from '../../../../enabledFields.json';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
 import Swal from 'sweetalert2';
-import { log } from 'node:console';
 import { CustomLoadingService } from '../../../../shared/custom-loading.service';
 
 @Component({
@@ -275,18 +274,18 @@ export class CustomerInfoComponent implements OnInit {
       this.customerFormComponent?.onGetCustomerList(this.userDetails.LoginResponse.AgencyCode);
     }
 
-    if (this.isOpneCover){
-    for (var control in this.customerForm.controls) {
+    if (this.isOpneCover) {
+      for (var control in this.customerForm.controls) {
         this.customerForm.controls[control].enable();
 
       }
     }
-  else{
-    for (var control in this.customerForm.controls) {
+    else {
+      for (var control in this.customerForm.controls) {
         this.customerForm.controls[control].enable();
 
       }
-  }
+    }
   }
 
 
@@ -311,7 +310,7 @@ export class CustomerInfoComponent implements OnInit {
     this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {
-    this.onChangeChannel('Direct')
+    // this.onChangeChannel('Direct')
     const urlLink = `${this.ApiUrl1}quote/edit`;
     const reqData = {
       ReferenceNo: this.referenceNo,
@@ -340,6 +339,7 @@ export class CustomerInfoComponent implements OnInit {
           this.brokerF.channel.setValue(this.editQuoteData?.ChannelType);
           this.quoteNo = this.editQuoteData?.QuoteDetails?.QuoteNo;
           this.brokerFormComponent?.onChangeChannel('direct');
+          this.onChangeChannel('direct');
           //this.broCode=this.editQuoteData?.BrokerCode;
           //console.log('kkkkkkkkkkkkkk',this.broCode)
           let e = this.brList.filter(e => e.CodeValue == this.editQuoteData?.BrokerCode)
@@ -707,6 +707,20 @@ export class CustomerInfoComponent implements OnInit {
               sessionStorage.setItem('CustomerType', this.customerF.customerType.value);
               this.router.navigate([`${this.routerBaseLink}/new-quotes/premium-info`]);
 
+            }
+            else {
+              if ((this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') || this.isOpneCover || this.editQuoteData?.FinalizeYn == 'Y') {
+                for (var control in this.customerForm.controls) {
+                  this.customerForm.controls[control].disable();
+
+                }
+                for (var control in this.quoteForm.controls) {
+                  this.quoteForm.controls[control].disable();
+                }
+                for (var control in this.bankForm.controls) {
+                  this.bankForm.controls[control].disable();
+                }
+              }
             }
           },
           (err) => { },
@@ -1102,6 +1116,15 @@ export class CustomerInfoComponent implements OnInit {
         console.log(data);
         if (data?.Message === 'Success') {
           this.brList = data?.Result;
+          if (this.editQuoteData?.BrokerCode) {
+            let e = this.brList.filter(e => e.CodeValue == this.editQuoteData?.BrokerCode)
+            console.log(this.brList);
+            this.brokerF.borker.setValue(e[0]?.Code);
+          }
+          else {
+            this.brokerF.borker.setValue('');
+          }
+
           // this.newQuotesService.BrokerList = data?.Result;
         }
       },
@@ -1143,4 +1166,5 @@ export class CustomerInfoComponent implements OnInit {
       }
     });
   }
+
 }

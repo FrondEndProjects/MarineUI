@@ -6,7 +6,7 @@ import { map, startWith } from 'rxjs/operators';
 import { PortfolioService } from '../../portfolio.service';
 import { PortfolioComponent } from '../../portfolio.component';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 //import { NewQuotesService } from 'src/app/modules/new-quotes/new-quotes.service';
 //import { NewQuotesService } from 'src/app/modules/new-quotes/new-quotes.service';
@@ -32,19 +32,19 @@ export class ProtfolioGridComponent implements OnInit {
 
   public tableData: any[] = [];
   public columnHeader: any[] = [];
-  uploadedDocumentsList:any[]=[];
+  uploadedDocumentsList: any[] = [];
 
 
   public brokerList: any[] = [];
   public selectedBroker: any = '';
-  otherPolicyNo:any=null;
+  otherPolicyNo: any = null;
   public show = 'endo'
-  public OpenCover:any='';
-  public routerBaseLink:any='';
+  public OpenCover: any = '';
+  public routerBaseLink: any = '';
   isIssuer: boolean;
-  userType: any=null;
+  userType: any = null;
   imageUrl: any;
-  uploadDocuments: any[]=[];
+  uploadDocuments: any[] = [];
   quote: any;
   policy: any;
   porttype: string;
@@ -54,7 +54,7 @@ export class ProtfolioGridComponent implements OnInit {
   constructor(
     private portfolioBrokerService: PortfolioService,
     private router: Router,
-    private portfolioComponent:PortfolioComponent,
+    private portfolioComponent: PortfolioComponent,
     private sessionStorageService: SessionStorageService,
     private dialog: MatDialog,
     private newQuotesService: NewQuotesService,
@@ -65,13 +65,15 @@ export class ProtfolioGridComponent implements OnInit {
     this.userType = this.userDetails?.UserType;
     this.routerBaseLink = this.userDetails?.routerBaseLink;
     this.OpenCover = this.portfolioComponent?.OpenCover;
-    this.InsuranceId = this.userDetails?.Result?.InsuranceId
+    this.InsuranceId = this.userDetails?.InsuranceId
+    console.log(this.userDetails,"sdfsdfsdfsdf");
+    
     console.log(this.OpenCover);
-    this.porttype= sessionStorage.getItem('openCOverType');
+    this.porttype = sessionStorage.getItem('openCOverType');
 
     if (this.userDetails?.UserType === 'Broker' || this.userDetails?.UserType === 'User') {
       this.loginId = this.userDetails.LoginId;
-      console.log('LLLLLLLLLLLLLL',this.loginId);
+      console.log('LLLLLLLLLLLLLL', this.loginId);
       this.applicationId = '1';
     }
     if (this.userDetails?.UserType !== 'Broker' && this.userDetails?.UserType !== 'User') {
@@ -80,8 +82,8 @@ export class ProtfolioGridComponent implements OnInit {
     }
 
 
-     // Broker
-     if (this.userDetails?.UserType != "Issuer") {
+    // Broker
+    if (this.userDetails?.UserType != "Issuer") {
       //this.loginId = this.userDetails?.LoginId;
       //this.applicationId = '1';
       this.isIssuer = false;
@@ -89,7 +91,7 @@ export class ProtfolioGridComponent implements OnInit {
     }
     // Issuer
 
-    if (this.userDetails?.UserType == "Issuer"){
+    if (this.userDetails?.UserType == "Issuer") {
       //this.loginId = this.endorsement?.LoginId || '';
       //.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;
@@ -115,7 +117,7 @@ export class ProtfolioGridComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.brokerList = data?.Result;
-        this.selectedBroker = this.selectedBroker?this.selectedBroker:this.brokerList[0].LoginId;
+        this.selectedBroker = this.selectedBroker ? this.selectedBroker : this.brokerList[0]?.LoginId;
         this.onChangeBroker();
       },
       (err) => { },
@@ -124,59 +126,58 @@ export class ProtfolioGridComponent implements OnInit {
 
 
   onChangeBroker() {
-    if(this.selectedBroker){
-      console.log('RRRRRRRRRR',this.loginId)
-      if( this.userDetails?.UserType !== 'User'){
-      this.loginId = this.selectedBroker;
+    if (this.selectedBroker) {
+      console.log('RRRRRRRRRR', this.loginId)
+      if (this.userDetails?.UserType !== 'User') {
+        this.loginId = this.selectedBroker;
       }
-      console.log('kkkkkkkkkkkk',this.loginId)
+      console.log('kkkkkkkkkkkk', this.loginId)
     }
     this.onLoadGrid();
   }
-  onmenu(row,rowData,template){
-    console.log('jjjjjjjjjjj',row)
-    console.log('kkkkkkkk',rowData)
-    
-      if(rowData=='Schedule' || rowData=='Policy Wordings' || rowData=='Marine Certificate')  this.getSchedulePdf(row,rowData);
+  onmenu(row, rowData, template) {
+    console.log('jjjjjjjjjjj', row)
+    console.log('kkkkkkkk', rowData)
 
-      if(rowData=='Documents'){
-        this.OpenDocument(template,row)
-      }
-      if(rowData == 'Debit Note'){
-        this.getDebitPdf(row,rowData);
-      }
-      if(rowData=='Credit Note'){
-        this.getCreditPdf(row,rowData);
-      }
+    if (rowData == 'Schedule' || rowData == 'Policy Wordings' || rowData == 'Marine Certificate') this.getSchedulePdf(row, rowData);
+
+    if (rowData == 'Documents') {
+      this.OpenDocument(template, row)
+    }
+    if (rowData == 'Debit Note') {
+      this.getDebitPdf(row, rowData);
+    }
+    if (rowData == 'Credit Note') {
+      this.getCreditPdf(row, rowData);
+    }
   }
 
-  submit(){
-    if(this.uploadDocuments.length!=0){
-      let i=0;
-        for(let doc of this.uploadDocuments){
-          const urlLink = `${this.ApiUrl1}file/upload`;
-          this.newQuotesService.onDocumentPostMethodSync(urlLink, doc).subscribe((data: any) => {
-            console.log(data);
-            if (data) {
-                 i+=1;
-                 if(i==this.uploadDocuments.length)
-                  {
-                    this.uploadedDocumentsList = []; 
-                    this.uploadDocuments=[];
-                    //this.close();
-                    this.ongetUploadedDocument();
-                    this.close();
-                  }
+  submit() {
+    if (this.uploadDocuments.length != 0) {
+      let i = 0;
+      for (let doc of this.uploadDocuments) {
+        const urlLink = `${this.ApiUrl1}file/upload`;
+        this.newQuotesService.onDocumentPostMethodSync(urlLink, doc).subscribe((data: any) => {
+          console.log(data);
+          if (data) {
+            i += 1;
+            if (i == this.uploadDocuments.length) {
+              this.uploadedDocumentsList = [];
+              this.uploadDocuments = [];
+              //this.close();
+              this.ongetUploadedDocument();
+              this.close();
             }
-          })
-        }
+          }
+        })
+      }
     }
-    else{
-     
+    else {
+
     }
   }
-  
-  ongetUploadedDocument(){
+
+  ongetUploadedDocument() {
     //console.log('fffffffffff',this.QuoteNo);
     //this.uploadedDocumentsList=[];
     const urlLink = `${this.ApiUrl1}file/upload/list`;
@@ -186,20 +187,20 @@ export class ProtfolioGridComponent implements OnInit {
       "UploadId": null
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      console.log("Doc List kkkkkkkkkkkkk",data);
-      this.uploadedDocumentsList=data.Result;
+      console.log("Doc List kkkkkkkkkkkkk", data);
+      this.uploadedDocumentsList = data.Result;
     })
   }
   onUploadDocument(event: any, eventType: string) {
     console.log(event);
-    console.log('hhhhhhh',eventType)
+    console.log('hhhhhhh', eventType)
     let fileList;
     if (eventType == 'click') {
-    let fileList = event.target.files;
-    for (let index = 0; index < fileList.length; index++) {
-      const element = fileList[index];
-      var reader:any = new FileReader();
-      reader.readAsDataURL(element);
+      let fileList = event.target.files;
+      for (let index = 0; index < fileList.length; index++) {
+        const element = fileList[index];
+        var reader: any = new FileReader();
+        reader.readAsDataURL(element);
         var filename = element.name;
 
         let imageUrl: any;
@@ -207,10 +208,10 @@ export class ProtfolioGridComponent implements OnInit {
           imageUrl = res.target.result;
           this.imageUrl = imageUrl;
           let Exist = this.uploadDocuments.some((ele: any) => ele.fileName == filename);
-          console.log("Element Exist",Exist)
+          console.log("Element Exist", Exist)
           if (!Exist) {
-            this.uploadDocuments.push({ 'url': element,"fileName":filename,'productid':this.sessionStorageService.sessionStorgaeModel.productId,'loginid':this.userDetails?.LoginId,'quoteNo':this.quote});
-            console.log('jjjjjj',this.uploadDocuments)
+            this.uploadDocuments.push({ 'url': element, "fileName": filename, 'productid': this.sessionStorageService.sessionStorgaeModel.productId, 'loginid': this.userDetails?.LoginId, 'quoteNo': this.quote });
+            console.log('jjjjjj', this.uploadDocuments)
           }
           else {
             Swal.fire(
@@ -221,58 +222,58 @@ export class ProtfolioGridComponent implements OnInit {
 
         }
 
-    }
-      
+      }
+
     }
     if (eventType == 'drop') {
       fileList = event[0];
     }
-    
+
   }
 
 
-  OpenDocument( templateRef,row ){
-     console.log('uuuuuuuuu',row.data)
-     this.policy=row.data.PolicyNo
-     this.quote=row.data.QuoteNo;
-      let dialogRef = this.dialog.open(templateRef, {
-       width: '100%',
-       height:'80%'
-     });
-     this.ongetUploadedDocument();
-    
+  OpenDocument(templateRef, row) {
+    console.log('uuuuuuuuu', row.data)
+    this.policy = row.data.PolicyNo
+    this.quote = row.data.QuoteNo;
+    let dialogRef = this.dialog.open(templateRef, {
+      width: '100%',
+      height: '80%'
+    });
+    this.ongetUploadedDocument();
+
   }
-  onDeleteUploadedDoc(index){
+  onDeleteUploadedDoc(index) {
     const urlLink = `${this.ApiUrl1}file/delete`;
     const reqData = {
       /*"BranchCode": this.userDetails?.BranchCode,
       "QuoteNo": this.premiumDetails?.QuoteDetails?.QuoteNo,*/
-       "LoginId": this.userDetails?.LoginId,
+      "LoginId": this.userDetails?.LoginId,
       "QuoteNo": index.QuoteNo,
       "UploadId": index.UploadId
     }
     this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-      if(data?.Result){
-       console.log('kkkkkkkkkk',this.uploadedDocumentsList);
-       this.ongetUploadedDocument();
+      if (data?.Result) {
+        console.log('kkkkkkkkkk', this.uploadedDocumentsList);
+        this.ongetUploadedDocument();
       }
-      
+
     })
     //this.uploadedDocumentsList.splice(index,1);
     //this.onSubmit(); 
   }
 
-  onDeleteUploadDoc(index){
-    this.uploadDocuments.splice(index,1);
+  onDeleteUploadDoc(index) {
+    this.uploadDocuments.splice(index, 1);
   }
-    close(){
-     
-      this.dialog.closeAll();
-    }
-  
-    onDownloadfile(item) {
-      console.log(item,"item");
-      
+  close() {
+
+    this.dialog.closeAll();
+  }
+
+  onDownloadfile(item) {
+    console.log(item, "item");
+
     let entry = this.uploadedDocumentsList.find(ele => ele.UploadId == item.UploadId);
     if (entry) {
       const urlLink = `${this.ApiUrl1}file/download`;
@@ -301,111 +302,111 @@ export class ProtfolioGridComponent implements OnInit {
     }
 
   }
-  getSchedulePdf(rowData,type){
-    let ReqObj:any,UrlLink:any;
-    
-    if(type == 'Marine Certificate'){
+  getSchedulePdf(rowData, type) {
+    let ReqObj: any, UrlLink: any;
+
+    if (type == 'Marine Certificate') {
       ReqObj = {
         // "QuoteNo": '100707'
         "QuoteNo": rowData.data?.QuoteNo
       }
     }
-    else{
+    else {
       ReqObj = {
         "BranchCode": this.userDetails?.BranchCode,
         "QuoteNo": rowData.data?.QuoteNo,
-         "PrintQuoteYn": "N"
-        
+        "PrintQuoteYn": "N"
+
       }
     }
-   
-    if(type=='Schedule'){
-      
-       UrlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+
+    if (type == 'Schedule') {
+
+      UrlLink = `${this.ApiUrl1}pdf/portalcertificate`;
     }
-    else if(type == 'Policy Wordings'){
+    else if (type == 'Policy Wordings') {
       type = 'PolicyWordings'
-       UrlLink = `${this.ApiUrl1}pdf/policywording`;
+      UrlLink = `${this.ApiUrl1}pdf/policywording`;
     }
-    else if(type == 'Marine Certificate'){
+    else if (type == 'Marine Certificate') {
       // type = 'PolicyWordings'
-       UrlLink = `${this.ApiUrl1}Integration/get/certificate`;
+      UrlLink = `${this.ApiUrl1}Integration/get/certificate`;
     }
-      this.portfolioBrokerService.onPostMethodSync(UrlLink, ReqObj).subscribe(
-        (data: any) => {
-          let Results=data.Result
-          this.onDownloadSchedule(Results,type)
-        });
+    this.portfolioBrokerService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        let Results = data.Result
+        this.onDownloadSchedule(Results, type)
+      });
   }
 
-  getCreditPdf(rowData,type){
-    let ReqObj:any,UrlLink:any;
+  getCreditPdf(rowData, type) {
+    let ReqObj: any, UrlLink: any;
     // ReqObj = {
     //   "BranchCode": this.userDetails?.BranchCode,
     //   "QuoteNo": rowData.data?.QuoteNo
     // }
-       UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
-      this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
-        (data: any) => {
-          let Results=data.Result
-          this.onDownloadSchedule(Results,type)
-        });
+    UrlLink = `${this.ApiUrl1}pdf/creditNote?policyNo=${rowData.data?.PolicyNo}`;
+    this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
+      (data: any) => {
+        let Results = data.Result
+        this.onDownloadSchedule(Results, type)
+      });
   }
-  getDebitPdf(rowData,type){
-    let ReqObj:any,UrlLink:any;
+  getDebitPdf(rowData, type) {
+    let ReqObj: any, UrlLink: any;
     // ReqObj = {
     //   "BranchCode": this.userDetails?.BranchCode,
     //   "QuoteNo": rowData.data?.QuoteNo
     // }
-       UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
-      this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
-        (data: any) => {
-          let Results=data.Result
-          this.onDownloadSchedule(Results,type)
-        });
+    UrlLink = `${this.ApiUrl1}pdf/debitNote?policyNo=${rowData.data?.PolicyNo}`;
+    this.portfolioBrokerService.onGetMethodSync(UrlLink).subscribe(
+      (data: any) => {
+        let Results = data.Result
+        this.onDownloadSchedule(Results, type)
+      });
   }
-  onDownloadSchedule(Results,rowData){
+  onDownloadSchedule(Results, rowData) {
 
-    console.log('jjjjjjjj',Results)
-   /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
-    const reqData = {
-      "BranchCode": this.userDetails?.BranchCode,
-      "QuoteNo":row.QuoteNo
-    }*/
-   if(rowData =='Marine Certificate'){
-    if(Results){
-      const link = document.createElement('a');
-      link.setAttribute('target', '_blank');
-      link.setAttribute('href', Results.rObj.blobDownloadURL);
-      link.setAttribute('download',rowData);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-     
-    }
-    
-   }
-   else{
-    if(Results){
-      const link = document.createElement('a');
-      link.setAttribute('target', '_blank');
-      link.setAttribute('href', Results);
-      link.setAttribute('download',rowData);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-     
-    }
-    
-   }
-    
+    console.log('jjjjjjjj', Results)
+    /* const urlLink = `${this.ApiUrl1}pdf/portalcertificate`;
+     const reqData = {
+       "BranchCode": this.userDetails?.BranchCode,
+       "QuoteNo":row.QuoteNo
+     }*/
+    if (rowData == 'Marine Certificate') {
+      if (Results) {
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results.rObj.blobDownloadURL);
+        link.setAttribute('download', rowData);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
 
-   
+      }
+
+    }
+    else {
+      if (Results) {
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', Results);
+        link.setAttribute('download', rowData);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+      }
+
+    }
+
+
+
   }
   onLoadGrid() {
-    this.tableData = [];let loginId = null,applicationId=null;
-    if(this.otherPolicyNo==null){loginId = this.loginId;applicationId = this.applicationId; }
-    console.log('LLLLLLLLLLLLLLMMMMMMMMMM',this.loginId);
+    this.tableData = []; let loginId = null, applicationId = null;
+    if (this.otherPolicyNo == null) { loginId = this.loginId; applicationId = this.applicationId; }
+    console.log('LLLLLLLLLLLLLLMMMMMMMMMM', this.loginId);
     const urlLink = `${this.ApiUrl1}menu/portfolio/policy`;
     const reqData = {
       "OpenCoverNo": this.OpenCover?.value,
@@ -421,137 +422,181 @@ export class ProtfolioGridComponent implements OnInit {
         this.tableData = [];
 
         if (data?.Result) {
-        if(this.porttype == 'MOP'){
-          this.columnHeader = [
+          if (this.porttype == 'MOP') {
+            if (this.InsuranceId == '100020') {
+              this.columnHeader = [
 
-            { key: 'QuoteNo', display: 'Quote No', sticky: false, },
-            { key: 'CustomerName', display: 'Customer Name' },
-            { key: 'QuotationDate', display: 'Policy Date' },
-            { key: 'Premium', display: 'Premium' },
-            { key: 'PremiumCurrencyName', display: 'Currency' },
-            { key: 'PolicyNo', display: 'Policy No' },
-            { key: 'Username', display: 'Username' },
-            { key: 'GoodsDescription', display: 'Goods' },
-            { key: 'LcDate', display: 'LC Date' },
-            { key: 'LcNumber', display: 'LC Number' },
-            { key: 'BlAwbNo', display: 'Bill No' },
-            { key: 'BlAwbDate', display: 'Bill Date' },
-            {
-              key: 'endorse',
-              display: 'Endorse',
-              sticky: true,
-              config: {
-                isActionBtn: true,
-                isActionBtnName: 'add',
-                isNgxIcon:'fas fa-plus-circle',
-                bg: 'primary'
-              }
-            },
-            {
-              key: 'actions',
-              display: 'Action',
-              sticky: true,
-              config: {
-                isMenuAction: true,
-                menuList: [
-                  { name: 'Schedule' },
-                  { name: 'Policy Wordings' },
-                  { name: 'Documents' },
-                ]
-              },
-            },
-          ];
-        }
-        else{
-          if(this.InsuranceId =='100020'){
-                this.columnHeader = [
+                { key: 'QuoteNo', display: 'Quote No', sticky: false, },
+                { key: 'CustomerName', display: 'Customer Name' },
+                { key: 'QuotationDate', display: 'Policy Date' },
+                { key: 'Premium', display: 'Premium' },
+                { key: 'PremiumCurrencyName', display: 'Currency' },
+                { key: 'PolicyNo', display: 'Policy No' },
+                { key: 'Username', display: 'Username' },
+                { key: 'GoodsDescription', display: 'Goods' },
+                { key: 'LcDate', display: 'LC Date' },
+                { key: 'LcNumber', display: 'LC Number' },
+                { key: 'BlAwbNo', display: 'Bill No' },
+                { key: 'BlAwbDate', display: 'Bill Date' },
+                {
+                  key: 'endorse',
+                  display: 'Endorse',
+                  sticky: true,
+                  config: {
+                    isActionBtn: true,
+                    isActionBtnName: 'add',
+                    isNgxIcon: 'fas fa-plus-circle',
+                    bg: 'primary'
+                  }
+                },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  sticky: true,
+                  config: {
+                    isMenuAction: true,
+                    menuList: [
+                      { name: 'Schedule' },
+                      { name: 'Policy Wordings' },
+                      { name: 'Marine Certificate' },
+                      { name: 'Documents' },
+                    ]
+                  },
+                },
+              ];
+            } else {
+              this.columnHeader = [
 
-            { key: 'QuoteNo', display: 'Quote No', sticky: false, },
-            { key: 'CustomerName', display: 'Customer Name' },
-            { key: 'QuotationDate', display: 'Policy Date' },
-            { key: 'Premium', display: 'Premium' },
-            { key: 'PremiumCurrencyName', display: 'Currency' },
-            { key: 'PolicyNo', display: 'Policy No' },
-            { key: 'Username', display: 'Username' },
-            { key: 'GoodsDescription', display: 'Goods' },
-            { key: 'LcDate', display: 'LC Date' },
-            { key: 'LcNumber', display: 'LC Number' },
-            { key: 'BlAwbNo', display: 'Bill No' },
-            { key: 'BlAwbDate', display: 'Bill Date' },
-            {
-              key: 'endorse',
-              display: 'Endorse',
-              sticky: true,
-              config: {
-                isActionBtn: true,
-                isActionBtnName: 'add',
-                isNgxIcon:'fas fa-plus-circle',
-                bg: 'primary'
-              }
-            },
-            {
-              key: 'actions',
-              display: 'Action',
-              sticky: true,
-              config: {
-                isMenuAction: true,
-                menuList: [
-                  { name: 'Schedule' },
-                  { name: 'Debit Note' },
-                  { name: 'Credit Note' },
-                  { name: 'Marine Certificate' },
-                  { name: 'Policy Wordings' },
-                  { name: 'Documents' },
-                ]
-              },
-            },
-          ];
+                { key: 'QuoteNo', display: 'Quote No', sticky: false, },
+                { key: 'CustomerName', display: 'Customer Name' },
+                { key: 'QuotationDate', display: 'Policy Date' },
+                { key: 'Premium', display: 'Premium' },
+                { key: 'PremiumCurrencyName', display: 'Currency' },
+                { key: 'PolicyNo', display: 'Policy No' },
+                { key: 'Username', display: 'Username' },
+                { key: 'GoodsDescription', display: 'Goods' },
+                { key: 'LcDate', display: 'LC Date' },
+                { key: 'LcNumber', display: 'LC Number' },
+                { key: 'BlAwbNo', display: 'Bill No' },
+                { key: 'BlAwbDate', display: 'Bill Date' },
+                {
+                  key: 'endorse',
+                  display: 'Endorse',
+                  sticky: true,
+                  config: {
+                    isActionBtn: true,
+                    isActionBtnName: 'add',
+                    isNgxIcon: 'fas fa-plus-circle',
+                    bg: 'primary'
+                  }
+                },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  sticky: true,
+                  config: {
+                    isMenuAction: true,
+                    menuList: [
+                      { name: 'Schedule' },
+                      { name: 'Policy Wordings' },
+                      { name: 'Documents' },
+                    ]
+                  },
+                },
+              ];
+            }
+
           }
-          else{
-                this.columnHeader = [
+          else {
+            if (this.InsuranceId == '100020') {
+              this.columnHeader = [
 
-            { key: 'QuoteNo', display: 'Quote No', sticky: false, },
-            { key: 'CustomerName', display: 'Customer Name' },
-            { key: 'QuotationDate', display: 'Policy Date' },
-            { key: 'Premium', display: 'Premium' },
-            { key: 'PremiumCurrencyName', display: 'Currency' },
-            { key: 'PolicyNo', display: 'Policy No' },
-            { key: 'Username', display: 'Username' },
-            { key: 'GoodsDescription', display: 'Goods' },
-            { key: 'LcDate', display: 'LC Date' },
-            { key: 'LcNumber', display: 'LC Number' },
-            { key: 'BlAwbNo', display: 'Bill No' },
-            { key: 'BlAwbDate', display: 'Bill Date' },
-            {
-              key: 'endorse',
-              display: 'Endorse',
-              sticky: true,
-              config: {
-                isActionBtn: true,
-                isActionBtnName: 'add',
-                isNgxIcon:'fas fa-plus-circle',
-                bg: 'primary'
-              }
-            },
-            {
-              key: 'actions',
-              display: 'Action',
-              sticky: true,
-              config: {
-                isMenuAction: true,
-                menuList: [
-                  { name: 'Schedule' },
-                  { name: 'Debit Note' },
-                  { name: 'Credit Note' },
-                  { name: 'Policy Wordings' },
-                  { name: 'Documents' },
-                ]
-              },
-            },
-          ];
+                { key: 'QuoteNo', display: 'Quote No', sticky: false, },
+                { key: 'CustomerName', display: 'Customer Name' },
+                { key: 'QuotationDate', display: 'Policy Date' },
+                { key: 'Premium', display: 'Premium' },
+                { key: 'PremiumCurrencyName', display: 'Currency' },
+                { key: 'PolicyNo', display: 'Policy No' },
+                { key: 'Username', display: 'Username' },
+                { key: 'GoodsDescription', display: 'Goods' },
+                { key: 'LcDate', display: 'LC Date' },
+                { key: 'LcNumber', display: 'LC Number' },
+                { key: 'BlAwbNo', display: 'Bill No' },
+                { key: 'BlAwbDate', display: 'Bill Date' },
+                {
+                  key: 'endorse',
+                  display: 'Endorse',
+                  sticky: true,
+                  config: {
+                    isActionBtn: true,
+                    isActionBtnName: 'add',
+                    isNgxIcon: 'fas fa-plus-circle',
+                    bg: 'primary'
+                  }
+                },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  sticky: true,
+                  config: {
+                    isMenuAction: true,
+                    menuList: [
+                      { name: 'Schedule' },
+                      { name: 'Debit Note' },
+                      { name: 'Credit Note' },
+                      { name: 'Marine Certificate' },
+                      { name: 'Policy Wordings' },
+                      { name: 'Documents' },
+                    ]
+                  },
+                },
+              ];
+            }
+            else {
+              this.columnHeader = [
+
+                { key: 'QuoteNo', display: 'Quote No', sticky: false, },
+                { key: 'CustomerName', display: 'Customer Name' },
+                { key: 'QuotationDate', display: 'Policy Date' },
+                { key: 'Premium', display: 'Premium' },
+                { key: 'PremiumCurrencyName', display: 'Currency' },
+                { key: 'PolicyNo', display: 'Policy No' },
+                { key: 'Username', display: 'Username' },
+                { key: 'GoodsDescription', display: 'Goods' },
+                { key: 'LcDate', display: 'LC Date' },
+                { key: 'LcNumber', display: 'LC Number' },
+                { key: 'BlAwbNo', display: 'Bill No' },
+                { key: 'BlAwbDate', display: 'Bill Date' },
+                {
+                  key: 'endorse',
+                  display: 'Endorse',
+                  sticky: true,
+                  config: {
+                    isActionBtn: true,
+                    isActionBtnName: 'add',
+                    isNgxIcon: 'fas fa-plus-circle',
+                    bg: 'primary'
+                  }
+                },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  sticky: true,
+                  config: {
+                    isMenuAction: true,
+                    menuList: [
+                      { name: 'Schedule' },
+                      { name: 'Debit Note' },
+                      { name: 'Credit Note' },
+                      { name: 'Policy Wordings' },
+                      { name: 'Documents' },
+                    ]
+                  },
+                },
+              ];
+            }
+
           }
-      
-        }
           this.tableData = data?.Result.map(x => ({
             ...x,
             isClicked: false
@@ -563,15 +608,15 @@ export class ProtfolioGridComponent implements OnInit {
   }
 
   isActionBtn(event: any) {
-    console.log('llllllllllllll',event)
-     const data:any = {
-      'PolicyNo':event.PolicyNo,
-      'QuoteNo':event.QuoteNo,
-      'LoginId':this.selectedBroker
-     }
-     if(this.otherPolicyNo!=null) data['LoginId'] = event.LoginId
-     console.log(data);
-    sessionStorage.setItem('portfolio',JSON.stringify(data));
+    console.log('llllllllllllll', event)
+    const data: any = {
+      'PolicyNo': event.PolicyNo,
+      'QuoteNo': event.QuoteNo,
+      'LoginId': this.selectedBroker
+    }
+    if (this.otherPolicyNo != null) data['LoginId'] = event.LoginId
+    console.log(data);
+    sessionStorage.setItem('portfolio', JSON.stringify(data));
     sessionStorage.setItem('quotesType', 'With-Endo');
     this.router.navigate([`${this.routerBaseLink}/new-quotes/endorsement-grid`]);
   }

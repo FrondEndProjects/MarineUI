@@ -72,7 +72,7 @@ export class EndorsementComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.brokerList = data?.Result;
-        this.selectedBroker = this.selectedBroker?this.selectedBroker:this.brokerList[0].LoginId;
+        this.selectedBroker = this.selectedBroker?this.selectedBroker:this.brokerList[0]?.LoginId;
         this.onChangeBroker();
       },
       (err) => { },

@@ -142,13 +142,9 @@
 
   </div>
 </div>
-<!-- <div style="cursor: pointer;" (click)="openDialog()"><b>---Bill / Airway---</b></div>
-<div style="cursor: pointer;" (click)="openDialog1()"><b>---Bank Details---</b></div> -->
 
-<!-- Nebular Popup (Dialog) -->
 <div class="overlay" style="z-index: 1050;" *ngIf="showDialog">
   <nb-card class="popup-card">
-    <!-- <nb-card-header>Bill / Airway</nb-card-header> -->
     <nb-card-body style="overflow-y:scroll !important;">
       <form [formGroup]="bankForm" #formDirective="ngForm">
         <div class="row">
@@ -228,48 +224,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col-12" *ngIf="userDetails.RegionCode=='100020'">
-            <div class="input-control-container">
-              <label class="input-form-label">UCR Number</label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" formControlName="UCRNumber">
-              </div>
-            </div>
-          </div> -->
         </div>
-
-        <!-- <div class="row">
-          <div class="col-12">
-            <div class="middle-line">
-              Bank Details
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">LC Bank</label>
-              <ng-select placeholder="Select" class="input-form-select" formControlName="lCBank" [items]="dropBankList"
-                bindValue="Code" bindLabel="CodeDescription">
-              </ng-select>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">LC Number</label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" formControlName="lcNumber">
-              </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">LC Date</label>
-              <div class="input-form-box">
-                <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
-                  formControlName="lcDate" (click)="d.toggle()" readonly>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </form>
     </nb-card-body>
     <nb-card-footer>
