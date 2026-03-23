@@ -40,6 +40,17 @@ export class CoverageInfoComponent implements OnInit {
   ngOnInit(): void {
     this.onGetCurrencyDropdownList();
     this.onGetTransportList();
+        const id = this.userDetails?.InsuranceId;
+
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
   }
 
   onSelectCustomer(item: any) {

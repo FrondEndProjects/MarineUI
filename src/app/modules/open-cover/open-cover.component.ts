@@ -29,14 +29,21 @@ export class OpenCoverComponent implements OnInit {
     private sessionStorageService: SessionStorageService
 
   ) {
+    //     this.stepperList = [
+    //   { isActive: true, name: 'Risk', title: 'customerinfo', url: `${this.routerBaseLink}/new-quotes/customer-info`, step: 1 },
+    //   { isActive: false, name: 'Premium', title: 'premiuminfo', url: `${this.routerBaseLink}/new-quotes/premium-info`, step: 2 },
+    //   { isActive: false, name: 'Document', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate`, step: 3 },
+    //   { isActive: false, name: 'Policy', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate`, step: 4 },
+    // ];
+
     this.stepperList = [
-      { isActive: false, name: '1', title: 'newopencover', url: '/Marine/new-open-cover/new-open-cover-form' },
-      { isActive: false, name: '2', title: 'countryandcommodity', url: '/Marine/new-open-cover/country-commodity-info' },
-      { isActive: false, name: '3', title: 'coverageinfo', url: '/Marine/new-open-cover/coverage-info' },
-      { isActive: false, name: '4', title: 'commoodityinfo', url: '/Marine/new-open-cover/commodity-info' },
-      { isActive: false, name: '5', title: 'premiumcomputation', url: '/Marine/new-open-cover/premium-computation' },
-      { isActive: false, name: '6', title: 'policygenerate', url: '/Marine/new-open-cover/policy-generate-cover' },
-      { isActive: false, name: '7', title: 'confirmation', url: '/Marine/new-open-cover/confirmation' },
+      { isActive: true, name: '1', title: 'newopencover', url: '/Marine/new-open-cover/new-open-cover-form', step: 1 },
+      { isActive: false, name: '2', title: 'countryandcommodity', url: '/Marine/new-open-cover/country-commodity-info', step: 2 },
+      { isActive: false, name: '3', title: 'coverageinfo', url: '/Marine/new-open-cover/coverage-info', step: 3 },
+      { isActive: false, name: '4', title: 'commoodityinfo', url: '/Marine/new-open-cover/commodity-info', step: 4 },
+      { isActive: false, name: '5', title: 'premiumcomputation', url: '/Marine/new-open-cover/premium-computation', step: 5 },
+      { isActive: false, name: '6', title: 'policygenerate', url: '/Marine/new-open-cover/policy-generate-cover', step: 6 },
+      { isActive: false, name: '7', title: 'confirmation', url: '/Marine/new-open-cover/confirmation', step: 7 },
     ];
 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -66,20 +73,20 @@ export class OpenCoverComponent implements OnInit {
         }
       })).subscribe((customData: any) => {
         console.log(customData);
-        const index = this.stepperList.findIndex((ele: any) => ele.title === customData);
-        console.log(index);
-        const name: any = this.stepperList[index].name;
+        // const index = this.stepperList.findIndex((ele: any) => ele.title === customData);
+        // console.log(index);
+        // const name: any = this.stepperList[index].name;
+        const index = this.stepperList.findIndex(
+          (el: any) => el.title === customData
+        );
 
-        this.stepperList.map((el: any) => {
-          if (el.name < name) {
-            el.isActive = true;
-          } else {
-            el.isActive = false;
+        if (index !== -1) {
+          const currentStep = this.stepperList[index].step;
 
-          }
-        })
-        // this.ProposalNo = sessionStorage.getItem('ProposalNo');
-        // ProposalNo
+          this.stepperList.forEach(step => {
+            step.isActive = step.step <= currentStep;
+          });
+        }
 
         this.activatedRoute.queryParams.subscribe(params => {
           this.ProposalNo = params['ProposalNo'];
@@ -87,7 +94,7 @@ export class OpenCoverComponent implements OnInit {
             this.onEditOpenCoverForm();
           }
           else {
-            
+
             this.ngOnDestroy();
             sessionStorage.removeItem('OpenCoverEdit');
           }
@@ -105,7 +112,16 @@ export class OpenCoverComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    const id = this.userDetails?.Result?.InsuranceId;
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
   }
   onEditOpenCoverForm() {
     const user = this.userDetails?.LoginResponse;

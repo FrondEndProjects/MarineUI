@@ -1,290 +1,192 @@
-<!-- <form [formGroup]="bankForm" #formDirective="ngForm">
-  <div class="row">
-    <div class="col-12">
-      <div class="middle-line">
-        Goods Other Details
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">BL | AWB | LR | RR Number</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="blAwbLrRrNumber">
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">BL | AWB | LR | RR Date</label>
-        <div class="input-form-box">
-
-          <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="blAwbLrRrDate" (click)="d1.toggle()" readonly>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Sailing date</label>
-        <div class="input-form-box">
-          <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="sailingDate" (click)="d3.toggle()" readonly>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Invoice Number</label>
-          <div class="input-form-box">
-            <input type="text"
-             [patterns]="pattern"
-             [dropSpecialCharacters]="false"
-              mask="000000000000000000"  class="input-form-control without-icon" formControlName="invoiceNumber">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Invoice Date</label>
-          <div class="input-form-box">
-            <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="invoiceDate" (click)="d2.toggle()" readonly>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">PO/PI Number</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="poPiNumber">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Consigned To</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="consignedTo">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Consigned From</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="consignedForm">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4" *ngIf="userDetails.RegionCode=='100020'">
-        <div class="input-control-container">
-          <label class="input-form-label">UCR Number</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="UCRNumber">
-          </div>
-        </div>
-      </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <div class="middle-line">
-        Bank Details
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">LC Bank</label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="lCBank" [items]="dropBankList"
-          bindValue="Code" bindLabel="CodeDescription">
-        </ng-select>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">LC Number</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="lcNumber">
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">LC Date</label>
-        <div class="input-form-box">
-          <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="lcDate" (click)="d.toggle()" readonly>
-        </div>
-      </div>
-    </div>
-  </div>
-</form> -->
-
-<!-- Button to open the popup -->
-<!-- <button nbButton hero status="primary" (click)="openDialog()">Open Nebular Popup</button> -->
-<div class="row">
-  <div class="col-12">
-    <div class="start-line">
-      <nb-icon icon="info-outline"></nb-icon>
-      Goods Other Details
-    </div>
-  </div>
-</div>
-<div class="row text-center">
-  <div class="col-12 col-md-4 col-lg-4">
-    <div style="cursor: pointer;border: 1px lightsteelblue dashed;" (click)="openDialog()"><b>---Bill / Airway---</b>
-    </div>
-
-  </div>
-  <div class="col-12 col-md-4 col-lg-4">
-    <div style="cursor: pointer;border: 1px lightsteelblue dashed;" (click)="openDialog1()"><b>---Bank Details---</b>
-    </div>
-
+<!-- ─── GOODS OTHER DETAILS SECTION ─── -->
+<div class="section-header">
+  <div class="section-icon"><i class="fas fa-info-circle"></i></div>
+  <div>
+    <div class="section-title">Goods Other Details</div>
   </div>
 </div>
 
-<div class="overlay" style="z-index: 1050;" *ngIf="showDialog">
-  <nb-card class="popup-card">
-    <nb-card-body style="overflow-y:scroll !important;">
-      <form [formGroup]="bankForm" #formDirective="ngForm">
-        <div class="row">
-          <div class="col-12">
-            <div class="middle-line">
-              Goods Other Details
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="input-control-container">
-                <label class="input-form-label">BL | AWB | LR | RR Number</label>
-                <div class="input-form-box">
-                  <input type="text" class="input-form-control without-icon" formControlName="blAwbLrRrNumber">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">BL | AWB | LR | RR Date</label>
-              <div class="input-form-box">
+<div class="section-body">
 
-                <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control without-icon"
-                  formControlName="blAwbLrRrDate" (click)="d1.toggle()" readonly>
-              </div>
+  <!-- ─── BILL / AIRWAY PANEL ─── -->
+  <div class="panel" [class.closed]="!showBillPanel">
+    <div class="panel-header" (click)="showBillPanel = !showBillPanel">
+      <div class="ph-title">
+        <i class="fas fa-file-invoice"></i> Bill / Airway Details
+      </div>
+      <i class="pi ph-arrow" [class.pi-chevron-down]="showBillPanel" [class.pi-chevron-right]="!showBillPanel"></i>
+    </div>
+    <div class="panel-body" *ngIf="showBillPanel">
+      <form [formGroup]="bankForm">
+        <div class="row g-3">
+
+          <!-- BL/AWB Number -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>BL | AWB | LR | RR Number</label>
+              <input pInputText formControlName="blAwbLrRrNumber"
+                placeholder="Enter number" class="w-100 p-inputtext-sm" />
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">Sailing date</label>
-              <div class="input-form-box">
-                <input type="text" ngbDatepicker #d3="ngbDatepicker" class="input-form-control without-icon"
-                  formControlName="sailingDate" (click)="d3.toggle()" readonly>
-              </div>
+
+          <!-- BL/AWB Date -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>BL | AWB | LR | RR Date</label>
+              <p-calendar formControlName="blAwbLrRrDate"
+               dateFormat="dd-mm-yy"
+                [showIcon]="true"
+                placeholder="Select date" appendTo="body"
+                styleClass="w-100"
+                inputStyleClass="p-inputtext-sm w-100">
+              </p-calendar>
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">Invoice Number</label>
-              <div class="input-form-box">
-                <input type="text" [patterns]="pattern" [dropSpecialCharacters]="false" mask="000000000000000000"
-                  class="input-form-control without-icon" formControlName="invoiceNumber">
-              </div>
+
+          <!-- Sailing Date -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>Sailing Date</label>
+              <p-calendar formControlName="sailingDate"
+               dateFormat="dd-mm-yy"
+                [showIcon]="true" appendTo="body"
+                placeholder="Select date"
+                styleClass="w-100"
+                inputStyleClass="p-inputtext-sm w-100">
+              </p-calendar>
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">Invoice Date</label>
-              <div class="input-form-box">
-                <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
-                  formControlName="invoiceDate" (click)="d2.toggle()" readonly>
-              </div>
+
+          <!-- Invoice Number -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>Invoice Number</label>
+              <input pInputText formControlName="invoiceNumber"
+                [patterns]="pattern" [dropSpecialCharacters]="false"
+                mask="000000000000000000"
+                placeholder="Enter invoice number" class="w-100 p-inputtext-sm" />
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">PO/PI Number</label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" formControlName="poPiNumber">
-              </div>
+
+          <!-- Invoice Date -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>Invoice Date</label>
+              <p-calendar formControlName="invoiceDate"
+               dateFormat="dd-mm-yy" appendTo="body"
+                [showIcon]="true"
+                placeholder="Select date"
+                styleClass="w-100"
+                inputStyleClass="p-inputtext-sm w-100">
+              </p-calendar>
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">Consigned To</label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" formControlName="consignedTo">
-              </div>
+
+          <!-- PO/PI Number -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>PO/PI Number</label>
+              <input pInputText formControlName="poPiNumber"
+                placeholder="Enter PO/PI number" class="w-100 p-inputtext-sm" />
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">Consigned From</label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" formControlName="consignedForm">
-              </div>
+
+          <!-- Consigned To -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>Consigned To</label>
+              <input pInputText formControlName="consignedTo"
+                placeholder="Enter consignee" class="w-100 p-inputtext-sm" />
             </div>
           </div>
+
+          <!-- Consigned From -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>Consigned From</label>
+              <input pInputText formControlName="consignedForm"
+                placeholder="Enter consignor" class="w-100 p-inputtext-sm" />
+            </div>
+          </div>
+
+          <!-- UCR Number -->
+          <!-- <div class="col-12 col-md-4" *ngIf="userDetails?.RegionCode=='100020'">
+            <div class="pf">
+              <label>UCR Number</label>
+              <input pInputText formControlName="UCRNumber"
+                placeholder="Enter UCR number" class="w-100 p-inputtext-sm" />
+            </div>
+          </div> -->
+
         </div>
       </form>
-    </nb-card-body>
-    <nb-card-footer>
-      <div class="row text-end">
-        <div class="col-12 text-end">
-          <button nbButton status="danger" (click)="closeDialog()">Close</button>&nbsp;
-          <button nbButton status="success" (click)="saveDialog()">Save</button>
-        </div>
+    </div>
+  </div>
+
+  <!-- ─── BANK DETAILS PANEL ─── -->
+  <div class="panel" [class.closed]="!showBankPanel">
+    <div class="panel-header" (click)="showBankPanel = !showBankPanel">
+      <div class="ph-title">
+        <i class="fas fa-university"></i> Bank Details
       </div>
-    </nb-card-footer>
-  </nb-card>
-</div>
+      <i class="pi ph-arrow" [class.pi-chevron-down]="showBankPanel" [class.pi-chevron-right]="!showBankPanel"></i>
+    </div>
+    <div class="panel-body" *ngIf="showBankPanel">
+      <form [formGroup]="bankForm">
+        <div class="row g-3">
 
-<div class="overlay" style="z-index: 1050;" *ngIf="showDialog1">
-  <nb-card class="popup-card">
-    <nb-card-body style="overflow-y:scroll !important;">
-      <form [formGroup]="bankForm" #formDirective="ngForm">
+          <!-- LC Bank -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>LC Bank</label>
+              <p-dropdown 
+                [options]="dropBankList"
+                optionLabel="CodeDescription"
+                optionValue="Code" appendTo="body"
+                formControlName="lCBank"
+                placeholder="Select Bank"
+                [filter]="true"
+                filterPlaceholder="Search bank..."
+                styleClass="w-100">
+              </p-dropdown>
+            </div>
+          </div>
 
+          <!-- LC Number -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>LC Number</label>
+              <input pInputText formControlName="lcNumber"
+                placeholder="Enter LC number" class="w-100 p-inputtext-sm" />
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="col-12">
-            <div class="middle-line">
-              Bank Details
+          <!-- LC Bank Description -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>LC Bank Description</label>
+              <input pInputText formControlName="lcBankDesc"
+                placeholder="Enter bank description" class="w-100 p-inputtext-sm" />
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">LC Bank</label>
-              <ng-select placeholder="Select" class="input-form-select" formControlName="lCBank" [items]="dropBankList"
-                bindValue="Code" bindLabel="CodeDescription">
-              </ng-select>
+
+          <!-- LC Date -->
+          <div class="col-12 col-md-4">
+            <div class="pf">
+              <label>LC Date</label>
+              <p-calendar formControlName="lcDate"
+                dateFormat="dd-mm-yy"
+                [showIcon]="true" appendTo="body"
+                placeholder="Select date"
+                styleClass="w-100"
+                inputStyleClass="p-inputtext-sm w-100">
+              </p-calendar>
             </div>
           </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">LC Number</label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" formControlName="lcNumber">
-              </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="input-control-container">
-              <label class="input-form-label">LC Date</label>
-              <div class="input-form-box">
-                <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
-                  formControlName="lcDate" (click)="d.toggle()" readonly>
-              </div>
-            </div>
-          </div>
+
         </div>
       </form>
-    </nb-card-body>
-    <nb-card-footer>
-      <div class="row ">
-        <div class="col-12 text-end">
-          <button nbButton status="danger" (click)="closeDialog1()">Close</button>&nbsp;
-          <button nbButton status="success" (click)="saveDialog1()">Save</button>
-        </div>
-      </div>
-    </nb-card-footer>
-  </nb-card>
+    </div>
+  </div>
+
 </div>

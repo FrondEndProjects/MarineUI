@@ -99,13 +99,10 @@
     <tr mat-row *matRowDef="let row; columns: keys"></tr>
   </table>
   <ng-container *ngIf="!dataSource.data.length">
-    <table>
-      <tr>
-        <td class="p-3" style="text-align: center" [attr.colspan]="columnHeader?.length">
-          No Records Found!
-        </td>
-      </tr>
-    </table>
+    <div class="sa-no-records">
+      <span class="sa-no-icon"><i class="fas fa-inbox"></i></span>
+      No Records Found!
+    </div>
   </ng-container>
 </div>
 <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons

@@ -38,13 +38,13 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   sortProperty: any = 'AllotedYN';
   sortDirection: any = 'desc';
-
+userDetails:any
 
   constructor(
     private router: Router,
     private _formBuilder: FormBuilder,
   ) {
-
+    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
   }
   onCheckCustomerId(rowData){
       return rowData.CustomerId ==this.customerId;
@@ -67,6 +67,15 @@ export class MaterialTableComponent implements OnInit, OnChanges, AfterViewInit 
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+      const id = this.userDetails?.Result?.InsuranceId;
+
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+    }
 
   }
 

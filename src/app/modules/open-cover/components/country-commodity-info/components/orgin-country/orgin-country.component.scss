@@ -1,131 +1,187 @@
-.country-selection .vision-grid-item {
-  background-color: white;
-  border-radius: .5rem;
-}
+// ══════════════════════════════════════════════════════
+//  Country Selector (Origin / Destination) — Salama Theme
+// ══════════════════════════════════════════════════════
+$teal:       #1C7988;
+$teal-dark:  #145f6c;
+$teal-light: #e8f4f6;
+$teal-xl:    #f0f9fa;
+$gold:       #E8A020;
+$white:      #ffffff;
+$border:     #c9dde2;
+$text:       #1a2e35;
+$muted:      #6b8c93;
+$error:      #e53935;
+$font:       'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-.country-selection.vision-grid {
-  gap: 1rem;
-}
+:host { display: block; font-family: $font; font-size: 13px; }
 
-.country-selection .vision-grid-item-title {
-  padding: 1rem 1rem 0rem;
-  font-size: 15px;
-}
-
-.country-selection .vision-grid-item-body {
-  padding: .5rem;
-}
-.vision-grid-column-2{
-  grid-template-columns: 1fr 1fr;
-}
-.country-selection.vision-grid-column-3 {
+// ── 3-column grid ──────────────────────────────────────
+.country-picker-grid {
+  display: grid;
   grid-template-columns: 2fr 1fr 2fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.search-input {
-  height: 41px;
-  border: 0;
-  background-color: ghostwhite;
+// ── Panel (left / right list boxes) ───────────────────
+.cp-panel {
+  border: 1px solid $border;
+  border-radius: 6px;
+  overflow: hidden;
+  background: $white;
 }
 
-.checklist {
-  max-height: 250px;
-  overflow-y: auto;
+.cp-panel-header {
+  background: $teal-xl;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $teal-dark;
+  border-bottom: 1px solid $border;
+  small { font-weight: 400; color: $muted; margin-left: 4px; }
 }
 
-.checklist .list-group-item {
-  border-top: 1px solid ghostwhite;
-  display: flex;
-  justify-content: space-between;
-  padding: .5rem;
-}
-.exchange-icon{
-  padding: 1rem;
-  text-align: center;
-  font-size: 1.8rem;
-  color: #ccc;
-}
-.actions-btn{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin: .5rem 0;
-}
-.action-btns{
- display: flex;
- margin: .5rem 0;
-}
-.action-btns .action-btn-item{
- padding: .5rem;
- border: 1px solid #eee;
- text-align: center;
-
-}
-.action-btns .action-btn-item:not(:nth-child(2n)){
-  cursor: pointer;
-  width: 20%;
-}
-
-.action-btn-item:nth-child(2){
-  text-align: center;
-  flex: 1 1 auto !important;
-}
-
-
-/* The container */
-.custom-checkbox-container {
-  display: block;
+// Search box inside panel
+.cp-search-wrap {
+  padding: 0.5rem;
+  border-bottom: 1px solid $teal-xl;
   position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  transition: all .2s;
-  font-size: 90%;
+
+  .pi-search {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.78rem;
+    color: $muted;
+    pointer-events: none;
+  }
+
+  .p-inputtext {
+    width: 100% !important;
+    height: 32px !important;
+    padding-left: 28px !important;
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    border: 1px solid $border !important;
+    border-radius: 4px !important;
+    &:focus { border-color: $teal !important; box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important; }
+  }
 }
 
-/* Hide the browser's default checkbox */
-.custom-checkbox-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+// Country checklist
+.cp-list {
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  &::-webkit-scrollbar       { width: 4px; }
+  &::-webkit-scrollbar-track { background: $teal-xl; }
+  &::-webkit-scrollbar-thumb { background: $teal-light; border-radius: 2px; }
 }
 
-.custom-checkbox-container .checkmark{
-  position: absolute;
-  left: 5%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.custom-checkbox-container input~.checkmark .fa-check-circle {
-  display: none;
-}
-.custom-checkbox-container input~.checkmark .fa-minus-circle{
-  display: block;
-}
-.custom-checkbox-container input:checked~.checkmark .fa-minus-circle{
-  display: none;
-}
-.custom-checkbox-container input:checked~.checkmark .fa-check-circle {
-  display: inline-block;
-}
-
-
-.custom-checkbox-container .description {
+.cp-list-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.4rem 0.5rem;
-  border-bottom: 1px solid #eee;
-  font-size: 12px;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  border-bottom: 1px solid $teal-xl;
+  font-size: 0.8rem;
+  color: $text;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:last-child { border-bottom: none; }
+
+  &.is-checked,
+  &:has(input:checked) { background: $teal-xl; color: $teal-dark; }
+
+  &:hover { background: $teal-light; }
+
+  input[type="checkbox"] {
+    accent-color: $teal;
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
 }
 
-.custom-checkbox-container input:checked~.description {
-  background-color: skyblue;
-  color: darkblue;
+// ── Actions column (centre) ───────────────────────────
+.cp-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.35rem;
 }
+
+.cp-action-row {
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
+  width: 100%;
+  gap: 3px;
+}
+
+.cp-action-btn {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $border;
+  border-radius: 4px;
+  background: $white;
+  color: $teal;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+
+  &:hover { background: $teal; color: $white; border-color: $teal; }
+  &.label {
+    cursor: default;
+    background: $teal-xl;
+    color: $muted;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:hover { background: $teal-xl; color: $muted; }
+  }
+}
+
+// ── Submit button row ─────────────────────────────────
+.cp-submit-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+
+  .p-button {
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    border-radius: 20px !important;
+    height: 32px !important;
+    padding: 0 1.1rem !important;
+    background: $teal !important;
+    border-color: $teal !important;
+    &:hover { background: $teal-dark !important; border-color: $teal-dark !important; }
+  }
+}
+
+// Responsive: stack action buttons horizontally on mobile
+@media (max-width: 767px) {
+  .cp-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cp-action-row { width: auto; }
+}
+

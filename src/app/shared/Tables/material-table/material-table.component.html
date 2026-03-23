@@ -231,13 +231,16 @@
     <tr mat-row *matRowDef="let row; columns: keys" class="mobile"></tr>
   </table>
   <ng-container *ngIf="!dataSource?.data?.length">
-    <table>
-      <tr>
-        <td class="p-3" style="text-align: center" [attr.colspan]="columnHeader?.length">
-          No Records Found!
-        </td>
-      </tr>
-    </table>
+    <div class="sa-no-records">
+      <table>
+        <tr>
+          <td [attr.colspan]="columnHeader?.length">
+            <i class="fas fa-inbox sa-no-icon"></i>
+            No Records Found!
+          </td>
+        </tr>
+      </table>
+    </div>
   </ng-container>
 </div>
 <mat-paginator class="mat-paginator-sticky"  [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons

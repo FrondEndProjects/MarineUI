@@ -12,43 +12,48 @@ import { MastersService } from '../../masters.service';
 
 })
 export class SaleTermTableComponent implements OnInit {
-  
-   // View child
- @ViewChild('paginator') paginator: MatPaginator;
 
- // public property
- public  ELEMENT_DATA = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+  // View child
+  @ViewChild('paginator') paginator: MatPaginator;
 
-public tableSection: boolean = false;
-public dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-public tableData: any;
-public columnHeader: any[] = [];
-public AppConfig: any = (Mydatas as any).default;
-public ApiUrl1: any = this.AppConfig.ApiUrl1;
-public userDetails: any;
-public branchCode: any;
-public filterValue;
- 
-// constructor
+  // public property
+  public ELEMENT_DATA = [
+    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+  ];
+
+  public tableSection: boolean = false;
+  public dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  public tableData: any;
+  public columnHeader: any[] = [];
+  public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public userDetails: any;
+  public branchCode: any;
+  public filterValue;
+  ProductList: any = [
+    { Code: '3', CodeDesc: 'Marine one off policy' },
+    { Code: '11', CodeDesc: 'Marine opencover policy' },
+  ];
+  selectedProduct: any = '3';
+
+  // constructor
   constructor(
     private masterSer: MastersService,
     private router: Router) {
-      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-      if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
-      
-      sessionStorage.removeItem('saleTermData');
-     }
+    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    if (this.userDetails) this.branchCode = this.userDetails?.LoginResponse.BranchCode;
+
+    sessionStorage.removeItem('saleTermData');
+  }
 
   // life cycle hooks
   ngOnInit(): void {
@@ -59,16 +64,16 @@ public filterValue;
     let ReqObj = {
       "BranchCode": this.userDetails?.Result.BelongingBranch
     }
-   
+
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/saleTermMaster/list`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-        if(data.Message == 'Success') {
+        if (data.Message == 'Success') {
           this.columnHeader = [
-            {key: 'SaleTermId', display: 'Sale Term ID' },
-            {key: 'SaleTermName', display: 'Sale Term Name' },
-            {key: 'SaleTermValue', display: 'Sale Term Value' },
-            {key: 'Status', display: 'Status' },
+            { key: 'SaleTermId', display: 'Sale Term ID' },
+            { key: 'SaleTermName', display: 'Sale Term Name' },
+            { key: 'SaleTermValue', display: 'Sale Term Value' },
+            { key: 'Status', display: 'Status' },
             {
               key: 'actions',
               display: 'Edit',
@@ -77,7 +82,10 @@ public filterValue;
               }
             }
           ];
-          this.tableData = data.Result;
+          let e = data.Result.filter(e => e.ProductId == this.selectedProduct)
+          this.tableData = e;
+          console.log(this.tableData.length);
+          
         }
       }, (err) => { }
     )
@@ -91,15 +99,17 @@ public filterValue;
 
   // PUBLIC METHODS
 
- // filter table value based on search value
- public applyFilter(event: Event) {
-  this.filterValue = (event.target as HTMLInputElement).value;
-}
+  // filter table value based on search value
+  public applyFilter(event: Event) {
+    this.filterValue = (event.target as HTMLInputElement).value;
+  }
 
-public onEdit(event) {
-  sessionStorage.setItem('saleTermData', event.SaleTermId);
-  this.router.navigateByUrl('Marine/masters/sale-term/add-edit');
-}
+  public onEdit(event) {
+    sessionStorage.setItem('saleTermData', event.SaleTermId);
+    this.router.navigateByUrl('Marine/masters/sale-term/add-edit');
+  }
 
-
+  onProductChange() {
+    this.getSaleTermList();
+  }
 }

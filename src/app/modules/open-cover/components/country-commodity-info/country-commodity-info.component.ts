@@ -31,7 +31,7 @@ export class CountryCommodityInfoComponent implements OnInit {
   public destiCountry: any[] = [];
   public proposalNo: any = '';
 
-  public routerBaseLink:any='';
+  public routerBaseLink: any = '';
   showSection: boolean = false;
   saleTermComponentmTableData: any;
 
@@ -50,7 +50,19 @@ export class CountryCommodityInfoComponent implements OnInit {
   ngOnInit(): void {
     this.onGetCommodityList();
     this.onParallelCall();
+    const id = this.userDetails?.InsuranceId;
+
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
   }
+
 
 
 
@@ -89,10 +101,10 @@ export class CountryCommodityInfoComponent implements OnInit {
               },
             },
           ];
-          data.Result.map((ele:any)=>{
-            ele.CommodityDescription=ele.CommodityName,
-            ele.Fragile = false,
-            ele.isChecked = false
+          data.Result.map((ele: any) => {
+            ele.CommodityDescription = ele.CommodityName,
+              ele.Fragile = false,
+              ele.isChecked = false
           });
           console.log(data.Result);
           this.commoditySelectionComponent.tableData = data?.Result;
@@ -119,29 +131,29 @@ export class CountryCommodityInfoComponent implements OnInit {
     let parallelCall = forkJoin(arr);
     parallelCall.subscribe(
       (data: any) => {
-        console.log("res",data);
+        console.log("res", data);
         let SaleTermList = data[0].Result;
         let ToleranceList = data[1].Result;
-        if(SaleTermList.length!=0){
+        if (SaleTermList.length != 0) {
           let i = 0;
-          for(let entry of SaleTermList){
-                entry['isChecked'] = false;
-                entry['toleranceVal'] = '4';
-                entry['toleranceList'] = ToleranceList;
-                i+=1;
-                if(i==SaleTermList.length){
-                  this.showSection = true;
-                  this.saleTermComponentmTableData = SaleTermList
-                  //this.saleTermComponent.tableData = SaleTermList;
-                  
-                  console.log("Sale Term List Data",this.saleTermComponent.tableData)
-                }
-          } 
+          for (let entry of SaleTermList) {
+            entry['isChecked'] = false;
+            entry['toleranceVal'] = '4';
+            entry['toleranceList'] = ToleranceList;
+            i += 1;
+            if (i == SaleTermList.length) {
+              this.showSection = true;
+              this.saleTermComponentmTableData = SaleTermList
+              //this.saleTermComponent.tableData = SaleTermList;
+
+              console.log("Sale Term List Data", this.saleTermComponent.tableData)
+            }
+          }
         }
-        else{
+        else {
           this.showSection = true;
           this.saleTermComponentmTableData = []
-          console.log("Sale Term List Empty Data",this.saleTermComponent.tableData)
+          console.log("Sale Term List Empty Data", this.saleTermComponent.tableData)
         }
         // const saleTermList = SaleTermList.map(x => ({
         //   ...x,
@@ -149,21 +161,21 @@ export class CountryCommodityInfoComponent implements OnInit {
         //   toleranceVal:'4',
         //   toleranceList:ToleranceList
         // }));
-        
+
       },
       (err) => { },
       () => console.log('done')
     );
   }
 
-  onCheckPageValidation(){
+  onCheckPageValidation() {
     const urlLink = `${this.ApiUrl1}OpenCover/secondpage`;
     const reqData = {
       'ProposalNo': this.proposalNo,
     };
     this.openCoverService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
-        if(data?.Result?.Status === true){
+        if (data?.Result?.Status === true) {
           this.onMoveFront();
         }
       });
@@ -176,7 +188,7 @@ export class CountryCommodityInfoComponent implements OnInit {
   }
   onMoveBack() {
     this.openCoverService.onMoveNext('Back');
-    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`],{ queryParams: {ProposalNo: this.proposalNo}});
+    this.router.navigate([`${this.routerBaseLink}/new-open-cover/new-open-cover-form`], { queryParams: { ProposalNo: this.proposalNo } });
   }
 }
 

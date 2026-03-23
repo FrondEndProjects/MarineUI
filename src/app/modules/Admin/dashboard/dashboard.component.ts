@@ -90,6 +90,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     }
 
+    const id = this.userDetails?.Result?.InsuranceId;
+
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+    }
+
   }
 
   getBrokerList() {
@@ -216,7 +226,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //   ApplicationId = '1';
     // }
     // else {
-      ApplicationId = this.userDetails?.Result?.LoginId;
+    ApplicationId = this.userDetails?.Result?.LoginId;
     // }
     const reqData = {
       "ProductId": this.ProductId,
@@ -678,6 +688,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   brokerPolicyAndQuodation() {
 
     const dom = this.chartContainer?.nativeElement;
+    if (!dom) return;
+
+    // Dispose existing to avoid double-init
+    const existing = echarts.getInstanceByDom(dom);
+    if (existing) { existing.dispose(); }
+
     this.myChart = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false
@@ -711,7 +727,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         axisPointer: { type: 'shadow' },
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#d1e8ec',
         padding: 12,
         appendToBody: true,
         textStyle: {
@@ -761,7 +777,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             show: false
           },
           axisLine: {
-            lineStyle: { color: '#aaa' }
+            lineStyle: { color: '#d1e8ec' }
           }
         }
       ],
@@ -769,7 +785,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         {
           type: 'value',
           minInterval: 1,
-          axisLine: { lineStyle: { color: '#3399ff' } },
+          axisLine: { lineStyle: { color: '#1C7988' } },
           splitLine: { show: false },
           axisLabel: {
             formatter: (value: number) => `${Math.round(value)}`
@@ -783,7 +799,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             formatter: (val: number) =>
               val >= 1000000 ? `${val / 1000000}M` : `${val / 1000}K`
           },
-          axisLine: { lineStyle: { color: '#66cc00' } },
+          axisLine: { lineStyle: { color: '#E8A020' } },
           splitLine: { show: false }
         }
       ],
@@ -799,8 +815,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             //   { offset: 1, color: '#0044cc' }
             // ])
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#a2cffe' }, // soft pastel blue
-              { offset: 1, color: '#0072ff' }  // vibrant blue
+              { offset: 0, color: '#7ec8d8' }, // teal light
+              { offset: 1, color: '#1C7988' }  // salama teal
             ])
           },
           data: policyCountData
@@ -812,8 +828,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           itemStyle: {
             borderRadius: [8, 8, 0, 0],
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#cbf3f0' },  // soft mint
-              { offset: 1, color: '#70e000' }  // fresh green
+              { offset: 0, color: '#fde8b0' },  // gold light
+              { offset: 1, color: '#E8A020' }  // salama gold
             ])
           },
           data: premiumData
@@ -824,7 +840,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.myChart.setOption(option);
 
 
-    const dom1 = this.chartContainer1.nativeElement;
+    const dom1 = this.chartContainer1?.nativeElement;
+    if (!dom1) return;
+    const existing2 = echarts.getInstanceByDom(dom1);
+    if (existing2) { existing2.dispose(); }
     this.myChart2 = echarts.init(dom1, null, {
       renderer: 'canvas',
       useDirtyRect: false
@@ -858,7 +877,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         axisPointer: { type: 'shadow' },
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#d1e8ec',
         padding: 12,
         appendToBody: true,
         textStyle: {
@@ -908,14 +927,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             show: false
           },
           axisLine: {
-            lineStyle: { color: '#aaa' }
+            lineStyle: { color: '#d1e8ec' }
           }
         }
       ],
       yAxis: [
         {
           type: 'value',
-          axisLine: { lineStyle: { color: '#000' } },
+          axisLine: { lineStyle: { color: '#1C7988' } },
           splitLine: { show: false },
           minInterval: 1,
           axisLabel: {
@@ -929,7 +948,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             formatter: (val: number) =>
               val >= 1000000 ? `${val / 1000000}M` : `${val / 1000}K`
           },
-          axisLine: { lineStyle: { color: '#000' } },
+          axisLine: { lineStyle: { color: '#1C7988' } },
           splitLine: { show: false }
         }
       ],
@@ -941,8 +960,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           itemStyle: {
             borderRadius: [8, 8, 0, 0],
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#E0BBE4' },  // Soft Lavender
-              { offset: 1, color: '#7F00FF' }   // Vivid Purple
+              { offset: 0, color: '#b2dce3' },  // teal light
+              { offset: 1, color: '#145f6c' }   // teal dark
             ])
           },
           data: policyCountData1
@@ -954,8 +973,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           itemStyle: {
             borderRadius: [8, 8, 0, 0],
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#FFE0B2' },  // Light Peach
-              { offset: 1, color: '#FF7043' }   // Deep Orange
+              { offset: 0, color: '#fef3d0' },  // gold light
+              { offset: 1, color: '#c8881a' }   // gold dark
             ])
           },
           data: premiumData1
@@ -1020,22 +1039,37 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   // }
 
   initPieChart(containerId: string, dataList: any[], title: string) {
-    const chartDom = document.getElementById(containerId)!;
+    const chartDom = document.getElementById(containerId);
+    if (!chartDom) return;
+
+    // Ensure the container has a measurable height before init
+    if (!chartDom.style.height || chartDom.style.height === '0px') {
+      chartDom.style.height = '240px';
+    }
+    chartDom.style.width = '100%';
+
+    // Dispose any existing chart on this container to avoid double-init errors
+    const existingChart = echarts.getInstanceByDom(chartDom);
+    if (existingChart) { existingChart.dispose(); }
+
     const chart = echarts.init(chartDom);
 
     const colorPalette = [
-      '#6FB1FC', '#FFA97A', '#8EE2B3', '#FFB38A',
-      '#FF9A94', '#B28DFF', '#E6D37F', '#9ADCF2'
+      '#1C7988', '#E8A020', '#2e7d32', '#145f6c',
+      '#c8881a', '#4db6c4', '#7fb3bb', '#f0c05a'
     ];
 
-    const data = dataList.map((item, index) => ({
-      name: item.Name,
+    // Guard: handle null/undefined dataList gracefully
+    const safeList = Array.isArray(dataList) ? dataList : [];
+
+    const data = safeList.map((item, index) => ({
+      name: item.Name || 'Unknown',
       value: parseFloat(item.Count || 0),
       count: item.Count || 0,
       premium: item.Premium || 0,
       itemStyle: {
-        shadowBlur: 15,
-        shadowColor: 'rgba(0, 0, 0, 0.2)',
+        shadowBlur: 12,
+        shadowColor: 'rgba(0, 0, 0, 0.18)',
         shadowOffsetX: 0,
         shadowOffsetY: 0,
         borderColor: '#fff',
@@ -1044,73 +1078,72 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     }));
 
-    const hasData = data.some(item => item.value > 0);
+    const hasData = data.length > 0 && data.some(item => item.value > 0);
+
+    const noDataItem = [{
+      name: 'No Data',
+      value: 1,
+      count: 0,
+      premium: 0,
+      itemStyle: { color: '#e0eef0', borderColor: '#fff', borderWidth: 2 }
+    }];
 
     chart.setOption({
-      backgroundColor: '#fff',
-      // title: {
-      //   text: title,
-      //   left: 'center',
-      //   top: 10,
-      //   textStyle: { fontSize: 14, fontWeight: 'normal', color: '#333' }
-      // },
       tooltip: {
         trigger: 'item',
-        backgroundColor: 'rgba(255,255,255,0.95)',
-        borderColor: '#ddd',
+        backgroundColor: 'rgba(255,255,255,0.97)',
+        borderColor: '#d1e8ec',
         borderWidth: 1,
         textStyle: {
-          color: '#333',
-          fontSize: 13
+          color: '#1a2e35',
+          fontSize: 12,
+          fontFamily: 'Segoe UI'
         },
         formatter: (params: any) => {
           return `
-          <strong>${params.name || ''}</strong><br/>
-          Count: ${params.data.count || 0}<br/>
-          Premium: ${params.data.premium || 0}
-        `;
+            <strong>${params.name || ''}</strong><br/>
+            Count: ${params.data?.count ?? 0}<br/>
+            Premium: ${params.data?.premium ?? 0}
+          `;
         }
       },
       series: [
         {
           type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          data: hasData ? data : [{
-            name: 'No Data',
-            value: 1,
-            itemStyle: {
-              color: '#eee',
-              shadowBlur: 0
-            }
-          }],
+          radius: ['38%', '68%'],
+          center: ['50%', '55%'],
+          avoidLabelOverlap: true,
+          data: hasData ? data : noDataItem,
           emphasis: {
             itemStyle: {
-              shadowBlur: 25,
-              shadowColor: 'rgba(0, 0, 0, 0.35)',
+              shadowBlur: 20,
+              shadowColor: 'rgba(0, 0, 0, 0.30)',
               borderColor: '#fff',
               borderWidth: 2
             }
           },
           label: {
+            show: hasData,
+            fontFamily: 'Segoe UI',
+            fontSize: 10,
             color: '#444',
             formatter: (params: any) => {
-              return `${params.name || ''}\nCount: ${params.data.count || 0}\nPremium: ${params.data.premium || 0}`;
+              return `${params.name || ''}\nCount: ${params.data?.count ?? 0}`;
             }
           },
           labelLine: {
+            show: hasData,
             smooth: true,
-            length: 10,
-            length2: 15,
-            lineStyle: {
-              color: '#999'
-            }
+            length: 8,
+            length2: 12,
+            lineStyle: { color: '#999' }
           }
         }
       ]
     });
-  }
 
+    window.addEventListener('resize', () => chart.resize());
+  }
   formatNumberWithCommas(value: any): string {
     const num = Number(value || 0);
     return num.toLocaleString('en-IN'); // For Indian-style commas like 1,00,000

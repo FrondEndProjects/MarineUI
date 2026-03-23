@@ -1,25 +1,591 @@
-.customer-search-box{
+:root {
+  --teal: rgb(30 64 175);
+  --teal-dark: #042181;
+  --teal-d: #042181;
+}
+
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+$teal-d: var(--teal-d);
+
+$teal-light: #e8f4f6;
+$teal-xlight: #f0f9fa;
+$gold: #E8A020;
+$gold-dark: #c8881a;
+$white: #ffffff;
+$border: #c9dde2;
+$text: #1a2e35;
+$muted: #6b8c93;
+$error: #e53935;
+$success: #2e7d32;
+$disabled-bg: #f4f8f9;
+$disabled-text: #9ab3b9;
+$page-bg: #eef2f5;
+// ── Typography ─────────────────────────────────────────────────
+$font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+// ── Host ───────────────────────────────────────────────────────
+:host {
+  display: block;
+  font-family: $font;
+  font-size: 13px;
+  color: $text;
+  background: $page-bg;
+  padding: 0.5rem;
+}
+
+// ── Form max-width centering wrapper ──────────────────────────
+// The <form> tag itself acts as the centering container
+form {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+* { box-sizing: border-box; }
+
+// ════════════════════════════════════════════════════════════════
+//  SA-CARD  — Section card wrapper (4 sections)
+// ════════════════════════════════════════════════════════════════
+.sa-card {
+  background: $white;
+  border-radius: 8px;
+  border: 1px solid $border;
+  box-shadow: 0 1px 6px rgba(28, 121, 136, 0.10);
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+}
+
+// ── Section header bar ─────────────────────────────────────────
+.sa-card-header {
+  background: $teal;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem 0 0.85rem;
+  gap: 0.6rem;
+}
+
+.sa-icon {
+  font-size: 1rem;
+  color: $gold;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.sa-title {
+  font-family: $font;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $white;
+  flex: 1;
+}
+
+// ── Section body ───────────────────────────────────────────────
+.sa-card-body {
+  padding: 1.1rem 1.35rem 0.65rem;
+}
+
+// ── Section footer (submit row) ────────────────────────────────
+.sa-card-footer {
+  padding: 0.8rem 1.35rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  border-top: 1px solid $teal-light;
+  background: $teal-xlight;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  FORM FIELD SYSTEM  — Exact match to customer-info form
+// ════════════════════════════════════════════════════════════════
+.input-control-container {
+  margin-bottom: 0.9rem;
+  position: relative;
+}
+
+// ── Label ──────────────────────────────────────────────────────
+.input-form-label {
+  display: block;
+  font-family: $font;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: $text;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.text-required {
+  color: $error;
+  margin-left: 2px;
+  font-size: 0.78rem;
+}
+
+// ── Input wrapper box ──────────────────────────────────────────
+.input-form-box {
+  position: relative;
+  width: 100%;
+}
+
+// ── Base input mixin ───────────────────────────────────────────
+%salama-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  font-family: $font;
+  font-size: 0.82rem;
+  color: $text;
+  background: $white;
+  border: 1px solid $border;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+
+  &::placeholder { color: lighten($muted, 15%); font-size: 0.8rem; }
+
+  &:focus {
+    border-color: $teal;
+    box-shadow: 0 0 0 2px rgba(28, 121, 136, 0.13);
+  }
+
+  &:disabled,
+  &[disabled],
+  &[readonly] {
+    background: $disabled-bg;
+    color: $disabled-text;
+    // cursor: not-allowed;
+    border-color: darken($border, 3%);
+  }
+}
+
+// ── Text inputs ────────────────────────────────────────────────
+.input-form-control,
+.input-form-control2 {
+  @extend %salama-input;
+}
+
+.without-icon  { padding-right: 10px; }
+.with-icon     { padding-right: 36px; }
+.with-icon1    { padding-right: 10px; }
+
+// ── Small symbol input (currency/ref) ──────────────────────────
+.input-form-control4 {
+  @extend %salama-input;
+  width: 58px;
+  height: 36px !important;
+  line-height: 36px;
+  text-align: center;
+  padding: 0 6px;
+  background: $teal-xlight;
+  border-color: $border;
+  color: $muted;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+  display: block;
+  align-self: center;
+}
+
+// ── Textarea ───────────────────────────────────────────────────
+textarea.input-form-control2 {
+  height: 70px;
+  resize: vertical;
+  padding: 8px 10px;
+  line-height: 1.4;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  CURRENCY / MERGED FIELD ROW
+//  currency-flex → .currrency-drop + .currrency-dollar
+//  customer flex → .opencover-drop + .opencover-dollar
+// ════════════════════════════════════════════════════════════════
+.currency-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 36px; // Force row to exactly 36px so all children align
+}
+
+// Currency dropdown (grows) + small symbol (fixed 58px)
+.currrency-drop {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  display: block; // block so width:100% of ng-select works naturally
+
+  // When also has input-form-box class, override width:100% conflict
+  &.input-form-box { width: auto; }
+
+  // Ensure ng-select fills its container
+  ng-select,
+  .input-form-select { height: 36px; }
+}
+
+.currrency-dollar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  height: 36px;
+}
+
+// Customer field: text input (grows) + search btn (36×36)
+.opencover-drop {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  display: block;
+
+  // When also has input-form-box class, override width:100% conflict
+  &.input-form-box { width: auto; }
+
+  // Input fills the drop zone
+  .input-form-control,
+  .input-form-control2 { height: 36px; width: 100%; }
+}
+
+.opencover-dollar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  height: 36px;
+}
+
+// Search button — square grey, 36×36
+.btn.btn-secondary {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #6b8c93 !important;
+  border: none !important;
+  border-radius: 5px !important;
+  color: $white !important;
+  font-size: 0.82rem !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: center !important;
+  flex-shrink: 0 !important;
+  transition: background 0.2s !important;
+
+  &:hover:not(:disabled) { background: $teal !important; }
+  &:disabled             { background: lighten(#6b8c93, 15%) !important; cursor: not-allowed !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ng-select overrides — match customer-info form exactly
+// ════════════════════════════════════════════════════════════════
+.input-form-select {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  // When ng-select is inside a flex row, it must fill the row height
+  .currrency-drop ng-select,
+  .currrency-drop .input-form-select {
+    display: block;
+    width: 100%;
+  }
+
+  .input-form-select .ng-select-container,
+  ng-select .ng-select-container {
+    height: 36px !important;
+    min-height: 36px !important;
+    font-family: $font !important;
+    font-size: 0.82rem !important;
+    color: $text !important;
+    border: 1px solid $border !important;
+    border-radius: 5px !important;
+    background: $white !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+
+    .ng-value-container {
+      padding: 0 10px !important;
+      align-items: center !important;
+    }
+
+    .ng-placeholder {
+      color: lighten($muted, 15%) !important;
+      font-size: 0.8rem !important;
+    }
+
+    .ng-arrow-wrapper {
+      padding-right: 8px !important;
+      .ng-arrow {
+        border-color: $teal transparent transparent !important;
+        border-width: 5px 4px 2px !important;
+      }
+    }
+
+    .ng-clear-wrapper { color: $muted !important; }
+  }
+
+  .input-form-select.ng-select-focused .ng-select-container,
+  ng-select.ng-select-focused .ng-select-container {
+    border-color: $teal !important;
+    box-shadow: 0 0 0 2px rgba(28, 121, 136, 0.13) !important;
+  }
+
+  .ng-dropdown-panel {
+    font-family: $font !important;
+    font-size: 0.82rem !important;
+    border: 1px solid $border !important;
+    border-radius: 5px !important;
+    box-shadow: 0 4px 14px rgba(28, 121, 136, 0.12) !important;
+    z-index: 100000 !important;
+
+    .ng-option {
+      padding: 7px 12px !important;
+      color: $text !important;
+      font-family: $font !important;
+    }
+
+    .ng-option-selected,
+    .ng-option-marked {
+      background: $teal-light !important;
+      color: $teal !important;
+      font-weight: 600 !important;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  RADIO PILL TOOLBAR — exact match to customer-info
+// ════════════════════════════════════════════════════════════════
+.input-form-radio-box {
+  margin-top: 2px;
+}
+
+.radio-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    padding: 0 16px;
+    border: 1.5px solid $border;
+    border-radius: 20px;
+    font-family: $font;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $muted;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.18s, color 0.18s, border-color 0.18s, box-shadow 0.18s;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: $teal;
+      color: $teal;
+      background: $teal-xlight;
+    }
+  }
+
+  input[type="radio"]:checked + label {
+    background: $teal;
+    color: $white;
+    border-color: $teal;
+    box-shadow: 0 2px 8px rgba(28, 121, 136, 0.25);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ngbDatepicker overrides
+// ════════════════════════════════════════════════════════════════
+:host ::ng-deep {
+  .ngb-dp-header { background: $teal !important; color: $white !important; border-radius: 5px 5px 0 0 !important; }
+  .ngb-dp-navigation-chevron { color: $white !important; }
+  .ngb-dp-month-name { color: $white !important; font-family: $font !important; font-weight: 600 !important; font-size: 0.85rem !important; }
+  select.custom-select { color: $white !important; background: transparent !important; border: none !important; font-family: $font !important; }
+  .btn-light.ngb-dp-arrow-btn { color: $white !important; background: transparent !important; border: none !important; }
+  .ngb-dp-weekday { color: $muted !important; font-family: $font !important; font-size: 0.75rem !important; }
+  .ngb-dp-day .btn-light {
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    border-radius: 4px !important;
+    color: $text !important;
+  }
+  .ngb-dp-day .btn-light:hover       { background: $teal-light !important; color: $teal !important; }
+  .ngb-dp-day .btn-light.bg-primary  { background: $teal !important; color: $white !important; border-radius: 4px !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  NbButton / PrimeNG pButton overrides
+// ════════════════════════════════════════════════════════════════
+:host ::ng-deep {
+
+  // NbButton
+  button[nbButton],
+  [nbButton] {
+    font-family: $font !important;
+    border-radius: 20px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    padding: 0.45rem 1.25rem !important;
+    letter-spacing: 0.3px !important;
+    cursor: pointer !important;
+    transition: background 0.2s, box-shadow 0.2s !important;
+
+    &[status="primary"]  { background: $teal !important; border-color: $teal !important; color: $white !important; &:hover { background: $teal-dark !important; } }
+    &[status="warning"]  { background: $gold !important; border-color: $gold !important; color: $white !important; &:hover { background: $gold-dark !important; } }
+    &[status="danger"]   { background: $error !important; border-color: $error !important; color: $white !important; }
+    &[status="success"]  { background: $success !important; border-color: $success !important; color: $white !important; }
+  }
+
+  // PrimeNG pButton
+  .p-button {
+    font-family: $font !important;
+    border-radius: 20px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    &.p-button-primary   { background: $teal !important; border-color: $teal !important; }
+    &.p-button-secondary { background: #6b8c93 !important; border-color: #6b8c93 !important; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  VALIDATION ERROR
+// ════════════════════════════════════════════════════════════════
+.input-form-error {
+  margin-top: 3px;
+}
+
+.error-text {
+  font-family: $font;
+  font-size: 0.73rem;
+  color: $error;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &::before {
+    content: '⚠';
+    font-size: 0.7rem;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MODAL overrides
+// ════════════════════════════════════════════════════════════════
+:host ::ng-deep {
+  .modal-header {
+    background: $teal !important;
+    color: $white !important;
+    padding: 0.75rem 1.1rem !important;
+    border-bottom: none !important;
+    border-radius: 6px 6px 0 0 !important;
+
+    .modal-title {
+      font-family: $font !important;
+      font-size: 0.9rem !important;
+      font-weight: 700 !important;
+      color: $white !important;
+    }
+
+    .close, .btn-secondary.close {
+      background: rgba(255,255,255,0.18) !important;
+      border: none !important;
+      color: $white !important;
+      border-radius: 4px !important;
+      font-size: 1.2rem !important;
+      padding: 0.1rem 0.45rem !important;
+      opacity: 1 !important;
+      &:hover { background: rgba(255,255,255,0.3) !important; }
+    }
+  }
+
+  .modal-footer {
+    background: $teal-xlight !important;
+    border-top: 1px solid $border !important;
+    padding: 0.65rem 1.1rem !important;
+
+    .btn-secondary {
+      background: $muted !important;
+      border: none !important;
+      border-radius: 20px !important;
+      font-family: $font !important;
+      font-size: 0.82rem !important;
+      color: $white !important;
+      padding: 0.4rem 1.1rem !important;
+    }
+
+    .btn-primary {
+      background: $teal !important;
+      border: none !important;
+      border-radius: 20px !important;
+      font-family: $font !important;
+      font-size: 0.82rem !important;
+      color: $white !important;
+      padding: 0.4rem 1.1rem !important;
+      &:hover { background: $teal-dark !important; }
+    }
+  }
+
+  .modal-body {
+    font-family: $font !important;
+    font-size: 0.82rem !important;
+    padding: 1rem 1.1rem !important;
+  }
+}
+
+// ── Create Customer button inside modal ───────────────────────
+.btn.btn-primary:not(.btn-secondary):not([nbButton]) {
+  background: $teal;
+  border: none;
+  border-radius: 20px;
+  font-family: $font;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: $white;
+  padding: 0.4rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover { background: $teal-dark; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  LEGACY (kept for existing HTML — customer-search, table-container)
+// ════════════════════════════════════════════════════════════════
+.customer-search-box {
   display: none;
   position: static;
-  background-color: #f9f9f9;
+  background-color: $teal-xlight;
   width: 600px;
-  // left: 0;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: 0 7px 29px rgba(28, 121, 136, 0.15);
   z-index: 1;
   overflow: hidden;
-  border-radius: .5rem;
-  padding: .5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
-.customer-search-container:hover .customer-search-box {
-  display: block;
-}
+.customer-search-container:hover .customer-search-box { display: block; }
 
 label.disabled {
-  color: #6c757d;
+  color: $disabled-text;
   pointer-events: none;
-  background-color: #fff;
+  background-color: $white;
 }
+
 .table-container {
   width: 100%;
   overflow: auto;
@@ -29,4 +595,73 @@ label.disabled {
   margin-bottom: 10px;
   width: 300px;
   display: block;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  RESPONSIVE
+// ════════════════════════════════════════════════════════════════
+@media (max-width: 960px) {
+  form { max-width: 100%; padding: 0; }
+}
+
+@media (max-width: 767px) {
+  :host { padding: 0.25rem; }
+  form  { max-width: 100%; padding: 0; }
+  .sa-card-body        { padding: 0.85rem 0.85rem 0.5rem; }
+  .sa-card-footer      { padding: 0.65rem 0.85rem; }
+  .input-form-control4 { width: 48px !important; font-size: 0.74rem; }
+  .currency-flex  { flex-wrap: nowrap; height: 36px; }
+  .currrency-drop { min-width: 0; flex: 1; height: 36px; }
+  .opencover-drop { min-width: 0; flex: 1; height: 36px; }
+}
+
+@media (max-width: 575px) {
+  .sa-card-header { height: auto; min-height: 40px; padding: 0.4rem 0.75rem; flex-wrap: nowrap; }
+  .sa-title       { font-size: 0.84rem; }
+  .radio-toolbar label { height: 30px; padding: 0 12px; font-size: 0.77rem; }
+
+  .btn.btn-secondary {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+  }
+}
+.currency-field-group {
+  display: flex;
+  align-items: center;
+  // gap: 8px;
+  width: 85%;
+}
+
+.currency-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.currency-symbol {
+  width: 80px;
+  text-align: center;
+  background: #f8f9fa;
+  font-weight: 500;
+}
+
+.currency-field-group ng-select {
+  width: 100%;
+}
+/* Ensure datepicker appears above everything */
+.ngb-datepicker,
+.ngb-datepicker-dropdown {
+  z-index: 9999 !important;
+}
+
+/* Prevent clipping from parent containers */
+.input-form-box {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Optional: improve popup look */
+.ngb-datepicker {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  border-radius: 8px;
 }

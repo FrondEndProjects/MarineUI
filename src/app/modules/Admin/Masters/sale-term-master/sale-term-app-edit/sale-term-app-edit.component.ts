@@ -15,41 +15,44 @@ import { DatePipe } from '@angular/common';
 export class SaleTermAppEditComponent implements OnInit {
   public min: Date = new Date();
   public saleTermForm: FormGroup;
-  
+
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public editBankId: any; bankId: any;
   public Userdetails: any;
-  public branchCode: any; 
+  public branchCode: any;
   public saleTermId;
-
-  constructor( 
+  ProductList: any = [
+    { Code: '3', CodeDesc: 'Marine one off policy' },
+    { Code: '11', CodeDesc: 'Marine opencover policy' },
+  ];
+  constructor(
     private router: Router,
     private masterSer: MastersService,
-    private toastrService:NbToastrService,private datePipe: DatePipe) {
+    private toastrService: NbToastrService, private datePipe: DatePipe) {
 
     this.Userdetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    
-    if(this.Userdetails) {
+
+    if (this.Userdetails) {
       this.branchCode = this.Userdetails?.LoginResponse?.BranchCode;
     }
 
     this.saleTermId = JSON.parse(sessionStorage.getItem('saleTermData'));
-    if(this.saleTermId) {
+    if (this.saleTermId) {
       this.getSaleTermDetails();
     } else {
       this.saleTermId = null;
     }
 
   }
-  
+
   ngOnInit(): void {
     this.createForm();
   }
 
   getSaleTermDetails() {
     let ReqObj = {
-      "BranchCode":this.Userdetails?.Result.BelongingBranch,
+      "BranchCode": this.Userdetails?.Result.BelongingBranch,
       "SaleTermId": this.saleTermId
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/saleTermMaster/edit`, ReqObj).subscribe(
@@ -57,8 +60,9 @@ export class SaleTermAppEditComponent implements OnInit {
         console.log(data);
 
         let saleTermDetails = data.Result;
-        
+
         this.saleTermForm.controls['saleTermName'].setValue(saleTermDetails.SaleTermName);
+        this.saleTermForm.controls['product'].setValue(saleTermDetails.ProductId);
         this.saleTermForm.controls['saleTermValue'].setValue(saleTermDetails.SaleTermValue);
         this.saleTermForm.controls['coreApplicationCode'].setValue(saleTermDetails.CoreApplicationCode);
         this.saleTermForm.controls['remarks'].setValue(saleTermDetails.Remarks);
@@ -69,22 +73,22 @@ export class SaleTermAppEditComponent implements OnInit {
     )
   }
 
-   // Date Format
-   onDateFormatInEdit(date) {
+  // Date Format
+  onDateFormatInEdit(date) {
     console.log(date);
     if (date) {
       let format = date.split('-');
-      if(format.length >1){
+      if (format.length > 1) {
         var NewDate = new Date(new Date(format[0], format[1], format[2]));
         NewDate.setMonth(NewDate.getMonth() - 1);
         return NewDate;
       }
-      else{
+      else {
         format = date.split('/');
-        if(format.length >1){
+        if (format.length > 1) {
           // var NewDate = new Date(new Date(format[2], format[1], format[0]));
           // NewDate.setMonth(NewDate.getMonth() - 1);
-          let NewDate = format[2]+'-'+format[1]+'-'+format[0];
+          let NewDate = format[2] + '-' + format[1] + '-' + format[0];
           return NewDate;
         }
       }
@@ -95,13 +99,14 @@ export class SaleTermAppEditComponent implements OnInit {
   public createForm() {
 
     this.saleTermForm = new FormGroup({
-      saleTermName: new FormControl( '', Validators.required),
-      saleTermValue: new FormControl( '', Validators.required),
-      coreApplicationCode : new FormControl( '', Validators.required),
-      remarks : new FormControl(''),
-      effectiveDate : new FormControl( '', Validators.required),
-      status : new FormControl('Y', Validators.required),
-      EffectiveDateStart:new FormControl('',Validators.required)
+      product: new FormControl('', Validators.required),
+      saleTermName: new FormControl('', Validators.required),
+      saleTermValue: new FormControl('', Validators.required),
+      coreApplicationCode: new FormControl('', Validators.required),
+      remarks: new FormControl(''),
+      effectiveDate: new FormControl('', Validators.required),
+      status: new FormControl('Y', Validators.required),
+      EffectiveDateStart: new FormControl('', Validators.required)
     });
   }
 
@@ -125,22 +130,23 @@ export class SaleTermAppEditComponent implements OnInit {
       "Remarks": this.saleTermForm.controls['remarks'].value,
       "SaleTermId": this.saleTermId,
       "SaleTermName": this.saleTermForm.controls['saleTermName'].value,
+      "ProductId": this.saleTermForm.controls['product'].value,
       "SaleTermValue": this.saleTermForm.controls['saleTermValue'].value,
       "Status": this.saleTermForm.controls['status'].value,
-      "EffectiveDate":this.saleTermForm.controls['EffectiveDateStart'].value,
-      "AmendId":'',
+      "EffectiveDate": this.saleTermForm.controls['EffectiveDateStart'].value,
+      "AmendId": '',
       // "EffectiveDate": effDate
     }
     if (ReqObj.EffectiveDate != '' && ReqObj.EffectiveDate != null && ReqObj.EffectiveDate != undefined) {
-      ReqObj['EffectiveDate'] =  this.datePipe.transform(ReqObj.EffectiveDate, "dd/MM/yyyy")
+      ReqObj['EffectiveDate'] = this.datePipe.transform(ReqObj.EffectiveDate, "dd/MM/yyyy")
     }
-    else{
+    else {
       ReqObj['EffectiveDate'] = "";
     }
     this.masterSer.onPostMethodSync(`${this.ApiUrl1}master/saleTermMaster/save`, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-        if(data.Message == 'Success') {
+        if (data.Message == 'Success') {
 
           let type: NbComponentStatus = 'success';
           const config = {
@@ -159,8 +165,8 @@ export class SaleTermAppEditComponent implements OnInit {
           sessionStorage.removeItem('saleTermData');
           this.router.navigateByUrl('Marine/masters/sale-term/view')
         }
-        else if(data.Errors){
-          for(let entry of data.Errors){
+        else if (data.Errors) {
+          for (let entry of data.Errors) {
             let type: NbComponentStatus = 'danger';
             const config = {
               status: type,
@@ -181,5 +187,7 @@ export class SaleTermAppEditComponent implements OnInit {
     )
 
   }
+  onProductChange() {
 
+  }
 }

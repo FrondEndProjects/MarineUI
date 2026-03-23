@@ -1,154 +1,595 @@
 
-.example-headers-align .mat-expansion-panel-header-title,
-.example-headers-align .mat-expansion-panel-header-description {
-  flex-basis: 0;
+:root {
+  --teal: #1B7B8A;
+  --teal-d: #145f6c;
+  // other
+  // --teal: rgb(30 64 175);
+  // --teal-d: #042181;
+  --teal-l: #e8f4f6;
+  --gold: #E8A020;
+  --gold-l: #fff8ec;
+  --bg: #eef2f5;
+  --white: #fff;
+  --text: #1a2535;
+  --muted: #6b7a8d;
+  --border: #d0dce6;
+  --error: #e53e3e;
+  --r: 6px;
+  --rl: 10px;
+  --sh: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --tr: 0.18s ease;;
 }
 
-.example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
-}
-.form-grid{
-  grid-area: main;
-  display: grid;
-  grid-auto-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 10px;
-}
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+$teal-light:  #eef0ff;
+$teal-xlight: #f5f6ff;
+$gold: #E8A020;
+$gold-dark: #c8881a;
+$white: #ffffff;
+$border: #c9dde2;
+$text: #1a2e35;
+$muted: #6b8c93;
+$error: #e53935;
+$success: #2e7d32;
+$disabled-bg: #f4f8f9;
+$disabled-text: #9ab3b9;
+$page-bg: #eef2f5;
+// ── Typography ─────────────────────────────────────────────────
+$font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-label.disabled {
-  color: #6c757d;
-  pointer-events: none;
-  background-color: #fff;
-}
-th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
-  border-bottom-color: #ccc;
-}
-th.mat-header-cell {
-  color: lightslategrey;
-  font-size: 100%;
-  font-weight: 500;
-}
-.example-container{
-  width: 100%;
-  overflow-x: auto;
-  border-radius: 0.6rem 0.6rem 0 0;
-}
-.mat-paginator{
-  border-radius: 0 0 0.6rem 0.6rem;
-}
-
-table {
-  width: 100%;
-  background-color: white;
-}
-.mat-table th,
-.mat-table td {
-    white-space: nowrap !important;
-    padding: 8px 10px !important;
-}
-.maan-card1 {
-  background-color: white !important;
-  padding: 1rem !important;;
-  border-radius: 0.6rem !important;;
-}
-/* Styling for the section titles inside the cards */
-.card-header-custom {
+// :root {
+//   --teal: rgb(30 64 175);
+//   --teal-d: #042181;
+//   --teal-l: #e8f4f6;
+//   --gold: #E8A020;
+//   --gold-l: #fff8ec;
+//   --bg: #eef2f5;
+//   --white: #fff;
+//   --text: #1a2535;
+//   --muted: #6b7a8d;
+//   --border: #d0dce6;
+//   --error: #e53e3e;
+//   --r: 6px;
+//   --rl: 10px;
+//   --sh: 0 2px 8px rgba(0,0,0,0.08);
+//   --tr: 0.18s ease;
+// }
+/* ─── SECTION HEADER ─── */
+.section-header {
+  background: linear-gradient(90deg, var(--teal), var(--teal-d));
+  padding: 11px 18px;
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #f0f4f8; /* Soft underline for the title */
+  border-radius: 10px 10px 0 0;
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 11px;
+  }
 }
 
-.card-header-custom nb-icon {
-  font-size: 1.5rem;
-  color: #3366ff; /* Primary Blue */
+/* ─── SECTION BODY ─── */
+.section-body {
+  padding: 16px 18px;
 }
 
-.header-text {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #222b45;
+/* ─── FIELD WRAPPER ─── */
+.pf {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 0;
+
+  > label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .req {
+    color: var(--error);
+    margin-left: 1px;
+  }
+
+  &.pf-invalid {
+    .p-inputtext,
+    .p-dropdown,
+    textarea {
+      border-color: var(--error) !important;
+      background: #fff5f5 !important;
+    }
+  }
+}
+
+/* ─── PRIMENG: Input ─── */
+.p-inputtext {
+  font-size: 13px !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--r) !important;
+  color: var(--text) !important;
+  padding: 8px 11px !important;
+  transition: border-color var(--tr), box-shadow var(--tr) !important;
+
+  &:focus {
+    border-color: var(--teal) !important;
+    box-shadow: 0 0 0 3px rgba(27, 123, 138, 0.1) !important;
+  }
+
+  &::placeholder { color: #b8c5d0 !important; }
+}
+
+/* ─── PRIMENG: Dropdown ─── */
+.p-dropdown {
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--r) !important;
+  font-size: 13px !important;
+  min-height: 36px !important;
+
+  &:not(.p-disabled):hover {
+    border-color: var(--teal) !important;
+  }
+
+  &.p-focus {
+    border-color: var(--teal) !important;
+    box-shadow: 0 0 0 3px rgba(27, 123, 138, 0.1) !important;
+  }
+
+  .p-dropdown-label {
+    font-size: 13px !important;
+    color: var(--text) !important;
+    padding: 7px 11px !important;
+  }
+
+  .p-dropdown-label.p-placeholder {
+    color: #b8c5d0 !important;
+  }
+}
+
+.p-dropdown-panel {
+  .p-dropdown-item {
+    font-size: 12.5px !important;
+
+    &.p-highlight {
+      background: var(--teal-l) !important;
+      color: var(--teal-d) !important;
+    }
+    &:hover { background: #f0f8f9 !important; }
+  }
+}
+
+/* ─── PRIMENG: Textarea ─── */
+textarea.p-inputtextarea {
+  font-size: 13px !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--r) !important;
+  padding: 8px 11px !important;
+  min-height: 80px;
+  resize: vertical;
+
+  &:focus {
+    border-color: var(--teal) !important;
+    box-shadow: 0 0 0 3px rgba(27, 123, 138, 0.1) !important;
+  }
+}
+
+/* ─── PRIMENG: InputGroup (search buttons) ─── */
+.p-inputgroup {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+
+  .p-inputtext {
+    flex: 1;
+    min-width: 0;
+    border-right: none !important;
+    border-radius: var(--r) 0 0 var(--r) !important;
+  }
+
+  .p-button.p-button-teal,
+  .p-button-teal {
+    background: var(--teal) !important;
+    border-color: var(--teal) !important;
+    border-radius: 0 var(--r) var(--r) 0 !important;
+    flex-shrink: 0;
+    &:hover { background: var(--teal-d) !important; }
+  }
+}
+
+/* ─── CURRENCY GROUP (dropdown + value input side by side) ─── */
+.currency-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  // border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: border-color var(--tr);
+
+  &:focus-within {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(27, 123, 138, 0.1);
+  }
+
+  /* The main dropdown (currency select or incoterms) */
+  .currency-drop {
+    flex: 1 1 60%;
+    min-width: 0;
+    // border: none !important;
+      border: 1.5px solid var(--border);
+    border-right: 1.5px solid var(--border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    .p-dropdown-label {
+      padding: 7px 10px !important;
+    }
+  }
+
+  /* The readonly value / percentage input */
+  .currency-val {
+    flex: 0 0 80px;
+    min-width: 70%;
+    // border: none !important;
+    border-radius: 5px !important;
+    background: #f4f8fa !important;
+    color: var(--muted) !important;
+    font-size: 12px !important;
+    text-align: center;
+    padding: 8px 6px !important;
+    box-shadow: none !important;
+    cursor: default;
+  }
+
+  /* Smaller secondary dropdown (incoterms %) */
+  .currency-val-sm {
+    flex: 0 0 90px;
+    min-width: 0;
+    border: none !important;
+    width: 100%;
+    min-width: 70%;
+    border-left: 1.5px solid var(--border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #f4f8fa !important;
+
+    .p-dropdown-label {
+      padding: 7px 6px !important;
+      font-size: 12px !important;
+      color: var(--muted) !important;
+    }
+  }
+}
+
+/* ─── ERROR TEXT ─── */
+.p-error {
+  font-size: 11px !important;
+  color: var(--error) !important;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ─── CALENDAR ─── */
+.p-calendar {
+  width: 100%;
+
+  .p-inputtext {
+    border-radius: var(--r) 0 0 var(--r) !important;
+  }
+
+  .p-datepicker-trigger {
+    background: var(--teal) !important;
+    border-color: var(--teal) !important;
+    border-radius: 0 var(--r) var(--r) 0 !important;
+  }
+}
+
+/* ─── BUTTONS ─── */
+.p-button {
+  font-size: 13px !important;
+  border-radius: 20px !important;
+
+  &.p-button-primary {
+    background: linear-gradient(135deg, var(--teal), var(--teal-d)) !important;
+    border-color: transparent !important;
+    box-shadow: 0 3px 8px rgba(27, 123, 138, 0.28) !important;
+
+    &:hover {
+      box-shadow: 0 5px 14px rgba(27, 123, 138, 0.42) !important;
+      transform: translateY(-1px);
+    }
+  }
+
+  &.p-button-warning {
+    background: linear-gradient(135deg, var(--gold), #c98a1a) !important;
+    border-color: transparent !important;
+  }
+}
+
+/* ─── YES/NO TOGGLE ─── */
+.yn-group {
+  display: flex;
+  gap: 0;
+  margin-top: 2px;
+
+  input[type=radio] { display: none; }
+
+  label {
+    padding: 5px 16px;
+    border: 1.5px solid var(--border);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all var(--tr);
+    white-space: nowrap;
+
+    &:first-of-type { border-radius: var(--r) 0 0 var(--r); }
+    &:last-of-type  { border-radius: 0 var(--r) var(--r) 0; border-left: none; }
+  }
+
+  input:checked + label {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+  }
+}
+
+/* ─── CUSTOMER TYPE TOGGLE ─── */
+.htype {
+  display: flex;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 2px;
+  gap: 0;
+
+  input[type=radio] { display: none; }
+
+  label {
+    padding: 3px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    transition: all var(--tr);
+    white-space: nowrap;
+  }
+
+  input:checked + label {
+    background: var(--gold);
+    color: #fff;
+  }
+}
+
+/* ─── INLINE TYPE RADIO ─── */
+.htype-inline {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  input[type=radio] { display: none; }
+
+  label {
+    padding: 5px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: all var(--tr);
+  }
+
+  input:checked + label {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+  }
+}
+
+/* ─── PANEL ─── */
+.panel {
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  margin-bottom: 10px;
+  overflow: hidden;
+
+  .panel-header {
+    background: var(--teal-l);
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+
+    .ph-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--teal);
+    }
+  }
+
+  .panel-body {
+    padding: 14px;
+  }
+}
+
+/* ─── SECTION DIVIDER ─── */
+.sdiv {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  margin: 10px 0 4px;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed var(--border);
+  }
 }
 
-/* Ensure the wrapper doesn't have duplicate padding if parent also has it */
-.modern-card-wrapper {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 15px;
-  padding-left: 4rem;
-  border: 1px solid #1e3a8a;
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  // margin-bottom: 1.5rem;
-}
-
-/* Radio toolbar modern look */
-.radio-toolbar input[type="radio"] {
-  display: none;
-}
-
-.radio-toolbar label {
-  display: inline-block;
-  padding: 6px 20px;
-  background-color: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-// .radio-toolbar input[type="radio"]:checked + label {
-//   background-color: #3366ff;
-//   color: white;
-//   border-color: #3366ff;
-// }
-.currency-70-30 {
+/* ─── OVERLAY POPUP ─── */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.35);
   display: flex;
-  gap: 10px;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+
+  nb-card.popup-card {
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
 }
 
-.currency-70-30 .currency-drop {
-  flex: 0 0 70%;
-  max-width: 70%;
+/* ─── CARD WRAPPER ─── */
+.modern-card-wrapper {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 0px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #c8d8e4;
+  margin-bottom: 16px;
+  overflow: visible;
+
+  &.footer-card {
+    padding: 0;
+  }
 }
 
-.currency-70-30 .currency-input {
-  flex: 0 0 30%;
-  max-width: 30%;
+/* ─── RESPONSIVE ─── */
+@media (max-width: 991px) {
+  /* On tablet: 2 columns */
+  .section-body .row > [class*='col-md-4'] {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 }
 
-/* Ensure full-width inside */
-.currency-70-30 ng-select,
-.currency-70-30 input {
-  width: 100%;
-}
-@media (max-width: 767px) {
-  .currency-70-30 {
-    flex-direction: column;
+@media (max-width: 575px) {
+  /* On mobile: single column */
+  .section-body {
+    padding: 12px 10px;
   }
 
-  .currency-70-30 .currency-drop,
-  .currency-70-30 .currency-input {
-    max-width: 100%;
+  .section-header {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+
+    .section-title { font-size: 13px; }
+  }
+
+  /* Full width columns on mobile */
+  .section-body .row > [class*='col-sm-6'],
+  .section-body .row > [class*='col-md-4'] {
     flex: 0 0 100%;
+    max-width: 100%;
   }
+
+  /* Currency group stacks gracefully */
+  .currency-group {
+    .currency-drop { flex: 1 1 55%; }
+    .currency-val { flex: 0 0 70px; width: 70px; }
+    .currency-val-sm { flex: 0 0 75px; }
+  }
+
+  /* Yes/No group full width */
+  .yn-group {
+    width: 100%;
+
+    label {
+      flex: 1;
+      text-align: center;
+      padding: 7px 8px;
+    }
+  }
+
+  /* Vessel search input group */
+  .p-inputgroup {
+    .p-inputtext { font-size: 12px !important; }
+  }
+
+  /* Calendar full width */
+  .p-calendar { width: 100%; }
 }
 
-  /* MOBILE */
-@media (max-width: 1199px) {
-  .modern-card-wrapper {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 1rem;
-    /* padding-left: 4rem; */
-    border: 1px solid #1e3a8a;
-    /* width: 90%; */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+@media (max-width: 400px) {
+  .currency-group {
+    flex-wrap: nowrap;
+    .currency-val { flex: 0 0 60px; width: 60px; font-size: 11px !important; }
   }
+}
+.customer-search {
+  position: relative;
+}
+
+.customer-search input {
+  border-radius: 30px !important;
+  padding: 10px 15px 10px 40px !important;;
+  border: 1px solid #dcdcdc !important;
+  background: #ffffff !important;;
+  font-size: 14px !important;;
+  transition: all 0.3s ease !important;;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08)!important;;
+}
+
+.customer-search input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59,130,246,0.25);
+  outline: none;
+}
+
+.customer-search i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.customer-search input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
 }

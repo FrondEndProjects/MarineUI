@@ -21,10 +21,10 @@ export class NewQuotesComponent implements OnInit {
   public loginId: any;
   public brokerCode: any;
   public applicationId: any;
-  public endorsement:any;
-  public portfolio:any;
-  public routerBaseLink:any;
-  public isIssuer:boolean= false;
+  public endorsement: any;
+  public portfolio: any;
+  public routerBaseLink: any;
+  public isIssuer: boolean = false;
   showRouting: boolean = true;
 
   constructor(
@@ -35,14 +35,14 @@ export class NewQuotesComponent implements OnInit {
     private sessionStorageService: SessionStorageService
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    
+
     this.userDetails = this.userDetails?.LoginResponse;
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
-    if(this.OpenCover){
-      if(this.OpenCover?.name == 'adminReferral'){
-            this.productId = this.OpenCover?.productId;
-      } 
+    if (this.OpenCover) {
+      if (this.OpenCover?.name == 'adminReferral') {
+        this.productId = this.OpenCover?.productId;
+      }
     }
     this.routerBaseLink = this.userDetails?.routerBaseLink;
 
@@ -57,89 +57,117 @@ export class NewQuotesComponent implements OnInit {
       this.applicationId = this.userDetails.LoginId;
     }
 
-    if (this.userDetails?.UserType =="Issuer"){
+    if (this.userDetails?.UserType == "Issuer") {
       this.isIssuer = true;
     }
 
     this.onReloadMenu();
     this.menuService.onItemClick().subscribe((data) => {
-      
-        console.log("Current Route on Quote",data.item.link,this.routerBaseLink  )
-        if (data.item.link === `${this.routerBaseLink}/new-quotes` || data.item.link==`${this.routerBaseLink}/new-quotes/customerinfo`) {
-          this.newQuotesService.quoteEditData.next(null)
-          this.sessionStorageService.remove('referral');
-          sessionStorage.setItem('quotesType', 'Without-Endo');
-          //sessionStorage.removeItem('quotesType')
-          sessionStorage.removeItem("endorsement");
-          sessionStorage.removeItem("ReferenceNo");
-          sessionStorage.removeItem('QuoteStatus');
-          //this.reloadCurrentRoute();
-          /*sessionStorage.removeItem('OpenCover');
-          sessionStorage.removeItem('quotesType');
-          sessionStorage.removeItem('MissippiCode');
-          sessionStorage.removeItem('ProposalNo');
-          sessionStorage.removeItem('loginId');
-          sessionStorage.removeItem('WithCertifi');  
-          sessionStorage.removeItem('customerLoginId');
-          sessionStorage.removeItem('OpenCoverNo');*/
-          this.reloadCurrentRoute();
-        }
+
+      console.log("Current Route on Quote", data.item.link, this.routerBaseLink)
+      if (data.item.link === `${this.routerBaseLink}/new-quotes` || data.item.link == `${this.routerBaseLink}/new-quotes/customerinfo`) {
+        this.newQuotesService.quoteEditData.next(null)
+        this.sessionStorageService.remove('referral');
+        sessionStorage.setItem('quotesType', 'Without-Endo');
+        //sessionStorage.removeItem('quotesType')
+        sessionStorage.removeItem("endorsement");
+        sessionStorage.removeItem("ReferenceNo");
+        sessionStorage.removeItem('QuoteStatus');
+        //this.reloadCurrentRoute();
+        /*sessionStorage.removeItem('OpenCover');
+        sessionStorage.removeItem('quotesType');
+        sessionStorage.removeItem('MissippiCode');
+        sessionStorage.removeItem('ProposalNo');
+        sessionStorage.removeItem('loginId');
+        sessionStorage.removeItem('WithCertifi');  
+        sessionStorage.removeItem('customerLoginId');
+        sessionStorage.removeItem('OpenCoverNo');*/
+        this.reloadCurrentRoute();
+      }
     });
   }
 
   ngOnInit(): void {
 
-    this.router
-      .events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .pipe(map(() => {
-        let child = this.activatedRoute.firstChild;
-        console.log("Activated Route",child)
-        while (child) {
-          if (child.firstChild) {
-          } else if (child.snapshot.data && child.snapshot.data['title']) {
-            
-              return child.snapshot.data['title'];
-            // }
-            // else{return 'customerinfo'}
-          } else {
-            return null;
-          }
-        }
-        return null;
-      })).subscribe((customData: any) => {
-        console.log(customData);
-        let refNo = sessionStorage.getItem("ReferenceNo")
-        // if(refNo==undefined || refNo == null){
-        //   customData = 'customerinfo'
-        // }
-        const index = this.stepperList.findIndex((ele: any) => ele.title === customData);
-        console.log(index);
-        const name: any = this.stepperList[index].name;
+    // this.router
+    //   .events
+    //   .pipe(filter(event => event instanceof NavigationEnd))
+    //   .pipe(map(() => {
+    //     let child = this.activatedRoute.firstChild;
+    //     console.log("Activated Route", child)
+    //     while (child) {
+    //       if (child.firstChild) {
+    //       } else if (child.snapshot.data && child.snapshot.data['title']) {
 
-        this.stepperList.map((el: any) => {
-          if (el.name < name) {
-            el.isActive = true;
-          } else {
-            el.isActive = false;
+    //         return child.snapshot.data['title'];
+    //       } else {
+    //         return null;
+    //       }
+    //     }
+    //     return null;
+    //   })).subscribe((customData: any) => {
+    //     console.log(customData);
+    //     let refNo = sessionStorage.getItem("ReferenceNo")
+    //     const index = this.stepperList.findIndex((ele: any) => ele.title === customData);
+    //     console.log(index);
+    //     const name: any = this.stepperList[index].name;
 
+    //     this.stepperList.map((el: any) => {
+    //       if (el.name < name) {
+    //         el.isActive = true;
+    //       } else {
+    //         el.isActive = false;
+
+    //       }
+    //     })
+
+    //     console.log(this.stepperList);
+
+    //   });
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => {
+          let route = this.activatedRoute;
+          // Correctly traverse to the deepest child
+          while (route.firstChild) {
+            route = route.firstChild;
           }
+          // Return the title from the leaf route's data
+          return route.snapshot.data && route.snapshot.data['title'] ? route.snapshot.data['title'] : null;
         })
+      )
+      .subscribe((customData: string) => {
+        if (!customData) return;
 
-        console.log(this.stepperList);
+        // 1. Find the current step object based on the title
+        const currentStepObj = this.stepperList.find((ele: any) => ele.title === customData);
 
+        if (currentStepObj) {
+          const currentStepNumber = currentStepObj.step;
+
+          // 2. Map through list and compare STEP NUMBERS (not names)
+          this.stepperList = this.stepperList.map((el: any) => {
+            return {
+              ...el,
+              // Item is active if it is the current step OR a previous step
+              isActive: el.step <= currentStepNumber
+            };
+          });
+        }
+        console.log("Updated Stepper:", this.stepperList);
       });
   }
 
   onReloadMenu() {
-   
+
     this.quotesType = sessionStorage.getItem('quotesType');
     if (this.quotesType == 'Without-Endo') {
       this.stepperList = [
-        { isActive: false, name: 'Risk', title: 'customerinfo', url: `${this.routerBaseLink}/new-quotes/customer-info` },
-        { isActive: false, name: 'Premium', title: 'premiuminfo', url: `${this.routerBaseLink}/new-quotes/premium-info` },
-        { isActive: false, name: 'Document', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate` },
-        { isActive: false, name: 'Policy', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate` },
+        { isActive: true, name: 'Risk', title: 'customerinfo', url: `${this.routerBaseLink}/new-quotes/customer-info`, step: 1 },
+        { isActive: false, name: 'Premium', title: 'premiuminfo', url: `${this.routerBaseLink}/new-quotes/premium-info`, step: 2 },
+        { isActive: false, name: 'Document', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate`, step: 3 },
+        { isActive: false, name: 'Policy', title: 'policygenerate', url: `${this.routerBaseLink}/new-quotes/policy-generate`, step: 4 },
       ];
     } else {
       this.stepperList = [
@@ -153,16 +181,16 @@ export class NewQuotesComponent implements OnInit {
     //this.router.navigate([this.stepperList[0].url]);
   }
   reloadCurrentRoute() {
-     this.showRouting = false;
-     console.log("Router Url",this.router.url)
-    if(this.router.url==`/${this.routerBaseLink}/new-quotes` || this.router.url==`/${this.routerBaseLink}/new-quotes/customer-info`){
-        window.location.reload();
+    this.showRouting = false;
+    console.log("Router Url", this.router.url)
+    if (this.router.url == `/${this.routerBaseLink}/new-quotes` || this.router.url == `/${this.routerBaseLink}/new-quotes/customer-info`) {
+      window.location.reload();
     }
     else this.router.navigate([`/${this.routerBaseLink}/new-quotes`]);
     // this.newQuotesService.quoteEditData.next(null)
     // this.router.navigate([`${this.routerBaseLink}/new-quotes/customer-info`]);
     // this.showRouting = true;
-    
+
   }
 
 

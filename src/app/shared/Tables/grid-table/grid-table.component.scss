@@ -1,125 +1,583 @@
-th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
-  border-bottom-color: #ccc;
+:root {
+  --teal: rgb(30 64 175);
+  --teal-dark: #042181;
 }
-th.mat-header-cell {
-  color: lightslategrey;
-  font-size: 100%;
-  font-weight: 500;
+
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+$teal-light:  #e8f4f6;
+$teal-xl:     #f0f9fa;
+$gold:        #E8A020;
+$gold-dark:   #c8881a;
+$white:       #ffffff;
+$border:      #c9dde2;
+$text:        #1a2e35;
+$muted:       #6b8c93;
+$error:       #e53935;
+$success:     #2e7d32;
+$disabled-bg: #f4f8f9;
+$font:        'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+// ════════════════════════════════════════════════════════════════
+//  HOST
+// ════════════════════════════════════════════════════════════════
+:host {
+  display: block;
+  font-family: $font;
+  font-size: 13px;
+  color: $text;
 }
-.example-container{
+* { box-sizing: border-box; }
+
+// ════════════════════════════════════════════════════════════════
+//  OUTER CONTAINER — rounded top, horizontal scroll, teal border
+// ════════════════════════════════════════════════════════════════
+.example-container {
   width: 100%;
   overflow-x: auto;
-  background: white;
-    padding: 0.5rem;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid $border;
+  border-bottom: none;
+  background: $white;
+  box-shadow: 0 2px 10px rgba(28,121,136,.08);
+
+  // Teal-toned scrollbar
+  &::-webkit-scrollbar       { height: 6px; }
+  &::-webkit-scrollbar-track { background: $teal-xl; }
+  &::-webkit-scrollbar-thumb { background: $teal-light; border-radius: 3px; }
 }
 
+// ════════════════════════════════════════════════════════════════
+//  TABLE BASE
+// ════════════════════════════════════════════════════════════════
 table {
   width: 100%;
+  background: $white;
+  font-family: $font;
+  font-size: 0.82rem;
 }
-.mat-table th,
-.mat-table td {
+
+// ════════════════════════════════════════════════════════════════
+//  HEADER ROW  ← teal background + white 700-weight text
+// ════════════════════════════════════════════════════════════════
+
+// Direct class (pre-MDC Angular Material)
+th.mat-header-cell {
+  background: $teal !important;
+  color: $white !important;
+  font-family: $font !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  padding: 0 14px !important;
+  height: 42px !important;
+  white-space: nowrap;
+  border-bottom: 2px solid $teal-dark !important;
+  letter-spacing: 0.2px;
+  &:first-child { border-radius: 7px 0 0 0; }
+  &:last-child  { border-radius: 0 7px 0 0; }
+}
+
+// MDC (Angular Material v15+) header
+::ng-deep {
+  .mdc-data-table__header-cell,
+  .mat-mdc-header-cell {
+    background: $teal !important;
+    color: $white !important;
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    padding: 0 14px !important;
+    height: 42px !important;
     white-space: nowrap !important;
-    padding: 8px 10px !important;
-}
-@media screen and (min-width:1024px) and (max-width: 20000px) {
-  .mobile{
-    display:table-row !important;
+    border-bottom: 2px solid $teal-dark !important;
+    letter-spacing: 0.2px !important;
   }
-  .mobiles{
-    display: table-cell !important;
-  }
-  .mobilev{
- visibility: hidden !important;
-       }
-       .mobiless{
-visibility: visible !important;
-       }
-   .display1{
-    display: none !important;
-   }
-   ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
-    border-bottom: none !important; 
-}
-  }
-  
-   /* iPads (portrait and landscape) ----------- */
-   @media only screen 
-   and (min-device-width : 750px) 
-   and (max-device-width : 1024px) {
-    .mobile{
-      display:table-row !important;
-    }
-    .mobiles{
-      display: table-cell !important;
-    }
-    .mobilev{
-      visibility: hidden !important;
-         }
-         .mobiless{
-          visibility: visible !important;
-                 }
-                 .display1{
-                  display: none !important;
-                 }
-     ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
-                  border-bottom: none !important; 
-              }
-   }
-   
-   /* iPads (landscape) ----------- */
-   @media only screen 
-   and (min-device-width : 750px) 
-   and (max-device-width : 1024px) 
-   and (orientation : landscape) {
-    .mobile{
-      display:table-row !important;
-    }
-    .mobiles{
-      display: table-cell !important;
-    }
-    .mobilev{
-      visibility: hidden !important;
-         }
-         .mobiless{
-          visibility: visible !important;
-                 }
-       .display1{
-        display: none !important;
-           }
-::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
-            border-bottom: none !important; 
-      }
-   }
 
-@media screen and (min-width: 280px) and (max-width: 750px) {
-  .mobile{
+  // Round top corners on first/last header cell
+  .mat-mdc-header-row .mat-mdc-header-cell:first-child,
+  .mat-header-row .mat-header-cell:first-child { border-radius: 7px 0 0 0 !important; }
+  .mat-mdc-header-row .mat-mdc-header-cell:last-child,
+  .mat-header-row .mat-header-cell:last-child   { border-radius: 0 7px 0 0 !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  SORT HEADER — white text, gold arrow
+// ════════════════════════════════════════════════════════════════
+th.mat-header-cell {
+  .mat-sort-header-button { color: $white !important; font-family: $font !important; font-weight: 700 !important; font-size: 0.8rem !important; }
+}
+
+::ng-deep {
+  .mat-sort-header-button     { color: $white !important; font-family: $font !important; font-weight: 700 !important; font-size: 0.8rem !important; }
+  .mat-sort-header-arrow,
+  .mat-sort-header-stem,
+  .mat-sort-header-pointer-left,
+  .mat-sort-header-pointer-right,
+  .mat-sort-header-pointer-middle { color: $gold !important; background: $gold !important; }
+  .mat-mdc-sort-header-arrow  { color: $gold !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  DATA ROWS — compact 40px, zebra, hover
+// ════════════════════════════════════════════════════════════════
+
+// Pre-MDC
+td.mat-cell, td.mat-footer-cell {
+  font-family: $font !important;
+  font-size: 0.81rem !important;
+  color: $text !important;
+  padding: 14px 14px !important;
+  height: auto !important;
+  min-height: 56px !important;
+  border-bottom: 1px solid $teal-xl !important;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+// MDC
+::ng-deep {
+  .mdc-data-table__cell,
+  .mat-mdc-cell {
+    font-family: $font !important;
+    font-size: 0.81rem !important;
+    color: $text !important;
+    padding: 14px 14px !important;
+    height: auto !important;
+    min-height: 56px !important;
+    border-bottom: 1px solid $teal-xl !important;
+    vertical-align: middle !important;
+    word-break: break-word;
+  }
+}
+
+// Zebra striping — even rows teal-xlight
+.mat-row:nth-child(even),
+::ng-deep .mat-mdc-row:nth-child(even) {
+  td.mat-cell, .mdc-data-table__cell { background: $teal-xl !important; }
+}
+.mat-row:nth-child(odd),
+::ng-deep .mat-mdc-row:nth-child(odd) {
+  td.mat-cell, .mdc-data-table__cell { background: $white !important; }
+}
+
+// Row hover
+.mat-row:hover td.mat-cell,
+::ng-deep .mat-mdc-row:hover .mdc-data-table__cell {
+  background: $teal-light !important;
+  transition: background 0.15s;
+}
+
+// Remove bottom border last row
+::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell { border-bottom: none !important; }
+
+// ════════════════════════════════════════════════════════════════
+//  PAGINATOR — teal-xlight background, teal nav buttons
+// ════════════════════════════════════════════════════════════════
+.mat-paginator,
+mat-paginator {
+  background: $teal-xl !important;
+  border: 1px solid $border !important;
+  border-top: 2px solid $teal-light !important;
+  border-radius: 0 0 8px 8px !important;
+  font-family: $font !important;
+  font-size: 0.8rem !important;
+}
+
+::ng-deep {
+  // Paginator outer container
+  .mat-paginator-outer-container,
+  .mat-mdc-paginator { background: $teal-xl !important; }
+
+  // Inner container
+  .mat-paginator-container,
+  .mat-mdc-paginator-container {
+    background: $teal-xl !important;
+    font-family: $font !important;
+    min-height: 48px !important;
+    padding: 0 8px !important;
     display: flex !important;
-    flex-direction: column !important; 
-    border-top:1px solid navy !important; 
-    border-bottom:1px solid navy !important;
-    font-size:14px !important;
-    height:auto !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
   }
-  .mobiles{
-    display:none !important;
-  }
-    .mobile-label {
-      //width: 80px;
-      display: inline-block;
-          font-weight: bold;
-    }
-    .mobilev{
- visibility: visible!important;
-    }
-    .mobiless{
-      visibility: hidden !important;
-             }
-             .display2{
-              display: none !important;
-             }
 
-      ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell {
-              border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important; 
-          }
-  
+  // Page size label & range label
+  .mat-paginator-page-size-label,
+  .mat-paginator-range-label,
+  .mat-mdc-paginator-range-label,
+  .mat-mdc-paginator-page-size-label {
+    font-family: $font !important;
+    font-size: 0.78rem !important;
+    color: $muted !important;
+  }
+
+  // Page size select
+  .mat-paginator-page-size-select .mat-select-trigger,
+  .mat-mdc-paginator .mat-mdc-select {
+    font-family: $font !important;
+    font-size: 0.78rem !important;
+    color: $text !important;
+  }
+
+  // Nav buttons — teal, round hover
+  .mat-paginator-navigation-previous,
+  .mat-paginator-navigation-next,
+  .mat-paginator-navigation-first,
+  .mat-paginator-navigation-last,
+  .mat-mdc-paginator-navigation-previous,
+  .mat-mdc-paginator-navigation-next,
+  .mat-mdc-paginator-navigation-first,
+  .mat-mdc-paginator-navigation-last {
+    color: $teal !important;
+    border-radius: 50% !important;
+    transition: background 0.18s !important;
+    &:hover:not([disabled]):not(.mat-button-disabled) { background: $teal-light !important; }
+    &[disabled], &.mat-button-disabled { color: $border !important; }
+    .mat-paginator-icon,
+    .mat-mdc-paginator-icon { fill: currentColor !important; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  NO RECORDS
+// ════════════════════════════════════════════════════════════════
+.sa-no-records {
+  background: $white;
+  border: 1px solid $border;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: $muted;
+  font-family: $font;
+  font-size: 0.85rem;
+
+  .sa-no-icon {
+    font-size: 2.2rem;
+    color: $teal-light;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  INLINE CELL CONTROLS
+// ════════════════════════════════════════════════════════════════
+
+// ── Text input inside cell ─────────────────────────────────────
+.input-edit {
+  .input-form-box { position: relative; }
+
+  .input-form-control {
+    height: 30px !important;
+    padding: 0 8px !important;
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    color: $text !important;
+    background: $white !important;
+    border: 1px solid $border !important;
+    border-radius: 4px !important;
+    outline: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    transition: border-color 0.2s !important;
+    &:focus { border-color: $teal !important; box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important; }
+    &:disabled { background: $disabled-bg !important; color: $muted !important; }
+  }
+
+  .input-form-icon {
+    position: absolute;
+    left: 8px; top: 0;
+    padding: 5px 6px;
+    color: $muted;
+    font-size: 0.75rem;
+    pointer-events: none;
+  }
+
+  .with-icon    { padding-left: 28px !important; }
+  .without-icon { padding-right: 8px !important; }
+}
+
+// ── Inline native select ───────────────────────────────────────
+.form-control.form-control-sm {
+  height: 30px !important;
+  font-family: $font !important;
+  font-size: 0.8rem !important;
+  color: $text !important;
+  border: 1px solid $border !important;
+  border-radius: 4px !important;
+  background: $white !important;
+  padding: 0 8px !important;
+  max-width: 180px;
+  outline: none;
+  &:focus { border-color: $teal !important; box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important; }
+}
+
+// ── Radio (select column) ──────────────────────────────────────
+.custom-control.custom-radio {
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: $teal !important;
+    border-color: $teal !important;
+  }
+  .custom-control-label {
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    color: $text !important;
+  }
+}
+
+// ── Checkbox ───────────────────────────────────────────────────
+.custom-control.custom-checkbox {
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: $teal !important;
+    border-color: $teal !important;
+  }
+  .custom-control-label {
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    color: $text !important;
+  }
+}
+
+// ── Toggle switch (Fragile / Endorse) ─────────────────────────
+.custom-switch {
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: $teal !important;
+    border-color: $teal !important;
+  }
+  .custom-control-label {
+    font-family: $font !important;
+    font-size: 0.78rem !important;
+    color: $muted !important;
+  }
+}
+
+// ── mat-radio-button ──────────────────────────────────────────
+::ng-deep {
+  .mat-radio-button.mat-accent .mat-radio-inner-circle { background-color: $teal !important; }
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle { border-color: $teal !important; }
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element { background-color: rgba(28,121,136,.2) !important; }
+  .mat-radio-label-content { font-family: $font !important; font-size: 0.8rem !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ACTION BUTTONS (nbButton)
+// ════════════════════════════════════════════════════════════════
+::ng-deep {
+  button[nbButton][shape="round"] {
+    font-family: $font !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    transition: background 0.2s, box-shadow 0.18s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+
+    &[size="tiny"]  { height: 24px !important; padding: 0 10px !important; font-size: 0.72rem !important; }
+    &[size="small"] { height: 28px !important; padding: 0 12px !important; font-size: 0.75rem !important; }
+
+    &[status="primary"] {
+      background: $teal !important; border-color: $teal !important; color: $white !important;
+      &:hover:not(:disabled) { background: $teal-dark !important; }
+    }
+    &[status="warning"] {
+      background: $gold !important; border-color: $gold !important; color: $white !important;
+      &:hover:not(:disabled) { background: $gold-dark !important; }
+    }
+    &[status="danger"] {
+      background: $error !important; border-color: $error !important; color: $white !important;
+      &:hover:not(:disabled) { background: darken($error, 8%) !important; }
+    }
+    &[status="success"] {
+      background: $success !important; border-color: $success !important; color: $white !important;
+    }
+    &:disabled { opacity: 0.5 !important; cursor: not-allowed !important; }
+  }
+
+  // Remove button (round but no status — uses danger style)
+  button[nbButton]:not([status]) {
+    height: 26px !important;
+    padding: 0 10px !important;
+    font-family: $font !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    border-radius: 4px !important;
+    background: $error !important;
+    color: $white !important;
+    border: none !important;
+    cursor: pointer !important;
+    &:hover { background: darken($error, 8%) !important; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  3-DOT MENU BUTTON + MAT-MENU PANEL
+// ════════════════════════════════════════════════════════════════
+// The gold vertical ellipsis icon button
+.text-warning.mat-icon-button,
+button.text-warning[mat-icon-button] {
+  color: $gold !important;
+  width: 28px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  border-radius: 50% !important;
+  transition: background 0.18s !important;
+  &:hover:not(:disabled) { background: $teal-xl !important; color: $teal !important; }
+  i { font-size: 0.88rem !important; }
+}
+
+::ng-deep {
+  // Dropdown panel
+  .mat-menu-panel,
+  .mat-mdc-menu-panel {
+    border: 1px solid $border !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 16px rgba(28,121,136,.14) !important;
+    min-width: 140px !important;
+  }
+  // Dropdown items
+  .mat-menu-item,
+  .mat-mdc-menu-item {
+    font-family: $font !important;
+    font-size: 0.82rem !important;
+    color: $text !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    padding: 0 14px !important;
+    &:hover { background: $teal-light !important; color: $teal !important; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  STICKY COLUMN
+// ════════════════════════════════════════════════════════════════
+[sticky], [stickyEnd] {
+  position: sticky !important;
+  background: inherit !important;
+  z-index: 2 !important;
+  box-shadow: -2px 0 6px rgba(28,121,136,.08) !important;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MOBILE LABEL (hidden by default, shown on mobile)
+// ════════════════════════════════════════════════════════════════
+.mobile-label {
+  display: none;
+  font-family: $font;
+  font-weight: 700;
+  font-size: 0.76rem;
+  color: $muted;
+  white-space: nowrap;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  RESPONSIVE BREAKPOINTS
+// ════════════════════════════════════════════════════════════════
+
+// ── Desktop + Tablet (≥750px) ──────────────────────────────────
+@media screen and (min-width: 750px) {
+  .mobile   { display: table-row !important; }
+  .mobiles  { display: table-cell !important; }
+  .display1 { display: none !important; }
+  .display2 { display: block; }
+
+  ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell { border-bottom: none !important; }
+}
+
+// ── iPad landscape & portrait (750–1024px) ────────────────────
+@media only screen and (min-device-width: 750px) and (max-device-width: 1024px) {
+  .mobile   { display: table-row !important; }
+  .mobiles  { display: table-cell !important; }
+  .display1 { display: none !important; }
+  .display2 { display: block; }
+
+  ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell { border-bottom: none !important; }
+}
+
+// ── Mobile (<750px) — card layout ─────────────────────────────
+@media screen and (max-width: 749px) {
+
+  // Container becomes transparent in card mode
+  .example-container {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    overflow-x: visible !important;
+    box-shadow: none !important;
+  }
+
+  // Hide header row
+  .mobiles { display: none !important; }
+
+  // Each data row becomes a card
+  .mobile {
+    display: block !important;
+    background: $white !important;
+    border: 1px solid $border !important;
+    border-top: 3px solid $teal !important;
+    border-radius: 8px !important;
+    margin-bottom: 0.75rem !important;
+    padding: 0.4rem 0.8rem !important;
+    box-shadow: 0 1px 6px rgba(28,121,136,.09) !important;
+  }
+
+  // Each cell is a label-value flex row
+  td.mat-cell,
+  ::ng-deep .mdc-data-table__cell {
+    display: flex !important;
+    align-items: center !important;
+    padding: 8px 0 !important;
+    height: auto !important;
+    min-height: 36px !important;
+    border-bottom: 1px solid $teal-xl !important;
+    font-size: 0.82rem !important;
+    &:last-child { border-bottom: none !important; }
+  }
+
+  // Show mobile label (column name)
+  .mobile-label {
+    display: inline-block !important;
+    min-width: 46%;
+    max-width: 46%;
+    padding-right: 8px;
+    flex-shrink: 0;
+  }
+
+  // Show display1 (label+value pairs), hide display2 (desktop cells)
+  .display1 { display: flex !important; width: 100%; align-items: center; }
+  .display2 { display: none !important; }
+
+  // Remove zebra in card mode
+  .mat-row:nth-child(even) td.mat-cell,
+  .mat-row:nth-child(odd)  td.mat-cell,
+  ::ng-deep .mat-mdc-row:nth-child(even) .mdc-data-table__cell,
+  ::ng-deep .mat-mdc-row:nth-child(odd)  .mdc-data-table__cell {
+    background: transparent !important;
+  }
+  .mat-row:hover td.mat-cell,
+  ::ng-deep .mat-mdc-row:hover .mdc-data-table__cell { background: transparent !important; }
+
+  // Centre paginator on mobile
+  ::ng-deep .mat-paginator-container,
+  ::ng-deep .mat-mdc-paginator-container {
+    justify-content: center !important;
+    padding: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  ::ng-deep .mdc-data-table__row:last-child .mdc-data-table__cell { border-bottom: 1px solid $teal-xl !important; }
+
+  // Full-width inline controls on mobile
+  .input-edit .input-form-control { max-width: 100%; }
+  .form-control.form-control-sm   { max-width: 100%; }
+}
+
+// ── Extra small (<400px) ──────────────────────────────────────
+@media screen and (max-width: 399px) {
+  .mobile-label { min-width: 42%; max-width: 42%; font-size: 0.73rem; }
+  td.mat-cell,
+  ::ng-deep .mdc-data-table__cell { font-size: 0.78rem !important; }
 }

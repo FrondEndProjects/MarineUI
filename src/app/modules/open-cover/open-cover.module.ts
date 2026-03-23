@@ -43,7 +43,17 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-
+import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple'; 
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { TabViewModule } from 'primeng/tabview';
 
 
 
@@ -103,7 +113,18 @@ import { MatRadioModule } from '@angular/material/radio';
     DigitOnlyModule,
     DragDropModule,
     NgxMaskModule.forRoot(),
-    NgbModule
+    NgbModule,
+     ButtonModule,
+    RippleModule,
+    InputTextModule,
+    TabViewModule,
+    DialogModule,
+    CalendarModule,
+    InputSwitchModule,
+    InputTextareaModule,
+    CardModule,
+    DropdownModule,
+    OverlayPanelModule,
 
   ],
   bootstrap: [OpenCoverComponent],

@@ -1,36 +1,58 @@
 <form [formGroup]="brokerForm">
-  <div class="row">
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="start-line">
-         <nb-icon icon="briefcase-outline"></nb-icon>
-         Broker Details
-      </div>
+  <!-- ─── SECTION HEADER ─── -->
+  <div class="section-header">
+    <div class="section-icon"><i class="fas fa-building"></i></div>
+    <div>
+      <div class="section-title">Broker Details</div>
     </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Channel<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" [items]="dropChannelList" bindValue="Code" bindLabel="CodeDescription"
-          formControlName="channel" (change)="onChangeChannel('change')">
-        </ng-select>
-        <div class="input-form-error" *ngIf="(brokerF.channel.errors && submitted) || (!brokerF.channel.valid && brokerF.channel.touched)">
-          <div *ngIf="brokerF.channel.errors?.required" class="error-text">
-            This field is required
-          </div>
+  </div>
+
+  <!-- ─── FORM BODY ─── -->
+  <div class="section-body">
+    <div class="row g-3">
+
+      <!-- Channel -->
+      <div class="col-12 col-md-4">
+        <div class="pf" [class.pf-invalid]="(brokerF.channel.errors && submitted) || (!brokerF.channel.valid && brokerF.channel.touched)">
+          <label>Channel <span class="req">*</span></label>
+          <p-dropdown
+            [options]="dropChannelList"
+            optionLabel="CodeDescription"
+            optionValue="Code" appendTo="body"
+            formControlName="channel"
+            placeholder="Select Channel"
+            [filter]="false"
+            styleClass="w-100"
+            (onChange)="onChangeChannel('change')">
+          </p-dropdown>
+          <small class="p-error" *ngIf="(brokerF.channel.errors && submitted) || (!brokerF.channel.valid && brokerF.channel.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
       </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Broker<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" [items]="dropBrokerList" [disabled]="checkBrokerDisabel()" bindValue="Code" bindLabel="CodeDescription"
-          formControlName="borker" (change)="onChangeBroker()">
-        </ng-select>
-        <div class="input-form-error" *ngIf="(brokerF.borker.errors && submitted) || (!brokerF.borker.valid && brokerF.borker.touched)">
-          <div *ngIf="brokerF.borker.errors?.required" class="error-text">
-            This field is required
-          </div>
+
+      <!-- Broker -->
+      <div class="col-12 col-md-4">
+        <div class="pf" [class.pf-invalid]="(brokerF.borker.errors && submitted) || (!brokerF.borker.valid && brokerF.borker.touched)">
+          <label>Broker <span class="req">*</span></label>
+          <p-dropdown
+            [options]="dropBrokerList"
+            optionLabel="CodeDescription"
+            optionValue="Code"
+            formControlName="borker" appendTo="body"
+            placeholder="Select Broker"
+            [filter]="true"
+            filterPlaceholder="Search broker..."
+            [disabled]="checkBrokerDisabel()"
+            styleClass="w-100"
+            (onChange)="onChangeBroker()">
+          </p-dropdown>
+          <small class="p-error" *ngIf="(brokerF.borker.errors && submitted) || (!brokerF.borker.valid && brokerF.borker.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
       </div>
+
     </div>
   </div>
 </form>

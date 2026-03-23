@@ -1,13 +1,70 @@
+<div class="cci-page">
 
-<app-orgin-country></app-orgin-country>
-<app-dest-country></app-dest-country>
-<app-customer-selection></app-customer-selection>
-<app-commodity-selection></app-commodity-selection>
-<ng-container *ngIf="showSection">
-  <app-sale-term [tableData]="saleTermComponentmTableData"></app-sale-term>
-</ng-container>
+  <!-- Section: Origin Country -->
+  <div class="sa-card">
+    <div class="sa-card-header">
+      <i class="fas fa-globe-asia sa-icon"></i>
+      <span class="sa-title">Origin Country</span>
+    </div>
+    <div class="sa-card-body">
+      <app-orgin-country></app-orgin-country>
+    </div>
+  </div>
 
-<div class="col-12" style="text-align:right">
-  <button nbButton (click)="onMoveBack()" status="danger" class="mx-2">Back</button>
-  <button nbButton (click)="onCheckPageValidation()" status="primary" class="mx-2">Next</button>
+  <!-- Section: Destination Country -->
+  <div class="sa-card">
+    <div class="sa-card-header">
+      <i class="fas fa-map-marker-alt sa-icon"></i>
+      <span class="sa-title">Destination Country</span>
+    </div>
+    <div class="sa-card-body">
+      <app-dest-country></app-dest-country>
+    </div>
+  </div>
+
+  <!-- Section: Customer Selection -->
+  <div class="sa-card">
+    <div class="sa-card-header">
+      <i class="fas fa-users sa-icon"></i>
+      <span class="sa-title">Customer Selection</span>
+    </div>
+    <div class="sa-card-body">
+      <app-customer-selection></app-customer-selection>
+    </div>
+  </div>
+
+  <!-- Section: Commodity Selection -->
+  <div class="sa-card">
+    <div class="sa-card-header">
+      <i class="fas fa-boxes sa-icon"></i>
+      <span class="sa-title">Commodity Selection</span>
+    </div>
+    <div class="sa-card-body">
+      <app-commodity-selection></app-commodity-selection>
+    </div>
+  </div>
+
+  <!-- Section: Tolerance (Sale Term) -->
+  <ng-container *ngIf="showSection">
+    <div class="sa-card">
+      <div class="sa-card-header">
+        <i class="fas fa-sliders-h sa-icon"></i>
+        <span class="sa-title">Tolerance Selection</span>
+      </div>
+      <div class="sa-card-body">
+        <app-sale-term [tableData]="saleTermComponentmTableData"></app-sale-term>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Page Footer: Back / Next -->
+  <div class="sa-page-footer">
+    <button pButton type="button" label="Back" icon="pi pi-arrow-left"
+      class="p-button-danger p-button-rounded p-button-sm"
+      (click)="onMoveBack()"></button>
+    <button pButton type="button" label="Next" icon="pi pi-arrow-right" iconPos="right"
+      class="p-button-rounded p-button-sm"
+      (click)="onCheckPageValidation()"></button>
+  </div>
+
 </div>

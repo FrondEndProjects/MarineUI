@@ -23,6 +23,8 @@ export class BankFormComponent implements OnInit {
   setDocvalue: any
   public bankForm!: FormGroup;
   public dropBankList: any[] = [];
+  showBillPanel = true;
+  showBankPanel =true;
   @ViewChild('formDirective') public bankFormDirective: NgForm;
   pattern = {
     0: {
@@ -61,6 +63,18 @@ export class BankFormComponent implements OnInit {
   ngOnInit(): void {
     this.onLoadDropdownList();
     console.log("Bank Form", this.quoteF)
+       const id = this.userDetails?.InsuranceId;
+
+
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
   }
 
   get quoteF() {
@@ -85,7 +99,11 @@ export class BankFormComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data?.Message === 'Success') {
-          this.dropBankList = data?.Result;
+          // this.dropBankList = data?.Result;
+             let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropBankList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropBankList, 'bank');
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadData();

@@ -1,28 +1,191 @@
-.vision-grid{
-  margin: 1rem 0 ;
-}
-.vision-grid .vision-grid-item {
- background-color: white;
- padding: .5rem;
-}
-.vision-grid-item-title{
-  padding: 0.5rem;
-  font-weight: 600;
+// ════════════════════════════════════════════════════════════════
+//  Coverage Info — Salama Theme
+// ════════════════════════════════════════════════════════════════
+:root {
+  --teal: rgb(30 64 175);
+  --teal-dark: #042181;
 }
 
-.example-margin {
-  margin: 0 10px;
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+$teal-light: #e8f4f6;
+$teal-xl: #f0f9fa;
+$gold: #E8A020;
+$white: #ffffff;
+$border: #c9dde2;
+$text: #1a2e35;
+$muted: #6b8c93;
+$error: #e53935;
+$page-bg: #eef2f5;
+$font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+:host {
+  display: block;
+  font-family: $font;
+  font-size: 13px;
+  color: $text;
 }
-.coverage-info{
-  background-color: white;
-    font-size: 90%;
-    border-radius: .5rem;
+
+* {
+  box-sizing: border-box;
 }
-.coverage-title{
-  padding: 1rem;
-  background-color: ghostwhite;
-  color: darkblue;
+
+.cov-page {
+  padding: 0.6rem;
+  max-width: 1280px;
+  margin: 0 auto;
 }
-.coverage-body{
-  padding: 1rem;
+
+// ── SA-CARD ──────────────────────────────────────────────────
+.sa-card {
+  background: $white;
+  border-radius: 8px;
+  border: 1px solid $border;
+  box-shadow: 0 1px 8px rgba(28, 121, 136, .10);
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+}
+
+.sa-card-header {
+  background: $teal;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem 0 0.85rem;
+  gap: 0.6rem;
+}
+
+.sa-icon {
+  font-size: 1rem;
+  color: $gold;
+  width: 20px;
+  text-align: center;
+}
+
+.sa-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $white;
+  letter-spacing: 0.2px;
+}
+
+.sa-card-body {
+  padding: 0.85rem 1rem;
+}
+
+// ── TOOLBAR ──────────────────────────────────────────────────
+.cov-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  justify-content: right;
+}
+
+.cov-search-wrap {
+  position: relative;
+  flex: 0 0 280px;
+  min-width: 180px;
+}
+
+.cov-search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.78rem;
+  color: $muted;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cov-search-input.p-inputtext,
+::ng-deep .cov-search-input.p-inputtext {
+  width: 100% !important;
+  height: 34px !important;
+  padding: 0 10px 0 30px !important;
+  font-family: $font !important;
+  font-size: 0.8rem !important;
+  border: 1px solid $border !important;
+  border-radius: 20px !important;
+  background: $white !important;
+  outline: none !important;
+  transition: border-color .2s, box-shadow .2s !important;
+
+  &:focus {
+    border-color: $teal !important;
+    box-shadow: 0 0 0 2px rgba(28, 121, 136, .14) !important;
+  }
+
+  &::placeholder {
+    color: $muted;
+  }
+}
+
+// ── PAGE FOOTER ──────────────────────────────────────────────
+.sa-page-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 0.25rem 0 0.4rem;
+}
+
+::ng-deep .sa-page-footer .p-button {
+  font-family: $font !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  height: 34px !important;
+  padding: 0 1.2rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  transition: background .18s, border-color .18s !important;
+
+  &:not(.p-button-danger) {
+    background: $teal !important;
+    border-color: $teal !important;
+    color: $white !important;
+
+    &:hover {
+      background: $teal-dark !important;
+      border-color: $teal-dark !important;
+    }
+  }
+
+  &.p-button-danger {
+    background: $error !important;
+    border-color: $error !important;
+    color: $white !important;
+
+    &:hover {
+      background: darken($error, 8%) !important;
+    }
+  }
+
+  .p-button-icon {
+    font-size: 0.78rem !important;
+  }
+}
+
+// ── MOBILE ───────────────────────────────────────────────────
+@media (max-width: 575px) {
+  .cov-page {
+    padding: 0.4rem;
+  }
+
+  .cov-search-wrap {
+    flex: 1 1 100%;
+  }
+
+  .sa-page-footer {
+    flex-direction: column;
+
+    ::ng-deep .p-button {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+  }
 }

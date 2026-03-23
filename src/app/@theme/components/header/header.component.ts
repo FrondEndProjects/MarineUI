@@ -100,6 +100,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // }
     // if(this.ProductId =='3')
   }
+  isActive(link: string): boolean {
+    if (!link) return false;
+    // This checks if the current URL starts with the menu link
+    return this.router.url.split('?')[0] === link || this.router.url.startsWith(link + '/');
+  }
+
+  // FIX: Robust check for parent menus
+  isParentActive(row: any): boolean {
+    if (!row.children) return false;
+    // Returns true if the current URL contains the path of any child
+    return row.children.some((child: any) => this.router.url.includes(child.link));
+  }
   ngAfterViewInit(): void {
     this.selectedBranch = this.userResponse?.BranchCode;
 
@@ -123,6 +135,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+       const id = this.userDetails?.Result?.InsuranceId;
+
+
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+      document.documentElement.style.setProperty('--teal-bg', '#4a6de0');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+      document.documentElement.style.setProperty('--teal-bg', '#23a0b5');
+    }
     this.currentTheme = this.themeService.currentTheme;
 
     this.userService.getUsers()
@@ -244,7 +270,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   //   }
 
   // }
-   toggleMobileMenu() {
+  toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
@@ -291,9 +317,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login/product`;
       // location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
       //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
-      location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
+      // location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
-      // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login/product`;
+      location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login/product`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login/product`;
       // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login/product`;
       //  location.href = `http://192.168.1.48:4900/#/auth/login/product`;
@@ -302,14 +328,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     else {
       // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
-      // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+      location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
       // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
       // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
       //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
-      location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
+      // location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
 
     }
     return false;
@@ -321,9 +347,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
       // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
       //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
-      location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
+      // location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
-      // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+      location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
       // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
       //  location.href = `http://192.168.1.48:4900/#/auth/login`;
@@ -333,9 +359,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
       // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
       //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
-      location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
+      // location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
-      // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+      location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
       // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
 
@@ -355,9 +381,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // location.href = `http://197.254.65.234:8080/Eway/#/auth/login/product`;
       // location.href = `http://193.203.162.152:8085/Eway/#/auth/login/product`;
       // location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
-      location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
+      // location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login/product`;
       // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login/product`;
-      // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+      location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
       // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
       // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
       //  window.location.href = `http://192.168.1.48:4600/#/auth/login/product`;
@@ -369,9 +395,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
       // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
       //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
-      location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
+      // location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
       // location.href = `http://102.69.166.162:8086/EwayB2C/#/`;
-      // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+      location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
       // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
       // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
 
@@ -395,9 +421,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
           // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
           //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
-          location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
+          // location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
           //  location.href = `http://192.168.1.48:4600/#/auth/login`;
-          // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+          location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
           // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
           // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
           // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
@@ -407,8 +433,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
           // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
           //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
-          location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
-          // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+          // location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
+          location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
           // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
           // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
           // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;
@@ -424,10 +450,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // location.href = `http://172.17.0.28:8080/EwayV2/#/auth/login`;
           // location.href = `http://197.254.65.234:8080/Eway/#/auth/login`;
           //  location.href = `http://193.203.162.152:8085/Eway/#/auth/login`;
-          location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
+          // location.href = `https://wecoreuat.wecorephoenixgroup.com/Eway/#/auth/login`;
           //  location.href = `http://192.168.1.48:4600/#/auth/login`;
           // location.href = `http://192.168.1.48:4600/#/auth/login`;
-          // location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
+          location.href = `https://selfservice.firstassurance.co.ke/Eway/#/auth/login`;
           // location.href = `http://192.168.24.73:8080/EwayV2/#/auth/login`;
           // location.href = `http://102.69.166.162:8086/EwayV1/#/auth/login`;
           // location.href = `http://192.168.24.74:8080/EwayV2/#/auth/login`;
@@ -437,8 +463,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // location.href = `http://172.17.0.28:8080/EwayB2CV1/#/`;
           // location.href = `http://197.254.65.234:8080/EwayB2C/#/`;
           //  location.href = `http://193.203.162.152:8085/EwayB2C/#/`;
-          location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
-          // location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
+          // location.href = `https://wecoreuat.wecorephoenixgroup.com/EwayB2C/#/`;
+          location.href = `https://selfservice.firstassurance.co.ke/EwayB2C/#/`;
           // location.href = `http://192.168.24.73:8080/EwayB2CV2/#/`;
           // location.href = `http://102.69.166.162:8086/EwayB2CV2/#/`;
           // location.href = `http://192.168.24.74:8080/EwayB2CV2/#/`;

@@ -1,9 +1,153 @@
-.header-details{
-  background-color: #eee;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+
+:host {
+  // --teal: #1B7B8A;
+  // --teal-d: #145f6c;
+  // other
+  // --teal: rgb(30 64 175);
+  // --teal-d: #042181;
+  --teal-l: #e8f4f6;
+  --gold: #E8A020;
+  --gold-l: #fff8ec;
+  --bg: #eef2f5;
+  --white: #fff;
+  --text: #1a2535;
+  --muted: #6b7a8d;
+  --border: #d0dce6;
+  --error: #e53e3e;
+  --r: 6px;
+  --rl: 10px;
+  --sh: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --tr: 0.18s ease;
 }
 
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+$teal-light:  #eef0ff;
+$teal-xlight: #f5f6ff;
+$gold: #E8A020;
+$gold-dark: #c8881a;
+$white: #ffffff;
+$border: #c9dde2;
+$text: #1a2e35;
+$muted: #6b8c93;
+$error: #e53935;
+$success: #2e7d32;
+$disabled-bg: #f4f8f9;
+$disabled-text: #9ab3b9;
+$page-bg: #eef2f5;
+// ── Typography ─────────────────────────────────────────────────
+$font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+/* ─── MODERN CONTAINER ─── */
+.modern-container {
+  max-width: 1200px;
+
+}
+
+/* ─── SECTION CARD ─── */
+.modern-card-wrapper {
+  background: var(--white);
+  border-radius: var(--rl);
+  padding: 0px;
+  box-shadow: var(--sh);
+  border: 1px solid #c8d8e4;
+  margin-bottom: 16px;
+  overflow: visible;
+
+  &.footer-card {
+    padding: 0;
+  }
+}
+
+/* ─── CARD HEADER (teal gradient) ─── */
+.maan-card-header {
+  background: linear-gradient(90deg, var(--teal), var(--teal-d));
+  padding: 11px 18px;
+  border-radius: var(--rl) var(--rl) 0 0;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ─── MODERN ACTIONS FOOTER ─── */
+.modern-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 var(--rl) var(--rl);
+}
+
+/* ─── STEP CARD SELECTION ─── */
+.container {
+  .product-container .card {
+    border: 2px solid var(--border);
+    border-radius: var(--rl);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-5px);
+      border-color: var(--teal);
+      box-shadow: 0 8px 24px rgba(27, 123, 138, 0.18);
+    }
+  }
+}
+
+/* ─── FILE UPLOAD AREA ─── */
+.imag-card {
+  border: 2px dashed var(--teal);
+  border-radius: var(--rl);
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--teal-l);
+  transition: background var(--tr), border-color var(--tr);
+
+  &:hover {
+    background: #d4ecef;
+    border-color: var(--teal-d);
+  }
+
+  .center {
+    color: var(--teal);
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+/* ─── QUOTE NO BADGE ─── */
+.quote-no-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-l);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8a5a00;
+}
+
+/* ─── OPEN COVER INFO ─── */
+.list-group-item-primary {
+  background: var(--teal-l);
+  border-color: var(--teal);
+  border-radius: var(--r);
+  padding: 12px 16px;
+  font-size: 13px;
+
+  .d-sm-flex>div:first-child {
+    font-weight: 600;
+    color: var(--teal-d);
+  }
+}
+
+/* ─── MODAL BACKDROP ─── */
 .modal-backdrop-custom {
   position: fixed;
   top: 0;
@@ -18,16 +162,60 @@
 }
 
 .modal-card {
-  width: 420px;
+  width: 460px;
   background: #fff;
-  padding: 24px;
+  padding: 28px;
   border-radius: 12px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border);
   animation: fadeInUp 0.3s ease-in-out;
-}
 
-.animate-fadeIn {
-  animation: fadeInUp 0.3s ease;
+  .progress-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    border-bottom: 1px dashed var(--border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .badge-done {
+      margin-left: auto;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 10px;
+      padding: 2px 9px;
+      font-size: 11px;
+    }
+
+    .spinner {
+      margin-left: auto;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  }
 }
 
 @keyframes fadeInUp {
@@ -41,15 +229,67 @@
     transform: translateY(0);
   }
 }
-.product-container .card {
-  transition: transform 0.2s ease-in-out;
-}
-.product-container .card:hover {
-  transform: translateY(-5px);
-  border-color: #007bff;
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.modern-card-wrapper:has(.overlay) {
-  transform: none !important;
-  transition: none !important;
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .modern-container {
+    padding: 0px 0px 30px;
+    width: 110%;
+    margin: 0px 0px 0px 4px;
+
+  }
+
+  .modal-card {
+    width: calc(100vw - 32px);
+    padding: 20px;
+  }
+}
+
+.salama-btn-outline {
+  border-color: $teal !important;
+  color: $teal !important;
+
+  &:hover {
+    background: $teal-light !important;
+  }
+}
+
+// =============================================
+// Salama Action Buttons
+// =============================================
+.salama-btn {
+  border-radius: 20px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  padding: 0.45rem 1.5rem !important;
+  border: none !important;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  &.btn-teal {
+    background: $teal !important;
+    color: #fff !important;
+
+    &:hover {
+      background: $teal-dark !important;
+    }
+  }
+
+  &.btn-gold {
+    background: $gold !important;
+    color: #fff !important;
+
+    &:hover {
+      background: $gold-dark !important;
+    }
+  }
 }

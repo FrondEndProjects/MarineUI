@@ -1,4 +1,4 @@
-<ul class="mynav">
+<!-- <ul class="mynav">
   <ng-container *ngFor="let item of stepperList;let i = index;let lastitem = last;">
     <li class="mynav-item"
     [style.width]="i !== stepperList.length - 1 ? '14%' : '-9'"
@@ -9,10 +9,26 @@
       </a>
     </li>
   </ng-container>
+</ul> -->
+<ul class="salama-stepper">
+  <li *ngFor="let item of stepperList; let i = index" class="step-item" [ngClass]="{ 'active': item.isActive }">
+
+    <div class="step-circle">
+      {{item.step}}
+    </div>
+
+    <span class="step-title">
+      {{item.name}}
+    </span>
+
+    <div class="step-line" *ngIf="i !== stepperList.length-1">
+    </div>
+
+  </li>
 </ul>
 <div class="stepper-components">
-  <ng-container >
+  <ng-container>
     <router-outlet></router-outlet>
   </ng-container>
-  
+
 </div>

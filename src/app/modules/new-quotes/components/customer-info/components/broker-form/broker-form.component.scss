@@ -1,0 +1,398 @@
+
+:root {
+  // salamaa
+  // --teal: #1B7B8A;
+  // --teal-d: #145f6c;
+  // others
+  //  --teal: rgb(30 64 175);
+  // --teal-d: #042181;
+  --teal-l: #e8f4f6;
+  --gold: #E8A020;
+  --bg: #eef2f5;
+  --white: #fff;
+  --text: #1a2535;
+  --muted: #6b7a8d;
+  --border: #d0dce6;
+  --error: #e53e3e;
+  --r: 6px;
+  --tr: 0.18s ease;
+}
+
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+$teal-d: var(--teal-dark);
+$teal-light:  #eef0ff;
+$teal-xlight: #f5f6ff;
+$gold: #E8A020;
+$gold-dark: #c8881a;
+$white: #ffffff;
+$border: #c9dde2;
+$text: #1a2e35;
+$muted: #6b8c93;
+$error: #e53935;
+$success: #2e7d32;
+$disabled-bg: #f4f8f9;
+$disabled-text: #9ab3b9;
+$page-bg: #eef2f5;
+// ── Typography ─────────────────────────────────────────────────
+$font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* ─── SECTION HEADER (Teal gradient band) ─── */
+.section-header {
+  background: linear-gradient(90deg, $teal, $teal-d) !important;
+  padding: 11px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px 10px 0 0;
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 11px;
+  }
+}
+
+/* ─── SECTION BODY ─── */
+.section-body {
+  padding: 16px 18px;
+}
+
+/* ─── FIELD WRAPPER ─── */
+.pf {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 0;
+
+  > label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .req {
+    color: var(--error);
+    margin-left: 1px;
+  }
+
+  &.pf-invalid {
+    .p-inputtext,
+    .p-dropdown,
+    textarea {
+      border-color: var(--error) !important;
+      background: #fff5f5 !important;
+    }
+  }
+}
+
+/* ─── PRIMENG OVERRIDES ─── */
+// Input text
+.p-inputtext {
+  font-size: 13px !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--r) !important;
+  color: var(--text) !important;
+  padding: 8px 11px !important;
+  transition: border-color var(--tr), box-shadow var(--tr) !important;
+
+  &:focus {
+    border-color: $teal !important;
+    box-shadow: 0 0 0 3px rgba(27, 123, 138, 0.1) !important;
+  }
+
+  &::placeholder { color: #b8c5d0 !important; }
+}
+
+// Dropdown
+.p-dropdown {
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--r) !important;
+  font-size: 13px !important;
+  min-height: 36px !important;
+
+  &:not(.p-disabled):hover {
+    border-color: $teal !important;
+  }
+
+  &.p-focus {
+    border-color: $teal !important;
+    box-shadow: 0 0 0 3px rgba(27, 123, 138, 0.1) !important;
+  }
+
+  .p-dropdown-label {
+    font-size: 13px !important;
+    color: var(--text) !important;
+    padding: 7px 11px !important;
+  }
+
+  .p-dropdown-label.p-placeholder {
+    color: #b8c5d0 !important;
+  }
+}
+
+// Dropdown panel
+.p-dropdown-panel {
+  .p-dropdown-item {
+    font-size: 12.5px !important;
+
+    &.p-highlight {
+      background: var(--teal-l) !important;
+      color: $teal-d !important;
+    }
+    &:hover { background: #f0f8f9 !important; }
+  }
+}
+
+// Textarea
+textarea.p-inputtextarea {
+  font-size: 13px !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--r) !important;
+  padding: 8px 11px !important;
+  min-height: 70px;
+  resize: vertical;
+
+  &:focus {
+    border-color: $teal !important;
+    box-shadow: 0 0 0 3px rgba(27, 123, 138, 0.1) !important;
+  }
+}
+
+// Input group / search button
+.p-inputgroup {
+  .p-inputtext { border-right: none !important; border-radius: var(--r) 0 0 var(--r) !important; }
+
+  .p-button.p-button-teal,
+  .p-button-teal {
+    background: $teal !important;
+    border-color: $teal !important;
+    border-radius: 0 var(--r) var(--r) 0 !important;
+    &:hover { background: $teal-d !important; }
+  }
+}
+
+// Error text
+.p-error {
+  font-size: 11px !important;
+  color: var(--error) !important;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+// Calendar
+.p-calendar {
+  width: 100%;
+
+  .p-inputtext {
+    border-radius: var(--r) !important;
+  }
+
+  .p-datepicker-trigger {
+    background: $teal !important;
+    border-color: $teal !important;
+    border-radius: 0 var(--r) var(--r) 0 !important;
+  }
+}
+
+// Buttons
+.p-button {
+  font-size: 13px !important;
+  border-radius: 20px !important;
+
+  &.p-button-primary {
+    background: linear-gradient(135deg, $teal, $teal-d) !important;
+    border-color: transparent !important;
+    box-shadow: 0 3px 8px rgba(27, 123, 138, 0.28) !important;
+
+    &:hover {
+      box-shadow: 0 5px 14px rgba(27, 123, 138, 0.42) !important;
+      transform: translateY(-1px);
+    }
+  }
+
+  &.p-button-warning {
+    background: linear-gradient(135deg, var(--gold), #c98a1a) !important;
+    border-color: transparent !important;
+  }
+}
+
+/* ─── CUSTOMER TYPE TOGGLE in header ─── */
+.htype {
+  display: flex;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 2px;
+  gap: 0;
+
+  input[type=radio] { display: none; }
+
+  label {
+    padding: 3px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    transition: all var(--tr);
+    white-space: nowrap;
+  }
+
+  input:checked + label {
+    background: var(--gold);
+    color: #fff;
+  }
+}
+
+/* ─── INLINE TYPE RADIO (modal) ─── */
+.htype-inline {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  input[type=radio] { display: none; }
+
+  label {
+    padding: 5px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: all var(--tr);
+  }
+
+  input:checked + label {
+    background: $teal;
+    border-color: $teal;
+    color: #fff;
+  }
+}
+
+/* ─── PANEL (collapsible) ─── */
+.panel {
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  margin-bottom: 10px;
+  overflow: hidden;
+
+  .panel-header {
+    background: var(--teal-l);
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+
+    .ph-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: $teal;
+    }
+  }
+
+  .panel-body {
+    padding: 14px;
+  }
+}
+
+/* ─── SECTION DIVIDER ─── */
+.sdiv {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 10px 0 4px;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed var(--border);
+  }
+}
+
+/* ─── YES/NO TOGGLE ─── */
+.yn-group {
+  display: flex;
+  gap: 0;
+  margin-top: 2px;
+
+  input[type=radio] { display: none; }
+
+  label {
+    padding: 5px 16px;
+    border: 1.5px solid var(--border);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all var(--tr);
+    white-space: nowrap;
+
+    &:first-of-type { border-radius: var(--r) 0 0 var(--r); }
+    &:last-of-type  { border-radius: 0 var(--r) var(--r) 0; border-left: none; }
+  }
+
+  input:checked + label {
+    background: $teal;
+    border-color: $teal;
+    color: #fff;
+  }
+}
+
+/* ─── OVERLAY POPUP ─── */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+
+  nb-card.popup-card {
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .section-body { padding: 12px; }
+  .section-header { padding: 10px 12px; }
+}

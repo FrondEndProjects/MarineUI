@@ -7,7 +7,6 @@ import * as moment from 'moment';
 import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
 import { SessionStorageService } from '../../../../shared/storage/session-storage.service';
 import { ModalDismissReasons, NgbDateAdapter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { table } from 'console';
 import { NbMenuService } from '@nebular/theme';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -52,7 +51,7 @@ export class NewOpenCoverComponent implements OnInit {
     btnStatus: 'primary',
     btnShow: true
   }
-  RefNo: any =null;
+  RefNo: any = null;
   MissippiCode: any;
   ProposalNo: any
   public routerBaseLink: any = '';
@@ -86,7 +85,7 @@ export class NewOpenCoverComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private currencyPipe: CurrencyPipe,
-        private authService: AuthService,
+    private authService: AuthService,
     private sessionStorageService: SessionStorageService,
     private dateAdapter: NgbDateAdapter<string>
   ) {
@@ -103,21 +102,30 @@ export class NewOpenCoverComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    const id = this.userDetails?.InsuranceId;
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
     this.activatedRoute.queryParams.subscribe(params => {
       this.ProposalNo = params['ProposalNo'];
       if (!this.ProposalNo) {
         this.onCreateFormControl();
         sessionStorage.removeItem('ProposalNo');
         this.RefNo = null;
-        this.proposalNo =null;
-        this.MissippiCode =null;
+        this.proposalNo = null;
+        this.MissippiCode = null;
       }
     });
 
     this.authService.branchCode$.subscribe((branchCode) => {
       if (branchCode) {
-        this.onGetBrokerDetailsDropdownList(branchCode); 
+        this.onGetBrokerDetailsDropdownList(branchCode);
       }
     });
 
@@ -182,12 +190,14 @@ export class NewOpenCoverComponent implements OnInit {
       "day": newDate.getDate()
     }
     this.minDate = ngbDate;
+
   }
   ngAfterViewInit() {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.newQuoteF.selectBranch.setValue(this.userDetails?.BranchCode);
     }, 2000);
+
   }
 
   // onChangeBranch() {
@@ -221,13 +231,13 @@ export class NewOpenCoverComponent implements OnInit {
       currency: [null, Validators.required],
       // sharedPercentage: ['100', Validators.required],
       // noOfCoInsuComp: ['0'],
-      sharedPercentage: ['100',  [
+      sharedPercentage: ['100', [
         Validators.required,
         Validators.maxLength(3),
         Validators.max(100),
         Validators.pattern(/^\d{1,3}$/)
-      ] ],
-      noOfCoInsuComp: ['0',[
+      ]],
+      noOfCoInsuComp: ['0', [
         Validators.maxLength(3),
         Validators.max(100),
         Validators.pattern(/^\d{1,3}$/)
@@ -356,7 +366,7 @@ export class NewOpenCoverComponent implements OnInit {
     );
   }
   onGetBrokerDetailsDropdownList(code) {
- 
+
     const urlLink = `${this.ApiUrl1}opencover/dropdown/brokerdetails`;
     const reqData = {
       'BranchCode': code,
@@ -687,11 +697,11 @@ export class NewOpenCoverComponent implements OnInit {
   }
   setFormValues() {
     this.proposalNo = this.editData?.ProposalNo;
-    if(this.proposalNo){
+    if (this.proposalNo) {
       this.RefNo = this.editData?.RefNo
     }
-    else{ 
-      this.RefNo =''
+    else {
+      this.RefNo = ''
     }
     this.customerId = this.editData?.CustomerId;
     this.newQuoteF.businessType.setValue(this.editData?.BusinessType.toString());

@@ -1,479 +1,389 @@
 <form [formGroup]="customerForm" #formDirective="ngForm">
-  <div class="row">
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="start-line">
-        <nb-icon icon="person-outline"></nb-icon>
-        Customer Details
-      </div>
+
+  <!-- ─── SECTION HEADER ─── -->
+  <div class="section-header">
+    <div class="section-icon"><i class="fas fa-user"></i></div>
+    <div>
+      <div class="section-title">Customer Details</div>
     </div>
-    <!-- <div class="row mb-3"> -->
-      <div class="col-12 col-md-8 col-lg-8 text-end">
-        <div class="input-control-container">
-          <!-- <label class="input-form-label">Cutomer Type<span class="text-required">*</span></label> -->
-          <div class="input-form-radio-box">
-            <div class="radio-toolbar">
-              <input id="Individual" type="radio" name="customerType" value="Individual" formControlName="customerType">
-              <label for="Individual">Individual</label>
-              <input type="radio" id="Corporate" name="customerType" value="Corporate" formControlName="customerType">
-              <label for="Corporate">Corporate</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    <!-- </div> -->
+    <div class="htype ms-auto">
+      <input type="radio" id="ct-ind" name="customerType" value="Individual" formControlName="customerType">
+      <label for="ct-ind">Individual</label>
+      <input type="radio" id="ct-corp" name="customerType" value="Corporate" formControlName="customerType">
+      <label for="ct-corp">Corporate</label>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Title<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" [items]="dropTitleList" bindValue="CodeDescription"
-          bindLabel="CodeDescription" formControlName="title">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(customerF.title.errors && submitted) || (!customerF.title.valid && customerF.title.touched)">
-          <div *ngIf="customerF.title.errors?.required" class="error-text">
-            This field is required
-          </div>
+
+  <!-- ─── FORM BODY ─── -->
+  <div class="section-body">
+    <div class="row g-3">
+
+      <!-- Title -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.title.errors && submitted) || (!customerF.title.valid && customerF.title.touched)">
+          <label>Title <span class="req">*</span></label>
+          <p-dropdown [options]="dropTitleList" optionLabel="CodeDescription" optionValue="CodeDescription"
+            formControlName="title" placeholder="Select Title" styleClass="w-100">
+          </p-dropdown>
+          <small class="p-error"
+            *ngIf="(customerF.title.errors && submitted) || (!customerF.title.valid && customerF.title.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
       </div>
-    </div>
-    <!-- <div class="col-12 col-md-4 col-lg-4">
-      <div class="customer-search-container">
-        <div class="input-control-container">
-          <label class="input-form-label">Name<span class="text-required">*</span></label>
-          <div class="currency-flex">
-            <div class="currrency-drop1 input-form-box">
-              <input type="text" class="input-form-control2 with-icon" [(ngModel)]="filterValue" formControlName="name"
-                placeholder="Enter Customer Name">
-            </div>
-            <div class="currrency-dollar">
-              <button class="btn btn-secondary" (click)="getCustomerAltList(myModal2)"
-                style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
-            </div>
+
+      <!-- Name / Company Name with search button -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.name.errors && submitted) || (!customerF.name.valid && customerF.name.touched)">
+          <label>
+            <span *ngIf="customerForm.controls.customerType.value=='Corporate'">Company Name</span>
+            <span *ngIf="customerForm.controls.customerType.value!='Corporate'">Name</span>
+            <span class="req"> *</span>
+          </label>
+          <!-- Individual: input + search button -->
+          <div *ngIf="customerForm.controls.customerType.value!='Corporate'" class="p-inputgroup">
+            <input pInputText [(ngModel)]="filterValue" formControlName="name" placeholder="Enter Customer Name"
+              class="p-inputtext-sm" />
+            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-teal p-button-sm"
+              (click)="getCustomerAltList(myModal2)"></button>
           </div>
-          <div class="input-form-error"
+          <!-- Corporate: plain input -->
+          <input *ngIf="customerForm.controls.customerType.value=='Corporate'" pInputText [(ngModel)]="filterValue"
+            formControlName="name" placeholder="Enter Company Name" class="w-100 p-inputtext-sm" />
+          <small class="p-error"
             *ngIf="(customerF.name.errors && submitted) || (!customerF.name.valid && customerF.name.touched)">
-            <div *ngIf="customerF.name.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
+      </div>
 
+      <!-- Core App Code -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf">
+          <label>Core App Code</label>
+          <input pInputText formControlName="coreAppcode" placeholder="Enter core app code"
+            class="w-100 p-inputtext-sm" />
+        </div>
       </div>
-    </div> -->
 
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="customer-search-container">
-        <div class="input-control-container">
-          <label *ngIf="this.customerForm.controls.customerType.value=='Individual'" class="input-form-label">Name<span
-              class="text-required">*</span></label>
-          <label *ngIf="this.customerForm.controls.customerType.value=='Corporate'" class="input-form-label">Company
-            Name<span class="text-required">*</span></label>
-          <div class="currency-flex">
-            <div class="currrency-drop1 input-form-box">
-              <input *ngIf="this.customerForm.controls.customerType.value=='Individual'" type="text"
-                class="input-form-control2 with-icon" [(ngModel)]="filterValue" formControlName="name"
-                placeholder="Enter Customer Name">
-              <input *ngIf="this.customerForm.controls.customerType.value=='Corporate'" type="text"
-                class="input-form-control with-icon1" placeholder="Enter Customer Name" [(ngModel)]="filterValue"
-                formControlName="name" placeholder="">
-            </div>
-            <div *ngIf="this.customerForm.controls.customerType.value=='Individual'" class="currrency-dollar">
-              <button class="btn btn-secondary" (click)="getCustomerAltList(myModal2)"
-                style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
-            </div>
-          </div>
-          <div class="input-form-error"
-            *ngIf="(customerF.name.errors && submitted) || (!customerF.name.valid && customerF.name.touched)">
-            <div *ngIf="customerF.name.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-          <!-- <div class="customer-search-box" *ngIf="isCustomerTable"> -->
-          <!-- <div class="customersearch" *ngIf="isCustomerTable">
-          
-        </div> -->
+      <!-- Address 1 -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.Address1.errors && submitted) || (!customerF.Address1.valid && customerF.Address1.touched)">
+          <label>Address 1 <span class="req">*</span></label>
+          <textarea pInputTextarea formControlName="Address1" rows="2" placeholder="Enter address line 1" class="w-100"
+            autoResize="true"></textarea>
+          <small class="p-error"
+            *ngIf="(customerF.Address1.errors && submitted) || (!customerF.Address1.valid && customerF.Address1.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
+      </div>
 
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Core app code</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="coreAppcode">
+      <!-- Address 2 -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf">
+          <label>Address 2</label>
+          <textarea pInputTextarea formControlName="Address2" rows="2" placeholder="Enter address line 2" class="w-100"
+            autoResize="true"></textarea>
         </div>
       </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="input-control-container">
-        <label class="input-form-label">Address 1<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <textarea type="text" class="input-form-control without-icon" formControlName="Address1"></textarea>
-        </div>
-        <div class="input-form-error"
-          *ngIf="(customerF.Address1.errors && submitted) || (!customerF.Address1.valid && customerF.Address1.touched)">
-          <div *ngIf="customerF.Address1.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="input-control-container">
-        <label class="input-form-label">Address 2</label>
-        <div class="input-form-box">
-          <textarea type="text" class="input-form-control without-icon" formControlName="Address2"></textarea>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="input-control-container">
-        <label class="input-form-label">P.O Box<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="poBox">
-        </div>
-        <div class="input-form-error"
-          *ngIf="(customerF.poBox.errors && submitted) || (!customerF.poBox.valid && customerF.poBox.touched)">
-          <div *ngIf="customerF.poBox.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="input-control-container">
-        <label class="input-form-label">City<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" [items]="dropCityList" bindValue="Code"
-          bindLabel="CodeDescription" formControlName="city">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(customerF.city.errors && submitted) || (!customerF.city.valid && customerF.city.touched)">
-          <div *ngIf="customerF.city.errors?.required" class="error-text">
-            This field is required
-          </div>
+      <!-- P.O. Box -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.poBox.errors && submitted) || (!customerF.poBox.valid && customerF.poBox.touched)">
+          <label>P.O Box <span class="req">*</span></label>
+          <input pInputText formControlName="poBox" placeholder="Enter P.O Box" class="w-100 p-inputtext-sm" />
+          <small class="p-error"
+            *ngIf="(customerF.poBox.errors && submitted) || (!customerF.poBox.valid && customerF.poBox.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
       </div>
-    </div>
 
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="input-control-container">
-        <label class="input-form-label">Mobile Number <span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" maxlength="10" formControlName="mobileNo">
-        </div>
-        <div class="input-form-error"
-          *ngIf="(customerF.mobileNo.errors && submitted) || (!customerF.mobileNo.valid && customerF.mobileNo.touched)">
-          <div *ngIf="customerF.mobileNo.errors?.required" class="error-text">
-            This field is required
-          </div>
+      <!-- City -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.city.errors && submitted) || (!customerF.city.valid && customerF.city.touched)">
+          <label>City <span class="req">*</span></label>
+          <p-dropdown [options]="dropCityList" optionLabel="CodeDescription" optionValue="Code" formControlName="city"
+            placeholder="Select City" [filter]="true" filterPlaceholder="Search city..." styleClass="w-100">
+          </p-dropdown>
+          <small class="p-error"
+            *ngIf="(customerF.city.errors && submitted) || (!customerF.city.valid && customerF.city.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
       </div>
-    </div>
 
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="input-control-container">
-        <label *ngIf="this.userDetails.InsuranceId =='100020'" class="input-form-label">KRA PIN<span
-            class="text-required">*</span></label>
-        <label *ngIf="this.userDetails.InsuranceId !='100020'" class="input-form-label">VAT Registraion No<span
-            class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="customerVat">
-        </div>
-        <div class="input-form-error"
-          *ngIf="(customerF.customerVat.errors && submitted) || (!customerF.customerVat.valid && customerF.customerVat.touched)">
-          <div *ngIf="customerF.customerVat.errors?.required" class="error-text">
-            This field is required
-          </div>
+      <!-- Mobile Number -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.mobileNo.errors && submitted) || (!customerF.mobileNo.valid && customerF.mobileNo.touched)">
+          <label>Mobile Number <span class="req">*</span></label>
+          <input pInputText formControlName="mobileNo" maxlength="10" placeholder="Enter mobile number"
+            class="w-100 p-inputtext-sm" />
+          <small class="p-error"
+            *ngIf="(customerF.mobileNo.errors && submitted) || (!customerF.mobileNo.valid && customerF.mobileNo.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
       </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4 mt-2">
-      <div class="input-control-container">
-        <label class="input-form-label">Email<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="email">
-        </div>
-        <div class="input-form-error"
-          *ngIf="(customerF.email.errors && submitted) || (!customerF.email.valid && customerF.email.touched)">
-          <div *ngIf="customerF.email.errors?.required" class="error-text">
-            This field is required
-          </div>
+
+      <!-- KRA PIN / VAT Reg No -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.customerVat.errors && submitted) || (!customerF.customerVat.valid && customerF.customerVat.touched)">
+          <label>
+            <span *ngIf="userDetails.InsuranceId =='100020'">KRA PIN</span>
+            <span *ngIf="userDetails.InsuranceId !='100020'">VAT Registration No</span>
+            <span class="req"> *</span>
+          </label>
+          <input pInputText formControlName="customerVat" placeholder="Enter VAT / KRA PIN"
+            class="w-100 p-inputtext-sm" />
+          <small class="p-error"
+            *ngIf="(customerF.customerVat.errors && submitted) || (!customerF.customerVat.valid && customerF.customerVat.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
         </div>
       </div>
+
+      <!-- Email -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf"
+          [class.pf-invalid]="(customerF.email.errors && submitted) || (!customerF.email.valid && customerF.email.touched)">
+          <label>Email <span class="req">*</span></label>
+          <input pInputText formControlName="email" placeholder="Enter email address" class="w-100 p-inputtext-sm" />
+          <small class="p-error"
+            *ngIf="(customerF.email.errors && submitted) || (!customerF.email.valid && customerF.email.touched)">
+            <i class="pi pi-exclamation-circle"></i> This field is required
+          </small>
+        </div>
+      </div>
+
     </div>
   </div>
 </form>
 
 
+<!-- ─── CUSTOMER SEARCH MODAL ─── -->
 <ng-template #myModal2 let-modal>
   <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel" *ngIf="!editSection">Select Customer</h5>
-      <h5 class="modal-title" id="exampleModalLabel" *ngIf="editSection">Customer Details</h5>
-      <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
-        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-header" style="background:linear-gradient(90deg,#1B7B8A,#145f6c); color:#fff;">
+      <h5 style="color:#fff;" class="modal-title mb-0">
+        <i class="fas fa-users me-2"></i>
+        <span *ngIf="!editSection">Select Customer</span>
+        <span *ngIf="editSection">Customer Details</span>
+      </h5>
+      <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
       <ng-container *ngIf="!editSection">
-        <div class="row">
-          <div class="col-md-4 col-lg-4"></div>
-          <div class="col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <!-- <label class="input-form-label">Search</label> -->
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" placeholder="Search"
-                  [(ngModel)]="filterValue">
-              </div>
-            </div>
+        <!-- <div class="row mb-3">
+          <div class="col-md-6 offset-md-3">
+            <span class="p-input-icon-left w-100">
+              <i class="pi pi-search"></i>
+              <input pInputText [(ngModel)]="filterValue" placeholder="Search customers..." class="w-100" />
+            </span>
           </div>
-          <div class="col-md-4 col-lg-4 mt-1" *ngIf="productId!='11' && productId!=11">
-            <div><button class="btn btn-primary" (click)="editSection=!editSection"><i
-                  class="fa fa-plus"></i>&nbsp;Create
-                Customer</button></div>
+          <div class="col-md-3 d-flex align-items-end" *ngIf="productId!='11' && productId!=11">
+            <button pButton pRipple icon="pi pi-plus" label="Create Customer"
+              class="p-button-sm p-button-outlined" (click)="editSection=!editSection"></button>
+          </div>
+        </div> -->
+        <div class="row mb-3 align-items-end">
+          <div class="col-md-6 offset-md-3">
+            <span class="p-input-icon-left w-100 customer-search">
+              <!-- <i class="pi pi-search"></i> -->
+              <input pInputText [(ngModel)]="filterValue" placeholder="Search customers..." class="w-100" />
+            </span>
+          </div>
+
+          <div class="col-md-3 d-flex align-items-end" *ngIf="productId!='11' && productId!=11">
+            <button pButton pRipple icon="pi pi-plus" label="Create Customer" class="p-button-sm p-button-outlined"
+              (click)="editSection=!editSection">
+            </button>
           </div>
         </div>
-
         <div class="row">
-          <div class="col-12 col-lg-12 col-md-12 col-xl-12">
+          <div class="col-12">
             <ng-container *ngIf="tableData.length!=0">
               <app-material-table [cols]="columnHeader" [customerId]="getCustomerId()" [data]="tableData"
                 [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event,modal)">
               </app-material-table>
             </ng-container>
             <ng-container *ngIf="tableData.length==0">
-              <div class="text-center">
+              <div class="text-center py-4 text-muted">
+                <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
                 No Customer Available
               </div>
             </ng-container>
           </div>
         </div>
       </ng-container>
+
       <ng-container *ngIf="editSection">
+        <!-- Customer Type Radio -->
         <div class="row mb-3">
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Cutomer Type<span class="text-required">*</span></label>
-              <div class="input-form-radio-box">
-                <div class="radio-toolbar">
-                  <input id="Individual1" type="radio" name="customerType" value="Individual"
-                    [(ngModel)]="customerType">
-                  <label for="Individual1">Individual</label>
-                  <input type="radio" id="Corporate1" name="customerType" value="Corporate" [(ngModel)]="customerType">
-                  <label for="Corporate1">Corporate</label>
-                </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf">
+              <label>Customer Type <span class="req">*</span></label>
+              <div class="htype-inline">
+                <input id="Individual1" type="radio" name="customerType" value="Individual" [(ngModel)]="customerType">
+                <label for="Individual1">Individual</label>
+                <input type="radio" id="Corporate1" name="customerType" value="Corporate" [(ngModel)]="customerType">
+                <label for="Corporate1">Corporate</label>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Title<span class="text-required">*</span></label>
-              <ng-select placeholder="Select" class="input-form-select" [items]="dropTitleList"
-                bindValue="CodeDescription" bindLabel="CodeDescription" [(ngModel)]="title">
-              </ng-select>
-              <div class="input-form-error" *ngIf="titleError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Name<span class="text-required">*</span></label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="customerName"
-                  placeholder="Enter Customer Name">
-              </div>
 
-              <div class="input-form-error" *ngIf="customerNameError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label *ngIf="customerType!='Corporate'" class="input-form-label">Name<span
-                  class="text-required">*</span></label>
-              <label *ngIf="customerType=='Corporate'" class="input-form-label">Company Name<span
-                  class="text-required">*</span></label>
-              <div class="currency-flex">
-                <div class="currrency-drop1 input-form-box">
-                  <input *ngIf="customerType!='Corporate'" type="text" class="input-form-control2 with-icon"
-                    maxlength="100" [(ngModel)]="customerName" placeholder="Enter Customer Name">
-                  <input *ngIf="customerType=='Corporate'" type="text" class="input-form-control with-icon1"
-                    [(ngModel)]="filterValue" placeholder="">
-                </div>
-                <div *ngIf="customerType!='Corporate'" class="currrency-dollar">
-                  <button class="btn btn-secondary" (click)="onSearchCustomer()"
-                    style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
-                </div>
-              </div>
-
-              <div class="input-form-error" *ngIf="customerNameError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
+        <div class="row g-3">
+          <!-- Title -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf" [class.pf-invalid]="titleError">
+              <label>Title <span class="req">*</span></label>
+              <p-dropdown [options]="dropTitleList" optionLabel="CodeDescription" optionValue="CodeDescription"
+                [(ngModel)]="title" placeholder="Select Title" styleClass="w-100"></p-dropdown>
+              <small class="p-error" *ngIf="titleError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control2 with-icon" maxlength="100" [(ngModel)]="coreAppcode"
-                  placeholder="Enter Core App Code">
+          <!-- Name -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf" [class.pf-invalid]="customerNameError">
+              <label>
+                <span *ngIf="customerType!='Corporate'">Name</span>
+                <span *ngIf="customerType=='Corporate'">Company Name</span>
+                <span class="req"> *</span>
+              </label>
+              <div *ngIf="customerType!='Corporate'" class="p-inputgroup">
+                <input pInputText maxlength="100" [(ngModel)]="customerName" placeholder="Enter Name"
+                  class="p-inputtext-sm" />
+                <button pButton pRipple type="button" icon="pi pi-search" class="p-button-teal p-button-sm"
+                  (click)="onSearchCustomer()"></button>
               </div>
-
-
-              <div class="input-form-error" *ngIf="coreAppcodeError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
+              <input *ngIf="customerType=='Corporate'" pInputText [(ngModel)]="filterValue" placeholder="Company Name"
+                class="w-100 p-inputtext-sm" />
+              <small class="p-error" *ngIf="customerNameError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">City<span class="text-required">*</span></label>
-              <ng-select placeholder="Select" class="input-form-select" [items]="dropCityList" bindValue="Code"
-                bindLabel="CodeDescription" [(ngModel)]="cityValue">
-              </ng-select>
-              <div class="input-form-error" *ngIf="cityNameError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
+          <!-- Core App Code -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf" [class.pf-invalid]="coreAppcodeError">
+              <label>Core App Code <span class="req">*</span></label>
+              <input pInputText maxlength="100" [(ngModel)]="coreAppcode" placeholder="Enter Core App Code"
+                class="w-100 p-inputtext-sm" />
+              <small class="p-error" *ngIf="coreAppcodeError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">P.O Box<span class="text-required">*</span></label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control2 without-icon" maxlength="6" [(ngModel)]="poBox"
-                  placeholder="Enter Post Box Number">
-              </div>
-              <div class="input-form-error" *ngIf="poBoxError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
+          <!-- City -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf" [class.pf-invalid]="cityNameError">
+              <label>City <span class="req">*</span></label>
+              <p-dropdown [options]="dropCityList" optionLabel="CodeDescription" optionValue="Code"
+                [(ngModel)]="cityValue" placeholder="Select City" [filter]="true" styleClass="w-100"></p-dropdown>
+              <small class="p-error" *ngIf="cityNameError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Mobile Number<span class="text-required">*</span></label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control2 without-icon" maxlength="10" [(ngModel)]="mobileNo"
-                  placeholder="Enter Mobile Number">
-              </div>
-              <div class="input-form-error" *ngIf="mobileNoError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
+          <!-- P.O Box -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf" [class.pf-invalid]="poBoxError">
+              <label>P.O Box <span class="req">*</span></label>
+              <input pInputText maxlength="6" [(ngModel)]="poBox" placeholder="P.O Box" class="w-100 p-inputtext-sm" />
+              <small class="p-error" *ngIf="poBoxError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Email Id<span class="text-required">*</span></label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control2 without-icon" maxlength="50" [(ngModel)]="emailId"
-                  placeholder="Enter Email ID">
-              </div>
-              <div class="input-form-error" *ngIf="emailIdError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
+          <!-- Mobile -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf" [class.pf-invalid]="mobileNoError">
+              <label>Mobile Number <span class="req">*</span></label>
+              <input pInputText maxlength="10" [(ngModel)]="mobileNo" placeholder="Mobile Number"
+                class="w-100 p-inputtext-sm" />
+              <small class="p-error" *ngIf="mobileNoError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Customer VAT <i>(Registration No)</i> </label>
-              <div class="input-form-box">
-                <input type="text" class="input-form-control2 without-icon" [(ngModel)]="customerVat"
-                  placeholder="Enter Customer VAt Number">
-              </div>
+          <!-- Email -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf" [class.pf-invalid]="emailIdError">
+              <label>Email ID <span class="req">*</span></label>
+              <input pInputText maxlength="50" [(ngModel)]="emailId" placeholder="Email ID"
+                class="w-100 p-inputtext-sm" />
+              <small class="p-error" *ngIf="emailIdError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Address 1</label>
-              <div class="input-form-box">
-                <textarea type="text" class="input-form-control2 without-icon" [(ngModel)]="Address1"></textarea>
-              </div>
+          <!-- VAT -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf">
+              <label>Customer VAT <em>(Reg No)</em></label>
+              <input pInputText [(ngModel)]="customerVat" placeholder="VAT Number" class="w-100 p-inputtext-sm" />
             </div>
           </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <label class="input-form-label">Address 2</label>
-              <div class="input-form-box">
-                <textarea type="text" class="input-form-control2 without-icon" [(ngModel)]="Address2"></textarea>
-              </div>
+          <!-- Address 1 -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf">
+              <label>Address 1</label>
+              <textarea pInputTextarea [(ngModel)]="Address1" rows="2" class="w-100" autoResize="true"></textarea>
+            </div>
+          </div>
+          <!-- Address 2 -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="pf">
+              <label>Address 2</label>
+              <textarea pInputTextarea [(ngModel)]="Address2" rows="2" class="w-100" autoResize="true"></textarea>
             </div>
           </div>
         </div>
       </ng-container>
-
     </div>
-    <div class="modal-footer">
 
-      <button type="button" class="btn btn-secondary" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Close</button>
-      <button type="button" class="btn btn-primary" *ngIf="editSection" (click)="onsubmit()">Submit</button>
+    <div class="modal-footer">
+      <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-secondary p-button-sm p-button-outlined"
+        (click)="modal.dismiss('Cross click')"></button>
+      <button pButton pRipple label="Submit" icon="pi pi-check" class="p-button-primary p-button-sm" *ngIf="editSection"
+        (click)="onsubmit()"></button>
     </div>
   </div>
 </ng-template>
 
 
-
+<!-- ─── CUSTOMER SEARCH LIST MODAL ─── -->
 <ng-template #myModal4 let-modal>
   <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Cusotmer Search</h5>
-      <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
-        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-header" style="background:linear-gradient(90deg,#1B7B8A,#145f6c); color:#fff;">
+      <h5 class="modal-title mb-0"><i class="fas fa-search me-2"></i>Customer Search</h5>
+      <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      <ng-container>
-        <div class="row">
-          <div class="col-md-4 col-lg-4"></div>
-          <div class="col-md-4 col-lg-4">
-            <div class="input-control-container">
-              <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" placeholder="Search"
-                  [(ngModel)]="filterValue">
-              </div>
+      <div class="row mb-3">
+        <div class="col-12 col-md-8 offset-md-2">
+          <span class="p-input-icon-left w-100">
+            <i class="pi pi-search"></i>
+            <input pInputText [(ngModel)]="filterValue" placeholder="Search..." class="w-100" />
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ng-container *ngIf="searchList.length!=0">
+            <app-material-table [cols]="columnHeader1" [customerId]="getCustomerId()" [data]="searchList"
+              [filterValue]="filterValue" (onSelectCustomer)="selectProduct($event,modal)">
+            </app-material-table>
+          </ng-container>
+          <ng-container *ngIf="searchList.length==0">
+            <div class="text-center py-4 text-muted">
+              <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+              No Customer Available
             </div>
-          </div>
-          <div class="col-md-4 col-lg-4 mt-1" *ngIf="productId!='11' && productId!=11">
-          </div>
+          </ng-container>
         </div>
-        <div class="row">
-          <div class="col-12 col-lg-12 col-md-12 col-xl-12">
-            <ng-container *ngIf="searchList.length!=0">
-              <app-material-table [cols]="columnHeader1" [customerId]="getCustomerId()" [data]="searchList"
-                [filterValue]="filterValue" (onSelectCustomer)="selectProduct($event,modal)">
-              </app-material-table>
-            </ng-container>
-            <ng-container *ngIf="searchList.length==0">
-              <div class="text-center">
-                No Customer Available
-              </div>
-            </ng-container>
-
-          </div>
-        </div>
-      </ng-container>
-
+      </div>
     </div>
     <div class="modal-footer">
+      <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-secondary p-button-sm p-button-outlined"
+        (click)="modal.dismiss('Cross click')"></button>
     </div>
   </div>
 </ng-template>

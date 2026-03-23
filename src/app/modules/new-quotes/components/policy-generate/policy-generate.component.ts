@@ -132,6 +132,17 @@ export class PolicyGenerateComponent implements OnInit {
       }
 
     }
+    const id = this.userDetails?.InsuranceId;
+
+  if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
   }
   get premiumF() {
     return this.premiumForm?.controls;
@@ -468,7 +479,7 @@ export class PolicyGenerateComponent implements OnInit {
     //   this.payee_name = "None"; this.payment_type = '1'; this.pay_amount = 0; this.inserPyment()
     // }
     // else {
-      this.onFinalProceed('submit');
+    this.onFinalProceed('submit');
     // }
     // if (this.generateCerti == 'Y' && (this.payment_type != null && this.payment_type != '' && this.pay_amount != '0' && this.pay_amount != 0)) {
     //   this.onschedule();

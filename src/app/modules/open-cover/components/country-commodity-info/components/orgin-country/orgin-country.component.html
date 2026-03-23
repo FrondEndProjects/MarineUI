@@ -1,129 +1,98 @@
+<div class="country-picker-grid">
 
-<div class="vision-grid vision-grid-column-3 country-selection my-3">
-  <div class="vision-grid-item">
-    <div class="vision-grid-item-title">
-      Country Of Origin <small class="text-dark"><i>(Excluded Orgin Country)</i></small>
+  <!-- LEFT: Excluded -->
+  <div class="cp-panel">
+    <div class="cp-panel-header">
+      Country Of Origin <small><i>(Excluded)</i></small>
     </div>
-    <div class="vision-grid-item-body">
-      <div class="input-control-container">
-        <div class="input-form-box">
-          <span class="input-form-icon">
-            <i class="fas fa-search"></i>
-          </span>
-          <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="excludedCountrySearch" placeholder="search...">
-        </div>
-      </div>
-      <ul class="list-group checklist list-group-flush">
-        <ng-container *ngFor="let item of excludedCountry | countryFilter:excludedCountrySearch : excludedCountry">
-          <label class="custom-checkbox-container">
-            <input type="checkbox" [(ngModel)]="item.isOrigin" [value]="item.CodeValue">
-            <div class="description">
-              <div class="description-name">
-                <span>
-                  {{item?.CodeDescription}}
-                </span>
-              </div>
-            </div>
-          </label>
-        </ng-container>
-      </ul>
+    <div class="cp-search-wrap">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" [(ngModel)]="excludedCountrySearch" placeholder="Search country..." />
     </div>
+    <ul class="cp-list">
+      <li class="cp-list-item"
+          *ngFor="let item of excludedCountry | countryFilter:excludedCountrySearch : excludedCountry">
+        <input type="checkbox" [(ngModel)]="item.isOrigin" [value]="item.CodeValue" />
+        <span>{{ item?.CodeDescription }}</span>
+      </li>
+    </ul>
   </div>
-  <div class="vision-grid-item">
-    <div class="vision-grid-item-title">
-      Actions
-    </div>
-    <div class="vision-grid-item-body">
-      <div class="exchange-icon">
 
-      </div>
-      <div class="action-btns">
-        <div class="action-btn-item" (click)="onSelected('left')">
-          <i class="fas fa-chevron-left"></i>
-        </div>
-        <div class="action-btn-item">
-          <i class="fas fa-exchange-alt"></i>
-        </div>
-        <div class="action-btn-item" (click)="onSelected('right')">
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </div>
-      <div class="action-btns">
-        <div class="action-btn-item" (click)="onMoveAll('left')">
-          <i class="fas fa-angle-double-left"></i>
-        </div>
-        <div class="action-btn-item">
-          <i class="fas fa-exchange-alt"></i>
-        </div>
-        <div class="action-btn-item" (click)="onMoveAll('right')">
-          <i class="fas fa-angle-double-right"></i>
-        </div>
-      </div>
-      <div class="action-btns">
-        <div class="action-btn-item" (click)="onMoveGroupWise('africanCode','left',africanCode)">
-          <i class="fas fa-angle-double-left"></i>
-        </div>
-        <div class="action-btn-item">
-          African
-        </div>
-        <div class="action-btn-item" (click)="onMoveGroupWise('africanCode','right',africanCode)">
-          <i class="fas fa-angle-double-right"></i>
-        </div>
-      </div>
-      <div class="action-btns">
-        <div class="action-btn-item" (click)="onMoveGroupWise('gccCode','left',gccCode)">
-          <i class="fas fa-angle-double-left"></i>
-        </div>
-        <div class="action-btn-item">
-          GCC
-        </div>
-        <div class="action-btn-item" (click)="onMoveGroupWise('gccCode','right',gccCode)">
-          <i class="fas fa-angle-double-right"></i>
-        </div>
-      </div>
-      <div class="action-btns">
-        <div class="action-btn-item" (click)="onMoveGroupWise('cisCode','left',cisCode)">
-          <i class="fas fa-angle-double-left"></i>
-        </div>
-        <div class="action-btn-item">
-          CIS
-        </div>
-        <div class="action-btn-item" (click)="onMoveGroupWise('cisCode','right',cisCode)">
-          <i class="fas fa-angle-double-right"></i>
-        </div>
-      </div>
+  <!-- CENTRE: Action buttons -->
+  <div class="cp-actions">
+    <!-- Move selected -->
+    <div class="cp-action-row">
+      <button class="cp-action-btn" title="Move selected left"  (click)="onSelected('left')">
+        <i class="pi pi-chevron-left"></i>
+      </button>
+      <div class="cp-action-btn label"><i class="pi pi-arrow-right-arrow-left"></i></div>
+      <button class="cp-action-btn" title="Move selected right" (click)="onSelected('right')">
+        <i class="pi pi-chevron-right"></i>
+      </button>
+    </div>
+    <!-- Move all -->
+    <div class="cp-action-row">
+      <button class="cp-action-btn" title="Move all left"  (click)="onMoveAll('left')">
+        <i class="pi pi-angle-double-left"></i>
+      </button>
+      <div class="cp-action-btn label"><i class="pi pi-arrow-right-arrow-left"></i></div>
+      <button class="cp-action-btn" title="Move all right" (click)="onMoveAll('right')">
+        <i class="pi pi-angle-double-right"></i>
+      </button>
+    </div>
+    <!-- African -->
+    <div class="cp-action-row">
+      <button class="cp-action-btn" title="Move African left"  (click)="onMoveGroupWise('africanCode','left',africanCode)">
+        <i class="pi pi-angle-double-left"></i>
+      </button>
+      <div class="cp-action-btn label">African</div>
+      <button class="cp-action-btn" title="Move African right" (click)="onMoveGroupWise('africanCode','right',africanCode)">
+        <i class="pi pi-angle-double-right"></i>
+      </button>
+    </div>
+    <!-- GCC -->
+    <div class="cp-action-row">
+      <button class="cp-action-btn" title="Move GCC left"  (click)="onMoveGroupWise('gccCode','left',gccCode)">
+        <i class="pi pi-angle-double-left"></i>
+      </button>
+      <div class="cp-action-btn label">GCC</div>
+      <button class="cp-action-btn" title="Move GCC right" (click)="onMoveGroupWise('gccCode','right',gccCode)">
+        <i class="pi pi-angle-double-right"></i>
+      </button>
+    </div>
+    <!-- CIS -->
+    <div class="cp-action-row">
+      <button class="cp-action-btn" title="Move CIS left"  (click)="onMoveGroupWise('cisCode','left',cisCode)">
+        <i class="pi pi-angle-double-left"></i>
+      </button>
+      <div class="cp-action-btn label">CIS</div>
+      <button class="cp-action-btn" title="Move CIS right" (click)="onMoveGroupWise('cisCode','right',cisCode)">
+        <i class="pi pi-angle-double-right"></i>
+      </button>
     </div>
   </div>
-  <div class="vision-grid-item">
-    <div class="vision-grid-item-title">
-      Country Of Orgin <small class="text-dark"><i>(Included Orgin Country)</i></small>
+
+  <!-- RIGHT: Included -->
+  <div class="cp-panel">
+    <div class="cp-panel-header">
+      Country Of Origin <small><i>(Included)</i></small>
     </div>
-    <div class="vision-grid-item-body">
-      <div class="input-control-container">
-        <div class="input-form-box">
-          <span class="input-form-icon">
-            <i class="fas fa-search"></i>
-          </span>
-          <input type="text" class="input-form-control with-icon search-input" [(ngModel)]="includedCountrySearch" placeholder="search...">
-        </div>
-      </div>
-      <ul class="list-group checklist list-group-flush">
-        <ng-container *ngFor="let item of includedCountry | countryFilter:includedCountrySearch : includedCountry">
-          <label class="custom-checkbox-container">
-            <input type="checkbox" [(ngModel)]="item.isOrigin" [value]="item.CodeValue">
-            <div class="description">
-              <div class="description-name">
-                <span>
-                  {{item?.CodeDescription}}
-                </span>
-              </div>
-            </div>
-          </label>
-        </ng-container>
-      </ul>
+    <div class="cp-search-wrap">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" [(ngModel)]="includedCountrySearch" placeholder="Search country..." />
     </div>
+    <ul class="cp-list">
+      <li class="cp-list-item"
+          *ngFor="let item of includedCountry | countryFilter:includedCountrySearch : includedCountry">
+        <input type="checkbox" [(ngModel)]="item.isOrigin" [value]="item.CodeValue" />
+        <span>{{ item?.CodeDescription }}</span>
+      </li>
+    </ul>
   </div>
+
 </div>
-<div style="text-align:right">
-  <button nbButton (click)="onSubmit()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+
+<div class="cp-submit-row">
+  <button pButton type="button" label="Submit" icon="pi pi-check"
+    class="p-button-rounded p-button-sm" (click)="onSubmit()"></button>
 </div>

@@ -31,12 +31,26 @@ import { CustomAdapter } from '../../shared/date-formatt/custom-adapter';
 import { ClausesComponent } from './components/clauses/clauses.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { FilterPipe } from '../../shared/pipes/filter.pipe';
-import {MatRadioModule} from '@angular/material/radio';
-import { NbThemeModule, NbLayoutModule} from '@nebular/theme';
+import { MatRadioModule } from '@angular/material/radio';
+import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbIconModule } from '@nebular/theme';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple'; 
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { TabViewModule } from 'primeng/tabview';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 @NgModule({
   declarations: [
@@ -51,13 +65,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     EndorsementGridComponent,
     BrokerFormComponent,
     ClausesComponent,
- 
+
   ],
   imports: [
     CommonModule,
     NbThemeModule,
     NbLayoutModule,
     FormsModule,
+    DropdownModule,
     ReactiveFormsModule,
     DirectivesModule,
     NgSelectModule,
@@ -66,7 +81,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ThemeModule,
     NbTabsetModule,
     NbIconModule,
+    ButtonModule,
+    RippleModule,
+    InputTextModule,
+    TabViewModule,
+    DialogModule,
+    CalendarModule,
+    InputSwitchModule,
+    InputTextareaModule,
+    CardModule,
+    OverlayPanelModule,
     NbRouteTabsetModule,
+    // BrowserAnimationsModule,
     NbStepperModule,
     NbEvaIconsModule,
     NbCardModule,

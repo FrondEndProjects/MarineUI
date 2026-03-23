@@ -1,11 +1,97 @@
-.vision-grid{
-  margin: 1rem 0 ;
+// ══════════════════════════════════════════════════════
+//  Selection Panel (Customer / Commodity / Sale-Term) — Salama Theme
+// ══════════════════════════════════════════════════════
+$teal:       #1C7988;
+$teal-dark:  #145f6c;
+$teal-light: #e8f4f6;
+$teal-xl:    #f0f9fa;
+$gold:       #E8A020;
+$white:      #ffffff;
+$border:     #c9dde2;
+$text:       #1a2e35;
+$muted:      #6b8c93;
+$font:       'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+:host { display: block; font-family: $font; font-size: 13px; }
+
+// ── Toolbar: search + selected badge ─────────────────
+.sel-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
 }
-.vision-grid .vision-grid-item {
- background-color: white;
- padding: .5rem;
+
+.sel-search-wrap {
+  flex: 0 0 260px;
+  min-width: 180px;
+  position: relative;
+
+  .pi-search {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.78rem;
+    color: $muted;
+    pointer-events: none;
+  }
+
+  .p-inputtext {
+    width: 100% !important;
+    height: 34px !important;
+    padding-left: 28px !important;
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    border: 1px solid $border !important;
+    border-radius: 20px !important;
+    background: $white !important;
+    &:focus { border-color: $teal !important; box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important; }
+  }
 }
-.vision-grid-item-title{
-  padding: 0.5rem;
+
+.sel-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 0.85rem;
+  background: $teal-xl;
+  border: 1px solid $border;
+  border-radius: 20px;
+  font-size: 0.75rem;
   font-weight: 600;
+  color: $teal-dark;
+  gap: 0.4rem;
+
+  i { font-size: 0.72rem; color: $gold; }
 }
+
+// ── Submit row ────────────────────────────────────────
+.sel-submit-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.6rem;
+  border-top: 1px solid $teal-xl;
+  margin-top: 0.5rem;
+
+  ::ng-deep .p-button {
+    font-family: $font !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    border-radius: 20px !important;
+    height: 32px !important;
+    padding: 0 1.1rem !important;
+    background: $teal !important;
+    border-color: $teal !important;
+    color: $white !important;
+    &:hover { background: $teal-dark !important; border-color: $teal-dark !important; }
+  }
+}
+
+@media (max-width: 575px) {
+  .sel-search-wrap { flex: 1 1 100%; }
+  .sel-badge { margin-left: 0; }
+}
+

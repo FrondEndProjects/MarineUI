@@ -1,119 +1,206 @@
-<div class="container-fluid card p-2 py-3">
-    <div class="row mb-3">
-        <div class="col">
-            <h6 class="fw-bold">Dashboard Overview</h6>
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SALAMA DASHBOARD  —  Themed, Modern, Compact              ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="dash-page">
+
+  <!-- ── Page Header ─────────────────────────────────────────── -->
+  <div class="dash-header">
+    <div class="dash-header-left">
+      <div class="dash-header-icon"><i class="fa fa-chart-line"></i></div>
+      <div>
+        <div class="dash-header-title">Dashboard Overview</div>
+        <div class="dash-header-sub">Marine Insurance Analytics</div>
+      </div>
+    </div>
+    <div class="dash-header-badge">
+      <i class="fa fa-circle dash-live-dot"></i> Live Data
+    </div>
+  </div>
+
+  <ng-container>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ROW 1 — Production/Quotation KPI + 2 Bar Charts
+    ══════════════════════════════════════════════════════════ -->
+    <div class="row g-3 mb-3">
+
+      <!-- KPI Summary Card -->
+      <div class="col-12 col-md-4">
+        <div class="sa-card kpi-card d-flex flex-column h-100">
+
+          <!-- Production Section -->
+          <div class="kpi-section">
+            <div class="kpi-section-header">
+              <div class="kpi-icon kpi-icon-teal"><i class="fa fa-file-contract"></i></div>
+              <span class="kpi-section-title">Production</span>
+            </div>
+            <h6 *ngIf="brokerProductPolicyListData?.length > 0"
+                class="kpi-product-name">{{ brokerProductPolicyListData[0]?.Name }}</h6>
+            <div class="kpi-stats-row">
+              <div class="kpi-stat">
+                <span class="kpi-stat-label">Count</span>
+                <span class="kpi-stat-value">{{ brokerProductPolicyListData[0]?.Count || 0 }}</span>
+              </div>
+              <div class="kpi-stat-divider"></div>
+              <div class="kpi-stat">
+                <span class="kpi-stat-label">Premium</span>
+                <span class="kpi-stat-value premium-val">
+                  {{ formatNumberWithCommas(brokerProductPolicyListData[0]?.Premium) }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-divider">
+            <span class="kpi-divider-line"></span>
+          </div>
+
+          <!-- Quotation Section -->
+          <div class="kpi-section">
+            <div class="kpi-section-header">
+              <div class="kpi-icon kpi-icon-gold"><i class="fa fa-file-alt"></i></div>
+              <span class="kpi-section-title">Quotation</span>
+            </div>
+            <h6 *ngIf="brokerProductQuoteListData?.length > 0"
+                class="kpi-product-name">{{ brokerProductQuoteListData[0]?.Name }}</h6>
+            <div class="kpi-stats-row">
+              <div class="kpi-stat">
+                <span class="kpi-stat-label">Count</span>
+                <span class="kpi-stat-value">{{ brokerProductQuoteListData[0]?.Count || 0 }}</span>
+              </div>
+              <div class="kpi-stat-divider"></div>
+              <div class="kpi-stat">
+                <span class="kpi-stat-label">Premium</span>
+                <span class="kpi-stat-value premium-val">
+                  {{ formatNumberWithCommas(brokerProductQuoteListData[0]?.Premium) }}
+                </span>
+              </div>
+            </div>
+          </div>
+
         </div>
+      </div>
+
+      <!-- Broker Policy Bar Chart -->
+      <div class="col-12 col-md-4">
+        <div class="sa-card chart-card d-flex flex-column h-100">
+          <div class="sa-card-header">
+            <div class="sa-icon"><i class="fa fa-shield-alt"></i></div>
+            <span class="sa-title">Broker Policy</span>
+          </div>
+          <div #chartContainer id="chart-container" class="chart-body" style="height:240px;width:100%;"></div>
+        </div>
+      </div>
+
+      <!-- Broker Quotation Bar Chart -->
+      <div class="col-12 col-md-4">
+        <div class="sa-card chart-card d-flex flex-column h-100">
+          <div class="sa-card-header">
+            <div class="sa-icon"><i class="fa fa-file-invoice"></i></div>
+            <span class="sa-title">Broker Quotation</span>
+          </div>
+          <div #chartContainer1 id="chart-container1" class="chart-body" style="height:240px;width:100%;"></div>
+        </div>
+      </div>
+
     </div>
 
-    <ng-container>
-        <div class="row gy-2">
-            <div class="col-12 col-sm-12yy col-md-4">
-                <div class="card h-auto card-style1 d-flex flex-column">
-                    <p class="heading">Production</p>
-                    <h6 *ngIf="brokerProductPolicyListData?.length > 0" style="font-size: 12px !important;" class="text-center text-wrap">{{
-                        brokerProductPolicyListData[0]?.Name }}</h6>
-                    <div class="card-body">
+    <!-- ══════════════════════════════════════════════════════════
+         ROW 2 — Referral Pie Charts (Approved / Pending / Rejected)
+    ══════════════════════════════════════════════════════════ -->
+    <div class="row g-3 mb-3">
 
-                        <div class="card-item">
-                            <span class="label">Count:</span>
-                            <span class="value">{{ brokerProductPolicyListData[0]?.Count || 0 }}</span>
-                        </div>
-                        <div class="card-item">
-                            <span class="label">Premium:</span>
-                            <span class="value">{{ formatNumberWithCommas(brokerProductPolicyListData[0]?.Premium)
-                                }}</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <p class="heading">Quotation</p>
-                    <h6 *ngIf="brokerProductQuoteListData?.length > 0" style="font-size: 12px !important;" class="text-center text-wrap">{{
-                        brokerProductQuoteListData[0]?.Name }}</h6>
-                    <div class="card-body">
-
-                        <div class="card-item">
-                            <span class="label">Count:</span>
-                            <span class="value">{{ brokerProductQuoteListData[0]?.Count || 0 }}</span>
-                        </div>
-                        <div class="card-item">
-                            <span class="label">Premium:</span>
-                            <span class="value">{{ formatNumberWithCommas(brokerProductQuoteListData[0]?.Premium)
-                                }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-4">
-                <div class="card h-100 card-style d-flex flex-column">
-                    <p class="heading">Broker Policy</p>
-                    <div #chartContainer id="chart-container" style="height: 250px; width: 100%;"></div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-4">
-                <div class="card h-100 card-style d-flex flex-column">
-                    <p class="heading">Broker Quotation</p>
-                    <div #chartContainer1 id="chart-container1" style="height: 250px; width: 100%;"></div>
-                </div>
-            </div>
-
+      <div class="col-12 col-md-4">
+        <div class="sa-card chart-card d-flex flex-column h-100">
+          <div class="sa-card-header sa-header-approved">
+            <div class="sa-icon"><i class="fa fa-check-circle"></i></div>
+            <span class="sa-title">Referral Approved</span>
+            <span class="sa-badge sa-badge-approved">Approved</span>
+          </div>
+          <div id="approvedChart" class="chart-body" style="height:240px;width:100%;"></div>
         </div>
-        <div class="row gy-3 mt-3">
-            <div class="col-12 col-sm-12yy col-md-4">
-                <div class="card h-100 card-style1 d-flex flex-column">
-                    <p class="heading">Referral Approved</p>
-                    <div id="approvedChart" style="height: 250px;"></div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-4">
-                <div class="card h-100 card-style d-flex flex-column">
-                    <p class="heading">Referral Pending</p>
-                    <div id="pendingChart" style="height: 250px;"></div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-4">
-                <div class="card h-100 card-style d-flex flex-column">
-                    <p class="heading">Referral Rejected</p>
-                    <div id="rejectedChart" style="height: 250px;"></div>
-                </div>
-            </div>
+      </div>
 
+      <div class="col-12 col-md-4">
+        <div class="sa-card chart-card d-flex flex-column h-100">
+          <div class="sa-card-header sa-header-pending">
+            <div class="sa-icon"><i class="fa fa-clock"></i></div>
+            <span class="sa-title">Referral Pending</span>
+            <span class="sa-badge sa-badge-pending">Pending</span>
+          </div>
+          <div id="pendingChart" class="chart-body" style="height:240px;width:100%;"></div>
         </div>
-        <div class="row mt-2">
-            <div class="col-md-6">
-                <div class="card h-100 p-2">
-                     <p class=" text-center text-wrap heading">Top Broker</p>
-                    <ng-container *ngIf="topBrokerList">
-                        <app-material-table [cols]="columnHeader1" [data]="topBrokerList">
-                        </app-material-table>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card h-100 p-2">
-                     <p class=" text-center text-wrap heading">Top Customers</p>
-                    <ng-container *ngIf="topCustomerList">
-                        <app-material-table [cols]="columnHeader1" [data]="topCustomerList">
-                        </app-material-table>
-                    </ng-container>
-                </div>
-            </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="sa-card chart-card d-flex flex-column h-100">
+          <div class="sa-card-header sa-header-rejected">
+            <div class="sa-icon"><i class="fa fa-times-circle"></i></div>
+            <span class="sa-title">Referral Rejected</span>
+            <span class="sa-badge sa-badge-rejected">Rejected</span>
+          </div>
+          <div id="rejectedChart" class="chart-body" style="height:240px;width:100%;"></div>
         </div>
+      </div>
 
+    </div>
 
+    <!-- ══════════════════════════════════════════════════════════
+         ROW 3 — Top Broker + Top Customers Tables
+    ══════════════════════════════════════════════════════════ -->
+    <div class="row g-3 mb-3">
 
-        <div class="row mb-2 mt-2">
-            <div class="col-md-12">
-            <div class="card h-100 p-2 mt-3">
-
-                <h6 class="text-center text-wrap">Top Referral
-                </h6>
-                <ng-container *ngIf="topReferralList">
-                    <app-material-table [cols]="columnHeader2" [data]="topReferralList">
-                    </app-material-table>
-                </ng-container>
-            </div>
-            </div>
+      <div class="col-12 col-md-6">
+        <div class="sa-card table-card h-100">
+          <div class="sa-card-header">
+            <div class="sa-icon"><i class="fa fa-handshake"></i></div>
+            <span class="sa-title">Top Broker</span>
+          </div>
+          <div class="sa-card-body">
+            <ng-container *ngIf="topBrokerList">
+              <app-material-table [cols]="columnHeader1" [data]="topBrokerList">
+              </app-material-table>
+            </ng-container>
+          </div>
         </div>
-    </ng-container>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="sa-card table-card h-100">
+          <div class="sa-card-header">
+            <div class="sa-icon"><i class="fa fa-users"></i></div>
+            <span class="sa-title">Top Customers</span>
+          </div>
+          <div class="sa-card-body">
+            <ng-container *ngIf="topCustomerList">
+              <app-material-table [cols]="columnHeader1" [data]="topCustomerList">
+              </app-material-table>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ROW 4 — Top Referral Table (full width)
+    ══════════════════════════════════════════════════════════ -->
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="sa-card table-card">
+          <div class="sa-card-header">
+            <div class="sa-icon"><i class="fa fa-exchange-alt"></i></div>
+            <span class="sa-title">Top Referral</span>
+          </div>
+          <div class="sa-card-body">
+            <ng-container *ngIf="topReferralList">
+              <app-material-table [cols]="columnHeader2" [data]="topReferralList">
+              </app-material-table>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
 </div>

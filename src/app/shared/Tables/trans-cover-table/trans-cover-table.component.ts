@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import * as Mydatas from '../../../app-config.json';
 import { OpenCoverService } from '../../../modules/open-cover/open-cover.service';
-import { table } from 'console';
+
 
 @Component({
   selector: 'app-trans-cover-table',

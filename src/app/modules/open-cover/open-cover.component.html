@@ -1,23 +1,35 @@
-<ul class="mynav">
+<!-- <ul class="mynav">
   <ng-container *ngFor="let item of stepperList;let i = index;let lastitem = last;">
-    <li class="mynav-item"
-    [style.width]="i !== stepperList.length - 1 ? '14%' : '0'"
-    [ngClass]="[i !== stepperList.length - 1 ? 'progress-line' : '', item.isActive ? 'menuactive' : '']"
-    >
-      <a class="mynav-link" [routerLink]="[item?.url]" routerLinkActive="router-link-active" >
+    <li class="mynav-item" [style.width]="i !== stepperList.length - 1 ? '14%' : '0'"
+      [ngClass]="[i !== stepperList.length - 1 ? 'progress-line' : '', item.isActive ? 'menuactive' : '']">
+      <a class="mynav-link" [routerLink]="[item?.url]" routerLinkActive="router-link-active">
         {{item?.name}}
       </a>
     </li>
   </ng-container>
+</ul> -->
+
+<ul class="salama-stepper">
+  <li *ngFor="let item of stepperList; let i = index" class="step-item" [ngClass]="{ 'active': item.isActive }">
+
+    <div class="step-circle">
+      {{item.step}}
+    </div>
+    <div class="step-line" *ngIf="i !== stepperList.length-1">
+    </div>
+
+  </li>
 </ul>
+
 <div class="stepper-components">
   <ng-container *ngIf="ProposalNo">
     <div class="proposal-card">
-      Proposal Number<span class="mx-2">:</span>{{ProposalNo}}
+      <span class="quote-no-badge">
+        <i class="fas fa-hashtag"></i> Proposal Number: {{ProposalNo}}
+      </span>
     </div>
   </ng-container>
   <router-outlet></router-outlet>
 </div>
 <!-- <button id="progress-prev" class="btn" disabled>Prev</button>
 <button id="progress-next" class="btn">Next</button> -->
-

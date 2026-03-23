@@ -1,77 +1,55 @@
 <ng-container *ngIf="this.productId =='11' && opencoverno">
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-primary">
-      <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-        <div class="p-1">Broker Name</div>
-        <div class="p-1">{{headerDetails?.BrokerName}}</div>
-      </div>
-      <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-        <div class="p-1">Customer Name</div>
-        <div class="p-1">{{headerDetails?.CustomerName}}</div>
-      </div>
-      <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-        <div class="p-1">OpenCover Number</div>
-        <div class="p-1">{{headerDetails?.OpenCoverNo}}</div>
-      </div>
-    </li>
-  </ul>
-</ng-container>
-<!-- <div class="maan-card customPadding"> -->
-<!-- <ng-container
-  *ngIf="showselectCard && setDocvalue!='back'  && setDocvalue!='referral' && setDocvalue!='edit' && setDocvalue!='openCover' && Endors!='Endors'">
-  <div class="row"></div>
-  <div class="row mt-3 mb-3">
-    <div class="col-md-2"></div>
-    <div class="col-md-4">
-      <div class="flex-center" style="margin-left: 125px;">
-        <div class="product-container" style="cursor: pointer;">
-          <div class="card text-center" style="max-width: fit-content; padding: 5px;" (click)="onSelectType(1)">
-            <img style="width: 176px; height: 116px;" src="./assets/images/fileUpload.png" alt="Card" title="Card" />
-            <p class="m-2"><b>File Upload</b></p>
-          </div>
+  <div class="p-3 mb-3">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-primary rounded">
+        <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+          <div class="p-1 fw-semibold">Broker Name</div>
+          <div class="p-1">{{headerDetails?.BrokerName}}</div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="flex-center">
-        <div class="product-container" style="cursor: pointer;">
-          <div class="card text-center" style="max-width: fit-content; padding: 5px;" (click)="onSelectType(2)">
-            <img style="width: 176px; height: 116px;" src="./assets/images/manualFill.jpg" alt="Card" title="Card" />
-            <p class="m-2"><b>New Quote</b></p>
-          </div>
+        <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+          <div class="p-1 fw-semibold">Customer Name</div>
+          <div class="p-1">{{headerDetails?.CustomerName}}</div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-2"></div>
-
+        <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+          <div class="p-1 fw-semibold">OpenCover Number</div>
+          <div class="p-1">{{headerDetails?.OpenCoverNo}}</div>
+        </div>
+      </li>
+    </ul>
   </div>
+</ng-container>
 
-</ng-container> -->
+<!-- ─── SELECT CARD (File Upload / New Quote) ─── -->
 <ng-container
   *ngIf="showselectCard && setDocvalue!='back' && setDocvalue!='referral' && setDocvalue!='edit' && setDocvalue!='openCover' && Endors!='Endors'">
-
-  <div class="container py-4">
+  <div class="container py-4" *ngIf="userDetails?.InsuranceId != '100044' && userDetails?.InsuranceId != '100053'">
     <div class="row justify-content-center g-4">
 
       <div class="col-12 col-sm-6 col-md-5 col-lg-4 d-flex justify-content-center">
-        <div class="product-container w-100" style="cursor: pointer; max-width: 250px;">
+        <div class="product-container w-100" style="max-width:260px; cursor:pointer;">
           <div class="card text-center h-100 shadow-sm" (click)="onSelectType(1)">
-            <div class="card-body p-2">
-              <img class="img-fluid rounded" style="aspect-ratio: 14/9; object-fit: cover;"
+            <div class="card-body p-3">
+              <img class="img-fluid rounded mb-2" style="aspect-ratio:14/9;object-fit:cover;"
                 src="./assets/images/favicon.png" alt="File Upload" />
-              <p class="mt-3 mb-1"><b>File Upload</b></p>
+              <p class="mb-1 fw-bold" style="color:#1B7B8A;">
+                <i class="fas fa-cloud-upload-alt me-1"></i>File Upload
+              </p>
+              <small class="text-muted">Upload a PDF document</small>
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-12 col-sm-6 col-md-5 col-lg-4 d-flex justify-content-center">
-        <div class="product-container w-100" style="cursor: pointer; max-width: 250px;">
+        <div class="product-container w-100" style="max-width:260px; cursor:pointer;">
           <div class="card text-center h-100 shadow-sm" (click)="onSelectType(2)">
-            <div class="card-body p-2">
-              <img class="img-fluid rounded" style="aspect-ratio: 16/9; object-fit: cover;"
+            <div class="card-body p-3">
+              <img class="img-fluid rounded mb-2" style="aspect-ratio:16/9;object-fit:cover;"
                 src="./assets/images/manualFill.jpg" alt="New Quote" />
-              <p class="mt-3 mb-1"><b>New Quote</b></p>
+              <p class="mb-1 fw-bold" style="color:#1B7B8A;">
+                <i class="fas fa-file-pen me-1"></i>New Quote
+              </p>
+              <small class="text-muted">Fill manually</small>
             </div>
           </div>
         </div>
@@ -79,136 +57,161 @@
 
     </div>
   </div>
-
 </ng-container>
+
+<!-- ─── FILE UPLOAD SECTION ─── -->
 <ng-container *ngIf="showFileUpload == true && showNewQuote==false">
-  <div class="row">
-    <div class="col-12">
-      <div class="middle-line">
-        File Upload
+  <div class="modern-container">
+    <div class="modern-card-wrapper">
+      <div class="maan-card-header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <span>File Upload</span>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3"></div>
-    <!-- <div class="col-md-6">
-        <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
-        <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
-          (click)="doc.click()">
-          <div>
-            <div class="center">
-              <b class="text-dark">
-                <i class="far fa-images"></i> Drag or Click</b>
+      <div class="p-4">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8">
+            <input style="display:none;" accept=".pdf" type="file" (change)="onUploadDocument($event,'click')" #doc>
+            <div class="imag-card" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')"
+              (click)="doc.click()">
+              <div class="center">
+                <i class="far fa-images fa-2x mb-2 d-block" style="color:#1B7B8A;"></i>
+                <b>Drag & Drop or Click to Upload</b>
+                <p class="text-muted mt-1 mb-0" style="font-size:12px;">PDF files only</p>
+              </div>
             </div>
           </div>
         </div>
-      </div> -->
-
-    <div class="col-md-6">
-      <input style="display: none;" accept=".pdf" type="file" (change)="onUploadDocument($event, 'click')" #doc>
-      <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event, 'drop')"
-        (click)="doc.click()">
-        <div>
-          <div class="center">
-            <b class="text-dark">
-              <i class="far fa-images"></i> Drag or Click
-            </b>
-          </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button pButton pRipple label="Back" icon="pi pi-arrow-left"
+            class="p-button-warning p-button-rounded p-button-sm" (click)="goBack()"></button>
         </div>
       </div>
     </div>
-
-    <div class="col-md-3 text-end">
-      <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="goBack()">Back</button>
-    </div>
   </div>
 </ng-container>
-<div class="modern-container" *ngIf="this.showNewQuote">
-  <div class="maan-card-header" *ngIf="quoteNo">
-    <div class="row">
-      <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
+
+<div class="d-flex justify-content-end mb-2" *ngIf="quoteNo">
+  <span class="quote-no-badge">
+    <i class="fas fa-hashtag"></i> Quote No: {{quoteNo}}
+  </span>
+</div>
+
+<div  *ngIf="this.showNewQuote">
+<ng-contianer *ngIf="!isMobile">
+  <div class="row">
+  <div class="col-2"></div>
+  <div class="col-9 col-md-9 col-lg-9 col-sm-12 sm:col-12">
+    <ng-container
+      *ngIf="(isIssuer && userDetails?.UserType !='admin') || (setDocvalue=='referral' && userDetails?.UserType !='Broker')">
+      <div class="modern-card-wrapper">
+        <app-broker-form></app-broker-form>
       </div>
-      <div class="col-md-4 col-lg-2 col-4 col-xl-4 offset-4 text-end" *ngIf="quoteNo">
-        Quote No - {{quoteNo}}
+    </ng-container>
+
+    <div class="modern-card-wrapper">
+      <app-customer-form></app-customer-form>
+    </div>
+
+    <app-quote-form></app-quote-form>
+
+    <div class="modern-card-wrapper footer-card">
+      <app-bank-form></app-bank-form>
+      <div class="modern-actions">
+        <button pButton pRipple label="Back" icon="pi pi-arrow-left"
+          class="p-button-warning p-button-rounded p-button-sm mx-1" (click)="back()"></button>
+        <button pButton pRipple label="Submit" icon="pi pi-check" class="salama-btn btn-teal mx-1"
+          (click)="onSaveQuote()"></button>
       </div>
     </div>
   </div>
+  </div>
+</ng-contianer>
+<ng-container *ngIf="isMobile">
+  <div style="margin-left: 20px;">
+ <ng-container
+      *ngIf="(isIssuer && userDetails?.UserType !='admin') || (setDocvalue=='referral' && userDetails?.UserType !='Broker')">
+      <div class="modern-card-wrapper">
+        <app-broker-form></app-broker-form>
+      </div>
+    </ng-container>
+
+    <div class="modern-card-wrapper">
+      <app-customer-form></app-customer-form>
+    </div>
+
+    <app-quote-form></app-quote-form>
+
+    <div class="modern-card-wrapper footer-card">
+      <app-bank-form></app-bank-form>
+      <div class="modern-actions">
+        <button pButton pRipple label="Back" icon="pi pi-arrow-left"
+          class="p-button-warning p-button-rounded p-button-sm mx-1" (click)="back()"></button>
+        <button pButton pRipple label="Submit" icon="pi pi-check" class="salama-btn btn-teal mx-1"
+          (click)="onSaveQuote()"></button>
+      </div>
+    </div>
+    </div>
+</ng-container>
+</div>
+
+<!-- <div class="modern-container" *ngIf="this.showNewQuote">
+
+
+  <div class="d-flex justify-content-end mb-2" *ngIf="quoteNo">
+    <span class="quote-no-badge">
+      <i class="fas fa-hashtag"></i> Quote No: {{quoteNo}}
+    </span>
+  </div>
+
   <ng-container
     *ngIf="(isIssuer && userDetails?.UserType !='admin') || (setDocvalue=='referral' && userDetails?.UserType !='Broker')">
     <div class="modern-card-wrapper">
       <app-broker-form></app-broker-form>
     </div>
-
   </ng-container>
+
   <div class="modern-card-wrapper">
     <app-customer-form></app-customer-form>
   </div>
-  <!-- <div class="modern-card-wrapper"> -->
+
   <app-quote-form></app-quote-form>
-  <!-- </div> -->
 
   <div class="modern-card-wrapper footer-card">
     <app-bank-form></app-bank-form>
-
     <div class="modern-actions">
-      <button nbButton (click)="back()" shape="round" size="small" status="warning" class="mx-2">Back</button>
-      <button nbButton (click)="onSaveQuote()" shape="round" size="small" status="primary" class="mx-2">Submit</button>
+      <button pButton pRipple label="Back" icon="pi pi-arrow-left"
+        class="p-button-warning p-button-rounded p-button-sm mx-1" (click)="back()"></button>
+      <button pButton pRipple label="Submit" icon="pi pi-check"
+        class="p-button-primary p-button-rounded p-button-sm mx-1" (click)="onSaveQuote()"></button>
     </div>
   </div>
 
-</div>
-<!-- <ng-container *ngIf="this.showNewQuote">
-  <div class="maan-card-header">
-    <div class="row">
-      <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
-      </div>
-      <div class="col-md-4 col-lg-2 col-4 col-xl-4 offset-4 text-end" *ngIf="quoteNo">
-        Quote No - {{quoteNo}}
-      </div>
-    </div>
-  </div>
-  <div class="maan-card-body">
-    <div class="maan-card customPadding">
-      <ng-container
-        *ngIf="(isIssuer && userDetails?.UserType !='admin') || (setDocvalue=='referral' && userDetails?.UserType !='Broker')">
-        <app-broker-form></app-broker-form>
-        <app-customer-form></app-customer-form>
-      </ng-container>
-    </div>
-    <div class="maan-card customPadding mt-3">
-      <app-quote-form></app-quote-form>
-    </div>
-    <div class="maan-card customPadding mt-3">
-      <app-bank-form></app-bank-form>
-      <div class="maan-card-footer">
-        <button nbButton (click)="back()" shape="round" size="small" status="warning" class="mx-2">Back</button>
-        <button nbButton (click)="onSaveQuote()" shape="round" size="small" status="primary"
-          class="mx-2">Submit</button>
-      </div>
-    </div>
+</div> -->
 
-  </div>
 
-</ng-container> -->
-<!-- </div> -->
-
+<!-- ─── PROCESSING MODAL ─── -->
 <div class="modal-backdrop-custom" *ngIf="showCommissionPopup">
-  <div class="modal-card shadow-lg animate-fadeIn">
+  <div class="modal-card shadow-lg">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <!-- <h5 class="mb-0">
-        <i class="bi bi-cash-stack me-2 text-primary"></i>Commission Details
-      </h5> -->
+      <h6 class="mb-0 fw-bold" style="color:#1B7B8A;">
+        <i class="fas fa-cog fa-spin me-2"></i>Processing Document
+      </h6>
       <button class="btn-close" (click)="showCommissionPopup = false"></button>
     </div>
 
-    <div *ngIf="shwoFilemesage" class="mb-2">&nbsp;&nbsp;<strong>1.File Upload <span
-          *ngIf="shwoFilemesage && !shoAImesage">in Progress...</span><span
-          *ngIf="shoAImesage">Completed.</span></strong>
+    <div class="progress-item" *ngIf="shwoFilemesage">
+      <div class="step-num">1</div>
+      <span>File Upload <span *ngIf="!shoAImesage" style="color:#6b7a8d;">(In Progress...)</span></span>
+      <span class="badge-done" *ngIf="shoAImesage">✓ Done</span>
+      <div class="spinner" *ngIf="!shoAImesage"></div>
     </div>
-    <div *ngIf="shoAImesage" class="mb-2">&nbsp;&nbsp;<strong>2.AI in Progress...</strong></div>
 
-    <!-- <div class="mt-3 text-end">
-      <button class="btn btn-secondary btn-sm" (click)="showCommissionPopup = false">Close</button>
-    </div> -->
+    <div class="progress-item" *ngIf="shoAImesage">
+      <div class="step-num">2</div>
+      <span>AI Analysis</span>
+      <div class="spinner"></div>
+    </div>
   </div>
 </div>

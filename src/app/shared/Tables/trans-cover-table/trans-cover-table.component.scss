@@ -1,56 +1,561 @@
-th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
-  border-bottom-color: #ccc;
-}
-th.mat-header-cell {
-  color: lightslategrey;
-  font-size: 100%;
-  font-weight: 500;
-}
-.example-container{
+// ════════════════════════════════════════════════════════════════
+//  Trans Cover Table — Salama Theme  (FIXED)
+//  Fixes: coverage list layout, mat-checkbox style, ng-select,
+//         input-form-control2, white-space wrapping, mobile cards
+// ════════════════════════════════════════════════════════════════
+
+$teal:        #1C7988;
+$teal-dark:   #145f6c;
+$teal-light:  #e8f4f6;
+$teal-xl:     #f0f9fa;
+$gold:        #E8A020;
+$gold-dark:   #c8881a;
+$white:       #ffffff;
+$border:      #c9dde2;
+$text:        #1a2e35;
+$muted:       #6b8c93;
+$error:       #e53935;
+$success:     #2e7d32;
+$disabled-bg: #f4f8f9;
+$font:        'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+:host { display: block; font-family: $font; font-size: 13px; color: $text; }
+* { box-sizing: border-box; }
+
+// ════════════════════════════════════════════════════════════════
+//  OUTER CONTAINER
+// ════════════════════════════════════════════════════════════════
+.example-container {
   width: 100%;
   overflow-x: auto;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid $border;
+  border-bottom: none;
+  background: $white;
+  box-shadow: 0 1px 6px rgba(28,121,136,.08);
+
+  &::-webkit-scrollbar       { height: 5px; }
+  &::-webkit-scrollbar-track { background: $teal-xl; }
+  &::-webkit-scrollbar-thumb { background: $teal-light; border-radius: 3px; }
 }
 
+// ════════════════════════════════════════════════════════════════
+//  TABLE BASE
+// ════════════════════════════════════════════════════════════════
 table {
   width: 100%;
-}
-.mat-table th,
-.mat-table td {
-    white-space: nowrap !important;
-    padding: 8px 10px !important;
-}
-.input-edit .input-form-control{
-  margin: 0;
-  border-radius: 0;
-}
-.input-edit .input-form-box .input-form-icon {
-  left: 8px;
-  top: 0px;
-  padding: 7px 8px;
+  background: $white;
+  font-family: $font;
+  font-size: 0.82rem;
 }
 
-.covers-list{
+// ════════════════════════════════════════════════════════════════
+//  HEADER ROW — teal background, white bold text, gold sort arrow
+// ════════════════════════════════════════════════════════════════
+th.mat-header-cell {
+  background: $teal !important;
+  color: $white !important;
+  font-family: $font !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  padding: 0 16px !important;
+  height: 44px !important;
+  white-space: nowrap;
+  border-bottom: 2px solid $teal-dark !important;
+  letter-spacing: 0.2px;
+  &:first-child { border-radius: 7px 0 0 0; }
+  &:last-child  { border-radius: 0 7px 0 0; }
+}
+
+::ng-deep {
+  .mdc-data-table__header-cell,
+  .mat-mdc-header-cell {
+    background: $teal !important;
+    color: $white !important;
+    font-family: $font !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    padding: 0 16px !important;
+    height: 44px !important;
+    border-bottom: 2px solid $teal-dark !important;
+  }
+  .mat-mdc-header-row .mat-mdc-header-cell:first-child { border-radius: 7px 0 0 0 !important; }
+  .mat-mdc-header-row .mat-mdc-header-cell:last-child  { border-radius: 0 7px 0 0 !important; }
+  .mat-sort-header-button { color: $white !important; font-family: $font !important; font-weight: 700 !important; }
+  .mat-sort-header-arrow,
+  .mat-sort-header-stem,
+  .mat-sort-header-pointer-left,
+  .mat-sort-header-pointer-right,
+  .mat-sort-header-pointer-middle { color: $gold !important; background: $gold !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  DATA ROWS  — KEY FIX: allow wrapping in coverage column
+// ════════════════════════════════════════════════════════════════
+td.mat-cell, td.mat-footer-cell {
+  font-family: $font !important;
+  font-size: 0.81rem !important;
+  color: $text !important;
+  // KEY FIX: remove white-space:nowrap — was squishing the coverage column
+  white-space: normal !important;
+  padding: 12px 16px !important;
+  height: auto !important;
+  min-height: 52px !important;
+  border-bottom: 1px solid $teal-xl !important;
+  vertical-align: top !important;
+}
+
+::ng-deep {
+  .mdc-data-table__cell,
+  .mat-mdc-cell {
+    font-family: $font !important;
+    font-size: 0.81rem !important;
+    color: $text !important;
+    white-space: normal !important;
+    padding: 12px 16px !important;
+    height: auto !important;
+    min-height: 52px !important;
+    border-bottom: 1px solid $teal-xl !important;
+    vertical-align: top !important;
+  }
+}
+
+// Zebra striping
+.mat-row:nth-child(even) td.mat-cell { background: $teal-xl !important; }
+.mat-row:nth-child(odd)  td.mat-cell { background: $white !important; }
+.mat-row:hover td.mat-cell           { background: $teal-light !important; transition: background .15s; }
+
+::ng-deep {
+  .mat-mdc-row:nth-child(even) .mdc-data-table__cell { background: $teal-xl !important; }
+  .mat-mdc-row:nth-child(odd)  .mdc-data-table__cell { background: $white !important; }
+  .mat-mdc-row:hover .mdc-data-table__cell           { background: $teal-light !important; transition: background .15s; }
+  .mdc-data-table__row:last-child .mdc-data-table__cell { border-bottom: none !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MAT-CHECKBOX — Salama teal style
+//  FIX: was rendering as plain browser checkbox / misaligned
+// ════════════════════════════════════════════════════════════════
+.example-margin,
+::ng-deep .example-margin { margin: 0 !important; }
+
+::ng-deep {
+  // Pre-MDC mat-checkbox
+  .mat-checkbox {
+    font-family: $font !important;
+    font-size: 0.82rem !important;
+
+    .mat-checkbox-frame {
+      border-color: $border !important;
+      border-radius: 3px !important;
+    }
+    &.mat-checkbox-checked .mat-checkbox-background {
+      background-color: $teal !important;
+    }
+    &.mat-checkbox-indeterminate .mat-checkbox-background {
+      background-color: $teal !important;
+    }
+    .mat-checkbox-ripple .mat-ripple-element {
+      background-color: rgba(28,121,136,.2) !important;
+    }
+    .mat-checkbox-label {
+      font-family: $font !important;
+      font-size: 0.82rem !important;
+      color: $text !important;
+      padding-left: 4px !important;
+      line-height: 1.4 !important;
+    }
+  }
+
+  // MDC mat-checkbox (Angular Material v15+)
+  .mat-mdc-checkbox {
+    font-family: $font !important;
+    font-size: 0.82rem !important;
+
+    .mdc-checkbox__background { border-color: $border !important; border-radius: 3px !important; }
+    &.mat-mdc-checkbox-checked .mdc-checkbox__background { background-color: $teal !important; border-color: $teal !important; }
+
+    .mdc-label {
+      font-family: $font !important;
+      font-size: 0.82rem !important;
+      color: $text !important;
+      padding-left: 4px !important;
+      cursor: pointer !important;
+    }
+    .mdc-checkbox__ripple { display: none; }
+    .mat-mdc-checkbox-ripple .mat-ripple-element { background-color: rgba(28,121,136,.2) !important; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  COVERS LIST — FIX: remove 3-col grid, use vertical stack
+//  Screenshot shows the coverage items were squished in 3 columns
+// ════════════════════════════════════════════════════════════════
+.covers-list {
+  // FIX: was grid-template-columns:1fr 1fr 1fr — caused squishing
+  // Change to responsive: 2 cols on desktop, 1 on mobile
   display: grid;
-  grid-auto-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 5px;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 }
-.input-edit .input-form-control{
-  margin: 0;
-  border-radius: 0;
+
+.covers-list-item {
+  border: 1px solid $border !important;
+  border-radius: 6px !important;
+  background: $white;
+  overflow: hidden;
+  transition: border-color .18s;
+
+  &:hover { border-color: $teal-light !important; }
+
+  // Top row: checkbox label + expand icon
+  .d-sm-flex {
+    padding: 0.45rem 0.6rem;
+    background: $teal-xl;
+    border-bottom: 1px solid $border;
+    align-items: center !important;
+    gap: 0.4rem;
+  }
+
+  // Expand/collapse icon
+  a {
+    color: $teal !important;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.35rem;
+    border-radius: 3px;
+    transition: background .15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &:hover { background: $teal-light; }
+    .fas { font-size: 0.72rem; }
+  }
 }
-.covers-list-item{
-  border: 1px solid #ccc;
-  padding: 0px !important;
-  border-radius: 0.5rem;
+
+// ════════════════════════════════════════════════════════════════
+//  CONVEYANCE LIST — chips inside each cover item
+// ════════════════════════════════════════════════════════════════
+.conveyance-list {
+  padding: 0.5rem !important;
+  margin: 0 !important;
+  list-style: none;
+
+  // Header item "Conveyance Selection"
+  li.list-group-item:first-child {
+    background: transparent !important;
+    border: none !important;
+    padding: 0.25rem 0.5rem 0.15rem !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: $muted !important;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  // Each conveyance item
+  li.list-group-item {
+    border: none !important;
+    padding: 0.2rem 0.5rem !important;
+    background: transparent !important;
+
+    // The mat-checkbox inside
+    ::ng-deep .mat-checkbox-label,
+    ::ng-deep .mdc-label {
+      font-size: 0.78rem !important;
+      color: $text !important;
+    }
+  }
 }
-.conveyance-list{
-  margin: .5rem 0;
+
+// ════════════════════════════════════════════════════════════════
+//  LIMITS ROW — Per Bottom Limit, Per Location Limit, Currency
+//  FIX: was unstyled, $ prefix, no Salama styling
+// ════════════════════════════════════════════════════════════════
+.row {
+  margin-top: 0.6rem;
 }
-.conveyance-list .list-group-item{
-  padding: 5px;
+
+// Label style
+.input-form-label {
+  display: block;
+  font-family: $font !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: $muted !important;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 4px !important;
 }
-.mat-checkbox {
-  font-family: var(--our-font-family);
-  font-size: 90%;
+
+.text-required { color: $error; margin-left: 2px; }
+
+// Input form box
+.input-form-box {
+  position: relative;
+}
+
+// input-form-control2 — FIX: was completely unstyled in original
+.input-form-control2 {
+  height: 34px !important;
+  width: 100% !important;
+  padding: 0 10px !important;
+  font-family: $font !important;
+  font-size: 0.82rem !important;
+  color: $text !important;
+  background: $white !important;
+  border: 1px solid $border !important;
+  border-radius: 5px !important;
+  outline: none !important;
+  transition: border-color .2s, box-shadow .2s !important;
+
+  &:focus {
+    border-color: $teal !important;
+    box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important;
+  }
+  &:disabled {
+    background: $disabled-bg !important;
+    color: $muted !important;
+    cursor: not-allowed !important;
+  }
+  &::placeholder { color: $muted; }
+}
+
+// input-form-control (used in edit cols)
+.input-form-control {
+  height: 32px !important;
+  width: 100% !important;
+  padding: 0 10px !important;
+  font-family: $font !important;
+  font-size: 0.82rem !important;
+  color: $text !important;
+  background: $white !important;
+  border: 1px solid $border !important;
+  border-radius: 5px !important;
+  outline: none !important;
+  margin: 0 !important;
+  transition: border-color .2s !important;
+  &:focus { border-color: $teal !important; box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  NG-SELECT (Currency dropdown) — FIX: was unstyled
+// ════════════════════════════════════════════════════════════════
+::ng-deep {
+  .input-form-select.ng-select {
+    .ng-select-container {
+      height: 34px !important;
+      min-height: 34px !important;
+      font-family: $font !important;
+      font-size: 0.82rem !important;
+      color: $text !important;
+      border: 1px solid $border !important;
+      border-radius: 5px !important;
+      background: $white !important;
+      cursor: pointer !important;
+
+      .ng-value-container { padding: 0 10px !important; }
+      .ng-placeholder { color: $muted !important; font-size: 0.82rem !important; }
+      .ng-arrow-wrapper { padding-right: 8px !important; }
+      .ng-arrow { border-color: $muted transparent transparent !important; }
+    }
+    &.ng-select-opened .ng-select-container {
+      border-color: $teal !important;
+      box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important;
+    }
+    &.ng-select-focused:not(.ng-select-opened) .ng-select-container {
+      border-color: $teal !important;
+      box-shadow: 0 0 0 2px rgba(28,121,136,.12) !important;
+    }
+  }
+
+  .input-form-select .ng-dropdown-panel {
+    border: 1px solid $border !important;
+    border-radius: 5px !important;
+    box-shadow: 0 4px 14px rgba(28,121,136,.14) !important;
+    font-family: $font !important;
+
+    .ng-option {
+      font-family: $font !important;
+      font-size: 0.82rem !important;
+      color: $text !important;
+      padding: 7px 10px !important;
+      &.ng-option-marked { background: $teal-light !important; color: $teal !important; }
+      &.ng-option-selected { background: $teal-xl !important; color: $teal-dark !important; font-weight: 600 !important; }
+    }
+    .ng-optgroup { font-size: 0.72rem !important; font-weight: 700 !important; color: $muted !important; text-transform: uppercase; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  PAGINATOR
+// ════════════════════════════════════════════════════════════════
+.mat-paginator,
+mat-paginator {
+  background: $teal-xl !important;
+  border: 1px solid $border !important;
+  border-top: 2px solid $teal-light !important;
+  border-radius: 0 0 8px 8px !important;
+  font-family: $font !important;
+  font-size: 0.8rem !important;
+}
+
+::ng-deep {
+  .mat-paginator-outer-container,
+  .mat-mdc-paginator { background: $teal-xl !important; }
+
+  .mat-paginator-container,
+  .mat-mdc-paginator-container {
+    background: $teal-xl !important;
+    font-family: $font !important;
+    min-height: 48px !important;
+    padding: 0 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+
+  .mat-paginator-page-size-label,
+  .mat-paginator-range-label,
+  .mat-mdc-paginator-range-label,
+  .mat-mdc-paginator-page-size-label {
+    font-family: $font !important;
+    font-size: 0.78rem !important;
+    color: $muted !important;
+  }
+
+  .mat-paginator-navigation-previous,
+  .mat-paginator-navigation-next,
+  .mat-paginator-navigation-first,
+  .mat-paginator-navigation-last,
+  .mat-mdc-paginator-navigation-previous,
+  .mat-mdc-paginator-navigation-next,
+  .mat-mdc-paginator-navigation-first,
+  .mat-mdc-paginator-navigation-last {
+    color: $teal !important;
+    border-radius: 50% !important;
+    transition: background .18s !important;
+    &:hover:not([disabled]) { background: $teal-light !important; }
+    &[disabled] { color: $border !important; }
+    .mat-paginator-icon,
+    .mat-mdc-paginator-icon { fill: currentColor !important; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  NO RECORDS
+// ════════════════════════════════════════════════════════════════
+.sa-no-records {
+  background: $white;
+  border: 1px solid $border;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: $muted;
+  font-family: $font;
+  font-size: 0.85rem;
+
+  .sa-no-icon {
+    font-size: 2rem; color: $teal-light;
+    display: block; margin-bottom: 0.4rem;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MOBILE RESPONSIVE
+// ════════════════════════════════════════════════════════════════
+
+// Desktop ≥ 750px
+@media screen and (min-width: 750px) {
+  .mat-table th,
+  .mat-table td { white-space: normal !important; }
+}
+
+// Mobile < 750px — card layout
+@media screen and (max-width: 749px) {
+
+  .example-container {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    overflow-x: visible !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep {
+    // Hide header
+    .mat-header-row,
+    .mdc-data-table__header-row { display: none !important; }
+
+    // Row → card
+    .mat-row,
+    .mdc-data-table__row {
+      display: block !important;
+      background: $white !important;
+      border: 1px solid $border !important;
+      border-top: 3px solid $teal !important;
+      border-radius: 8px !important;
+      margin-bottom: 0.75rem !important;
+      padding: 0.5rem 0.75rem !important;
+      box-shadow: 0 1px 6px rgba(28,121,136,.09) !important;
+    }
+
+    // Cell → label+value flex row
+    .mat-cell,
+    .mdc-data-table__cell,
+    .mat-mdc-cell {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 8px 0 !important;
+      height: auto !important;
+      border-bottom: 1px solid $teal-xl !important;
+      &:last-child { border-bottom: none !important; }
+    }
+
+    // Remove zebra on mobile
+    .mat-row:nth-child(even) .mat-cell,
+    .mat-row:nth-child(odd)  .mat-cell,
+    .mat-mdc-row:nth-child(even) .mdc-data-table__cell,
+    .mat-mdc-row:nth-child(odd)  .mdc-data-table__cell {
+      background: transparent !important;
+    }
+
+    // Paginator
+    .mat-paginator-container,
+    .mat-mdc-paginator-container {
+      justify-content: center !important;
+      padding: 6px !important;
+      flex-wrap: wrap !important;
+    }
+  }
+
+  // Covers list: single column on mobile
+  .covers-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  // Limit inputs: full width
+  .input-form-control2,
+  .input-form-control {
+    width: 100% !important;
+  }
+
+  ::ng-deep .input-form-select.ng-select {
+    width: 100% !important;
+  }
+}
+
+// Extra small < 400px
+@media screen and (max-width: 399px) {
+  td.mat-cell,
+  ::ng-deep .mdc-data-table__cell { font-size: 0.78rem !important; }
 }

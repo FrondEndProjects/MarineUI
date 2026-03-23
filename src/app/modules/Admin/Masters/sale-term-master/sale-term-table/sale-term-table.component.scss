@@ -1,0 +1,70 @@
+.custom-header-align {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    /* responsive */
+    gap: 10px;
+    padding: 10px;
+}
+
+.left-section {
+    display: flex;
+    width: 60%;
+    align-items: center;
+}
+
+.right-section {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    /* pushes to right end */
+}
+
+/* optional: responsive tweak */
+@media (max-width: 768px) {
+    .custom-header-align {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .right-section {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Apply deep properly */
+::ng-deep .search-box .mat-mdc-form-field-flex {
+    height: 35px;
+    display: flex;
+    align-items: center;
+}
+
+/* Fix infix (main container of input + label) */
+::ng-deep .search-box .mat-mdc-form-field-infix {
+    padding: 0 8px !important;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+}
+
+/* Input text alignment */
+::ng-deep .search-box .mat-mdc-input-element {
+    height: 100%;
+    line-height: normal; /* IMPORTANT */
+    padding: 0;
+    margin: 0;
+}
+
+/* Fix floating label position */
+::ng-deep .search-box .mat-mdc-floating-label {
+    top: 50% !important;
+    transform: translateY(-50%) scale(1);
+}
+
+/* When label floats (on focus / value) */
+::ng-deep .search-box.mat-mdc-form-field-should-float .mat-mdc-floating-label {
+    top: 0 !important;
+    transform: translateY(-50%) scale(0.75);
+}

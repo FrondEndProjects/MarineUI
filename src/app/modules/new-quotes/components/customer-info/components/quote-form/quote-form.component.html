@@ -1,1164 +1,550 @@
-<!-- <form [formGroup]="quoteForm" #formDirective="ngForm">
-  <div class="row">
-    <div class="col-12">
-      <div class="start-line">
-        <nb-icon icon="car-outline"></nb-icon>
-        Transport Details
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Mode of transport<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="modeOfTransport"
-          [items]="dropTransportList" bindValue="Code" bindLabel="CodeDescription" (change)="onGetCoverDropdownList(1)">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
-          <div *ngIf="quoteF.modeOfTransport.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Cover<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="cover" [items]="dropCoverList"
-          bindValue="Code" bindLabel="CodeDescription" (change)="onGetCarriageDropdownList(null,null)">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
-          <div *ngIf="quoteF.cover.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Mode of carriage<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="modeOfCarriage"
-          [items]="dropCarriageList" bindValue="Code" bindLabel="CodeDescription">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.modeOfCarriage.errors && submitted) || (!quoteF.modeOfCarriage.valid && quoteF.modeOfCarriage.touched)">
-          <div *ngIf="quoteF.modeOfCarriage.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Originating country<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="originatingCountry"
-          [items]="dropOriginCountryList" bindValue="Code" bindLabel="CodeDescription"
-          (change)="onGetOriginCityDropdownList()">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.originatingCountry.errors && submitted) || (!quoteF.originatingCountry.valid && quoteF.originatingCountry.touched)">
-          <div *ngIf="quoteF.originatingCountry.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label d-flex">
-          <span class="mx-2">Originating city <span *ngIf="insurenceId=='100020'" class="text-required">*</span></span>
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="switch1" (change)="OrgincityChange($event)"
-              formControlName="orginatingCityOtherYN">
-            <label class="custom-control-label" for="switch1">Other City</label>
-          </div>
-        </label>
-        <div class="input-form-box">
-          <ng-container *ngIf="!quoteF.orginatingCityOtherYN.value">
-            <ng-select placeholder="Select" [clearable]="true" [closeOnSelect]="true" class="input-form-select"
-              formControlName="originatingCity" [items]="dropOriginCityList" bindValue="Code"
-              bindLabel="CodeDescription">
-            </ng-select>
-          </ng-container>
-          <ng-container *ngIf="quoteF.orginatingCityOtherYN.value">
-            <input type="text" class="input-form-control without-icon" placeholder="Enter City here.."
-              formControlName="orginatingCityOther">
-          </ng-container>
-        </div>
-        <span *ngIf="quoteF.orginatingCityOtherYN.value ==true">
-          <div class="input-form-error"
-            *ngIf="(quoteF.orginatingCityOther.errors && submitted) || (!quoteF.orginatingCityOther.valid && quoteF.orginatingCityOther.touched)">
-            <div *ngIf="quoteF.orginatingCityOther.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </span>
-        <span *ngIf="quoteF.orginatingCityOtherYN.value !=true">
-          <div class="input-form-error"
-            *ngIf="(quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
-            <div *ngIf="quoteF.originatingCity.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </span>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Originating warehouse</label>
-        <div class="input-form-radio-box">
-          <div class="radio-toolbar">
-            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" value="YES"
-              formControlName="originatingWarehouse">
-            <label for="orginwarehouse_Yes">Yes</label>
-            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" value="NO"
-              formControlName="originatingWarehouse">
-            <label for="orginwarehouse_No">No</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Destination country<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="destinationCountry"
-          [items]="dropDestinaCountryList" bindValue="Code" bindLabel="CodeDescription"
-          (change)="onGetDestinaCityDropdownList()">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.destinationCountry.errors && submitted) || (!quoteF.destinationCountry.valid && quoteF.destinationCountry.touched)">
-          <div *ngIf="quoteF.destinationCountry.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label d-flex">
-          <span class="mx-2">Destination city <span *ngIf="insurenceId=='100020'" class="text-required">*</span></span>
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="switch2" (change)="DestinationcityChange($event)"
-              formControlName="destinationOtherYN">
-            <label class="custom-control-label" for="switch2">Other City</label>
-          </div>
-        </label>
-        <div class="input-form-box">
-          <ng-container *ngIf="!quoteF.destinationOtherYN.value">
-            <ng-select placeholder="Select" [clearable]="true" [closeOnSelect]="true" class="input-form-select"
-              formControlName="destinationCity" [items]="dropDestinaCityList" bindValue="Code"
-              bindLabel="CodeDescription">
-            </ng-select>
-          </ng-container>
-          <ng-container *ngIf="quoteF.destinationOtherYN.value">
-            <input type="text" class="input-form-control without-icon" placeholder="Enter City here.."
-              formControlName="destinationCityOther">
-          </ng-container>
-        </div>
-        <span *ngIf="quoteF.destinationOtherYN.value ==true">
-          <div class="input-form-error"
-            *ngIf="(quoteF.destinationCityOther.errors && submitted) || (!quoteF.destinationCityOther.valid && quoteF.destinationCityOther.touched)">
-            <div *ngIf="quoteF.destinationCityOther.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </span>
-        <span *ngIf="quoteF.destinationOtherYN.value !=true">
-          <div class="input-form-error"
-            *ngIf="(quoteF.destinationCity.errors && submitted) || (!quoteF.destinationCity.valid && quoteF.destinationCity.touched)">
-            <div *ngIf="quoteF.destinationCity.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </span>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Destination Warehouse</label>
-        <div class="input-form-radio-box">
-          <div class="radio-toolbar">
-            <input id="destwarehouse_Yes" type="radio" name="destinationWarehouse" value="YES"
-              formControlName="destinationWarehouse">
-            <label for="destwarehouse_Yes">Yes</label>
-            <input type="radio" id="destwarehouse_No" name="destinationWarehouse" value="NO"
-              formControlName="destinationWarehouse">
-            <label for="destwarehouse_No">No</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Policy start date<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="policyStartDate" (click)="d2.toggle()" readonly [maxDate]="maxDate">
-          <div class="input-form-error"
-            *ngIf="(quoteF.policyStartDate.errors && submitted) || (!quoteF.policyStartDate.valid && quoteF.policyStartDate.touched)">
-            <div *ngIf="quoteF.policyStartDate.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
+<form [formGroup]="quoteForm" #formDirective="ngForm">
+  <div class="modern-card-wrapper">
+
+    <div class="section-header">
+      <div class="section-icon"><i class="fas fa-truck"></i></div>
+      <div>
+        <div class="section-title">Transport Details</div>
       </div>
     </div>
 
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <div *ngIf="userDetails?.RegionCode=='100019'"><label class="input-form-label">PVT Cover</label> </div>
-        <div *ngIf="userDetails?.RegionCode!='100019'"><label class="input-form-label">War Cover</label> </div>
-        <div class="input-form-radio-box">
-          <div class="radio-toolbar">
-            <input id="warsrcc_Yes" type="radio" name="warSrcc" value="YES" formControlName="warSrcc">
-            <label for="warsrcc_Yes" [ngClass]="warStatus =='N'?'disabled':'enabled'">Yes</label>
-            <input type="radio" id="warsrcc_No" name="warSrcc" value="NO" formControlName="warSrcc">
-            <label for="warsrcc_No" [ngClass]="warStatus =='N'?'disabled':'enabled'">No</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="this.insurenceId!='100020'" class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Via</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="via">
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
-      <div class="input-control-container">
-        <label class="input-form-label">Storage Period (>60 days)</label>
-        <div class="input-form-radio-box">
-          <div class="radio-toolbar">
-            <input id="StoragePeriod_Yes" type="radio" name="StoragePeriod" value="Y" formControlName="StoragePeriodYn">
-            <label for="StoragePeriod_Yes">Yes</label>
-            <input type="radio" id="StoragePeriod_No" name="StoragePeriod" value="N" formControlName="StoragePeriodYn">
-            <label for="StoragePeriod_No">No</label>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="section-body">
+      <div class="row g-3">
 
-    <div class="col-12 col-md-4 col-lg-4 mt-1" *ngIf="userDetails?.RegionCode=='100020'">
-      <div class="input-control-container">
-        <label class="input-form-label">Transhipment</label>
-        <div class="input-form-radio-box">
-          <div class="radio-toolbar">
-            <input (change)="onTranshipmentChange($event)" id="Transhipment_Yes" type="radio" name="Transhipment"
-              value="Y" formControlName="TranshipmentYN">
-            <label for="Transhipment_Yes">Yes</label>
-            <input (change)="onTranshipmentChange($event)" type="radio" id="Transhipment_No" name="Transhipment"
-              value="N" formControlName="TranshipmentYN">
-            <label for="Transhipment_No">No</label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y'"
-      class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Transhipment Country<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="transhippingCountry"
-          [items]="dropTranshippingCountryList" bindValue="Code" bindLabel="CodeDescription"
-          (change)="onGetTranshippingCityDropdownList()">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.transhippingCountry.errors && submitted) || (!quoteF.transhippingCountry.valid && quoteF.transhippingCountry.touched)">
-          <div *ngIf="quoteF.transhippingCountry.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y'"
-      class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label d-flex">
-          <span class="mx-2">Transhipment City <span class="text-required">*</span></span>
-          <div class="custom-control custom-switch">
-          </div>
-        </label>
-        <div class="input-form-box">
-          <ng-container *ngIf="!quoteF.transhippingOtherYN.value">
-            <ng-select placeholder="Select" [clearable]="true" [closeOnSelect]="true" class="input-form-select"
-              formControlName="via" [items]="secondarylist" bindValue="ShortCode" bindLabel="CodeDescription">
-            </ng-select>
-          </ng-container>
-          <ng-container *ngIf="quoteF.transhippingOtherYN.value">
-            <input type="text" class="input-form-control without-icon" placeholder="Enter City here.."
-              formControlName="transhippingCityOther">
-          </ng-container>
-        </div>
-        <div class="input-form-error"
-          *ngIf="(quoteF.via.errors && submitted) || (!quoteF.via.valid && quoteF.via.touched)">
-          <div *ngIf="quoteF.via.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <ng-container *ngIf="quoteF.settlingAgent.value === '9999'">
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Others</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="others">
-          </div>
-        </div>
-      </div>
-    </ng-container>
-    <div class="col-12">
-      <div class="start-line">
-        <nb-icon icon="cube-outline"></nb-icon>
-        Commodity Details
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Goods Category<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="goodsCategory"
-          [items]="dropGoodsOfCateList" bindValue="Code" bindLabel="CodeDescription">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.goodsCategory.errors && submitted) || (!quoteF.goodsCategory.valid && quoteF.goodsCategory.touched)">
-          <div *ngIf="quoteF.goodsCategory.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Insured Value<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" (keyup)="CommaFormatteds()"
-            formControlName="insuredValue" [value]="quoteF.insuredValue.value | commaseparator">
-        </div>
-        <div class="input-form-error"
-          *ngIf="(quoteF.insuredValue.errors && submitted) || (!quoteF.insuredValue.valid && quoteF.insuredValue.touched)">
-          <div *ngIf="quoteF.insuredValue.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Currency<span class="text-required">*</span></label>
-        <div class="currency-flex">
-          <div class="currrency-drop">
-            <ng-select placeholder="Select" class="input-form-select" formControlName="currency"
-              [items]="dropCurrencyList" bindValue="Code" bindLabel="CodeDescription" (change)="onChangeCurrencyDrop()">
-            </ng-select>
-          </div>
-          <div class="currrency-dollar">
-            <div class="input-control-container">
-              <div class="input-form-box">
-                <input type="text" class="input-form-control4 without-icon" formControlName="currencyValue"
-                  [value]="quoteF.currency.value | currency: dropCurrencyList">
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="input-form-error"
-          *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
-          <div *ngIf="quoteF.currency.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Package description<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="packageDescription"
-          [items]="dropPackageDescList" bindValue="Code" bindLabel="CodeDescription">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.packageDescription.errors && submitted) || (!quoteF.packageDescription.valid && quoteF.packageDescription.touched)">
-          <div *ngIf="quoteF.packageDescription.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Conveyance | Vessel name</label>
-        <div class="currency-flex">
-          <div class="currrency-drop-vss input-form-box">
-            <input type="text" class="input-form-control2 with-icon" disabled [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="vesselValue" placeholder="Enter Vessel Name">
-          </div>
-          <div class="currrency-dollar">
-            <button class="btn btn-secondary" (click)="vessel(myModal2)"
-              style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
-
-          </div>
-          <div class="input-form-box" style="margin-left:-20px!important;width:40px !important">
-           
+        <!-- Mode of Transport -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
+            <label>Mode of Transport <span class="req">*</span></label>
+            <p-dropdown [options]="dropTransportList" optionLabel="CodeDescription" optionValue="Code" appendTo="body"
+              formControlName="modeOfTransport" placeholder="Select" [filter]="false" styleClass="w-100"
+              (onChange)="onGetCoverDropdownList(1)">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
           </div>
         </div>
 
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="">
-        <label class="input-form-label">Container Number</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="voyageNumber">
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Incoterms<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="incoterms"
-          [items]="dropIncotermsList" bindValue="Code" bindLabel="CodeDescription"
-          (change)="onGetIncotermsPrecentDropdownList(1)">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.incoterms.errors && submitted) || (!quoteF.incoterms.valid && quoteF.incoterms.touched)">
-          <div *ngIf="quoteF.incoterms.errors?.required" class="error-text">
-            This field is required
+        <!-- Cover -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
+            <label>Cover <span class="req">*</span></label>
+            <p-dropdown [options]="dropCoverList" optionLabel="CodeDescription" optionValue="Code"
+              formControlName="cover" appendTo="body" placeholder="Select" [filter]="false" styleClass="w-100"
+              (onChange)="onGetCarriageDropdownList(null,null)">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Incoterms<i>(Percentage)</i><span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="incotermsPercentage"
-          [items]="dropIncotermsPrecentList" bindValue="Code" bindLabel="CodeDescription"
-          (change)="onGetToleranceDropdownList(1)">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.incotermsPercentage.errors && submitted) || (!quoteF.incotermsPercentage.valid && quoteF.incotermsPercentage.touched)">
-          <div *ngIf="quoteF.incotermsPercentage.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Tolerance<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="tolerance"
-          [items]="dropToleranceList" bindValue="Code" bindLabel="CodeDescription">
-        </ng-select>
-        <div class="input-form-error"
-          *ngIf="(quoteF.tolerance.errors && submitted) || (!quoteF.tolerance.valid && quoteF.tolerance.touched)">
-          <div *ngIf="quoteF.tolerance.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4">
-      <div class="input-control-container">
-        <label class="input-form-label">Goods Description<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <textarea class="input-form-control3 without-icon" rows="3" formControlName="goodsDescript"></textarea>
-        </div>
-        <div class="input-form-error"
-          *ngIf="(quoteF.goodsDescript.errors && submitted) || (!quoteF.goodsDescript.valid && quoteF.goodsDescript.touched)">
-          <div *ngIf="quoteF.goodsDescript.errors?.required" class="error-text">
-            This field is required
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-4 col-lg-4" *ngIf="userDetails.RegionCode=='100020'">
-      <div class="input-control-container">
-        <label class="input-form-label">UCR Number</label>
-        <div class="input-form-box">
-          <input type="text" class="input-form-control without-icon" formControlName="UCRNumber">
-        </div>
-      </div>
-    </div>
 
-  </div>
-</form> -->
+        <!-- Mode of Carriage -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.modeOfCarriage.errors && submitted) || (!quoteF.modeOfCarriage.valid && quoteF.modeOfCarriage.touched)">
+            <label>Mode of Carriage <span class="req">*</span></label>
+            <p-dropdown [options]="dropCarriageList" optionLabel="CodeDescription" optionValue="Code" appendTo="body"
+              formControlName="modeOfCarriage" placeholder="Select" [filter]="false" styleClass="w-100">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.modeOfCarriage.errors && submitted) || (!quoteF.modeOfCarriage.valid && quoteF.modeOfCarriage.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+          </div>
+        </div>
 
+        <!-- Originating Country -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.originatingCountry.errors && submitted) || (!quoteF.originatingCountry.valid && quoteF.originatingCountry.touched)">
+            <label>Originating Country <span class="req">*</span></label>
+            <p-dropdown [options]="dropOriginCountryList" optionLabel="CodeDescription" optionValue="Code"
+              formControlName="originatingCountry" placeholder="Select" [filter]="true" appendTo="body"
+              filterPlaceholder="Search country..." styleClass="w-100" (onChange)="onGetOriginCityDropdownList()">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.originatingCountry.errors && submitted) || (!quoteF.originatingCountry.valid && quoteF.originatingCountry.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+          </div>
+        </div>
 
-<form [formGroup]="quoteForm" #formDirective="ngForm" class="modern-form-layout">
-
-  <div class="modern-card-wrapper mb-3">
-    <div class="col-12">
-      <div class="start-line">
-        <nb-icon icon="car-outline"></nb-icon>
-        Transport Details
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Mode of transport<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="modeOfTransport"
-            [items]="dropTransportList" bindValue="Code" bindLabel="CodeDescription"
-            (change)="onGetCoverDropdownList(1)">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
-            <div *ngIf="quoteF.modeOfTransport.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Cover<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="cover" [items]="dropCoverList"
-            bindValue="Code" bindLabel="CodeDescription" (change)="onGetCarriageDropdownList(null,null)">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
-            <div *ngIf="quoteF.cover.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Mode of carriage<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="modeOfCarriage"
-            [items]="dropCarriageList" bindValue="Code" bindLabel="CodeDescription">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.modeOfCarriage.errors && submitted) || (!quoteF.modeOfCarriage.valid && quoteF.modeOfCarriage.touched)">
-            <div *ngIf="quoteF.modeOfCarriage.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Originating country<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="originatingCountry"
-            [items]="dropOriginCountryList" bindValue="Code" bindLabel="CodeDescription"
-            (change)="onGetOriginCityDropdownList()">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.originatingCountry.errors && submitted) || (!quoteF.originatingCountry.valid && quoteF.originatingCountry.touched)">
-            <div *ngIf="quoteF.originatingCountry.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label d-flex">
-            <span class="mx-2">Originating city <span *ngIf="insurenceId=='100020'"
-                class="text-required">*</span></span>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="switch1" (change)="OrgincityChange($event)"
-                formControlName="orginatingCityOtherYN">
-              <label class="custom-control-label" for="switch1">Other City</label>
-            </div>
-          </label>
-          <div class="input-form-box">
+        <!-- Originating City -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label class="d-flex align-items-center gap-2">
+              <span>Originating City <span *ngIf="insurenceId=='100020'" class="req">*</span></span>
+              <p-inputSwitch formControlName="orginatingCityOtherYN" (onChange)="OrgincityChange($event)"
+                styleClass="city-switch"></p-inputSwitch>
+              <span style="font-size:11px; color:var(--muted)">Other City</span>
+            </label>
             <ng-container *ngIf="!quoteF.orginatingCityOtherYN.value">
-              <ng-select placeholder="Select" [clearable]="true" [closeOnSelect]="true" class="input-form-select"
-                formControlName="originatingCity" [items]="dropOriginCityList" bindValue="Code"
-                bindLabel="CodeDescription">
-              </ng-select>
+              <p-dropdown [options]="dropOriginCityList" optionLabel="CodeDescription" optionValue="Code"
+                appendTo="body" formControlName="originatingCity" placeholder="Select city" [filter]="true"
+                styleClass="w-100">
+              </p-dropdown>
             </ng-container>
             <ng-container *ngIf="quoteF.orginatingCityOtherYN.value">
-              <input type="text" class="input-form-control without-icon" placeholder="Enter City here.."
-                formControlName="orginatingCityOther">
+              <input pInputText formControlName="orginatingCityOther" placeholder="Enter city name"
+                class="w-100 p-inputtext-sm" />
             </ng-container>
+            <small class="p-error"
+              *ngIf="quoteF.orginatingCityOtherYN.value && (quoteF.orginatingCityOther.errors && submitted) || (!quoteF.orginatingCityOther.valid && quoteF.orginatingCityOther.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+            <small class="p-error"
+              *ngIf="!quoteF.orginatingCityOtherYN.value && (quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
           </div>
-          <span *ngIf="quoteF.orginatingCityOtherYN.value ==true">
-            <div class="input-form-error"
-              *ngIf="(quoteF.orginatingCityOther.errors && submitted) || (!quoteF.orginatingCityOther.valid && quoteF.orginatingCityOther.touched)">
-              <div *ngIf="quoteF.orginatingCityOther.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </span>
-          <span *ngIf="quoteF.orginatingCityOtherYN.value !=true">
-            <div class="input-form-error"
-              *ngIf="(quoteF.originatingCity.errors && submitted) || (!quoteF.originatingCity.valid && quoteF.originatingCity.touched)">
-              <div *ngIf="quoteF.originatingCity.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </span>
         </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Originating warehouse</label>
-          <div class="input-form-radio-box">
-            <div class="radio-toolbar">
-              <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" value="YES"
+
+        <!-- Originating Warehouse -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Originating Warehouse</label>
+            <div class="yn-group">
+              <input id="ow-yes" type="radio" name="originatingWarehouse" value="YES"
                 formControlName="originatingWarehouse">
-              <label for="orginwarehouse_Yes">Yes</label>
-              <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" value="NO"
+              <label for="ow-yes">Yes</label>
+              <input id="ow-no" type="radio" name="originatingWarehouse" value="NO"
                 formControlName="originatingWarehouse">
-              <label for="orginwarehouse_No">No</label>
+              <label for="ow-no">No</label>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Destination country<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="destinationCountry"
-            [items]="dropDestinaCountryList" bindValue="Code" bindLabel="CodeDescription"
-            (change)="onGetDestinaCityDropdownList()">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.destinationCountry.errors && submitted) || (!quoteF.destinationCountry.valid && quoteF.destinationCountry.touched)">
-            <div *ngIf="quoteF.destinationCountry.errors?.required" class="error-text">
-              This field is required
-            </div>
+
+        <!-- Destination Country -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.destinationCountry.errors && submitted) || (!quoteF.destinationCountry.valid && quoteF.destinationCountry.touched)">
+            <label>Destination Country <span class="req">*</span></label>
+            <p-dropdown [options]="dropDestinaCountryList" optionLabel="CodeDescription" optionValue="Code"
+              appendTo="body" formControlName="destinationCountry" placeholder="Select" [filter]="true"
+              filterPlaceholder="Search country..." styleClass="w-100" (onChange)="onGetDestinaCityDropdownList()">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.destinationCountry.errors && submitted) || (!quoteF.destinationCountry.valid && quoteF.destinationCountry.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label d-flex">
-            <span class="mx-2">Destination city <span *ngIf="insurenceId=='100020'"
-                class="text-required">*</span></span>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="switch2" (change)="DestinationcityChange($event)"
-                formControlName="destinationOtherYN">
-              <label class="custom-control-label" for="switch2">Other City</label>
-            </div>
-          </label>
-          <div class="input-form-box">
+
+        <!-- Destination City -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label class="d-flex align-items-center gap-2">
+              <span>Destination City <span *ngIf="insurenceId=='100020'" class="req">*</span></span>
+              <p-inputSwitch formControlName="destinationOtherYN" (onChange)="DestinationcityChange($event)"
+                styleClass="city-switch"></p-inputSwitch>
+              <span style="font-size:11px; color:var(--muted)">Other City</span>
+            </label>
             <ng-container *ngIf="!quoteF.destinationOtherYN.value">
-              <ng-select placeholder="Select" [clearable]="true" [closeOnSelect]="true" class="input-form-select"
-                formControlName="destinationCity" [items]="dropDestinaCityList" bindValue="Code"
-                bindLabel="CodeDescription">
-              </ng-select>
+              <p-dropdown [options]="dropDestinaCityList" optionLabel="CodeDescription" appendTo="body"
+                optionValue="Code" formControlName="destinationCity" placeholder="Select city" [filter]="true"
+                styleClass="w-100">
+              </p-dropdown>
             </ng-container>
             <ng-container *ngIf="quoteF.destinationOtherYN.value">
-              <input type="text" class="input-form-control without-icon" placeholder="Enter City here.."
-                formControlName="destinationCityOther">
+              <input pInputText formControlName="destinationCityOther" placeholder="Enter city name"
+                class="w-100 p-inputtext-sm" />
             </ng-container>
+            <small class="p-error"
+              *ngIf="quoteF.destinationOtherYN.value && (quoteF.destinationCityOther.errors && submitted) || (!quoteF.destinationCityOther.valid && quoteF.destinationCityOther.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+            <small class="p-error"
+              *ngIf="!quoteF.destinationOtherYN.value && (quoteF.destinationCity.errors && submitted) || (!quoteF.destinationCity.valid && quoteF.destinationCity.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
           </div>
-          <span *ngIf="quoteF.destinationOtherYN.value ==true">
-            <div class="input-form-error"
-              *ngIf="(quoteF.destinationCityOther.errors && submitted) || (!quoteF.destinationCityOther.valid && quoteF.destinationCityOther.touched)">
-              <div *ngIf="quoteF.destinationCityOther.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </span>
-          <span *ngIf="quoteF.destinationOtherYN.value !=true">
-            <div class="input-form-error"
-              *ngIf="(quoteF.destinationCity.errors && submitted) || (!quoteF.destinationCity.valid && quoteF.destinationCity.touched)">
-              <div *ngIf="quoteF.destinationCity.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </span>
         </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Destination Warehouse</label>
-          <div class="input-form-radio-box">
-            <div class="radio-toolbar">
-              <input id="destwarehouse_Yes" type="radio" name="destinationWarehouse" value="YES"
+
+        <!-- Destination Warehouse -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Destination Warehouse</label>
+            <div class="yn-group">
+              <input id="dw-yes" type="radio" name="destinationWarehouse" value="YES"
                 formControlName="destinationWarehouse">
-              <label for="destwarehouse_Yes">Yes</label>
-              <input type="radio" id="destwarehouse_No" name="destinationWarehouse" value="NO"
+              <label for="dw-yes">Yes</label>
+              <input id="dw-no" type="radio" name="destinationWarehouse" value="NO"
                 formControlName="destinationWarehouse">
-              <label for="destwarehouse_No">No</label>
+              <label for="dw-no">No</label>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Policy start date<span class="text-required">*</span></label>
-          <div class="input-form-box">
-            <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
-              formControlName="policyStartDate" (click)="d2.toggle()" readonly [maxDate]="maxDate">
-            <div class="input-form-error"
+
+        <!-- Policy Start Date -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.policyStartDate.errors && submitted) || (!quoteF.policyStartDate.valid && quoteF.policyStartDate.touched)">
+            <label>Policy Start Date <span class="req">*</span></label>
+            <p-calendar formControlName="policyStartDate" dateFormat="dd-mm-yy" [showIcon]="true" appendTo="body"
+              placeholder="Select date" [maxDate]="maxDatePrime" styleClass="w-100"
+              inputStyleClass="p-inputtext-sm w-100">
+            </p-calendar>
+            <small class="p-error"
               *ngIf="(quoteF.policyStartDate.errors && submitted) || (!quoteF.policyStartDate.valid && quoteF.policyStartDate.touched)">
-              <div *ngIf="quoteF.policyStartDate.errors?.required" class="error-text">
-                This field is required
-              </div>
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+          </div>
+        </div>
+
+        <!-- War Cover / PVT Cover -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label *ngIf="userDetails?.RegionCode=='100019'">PVT Cover</label>
+            <label *ngIf="userDetails?.RegionCode!='100019'">War Cover</label>
+            <div class="yn-group">
+              <input id="wc-yes" type="radio" name="warSrcc" value="YES" formControlName="warSrcc">
+              <label for="wc-yes" [ngClass]="warStatus=='N'?'disabled':'enabled'">Yes</label>
+              <input id="wc-no" type="radio" name="warSrcc" value="NO" formControlName="warSrcc">
+              <label for="wc-no" [ngClass]="warStatus=='N'?'disabled':'enabled'">No</label>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <div *ngIf="userDetails?.RegionCode=='100019'"><label class="input-form-label">PVT Cover</label> </div>
-          <div *ngIf="userDetails?.RegionCode!='100019'"><label class="input-form-label">War Cover</label> </div>
-          <div class="input-form-radio-box">
-            <div class="radio-toolbar">
-              <input id="warsrcc_Yes" type="radio" name="warSrcc" value="YES" formControlName="warSrcc">
-              <label for="warsrcc_Yes" [ngClass]="warStatus =='N'?'disabled':'enabled'">Yes</label>
-              <input type="radio" id="warsrcc_No" name="warSrcc" value="NO" formControlName="warSrcc">
-              <label for="warsrcc_No" [ngClass]="warStatus =='N'?'disabled':'enabled'">No</label>
+        <!-- Via -->
+        <div *ngIf="insurenceId!='100020'" class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Via</label>
+            <input pInputText formControlName="via" placeholder="Enter via route" class="w-100 p-inputtext-sm" />
+          </div>
+        </div>
+
+        <!-- Storage Period (KE only) -->
+        <div class="col-12 col-sm-6 col-md-4" *ngIf="userDetails?.RegionCode=='100020'">
+          <div class="pf">
+            <label>Storage Period (&gt;60 days)</label>
+            <div class="yn-group">
+              <input id="sp-yes" type="radio" name="StoragePeriod" value="Y" formControlName="StoragePeriodYn">
+              <label for="sp-yes">Yes</label>
+              <input id="sp-no" type="radio" name="StoragePeriod" value="N" formControlName="StoragePeriodYn">
+              <label for="sp-no">No</label>
             </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="this.insurenceId!='100020'" class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Via</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="via">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="userDetails?.RegionCode=='100020'">
-        <div class="input-control-container">
-          <label class="input-form-label">Storage Period (>60 days)</label>
-          <div class="input-form-radio-box">
-            <div class="radio-toolbar">
-              <input id="StoragePeriod_Yes" type="radio" name="StoragePeriod" value="Y"
-                formControlName="StoragePeriodYn">
-              <label for="StoragePeriod_Yes">Yes</label>
-              <input type="radio" id="StoragePeriod_No" name="StoragePeriod" value="N"
-                formControlName="StoragePeriodYn">
-              <label for="StoragePeriod_No">No</label>
+
+        <!-- Transhipment (KE only) -->
+        <div class="col-12 col-sm-6 col-md-4" *ngIf="userDetails?.RegionCode=='100020'">
+          <div class="pf">
+            <label>Transhipment</label>
+            <div class="yn-group">
+              <input id="ts-yes" type="radio" name="Transhipment" value="Y" formControlName="TranshipmentYN"
+                (change)="onTranshipmentChange($event)">
+              <label for="ts-yes">Yes</label>
+              <input id="ts-no" type="radio" name="Transhipment" value="N" formControlName="TranshipmentYN"
+                (change)="onTranshipmentChange($event)">
+              <label for="ts-no">No</label>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="userDetails?.RegionCode=='100020'">
-        <div class="input-control-container">
-          <label class="input-form-label">Transhipment</label>
-          <div class="input-form-radio-box">
-            <div class="radio-toolbar">
-              <input (change)="onTranshipmentChange($event)" id="Transhipment_Yes" type="radio" name="Transhipment"
-                value="Y" formControlName="TranshipmentYN">
-              <label for="Transhipment_Yes">Yes</label>
-              <input (change)="onTranshipmentChange($event)" type="radio" id="Transhipment_No" name="Transhipment"
-                value="N" formControlName="TranshipmentYN">
-              <label for="Transhipment_No">No</label>
-            </div>
+        <!-- Transhipment Country -->
+        <div class="col-12 col-sm-6 col-md-4"
+          *ngIf="userDetails?.RegionCode=='100020' && quoteF.TranshipmentYN.value=='Y'">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.transhippingCountry.errors && submitted) || (!quoteF.transhippingCountry.valid && quoteF.transhippingCountry.touched)">
+            <label>Transhipment Country <span class="req">*</span></label>
+            <p-dropdown [options]="dropTranshippingCountryList" optionLabel="CodeDescription" optionValue="Code"
+              formControlName="transhippingCountry" placeholder="Select" [filter]="true" styleClass="w-100"
+              (onChange)="onGetTranshippingCityDropdownList()">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.transhippingCountry.errors && submitted) || (!quoteF.transhippingCountry.valid && quoteF.transhippingCountry.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
           </div>
         </div>
-      </div>
 
-      <div *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y'"
-        class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Transhipment Country<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="transhippingCountry"
-            [items]="dropTranshippingCountryList" bindValue="Code" bindLabel="CodeDescription"
-            (change)="onGetTranshippingCityDropdownList()">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.transhippingCountry.errors && submitted) || (!quoteF.transhippingCountry.valid && quoteF.transhippingCountry.touched)">
-            <div *ngIf="quoteF.transhippingCountry.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="userDetails?.RegionCode=='100020' &&this.quoteF.TranshipmentYN.value=='Y'"
-        class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label d-flex">
-            <span class="mx-2">Transhipment City <span class="text-required">*</span></span>
-            <div class="custom-control custom-switch">
-            </div>
-          </label>
-          <div class="input-form-box">
-            <ng-container *ngIf="!quoteF.transhippingOtherYN.value">
-              <ng-select placeholder="Select" [clearable]="true" [closeOnSelect]="true" class="input-form-select"
-                formControlName="via" [items]="secondarylist" bindValue="ShortCode" bindLabel="CodeDescription">
-              </ng-select>
-            </ng-container>
-            <ng-container *ngIf="quoteF.transhippingOtherYN.value">
-              <input type="text" class="input-form-control without-icon" placeholder="Enter City here.."
-                formControlName="transhippingCityOther">
-            </ng-container>
-          </div>
-          <div class="input-form-error"
-            *ngIf="(quoteF.via.errors && submitted) || (!quoteF.via.valid && quoteF.via.touched)">
-            <div *ngIf="quoteF.via.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <ng-container *ngIf="quoteF.settlingAgent.value === '9999'">
-        <div class="col-12 col-md-4 col-lg-4 mt-2">
-          <div class="input-control-container">
-            <label class="input-form-label">Others</label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="others">
-            </div>
-          </div>
-        </div>
-      </ng-container>
-
-    </div>
-  </div>
-
-  <div class="modern-card-wrapper">
-    <div class="col-12">
-      <div class="start-line">
-        <nb-icon icon="cube-outline"></nb-icon>
-        Commodity Details
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Goods Category<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="goodsCategory"
-            [items]="dropGoodsOfCateList" bindValue="Code" bindLabel="CodeDescription">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.goodsCategory.errors && submitted) || (!quoteF.goodsCategory.valid && quoteF.goodsCategory.touched)">
-            <div *ngIf="quoteF.goodsCategory.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Insured Value<span class="text-required">*</span></label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" (keyup)="CommaFormatteds()"
-              formControlName="insuredValue" [value]="quoteF.insuredValue.value | commaseparator">
-          </div>
-          <div class="input-form-error"
-            *ngIf="(quoteF.insuredValue.errors && submitted) || (!quoteF.insuredValue.valid && quoteF.insuredValue.touched)">
-            <div *ngIf="quoteF.insuredValue.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">
-            Currency<span class="text-required">*</span>
-          </label>
-
-          <!-- ✅ NEW WRAPPER CLASS -->
-          <div class="currency-flex currency-70-30">
-
-            <div class="currency-drop">
-              <ng-select placeholder="Select" class="input-form-select" formControlName="currency"
-                [items]="dropCurrencyList" bindValue="Code" bindLabel="CodeDescription"
-                (change)="onChangeCurrencyDrop()">
-              </ng-select>
-            </div>
-
-            <div class="currency-input">
-              <div class="input-control-container">
-                <div class="input-form-box">
-                  <input type="text" class="input-form-control4 without-icon" formControlName="currencyValue">
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="input-form-error"
-            *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
-            <div *ngIf="quoteF.currency.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="col-12 col-md-4 col-lg-4">
-        <div class="input-control-container">
-          <label class="input-form-label">Currency<span class="text-required">*</span></label>
-          <div class="currency-flex">
-            <div class="currrency-drop">
-              <ng-select placeholder="Select" class="input-form-select" formControlName="currency"
-                [items]="dropCurrencyList" bindValue="Code" bindLabel="CodeDescription"
-                (change)="onChangeCurrencyDrop()">
-              </ng-select>
-            </div>
-            <div class="currrency-dollar">
-              <div class="input-control-container">
-                <div class="input-form-box">
-                  <input type="text" class="input-form-control4 without-icon" formControlName="currencyValue"
-                    [value]="quoteF.currency.value | currency: dropCurrencyList">
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="input-form-error"
-            *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
-            <div *ngIf="quoteF.currency.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
+        <!-- Settling Agent -->
+        <!-- <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf">
+          <label>Settling Agent</label>
+          <p-dropdown [options]="dropSettlingAgentList" optionLabel="CodeDescription" optionValue="Code"
+            formControlName="settlingAgent" placeholder="Select" [filter]="true" styleClass="w-100">
+          </p-dropdown>
         </div>
       </div> -->
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Package description<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="packageDescription"
-            [items]="dropPackageDescList" bindValue="Code" bindLabel="CodeDescription">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.packageDescription.errors && submitted) || (!quoteF.packageDescription.valid && quoteF.packageDescription.touched)">
-            <div *ngIf="quoteF.packageDescription.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Conveyance | Vessel name</label>
-          <div class="currency-flex">
-            <div class="currrency-drop-vss input-form-box">
-              <input type="text" class="input-form-control2 with-icon" disabled [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="vesselValue" placeholder="Enter Vessel Name">
-            </div>
-            <div class="currrency-dollar">
-              <button class="btn btn-secondary" (click)="vessel(myModal2)"
-                style="border-radius: 3px;padding: 5px;margin-top: 6px;"><i class="fas fa-search"></i></button>
 
-            </div>
-            <div class="input-form-box" style="margin-left:-20px!important;width:40px !important">
-              <!-- <input type="text" class="input-form-control5 with-icon" disabled [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="ManufactureYear" placeholder="Year"> -->
-              <!--(keyup)="numberOnly($event)"-->
-            </div>
+        <!-- Others (when settling agent = 9999) -->
+        <div class="col-12 col-sm-6 col-md-4" *ngIf="quoteF.settlingAgent.value === '9999'">
+          <div class="pf">
+            <label>Others</label>
+            <input pInputText formControlName="others" placeholder="Enter other details" class="w-100 p-inputtext-sm" />
           </div>
+        </div>
 
-          <!-- <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="conveyanceVesselName">
-          </div> -->
-        </div>
       </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="">
-          <label class="input-form-label">Container Number</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="voyageNumber">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Incoterms<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="incoterms"
-            [items]="dropIncotermsList" bindValue="Code" bindLabel="CodeDescription"
-            (change)="onGetIncotermsPrecentDropdownList(1)">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.incoterms.errors && submitted) || (!quoteF.incoterms.valid && quoteF.incoterms.touched)">
-            <div *ngIf="quoteF.incoterms.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Incoterms<i>(Percentage)</i><span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="incotermsPercentage"
-            [items]="dropIncotermsPrecentList" bindValue="Code" bindLabel="CodeDescription"
-            (change)="onGetToleranceDropdownList(1)">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.incotermsPercentage.errors && submitted) || (!quoteF.incotermsPercentage.valid && quoteF.incotermsPercentage.touched)">
-            <div *ngIf="quoteF.incotermsPercentage.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Tolerance<span class="text-required">*</span></label>
-          <ng-select placeholder="Select" class="input-form-select" formControlName="tolerance"
-            [items]="dropToleranceList" bindValue="Code" bindLabel="CodeDescription">
-          </ng-select>
-          <div class="input-form-error"
-            *ngIf="(quoteF.tolerance.errors && submitted) || (!quoteF.tolerance.valid && quoteF.tolerance.touched)">
-            <div *ngIf="quoteF.tolerance.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2">
-        <div class="input-control-container">
-          <label class="input-form-label">Goods Description<span class="text-required">*</span></label>
-          <div class="input-form-box">
-            <textarea class="input-form-control3 without-icon" rows="3" formControlName="goodsDescript"></textarea>
-          </div>
-          <div class="input-form-error"
-            *ngIf="(quoteF.goodsDescript.errors && submitted) || (!quoteF.goodsDescript.valid && quoteF.goodsDescript.touched)">
-            <div *ngIf="quoteF.goodsDescript.errors?.required" class="error-text">
-              This field is required
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-4 mt-2" *ngIf="userDetails.RegionCode=='100020'">
-        <div class="input-control-container">
-          <label class="input-form-label">UCR Number</label>
-          <div class="input-form-box">
-            <input type="text" class="input-form-control without-icon" formControlName="UCRNumber">
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
+  <div class="modern-card-wrapper mt-3">
+    <div class="section-header">
+      <div class="section-icon"><i class="fas fa-cube"></i></div>
+      <div>
+        <div class="section-title">Commodity Details</div>
+      </div>
+    </div>
+
+    <div class="section-body">
+
+      <div class="row g-3">
+
+        <!-- Goods Category -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.goodsCategory.errors && submitted) || (!quoteF.goodsCategory.valid && quoteF.goodsCategory.touched)">
+            <label>Goods Category <span class="req">*</span></label>
+            <p-dropdown [options]="dropGoodsOfCateList" optionLabel="CodeDescription" optionValue="Code"
+              formControlName="goodsCategory" appendTo="body" placeholder="Select" [filter]="true" styleClass="w-100">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.goodsCategory.errors && submitted) || (!quoteF.goodsCategory.valid && quoteF.goodsCategory.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+          </div>
+        </div>
+
+        <!-- Insured Value -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.insuredValue.errors && submitted) || (!quoteF.insuredValue.valid && quoteF.insuredValue.touched)">
+            <label>Insured Value <span class="req">*</span></label>
+            <input pInputText formControlName="insuredValue" (keyup)="CommaFormatteds()"
+              [value]="quoteF.insuredValue.value | commaseparator" placeholder="0.00" class="w-100 p-inputtext-sm" />
+            <small class="p-error"
+              *ngIf="(quoteF.insuredValue.errors && submitted) || (!quoteF.insuredValue.valid && quoteF.insuredValue.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+          </div>
+        </div>
+
+        <!-- Currency -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+            <label>Currency <span class="req">*</span></label>
+            <div class="currency-group">
+              <p-dropdown [options]="dropCurrencyList" optionLabel="CodeDescription" appendTo="body" optionValue="Code"
+                formControlName="currency" placeholder="Select" styleClass="currency-drop"
+                (onChange)="onChangeCurrencyDrop()">
+              </p-dropdown>
+              <input pInputText formControlName="currencyValue"
+                [value]="quoteF.currency.value | currency: dropCurrencyList" class="currency-val p-inputtext-sm"
+                readonly />
+            </div>
+            <small class="p-error"
+              *ngIf="(quoteF.currency.errors && submitted) || (!quoteF.currency.valid && quoteF.currency.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+          </div>
+        </div>
+
+        <!-- Package Description -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf"
+            [class.pf-invalid]="(quoteF.packageDescription.errors && submitted) || (!quoteF.packageDescription.valid && quoteF.packageDescription.touched)">
+            <label>Package Description <span class="req">*</span></label>
+            <p-dropdown [options]="dropPackageDescList" optionLabel="CodeDescription" optionValue="Code" appendTo="body"
+              formControlName="packageDescription" placeholder="Select" [filter]="true" styleClass="w-100">
+            </p-dropdown>
+            <small class="p-error"
+              *ngIf="(quoteF.packageDescription.errors && submitted) || (!quoteF.packageDescription.valid && quoteF.packageDescription.touched)">
+              <i class="pi pi-exclamation-circle"></i> This field is required
+            </small>
+          </div>
+        </div>
+
+        <!-- Conveyance / Vessel Name -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Conveyance | Vessel Name</label>
+            <div class="p-inputgroup">
+              <input pInputText disabled [ngModelOptions]="{standalone: true}" [(ngModel)]="vesselValue"
+                placeholder="Enter Vessel Name" class="p-inputtext-sm" />
+              <button pButton pRipple type="button" icon="pi pi-search" class="p-button-teal p-button-sm"
+                (click)="vessel(myModal2)"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Container Number -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Container Number</label>
+            <input pInputText formControlName="containerNumber" placeholder="Enter container number"
+              class="w-100 p-inputtext-sm" />
+          </div>
+        </div>
+
+        <!-- Incoterms -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Incoterms <span class="req">*</span></label>
+            <!-- <div class="currency-group"> -->
+            <p-dropdown [options]="dropIncotermsList" optionLabel="CodeDescription" appendTo="body"
+              (onChange)="onGetIncotermsPrecentDropdownList(1)" styleClass="w-100" optionValue="Code"
+              formControlName="incoterms" placeholder="Select" styleClass="currency-drop">
+            </p-dropdown>
+            <!-- <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body" optionValue="Code"
+              formControlName="incotermsPercentage" placeholder="%" styleClass="currency-val-sm">
+            </p-dropdown> -->
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Incoterms(Percentage) <span class="req">*</span></label>
+            <!-- <div class="currency-group"> -->
+            <!-- <p-dropdown [options]="dropIncotermsList" optionLabel="CodeDescription" appendTo="body" styleClass="w-100" optionValue="Code"
+              formControlName="incoterms" placeholder="Select" styleClass="currency-drop">
+            </p-dropdown> -->
+            <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body"
+              (onChange)="onGetToleranceDropdownList(1)" optionValue="Code" formControlName="incotermsPercentage"
+              placeholder="%" styleClass="w-100">
+            </p-dropdown>
+            <!-- </div> -->
+          </div>
+        </div>
+
+        <!-- Tolerance -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Tolerance <span class="req">*</span></label>
+            <p-dropdown [options]="dropToleranceList" appendTo="body" optionLabel="CodeDescription" optionValue="Code"
+              formControlName="tolerance" placeholder="Select" styleClass="w-100">
+            </p-dropdown>
+          </div>
+        </div>
+
+        <!-- Voyage Number -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Voyage Number</label>
+            <input pInputText formControlName="voyageNumber" placeholder="Enter voyage number"
+              class="w-100 p-inputtext-sm" />
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4" *ngIf="userDetails?.RegionCode=='100020'">
+          <div class="pf">
+            <label>UCR Number</label>
+            <input pInputText formControlName="UCRNumber" placeholder="Enter UCR number" class="w-100 p-inputtext-sm" />
+          </div>
+        </div>
+        <!-- Fragile -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Fragile</label>
+            <div class="yn-group">
+              <input id="fr-yes" type="radio" name="fragileYN" value="on" formControlName="fragileYN">
+              <label for="fr-yes">Yes</label>
+              <input id="fr-no" type="radio" name="fragileYN" value="off" formControlName="fragileYN">
+              <label for="fr-no">No</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partial Shipment -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="pf">
+            <label>Partial Shipment</label>
+            <div class="yn-group">
+              <input id="ps-yes" type="radio" name="partialShipment" value="Y" formControlName="partialShipment"
+                (change)="onPartialshipmentChange($event)">
+              <label for="ps-yes">Yes</label>
+              <input id="ps-no" type="radio" name="partialShipment" value="N" formControlName="partialShipment"
+                (change)="onPartialshipmentChange($event)">
+              <label for="ps-no">No</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exposure of Shipment (when partial = Y) -->
+        <div class="col-12 col-sm-6 col-md-4" *ngIf="quoteF.partialShipment.value === 'Y'">
+          <div class="pf">
+            <label>Exposure of Shipment</label>
+            <input pInputText formControlName="exposureOfShipment" placeholder="Enter exposure value"
+              class="w-100 p-inputtext-sm" />
+          </div>
+        </div>
+
+
+        <!-- <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf">
+          <label>War on Land</label>
+          <div class="yn-group">
+            <input id="wl-yes" type="radio" name="warOnLand" value="YES" formControlName="warOnLand">
+            <label for="wl-yes">Yes</label>
+            <input id="wl-no" type="radio" name="warOnLand" value="NO" formControlName="warOnLand">
+            <label for="wl-no">No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="pf">
+          <label>Excess Description</label>
+          <input pInputText formControlName="excessDescription" placeholder="Enter excess description"
+            class="w-100 p-inputtext-sm" />
+        </div>
+      </div> -->
+
+        <!-- Goods Description - Full Width -->
+        <div class="col-12">
+          <div class="pf">
+            <label>Goods Description <span class="req">*</span></label>
+            <textarea pInputTextarea formControlName="goodsDescript" rows="3" placeholder="Enter goods description"
+              class="w-100" autoResize="false"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </form>
+
 <ng-template #myModal2 let-modal>
   <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Vessel Search</h5>
-      <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
-        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-header" style="background:linear-gradient(90deg,#1B7B8A,#145f6c); color:#fff;">
+      <h5 style="color:#fff;" class="modal-title mb-0"><i class="fas fa-ship me-2"></i>Vessel Search</h5>
+      <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      <ng-container>
-        <div class="row">
-          <div class="col-12 col-md-4 col-lg-4" *ngIf="values!='None'">
-            <div class="input-control-container">
-              <label class="input-form-label">Vessel Name<span class="text-required">*</span></label>
-              <input type="text" style="height: 40px !important;
-                  width: 100% !important;" class="input-form-control2 with-icon" maxlength="100"
-                [(ngModel)]="VesselName" (keyup)="onGetVesselDropdownList()" placeholder="Enter Vessel Name">
-              <div class="input-form-error" *ngIf="titleError">
-                <div class="error-text">
-                  This field is required
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-4 col-lg-4">
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="switch3" [checked]="values=='None'"
-                (change)="none($event.target.checked)">
-              <label class="custom-control-label" for="switch3">&nbsp;Other</label>
-            </div>
-            <!-- <mat-radio-group aria-label="Select an option" [(ngModel)]="values" (change)="none(value)">
-                  <mat-radio-button value="others">None</mat-radio-button>
-                  <mat-radio-button value="None">Others</mat-radio-button>
-                </mat-radio-group> -->
-
-
-
-          </div>
-        </div>
-        <div class="row" *ngIf="values=='None'">
-          <div class="col-md-5 col-xl-5 col-lg-5 col-12">
-            <div class="input-control-container mt-2">
-              <label class="input-form-label">Vessel Name</label>
-              <div class="input-form-box">
-                <input type="text" style="width:110% !important;" placeholder="Vessel Name"
-                  class="input-form-control without-icon" maxlength="100" [(ngModel)]="VesselNames">
-              </div>
-              <div *ngIf="manshow">
-                <div style="color:red;font-size:14px !important;"> Please Fill Vessel Name</div>
-              </div>
-            </div>
-
-          </div>
-          <div class="col-12 col-md-2 col-xl-2 col-lg-2">
-            <div class="input-control-container mt-2" *ngIf="values=='None'">
-              <label class="input-form-label">Manufacture Year</label>
-              <div class="input-form-box">
-                <input type="text" placeholder="Manufacture Year" class="input-form-control without-icon" maxlength="10"
-                  [(ngModel)]="ManufactureYear">
-              </div>
-              <div *ngIf="manshow">
-                <div style="color:red;font-size:14px !important;"> Please Fill Manufacute Year</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="row" *ngIf="!newshow">
-          <ng-container *ngIf="vesselSearchList.length!=0">
-            <app-grid-table [cols]="columnHeader" [data]="vesselSearchList" [filterValue]="filterValue"
-              (onSelectCustomer)="onSelectCustomer($event,$event.checked,modal)">
-            </app-grid-table>
-          </ng-container>
-          <div *ngIf="manshows">
-            <div style="color:red;font-size:14px !important;"> Please Select One Vessel Name</div>
-          </div>
-
-          <!-- <ng-container *ngIf="vesselSearchList.length==0">
-                 No Records Found
-              </ng-container> -->
-        </div>
-      </ng-container>
-
-    </div>
-    <div class="modal-footer">
-
-      <button type="button" class="btn btn-secondary" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Close</button>
-      <button type="button" class="btn btn-warning" *ngIf="vesselSearchList.length!=0"
-        (click)="clearSearch()">Clear</button>
-      <button type="button" class="btn btn-primary" (click)="submits(modal)">Submit</button>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #myModal3 let-modal>
-  <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Transhipping Search</h5>
-      <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
-        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
-    </div>
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-md-4 col-lg-4"></div>
-        <div class="col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" placeholder="Search" [(ngModel)]="filterValue">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-lg-4 mt-1">
+      <div class="row mb-3">
+        <div class="col-12 col-md-8 offset-md-2">
+          <span class="p-input-icon-left w-100 customer-search">
+            <!-- <i class="pi pi-search"></i> -->
+            <input pInputText [(ngModel)]="vesselFilter" placeholder="Search vessel..." class="w-100" />
+          </span>
         </div>
       </div>
-
-
-      <app-material-table *ngIf="enableGrid" [cols]="displayedColumns" [customerId]="getTranshippingId()"
-        [data]="dropTranshippingList" [filterValue]="filterValue"
-        (onSelectCustomer)="onSelectTranshipping($event,modal)">
-      </app-material-table>
-      <h6 *ngIf="!enableGrid">Loading Data ........</h6>
-
-      <!-- <app-material-table [cols]="displayedColumns" [customerId]="getTranshippingId()" [data]="dataSource.data"
-        [filterValue]="filterValue" [pageSize]="pageSize" [totalRecords]="totalRecords"
-        (onPageChange)="handlePageChange($event)" (onSelectCustomer)="onSelectTranshipping($event, modal)">
-      </app-material-table> -->
+      <div class="row">
+        <div class="col-12">
+          <ng-container *ngIf="dropVesselList?.length > 0">
+            <app-material-table [cols]="vesselColumns" [data]="dropVesselList" [filterValue]="vesselFilter"
+              (onSelectCustomer)="onSelectVessel($event, modal)">
+            </app-material-table>
+          </ng-container>
+          <ng-container *ngIf="!dropVesselList || dropVesselList?.length === 0">
+            <div class="text-center py-4 text-muted">
+              <i class="fas fa-ship fa-2x mb-2 d-block"></i>
+              No vessels found
+            </div>
+          </ng-container>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Close</button>
+      <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-secondary p-button-sm p-button-outlined"
+        (click)="modal.dismiss('Cross click')"></button>
     </div>
   </div>
 </ng-template>

@@ -1,30 +1,321 @@
-
-.vision-grid{
-  margin: 1rem 0 ;
-}
-.vision-grid .vision-grid-item {
- background-color: white;
- padding: 1rem;
- border-radius: .5rem;
- margin: .5rem 0;
-}
-.vision-grid-item-title{
-  padding: 0.5rem;
-  font-weight: 600;
-}
-.mat-radio-button ~ .mat-radio-button {
-  margin-left: 16px;
+// ════════════════════════════════════════════════════════════════
+//  Premium Computation — Salama Theme
+// ════════════════════════════════════════════════════════════════
+:root {
+  --teal: rgb(30 64 175);
+  --teal-dark: #042181;
 }
 
-.vision-grid-item:first-child{
-  background-color: #f1f1f1 !important;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-.vision-grid-item:first-child .premium-lable,
-.vision-grid-item:first-child .premium-val{
- padding: .5rem 0;
-}
-.vision-grid-item:first-child .premium-lable{
-font-weight: 500;
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+$teal-light:  #e8f4f6;
+$teal-xl:     #f0f9fa;
+$gold:        #E8A020;
+$gold-dark:   #c8881a;
+$white:       #ffffff;
+$border:      #c9dde2;
+$text:        #1a2e35;
+$muted:       #6b8c93;
+$error:       #e53935;
+$warn:        #e65100;
+$success:     #2e7d32;
+$disabled-bg: #f4f8f9;
+$page-bg:     #eef2f5;
+$font:        'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+:host { display: block; font-family: $font; font-size: 13px; color: $text; background: $page-bg; }
+* { box-sizing: border-box; }
+
+.prc-page {
+  padding: 0.6rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+// ════════════════════════════════════════════════════════════════
+//  KPI SUMMARY BAND
+// ════════════════════════════════════════════════════════════════
+.sa-kpi-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+
+  @media (max-width: 767px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 400px) { grid-template-columns: 1fr; }
+}
+
+.sa-kpi-item {
+  background: $white;
+  border: 1px solid $border;
+  border-radius: 8px;
+  border-top: 3px solid $teal;
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 1px 6px rgba(28,121,136,.07);
+  transition: box-shadow .2s;
+  &:hover { box-shadow: 0 3px 12px rgba(28,121,136,.14); }
+}
+
+.sa-kpi-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: $muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sa-kpi-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: $teal;
+  line-height: 1.2;
+  word-break: break-all;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  SA-CARD
+// ════════════════════════════════════════════════════════════════
+.sa-card {
+  background: $white;
+  border-radius: 8px;
+  border: 1px solid $border;
+  box-shadow: 0 1px 8px rgba(28,121,136,.09);
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+}
+.sa-card-header {
+  background: $teal;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem 0 0.85rem;
+  gap: 0.6rem;
+}
+.sa-icon  { font-size: 1rem; color: $gold; width: 20px; text-align: center; }
+.sa-title { font-size: 0.9rem; font-weight: 700; color: $white; letter-spacing: 0.2px; }
+.sa-card-body { padding: 1rem; }
+
+// ════════════════════════════════════════════════════════════════
+//  PREMIUM TABLE
+// ════════════════════════════════════════════════════════════════
+.prc-table-wrap {
+  border: 1px solid $border;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.prc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: $font;
+  font-size: 0.82rem;
+  background: $white;
+
+  thead th {
+    background: $teal;
+    color: $white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0 14px;
+    height: 40px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 2px solid $teal-dark;
+
+    &:first-child { border-radius: 6px 0 0 0; }
+    &:last-child  { border-radius: 0 6px 0 0; }
+    &.col-name    { width: 200px; }
+  }
+
+  tbody {
+    tr:nth-child(even) td { background: $teal-xl; }
+    tr:nth-child(odd)  td { background: $white; }
+    tr:hover td           { background: $teal-light; transition: background .15s; }
+    tr:last-child td      { border-bottom: none; }
+    tr.tr-radio td        { vertical-align: middle; padding-top: 8px; padding-bottom: 8px; }
+
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid $teal-xl;
+      vertical-align: middle;
+    }
+  }
+}
+
+// ── Row name badge ────────────────────────────────────────────
+.row-label { width: 200px; white-space: nowrap; }
+
+.row-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+
+  i { font-size: 0.7rem; }
+}
+
+.row-badge-actual   { background: $teal-xl;  color: $teal-dark;  border: 1px solid $border; }
+.row-badge-received { background: #e8f5e9;   color: $success;    border: 1px solid #c8e6c9; }
+.row-badge-balance  { background: #fff3e0;   color: $warn;       border: 1px solid #ffe0b2; }
+.row-badge-choice   { background: #f3e5f5;   color: #6a1b9a;     border: 1px solid #e1bee7; }
+.row-badge-refund   { background: $teal-light; color: $teal;     border: 1px solid $border; }
+
+// ── Inputs inside table cells ─────────────────────────────────
+.prc-input {
+  width: 100%;
+  height: 32px;
+  padding: 0 8px;
+  font-family: $font !important;
+  font-size: 0.82rem;
+  color: $text;
+  background: $white;
+  border: 1px solid $border;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  min-width: 100px;
+
+  &:focus {
+    border-color: $teal;
+    box-shadow: 0 0 0 2px rgba(28,121,136,.12);
+  }
+  &::placeholder { color: $muted; }
+}
+
+.prc-input-disabled {
+  background: $disabled-bg !important;
+  color: $muted !important;
+  cursor: default !important;
+}
+
+// ── mat-radio-button (Chargeable / Refund) ───────────────────
+.sa-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+::ng-deep {
+  .sa-radio-group {
+    .mat-radio-button { margin-right: 0 !important; }
+
+    .mat-radio-outer-circle,
+    .mat-mdc-radio-button .mdc-radio__outer-circle {
+      border-color: $border !important;
+    }
+    .mat-radio-button.mat-accent .mat-radio-inner-circle,
+    .mat-mdc-radio-button.mat-accent .mdc-radio__inner-circle {
+      background-color: $teal !important;
+    }
+    .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+    .mat-mdc-radio-button.mat-accent.mdc-radio--checked .mdc-radio__outer-circle {
+      border-color: $teal !important;
+    }
+    .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+      background-color: rgba(28,121,136,.18) !important;
+    }
+    .mat-radio-label-content,
+    .mdc-label {
+      font-family: $font !important;
+      font-size: 0.82rem !important;
+      color: $text !important;
+      padding-left: 4px !important;
+    }
+    .mat-radio-button[disabled] .mat-radio-label-content,
+    .mat-mdc-radio-button[disabled] .mdc-label {
+      color: $muted !important;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  PAGE FOOTER
+// ════════════════════════════════════════════════════════════════
+.sa-page-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.25rem 0 0.4rem;
+}
+
+::ng-deep .sa-page-footer .p-button {
+  font-family: $font !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  height: 34px !important;
+  padding: 0 1.1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  transition: background .18s, border-color .18s !important;
+  .p-button-icon { font-size: 0.78rem !important; }
+
+  // Primary (Next)
+  &:not(.p-button-danger):not(.p-button-warning) {
+    background: $teal !important;
+    border-color: $teal !important;
+    color: $white !important;
+    &:hover { background: $teal-dark !important; border-color: $teal-dark !important; }
+  }
+  // Warning (Calculate)
+  &.p-button-warning {
+    background: $gold !important;
+    border-color: $gold !important;
+    color: $white !important;
+    &:hover { background: $gold-dark !important; border-color: $gold-dark !important; }
+  }
+  // Danger (Back)
+  &.p-button-danger {
+    background: $error !important;
+    border-color: $error !important;
+    color: $white !important;
+    &:hover { background: darken($error, 8%) !important; }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MOBILE RESPONSIVE
+// ════════════════════════════════════════════════════════════════
+@media (max-width: 749px) {
+  .prc-page { padding: 0.4rem; }
+
+  // Table → card layout
+  .prc-table-wrap { border: none; }
+  .prc-table thead { display: none; }
+  .prc-table tbody, .prc-table tbody tr, .prc-table tbody td { display: block; }
+
+  .prc-table tbody tr {
+    background: $white !important;
+    border: 1px solid $border;
+    border-top: 3px solid $teal;
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 1px 6px rgba(28,121,136,.08);
+  }
+  .prc-table tbody td {
+    padding: 7px 0 !important;
+    border-bottom: 1px solid $teal-xl !important;
+    &:last-child { border-bottom: none !important; }
+    &::before { content: attr(data-label); display: block; font-size: 0.7rem; font-weight: 700; color: $muted; text-transform: uppercase; margin-bottom: 4px; }
+  }
+  .prc-table tbody tr:nth-child(even) td,
+  .prc-table tbody tr:nth-child(odd)  td { background: transparent !important; }
+  .row-label { width: auto; }
+  .prc-input { width: 100%; }
+
+  .sa-page-footer {
+    flex-direction: column;
+    ::ng-deep .p-button { width: 100% !important; justify-content: center !important; }
+  }
+}

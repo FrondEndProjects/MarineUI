@@ -131,7 +131,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         this.docUploadedData = null
       }
     });
-
+ 
   }
 
   ngAfterViewInit() {
@@ -197,7 +197,17 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         }
       }
     });
+   const id = this.insurenceId;
 
+ if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
 
   }
   ClearSubscribe(): void {
@@ -209,7 +219,13 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.subscription = this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
       if (data) {
         if (this.dropOriginCountryList.length == 0) {
-          this.onEditQuote(data);
+
+          // this.onGetOriginCountryDropdownList(1);
+          // this.onGetDestinaCountryDropdownList();
+          setTimeout(() => {
+            this.onEditQuote(data);
+          }, 1000);
+
         }
       }
       else {
@@ -220,8 +236,8 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     });
 
 
-    //  this.onGetOriginCityDropdownList();
-    //  this.onGetDestinaCityDropdownList();
+    // this.onGetOriginCityDropdownList();
+    // this.onGetDestinaCityDropdownList();
 
   }
 
@@ -238,17 +254,43 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     const quoteDetails = data?.QuoteDetails;
     const commodityDetails = data?.QuoteDetails?.CommodityDetails[0];
     const transportDetails = data?.QuoteDetails?.TransportDetails;
+    this.quoteF.modeOfTransport.setValue(transportDetails?.ModeOfTansportCode);
     const vesselDetails = data?.QuoteDetails?.VesselDetails;
     this.editCover = transportDetails?.CoverCode;
     this.editmodeOfCarriage = transportDetails?.ModeOfCarriageCode;
-    this.quoteF.modeOfTransport.setValue(transportDetails?.ModeOfTansportCode);
-    this.onGetCoverDropdownList(1);
+    let orginCountry: any;
+    let desinationCountry: any;
+
+    if (this.userDetails?.InsuranceId == '100020') {
+      let value: any = this.quoteF.modeOfTransport.value
+      if (value == '1' || value == 1) {
+        orginCountry = this.dropOriginCountryList.find(ele => ele.Code == transportDetails?.OriginCountryCode);
+        desinationCountry = this.dropDestinaCountryList.find(ele => ele.Code == transportDetails?.DestinationCountryCode);
+        this.onGetCoverDropdownList(1);
+      }
+      else {
+        orginCountry = this.dropOriginCountryList.find(ele => ele.CodeValue2 == transportDetails?.OriginCountryCode);
+        desinationCountry = this.dropDestinaCountryList.find(ele => ele.CodeValue2 == transportDetails?.DestinationCountryCode);
+        this.onGetCoverDropdownList(1);
+      }
+    }
+    else {
+      this.onGetCoverDropdownList(1);
+    }
+
     this.onGetCarriageDropdownList(null, null);
     this.quoteF.cover.setValue(transportDetails?.CoverCode);
     this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
+    if (this.userDetails?.RegionCode == '100020') {
+      this.quoteF.originatingCountry.setValue(orginCountry?.Code);
+      this.onGetOriginCityDropdownList();
+    }
+    else {
+      this.quoteF.originatingCountry.setValue(transportDetails?.OriginCountryCode);
+      this.onGetOriginCityDropdownList();
+    }
 
-    this.quoteF.originatingCountry.setValue(transportDetails?.OriginCountryCode);
-    this.onGetOriginCityDropdownList();
+
     // this.quoteF.originatingCity.setValue(transportDetails?.OriginCityCode);
     this.editOrginCity = transportDetails?.OriginCityCode
     if (this.userDetails?.RegionCode == '100020') {
@@ -260,7 +302,13 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       this.quoteF.StoragePeriodYn.setValue('N');
     }
     this.quoteF.originatingWarehouse.setValue(transportDetails?.OriginWarehouseYn);
-    this.quoteF.destinationCountry.setValue(transportDetails?.DestinationCountryCode);
+    // this.quoteF.destinationCountry.setValue(transportDetails?.DestinationCountryCode);
+    if (this.userDetails?.RegionCode == '100020') {
+      this.quoteF.destinationCountry.setValue(desinationCountry?.Code);
+    }
+    else {
+      this.quoteF.destinationCountry.setValue(transportDetails?.DestinationCountryCode);
+    }
     this.onGetDestinaCityDropdownList();
     this.TranshippingCountryEdit = transportDetails?.TranshipmentCountry
     // this.quoteF.destinationCity.setValue(transportDetails?.DestinationCityCode);
@@ -499,7 +547,12 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropTransportList = data?.Result;
+
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropTransportList = obj.concat(data?.Result)
+          // this.dropTransportList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropTransportList, 'transport');
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadedData();
@@ -511,6 +564,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onGetCoverDropdownList(value) {
+
     if (this.insurenceId == '100020') {
       this.onGetOriginCityDropdownList();
       this.onGetDestinaCityDropdownList();
@@ -537,7 +591,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropCoverList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropCoverList = obj.concat(data?.Result)
+          // this.dropCoverList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCoverList, 'cover');
           if (this.docUploadedData) {
             this.quoteF.cover.setValue(this.editCover)
@@ -577,7 +635,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropCarriageList = data?.Result;
+          // this.dropCarriageList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropCarriageList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropCarriageList, 'carriage');
           if (this.docUploadedData && mode != null && cover != null) {
             this.quoteF.modeOfCarriage.setValue(this.editmodeOfCarriage)
@@ -600,7 +662,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropOriginCountryList = data?.Result;
+          // this.dropOriginCountryList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropOriginCountryList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropOriginCountryList, 'orgCountry');
           if (this.docUploadedData && value != 1) {
             let Orgcountry = this.dropOriginCountryList.filter(e => e.ShortCode === this.docUploadedData.CountryOfSupply);
@@ -653,7 +719,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         (data: any) => {
 
           if (data?.Message === 'Success') {
-            this.dropOriginCityList = data?.Result;
+            // this.dropOriginCityList = data?.Result;
+            let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+            ];
+            this.dropOriginCityList = obj.concat(data?.Result)
             this.newQuotesService.getDropDownList(this.dropOriginCityList, 'orgCity');
             const isIncluded = this.dropOriginCityList.some(item => item.Code == this.editOrginCity);
 
@@ -683,7 +753,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropDestinaCountryList = data?.Result;
+          // this.dropDestinaCountryList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropDestinaCountryList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropDestinaCountryList, 'destCounty');
           this.onGetDestinaCityDropdownList();
 
@@ -739,7 +813,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
         (data: any) => {
 
           if (data?.Message === 'Success') {
-            this.dropDestinaCityList = data?.Result;
+            // this.dropDestinaCityList = data?.Result;
+            let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+            ];
+            this.dropDestinaCityList = obj.concat(data?.Result)
             this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
             const isIncluded = this.dropDestinaCityList.some(item => item.Code == this.editDesinationCity);
             if (isIncluded && (this.setDocvalue == 'edit' || this.setDocvalue == 'back' || this.setDocvalue == 'referral' || this.Endors == 'Endors')) {
@@ -797,7 +875,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropPackageDescList = data?.Result;
+          // this.dropPackageDescList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropPackageDescList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropPackageDescList, 'packageDesc');
           // if(this.docUploadedData && value!= 1){
           //   this.quoteF.packageDescription.setValue(this.dropPackageDescList[0].Code)
@@ -990,7 +1072,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropIncotermsList = data?.Result;
+          // this.dropIncotermsList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropIncotermsList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropIncotermsList, 'incoterms');
           if (this.docUploadedData && value != 1) {
             let e = this.dropIncotermsList.filter(e => e.CodeDescription == this.docUploadedData?.Incoterm)
@@ -1027,7 +1113,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropIncotermsPrecentList = data?.Result;
+          // this.dropIncotermsPrecentList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropIncotermsPrecentList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropIncotermsPrecentList, 'incotermsPrec');
           // if(this.docUploadedData && value!=1){
           //   this.quoteF.incotermsPercentage.setValue(this.dropIncotermsPrecentList[0].Code)
@@ -1053,7 +1143,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropToleranceList = data?.Result;
+          // this.dropToleranceList = data?.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropToleranceList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropToleranceList, 'tolerance');
           // if(this.docUploadedData && value !=1){
           // this.quoteF.incotermsPercentage.setValue(this.dropToleranceList[0].Code) 
@@ -1109,7 +1203,13 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       (data: any) => {
 
         if (data?.Message === 'Success') {
-          this.dropCurrencyList = data?.Result;
+          // this.dropCurrencyList = data?.Result;
+
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+
+          ];
+          this.dropCurrencyList = obj.concat(data?.Result)
+
           this.newQuotesService.getDropDownList(this.dropCurrencyList, 'currencyList');
           if (this.docUploadedData && value != 1) {
             let curr = this.dropCurrencyList.filter(e => e.ShortCode == this.docUploadedData?.Currency)
@@ -1218,6 +1318,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
 
         if (type == 1 || type == 'edit') {
           this.dropTranshippingCountryList = data.Result;
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
+          ];
+          this.dropTranshippingCountryList = obj.concat(data?.Result)
           if (type == 'edit') {
 
             const countryList: any = this.dropTranshippingCountryList.find(ele => ele.Code == this.TranshippingCountryEdit);
@@ -1388,6 +1491,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
       this.quoteF.orginatingCityOther.updateValueAndValidity();
 
     }
+
+  }
+  maxDatePrime: any
+  dropSettlingAgentList: any
+  onPartialshipmentChange(event) {
 
   }
 }

@@ -36,6 +36,7 @@ export class CustomerInfoComponent implements OnInit {
   showNewQuote: boolean = false;
   showselectCard: boolean = true;
   showCommissionPopup: boolean = false;
+  isMobile: boolean = false;
   setDocvalue: any;
   public userDetails: any;
   public productId: any;
@@ -119,6 +120,8 @@ export class CustomerInfoComponent implements OnInit {
     //  else{
     //   this.brList =[]
     //  }
+    this.checkScreenWidth();
+    window.addEventListener('resize', () => this.checkScreenWidth());
     this.userDetails = this.userDetails?.LoginResponse;
     this.productId = this.sessionStorageService.sessionStorgaeModel.productId;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
@@ -164,6 +167,11 @@ export class CustomerInfoComponent implements OnInit {
       this.loginId = this.endorsement?.LoginId || '';
       this.applicationId = this.userDetails.LoginId;
       this.isIssuer = true;
+    }
+
+    if (this.userDetails?.InsuranceId == '100044' || this.userDetails?.InsuranceId == '100053') {
+      this.showNewQuote = true;
+      // this.showFileUpload = false;
     }
 
     if (this.referenceNo) {
@@ -286,6 +294,17 @@ export class CustomerInfoComponent implements OnInit {
 
       }
     }
+
+    const id = this.userDetails?.InsuranceId;
+    if (id !== '100044' && id !== '100053') {
+      document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
+      document.documentElement.style.setProperty('--teal-dark', '#042181');
+      document.documentElement.style.setProperty('--teal-d', '#042181');
+    } else {
+      document.documentElement.style.setProperty('--teal', '#1C7988');
+      document.documentElement.style.setProperty('--teal-dark', '#145f6c');
+      document.documentElement.style.setProperty('--teal-d', '#145f6c');
+    }
   }
 
 
@@ -331,8 +350,10 @@ export class CustomerInfoComponent implements OnInit {
             sessionStorage.setItem('OpenCover', JSON.stringify(opencover));
           }
           this.sessionStorageService.set('coverId', this.editQuoteData?.QuoteDetails?.TransportDetails?.CoverCode);
-
-          this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
+          setTimeout(() => {
+            this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
+          }, 100);
+          // this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
           const customerDetails = this.editQuoteData?.CustomerDetails;
           const lcBankDetails = this.editQuoteData?.LcBankDetails;
           const commodityDetails = this.editQuoteData?.QuoteDetails?.CommodityDetails[0];
@@ -501,6 +522,29 @@ export class CustomerInfoComponent implements OnInit {
 
     const invalidFields = this.getInvalidControls(this.quoteForm);
     console.log("Invalid Controls:", invalidFields);
+    let orginCountry = null;
+    let DestinationCountry = null;
+
+    let list = this.dropOriginCountryList.find(ele => ele.Code == this.quoteF.originatingCountry.value)
+    let list2 = this.dropDestinaCountryList.find(ele => ele.Code == this.quoteF.destinationCountry.value)
+    console.log(list, "list");
+    console.log(list2, "list");
+    console.log(this.userDetails, "sdfdsfds");
+
+
+    if (this.userDetails?.InsuranceId == '100020') {
+      if (this.quoteF.modeOfTransport.value == '1') {
+        orginCountry = list.Code
+        DestinationCountry = list2.Code
+      }
+      else {
+        orginCountry = list.CodeValue2
+        DestinationCountry = list2.CodeValue2
+      }
+    }
+    console.log(orginCountry);
+    console.log(DestinationCountry);
+
     if (this.Endors != 'Endors') {
       if (this.quoteForm.valid && this.customerForm.valid) {
 
@@ -589,15 +633,29 @@ export class CustomerInfoComponent implements OnInit {
           'Executive': '5',
           'Issuer': issuerId,
           'LcBankDetails': {
-            'AwbDate': this.bankF.blAwbLrRrDate.value?.replace(/-/g, "/"),
+            'AwbDate': this.formatDate(this.bankF.blAwbLrRrDate.value),
+            // 'AwbDate': this.bankF.blAwbLrRrDate.value
+            //   ? (() => {
+            //     const d = new Date(this.bankF.blAwbLrRrDate.value);
+            //     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+            //   })()
+            //   : null,
             'AwbNo': this.bankF.blAwbLrRrNumber.value,
             'BankCode': this.bankF.lCBank.value,
             'BankDescription': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
             'BankName': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
             'BankOthers': this.bankF.lcBankDesc.value,
-            'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
+            'LcDate': this.formatDate(this.bankF.lcDate.value),
+            // 'LcDate': this.bankF.lcDate.value
+            //   ? (() => {
+            //     const d = new Date(this.bankF.lcDate.value);
+            //     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+            //   })()
+            //   : null,
             'LcNo': this.bankF.lcNumber.value,
-            'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/"),
+
+            'SailingDate': this.formatDate(this.bankF.sailingDate.value),
+
           },
           'LoginId': loginId,
           'LoginUserType': this.userDetails.UserType,
@@ -613,7 +671,8 @@ export class CustomerInfoComponent implements OnInit {
                 'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
                 'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
                 'InsuredValue': this.quoteF.insuredValue?.value?.toString().replace(/,/g, ''),
-                'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
+                'InvoiceDate': this.formatDate(this.bankF.invoiceDate.value),
+
                 'InvoiceNo': this.bankF.invoiceNumber.value,
                 'PoDescription': this.bankF.poPiNumber.value,
                 'PolicyExcessDescription': this.quoteF.excessDescription.value,
@@ -633,7 +692,8 @@ export class CustomerInfoComponent implements OnInit {
             'ExpiryDate': '',
             'ExposureOfShipment': exposureValue,
             'FinalizeYn': this.editQuoteData?.FinalizeYn,
-            'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
+            'InceptionDate': this.formatDate(this.quoteF.policyStartDate.value),
+            // 'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
             'IncoTerms': this.quoteF.incoterms.value,
             'PackageCode': this.quoteF.packageDescription.value,
             'PackageName': this.getCodeDescription(this.dropPackageDescList, this.quoteF.packageDescription.value),
@@ -651,6 +711,8 @@ export class CustomerInfoComponent implements OnInit {
               // tslint:disable-next-line: max-line-length
               'DestinationCityName': this.quoteF.destinationOtherYN.value ? this.quoteF.destinationCityOther.value : this.getCodeDescription(this.dropDestinaCityList, this.quoteF.destinationCity.value),
               'DestinationCountryCode': this.quoteF.destinationCountry.value,
+              // 'DestinationCountryCode': DestinationCountry,
+              // DestinationCountry = list2.Code
               // tslint:disable-next-line: max-line-length
               'DestinationCountryName': this.getCodeDescription(this.dropDestinaCountryList, this.quoteF.destinationCountry.value),
               'DestinationWarehouseYn': this.quoteF.destinationWarehouse.value,
@@ -662,6 +724,7 @@ export class CustomerInfoComponent implements OnInit {
               // tslint:disable-next-line: max-line-length
               'OriginCityName': this.quoteF.orginatingCityOtherYN.value ? this.quoteF.orginatingCityOther.value : this.getCodeDescription(this.dropOriginCityList, this.quoteF.originatingCity.value),
               'OriginCountryCode': this.quoteF.originatingCountry.value,
+              // 'OriginCountryCode': orginCountry,
               // tslint:disable-next-line: max-line-length
               'OriginCountryName': this.getCodeDescription(this.dropOriginCountryList, this.quoteF.originatingCountry.value),
               'OriginWarehouseYn': this.quoteF.originatingWarehouse.value,
@@ -817,15 +880,19 @@ export class CustomerInfoComponent implements OnInit {
         'Executive': '5',
         'Issuer': issuerId,
         'LcBankDetails': {
-          'AwbDate': this.bankF.blAwbLrRrDate.value?.replace(/-/g, "/"),
+          'AwbDate': this.formatDate(this.bankF.blAwbLrRrDate.value),
+
+          // 'AwbDate': this.bankF.blAwbLrRrDate.value?.replace(/-/g, "/"),
           'AwbNo': this.bankF.blAwbLrRrNumber.value,
           'BankCode': this.bankF.lCBank.value,
           'BankDescription': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
           'BankName': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
           'BankOthers': this.bankF.lcBankDesc.value,
-          'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
+          'LcDate': this.formatDate(this.bankF.lcDate.value),
+          // 'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
           'LcNo': this.bankF.lcNumber.value,
-          'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/"),
+          'SailingDate': this.formatDate(this.bankF.sailingDate.value),
+          // 'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/"),
         },
         'LoginId': loginId,
         'LoginUserType': this.userDetails.UserType,
@@ -841,7 +908,8 @@ export class CustomerInfoComponent implements OnInit {
               'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
               'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
               'InsuredValue': this.quoteF.insuredValue?.value?.toString().replace(/,/g, ''),
-              'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
+              // 'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
+              'InvoiceDate': this.formatDate(this.bankF.invoiceDate.value),
               'InvoiceNo': this.bankF.invoiceNumber.value,
               'PoDescription': this.bankF.poPiNumber.value,
               'PolicyExcessDescription': this.quoteF.excessDescription.value,
@@ -863,7 +931,8 @@ export class CustomerInfoComponent implements OnInit {
           'ExpiryDate': '',
           'ExposureOfShipment': exposureValue,
           'FinalizeYn': this.editQuoteData?.FinalizeYn,
-          'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
+          // 'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
+          'InceptionDate': this.formatDate(this.quoteF.policyStartDate.value),
           'IncoTerms': this.quoteF.incoterms.value,
           'PackageCode': this.quoteF.packageDescription.value,
           'PackageName': this.getCodeDescription(this.dropPackageDescList, this.quoteF.packageDescription.value),
@@ -880,7 +949,8 @@ export class CustomerInfoComponent implements OnInit {
             'DestinationCityCode': this.quoteF.destinationOtherYN.value ? '9999' : this.quoteF.destinationCity.value,
             // tslint:disable-next-line: max-line-length
             'DestinationCityName': this.quoteF.destinationOtherYN.value ? this.quoteF.destinationCityOther.value : this.getCodeDescription(this.dropDestinaCityList, this.quoteF.destinationCity.value),
-            'DestinationCountryCode': this.quoteF.destinationCountry.value,
+            // 'DestinationCountryCode': this.quoteF.destinationCountry.value,
+            'DestinationCountryCode': DestinationCountry,
             // tslint:disable-next-line: max-line-length
             'DestinationCountryName': this.getCodeDescription(this.dropDestinaCountryList, this.quoteF.destinationCountry.value),
             'DestinationWarehouseYn': this.quoteF.destinationWarehouse.value,
@@ -891,7 +961,8 @@ export class CustomerInfoComponent implements OnInit {
             'OriginCityCode': this.quoteF.orginatingCityOtherYN.value ? '9999' : this.quoteF.originatingCity.value,
             // tslint:disable-next-line: max-line-length
             'OriginCityName': this.quoteF.orginatingCityOtherYN.value ? this.quoteF.orginatingCityOther.value : this.getCodeDescription(this.dropOriginCityList, this.quoteF.originatingCity.value),
-            'OriginCountryCode': this.quoteF.originatingCountry.value,
+            // 'OriginCountryCode': this.quoteF.originatingCountry.value,
+            'OriginCountryCode': orginCountry,
             // tslint:disable-next-line: max-line-length
             'OriginCountryName': this.getCodeDescription(this.dropOriginCountryList, this.quoteF.originatingCountry.value),
             'OriginWarehouseYn': this.quoteF.originatingWarehouse.value,
@@ -1166,5 +1237,19 @@ export class CustomerInfoComponent implements OnInit {
       }
     });
   }
+  checkScreenWidth() {
+    this.isMobile = window.innerWidth <= 768; // Adjust 768px as needed for your mobile breakpoint
+  }
+  formatDate(value: any): string | null {
+    if (!value) return null;
 
+    const d = value instanceof Date
+      ? value
+      : (() => {
+        const parts = value.split('-'); // handles "dd-mm-yyyy"
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+      })();
+
+    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  }
 }

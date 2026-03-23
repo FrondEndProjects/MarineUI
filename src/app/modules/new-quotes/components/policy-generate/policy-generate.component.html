@@ -1,47 +1,44 @@
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 — Policy Generation Form
+═══════════════════════════════════════════════════════════ -->
 <div class="maan-card" *ngIf="!draftSection && !policySection && !schedule">
+
+  <!-- Header -->
   <div class="maan-card-header">
-    <!-- <div class="form-heading-number">
-        5
-      </div> -->
-    <div class="row">
-      <div class="form-heading-text col-md-4 col-lg-4 col-4 col-xl-4">
-        Policy Generation
+    <div class="row w-100 align-items-center g-0">
+      <div class="form-heading-text col-md-4 col-lg-4 col-8 col-xl-4">
+        <i class="fa fa-file-alt me-2"></i> Policy Generation
       </div>
-      <div class="col-md-2 col-lg-2 col-2 col-xl-2 offset-6" *ngIf="quoteNo">
+      <div class="col-md-2 col-lg-2 col-4 col-xl-2 offset-md-6 offset-lg-6 offset-xl-6 text-end" *ngIf="quoteNo">
         Quote No - {{quoteNo}}
       </div>
     </div>
   </div>
+
+  <!-- Body -->
   <div class="maan-card-body">
     <div class="vision-grid vision-grid-column-2 policy-grid">
+
+      <!-- LEFT — Document Upload -->
       <div class="vision-grid-item">
         <div class="vision-grid-item-title">
-          <label class="form-label">
-            Document Upload
-            <span class="text-danger ms-1">
-              <!-- <small>(Upload at least Invoice or IDF)</small> -->
-            </span>
-          </label>
+          <i class="fa fa-cloud-upload-alt"></i> Document Upload
         </div>
         <div class="vision-grid-item-body">
-          <ng-container *ngIf="docTypeList.length!=0">
-            <div class="row">
+          <ng-container *ngIf="docTypeList.length != 0">
+            <div class="row g-2">
               <ng-container *ngFor="let doc of docTypeList">
-                <div class="col-12 col-md-6 col-lg-6 col-xl-6 mb-2">
-                  <ng-container *ngIf="doc.DocAvailable=='N'">
-                    <input style="display: none;" type="file" (change)="onUploadDocuments($event,doc)" #fileInput>
-                    <div id="Image_{{doc.Code}}" (click)="fileInput.click()" class="imag-card" style="
-                                          background-position: center;
-                                          background-repeat: no-repeat;
-                                          background-size: cover;
-                                          height: 150px;
-                                          width: 100%;
-                                          position: relative;">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+
+                  <!-- Not uploaded -->
+                  <ng-container *ngIf="doc.DocAvailable == 'N'">
+                    <input style="display:none;" type="file" (change)="onUploadDocuments($event, doc)" #fileInput>
+                    <div id="Image_{{doc.Code}}" (click)="fileInput.click()" class="imag-card"
+                      style="height:140px; width:100%; position:relative;">
                       <div class="center">
                         <b class="text-dark">
                           {{doc.CodeDescription}}
                           <ng-container *ngIf="doc.CodeValue == 'Y'">
-                            <!-- <ng-container *ngIf="doc.CodeValue == 'Y' ||doc.CodeDescription =='IDF'"> -->
                             <span class="text-danger">*</span>
                           </ng-container>
                           <br>
@@ -50,71 +47,75 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="doc.DocAvailable=='P'">
+
+                  <!-- Pending upload -->
+                  <ng-container *ngIf="doc.DocAvailable == 'P'">
                     <mat-card class="accident-gallery-photo">
-                      <ng-container *ngIf="doc.FileType!='pdf'">
-                        <img *ngIf="doc.FileType!='pdf'" class="img-fluid customImage" [src]="doc.urlPath">
+                      <ng-container *ngIf="doc.FileType != 'pdf'">
+                        <img class="img-fluid customImage" [src]="doc.urlPath">
+                        <div class="text-center p-1">
+                          <p class="text-center mb-0" style="font-size:0.75rem; color:#6b8c93;">{{doc.FileName}}</p>
+                        </div>
+                      </ng-container>
+                      <div class="imgbox" *ngIf="doc.FileType == 'pdf'"
+                        style="background-size:cover; height:100px; padding:8px; display:flex; align-items:center; justify-content:center; background:#f0f9fa;">
                         <div class="text-center">
-                          <p class="text-center">{{doc.FileName}}</p>
+                          <i class="fa fa-file-pdf" style="font-size:2rem; color:#1B7B8A; display:block; margin-bottom:4px;"></i>
+                          <p class="text-center mb-0" style="font-size:0.72rem; color:#6b8c93; word-break:break-all;">{{doc.FileName}}</p>
                         </div>
-                      </ng-container>
-
-                      <div class="imgbox" *ngIf="doc.FileType=='pdf'" style="
-                              background-size: cover;
-                              height: 100px;
-                              padding: 2px;">
-                        <p class="text-center">{{doc.FileName}}
-
-                        </p>
                       </div>
                       <div class="d-flex justify-content-center mt-1">
-                        <!-- <a mat-raised-button class="mx-1" *ngIf="doc.FileType!='pdf'"><i
-                                      class="far fa-eye mx-1"></i></a>
-                                  <a mat-raised-button class="mx-1" download><i
-                                      class="fas fa-download mx-1"></i></a> -->
-                        <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteDoc(doc)"><i
-                            class="far fa-trash-alt"></i></a>
+                        <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteDoc(doc)">
+                          <i class="far fa-trash-alt"></i>
+                        </a>
                       </div>
                     </mat-card>
                   </ng-container>
-                  <ng-container *ngIf="doc.DocAvailable=='S'">
+
+                  <!-- Already saved -->
+                  <ng-container *ngIf="doc.DocAvailable == 'S'">
                     <mat-card class="accident-gallery-photo customImageCard">
-                      <ng-container *ngIf="doc.FileType!='pdf'">
-                        <div class="text-center mt-5">
-                          <p>{{doc.FileName}}</p>
+                      <ng-container *ngIf="doc.FileType != 'pdf'">
+                        <div class="text-center" style="padding-top:1.5rem;">
+                          <i class="fa fa-file-image" style="font-size:2rem; color:#1B7B8A;"></i>
+                          <p class="mb-0 mt-1" style="font-size:0.75rem; color:#6b8c93;">{{doc.FileName}}</p>
                         </div>
                       </ng-container>
-
-
                       <div class="d-flex justify-content-center mt-1">
-                        <!-- <a mat-raised-button class="mx-1" *ngIf="doc.FileType!='pdf'"><i
-                                        class="far fa-eye mx-1"></i></a> -->
-                        <a mat-raised-button class="mx-1" download><i class="fas fa-download mx-1"
-                            (click)="onDownloadfile(doc)"></i></a>
-                        <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteUploadedDoc(doc)"><i
-                            class="far fa-trash-alt"></i></a>
+                        <a mat-raised-button class="mx-1" download>
+                          <i class="fas fa-download" (click)="onDownloadfile(doc)"></i>
+                        </a>
+                        <a mat-raised-button class="mx-1" id="delete_{{doc.Code}}" (click)="onDeleteUploadedDoc(doc)">
+                          <i class="far fa-trash-alt"></i>
+                        </a>
                       </div>
                     </mat-card>
                   </ng-container>
+
                 </div>
               </ng-container>
             </div>
-            <div class="d-flex justify-content-center mt-1" *ngIf="checkUploadButton()">
-              <a mat-raised-button class="mx-1" (click)="onUploadSubmit()"><i class="fa fa-upload"></i>&nbsp;Upload
-                Document</a>
+
+            <!-- Upload Submit -->
+            <div class="d-flex justify-content-center mt-3" *ngIf="checkUploadButton()">
+              <a mat-raised-button (click)="onUploadSubmit()">
+                <i class="fa fa-upload"></i>&nbsp;Upload Document
+              </a>
             </div>
           </ng-container>
         </div>
       </div>
 
+      <!-- RIGHT — Policy Generation Options -->
       <div class="vision-grid-item">
         <div class="vision-grid-item-title">
-          Policy Generation
+          <i class="fa fa-cog"></i> Generation Options
         </div>
-
         <div class="vision-grid-item-body">
+
+          <!-- Generate Certificate -->
           <div class="left-line font-size-95">
-            Generate Certificate
+            <i class="fa fa-certificate"></i> Generate Certificate
           </div>
           <div class="input-control-container">
             <div class="input-form-radio-box">
@@ -122,92 +123,89 @@
                 <input id="generateCerti_quote" type="radio" (change)="onGenerateCertificateTypeChange()"
                   name="generateCerti" [(ngModel)]="generateCerti" value="Q">
                 <label for="generateCerti_quote">QUOTE</label>
+
                 <input type="radio" id="generateCerti_draft" (change)="onGenerateCertificateTypeChange()"
                   name="generateCerti" [(ngModel)]="generateCerti" value="N">
                 <label for="generateCerti_draft">DRAFT</label>
+
                 <input type="radio" id="generateCerti_schedule" (change)="onGenerateCertificateTypeChange()"
                   name="generateCerti" [(ngModel)]="generateCerti" value="Y">
                 <label for="generateCerti_schedule">
-                  <ng-container *ngIf="productId!='11' && productId!=11">SCHEDULE</ng-container>
-                  <ng-container *ngIf="productId=='11' || productId==11">CERTIFICATE</ng-container>
+                  <ng-container *ngIf="productId != '11' && productId != 11">SCHEDULE</ng-container>
+                  <ng-container *ngIf="productId == '11' || productId == 11">CERTIFICATE</ng-container>
                 </label>
               </div>
             </div>
           </div>
+
+          <!-- Print In -->
           <div class="left-line font-size-95">
-            Print In
-            <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
-            <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container>
+            <i class="fa fa-print"></i>
+            Print In&nbsp;
+            <ng-container *ngIf="productId != '11' && productId != 11">Schedule</ng-container>
+            <ng-container *ngIf="productId == '11' || productId == 11">Certificate</ng-container>
           </div>
           <div class="print-check">
             <label class="custom-checkbox-container">
               <input type="checkbox" [(ngModel)]="premium">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                <span class=""><i class="fas fa-minus-circle"></i></span>
+                <span><i class="fas fa-minus-circle"></i></span>
               </span>
               <div class="description">
-                <div class="description-name">
-                  <span>
-                    Premium
-                  </span>
-                </div>
+                <div class="description-name"><span>Premium</span></div>
               </div>
             </label>
-            <label class="custom-checkbox-container" *ngIf="bankName!=null && bankName!=undefined && bankName!=''">
+
+            <label class="custom-checkbox-container" *ngIf="bankName != null && bankName != undefined && bankName != ''">
               <input type="checkbox" [(ngModel)]="nameOfBroker">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                <span class=""><i class="fas fa-minus-circle"></i></span>
+                <span><i class="fas fa-minus-circle"></i></span>
               </span>
               <div class="description">
-                <div class="description-name">
-                  <span>
-                    Name Of Banker
-                  </span>
-                </div>
+                <div class="description-name"><span>Name Of Banker</span></div>
               </div>
             </label>
+
             <label class="custom-checkbox-container">
               <input type="checkbox" [(ngModel)]="darft">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                <span class=""><i class="fas fa-minus-circle"></i></span>
+                <span><i class="fas fa-minus-circle"></i></span>
               </span>
               <div class="description">
-                <div class="description-name">
-                  <span>DRAFT</span>
-                </div>
+                <div class="description-name"><span>DRAFT</span></div>
               </div>
             </label>
-            <label class="custom-checkbox-container" *ngIf="bankName!=null && bankName!=undefined && bankName!=''">
+
+            <label class="custom-checkbox-container" *ngIf="bankName != null && bankName != undefined && bankName != ''">
               <input type="checkbox" [(ngModel)]="bankerAssured">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                <span class=""><i class="fas fa-minus-circle"></i></span>
+                <span><i class="fas fa-minus-circle"></i></span>
               </span>
               <div class="description">
-                <div class="description-name">
-                  <span>Both Banker and Assured</span>
-                </div>
+                <div class="description-name"><span>Both Banker &amp; Assured</span></div>
               </div>
             </label>
+
             <label class="custom-checkbox-container">
               <input type="checkbox" [(ngModel)]="excess">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                <span class=""><i class="fas fa-minus-circle"></i></span>
+                <span><i class="fas fa-minus-circle"></i></span>
               </span>
               <div class="description">
-                <div class="description-name">
-                  <span>Excess</span>
-                </div>
+                <div class="description-name"><span>Excess</span></div>
               </div>
             </label>
           </div>
-          <div *ngIf="generateCerti == 'Y' && !termsSection && pay_amount!=0 && pay_amount!='0' && pay_amount!=null" class="row">
-            <div class="col-md-12 left-line font-size-95">
-              Payment Type
+
+          <!-- Payment Type (conditional) -->
+          <div *ngIf="generateCerti == 'Y' && !termsSection && pay_amount != 0 && pay_amount != '0' && pay_amount != null">
+            <div class="left-line font-size-95">
+              <i class="fa fa-credit-card"></i> Payment Type
             </div>
             <div class="input-control-container">
               <div class="input-form-radio-box">
@@ -221,16 +219,16 @@
               </div>
             </div>
           </div>
-          <ng-continer *ngIf="payment_type=='1' && pay_amount!=0 && pay_amount!='0' && pay_amount!=null">
+
+          <!-- Cheque Payment -->
+          <ng-container *ngIf="payment_type == '1' && pay_amount != 0 && pay_amount != '0' && pay_amount != null">
             <div class="input-control-container">
               <label class="input-form-label">Payee Name<span class="text-required">*</span></label>
               <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" name="payee_name" #payeeName="ngModel"
-                  [(ngModel)]="payee_name">
+                <input type="text" class="input-form-control without-icon" name="payee_name"
+                  #payeeName="ngModel" [(ngModel)]="payee_name">
               </div>
-              <div *ngIf="payeeName.invalid && payeeName.touched" class="text-danger">
-                This field is required
-              </div>
+              <div *ngIf="payeeName.invalid && payeeName.touched" class="text-danger">This field is required</div>
             </div>
             <div class="input-control-container">
               <label class="input-form-label">Amount<span class="text-required">*</span></label>
@@ -238,367 +236,293 @@
                 <input type="text" class="input-form-control without-icon" readonly name="pay_amount"
                   #payAmount="ngModel" [(ngModel)]="pay_amount">
               </div>
-              <div *ngIf="payAmount.invalid && payAmount.touched" class="text-danger">
-                This field is required
-              </div>
+              <div *ngIf="payAmount.invalid && payAmount.touched" class="text-danger">This field is required</div>
             </div>
-          </ng-continer>
-          <ng-continer *ngIf="payment_type=='2'">
+          </ng-container>
+
+          <!-- Bank/Cheque Payment -->
+          <ng-container *ngIf="payment_type == '2'">
             <div class="input-control-container">
               <label class="input-form-label">Bank Name<span class="text-required">*</span></label>
-              <ng-select placeholder="Select" class="input-form-select" name="bank_name" #BankName="ngModel"
-                [(ngModel)]="bank_name" [items]="bank_list" bindValue="Code" bindLabel="CodeDesc">
+              <ng-select placeholder="Select" class="input-form-select" name="bank_name"
+                #BankName="ngModel" [(ngModel)]="bank_name" [items]="bank_list" bindValue="Code" bindLabel="CodeDesc">
               </ng-select>
-              <div *ngIf="BankName.invalid && BankName.touched" class="text-danger">
-                This field is required
-              </div>
+              <div *ngIf="BankName.invalid && BankName.touched" class="text-danger">This field is required</div>
             </div>
             <div class="input-control-container">
               <label class="input-form-label">MICR Number<span class="text-required">*</span></label>
               <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" name="micr_number" #micrNumber="ngModel"
-                  [(ngModel)]="micr_number">
+                <input type="text" class="input-form-control without-icon" name="micr_number"
+                  #micrNumber="ngModel" [(ngModel)]="micr_number">
               </div>
-              <div *ngIf="micrNumber.invalid && micrNumber.touched" class="text-danger">
-                This field is required
-              </div>
+              <div *ngIf="micrNumber.invalid && micrNumber.touched" class="text-danger">This field is required</div>
             </div>
             <div class="input-control-container">
               <label class="input-form-label">Cheque Number<span class="text-required">*</span></label>
               <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" name="cheque_number" #chequeNumber="ngModel"
-                  [(ngModel)]="cheque_number">
+                <input type="text" class="input-form-control without-icon" name="cheque_number"
+                  #chequeNumber="ngModel" [(ngModel)]="cheque_number">
               </div>
-              <div *ngIf="chequeNumber.invalid && chequeNumber.touched" class="text-danger">
-                This field is required
-              </div>
+              <div *ngIf="chequeNumber.invalid && chequeNumber.touched" class="text-danger">This field is required</div>
             </div>
             <div class="input-control-container">
               <label class="input-form-label">Cheque Date<span class="text-required">*</span></label>
               <div class="input-form-box">
                 <input type="text" ngbDatepicker #d2="ngbDatepicker" class="input-form-control without-icon"
-                  formname="cheque_date" #chequeDate="ngModel" [(ngModel)]="cheque_date" (click)="d2.toggle()" readonly
-                  [maxDate]="maxDate">
+                  formname="cheque_date" #chequeDate="ngModel" [(ngModel)]="cheque_date"
+                  (click)="d2.toggle()" readonly [maxDate]="maxDate">
               </div>
-              <div *ngIf="chequeDate.invalid && chequeDate.touched" class="text-danger">
-                This field is required
-              </div>
+              <div *ngIf="chequeDate.invalid && chequeDate.touched" class="text-danger">This field is required</div>
             </div>
-          </ng-continer>
-          <ng-continer *ngIf="payment_type=='5'">
-            <div class="row">
-              <div class="col-3">
+          </ng-container>
+
+          <!-- Mobile Payment -->
+          <ng-container *ngIf="payment_type == '5'">
+            <div class="row g-2">
+              <div class="col-4">
                 <div class="input-control-container">
                   <label class="input-form-label">Mobile Code<span class="text-required">*</span></label>
                   <div class="input-form-box">
                     <input type="text" class="input-form-control without-icon" name="pay_mobile_code"
                       #payMobileCode="ngModel" [(ngModel)]="pay_mobile_code">
                   </div>
-                  <div *ngIf="payMobileCode.invalid && payMobileCode.touched" class="text-danger">
-                    This field is required
-                  </div>
+                  <div *ngIf="payMobileCode.invalid && payMobileCode.touched" class="text-danger">Required</div>
                 </div>
               </div>
-              <div class="col-9">
+              <div class="col-8">
                 <div class="input-control-container">
                   <label class="input-form-label">Mobile Number<span class="text-required">*</span></label>
                   <div class="input-form-box">
                     <input type="text" class="input-form-control without-icon" name="pay_mobile_number"
                       #payMobileNumber="ngModel" [(ngModel)]="pay_mobile_number">
                   </div>
-                  <div *ngIf="payMobileNumber.invalid && payMobileNumber.touched" class="text-danger">
-                    This field is required
-                  </div>
+                  <div *ngIf="payMobileNumber.invalid && payMobileNumber.touched" class="text-danger">Required</div>
                 </div>
               </div>
             </div>
+          </ng-container>
 
-
-          </ng-continer>
         </div>
       </div>
     </div>
-
   </div>
+
+  <!-- Footer -->
   <div class="maan-card-footer my-2">
     <app-back-btn></app-back-btn>
     <button nbButton shape="round" size="small" status="primary" class="mx-2"
-      (click)="generateCertiCheck()">Submit</button>
+      (click)="generateCertiCheck()">
+      <i class="fa fa-check me-1"></i> Submit
+    </button>
   </div>
 </div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 — Draft / Schedule / Policy Result
+═══════════════════════════════════════════════════════════ -->
 <div class="maan-card" *ngIf="draftSection || policySection || schedule">
+
+  <!-- Header -->
   <div class="maan-card-header">
-    <div class="form-heading">
-      <div class="form-heading-text">
-        <!--<ng-container *ngIf="policySection">Policy Information</ng-container>-->
-        <ng-container *ngIf="draftSection">Draft Information</ng-container>
-        <ng-container *ngIf="schedule">
-          <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
-          <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container>
-          Information</ng-container>
-      </div>
-    </div>
-    <!-- <p *ngIf="!certificateNo" class="text-danger mt-3">AKI Certificate Integration Failed</p>
-     <div *ngIf="!certificateNo" class="row mt-0">
-       <div class="col-md-3 text-danger" *ngFor="let item of integrationErrorList">*<small>{{item.errorText}}</small></div>
-     </div> -->
-  </div>
-  <!-- {{!certificateNo && integrationErrorList && generateCerti=='Y' && policuNoGenerate}} -->
-  <div *ngIf="!certificateNo && integrationErrorList.length !=0 && generateCerti=='Y' && userDetails?.RegionCode =='100020'"
-    class="col-12 col-md-12 col-lg-12">
-    <div class="middle-line">
-      Marine Certificate Integration Failed Information
+    <div class="form-heading-text">
+      <i class="fa fa-file-invoice me-2"></i>
+      <ng-container *ngIf="draftSection">Draft Information</ng-container>
+      <ng-container *ngIf="schedule">
+        <ng-container *ngIf="productId != '11' && productId != 11">Schedule</ng-container>
+        <ng-container *ngIf="productId == '11' || productId == 11">Certificate</ng-container>
+        &nbsp;Information
+      </ng-container>
     </div>
   </div>
-  <div *ngIf="!certificateNo && integrationErrorList?.length !=0  && generateCerti=='Y' && userDetails?.RegionCode =='100020'" class="row header-details">
-    <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
 
-      <div class="vision-grid-item-body">
-        <div class="row">
-          <div *ngFor="let item of integrationErrorList" class="col-12 col-md-12 col-lg-12">
-            <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-              <div class="p-2 text-danger">
-                <!-- Policy No -->
-                - {{item.errorText}}*
-              </div>
-              <div class="p-2">
-
-              </div>
-            </div>
+  <!-- AKI Integration Error -->
+  <div *ngIf="!certificateNo && integrationErrorList.length != 0 && generateCerti == 'Y' && userDetails?.RegionCode == '100020'"
+    style="padding: 0 1.5rem;">
+    <div class="middle-line" style="color:#e53935; border-left-color:#e53935; background: linear-gradient(90deg,#fff5f5,transparent);">
+      <i class="fa fa-exclamation-triangle"></i> Marine Certificate Integration Failed
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+        <div style="background:#fff5f5; border:1px solid #ffcdd2; border-left:4px solid #e53935; border-radius:6px; padding:0.75rem 1rem; margin-bottom:1rem;">
+          <div *ngFor="let item of integrationErrorList"
+            style="font-size:0.82rem; color:#c62828; padding:0.2rem 0 0.2rem 0.5rem;">
+            &bull; {{item.errorText}}
           </div>
         </div>
-
       </div>
     </div>
   </div>
 
+  <!-- Body -->
   <div class="maan-card-body">
-    <div class="col-12 col-md-12 col-lg-12">
-      <div class="middle-line">
-        Quote Information
-      </div>
+
+    <!-- Quote Information -->
+    <div class="middle-line">
+      <i class="fa fa-file-alt"></i> Quote Information
     </div>
     <div class="row header-details">
       <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+        <div class="vision-grid-item-body" style="padding:0;">
+          <div class="row g-0">
+            <div class="col-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">Quote No</div>
+                <div class="p-2"><b>{{premiumDetails?.QuoteDetails?.QuoteNo}}</b></div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">Customer Name</div>
+                <div class="p-2"><b>{{premiumDetails?.CustomerDetails?.Name}}</b></div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">Policy Start Date</div>
+                <div class="p-2"><b>{{premiumDetails?.QuoteDetails?.InceptionDate}}</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <div class="vision-grid-item-body">
-          <div class="row">
-            <!--<div class="col-12 col-md-12 col-lg-12" *ngIf="schedule"> 
-                <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                  <div class="p-2">
-                    Policy No
-                  </div>
-                  <div class="p-2">
-                    <b>{{policyNo}}</b> 
-                  </div>
-                </div>
-              </div>-->
-            <div class="col-12 col-md-12 col-lg-12">
-              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                <div class="p-2">
-                  Quote No
-                </div>
-                <div class="p-2">
-                  <b>{{premiumDetails?.QuoteDetails?.QuoteNo}}</b>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-12">
-              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                <div class="p-2">
-                  Customer Name
-                </div>
-                <div class="p-2">
-                  <b>{{premiumDetails?.CustomerDetails?.Name}}</b>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-12">
-              <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                <div class="p-2">
-                  Policy Start Date
-                </div>
-                <div class="p-2">
-                  <b>{{premiumDetails?.QuoteDetails?.InceptionDate}}</b>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <!-- <div class="header-details">
-      <div class="row">
-        <div class="col-12 col-md-6 col-lg-6">
-          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-            <div class="p-2">
-              Quote No
-            </div>
-            <div class="p-2">
-              {{premiumDetails?.QuoteDetails?.QuoteNo}}
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-6">
-          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-            <div class="p-2">
-              Customer Name
-            </div>
-            <div class="p-2">
-              {{premiumDetails?.CustomerDetails?.Name}}
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-6">
-          <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-            <div class="p-2">
-              Policy Start Date
-            </div>
-            <div class="p-2">
-              {{premiumDetails?.QuoteDetails?.InceptionDate}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <div class="col-12 col-md-12 col-lg-12">
-      <div class="middle-line">
-        Premium Information
-      </div>
+    <!-- Premium Information -->
+    <div class="middle-line">
+      <i class="fa fa-coins"></i> Premium Information
     </div>
     <div class="row header-details">
       <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
-
-        <div class="vision-grid-item-body">
-          <div class="row">
-            <div class="col-12 col-md-12 col-lg-12" *ngIf="policySection">
+        <div class="vision-grid-item-body" style="padding:0;">
+          <div class="row g-0">
+            <div class="col-12" *ngIf="policySection">
               <div class="d-sm-flex flex-sm-row justify-content-sm-between">
-                <div class="p-2">
-                  Policy No
-                </div>
-                <div class="p-2">
-                  <b>{{policyNo}}</b>
-                </div>
+                <div class="p-2">Policy No</div>
+                <div class="p-2"><b>{{policyNo}}</b></div>
               </div>
             </div>
-            <div class="col-12 col-md-12 col-lg-12">
+            <div class="col-12">
               <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">Total Sum Insured</div>
                 <div class="p-2">
-                  Total SumInsured
-                </div>
-                <div class="p-2">
-                  <!--<b>
-                        {{premiumDetails?.PremiumDetails.PremiumInsuredValue | commaseparator}}</b> &nbsp;({{premiumDetails?.PremiumDetails.PremiumCurrency}}) -->
                   <b>{{premiumDetails?.TotalInsuredValue | commaseparator}}</b>
                   &nbsp;({{premiumDetails?.QuoteDetails?.CurrencyName}})
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-12 col-lg-12">
+            <div class="col-12">
               <div class="d-sm-flex flex-sm-row justify-content-sm-between">
+                <div class="p-2">Premium</div>
                 <div class="p-2">
-                  Premium
-                </div>
-                <div class="p-2">
-                  <b>{{premiumDetails?.PremiumDetails?.NetPremium | commaseparator}}</b> &nbsp;
-                  ({{premiumDetails?.PremiumDetails?.PremiumCurrency}})
+                  <b>{{premiumDetails?.PremiumDetails?.NetPremium | commaseparator}}</b>
+                  &nbsp;({{premiumDetails?.PremiumDetails?.PremiumCurrency}})
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-    <div class="text-center mx-1">
-      <button nbButton shape="round" size="small" status="danger" class="mx-2" *ngIf="!policySection"
-        (click)="getBack()">Back</button>
 
-      <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="policySection && policyNo"
-        (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-        <ng-container *ngIf="productId!='11' && productId!=11">Schedule</ng-container>
-        <ng-container *ngIf="productId=='11' || productId==11">Certificate</ng-container> Pdf</button>
+    <!-- Action Buttons -->
+    <div class="text-center mx-1 mt-3" style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.65rem;">
+
+      <button nbButton shape="round" size="small" status="danger" *ngIf="!policySection"
+        (click)="getBack()">
+        <i class="fa fa-arrow-left"></i> Back
+      </button>
+
+      <button nbButton shape="round" size="small" status="success" *ngIf="policySection && policyNo"
+        (click)="onDownloadSchedule()">
+        <i class="fa fa-download"></i>
+        <ng-container *ngIf="productId != '11' && productId != 11">Schedule</ng-container>
+        <ng-container *ngIf="productId == '11' || productId == 11">Certificate</ng-container>
+        Pdf
+      </button>
+
       <ng-container *ngIf="porttype != 'MOP'">
-        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && policyNo"
-          (click)="onDownloadCredit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-          Credit Note Pdf</button>
+        <button nbButton shape="round" size="small" status="warning" *ngIf="policySection && policyNo"
+          (click)="onDownloadCredit()">
+          <i class="fa fa-download"></i> Credit Note Pdf
+        </button>
       </ng-container>
-      <ng-container>
-        <!-- <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection" (click)="onDownloadAKIDoc()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-              AKI DOCUMENT</button> -->
-        <button nbButton shape="round" size="small" status="warning" class="mx-2" *ngIf="policySection && policyNo"
-          (click)="onDownloadDebit()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;
-          Debit Note Pdf</button>
-      </ng-container>
-      <button  nbButton shape="round" size="small" status="warning"
-        class="mx-2" *ngIf="policySection && certificateNo && userDetails?.RegionCode =='100020'" (click)="onDownloadAKIDoc()"><i class="fa fa-download"
-          aria-hidden="true"></i>&nbsp;
-        Marine Certificate</button>
-      <button nbButton shape="round" size="small" status="success" class="mx-2" *ngIf="draftSection"
-        (click)="onDownloadSchedule()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Draft Pdf</button>
-      <button nbButton shape="round" size="small" status="primary" class="mx-2" (click)="onNavigate()">Proceed</button>
+
+      <button nbButton shape="round" size="small" status="warning" *ngIf="policySection && policyNo"
+        (click)="onDownloadDebit()">
+        <i class="fa fa-download"></i> Debit Note Pdf
+      </button>
+
+      <button nbButton shape="round" size="small" status="warning"
+        *ngIf="policySection && certificateNo && userDetails?.RegionCode == '100020'"
+        (click)="onDownloadAKIDoc()">
+        <i class="fa fa-download"></i> Marine Certificate
+      </button>
+
+      <button nbButton shape="round" size="small" status="success" *ngIf="draftSection"
+        (click)="onDownloadSchedule()">
+        <i class="fa fa-download"></i> Draft Pdf
+      </button>
+
+      <button nbButton shape="round" size="small" status="primary" (click)="onNavigate()">
+        <i class="fa fa-arrow-right"></i> Proceed
+      </button>
+
     </div>
+
   </div>
 </div>
 
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL — Terms & Conditions
+═══════════════════════════════════════════════════════════ -->
 <ng-template #myModal3 let-modal>
   <div class="modal-dialog modal-dialog-scrollable custom-modal-height modal-content m-0 p-0" role="document">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
-      <!-- <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
-        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button> -->
+      <h5 class="modal-title" id="exampleModalLabel">
+        <i class="fa fa-shield-alt me-2"></i>Terms &amp; Conditions
+      </h5>
     </div>
     <div class="modal-body">
       <div class="card grid customStyleCard mt-2" *ngIf="termsSection">
-        <!-- <div class="col-12 col-md-12 col-lg-12 text-center">
-              <h6 class="m-0 p-0">Terms & Conditions</h6>
-            </div> -->
         <div class="col-12 col-md-12 col-lg-12">
           <ol type="I">
             <li class="customListStyle">I/We confirm that the information and documents provided are accurate and
-              true. I/We
-              understand that failure to do so may lead to the decline, termination or suspension of cover
-              by First Assurance Company Limited. </li>
+              true. I/We understand that failure to do so may lead to the decline, termination or suspension of cover
+              by First Assurance Company Limited.</li>
             <li class="customListStyle">I/We understand that First Assurance Company Limited is part of a global
-              financial institution
-              and is obligated to comply with national and international laws, regulations, policies, and
-              requirements to prevent criminal activities, money laundering, terrorist financing, sanctions
-              violations and prohibited business activities. </li>
+              financial institution and is obligated to comply with national and international laws, regulations,
+              policies, and requirements to prevent criminal activities, money laundering, terrorist financing,
+              sanctions violations and prohibited business activities.</li>
             <li class="customListStyle">I/We consent to the collection, use, storage, processing, and sharing of our
-              personal data by
-              First Assurance Company Ltd and its affiliates in accordance with applicable data protection
-              laws and the company’s privacy policy. This includes sharing information with third parties for
-              due diligence, regulatory compliance, and risk assessment purposes.</li>
-            <li class="customListStyle">I /We, understand First Assurance Company Ltd will initially screen, verify
-              and process all new
-              and related information and thereafter monitor all information, instructions and transactions
-              by and on behalf of my/ourselves in relation to all transactions and the business relationship
-              on a continuous basis. This may result in the prohibition, limitation, and/or delay in the
-              execution of instructions or transactions. It may further lead to the decline or termination of
-              any transaction or business relationship with yourself(s) and to the extent permitted, we shall
-              notify you of any such intended action. </li>
-            <li class="customListStyle">
-              I/We acknowledge and confirm that neither First Assurance Company Ltd, nor its respective
-              affiliates, employees, officers or directors, shall be liable for any direct or consequential loss,
-              damage, costs or expenses whatsoever that may be suffered or incurred because of any such
-              prohibition, limitation, delay, decline or termination due to the implementation of these
-              conditions.
-            </li>
+              personal data by First Assurance Company Ltd and its affiliates in accordance with applicable data
+              protection laws and the company's privacy policy. This includes sharing information with third parties
+              for due diligence, regulatory compliance, and risk assessment purposes.</li>
+            <li class="customListStyle">I/We understand First Assurance Company Ltd will initially screen, verify and
+              process all new and related information and thereafter monitor all information, instructions and
+              transactions by and on behalf of my/ourselves in relation to all transactions and the business
+              relationship on a continuous basis. This may result in the prohibition, limitation, and/or delay in
+              the execution of instructions or transactions. It may further lead to the decline or termination of
+              any transaction or business relationship with yourself(s) and to the extent permitted, we shall notify
+              you of any such intended action.</li>
+            <li class="customListStyle">I/We acknowledge and confirm that neither First Assurance Company Ltd, nor
+              its respective affiliates, employees, officers or directors, shall be liable for any direct or
+              consequential loss, damage, costs or expenses whatsoever that may be suffered or incurred because of
+              any such prohibition, limitation, delay, decline or termination due to the implementation of these
+              conditions.</li>
           </ol>
         </div>
-        <div class="col-12 col-md-12 col-lg-12" style="font-size: 15px;">
-
-          <input type="checkbox" (change)="onChangeCheckBox($event)">&nbsp;<span>I have read the terms and conditions
-            and
-            I hereby accept and agree to the terms and conditions as stated
-            above</span>
+        <div class="col-12 col-md-12 col-lg-12" style="font-size:15px; padding: 0 0.75rem 0.75rem;">
+          <div style="background:#f0f9fa; border:1px solid #d1e8ec; border-radius:6px; padding:0.85rem 1rem; display:flex; align-items:flex-start; gap:0.75rem;">
+            <input type="checkbox" (change)="onChangeCheckBox($event)"
+              style="accent-color:#1B7B8A; width:16px; height:16px; margin-top:2px; flex-shrink:0;">
+            <span style="font-size:0.875rem; color:#1a2e35; line-height:1.6;">
+              I have read the terms and conditions and I hereby accept and agree to the terms and conditions as stated above.
+            </span>
+          </div>
         </div>
       </div>
     </div>
-    <!-- <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal"
-        (click)="modal.dismiss('Cross click')">Close</button>
-    </div> -->
   </div>
 </ng-template>

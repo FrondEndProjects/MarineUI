@@ -1,0 +1,13 @@
+// ─── PATCH: Add these two properties to BankFormComponent class ───
+// Replace:  showDialog = false;
+//           showDialog1 = false;
+// With:
+
+showDialog = false;
+showDialog1 = false;
+showBillPanel = true;   // NEW: Controls Bill/Airway collapsible panel (open by default)
+showBankPanel = true;   // NEW: Controls Bank Details collapsible panel (open by default)
+
+// ─── Remove the openDialog(), closeDialog(), saveDialog(), openDialog1(),
+//     closeDialog1(), saveDialog1() methods (no longer needed).
+//     The form is now always visible inside collapsible panels.

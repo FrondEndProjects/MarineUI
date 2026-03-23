@@ -1,197 +1,212 @@
 <form [formGroup]="policyGenerateForm">
-<div class="vision-card">
-  <div class="vision-card-header">
-    New OpenCover Information
-  </div>
-  <div class="vision-card-body">
-      <div class="row">
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Do You want to Generate Open Cover<span class="text-required">*</span></label>
-            <div class="input-form-radio-box">
-              <div class="radio-toolbar">
-                <input id="generatecover-yes" type="radio" name="generateCover" value="Y" formControlName="generateCover">
-                <label for="generatecover-yes">Yes</label>
-                <input type="radio" id="generatecover-no" name="generateCover" value="N" formControlName="generateCover">
-                <label for="generatecover-no">No</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Policy Effective Date</label>
-            <div class="input-form-box">
+<div class="pgc-page">
 
-              <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control without-icon"
-            formControlName="policyEffectiveDate" (click)="d.toggle()" readonly>
-            </div>
-            <div class="input-form-error" *ngIf="(pG.policyEffectiveDate.errors && submitted) || (!pG.policyEffectiveDate.valid && pG.policyEffectiveDate.touched)">
-              <div *ngIf="pG.policyEffectiveDate.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
+  <!-- ══════════════════════════════════════════════
+       CARD 1 — New OpenCover Information
+  ══════════════════════════════════════════════ -->
+  <div class="sa-card">
+    <div class="sa-card-header">
+      <i class="fas fa-file-alt sa-icon"></i>
+      <span class="sa-title">New OpenCover Information</span>
+    </div>
+    <div class="sa-card-body">
+      <div class="sa-form-grid">
+
+        <!-- Generate Open Cover -->
+        <div class="sa-field">
+          <label class="sa-label">Do You Want to Generate Open Cover<span class="sa-req">*</span></label>
+          <div class="sa-radio-group">
+            <input id="generatecover-yes" type="radio" name="generateCover" value="Y" formControlName="generateCover">
+            <label for="generatecover-yes">Yes</label>
+            <input type="radio" id="generatecover-no" name="generateCover" value="N" formControlName="generateCover">
+            <label for="generatecover-no">No</label>
           </div>
         </div>
+
+        <!-- Policy Effective Date -->
+        <div class="sa-field">
+          <label class="sa-label">Policy Effective Date</label>
+          <div class="sa-input-wrap">
+            <input type="text" ngbDatepicker #d="ngbDatepicker"
+              class="sa-input"
+              formControlName="policyEffectiveDate"
+              (click)="d.toggle()" readonly
+              placeholder="DD-MM-YYYY">
+            <i class="pi pi-calendar sa-input-icon-right" (click)="d.toggle()"></i>
+          </div>
+          <div class="sa-error" *ngIf="(pG.policyEffectiveDate.errors && submitted) || (!pG.policyEffectiveDate.valid && pG.policyEffectiveDate.touched)">
+            <span *ngIf="pG.policyEffectiveDate.errors?.required">This field is required</span>
+          </div>
+        </div>
+
+        <!-- Conditional fields (coverTypeId == 12 or 13) -->
         <ng-container *ngIf="coverTypeId == '12' || coverTypeId == '13'">
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Installment<span class="text-required">*</span></label>
-            <ng-select placeholder="Select" class="input-form-select" [items]="installmentList" bindValue="CategoryDetailId" bindLabel="DetailName"  formControlName="installment">
+
+          <!-- Installment -->
+          <div class="sa-field">
+            <label class="sa-label">Installment<span class="sa-req">*</span></label>
+            <ng-select placeholder="Select" class="sa-ng-select"
+              [items]="installmentList" bindValue="CategoryDetailId" bindLabel="DetailName"
+              formControlName="installment">
             </ng-select>
           </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Premium<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" [value]="pG.premium.value | commaseparator" formControlName="premium">
+
+          <!-- Premium -->
+          <div class="sa-field">
+            <label class="sa-label">Premium<span class="sa-req">*</span></label>
+            <div class="sa-input-wrap">
+              <input type="text" class="sa-input" [value]="pG.premium.value | commaseparator" formControlName="premium">
             </div>
           </div>
-        </div>
-        <!-- <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Policy Fee<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="policyFee">
+
+          <!-- Levy Premium -->
+          <div class="sa-field" *ngIf="regionCode=='100019' || regionCode=='100020'">
+            <label class="sa-label">Levy Premium<span class="sa-req">*</span></label>
+            <div class="sa-input-wrap">
+              <input type="text" class="sa-input" formControlName="levyPremium">
             </div>
           </div>
-        </div> -->
-        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100019' || regionCode=='100020'">
-          <div class="input-control-container">
-            <label class="input-form-label">Levy Premium<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="levyPremium">
+
+          <!-- Policy Holder Fee -->
+          <div class="sa-field" *ngIf="regionCode=='100020'">
+            <label class="sa-label">Policy Holder Fee<span class="sa-req">*</span></label>
+            <div class="sa-input-wrap">
+              <input type="text" class="sa-input" formControlName="PolicyHolderFee">
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100020'">
-          <div class="input-control-container">
-            <label class="input-form-label">Policy Holder Fee<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="PolicyHolderFee">
+
+          <!-- Vat Tax -->
+          <div class="sa-field" *ngIf="regionCode!='100020'">
+            <label class="sa-label">Vat Tax<span class="sa-req">*</span></label>
+            <div class="sa-input-wrap">
+              <input type="text" class="sa-input" formControlName="vatTax" (keyup)="vattax(pG.vatTax.value)">
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode!='100020'">
-          <div class="input-control-container">
-            <label class="input-form-label">Vat Tax<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="vatTax" (keyup)="vattax(pG.vatTax.value)">
+
+          <!-- Stamp Duty -->
+          <div class="sa-field" *ngIf="regionCode=='100019' || regionCode=='100020'">
+            <label class="sa-label">Stamp Duty<span class="sa-req">*</span></label>
+            <div class="sa-input-wrap">
+              <input type="text" class="sa-input" formControlName="stampDuty">
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4" *ngIf="regionCode=='100019' || regionCode=='100020'">
-          <div class="input-control-container">
-            <label class="input-form-label">Stamp Duty<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="stampDuty">
+
+          <!-- Total Premium -->
+          <div class="sa-field">
+            <label class="sa-label">Total Premium<span class="sa-req">*</span></label>
+            <div class="sa-input-wrap">
+              <input type="text" class="sa-input sa-input-disabled" formControlName="totalPremium">
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Total Premium<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="totalPremium">
-            </div>
-          </div>
-        </div>
+
         </ng-container>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Remarks</label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" formControlName="remarks">
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-</div>
-<div class="vision-card">
-  <div class="vision-card-header">
-    Conveyance
-  </div>
-  <div class="vision-card-body">
-      <div class="row">
-        <ng-container *ngFor="let item of conveyance">
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">{{item.TransportDescription}}</label>
-            <div class="input-form-box">
-              <textarea type="text" class="input-form-control without-icon" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.Conveyance"></textarea>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-      </div>
-  </div>
-</div>
-<div class="vision-card">
-  <div class="vision-card-header">
-    Print in Schedule
-  </div>
-  <div class="vision-card-body">
-      <div class="row">
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Cancellation Clauses<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text"  class="input-form-control without-icon" formControlName="cancelClauses" >
-            </div>
-            <div class="input-form-error" *ngIf="(pG.cancelClauses.errors && submitted) || (!pG.cancelClauses.valid && pG.cancelClauses.touched)">
-              <div *ngIf="pG.cancelClauses.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Schedule<span class="text-required">*</span></label>
-            <div class="input-form-radio-box">
-              <div class="radio-toolbar">
-                <input id="schedule-yes" type="radio" name="schedule" value="Y" formControlName="schedule">
-                <label for="schedule-yes">Rate</label>
-                <input type="radio" id="schedule-no" name="schedule" value="N" formControlName="schedule">
-                <label for="schedule-no">As Agreed</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">Do You want to print Amended Insolvency Exclusion Clause</label>
-            <div class="input-form-radio-box">
-              <div class="radio-toolbar">
-                <input id="printclause-yes" type="radio" name="exclusionClauses" value="Y" formControlName="exclusionClauses">
-                <label for="printclause-yes">Yes</label>
-                <input type="radio" id="printclause-no" name="exclusionClauses" value="N" formControlName="exclusionClauses">
-                <label for="printclause-no">No</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-4">
-          <div class="input-control-container">
-            <label class="input-form-label">PPW days<span class="text-required">*</span></label>
-            <div class="input-form-box">
-              <input type="text" digitOnly class="input-form-control without-icon" maxlength="3" formControlName="pwwDays">
-            </div>
-            <div class="input-form-error" *ngIf="(pG.pwwDays.errors && submitted) || (!pG.pwwDays.valid && pG.pwwDays.touched)">
-              <div *ngIf="pG.pwwDays.errors?.required" class="error-text">
-                This field is required
-              </div>
-            </div>
+
+        <!-- Remarks -->
+        <div class="sa-field">
+          <label class="sa-label">Remarks</label>
+          <div class="sa-input-wrap">
+            <input type="text" class="sa-input" formControlName="remarks">
           </div>
         </div>
 
       </div>
+    </div>
   </div>
-</div>
-<div class="col-12" style="text-align:right">
-  <button nbButton (click)="onMoveBack()" status="danger" class="mx-2">Back</button>
-  <button nbButton (click)="onSubmit()" status="primary" class="mx-2">Next</button>
+
+  <!-- ══════════════════════════════════════════════
+       CARD 2 — Conveyance
+  ══════════════════════════════════════════════ -->
+  <div class="sa-card">
+    <div class="sa-card-header">
+      <i class="fas fa-ship sa-icon"></i>
+      <span class="sa-title">Conveyance</span>
+    </div>
+    <div class="sa-card-body">
+      <div class="sa-form-grid">
+        <ng-container *ngFor="let item of conveyance">
+          <div class="sa-field">
+            <label class="sa-label">{{item.TransportDescription}}</label>
+            <div class="sa-input-wrap">
+              <textarea class="sa-textarea" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.Conveyance" rows="3"></textarea>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       CARD 3 — Print in Schedule
+  ══════════════════════════════════════════════ -->
+  <div class="sa-card">
+    <div class="sa-card-header">
+      <i class="fas fa-print sa-icon"></i>
+      <span class="sa-title">Print in Schedule</span>
+    </div>
+    <div class="sa-card-body">
+      <div class="sa-form-grid">
+
+        <!-- Cancellation Clauses -->
+        <div class="sa-field">
+          <label class="sa-label">Cancellation Clauses<span class="sa-req">*</span></label>
+          <div class="sa-input-wrap">
+            <input type="text" class="sa-input" formControlName="cancelClauses">
+          </div>
+          <div class="sa-error" *ngIf="(pG.cancelClauses.errors && submitted) || (!pG.cancelClauses.valid && pG.cancelClauses.touched)">
+            <span *ngIf="pG.cancelClauses.errors?.required">This field is required</span>
+          </div>
+        </div>
+
+        <!-- Schedule -->
+        <div class="sa-field">
+          <label class="sa-label">Schedule<span class="sa-req">*</span></label>
+          <div class="sa-radio-group">
+            <input id="schedule-yes" type="radio" name="schedule" value="Y" formControlName="schedule">
+            <label for="schedule-yes">Rate</label>
+            <input type="radio" id="schedule-no" name="schedule" value="N" formControlName="schedule">
+            <label for="schedule-no">As Agreed</label>
+          </div>
+        </div>
+
+        <!-- Exclusion Clauses -->
+        <div class="sa-field">
+          <label class="sa-label">Do You Want to Print Amended Insolvency Exclusion Clause</label>
+          <div class="sa-radio-group">
+            <input id="printclause-yes" type="radio" name="exclusionClauses" value="Y" formControlName="exclusionClauses">
+            <label for="printclause-yes">Yes</label>
+            <input type="radio" id="printclause-no" name="exclusionClauses" value="N" formControlName="exclusionClauses">
+            <label for="printclause-no">No</label>
+          </div>
+        </div>
+
+        <!-- PPW Days -->
+        <div class="sa-field">
+          <label class="sa-label">PPW Days<span class="sa-req">*</span></label>
+          <div class="sa-input-wrap">
+            <input type="text" digitOnly class="sa-input" maxlength="3" formControlName="pwwDays">
+          </div>
+          <div class="sa-error" *ngIf="(pG.pwwDays.errors && submitted) || (!pG.pwwDays.valid && pG.pwwDays.touched)">
+            <span *ngIf="pG.pwwDays.errors?.required">This field is required</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PAGE FOOTER
+  ══════════════════════════════════════════════ -->
+  <div class="sa-page-footer">
+    <button pButton type="button" label="Back" icon="pi pi-arrow-left"
+      class="p-button-danger p-button-rounded p-button-sm"
+      (click)="onMoveBack()">
+    </button>
+    <button pButton type="button" label="Next" icon="pi pi-arrow-right" iconPos="right"
+      class="p-button-rounded p-button-sm"
+      (click)="onSubmit()">
+    </button>
+  </div>
+
 </div>
 </form>
