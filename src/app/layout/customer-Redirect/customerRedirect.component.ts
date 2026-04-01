@@ -14,155 +14,206 @@ import * as CryptoJS from 'crypto-js';
   styleUrls: ['./customerRedirect.component.scss']
 })
 export class CustomerRedirectComponent implements OnInit {
-    public AppConfig: any = (Mydatas as any).default;
-    public ApiUrl1: any = this.AppConfig.ApiUrl1;
-    encryptedValue:any=null;loginId:any=null;insuranceId:any=null;
+  public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  encryptedValue: any = null; loginId: any = null; insuranceId: any = null;
   branchcode: any;
   productId: any;
-  public routerBaseLink:any='';
+  public routerBaseLink: any = '';
   userType: any;
-    constructor(private _formBuilder: FormBuilder,
-        private loginService: LoginService,
-        private authService: AuthService,
-        private router: Router,private route:ActivatedRoute,
-        private sessionStorageService:SessionStorageService
-        ) {
-          let details = JSON.parse(localStorage.getItem('Userdetails'));
-          console.log("Login Details",details);
-          this.route.queryParamMap.subscribe((params: any) => {
-            this.encryptedValue = encodeURIComponent(params.params.e);
-           });
-        // var sessionLength = sessionStorage.length;
-        // console.log(sessionLength);
-        // sessionStorage.clear();
-        // for (let index = 0; index < sessionLength; index++) {
-        //   const element = sessionStorage.key(index);
-        //   console.log(element)
-        //   sessionStorage.removeItem(element);
-        // }
+  constructor(private _formBuilder: FormBuilder,
+    private loginService: LoginService,
+    private authService: AuthService,
+    private router: Router, private route: ActivatedRoute,
+    private sessionStorageService: SessionStorageService
+  ) {
+    let details = JSON.parse(localStorage.getItem('Userdetails'));
+    console.log("Login Details", details);
+    this.route.queryParamMap.subscribe((params: any) => {
+      this.encryptedValue = encodeURIComponent(params.params.e);
+    });
+    // var sessionLength = sessionStorage.length;
+    // console.log(sessionLength);
+    // sessionStorage.clear();
+    // for (let index = 0; index < sessionLength; index++) {
+    //   const element = sessionStorage.key(index);
+    //   console.log(element)
+    //   sessionStorage.removeItem(element);
+    // }
+  }
+  ngOnInit(): void {
+    // this.onLogin();
+    //  this.route.queryParamMap.subscribe((params: any) => {
+    //   this.encryptedValue = encodeURIComponent(params.params.e);
+    //  let storageData = CryptoJS.AES.decrypt(decodeURIComponent(this.encryptedValue), 'secret key 123'); 
+    //   let decryptedInfo = JSON.parse(storageData.toString(CryptoJS.enc.Utf8));
+    //   console.log("Encrypted Info",decryptedInfo)
+    //   if(decryptedInfo){
+    //     let Userdetails = decryptedInfo;
+    //     this.loginId = Userdetails.Result.LoginId;
+    //     this.insuranceId = Userdetails.Result.InsuranceId;
+
+    //     //Userdetails.Result['BranchCode'] = Userdetails.Result.BelongingBranch;
+    //     this.branchcode = Userdetails.Result.BranchCode;
+    //     this.productId = Userdetails.Result['ProductId']
+    //     Userdetails['LoginResponse'] = Userdetails.Result;
+    //     Userdetails.LoginResponse['RegionCode'] = this.insuranceId;
+    //     Userdetails.LoginResponse.UserType = Userdetails.LoginResponse?.UserTypeAlt;
+    //     if(Userdetails.LoginResponse?.UserType == 'admin'){
+    //       Userdetails.LoginResponse['routerBaseLink'] = 'Marine';
+    //       this.routerBaseLink = 'Marine';
+    //     }else{
+    //       Userdetails.LoginResponse['routerBaseLink'] = 'marine-opencover';
+    //       this.routerBaseLink = 'marine-opencover';
+    //     }
+    //     sessionStorage.setItem('Userdetails',JSON.stringify(Userdetails))
+    //     sessionStorage.setItem('UserToken', Userdetails.Result.Token);
+    //     this.authService.login(Userdetails);
+    //     this.authService.UserToken(Userdetails.Result.Token);
+    //     this.userType = Userdetails.Result.UserType;
+    //     this.sessionStorageService.set('Userdetails',Userdetails);
+    //     this.onSelectProduct();
+    //   }
+    //   console.log('Cutomer Redirect',decryptedInfo);
+    //  })
+    this.route.queryParamMap.subscribe((params: any) => {
+      // 1. Get the raw value from the URL
+      let rawValue = params.get('e');
+
+      if (rawValue) {
+        try {
+          // STEP 1: Fix the URL Encoding manually
+          // We replace spaces back to '+' AND ensure it's decoded properly
+          let base64Data = decodeURIComponent(rawValue).replace(/ /g, '+');
+
+          // STEP 2: Decrypt using the cleaned string
+          // We bypass your 'this.encryptedValue' logic for a second to get a clean result
+          let storageData = CryptoJS.AES.decrypt(base64Data, 'secret key 123');
+
+          // STEP 3: Convert to string
+          let decryptedText = storageData.toString(CryptoJS.enc.Utf8);
+
+          if (decryptedText && decryptedText.startsWith('{')) {
+            let Userdetails = JSON.parse(decryptedText);
+
+            // --- YOUR EXISTING REDIRECTION LOGIC START ---
+            this.loginId = Userdetails.Result.LoginId;
+            this.insuranceId = Userdetails.Result.InsuranceId;
+            this.branchcode = Userdetails.Result.BranchCode;
+            this.productId = Userdetails.Result['ProductId'];
+
+            Userdetails['LoginResponse'] = Userdetails.Result;
+            Userdetails.LoginResponse['RegionCode'] = this.insuranceId;
+            Userdetails.LoginResponse.UserType = Userdetails.LoginResponse?.UserTypeAlt;
+
+            if (Userdetails.LoginResponse?.UserType == 'admin') {
+              Userdetails.LoginResponse['routerBaseLink'] = 'Marine';
+              this.routerBaseLink = 'Marine';
+            } else {
+              Userdetails.LoginResponse['routerBaseLink'] = 'marine-opencover';
+              this.routerBaseLink = 'marine-opencover';
+            }
+
+            sessionStorage.setItem('Userdetails', JSON.stringify(Userdetails));
+            sessionStorage.setItem('UserToken', Userdetails.Result.Token);
+            this.authService.login(Userdetails);
+            this.authService.UserToken(Userdetails.Result.Token);
+            this.userType = Userdetails.Result.UserType;
+            this.sessionStorageService.set('Userdetails', Userdetails);
+
+            this.onSelectProduct();
+            // --- YOUR EXISTING REDIRECTION LOGIC END ---
+          } else {
+            console.error("Decryption failed: Key mismatch or data corrupted.");
+            // OPTIONAL: If it fails, check if the data exists in SessionStorage already
+            // this.tryLoadFromStorage();
+          }
+
+        } catch (error) {
+          console.error("Redirection Error:", error);
+        }
       }
-    ngOnInit(): void {
-       // this.onLogin();
-       this.route.queryParamMap.subscribe((params: any) => {
-        this.encryptedValue = encodeURIComponent(params.params.e);
-       let storageData = CryptoJS.AES.decrypt(decodeURIComponent(this.encryptedValue), 'secret key 123'); 
-        let decryptedInfo = JSON.parse(storageData.toString(CryptoJS.enc.Utf8));
-        console.log("Encrypted Info",decryptedInfo)
-        if(decryptedInfo){
-          let Userdetails = decryptedInfo;
-          this.loginId = Userdetails.Result.LoginId;
-          this.insuranceId = Userdetails.Result.InsuranceId;
-          
-          //Userdetails.Result['BranchCode'] = Userdetails.Result.BelongingBranch;
-          this.branchcode = Userdetails.Result.BranchCode;
-          this.productId = Userdetails.Result['ProductId']
-          Userdetails['LoginResponse'] = Userdetails.Result;
-          Userdetails.LoginResponse['RegionCode'] = this.insuranceId;
-          Userdetails.LoginResponse.UserType = Userdetails.LoginResponse?.UserTypeAlt;
-          if(Userdetails.LoginResponse?.UserType == 'admin'){
-            Userdetails.LoginResponse['routerBaseLink'] = 'Marine';
+    });
+  }
+
+  onLogin() {
+    const urlLink = `${this.ApiUrl1}login/Logincheck`;
+    const reqData = {
+      UserId: this.loginId,
+      Password: "",
+      LoginType: 'Admin',
+      RegionCode: "",
+      BranchCode: this.branchcode,
+      LoginFlag: 'Y'
+    };
+
+    this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
+      console.log(data);
+      if (data.LoginResponse) {
+        if (data.LoginResponse?.Status != "ChangePassword") {
+          console.log('NNNNNNNNNNNNN', data.LoginResponse?.Status)
+          if (data.LoginResponse?.UserType == 'admin') {
+            data.LoginResponse['routerBaseLink'] = 'Marine';
             this.routerBaseLink = 'Marine';
-          }else{
-            Userdetails.LoginResponse['routerBaseLink'] = 'marine-opencover';
+          } else {
+            data.LoginResponse['routerBaseLink'] = 'marine-opencover';
             this.routerBaseLink = 'marine-opencover';
           }
-          sessionStorage.setItem('Userdetails',JSON.stringify(Userdetails))
-          sessionStorage.setItem('UserToken', Userdetails.Result.Token);
-          this.authService.login(Userdetails);
-          this.authService.UserToken(Userdetails.Result.Token);
-          this.userType = Userdetails.Result.UserType;
-          this.sessionStorageService.set('Userdetails',Userdetails);
+          const Token = data?.LoginResponse?.Token;
+          this.authService.login(data);
+          this.authService.UserToken(Token);
+          this.sessionStorageService.set('Userdetails', data);
+          sessionStorage.setItem('Userdetails', JSON.stringify(data));
+          sessionStorage.setItem('UserToken', Token);
+
           this.onSelectProduct();
-          // sessionStorage.setItem('storageData',JSON.stringify(decryptedInfo));
-          // this.loginId = decryptedInfo?.Username;
-          // this.insuranceId = decryptedInfo?.insuranceId;
-          // this.branchcode = decryptedInfo?.BranchCode;
-          // this.productId= decryptedInfo?.ProductId;
-          // this.onLogin();
+          //this.router.navigate(['/product-layout/product']);
         }
-        console.log('Cutomer Redirect',decryptedInfo);
-       })
-       
+      }
+    })
+  }
+
+  onSelectProduct() {
+    sessionStorage.removeItem('OpenCover');
+    sessionStorage.removeItem("endorsement");
+    sessionStorage.removeItem('quotesType');
+    sessionStorage.removeItem('ReferenceNo');
+    sessionStorage.removeItem('MissippiCode');
+    sessionStorage.removeItem('ProposalNo');
+    sessionStorage.removeItem('loginId');
+    sessionStorage.removeItem('WithCertifi');
+    sessionStorage.removeItem('customerLoginId');
+    sessionStorage.removeItem('OpenCoverNo');
+    sessionStorage.setItem('quotesType', 'Without-Endo');
+    if (this.productId === '3') {
+      sessionStorage.removeItem('ReferenceNo');
+      this.sessionStorageService.remove('referral');
+      sessionStorage.setItem('quotesType', 'Without-Endo');
+      //sessionStorage.removeItem('quotesType')
+      sessionStorage.removeItem("endorsement");
+      sessionStorage.removeItem("ReferenceNo");
+      sessionStorage.setItem('productId', '3');
+      this.sessionStorageService.set('productId', '3');
+      this.reloadCurrentRoute();
     }
 
-    onLogin() {
-        const urlLink = `${this.ApiUrl1}login/Logincheck`;
-        const reqData = {
-          UserId: this.loginId,
-          Password: "",
-          LoginType: 'Admin',
-          RegionCode: "",
-          BranchCode: this.branchcode,
-          LoginFlag:'Y'
-        };
-    
-        this.loginService.onPostMethodSync(urlLink, reqData).subscribe((data: any) => {
-          console.log(data);
-            if (data.LoginResponse) {
-            if(data.LoginResponse?.Status!="ChangePassword") { 
-                console.log('NNNNNNNNNNNNN',data.LoginResponse?.Status)
-              if(data.LoginResponse?.UserType == 'admin'){
-                data.LoginResponse['routerBaseLink'] = 'Marine';
-                this.routerBaseLink = 'Marine';
-              }else{
-                data.LoginResponse['routerBaseLink'] = 'marine-opencover';
-                this.routerBaseLink = 'marine-opencover';
-              }
-              const Token = data?.LoginResponse?.Token;
-              this.authService.login(data);
-              this.authService.UserToken(Token);
-              this.sessionStorageService.set('Userdetails',data);
-              sessionStorage.setItem('Userdetails', JSON.stringify(data));
-              sessionStorage.setItem('UserToken', Token);
-            
-               this.onSelectProduct();
-              //this.router.navigate(['/product-layout/product']);
-            }
-          }
-        })
-      }
+    else if (this.productId === '11') {
+      sessionStorage.setItem('productId', '11');
+      this.sessionStorageService.set('productId', '11');
+      if (this.userType == 'admin') {
+        this.router.navigate([`${this.routerBaseLink}/dashboard`]);
+        //this.router.navigate([`${this.routerBaseLink}/new-open-cover/exist-opencover`]);
+      } else {
+        this.router.navigate(['product-layout/opencover']);
 
-      onSelectProduct() {
-        sessionStorage.removeItem('OpenCover');
-        sessionStorage.removeItem("endorsement");
-        sessionStorage.removeItem('quotesType');
-        sessionStorage.removeItem('ReferenceNo');
-        sessionStorage.removeItem('MissippiCode');
-        sessionStorage.removeItem('ProposalNo');
-        sessionStorage.removeItem('loginId');
-        sessionStorage.removeItem('WithCertifi');  
-        sessionStorage.removeItem('customerLoginId');
-        sessionStorage.removeItem('OpenCoverNo');
-        sessionStorage.setItem('quotesType', 'Without-Endo');
-        if (this.productId=== '3') {
-          sessionStorage.removeItem('ReferenceNo');
-          this.sessionStorageService.remove('referral');
-          sessionStorage.setItem('quotesType', 'Without-Endo');
-          //sessionStorage.removeItem('quotesType')
-          sessionStorage.removeItem("endorsement");
-          sessionStorage.removeItem("ReferenceNo");
-          sessionStorage.setItem('productId','3');
-          this.sessionStorageService.set('productId','3');
-          this.reloadCurrentRoute();
-        }
-        
-        else if (this.productId === '11') {
-          sessionStorage.setItem('productId','11');
-          this.sessionStorageService.set('productId','11');
-          if(this.userType == 'admin'){
-            this.router.navigate([`${this.routerBaseLink}/dashboard`]);
-            //this.router.navigate([`${this.routerBaseLink}/new-open-cover/exist-opencover`]);
-           }else{
-            this.router.navigate(['product-layout/opencover']);
-    
-           }
-        }
       }
+    }
+  }
 
-      reloadCurrentRoute() {
-        // this.router.navigate([`/marine-opencover/new-quotes/customer-info`]);
-        this.router.navigate([`/Marine/dashboard`]);
-        // this.router.navigate([`/Marine/dashboard/broker-dashborad`]);
-        //window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
-      }
+  reloadCurrentRoute() {
+    // this.router.navigate([`/marine-opencover/new-quotes/customer-info`]);
+    this.router.navigate([`/Marine/dashboard`]);
+    // this.router.navigate([`/Marine/dashboard/broker-dashborad`]);
+    //window.location.href = `${this.routerBaseLink}/new-quotes/customer-info`;
+  }
 }

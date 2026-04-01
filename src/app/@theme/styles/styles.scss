@@ -34,8 +34,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --teal: rgb(30 64 175);
-  --teal-dark: #042181;
+  --teal: #1C7988;
+  --teal-dark: #145f6c;
+  // --teal: rgb(30 64 175);
+  // --teal-dark: #042181;
 }
 
 $teal: var(--teal);
@@ -501,7 +503,7 @@ ng-select input {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1002;
+  z-index: 2000;
 }
 
 .overlay {
@@ -510,7 +512,7 @@ ng-select input {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1001;
+  z-index: 2000;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(1px);
   height: 100vh;
@@ -522,6 +524,7 @@ ng-select input {
   width: 240px;
   top: 50%;
   left: 50%;
+  z-index: 2000 !important;
   transform: translate(-50%, -50%);
 
 }
@@ -530,6 +533,7 @@ ng-select input {
   width: 100px;
   height: 100px;
   border-radius: 1rem;
+   z-index: 2000 !important;
   background-color: white;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
@@ -1687,4 +1691,93 @@ nb-user .user-name {
     }
 
   }
+}
+/* Ensure password input fills width */
+.p-password {
+  display: block !important;
+}
+
+.p-password input {
+  width: 100% !important;
+}
+
+/* Toast z-index */
+.p-toast {
+  z-index: 9999 !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f0f4f6; }
+::-webkit-scrollbar-thumb { background: #b0c8cf; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1d7280; }
+/* ===================================================================
+   FIX: PrimeNG 12 Dialog – stable height & always-visible header
+   Root cause:
+     1. PrimeNG 12 centres dialogs with .p-dialog-mask (display:flex,
+        align-items:center). When a radio button triggers *ngIf and
+        content collapses, PrimeNG re-runs its center() method and
+        repositions the dialog – the header scrolls above the viewport.
+     2. [contentStyle]="{ 'max-height': '80vh' }" with no min-height
+        allows the dialog to freely shrink to near-zero.
+   Fix strategy:
+     - Force .p-dialog-mask to align dialogs from the TOP (flex-start)
+       so the header is always anchored at a visible position.
+     - Give .stable-dialog (our two Add dialogs) a hard min-height so
+       they never collapse when *ngIf removes DOM nodes.
+     - Make the header flex-shrink:0 so it can never be squeezed out.
+     - Let .p-dialog-content scroll internally.
+   =================================================================== */
+
+/* The mask is the full-screen overlay PrimeNG puts dialogs inside.
+   Changing align-items to flex-start + a top margin keeps the dialog
+   anchored at the top of the screen so the header is always visible. */
+::ng-deep .p-dialog-mask.p-component-overlay {
+  align-items: flex-start !important;
+  padding-top: 3vh !important;
+}
+
+/* Apply only to our two Add dialogs via the styleClass="stable-dialog" */
+::ng-deep .p-dialog.stable-dialog {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 540px !important;
+  max-height: 92vh !important;
+}
+
+/* Header must never shrink or scroll away */
+::ng-deep .p-dialog.stable-dialog .p-dialog-header {
+  flex-shrink: 0 !important;
+  background: #ffffff !important;
+  z-index: 1 !important;
+}
+
+/* Content fills remaining space and scrolls internally */
+::ng-deep .p-dialog.stable-dialog .p-dialog-content {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  min-height: 420px !important;
+}
+
+/* Footer stays at bottom */
+::ng-deep .p-dialog.stable-dialog .p-dialog-footer {
+  flex-shrink: 0 !important;
+}
+
+/* General safety net for all other dialogs */
+::ng-deep .p-dialog {
+  max-height: 95vh;
+}
+::ng-deep .p-dialog-content {
+  overflow-y: auto;
+}
+::ng-deep.p-dialog {
+    /* display: flex; */
+    flex-direction: column;
+    max-height: 80%;
+    transform: scale(1);
+    position: relative;
+}
+.p-datepicker {
+  z-index: 12000 !important;
 }

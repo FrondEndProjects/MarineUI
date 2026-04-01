@@ -10,6 +10,7 @@ import { catchError, map, retry, take } from 'rxjs/operators';
 import { AuthService } from '../Auth/auth.service';
 import { IdleTimeoutManager } from 'idle-timer-manager';
 import Swal from 'sweetalert2';
+// import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -45,11 +46,11 @@ export class SharedService {
     return this.Token;
   }
 
-  onGetData(data:any){
+  onGetData(data: any) {
     this.onView.next(data);
   }
 
-  onGetDataSub(data:any){
+  onGetDataSub(data: any) {
     this.onViewSub.next(data);
   }
 
@@ -92,7 +93,7 @@ export class SharedService {
     // tslint:disable-next-line: triple-equals
     if ((redirectStatus == undefined && this.router != undefined)) {
       // tslint:disable-next-line: triple-equals
-      if (this.router.url != '/' && this.router.url != '/login-layout/login/broker' && this.router.url != '/sessionRedirect' ) {
+      if (this.router.url != '/' && this.router.url != '/login-layout/login/broker' && this.router.url != '/sessionRedirect') {
         window.clearTimeout(this.timeoutHandle);
         this.setTimeOutSection();
       }
@@ -103,42 +104,71 @@ export class SharedService {
     this.timeoutHandle = setTimeout(() => this.showAlert(this.redirectSection, this.router), (20 * 60 * 1000));
     //this.redirectRouting();
   }
-  showAlert(redirectSection,router){
+  showAlert(redirectSection, router) {
     let redirectStatus = sessionStorage.getItem('redirectStatus');
-    if((redirectStatus==undefined && router!= undefined)){
-      if(this.router.url!= '/' && this.router.url!='' && this.router.url!='/login' && this.router.url != '/sessionRedirect'){
-      sessionStorage.setItem('redirectStatus','started')
+    if ((redirectStatus == undefined && router != undefined)) {
+      if (this.router.url != '/' && this.router.url != '' && this.router.url != '/login' && this.router.url != '/sessionRedirect') {
+        sessionStorage.setItem('redirectStatus', 'started')
         const startValue = 1 * 60 + 5;
         this.timeLimit = timer(0, 1000).pipe(
           take(startValue + 1),
           map(value => startValue - value)
         ).subscribe(
-          value => this.value = value, 
-          null, 
+          value => this.value = value,
+          null,
           () => this.timeLimit = null
         );
-          console.log("Alert Time Out",router,this.redirectSection,this.timeLimit);
-          // Swal.fire({
-          //   title: 'Your Session is About to Expire!',
-          //   text: `You will be LogOut in 20 Minute 0 seconds Due to InActivity.Are You want to Stay Logged in?`,
-          //   icon: 'warning',
-          //   confirmButtonColor: '#3085d6',
-          //   cancelButtonColor: '#d33',
-          //   confirmButtonText: `Yes, Stay Loggined in!`
-          // }).then((result) => {
-          //   if (result.value) {
-              this.router.navigate(['./sessionRedirect']);
-          //   }
-          // })
+        console.log("Alert Time Out", router, this.redirectSection, this.timeLimit);
+        // Swal.fire({
+        //   title: 'Your Session is About to Expire!',
+        //   text: `You will be LogOut in 20 Minute 0 seconds Due to InActivity.Are You want to Stay Logged in?`,
+        //   icon: 'warning',
+        //   confirmButtonColor: '#3085d6',
+        //   cancelButtonColor: '#d33',
+        //   confirmButtonText: `Yes, Stay Loggined in!`
+        // }).then((result) => {
+        //   if (result.value) {
+        this.router.navigate(['./sessionRedirect']);
+        //   }
+        // })
       }
     }
   }
-
-  redirectRouting(){
+  onPostBrokerDocumentMethodSync(
+    UrlLink: string,
+    Req: any,
+    file: any,
+  ): Observable<any[]> {
+    const formData: FormData = new FormData();
+    formData.append('Req', JSON.stringify(Req));
+    formData.append('BrokerLogo', file);
+    // this.cookieService.set(
+    //   'XSRF-TOKEN',
+    //   this.getToken(),
+    //   1,
+    //   '/',
+    //   'localhost',
+    //   false,
+    //   'Strict',
+    // );
+    let headers = new HttpHeaders();
+    headers = headers.append(
+      'Cache-Control',
+      'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+    );
+    headers = headers.append('Pragma', 'no-cache');
+    headers = headers.append('Expires', '0');
+    headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    headers = headers.append('X-XSRF-TOKEN', this.getToken());
+    return this.http
+      .post<any>(UrlLink, formData, { headers: headers })
+      .pipe(catchError(this.handleError));
+  }
+  redirectRouting() {
     console.log("Redirect Time Out")
-    if(this.router!=undefined){
+    if (this.router != undefined) {
       this.timer = new IdleTimeoutManager({
-        timeout: 60*30,
+        timeout: 60 * 30,
         onExpired: () => {
           sessionStorage.clear();
           Swal.close();

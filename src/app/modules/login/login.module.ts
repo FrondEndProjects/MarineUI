@@ -9,16 +9,21 @@ import { BroCusLoginComponent } from './components/bro-cus-login/bro-cus-login.c
 import { IssuerLoginComponent } from './components/issuer-login/issuer-login.component';
 import { LoginService } from './login.service';
 import { ErrorModalComponent } from '../../shared/error/error-modal/error-modal.component';
-
-
-
+import { SalamaLoginPageComponent } from './salama-login-page/salama-login-page.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     BroCusLoginComponent,
-    IssuerLoginComponent
+    IssuerLoginComponent,
+    SalamaLoginPageComponent
   ],
   imports: [
     CommonModule,
@@ -26,10 +31,15 @@ import { ErrorModalComponent } from '../../shared/error/error-modal/error-modal.
     ReactiveFormsModule,
     LoginRoutingModule,
     NgSelectModule,
+        InputTextModule,
+    PasswordModule,
+    ButtonModule,
+    CheckboxModule,
+    ToastModule,
     ErrorModalModule,
 
   ],
-  providers:[LoginService],
+  providers:[LoginService,MessageService],
   bootstrap: [LoginComponent],
 })
 export class LoginModule { }

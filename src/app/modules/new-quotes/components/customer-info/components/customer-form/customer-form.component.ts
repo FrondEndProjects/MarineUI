@@ -502,4 +502,47 @@ export class CustomerFormComponent implements OnInit {
     this.customerName = customer.BROKER_NAME
     modal.close();
   }
+
+convertDate(value: any): Date | null {
+  if (!value) return null;
+
+  // ✅ Already Date
+  if (value instanceof Date) return value;
+
+  if (typeof value === 'string') {
+
+    // ✅ Handle ISO or yyyy-MM-dd directly
+    if (value.includes('T') || /^\d{4}-\d{2}-\d{2}/.test(value)) {
+      const d = new Date(value);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    let parts;
+
+    // dd/MM/yyyy
+    if (value.includes('/')) {
+      parts = value.split('/');
+      const [dd, mm, yyyy] = parts;
+      return new Date(+yyyy, +mm - 1, +dd);
+    }
+
+    // dd-MM-yyyy
+    if (value.includes('-')) {
+      parts = value.split('-');
+
+      // detect format
+      if (parts[0].length === 4) {
+        // yyyy-MM-dd
+        const [yyyy, mm, dd] = parts;
+        return new Date(+yyyy, +mm - 1, +dd);
+      } else {
+        // dd-MM-yyyy
+        const [dd, mm, yyyy] = parts;
+        return new Date(+yyyy, +mm - 1, +dd);
+      }
+    }
+  }
+
+  return null;
+}
 }

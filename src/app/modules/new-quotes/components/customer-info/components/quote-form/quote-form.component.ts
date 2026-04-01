@@ -1,11 +1,12 @@
 import { CustomerInfoComponent } from './../../customer-info.component';
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges, ViewChild, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, NgForm, ValidationErrors, Validators } from '@angular/forms';
 import * as Mydatas from '../../../../../../app-config.json';
 import { NewQuotesService } from '../../../../new-quotes.service';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +18,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
   templateUrl: './quote-form.component.html',
   styleUrls: ['./quote-form.component.scss'],
 })
-export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
+export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource<any>();
@@ -56,7 +57,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   editmodeOfCarriage: any
   vesselSearchList: any[] = [];
   public warStatus: any = ''; closeResult: any = null;
-  subscription: Subscription; public tableData: any[] = [];
+  subscription: Subscription;
+  private editDataSubscription: Subscription;
+  public tableData: any[] = [];
   ManufactureYear: any; manshow: any = false;
   pageSize = 100;
   currentPage = 0;
@@ -211,34 +214,244 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   }
   ClearSubscribe(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+    this.editDataSubscription?.unsubscribe();
   }
   omDropDownParallelCall() {
     this.quoteF.originatingCountry.setValue(this.userDetails?.OriginationCountryId);
     this.quoteF.destinationCountry.setValue(this.userDetails?.DestinationCountryId);
-    this.subscription = this.newQuotesService.getQuoteEditData.subscribe((data: any) => {
-      if (data) {
-        if (this.dropOriginCountryList.length == 0) {
 
-          // this.onGetOriginCountryDropdownList(1);
-          // this.onGetDestinaCountryDropdownList();
-          setTimeout(() => {
-            this.onEditQuote(data);
-          }, 1000);
-
-        }
-      }
-      else {
+    this.editDataSubscription = this.newQuotesService.getQuoteEditData.subscribe((editData: any) => {
+      if (editData) {
+        // Edit mode: load all base dropdowns in parallel, then patch
+        this.loadBaseDropdownsAndPatch(editData);
+      } else {
+        // New quote mode: just load dropdowns normally
         if (this.dropOriginCountryList.length == 0) {
           this.onLoadDropdownList();
         }
       }
     });
+  }
 
+  /**
+   * Loads all required dropdowns in parallel using forkJoin,
+   * then calls onEditQuote() only after every list is populated.
+   * This eliminates all timing/race-condition patching failures.
+   */
+  private loadBaseDropdownsAndPatch(editData: any) {
+    const transportDetails = editData?.QuoteDetails?.TransportDetails;
+    const modeOfTransport = transportDetails?.ModeOfTansportCode;
+    const coverCode = transportDetails?.CoverCode;
 
-    // this.onGetOriginCityDropdownList();
-    // this.onGetDestinaCityDropdownList();
+    const transportReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/modeoftransport`,
+      { BranchCode: this.userDetails.BelongingBranch, OpenCoverNo: this.openCoverNo, pvType: 'mode', ProductId: this.productId }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
 
+    const originCountryReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/originationcountry`,
+      { BranchCode: this.userDetails?.BelongingBranch, ProductId: this.productId, OriginationCountryCode: this.userDetails?.OrginationCountryId, OpenCoverNo: this.openCoverNo }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const destCountryReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/destinationcountry`,
+      { BranchCode: this.userDetails?.BelongingBranch, ProductId: this.productId, DestinationCountryCode: this.userDetails?.DestinationCountryId, OpenCoverNo: this.openCoverNo }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const coverReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/cover`,
+      { BranchCode: this.userDetails.BelongingBranch, ModeOfTransportCode: modeOfTransport, OpenCoverNo: this.openCoverNo, pvType: 'cover', ProductId: this.productId }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const carriageReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/modeofcarriage`,
+      { BranchCode: this.userDetails?.BelongingBranch, ProductId: this.productId, ModeOfTransportCode: modeOfTransport, CoverId: coverCode, OpenCoverNo: this.openCoverNo, pvType: 'conveyance' }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const incotermsReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/incoterm`,
+      { BranchCode: this.userDetails?.BelongingBranch, ProductId: this.productId, OpenCoverNo: this.openCoverNo, pvType: 'saleTerm' }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const currencyReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/currency`,
+      { BranchCode: this.userDetails?.BranchCode, ProductId: this.productId, pvType: 'currency' }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const premiumReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/premiumcurrency`,
+      { CompanyId: this.userDetails?.RegionCode, BranchCode: this.userDetails?.BelongingBranch }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const goodsReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/goodscategory`,
+      { BranchCode: this.userDetails?.BelongingBranch, ProductId: this.productId, OpenCoverNo: this.openCoverNo, pvType: 'goodsCategory' }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const toleranceReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/tolerance`,
+      { BranchCode: this.userDetails?.BelongingBranch, ProductId: this.productId, OpenCoverNo: this.openCoverNo, pvType: 'tolerance', IncotermPercent: '' }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    const packageReq = this.newQuotesService.onPostMethodSync(
+      `${this.ApiUrl1}quote/dropdown/package`,
+      { BranchCode: this.userDetails?.BelongingBranch, ProductId: this.productId, ModeOfTransportCode: modeOfTransport, pvType: 'package' }
+    ).pipe(catchError(() => of({ Message: null, Result: [] })));
+
+    forkJoin([
+      transportReq, originCountryReq, destCountryReq,
+      coverReq, carriageReq, incotermsReq,
+      currencyReq, premiumReq, goodsReq, toleranceReq, packageReq
+    ]).subscribe(([
+      transportData, originCountryData, destCountryData,
+      coverData, carriageData, incotermsData,
+      currencyData, premiumData, goodsData, toleranceData, packageData
+    ]: any[]) => {
+      const placeholder = [{ Code: null, CodeDescription: '--Select--' }];
+
+      if (transportData?.Message === 'Success') {
+        this.dropTransportList = [...placeholder, ...transportData.Result];
+        this.newQuotesService.getDropDownList(this.dropTransportList, 'transport');
+      }
+      if (originCountryData?.Message === 'Success') {
+        this.dropOriginCountryList = [...placeholder, ...originCountryData.Result];
+        this.newQuotesService.getDropDownList(this.dropOriginCountryList, 'orgCountry');
+      }
+      if (destCountryData?.Message === 'Success') {
+        this.dropDestinaCountryList = [...placeholder, ...destCountryData.Result];
+        this.newQuotesService.getDropDownList(this.dropDestinaCountryList, 'destCounty');
+      }
+      if (coverData?.Message === 'Success') {
+        this.dropCoverList = [...placeholder, ...coverData.Result];
+        this.newQuotesService.getDropDownList(this.dropCoverList, 'cover');
+      }
+      if (carriageData?.Message === 'Success') {
+        this.dropCarriageList = [...placeholder, ...carriageData.Result];
+        this.newQuotesService.getDropDownList(this.dropCarriageList, 'carriage');
+      }
+      if (incotermsData?.Message === 'Success') {
+        this.dropIncotermsList = [...placeholder, ...incotermsData.Result];
+        this.newQuotesService.getDropDownList(this.dropIncotermsList, 'incoterms');
+      }
+      if (currencyData?.Message === 'Success') {
+        this.dropCurrencyList = [...placeholder, ...currencyData.Result];
+        this.newQuotesService.getDropDownList(this.dropCurrencyList, 'currencyList');
+      }
+      if (premiumData?.Message === 'Success') {
+        this.dropPremiumCurrencyList = premiumData.Result;
+        this.newQuotesService.getDropDownList(this.dropPremiumCurrencyList, 'PremiumcurrencyList');
+      }
+      if (goodsData?.Message === 'Success') {
+        this.dropGoodsOfCateList = [{ CodeDescription: '-Select-', Code: '9999' }, ...goodsData.Result];
+        this.newQuotesService.getDropDownList(this.dropGoodsOfCateList, 'goodesofCat');
+      }
+      if (toleranceData?.Message === 'Success') {
+        this.dropToleranceList = [...placeholder, ...toleranceData.Result];
+        this.newQuotesService.getDropDownList(this.dropToleranceList, 'tolerance');
+      }
+      if (packageData?.Message === 'Success') {
+        this.dropPackageDescList = [...placeholder, ...packageData.Result];
+        this.newQuotesService.getDropDownList(this.dropPackageDescList, 'packageDesc');
+      }
+
+      // All base dropdowns ready — now load city lists, then patch all form values
+      this.loadCityDropdownsAndPatch(editData);
+    });
+  }
+
+  /**
+   * After base dropdowns are loaded, fetch origin + destination city lists,
+   * then patch all form values in one go — no race conditions.
+   */
+  private loadCityDropdownsAndPatch(editData: any) {
+    const transportDetails = editData?.QuoteDetails?.TransportDetails;
+    const originCountryCode = transportDetails?.OriginCountryCode;
+    const destCountryCode = transportDetails?.DestinationCountryCode;
+
+    let originCountryEntry: any;
+    let destCountryEntry: any;
+
+    // Resolve country entries (handles InsuranceId 100020 dual-code logic)
+    const modeOfTransport = transportDetails?.ModeOfTansportCode;
+    if (this.userDetails?.InsuranceId == '100020') {
+      if (modeOfTransport == '1') {
+        originCountryEntry = this.dropOriginCountryList.find(e => e.Code == originCountryCode);
+        destCountryEntry = this.dropDestinaCountryList.find(e => e.Code == destCountryCode);
+      } else {
+        originCountryEntry = this.dropOriginCountryList.find(e => e.CodeValue2 == originCountryCode);
+        destCountryEntry = this.dropDestinaCountryList.find(e => e.CodeValue2 == destCountryCode);
+      }
+    }
+
+    const resolvedOriginCountry = (this.userDetails?.RegionCode == '100020') ? originCountryEntry?.Code : originCountryCode;
+    const resolvedDestCountry = (this.userDetails?.RegionCode == '100020') ? destCountryEntry?.Code : destCountryCode;
+
+    // Build origin city request
+    const originCityUrlAndReq = this.buildCityRequest('origin', resolvedOriginCountry, modeOfTransport);
+    const destCityUrlAndReq = this.buildCityRequest('destination', resolvedDestCountry, modeOfTransport);
+
+    const originCityReq$ = (originCityUrlAndReq)
+      ? this.newQuotesService.onPostMethodSync(originCityUrlAndReq.url, originCityUrlAndReq.req).pipe(catchError(() => of({ Message: null, Result: [] })))
+      : of({ Message: 'Success', Result: [] });
+
+    const destCityReq$ = (destCityUrlAndReq)
+      ? this.newQuotesService.onPostMethodSync(destCityUrlAndReq.url, destCityUrlAndReq.req).pipe(catchError(() => of({ Message: null, Result: [] })))
+      : of({ Message: 'Success', Result: [] });
+
+    forkJoin([originCityReq$, destCityReq$]).subscribe(([originCityData, destCityData]: any[]) => {
+      const placeholder = [{ Code: null, CodeDescription: '--Select--' }];
+
+      if (originCityData?.Message === 'Success') {
+        this.dropOriginCityList = [...placeholder, ...originCityData.Result];
+        this.newQuotesService.getDropDownList(this.dropOriginCityList, 'orgCity');
+      }
+      if (destCityData?.Message === 'Success') {
+        this.dropDestinaCityList = [...placeholder, ...destCityData.Result];
+        this.newQuotesService.getDropDownList(this.dropDestinaCityList, 'destCity');
+      }
+
+      // Now ALL dropdowns are ready — patch the form
+      this.editCover = transportDetails?.CoverCode;
+      this.editmodeOfCarriage = transportDetails?.ModeOfCarriageCode;
+      this.onEditQuote(editData);
+    });
+  }
+
+  private buildCityRequest(type: 'origin' | 'destination', countryCode: string, modeOfTransport: string): { url: string, req: any } | null {
+    if (!countryCode) return null;
+
+    const countryList = type === 'origin' ? this.dropOriginCountryList : this.dropDestinaCountryList;
+    const entry = countryList.find(e => e.Code == countryCode);
+
+    let codeValue: any = countryCode;
+    if (this.insurenceId == '100020') {
+      if (modeOfTransport == '1') codeValue = entry?.CodeValue;
+      else if (!modeOfTransport) codeValue = countryCode;
+      else codeValue = entry?.CodeValue2;
+    }
+
+    if (!codeValue) return null;
+
+    if (this.insurenceId == '100020') {
+      return {
+        url: `${this.ApiUrl1}master/countryport/list`,
+        req: { countryID: codeValue, modeOfTransport: modeOfTransport || null }
+      };
+    } else {
+      return {
+        url: type === 'origin'
+          ? `${this.ApiUrl1}quote/dropdown/originationcity`
+          : `${this.ApiUrl1}quote/dropdown/destinationcity`,
+        req: type === 'origin'
+          ? { pvType: 'orgCity', OriginationCountryCode: countryCode, BranchCode: this.userDetails?.BelongingBranch }
+          : { pvType: 'destCity', BranchCode: this.userDetails?.BelongingBranch, DestinationCountryCode: countryCode }
+      };
+    }
   }
 
   get quoteF() {
@@ -254,97 +467,93 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     const quoteDetails = data?.QuoteDetails;
     const commodityDetails = data?.QuoteDetails?.CommodityDetails[0];
     const transportDetails = data?.QuoteDetails?.TransportDetails;
-    this.quoteF.modeOfTransport.setValue(transportDetails?.ModeOfTansportCode);
     const vesselDetails = data?.QuoteDetails?.VesselDetails;
-    this.editCover = transportDetails?.CoverCode;
-    this.editmodeOfCarriage = transportDetails?.ModeOfCarriageCode;
+
+    // editCover and editmodeOfCarriage are set by loadCityDropdownsAndPatch before this call
     let orginCountry: any;
     let desinationCountry: any;
 
+    // Patch mode of transport first (needed for country resolution)
+    this.quoteF.modeOfTransport.setValue(transportDetails?.ModeOfTansportCode);
+
     if (this.userDetails?.InsuranceId == '100020') {
-      let value: any = this.quoteF.modeOfTransport.value
+      let value: any = transportDetails?.ModeOfTansportCode;
       if (value == '1' || value == 1) {
         orginCountry = this.dropOriginCountryList.find(ele => ele.Code == transportDetails?.OriginCountryCode);
         desinationCountry = this.dropDestinaCountryList.find(ele => ele.Code == transportDetails?.DestinationCountryCode);
-        this.onGetCoverDropdownList(1);
-      }
-      else {
+      } else {
         orginCountry = this.dropOriginCountryList.find(ele => ele.CodeValue2 == transportDetails?.OriginCountryCode);
         desinationCountry = this.dropDestinaCountryList.find(ele => ele.CodeValue2 == transportDetails?.DestinationCountryCode);
-        this.onGetCoverDropdownList(1);
       }
     }
-    else {
-      this.onGetCoverDropdownList(1);
-    }
 
-    this.onGetCarriageDropdownList(null, null);
+    // Patch cover and carriage directly — lists are already loaded by forkJoin
     this.quoteF.cover.setValue(transportDetails?.CoverCode);
     this.quoteF.modeOfCarriage.setValue(transportDetails?.ModeOfCarriageCode);
+
+    // Patch countries
     if (this.userDetails?.RegionCode == '100020') {
       this.quoteF.originatingCountry.setValue(orginCountry?.Code);
-      this.onGetOriginCityDropdownList();
-    }
-    else {
+    } else {
       this.quoteF.originatingCountry.setValue(transportDetails?.OriginCountryCode);
-      this.onGetOriginCityDropdownList();
     }
 
+    // Patch origin city — city lists already loaded
+    this.editOrginCity = transportDetails?.OriginCityCode;
+    const isOriginCityIncluded = this.dropOriginCityList.some(item => item.Code == transportDetails?.OriginCityCode);
+    this.quoteF.originatingCity.setValue(isOriginCityIncluded ? transportDetails?.OriginCityCode : null);
 
-    // this.quoteF.originatingCity.setValue(transportDetails?.OriginCityCode);
-    this.editOrginCity = transportDetails?.OriginCityCode
     if (this.userDetails?.RegionCode == '100020') {
       this.quoteF.TranshipmentYN.setValue(transportDetails?.TranshipmentYn);
       this.quoteF.StoragePeriodYn.setValue(transportDetails?.StoragePeriodYn);
-    }
-    else {
+    } else {
       this.quoteF.TranshipmentYN.setValue('N');
       this.quoteF.StoragePeriodYn.setValue('N');
     }
+
     this.quoteF.originatingWarehouse.setValue(transportDetails?.OriginWarehouseYn);
-    // this.quoteF.destinationCountry.setValue(transportDetails?.DestinationCountryCode);
+
+    // Patch destination country
     if (this.userDetails?.RegionCode == '100020') {
       this.quoteF.destinationCountry.setValue(desinationCountry?.Code);
-    }
-    else {
+    } else {
       this.quoteF.destinationCountry.setValue(transportDetails?.DestinationCountryCode);
     }
-    this.onGetDestinaCityDropdownList();
-    this.TranshippingCountryEdit = transportDetails?.TranshipmentCountry
-    // this.quoteF.destinationCity.setValue(transportDetails?.DestinationCityCode);
-    this.editDesinationCity = transportDetails?.DestinationCityCode
+
+    // Patch destination city — city list already loaded
+    this.TranshippingCountryEdit = transportDetails?.TranshipmentCountry;
+    this.editDesinationCity = transportDetails?.DestinationCityCode;
+    const isDestCityIncluded = this.dropDestinaCityList.some(item => item.Code == transportDetails?.DestinationCityCode);
+    this.quoteF.destinationCity.setValue(isDestCityIncluded ? transportDetails?.DestinationCityCode : null);
+
     this.quoteF.destinationWarehouse.setValue(transportDetails?.DestinationWarehouseYn);
-    this.quoteF.policyStartDate.setValue(this.newQuotesService.ngbDateFormatt(quoteDetails?.InceptionDate));
+    this.quoteF.policyStartDate.setValue(this.convertDate(quoteDetails?.InceptionDate));
     this.quoteF.warSrcc.setValue(quoteDetails?.WarAndSrccYn);
     this.quoteF.warOnLand.setValue(quoteDetails?.WarOnLandYn);
+
     if (this.quoteF.TranshipmentYN.value == 'Y') {
-      this.get_transhipping_list('edit')
+      this.get_transhipping_list('edit');
     }
-    // this.quoteF.via.setValue(transportDetails?.Via);
     this.TranshippingCityEdit = transportDetails?.Via;
     this.quoteF.settlingAgent.setValue(quoteDetails?.SettlingAgentCode);
-    //  this.quoteF.others.setValue('');
 
     this.quoteF.goodsCategory.setValue(commodityDetails?.GoodsCategoryCode);
     this.quoteF.goodsDescript.setValue(commodityDetails?.GoodsCategoryDescription);
     this.quoteF.UCRNumber.setValue(transportDetails?.UCRNumber);
+
     if (commodityDetails?.InsuredValue) {
-      this.CommaFormatted(commodityDetails?.InsuredValue)
+      this.CommaFormatted(commodityDetails?.InsuredValue);
     }
-    // this.quoteF.insuredValue.setValue(commodityDetails?.InsuredValue);
+
     this.quoteF.invoiceNumber.setValue(commodityDetails?.InvoiceNo);
-    this.quoteF.invoiceDate.setValue(this.newQuotesService.ngbDateFormatt(commodityDetails?.InvoiceDate));
+    this.quoteF.invoiceDate.setValue(this.convertDate(commodityDetails?.InvoiceDate));
     this.quoteF.consignedTo.setValue(commodityDetails?.ConsignedTo);
     this.quoteF.consignedForm.setValue(commodityDetails?.ConsignedFrom);
-    // this.quoteF.UCRNumber.setValue(commodityDetails?.UCRNumber);
     this.quoteF.fragileYN.setValue(commodityDetails?.Fragile);
     this.quoteF.excessDescription.setValue(commodityDetails?.PolicyExcessDescription);
-
-
     this.quoteF.poPiNumber.setValue(commodityDetails?.PoDescription);
     this.quoteF.currency.setValue(quoteDetails?.CurrencyCode);
     this.quoteF.currencyValue.setValue(quoteDetails?.CurrencyValue);
-    // this.quoteF.premiumCurrency.setValue(quoteDetails?.PremiumCurrencyCode);
     this.quoteF.packageDescription.setValue(quoteDetails?.PackageCode);
     this.quoteF.incoterms.setValue(quoteDetails?.IncoTerms);
     this.onGetIncotermsPrecentDropdownList(1);
@@ -355,19 +564,24 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.ManufactureYear = vesselDetails?.VesselYear;
     this.vesselId = vesselDetails?.VesselCode;
     this.quoteF.ManfctureYear.setValue(vesselDetails?.VesselYear);
+
     if (this.vesselId == '9999') {
       this.VesselNames = this.vesselValue;
+    } else {
+      this.VesselName = this.vesselValue;
     }
-    else { this.VesselName = this.vesselValue }
+
     this.quoteF.voyageNumber.setValue(quoteDetails?.VoyageNo);
     this.quoteF.partialShipment.setValue(quoteDetails?.PartialShipmentCode == null ? 'N' : quoteDetails?.PartialShipmentCode);
-    if (quoteDetails?.ExposureOfShipment != null && quoteDetails?.ExposureOfShipment != '' && quoteDetails?.ExposureOfShipment != undefined && quoteDetails?.ExposureOfShipment != '0') {
+
+    if (quoteDetails?.ExposureOfShipment != null && quoteDetails?.ExposureOfShipment != '' &&
+        quoteDetails?.ExposureOfShipment != undefined && quoteDetails?.ExposureOfShipment != '0') {
       quoteDetails.ExposureOfShipment = String(quoteDetails?.ExposureOfShipment).split('.')[0];
-      this.ExposureCommaFormatted(quoteDetails?.ExposureOfShipment)
+      this.ExposureCommaFormatted(quoteDetails?.ExposureOfShipment);
     }
+
     this.quoteF.currencyOfExposure.setValue(quoteDetails?.CurrencyOfExposureCode);
     this.quoteF.transhippingCountry.setValue(quoteDetails?.TranshipmentCountry);
-
   }
 
 
@@ -421,7 +635,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
     this.onGetCurrencyDropdownList(2);
     this.onGetOriginCountryDropdownList(2)
     // let curDate = new Date();
-    // this.quoteF.policyStartDate.setValue(this.newQuotesService.ngbDateFormatt(curDate))
+    // this.quoteF.policyStartDate.setValue(this.convertDate(curDate))
   }
 
   CommaFormatteds() {
@@ -1498,4 +1712,46 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit {
   onPartialshipmentChange(event) {
 
   }
+convertDate(value: any): Date | null {
+  if (!value) return null;
+
+  // ✅ Already Date
+  if (value instanceof Date) return value;
+
+  if (typeof value === 'string') {
+
+    // ✅ Handle ISO or yyyy-MM-dd directly
+    if (value.includes('T') || /^\d{4}-\d{2}-\d{2}/.test(value)) {
+      const d = new Date(value);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    let parts;
+
+    // dd/MM/yyyy
+    if (value.includes('/')) {
+      parts = value.split('/');
+      const [dd, mm, yyyy] = parts;
+      return new Date(+yyyy, +mm - 1, +dd);
+    }
+
+    // dd-MM-yyyy
+    if (value.includes('-')) {
+      parts = value.split('-');
+
+      // detect format
+      if (parts[0].length === 4) {
+        // yyyy-MM-dd
+        const [yyyy, mm, dd] = parts;
+        return new Date(+yyyy, +mm - 1, +dd);
+      } else {
+        // dd-MM-yyyy
+        const [dd, mm, yyyy] = parts;
+        return new Date(+yyyy, +mm - 1, +dd);
+      }
+    }
+  }
+
+  return null;
+}
 }

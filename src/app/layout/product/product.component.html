@@ -1,0 +1,231 @@
+<!-- ══════════════════════════════════════════════════════
+     TOP NAVBAR
+══════════════════════════════════════════════════════ -->
+<header class="app-navbar">
+    <div class="navbar-brand">
+        <a (click)="homeRoute()"><img src="./assets/images/Orientlogo-removebg-preview.png" class="imgwidAlt"></a>
+        <div class="brand-text">
+            <span class="brand-sub">Marine Insurance Portal</span>
+        </div>
+    </div>
+    <div class="navbar-center"></div>
+    <div class="navbar-right">
+        <div class="nav-user" (click)="opUser.toggle($event)">
+
+            <div class="user-avatar">{{ getUserInitials() }}</div>
+
+            <div class="user-info">
+                <span class="user-name">{{ user?.Result?.UserName || 'User' }}</span>
+                <span class="user-type">{{ userType }}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Overlay Panel -->
+    <p-overlayPanel #opUser appendTo="body" [style]="{ width: '200px' }">
+
+        <div class="user-menu">
+
+            <div class="menu-item" (click)="onLogout()"><i class="pi pi-sign-out"></i> Logout</div>
+            
+        </div>
+
+    </p-overlayPanel>
+</header>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE BODY
+══════════════════════════════════════════════════════ -->
+<main class="page-body">
+
+    <!-- ── Marine Quotes Banner ── -->
+    <div class="quotes-banner">
+        <div class="quotes-track">
+            <span class="quote-item"><i class="pi pi-compass"></i>&nbsp;"The sea, once it casts its spell, holds one in
+                its net of wonder forever." — Jacques Cousteau</span>
+            <span class="quote-sep">⚓</span>
+            <span class="quote-item"><i class="pi pi-shield"></i>&nbsp;"Comprehensive cargo &amp; freight protection for
+                your global trade operations."</span>
+            <span class="quote-sep">⚓</span>
+            <span class="quote-item"><i class="pi pi-globe"></i>&nbsp;"A smooth sea never made a skilled sailor — but we
+                ensure you're covered either way."</span>
+            <span class="quote-sep">⚓</span>
+            <span class="quote-item"><i class="pi pi-star"></i>&nbsp;"Protecting every voyage, every cargo, every dream
+                — since day one."</span>
+            <span class="quote-sep">⚓</span>
+            <span class="quote-item"><i class="pi pi-compass"></i>&nbsp;"The sea, once it casts its spell, holds one in
+                its net of wonder forever." — Jacques Cousteau</span>
+            <span class="quote-sep">⚓</span>
+            <span class="quote-item"><i class="pi pi-shield"></i>&nbsp;"Comprehensive cargo &amp; freight protection for
+                your global trade operations."</span>
+            <span class="quote-sep">⚓</span>
+            <span class="quote-item"><i class="pi pi-globe"></i>&nbsp;"A smooth sea never made a skilled sailor — but we
+                ensure you're covered either way."</span>
+            <span class="quote-sep">⚓</span>
+            <span class="quote-item"><i class="pi pi-star"></i>&nbsp;"Protecting every voyage, every cargo, every dream
+                — since day one."</span>
+        </div>
+    </div>
+
+    <!-- ── Inner Content ── -->
+    <div class="content-wrap">
+
+        <!-- ── SECTION TOOLBAR ── -->
+        <ng-container *ngIf="selectedBranch || approverSection">
+            <div class="top-bar1">
+                <div class="top-bar-left">
+                    <div class="title-block">
+                        <h3 class="page-title" *ngIf="quoteSection">
+                            <i class="pi pi-th-large title-icon"></i>
+                            Product You Wish to Buy
+                        </h3>
+                        <h3 class="page-title" *ngIf="approverSection">
+                            <i class="pi pi-search title-icon"></i>
+                            Looking For
+                        </h3>
+                        <span class="page-subtitle" *ngIf="quoteSection">Select a product to get started</span>
+                        <span class="page-subtitle" *ngIf="approverSection">Choose your user type below</span>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <div class="toggle-group admin-toggle" *ngIf="userType=='Issuer'">
+                        <span class="toggle-label" [class.active]="!isAdminView">Product</span>
+                        <label class="switch admin-switch">
+                            <input type="checkbox" [(ngModel)]="isAdminView" (change)="onAdminToggle()">
+                            <span class="slider admin-slider"></span>
+                        </label>
+                        <span class="toggle-label" [class.active]="isAdminView">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- ══════════════════════════════════════════════
+             PRODUCT SECTION — Modern Cards
+        ══════════════════════════════════════════════ -->
+        <ng-container *ngIf="quoteSection">
+            <ng-container *ngIf="selectedBranch">
+                <div class="product-grid-wrap">
+                    <div class="product-grid">
+
+                        <div *ngFor="let product of filteredProducts; let i = index" class="prod-card"
+                            [attr.data-index]="i" (click)="selectProduct(product)">
+
+                            <!-- Accent ribbon top -->
+                            <div class="card-ribbon"></div>
+
+                            <!-- Product image area -->
+                            <div class="prod-img-wrap">
+                                <img [src]="getProductUrl(product.ProductId)" alt="{{ product.ProductName }}" />
+                                <!-- Floating badge -->
+                                <span class="prod-badge">
+                                    <i class="pi pi-shield"></i> Covered
+                                </span>
+                            </div>
+
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <p class="prod-name">{{ product.ProductName }}</p>
+                                <p class="prod-quote">{{ getProductQuote(product.ProductId, product.ProductName) }}</p>
+                            </div>
+
+                            <!-- Card footer -->
+                            <div class="card-footer-row">
+                                <span class="card-cta">
+                                    Get Started <i class="pi pi-arrow-right"></i>
+                                </span>
+                                <span class="card-type-badge" [class.pkg]="product.PackageYn === 'Y'">
+                                    {{ product.PackageYn === 'Y' ? 'Package' : 'Individual' }}
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="empty-state" *ngIf="filteredProducts?.length === 0">
+                        <i class="pi pi-inbox"></i>
+                        <p>No products found</p>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <!-- ══════════════════════════════════════════════
+             ADMIN / APPROVER SECTION — Modern Cards
+        ══════════════════════════════════════════════ -->
+        <ng-container *ngIf="approverSection">
+            <div class="admin-section">
+                <div class="product-grid">
+                    <ng-container *ngFor="let product of imageMappings?.userTypes; let i = index">
+                        <ng-container *ngIf="checkUserType(product)">
+                            <div class="prod-card" [attr.data-index]="i" (click)="onSelectUserType(product)">
+
+                                <div class="card-ribbon"></div>
+
+                                <div class="prod-img-wrap">
+                                    <img [src]="getUserTypeImage(product?.code)" alt="Card" />
+                                    <span class="prod-badge admin-badge">
+                                        <i class="pi pi-user"></i> Access
+                                    </span>
+                                </div>
+
+                                <div class="card-body">
+                                    <ng-container *ngIf="product.code=='1' || product.code=='3' || product.code=='4'">
+                                        <p class="prod-name">{{ product.description === 'Transaction' ? 'Quotation &
+                                            Policy Information' : product.description }}</p>
+                                    </ng-container>
+                                    <ng-container *ngIf="product.code=='2'">
+                                        <p class="prod-name">
+                                            <ng-container *ngIf="checkUserTypeLabel(product,'Login')">Login
+                                                Creation</ng-container>
+                                            <ng-container
+                                                *ngIf="checkUserTypeLabel(product,'Login') && checkUserTypeLabel(product,'Masters')">
+                                                &amp; </ng-container>
+                                            <ng-container
+                                                *ngIf="checkUserTypeLabel(product,'Masters')">Masters</ng-container>
+                                        </p>
+                                    </ng-container>
+                                    <p class="prod-quote">{{ getAdminQuote(product.code) }}</p>
+                                </div>
+
+                                <div class="card-footer-row">
+                                    <span class="card-cta">
+                                        Open <i class="pi pi-arrow-right"></i>
+                                    </span>
+                                    <span class="card-type-badge admin-type">
+                                        <i class="pi pi-lock-open"></i> Admin
+                                    </span>
+                                </div>
+
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+
+    </div><!-- /content-wrap -->
+</main>
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer class="app-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="footer-logo"><i class="pi pi-compass"></i></div>
+            <span class="footer-brand-name">SALAMA Marine Insurance</span>
+        </div>
+        <div class="footer-links">
+            <a class="footer-link">Privacy Policy</a>
+            <span class="footer-sep">·</span>
+            <a class="footer-link">Terms of Service</a>
+            <span class="footer-sep">·</span>
+            <a class="footer-link">Support</a>
+            <span class="footer-sep">·</span>
+            <a class="footer-link">Contact</a>
+        </div>
+        <span class="footer-copy">© 2026 SALAMA b.s.c. All rights reserved.</span>
+    </div>
+</footer>

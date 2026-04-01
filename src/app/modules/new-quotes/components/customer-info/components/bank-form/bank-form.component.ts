@@ -24,7 +24,7 @@ export class BankFormComponent implements OnInit {
   public bankForm!: FormGroup;
   public dropBankList: any[] = [];
   showBillPanel = true;
-  showBankPanel =true;
+  showBankPanel = true;
   @ViewChild('formDirective') public bankFormDirective: NgForm;
   pattern = {
     0: {
@@ -63,7 +63,7 @@ export class BankFormComponent implements OnInit {
   ngOnInit(): void {
     this.onLoadDropdownList();
     console.log("Bank Form", this.quoteF)
-       const id = this.userDetails?.InsuranceId;
+    const id = this.userDetails?.InsuranceId;
 
 
     if (id !== '100044' && id !== '100053') {
@@ -86,7 +86,7 @@ export class BankFormComponent implements OnInit {
 
   setDocUploadData() {
     this.bankForm.controls['invoiceNumber']?.setValue(this.docUploadedData?.InvoiceNumber);
-    this.bankForm.controls['invoiceDate'].setValue(this.newQuotesService.ngbDateFormatt(this.docUploadedData?.InvoiceDate));
+    this.bankForm.controls['invoiceDate'].setValue(this.convertDate(this.docUploadedData?.InvoiceDate));
   }
   onGetBankList() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/lcbank`;
@@ -100,7 +100,7 @@ export class BankFormComponent implements OnInit {
         console.log(data);
         if (data?.Message === 'Success') {
           // this.dropBankList = data?.Result;
-             let obj = [{ Code: null, CodeDescription: "--Select--" }
+          let obj = [{ Code: null, CodeDescription: "--Select--" }
 
           ];
           this.dropBankList = obj.concat(data?.Result)
@@ -150,4 +150,47 @@ export class BankFormComponent implements OnInit {
     this.showDialog = false;
 
   }
+
+convertDate(value: any): Date | null {
+  if (!value) return null;
+
+  // ✅ Already Date
+  if (value instanceof Date) return value;
+
+  if (typeof value === 'string') {
+
+    // ✅ Handle ISO or yyyy-MM-dd directly
+    if (value.includes('T') || /^\d{4}-\d{2}-\d{2}/.test(value)) {
+      const d = new Date(value);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    let parts;
+
+    // dd/MM/yyyy
+    if (value.includes('/')) {
+      parts = value.split('/');
+      const [dd, mm, yyyy] = parts;
+      return new Date(+yyyy, +mm - 1, +dd);
+    }
+
+    // dd-MM-yyyy
+    if (value.includes('-')) {
+      parts = value.split('-');
+
+      // detect format
+      if (parts[0].length === 4) {
+        // yyyy-MM-dd
+        const [yyyy, mm, dd] = parts;
+        return new Date(+yyyy, +mm - 1, +dd);
+      } else {
+        // dd-MM-yyyy
+        const [dd, mm, yyyy] = parts;
+        return new Date(+yyyy, +mm - 1, +dd);
+      }
+    }
+  }
+
+  return null;
+}
 }

@@ -255,6 +255,7 @@ export class AdminPortfolioComponent implements OnInit {
   onmenu(row, rowData, template) {
     console.log('jjjjjjjjjjj', row)
     console.log('kkkkkkkk', rowData)
+    console.log('ttttttt', template)
     if (rowData == 'Schedule' || rowData == 'Policy Wordings') this.getSchedulePdf(row, rowData);
 
     if (rowData == 'Debit Note') {

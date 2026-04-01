@@ -29,7 +29,7 @@
           <div class="sa-input-wrap">
             <input type="text" ngbDatepicker #d="ngbDatepicker"
               class="sa-input"
-              formControlName="policyEffectiveDate"
+              formControlName="policyEffectiveDate" container="body"
               (click)="d.toggle()" readonly
               placeholder="DD-MM-YYYY">
             <i class="pi pi-calendar sa-input-icon-right" (click)="d.toggle()"></i>
@@ -45,7 +45,7 @@
           <!-- Installment -->
           <div class="sa-field">
             <label class="sa-label">Installment<span class="sa-req">*</span></label>
-            <ng-select placeholder="Select" class="sa-ng-select"
+            <ng-select placeholder="Select" class="sa-ng-select" appendTo="body"
               [items]="installmentList" bindValue="CategoryDetailId" bindLabel="DetailName"
               formControlName="installment">
             </ng-select>

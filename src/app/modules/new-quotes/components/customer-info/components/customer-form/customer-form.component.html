@@ -23,7 +23,7 @@
         <div class="pf"
           [class.pf-invalid]="(customerF.title.errors && submitted) || (!customerF.title.valid && customerF.title.touched)">
           <label>Title <span class="req">*</span></label>
-          <p-dropdown [options]="dropTitleList" optionLabel="CodeDescription" optionValue="CodeDescription"
+          <p-dropdown [options]="dropTitleList" optionLabel="CodeDescription" [filter]="true" filterBy="CodeDescription" optionValue="CodeDescription"
             formControlName="title" placeholder="Select Title" styleClass="w-100">
           </p-dropdown>
           <small class="p-error"
@@ -246,7 +246,7 @@
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="titleError">
               <label>Title <span class="req">*</span></label>
-              <p-dropdown [options]="dropTitleList" optionLabel="CodeDescription" optionValue="CodeDescription"
+              <p-dropdown [options]="dropTitleList" [filter]="true" filterBy="CodeDescription" optionLabel="CodeDescription" optionValue="CodeDescription"
                 [(ngModel)]="title" placeholder="Select Title" styleClass="w-100"></p-dropdown>
               <small class="p-error" *ngIf="titleError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
@@ -283,7 +283,7 @@
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="cityNameError">
               <label>City <span class="req">*</span></label>
-              <p-dropdown [options]="dropCityList" optionLabel="CodeDescription" optionValue="Code"
+              <p-dropdown [options]="dropCityList" optionLabel="CodeDescription" optionValue="Code" [filter]="true" filterBy="CodeDescription"
                 [(ngModel)]="cityValue" placeholder="Select City" [filter]="true" styleClass="w-100"></p-dropdown>
               <small class="p-error" *ngIf="cityNameError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>

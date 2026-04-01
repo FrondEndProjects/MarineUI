@@ -1,0 +1,399 @@
+// ── Theme tokens ──────────────────────────────────────────────────────────────
+$teal-dark:    #1a5f68;
+$teal-primary: #1d7280;
+$teal-light:   #238fa0;
+$teal-muted:   #e8f4f6;
+$gold:         #f5a623;
+$gold-dark:    #d4891a;
+$bg:           #edf1f4;
+$white:        #fff;
+$text-dark:    #1e2d35;
+$text-mid:     #4a6572;
+$text-soft:    #8fa8b2;
+$border:       #d0dfe4;
+$radius:       12px;
+
+// Card accent palette — cycles by index via CSS custom property
+$accent-1: #1d7280;   // teal
+$accent-2: #2a6fad;   // ocean blue
+$accent-3: #0f6e56;   // deep green
+$accent-4: #7b4fa6;   // violet
+$accent-5: #d4891a;   // gold
+$accent-6: #c0392b;   // coral red
+
+// ── Host ──────────────────────────────────────────────────────────────────────
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  color: $text-dark;
+  background: $bg;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// NAVBAR
+// ════════════════════════════════════════════════════════════════════════════
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: 60px;
+  background: linear-gradient(135deg, $teal-dark 0%, $teal-primary 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  box-shadow: 0 3px 14px rgba(0,0,0,.22);
+  gap: 16px;
+}
+
+.navbar-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.brand-icon {
+  width: 38px; height: 38px; background: $gold; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px rgba($gold,.45);
+  i { font-size: 18px; color: $white; }
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-name { font-size: 15px; font-weight: 800; color: $white; letter-spacing: 1.5px; }
+.brand-sub  { font-size: 10px; color: rgba(255,255,255,.6); letter-spacing: .3px; }
+.navbar-center { flex: 1; display: flex; justify-content: center; }
+.navbar-right  { flex-shrink: 0; }
+.nav-user {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  border-radius: 24px; padding: 5px 14px 5px 5px; cursor: pointer; transition: background .2s;
+  &:hover { background: rgba(255,255,255,.18); }
+}
+.user-avatar {
+  width: 32px; height: 32px; background: $gold; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: $white;
+}
+.user-info { display: flex; flex-direction: column; line-height: 1.2; }
+.user-name  { font-size: 13px; font-weight: 600; color: $white; }
+.user-type  { font-size: 10px; color: rgba(255,255,255,.6); }
+.imgwidAlt  { width: 102px !important; margin-left: 0; height: 45px; background: #fff; border-radius: 10px; padding: 10px; }
+
+// ════════════════════════════════════════════════════════════════════════════
+// QUOTES TICKER
+// ════════════════════════════════════════════════════════════════════════════
+.quotes-banner {
+  width: 100%; overflow: hidden; height: 36px; display: flex; align-items: center;
+  background: linear-gradient(90deg, $teal-dark 0%, $teal-primary 50%, $teal-light 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.quotes-track {
+  display: flex; align-items: center; white-space: nowrap;
+  animation: marquee 38s linear infinite; gap: 0;
+}
+.quote-item {
+  font-size: 12.5px; color: rgba(255,255,255,.9); padding: 0 28px;
+  font-style: italic; letter-spacing: .2px;
+  i { color: $gold; font-size: 11px; font-style: normal; }
+}
+.quote-sep { color: rgba(255,255,255,.35); font-size: 14px; padding: 0 4px; }
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// PAGE BODY
+// ════════════════════════════════════════════════════════════════════════════
+.page-body { flex: 1; display: flex; flex-direction: column; background: $bg; }
+.content-wrap {
+  flex: 1; padding: 28px 36px 32px;
+  max-width: 1400px; width: 100%; margin: 0 auto; box-sizing: border-box;
+}
+
+// ── Toolbar ──────────────────────────────────────────────────────────────────
+::ng-deep .top-bar1 {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px; border: 1px solid $border;
+  border-radius: $radius; padding: 14px 22px; margin-bottom: 28px;
+  box-shadow: 0 2px 10px rgba($teal-primary,.07);
+}
+.top-bar-left  { display: flex; align-items: center; gap: 14px; }
+.top-bar-right { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.title-block   { display: flex; flex-direction: column; gap: 2px; }
+.page-title    { font-size: 18px; font-weight: 700; color: $teal-dark; margin: 0; display: flex; align-items: center; gap: 8px; }
+.title-icon    { font-size: 16px; color: $teal-primary; }
+.page-subtitle { font-size: 12px; color: $text-soft; }
+.back-btn {
+  background: transparent !important; border: 1.5px solid $teal-primary !important;
+  color: $teal-primary !important; border-radius: 20px !important;
+  font-size: 13px !important; padding: 6px 16px !important; transition: .2s !important;
+  &:hover { background: $teal-muted !important; }
+}
+.toggle-group {
+  display: flex; align-items: center; gap: 8px;
+  background: $bg; border: 1px solid $border; border-radius: 24px; padding: 5px 12px;
+}
+.toggle-label { font-size: 13px; font-weight: 500; color: $text-soft; transition: color .2s;
+  &.active { color: $teal-dark; font-weight: 700; } }
+.switch {
+  position: relative; display: inline-block; width: 40px; height: 22px;
+  input { opacity: 0; width: 0; height: 0; }
+}
+.slider {
+  position: absolute; cursor: pointer; inset: 0; background: $border; border-radius: 22px; transition: .3s;
+  &::before {
+    content: ''; position: absolute; height: 16px; width: 16px;
+    left: 3px; bottom: 3px; background: $white; border-radius: 50%;
+    transition: .3s; box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  }
+}
+.switch input:checked + .slider { background: $teal-primary; }
+.switch input:checked + .slider::before { transform: translateX(18px); }
+.admin-toggle { border-color: rgba($gold,.4); background: rgba($gold,.05); }
+.admin-slider {
+  background: $border;
+  &::before {
+    content: ''; position: absolute; height: 16px; width: 16px;
+    left: 3px; bottom: 3px; background: $white; border-radius: 50%;
+    transition: .3s; box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  }
+}
+.admin-switch input:checked + .admin-slider { background: $gold; }
+.admin-switch input:checked + .admin-slider::before { transform: translateX(18px); }
+
+// ════════════════════════════════════════════════════════════════════════════
+// PRODUCT GRID
+// ════════════════════════════════════════════════════════════════════════════
+.product-grid-wrap { padding: 4px 0; }
+.admin-section     { padding: 4px 0; }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// MODERN PRODUCT CARD
+// ════════════════════════════════════════════════════════════════════════════
+
+// Accent color wheel — applied via nth-child on the ribbon + badge + cta
+$accents: ($accent-1, $accent-2, $accent-3, $accent-4, $accent-5, $accent-6);
+
+.prod-card {
+  position: relative;
+  background: $white;
+  border-radius: 16px;
+  border: 1px solid $border;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba($teal-primary, .07);
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba($teal-primary, .18);
+    border-color: $gold;
+
+    .card-ribbon { opacity: 1; }
+    .prod-img-wrap img { transform: scale(1.06); }
+    .card-cta { gap: 8px; }
+    .card-cta i { transform: translateX(3px); }
+  }
+
+  // Per-card accent colour via nth-child
+  @for $i from 1 through 6 {
+    &:nth-child(6n + #{$i}) {
+      --accent: #{nth($accents, $i)};
+    }
+  }
+}
+
+// Top ribbon bar — 4px coloured line
+.card-ribbon {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--accent, $teal-primary);
+  border-radius: 16px 16px 0 0;
+  opacity: 0.7;
+  transition: opacity .22s;
+}
+
+// Image area
+.prod-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(145deg, #f0f7f9 0%, #e4f2f5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+    transition: transform .3s ease;
+  }
+}
+
+// Floating "Covered" badge on image
+.prod-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent, $teal-primary);
+  color: $white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: .3px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+
+  i { font-size: 9px; }
+}
+
+.admin-badge {
+  background: rgba($gold-dark, .9);
+}
+
+// Card text body
+.card-body {
+  padding: 14px 16px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prod-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: $text-dark;
+  line-height: 1.3;
+}
+
+// Product-specific quote line
+.prod-quote {
+  margin: 0;
+  font-size: 11.5px;
+  color: $text-soft;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: .1px;
+
+  // Left accent rule
+  border-left: 2px solid var(--accent, $teal-primary);
+  padding-left: 8px;
+}
+
+// Card bottom row
+.card-footer-row {
+  padding: 10px 16px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba($border, .7);
+  margin-top: auto;
+}
+
+.card-cta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--accent, $teal-primary);
+  transition: gap .2s;
+
+  i { font-size: 11px; transition: transform .2s; }
+}
+
+.card-type-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: $teal-muted;
+  color: $teal-primary;
+  letter-spacing: .3px;
+
+  &.pkg {
+    background: rgba($gold, .14);
+    color: $gold-dark;
+  }
+}
+
+.admin-type {
+  background: rgba($gold,.14);
+  color: $gold-dark;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  i { font-size: 9px; }
+}
+
+// ── Empty state ────────────────────────────────────────────────────────────────
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 20px; color: $text-soft;
+  i { font-size: 40px; margin-bottom: 12px; }
+  p { font-size: 15px; margin: 0; }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// FOOTER
+// ════════════════════════════════════════════════════════════════════════════
+.app-footer { background: $teal-dark; padding: 0; }
+.footer-inner {
+  max-width: 1400px; margin: 0 auto; padding: 14px 36px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.footer-brand { display: flex; align-items: center; gap: 10px; }
+.footer-logo {
+  width: 30px; height: 30px; background: $gold; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  i { font-size: 14px; color: $white; }
+}
+.footer-brand-name { font-size: 13px; font-weight: 700; color: $white; letter-spacing: .5px; }
+.footer-links { display: flex; align-items: center; gap: 8px; }
+.footer-link {
+  font-size: 12px; color: rgba(255,255,255,.6); text-decoration: none; cursor: pointer; transition: color .2s;
+  &:hover { color: $gold; }
+}
+.footer-sep  { color: rgba(255,255,255,.25); font-size: 12px; }
+.footer-copy { font-size: 11px; color: rgba(255,255,255,.45); }
+
+// ════════════════════════════════════════════════════════════════════════════
+// RESPONSIVE
+// ════════════════════════════════════════════════════════════════════════════
+@media (max-width: 1300px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 900px)  {
+  .navbar-center { display: none; }
+  .content-wrap  { padding: 20px 20px 24px; }
+  .product-grid  { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px)  {
+  .product-grid  { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .app-navbar    { padding: 0 16px; }
+  .brand-sub     { display: none; }
+  .user-info     { display: none; }
+  .content-wrap  { padding: 16px 12px 20px; }
+  .footer-inner  { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+@media (max-width: 400px)  { .product-grid { grid-template-columns: 1fr; } }
+.menu-item{
+  cursor: pointer;
+}

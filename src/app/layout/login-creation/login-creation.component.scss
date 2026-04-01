@@ -1,0 +1,533 @@
+// ===== SALAMA THEME VARIABLES =====
+$salama-primary: #1a7a7a;
+$salama-primary-dark: #155f5f;
+$salama-primary-light: #e8f5f5;
+$salama-accent: #e8a020;
+$salama-accent-dark: #c8880e;
+$salama-white: #ffffff;
+$salama-gray-50: #f8fafb;
+$salama-gray-100: #f0f4f4;
+$salama-gray-200: #e2eaea;
+$salama-gray-400: #94b0b0;
+$salama-gray-600: #4a6b6b;
+$salama-gray-800: #1e3a3a;
+$salama-text: #1e3a3a;
+$salama-text-muted: #5a7a7a;
+$salama-border: #c8dada;
+$salama-shadow: rgba(26, 122, 122, 0.12);
+
+// ===== TOPBAR =====
+.salama-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 58px;
+  background: $salama-primary;
+  padding: 0 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+  }
+
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: $salama-accent;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+      .brand-letter {
+        color: $salama-white;
+        font-size: 1.1rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+
+      .brand-name {
+        color: $salama-white;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        line-height: 1.1;
+      }
+
+      .brand-module {
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 0.68rem;
+        letter-spacing: 0.3px;
+        line-height: 1.2;
+      }
+    }
+  }
+
+  .topbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.85rem;
+        font-weight: 500;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+
+        i {
+          font-size: 0.8rem;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.12);
+          color: $salama-white;
+        }
+
+        &.active {
+          background: rgba(255, 255, 255, 0.18);
+          color: $salama-white;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 200px;
+    justify-content: flex-end;
+
+    .topbar-icon-btn {
+      width: 34px;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      border-radius: 8px;
+      color: $salama-white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+
+      i {
+        font-size: 0.9rem;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+    }
+
+    .topbar-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        background: $salama-accent;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $salama-white;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .user-label {
+        color: $salama-white;
+        font-size: 0.82rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// ===== PAGE CONTAINER =====
+.page-container {
+  padding: 1.5rem;
+  background: $salama-gray-50;
+  min-height: calc(100vh - 58px);
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+
+  .page-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: $salama-text;
+    margin: 0 0 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    i {
+      color: $salama-primary;
+      font-size: 1.2rem;
+    }
+  }
+
+  .page-subtitle {
+    color: $salama-text-muted;
+    font-size: 0.83rem;
+    display: block;
+    padding-left: 30px;
+  }
+}
+
+// ===== MAIN CARD =====
+.main-card {
+  background: $salama-white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px $salama-shadow;
+  overflow: hidden;
+}
+
+// ===== TAB STYLING (PrimeNG override) =====
+::ng-deep {
+  .salama-tabs {
+    .p-tabview-nav {
+      background: $salama-primary;
+      border: none;
+      padding: 0 1rem;
+      margin: 0;
+
+      li {
+        .p-tabview-nav-link {
+          background: transparent;
+          border: none;
+          color: rgba(255, 255, 255, 0.75);
+          font-size: 0.88rem;
+          font-weight: 500;
+          padding: 14px 20px;
+          margin: 0 2px;
+          border-radius: 0;
+          transition: all 0.2s;
+
+          &:hover {
+            color: $salama-white;
+            background: rgba(255, 255, 255, 0.1);
+          }
+
+          .tab-header i {
+            font-size: 0.82rem;
+          }
+        }
+
+        &.p-highlight .p-tabview-nav-link {
+          background: $salama-white;
+          color: $salama-primary;
+          font-weight: 700;
+          border-bottom: 3px solid $salama-accent;
+        }
+      }
+
+      .p-tabview-ink-bar {
+        display: none;
+      }
+    }
+
+    .p-tabview-panels {
+      padding: 1.5rem;
+      background: $salama-white;
+    }
+  }
+
+  // ===== FORM GRID ALIGNMENT FIX =====
+  .p-tabview-panels {
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -0.5rem;
+      align-items: flex-start;
+
+      &>[class*="col-"] {
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    // Every form field block
+    .col-12.lg\:col-4 {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+
+      label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: $salama-gray-600;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      input.p-inputtext,
+      textarea.p-inputtextarea {
+        width: 100%;
+        border: 1.5px solid $salama-border;
+        border-radius: 6px;
+        padding: 8px 10px;
+        font-size: 0.875rem;
+        color: $salama-text;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+          border-color: $salama-primary;
+          box-shadow: 0 0 0 3px rgba(26, 122, 122, 0.12);
+          outline: none;
+        }
+      }
+
+      .p-dropdown,
+      .p-calendar {
+        width: 100%;
+
+        .p-dropdown-label,
+        .p-inputtext {
+          border: 1.5px solid $salama-border;
+          border-radius: 6px;
+          font-size: 0.875rem;
+          color: $salama-text;
+        }
+
+        &:not(.p-disabled).p-focus,
+        &:not(.p-disabled):hover {
+          border-color: $salama-primary;
+        }
+      }
+    }
+  }
+
+  // ===== TABLE STYLING =====
+  .p-datatable {
+    .p-datatable-header {
+      background: $salama-gray-50;
+      border: 1px solid $salama-border;
+      padding: 0.75rem 1rem;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .p-datatable-thead > tr > th {
+      background: $salama-primary;
+      color: $salama-white;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 10px 12px;
+      border: none;
+      letter-spacing: 0.3px;
+
+      &:first-child {
+        border-radius: 0;
+      }
+    }
+
+    .p-datatable-tbody > tr > td {
+      font-size: 0.855rem;
+      color: $salama-text;
+      padding: 10px 12px;
+      border: 1px solid $salama-gray-200;
+      border-width: 0 0 1px 0;
+    }
+
+    .p-datatable-tbody > tr:hover > td {
+      background: $salama-primary-light;
+    }
+
+    .p-paginator {
+      background: $salama-gray-50;
+      border: 1px solid $salama-border;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+
+      .p-paginator-element {
+        &.p-highlight {
+          background: $salama-primary;
+          color: $salama-white;
+          border-radius: 6px;
+        }
+      }
+    }
+  }
+
+  // ===== BUTTON STYLING =====
+  .p-button {
+    background: $salama-primary;
+    border-color: $salama-primary;
+    font-size: 0.855rem;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 7px;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $salama-primary-dark;
+      border-color: $salama-primary-dark;
+    }
+
+    &.p-button-outlined {
+      background: transparent;
+      color: $salama-primary;
+      border-color: $salama-primary;
+
+      &:hover {
+        background: $salama-primary-light;
+      }
+    }
+
+    &.p-button-sm,
+    &[size="small"] {
+      padding: 5px 12px;
+      font-size: 0.82rem;
+    }
+  }
+
+  // ===== DIALOG STYLING =====
+  .p-dialog {
+    border-radius: 12px;
+    // overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+
+    .p-dialog-header {
+      background: $salama-primary;
+      color: $salama-white;
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-bottom: none;
+
+      .p-dialog-header-icon {
+        color: rgba(255, 255, 255, 0.8);
+
+        &:hover {
+          color: $salama-white;
+          background: rgba(255, 255, 255, 0.15);
+        }
+      }
+    }
+
+    .p-dialog-content {
+      padding: 1.5rem;
+      background: $salama-white;
+    }
+
+    .p-dialog-footer {
+      padding: 1rem 1.5rem;
+      background: $salama-gray-50;
+      border-top: 1px solid $salama-border;
+    }
+  }
+
+  // ===== DIVIDER =====
+  .p-divider {
+    &::before {
+      border-color: $salama-border;
+    }
+  }
+
+  // ===== RADIO BUTTONS =====
+  .p-radiobutton {
+    .p-radiobutton-box {
+      border-color: $salama-border;
+
+      &.p-highlight {
+        border-color: $salama-primary;
+        background: $salama-primary;
+      }
+    }
+  }
+
+  // ===== SECTION HEADERS IN DIALOGS =====
+  .p-text-dark {
+    color: $salama-text;
+    font-size: 0.95rem;
+  }
+
+  // ===== TOTAL RECORDS ROW =====
+  .text-end b {
+    color: $salama-primary;
+    font-size: 0.85rem;
+  }
+
+  // ===== ERROR TEXT =====
+  .error-text.text-danger {
+    font-size: 0.78rem;
+    margin-top: 3px;
+  }
+
+  // ===== INPUT GROUP =====
+  .p-inputgroup {
+    .p-inputtext {
+      border: 1.5px solid $salama-border;
+      border-right: none;
+      border-radius: 6px 0 0 6px;
+    }
+
+    .p-button {
+      border-radius: 0 6px 6px 0;
+      border-color: $salama-primary;
+    }
+  }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 768px) {
+  .topbar-center {
+    display: none;
+  }
+
+  .page-container {
+    padding: 1rem;
+  }
+
+  .salama-topbar {
+    padding: 0 1rem;
+  }
+}
+.imgwidAlt  { width: 102px !important; margin-left: 0; height: 45px; background: #fff; border-radius: 10px; padding: 10px; }

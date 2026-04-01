@@ -1,297 +1,310 @@
+<!-- login-layout.component.html -->
+<div class="login-wrapper">
 
-<div class="login-grid">
-    <div class="login-grid-item">
-      <div class="login-grid-item-title">
-        <div class="logo-img">
-          <img src="./assets/images/alliance-img-1.png">
-        </div>
-        <div class="login-menu">
-          <div class="radio-toolbar">
-           <div class="d-flex justify-content-between">
-            <li class="dropdown" style="list-style-type: none !important;">
-                <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
-                <ng-container >
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                </ng-container>
-            </li> 
-            <input id="verify" type="radio" name="menus" value="login-layout/login/verify" [(ngModel)]="menuActive" (change)="onLoginTap()">
-            <label for="verify">
-              Verify a Certificate
-            </label>
-           </div>
-          
-            <!-- <input id="broker" type="radio" name="menus" value="login-layout/login/broker" [(ngModel)]="menuActive" (change)="onLoginTap()">
-            <label for="broker">
-              Broker | Customer
-            </label>
-            <input id="employee" type="radio" name="menus" value="login-layout/login/issuer" [(ngModel)]="menuActive" (change)="onLoginTap()">
-            <label for="employee">
-              Employee | UW Login
-            </label> -->
-          </div>
-        </div>
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <div class="brand">
+        <a (click)="homeRoute()"><img src="./assets/images/Orientlogo-removebg-preview.png" class="imgwidAlt"></a>
       </div>
-      <div class="login-grid-item-body">
-        <div class="login-component">
-          <div>
-            <div class="row" *ngIf="first">
-              <div class="col-12">
-                <form [formGroup]="loginForm">
-                  <div class="input-control-container">
-                    <label class="input-form-label">Username</label>
-                    <div class="input-form-box">
-                      <input type="text" class="input-form-control2 without-icon" formControlName="username" placeholder="Enter username">
-                    </div>
-                    <div class="input-form-error" *ngIf="(f.username.errors && submitted) || (!f.username.valid && f.username.touched)">
-                      <div *ngIf="f.username.errors?.required" class="error-text">
-                        This field is required
-                      </div>
-                    </div>
-                  </div>
-                  <div class="input-control-container">
-                    <label class="input-form-label">Password</label>
-                    <div class="input-form-box">
-                      <input type="password" class="input-form-control2 without-icon" formControlName="password" placeholder="Enter password">
-                    </div>
-                    <div class="input-form-error" *ngIf="(f.password.errors && submitted) || (!f.password.valid && f.password.touched)">
-                      <div *ngIf="f.password.errors?.required" class="error-text">
-                        This field is required
-                      </div>
-                    </div>
-                  </div>
-                  <div class="input-control-container2">
-                    <label class="input-form-label">Select Country<span class="text-required">*</span></label>
-                    <ng-select placeholder="Select" style="width: 100% important;" class="input-form-select" placeholder="Select" [items]="regionList" bindValue="RegionId" bindLabel="RegionName"
-                      formControlName="region" (change)="onGetBranchList()">
-                    </ng-select>
-                    <div class="input-form-error" *ngIf="(f.region.errors && submitted) || (!f.region.valid && f.region.touched)">
-                      <div *ngIf="f.region.errors?.required" class="error-text">
-                        This field is required
-                      </div>
-                    </div>
-                  </div>
-                  <div class="input-control-container2">
-                    <label class="input-form-label">Select Branch<span class="text-required">*</span></label>
-                    <ng-select placeholder="Select" style="width: 100% important;" class="input-form-select"  placeholder="Select" [items]="branchList" bindValue="BranchCode" bindLabel="BranchName"
-                      formControlName="branch">
-                    </ng-select>
-                    <div class="input-form-error" *ngIf="(f.branch.errors && submitted) || (!f.branch.valid && f.branch.touched)">
-                      <div *ngIf="f.branch.errors?.required" class="error-text">
-                        This field is required
-                      </div>
-                    </div>
-                  </div>
-            
-                  <!--<div class="text-center">
-                    <button class="button-34" role="button" (click)="onLogin()">Login</button>
-                  </div>-->
-            
-                  <div class="text-center" style="position: relative; margin-left:20px;">
-                      <button type="button" class="button-34 ml-3"
-                          (click)="onLogin()"><span>Login</span></button>
-                  </div>
-            
-                  <!--<label for="chek" aria-hidden="true">Forget Password ?</label>-->
-                 
-                </form>
-              </div>
-            </div>
-            
-            <div class="back_login" *ngIf="second && !first">
-              <div class=" inner_login">
-                  <div class="row">
-                      <div class="col-12">
-                          <div class="middle-line">
-                              <span>Reset Password</span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12">
-                          <form [formGroup]="changeForm">
-                              <div class="input-control-container" style="position: relative;top: 1.4rem;">
-                                  <label class="input-form-label" style="position: absolute;bottom: 0rem;top: -1rem;left:.3rem">UserName</label>
-                                  <div class="input-form-box">
-                                      <input type="text" formControlName="LoginId" class="input-form-control2 without-icon"
-                                          maxlength="20">
-                                  </div>
-                              </div>
-                         
-                              <div class="input-control-container" style="position: relative;top: 1.4rem;" *ngIf="pass">
-                                  <label class="input-form-label mt-2" style="position: absolute;left: -0.5rem;">New
-                                      Password</label>
-                                  <div class="input-form-box" style="position: relative;top: 1.8rem;">
-                                      <input type="password" formControlName="OldPassword"
-                                          class="input-form-control2 without-icon" maxlength="20">
-                                  </div>
-                              </div>
-            
-                              <div class="input-control-container" style="position: relative;top: 3.5rem;">
-                                  <label class="input-form-label mt-2" style="position: absolute;left: -0.3rem;">Re Enter New
-                                      Password</label>
-                                  <div class="input-form-box" style="position: relative;top: 1.8rem;">
-                                      <input type="password" formControlName="NewPassword"
-                                          class="input-form-control2 without-icon" maxlength="20">
-                                  </div>
-                              </div>
-            
-                              <div class="text-center mt-3" style="position: relative;
-                              top: 4rem;">
-                              <!--<button type="button" class="custom-btn-reset btn-2 mt-2"
-                                  (click)="resetForm()"><span>Reset</span></button>-->
-                              <button type="button" class="custom-btn-cancel btn-1 mt-2" style="position: relative;left: 2rem;"
-                                  (click)="cancel(value_cancel)"><span>Cancel</span></button>
-                              <button type="button" class="custom-btn-submit btn-0 mt-2" style="position: relative;left: 4rem;"
-                                  (click)="submit()"><span>Submit</span></button>
-                                  </div>
-            
-                          </form>
-                      </div>
-                  </div>
-              </div>
-            </div>
-            
-            <div class="back_login" *ngIf="forget && !first && !second">
-            <div class="inner_login">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="middle-line">
-                            <span>ForgetPassword</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <form [formGroup]="ForgetForm">
-                          
-                            <div class="input-control-container" style="position: relative;top: 1.4rem;">
-                              <label class="input-form-label mt-2" style="position: absolute;bottom: 0rem;top: -1rem;left:.3rem">UserName</label>
-                              <div class="input-form-box">
-                                  <input type="text" formControlName="LoginId" class="input-form-control2 without-icon"
-                                      maxlength="20">
-                              </div>
-                          </div>
-                          <div class="input-control-container" style="position: relative;top: 1.4rem;">
-                            <label class="input-form-label mt-2" style="position: absolute;left: .3rem;">
-                                Email</label>
-                            <div class="input-form-box" style="position: relative;top: 1.8rem;">
-                                <input type="text" formControlName="Email"
-                                    class="input-form-control2 without-icon" maxlength="20">
-                            </div>
-                        </div>
-                          
-                            <!--<div class="input-control-container" style="position: relative;top: 2.5rem;">
-                                <label class="input-form-label" style="position: absolute;left: -0.5rem;">
-                                    Email</label>
-                                <div class="input-form-box" style="position: relative;top: 2rem;">
-                                    <input type="password" formControlName="Email"
-                                        class="input-form-control2 without-icon" maxlength="20">
-                                </div>
-                            </div>-->
-                           
-                                <div class="text-center mt-3" style="position: relative;
-                                top: 4rem;">
-                                <!--<button type="button" class="custom-btn-reset btn-2 mt-2"
-                                    (click)="resetForm()"><span>Reset</span></button>-->
-                                <button type="button" class="custom-btn-cancel btn-1 mt-2" style="position: relative;left: 2rem;"
-                                    (click)="cancel(value_cancel)"><span>Cancel</span></button>
-                                <button type="button" class="custom-btn-submit btn-0 mt-2" style="position: relative;left: 4rem;"
-                                    (click)="forgetSubmit()"><span>submit</span></button>
-                                    </div>
-              
-                        </form>
-                    </div>
-                </div>
-            </div>
-            </div>
-            
-            
-            
-            
-            <div class="back_login" *ngIf="!forget && !first && !second">
-              <div class="inner_login">
-                  <div class="row">
-                      <div class="col-12">
-                          <div class="middle-line">
-                              <span>Please Login To ChangePassword</span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12">
-                        <form [formGroup]="PasswordCheckForm">
-                          <div class="input-control-container">
-                            <label class="input-form-label">Username</label>
-                            <div class="input-form-box">
-                              <input type="text" class="input-form-control2 without-icon" formControlName="username" placeholder="Enter username">
-                            </div>
-                          
-                          </div>
-                          <div class="input-control-container">
-                            <label class="input-form-label">Password</label>
-                            <div class="input-form-box">
-                              <input type="password" class="input-form-control2 without-icon" formControlName="password" placeholder="Enter password">
-                            </div>
-                        
-                          </div>
-                          <div class="input-control-container2">
-                            <label class="input-form-label">Select Country<span class="text-required">*</span></label>
-                            <ng-select placeholder="Select" style="width: 100% !important;" class="input-form-select" placeholder="Select" [items]="regionList" bindValue="RegionId" bindLabel="RegionName"
-                              formControlName="region" (change)="onGetBranchListChange()">
-                            </ng-select>
-                        
-                          </div>
-                          <div class="input-control-container2">
-                            <label class="input-form-label">Select Branch<span class="text-required">*</span></label>
-                            <ng-select placeholder="Select" style="width: 100% !important;" class="input-form-select"  placeholder="Select" [items]="branchList" bindValue="BranchCode" bindLabel="BranchName"
-                              formControlName="branch">
-                            </ng-select>
-                        
-                          </div>
-                          <div class="text-center mt-4" style="position: relative;">
-                          <button type="button" class="custom-btn-reset btn-2"
-                              (click)="resetForm()"><span>Reset</span></button>
-                          <button type="button" class="custom-btn-cancel btn-1" style="position: relative;left: 2rem;"
-                              (click)="cancel(value_cancel)"><span>Cancel</span></button>
-                          <button type="button" class="custom-btn-submit btn-0" style="position: relative;left: 4rem;"
-                              (click)="onchangepasswordcheck()"><span>Next</span></button>
-                              </div>
-                    
-                          <!--<div class="text-center">
-                            <button class="button-34" role="button" (click)="onLogin()">Login</button>
-                          </div>-->
-                    
-                    
-                          <!--<label for="chek" aria-hidden="true">Forget Password ?</label>-->
-                         
-                        </form>
-                      </div>
-                  </div>
-              </div>
-              </div>
-            
-            
-            
-            
-            <!--<div class="d-flex justify-content-end">
-              <div>
-                <label for="chk" aria-hidden="true" (click)="Forget('change','ChangePassword')" (change)="changepass('ChangePassword')">Change
-                  Password ?</label>
-                <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword')"  (change)="changepass('ForgotPassword')">Forgot
-                  Password ?</label>
-            </div>
-            </div>-->
+      <div class="nav-divider"></div>
+      <div class="nav-product">
+        <i class="fas fa-anchor"></i>
+        <span>Marine Insurance</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <p-button label="Marine" icon="pi pi-anchor" styleClass="nav-btn-marine"></p-button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero-section">
+
+    <!-- Left Side: Branding Panel -->
+    <div class="hero-left">
+      <div class="hero-content">
+        <div class="hero-icon">
+          <i class="fas fa-anchor"></i>
+        </div>
+        <h1 class="hero-title">Marine<br>Insurance</h1>
+        <p class="hero-subtitle">
+          Comprehensive cargo &amp; freight protection for your global trade operations.
+        </p>
+        <div class="hero-features">
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Instant Quote Generation</span>
           </div>
-            <!-- HTML !-->
-            
-            <div class="smallclass mt-4" *ngIf="first">
-                <label for="chk" aria-hidden="true" class="smallclass1 mt-2" (click)="Forget('change','ChangePassword')" (change)="changepass('ChangePassword')">Change
-                  Password ?</label>
-                <label for="chk" aria-hidden="true" class="smallclass2 mt-2" (click)="Forget('foget','ForgotPassword')"  (change)="changepass('ForgotPassword')">Forgot
-                  Password ?</label>
-            </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Global Coverage Network</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Real-time Shipment Tracking</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
+
+    <!-- Right Side: Login / Forgot / Change Password Card -->
+    <div class="hero-right">
+      <div class="login-card">
+
+        <!-- ══════════════════════════════════════════
+             SIGN IN SECTION
+        ══════════════════════════════════════════ -->
+        <ng-container *ngIf="!changePasswordSection && !forget && !errorSection">
+
+          <!-- Card Header -->
+          <div class="card-header">
+            <div class="card-logo">
+              <i class="fas fa-anchor"></i>
+            </div>
+            <h2 class="card-title">Welcome Back</h2>
+            <p class="card-desc">Sign in to access your marine insurance portal</p>
+          </div>
+
+          <!-- Login Form -->
+          <form class="login-form" (ngSubmit)="onLogin()">
+
+            <p-messages [(value)]="messages" [enableService]="false"></p-messages>
+
+            <div class="form-group">
+              <label for="loginId" class="form-label">
+                <i class="fas fa-user"></i> Login ID
+              </label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-user input-icon"></i>
+                <input pInputText id="loginId" type="text" [(ngModel)]="loginId" name="loginId"
+                  placeholder="Enter your login ID" class="login-input" autocomplete="username"
+                  [ngClass]="{'input-error': submitted && !loginId}" />
+              </div>
+              <small class="error-msg" *ngIf="submitted && !loginId">
+                <i class="fas fa-exclamation-circle"></i> Login ID is required.
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="form-label">
+                <i class="fas fa-lock"></i> Password
+              </label>
+              <p-password id="password" [(ngModel)]="password" name="password" placeholder="Enter your password"
+                [feedback]="false" [toggleMask]="true" styleClass="login-password" inputStyleClass="login-input"
+                [ngClass]="{'input-error': submitted && !password}"></p-password>
+              <small class="error-msg" *ngIf="submitted && !password">
+                <i class="fas fa-exclamation-circle"></i> Password is required.
+              </small>
+            </div>
+
+            <div class="form-options">
+              <div class="remember-me"></div>
+              <div class="auth-links">
+                <a class="forgot-link" (click)="Forget('foget','ForgotPassword'); changepass('ForgotPassword')">
+                  Forgot Password?
+                </a>
+                <span class="link-sep">|</span>
+                <a class="forgot-link" (click)="Forget('change','ChangePassword'); changepass('ChangePassword')">
+                  Change Password?
+                </a>
+              </div>
+            </div>
+
+            <div class="row container">
+              <p-button type="submit" label="Sign In" icon="pi pi-sign-in" iconPos="right"
+                styleClass="login-submit-btn" [loading]="loading"></p-button>
+            </div>
+
+          </form>
+
+          <!-- Card Footer -->
+          <div class="card-footer">
+            <p>Don't have an account? <a href="#" class="register-link">Contact your broker</a></p>
+          </div>
+
+        </ng-container>
+
+        <!-- ══════════════════════════════════════════
+             SESSION / MULTI-LOGIN ERROR SECTION
+        ══════════════════════════════════════════ -->
+        <ng-container *ngIf="errorSection && !changePasswordSection && !forget">
+
+          <div class="card-header">
+            <div class="card-logo card-logo--warn">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 class="card-title">Session Alert</h2>
+            <p class="card-desc">An active session was detected for this account</p>
+          </div>
+
+          <div class="section-body">
+            <div class="alert-text">
+              <i class="fas fa-info-circle"></i>
+              <span>{{ messageText }}</span>
+            </div>
+            <div class="section-actions">
+              <p-button styleClass="btn-secondary" label="Cancel" (click)="onCancelLogin()"></p-button>
+              <p-button label="Proceed Login" (click)="submit('Y')"></p-button>
+            </div>
+          </div>
+
+        </ng-container>
+
+        <!-- ══════════════════════════════════════════
+             FORGOT PASSWORD SECTION
+        ══════════════════════════════════════════ -->
+        <ng-container *ngIf="forget">
+
+          <div class="card-header card-header--alt">
+            <div class="card-logo card-logo--alt">
+              <i class="fas fa-key"></i>
+            </div>
+            <h2 class="card-title">Forgot Password</h2>
+            <p class="card-desc">Enter your username and registered email to reset your password</p>
+          </div>
+
+          <div class="section-body">
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-user"></i> Username
+              </label>
+              <div class="input-icon-wrap">
+                <!-- <i class="fas fa-user input-icon"></i> -->
+                <input pInputText type="text" [(ngModel)]="username2"
+                  placeholder="Enter your username" class="login-input" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-envelope"></i> Email Address
+              </label>
+              <div class="input-icon-wrap">
+                <!-- <i class="fas fa-envelope input-icon"></i> -->
+                <input pInputText type="text" [(ngModel)]="Email"
+                  placeholder="Enter your registered email" class="login-input" />
+              </div>
+            </div>
+
+            <div class="section-actions">
+              <p-button styleClass="btn-secondary" label="Cancel" icon="pi pi-times"
+                (click)="cancel()"></p-button>
+              <p-button label="Submit" icon="pi pi-send"
+                (click)="forgetSubmit()"></p-button>
+            </div>
+
+          </div>
+
+          <div class="card-footer">
+            <p>Remembered your password?
+              <a class="register-link" (click)="cancel()">Back to Sign In</a>
+            </p>
+          </div>
+
+        </ng-container>
+
+        <!-- ══════════════════════════════════════════
+             CHANGE PASSWORD SECTION
+        ══════════════════════════════════════════ -->
+        <ng-container *ngIf="changePasswordSection">
+
+          <div class="card-header card-header--change">
+            <div class="card-logo card-logo--change">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h2 class="card-title">Reset Password</h2>
+            <p class="card-desc">
+              <span *ngIf="passExpiredError" class="expired-badge">
+                <i class="fas fa-exclamation-circle"></i> Password Expired — Please Reset
+              </span>
+              <span *ngIf="!passExpiredError">Update your account password securely</span>
+            </p>
+          </div>
+
+          <div class="section-body">
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-user"></i> Username
+              </label>
+              <div class="input-icon-wrap">
+
+                <input pInputText type="text" [(ngModel)]="username1"
+                  placeholder="Enter your username" class="login-input" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-lock"></i>
+                {{ pa === 'ForgotPassword' ? 'Temporary Password' : 'Old Password' }}
+              </label>
+              <p-password [(ngModel)]="password2" [feedback]="false" [toggleMask]="true"
+                [placeholder]="pa === 'ForgotPassword' ? 'Enter temporary password' : 'Enter old password'"
+                styleClass="login-password" inputStyleClass="login-input"></p-password>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-lock"></i> New Password
+              </label>
+              <p-password [(ngModel)]="password1" [feedback]="false" [toggleMask]="true"
+                placeholder="Enter new password"
+                styleClass="login-password" inputStyleClass="login-input"></p-password>
+            </div>
+
+            <div class="section-actions section-actions--triple">
+              <p-button styleClass="btn-secondary btn-sm" label="Reset" icon="pi pi-refresh"
+                (click)="resetForm()"></p-button>
+              <p-button styleClass="btn-secondary btn-sm" label="Login" icon="pi pi-arrow-left"
+                (click)="cancel()"></p-button>
+              <p-button styleClass="btn-sm" label="Submit" icon="pi pi-check"
+                (click)="onsubmit()"></p-button>
+            </div>
+
+          </div>
+
+          <div class="card-footer">
+            <p>Need help? <a href="#" class="register-link">Contact your broker</a></p>
+          </div>
+
+        </ng-container>
+
+      </div><!-- /login-card -->
+
+      <!-- Info Strip -->
+      <div class="info-strip">
+        <div class="info-item">
+          <i class="fas fa-shield-alt"></i>
+          <span>SSL Secured</span>
+        </div>
+        <div class="info-sep">•</div>
+        <div class="info-item">
+          <i class="fas fa-certificate"></i>
+          <span>ISO Certified</span>
+        </div>
+        <div class="info-sep">•</div>
+        <div class="info-item">
+          <i class="fas fa-lock"></i>
+          <span>Data Protected</span>
+        </div>
+      </div>
+    </div><!-- /hero-right -->
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="login-footer">
+    <span>© 2026 SALAMA Marine Insurance. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Support</a>
+    </div>
+  </footer>
+
+</div>
+
+<p-toast position="top-right"></p-toast>

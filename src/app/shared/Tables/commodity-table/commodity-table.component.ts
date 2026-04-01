@@ -35,6 +35,7 @@ export class CommodityTableComponent implements OnInit {
   @Output('onDelete') onDelete = new EventEmitter();
   @Output('onView') onView = new EventEmitter();
   @Output('onViews') onViews = new EventEmitter();
+  @Output('onMenu') onMenu = new EventEmitter();
   //@Output('title') nan: any;
 
 

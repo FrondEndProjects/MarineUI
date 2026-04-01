@@ -350,9 +350,9 @@ export class CustomerInfoComponent implements OnInit {
             sessionStorage.setItem('OpenCover', JSON.stringify(opencover));
           }
           this.sessionStorageService.set('coverId', this.editQuoteData?.QuoteDetails?.TransportDetails?.CoverCode);
-          setTimeout(() => {
-            this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
-          }, 100);
+          // setTimeout(() => {
+          this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
+          // }, 100);
           // this.newQuotesService.onEditQuoteDetails(this.editQuoteData);
           const customerDetails = this.editQuoteData?.CustomerDetails;
           const lcBankDetails = this.editQuoteData?.LcBankDetails;
@@ -396,7 +396,7 @@ export class CustomerInfoComponent implements OnInit {
           this.customerF.Address2.setValue(customerDetails?.Address2);
           this.customerF.Code.setValue(customerDetails?.Code);
           this.bankF.invoiceNumber.setValue(commodityDetails?.InvoiceNo);
-          this.bankF.invoiceDate.setValue(this.newQuotesService.ngbDateFormatt(commodityDetails?.InvoiceDate));
+          this.bankF.invoiceDate.setValue(this.convertDate(commodityDetails?.InvoiceDate));
           this.bankF.consignedTo.setValue(commodityDetails?.ConsignedTo);
           this.bankF.consignedForm.setValue(commodityDetails?.ConsignedFrom);
           this.bankF.UCRNumber.setValue(commodityDetails?.UCRNumber);
@@ -405,10 +405,10 @@ export class CustomerInfoComponent implements OnInit {
           this.bankF.lcNumber.setValue(lcBankDetails?.LcNo);
           this.bankF.lcBankDesc.setValue(lcBankDetails?.BankDescription);
           this.bankF.blAwbLrRrNumber.setValue(lcBankDetails?.AwbNo);
-          this.bankF.lcDate.setValue(this.newQuotesService.ngbDateFormatt(lcBankDetails?.LcDate));
-          console.log(this.newQuotesService.ngbDateFormatt(lcBankDetails?.AwbDate))
-          this.bankF.blAwbLrRrDate.setValue(this.newQuotesService.ngbDateFormatt(lcBankDetails?.AwbDate));
-          this.bankF.sailingDate.setValue(this.newQuotesService.ngbDateFormatt(lcBankDetails?.SailingDate));
+          this.bankF.lcDate.setValue(this.convertDate(lcBankDetails?.LcDate));
+          console.log(this.convertDate(lcBankDetails?.AwbDate))
+          this.bankF.blAwbLrRrDate.setValue(this.convertDate(lcBankDetails?.AwbDate));
+          this.bankF.sailingDate.setValue(this.convertDate(lcBankDetails?.SailingDate));
 
           console.log('EndTypeId to Know', this.editQuoteData.EndtTypeId)
           console.log(this.editQuoteData, "this.editQuoteDatathis.editQuoteData");
@@ -633,7 +633,7 @@ export class CustomerInfoComponent implements OnInit {
           'Executive': '5',
           'Issuer': issuerId,
           'LcBankDetails': {
-            'AwbDate': this.formatDate(this.bankF.blAwbLrRrDate.value),
+            'AwbDate': this.formatDateForApi(this.bankF.blAwbLrRrDate.value),
             // 'AwbDate': this.bankF.blAwbLrRrDate.value
             //   ? (() => {
             //     const d = new Date(this.bankF.blAwbLrRrDate.value);
@@ -645,7 +645,7 @@ export class CustomerInfoComponent implements OnInit {
             'BankDescription': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
             'BankName': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
             'BankOthers': this.bankF.lcBankDesc.value,
-            'LcDate': this.formatDate(this.bankF.lcDate.value),
+            'LcDate': this.formatDateForApi(this.bankF.lcDate.value),
             // 'LcDate': this.bankF.lcDate.value
             //   ? (() => {
             //     const d = new Date(this.bankF.lcDate.value);
@@ -654,7 +654,7 @@ export class CustomerInfoComponent implements OnInit {
             //   : null,
             'LcNo': this.bankF.lcNumber.value,
 
-            'SailingDate': this.formatDate(this.bankF.sailingDate.value),
+            'SailingDate': this.formatDateForApi(this.bankF.sailingDate.value),
 
           },
           'LoginId': loginId,
@@ -671,7 +671,7 @@ export class CustomerInfoComponent implements OnInit {
                 'GoodsCategoryDescription': this.quoteF.goodsDescript.value,
                 'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
                 'InsuredValue': this.quoteF.insuredValue?.value?.toString().replace(/,/g, ''),
-                'InvoiceDate': this.formatDate(this.bankF.invoiceDate.value),
+                'InvoiceDate': this.formatDateForApi(this.bankF.invoiceDate.value),
 
                 'InvoiceNo': this.bankF.invoiceNumber.value,
                 'PoDescription': this.bankF.poPiNumber.value,
@@ -692,7 +692,7 @@ export class CustomerInfoComponent implements OnInit {
             'ExpiryDate': '',
             'ExposureOfShipment': exposureValue,
             'FinalizeYn': this.editQuoteData?.FinalizeYn,
-            'InceptionDate': this.formatDate(this.quoteF.policyStartDate.value),
+            'InceptionDate': this.formatDateForApi(this.quoteF.policyStartDate.value),
             // 'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
             'IncoTerms': this.quoteF.incoterms.value,
             'PackageCode': this.quoteF.packageDescription.value,
@@ -880,7 +880,7 @@ export class CustomerInfoComponent implements OnInit {
         'Executive': '5',
         'Issuer': issuerId,
         'LcBankDetails': {
-          'AwbDate': this.formatDate(this.bankF.blAwbLrRrDate.value),
+          'AwbDate': this.formatDateForApi(this.bankF.blAwbLrRrDate.value),
 
           // 'AwbDate': this.bankF.blAwbLrRrDate.value?.replace(/-/g, "/"),
           'AwbNo': this.bankF.blAwbLrRrNumber.value,
@@ -888,10 +888,10 @@ export class CustomerInfoComponent implements OnInit {
           'BankDescription': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
           'BankName': this.getCodeDescription(this.dropBankList, this.bankF.lCBank.value),
           'BankOthers': this.bankF.lcBankDesc.value,
-          'LcDate': this.formatDate(this.bankF.lcDate.value),
+          'LcDate': this.formatDateForApi(this.bankF.lcDate.value),
           // 'LcDate': this.bankF.lcDate.value?.replace(/-/g, "/"),
           'LcNo': this.bankF.lcNumber.value,
-          'SailingDate': this.formatDate(this.bankF.sailingDate.value),
+          'SailingDate': this.formatDateForApi(this.bankF.sailingDate.value),
           // 'SailingDate': this.bankF.sailingDate.value?.replace(/-/g, "/"),
         },
         'LoginId': loginId,
@@ -909,7 +909,7 @@ export class CustomerInfoComponent implements OnInit {
               'GoodsCategoryName': this.getCodeDescription(this.dropGoodsOfCateList, this.quoteF.goodsCategory.value),
               'InsuredValue': this.quoteF.insuredValue?.value?.toString().replace(/,/g, ''),
               // 'InvoiceDate': this.bankF.invoiceDate.value?.replace(/-/g, '/'),
-              'InvoiceDate': this.formatDate(this.bankF.invoiceDate.value),
+              'InvoiceDate': this.formatDateForApi(this.bankF.invoiceDate.value),
               'InvoiceNo': this.bankF.invoiceNumber.value,
               'PoDescription': this.bankF.poPiNumber.value,
               'PolicyExcessDescription': this.quoteF.excessDescription.value,
@@ -932,7 +932,7 @@ export class CustomerInfoComponent implements OnInit {
           'ExposureOfShipment': exposureValue,
           'FinalizeYn': this.editQuoteData?.FinalizeYn,
           // 'InceptionDate': this.quoteF.policyStartDate.value?.replace(/-/g, "/"),
-          'InceptionDate': this.formatDate(this.quoteF.policyStartDate.value),
+          'InceptionDate': this.formatDateForApi(this.quoteF.policyStartDate.value),
           'IncoTerms': this.quoteF.incoterms.value,
           'PackageCode': this.quoteF.packageDescription.value,
           'PackageName': this.getCodeDescription(this.dropPackageDescList, this.quoteF.packageDescription.value),
@@ -1240,16 +1240,56 @@ export class CustomerInfoComponent implements OnInit {
   checkScreenWidth() {
     this.isMobile = window.innerWidth <= 768; // Adjust 768px as needed for your mobile breakpoint
   }
-  formatDate(value: any): string | null {
+  convertDate(value: any): Date | null {
     if (!value) return null;
 
-    const d = value instanceof Date
-      ? value
-      : (() => {
-        const parts = value.split('-'); // handles "dd-mm-yyyy"
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-      })();
+    // ✅ Already Date
+    if (value instanceof Date) return value;
 
-    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+    if (typeof value === 'string') {
+
+      // ✅ Handle ISO or yyyy-MM-dd directly
+      if (value.includes('T') || /^\d{4}-\d{2}-\d{2}/.test(value)) {
+        const d = new Date(value);
+        return isNaN(d.getTime()) ? null : d;
+      }
+
+      let parts;
+
+      // dd/MM/yyyy
+      if (value.includes('/')) {
+        parts = value.split('/');
+        const [dd, mm, yyyy] = parts;
+        return new Date(+yyyy, +mm - 1, +dd);
+      }
+
+      // dd-MM-yyyy
+      if (value.includes('-')) {
+        parts = value.split('-');
+
+        // detect format
+        if (parts[0].length === 4) {
+          // yyyy-MM-dd
+          const [yyyy, mm, dd] = parts;
+          return new Date(+yyyy, +mm - 1, +dd);
+        } else {
+          // dd-MM-yyyy
+          const [dd, mm, yyyy] = parts;
+          return new Date(+yyyy, +mm - 1, +dd);
+        }
+      }
+    }
+
+    return null;
   }
+
+formatDateForApi(date: Date): string | null {
+  if (!date) return null;
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
 }

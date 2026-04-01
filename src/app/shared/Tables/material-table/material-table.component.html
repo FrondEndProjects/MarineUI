@@ -6,21 +6,25 @@
   </div> -->
   <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection"
     matSortDisableClear>
-    <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobiles table-header">{{ columnHeader[i]["display"] }}</th>
+    <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="col.sticky"
+      [stickyEnd]="col.sticky">
+      <!-- <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobiles table-header">{{ columnHeader[i]["display"] }}</th> -->
+      <th mat-header-cell *matHeaderCellDef [mat-sort-header]="col.key" class="table-header">
+        {{ col.display }}
+      </th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="!col.config; else hasConfig">
           <div class="display1 row" style="overflow-y: scroll !important;"><!--mobilev-->
             <div class="col-6">
               <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
             </div>
-            <div class="col-6" style="word-break: break-word !important;"> 
+            <div class="col-6" style="word-break: break-word !important;">
               <ng-container *ngIf="col.key=='Premium'">
                 <ng-container *ngIf="element[col.key]=='0'">{{ element[col.key] }}</ng-container>
                 <ng-container *ngIf="element[col.key]!='0'">{{ element[col.key] | commaseparator }}</ng-container>
               </ng-container>
               <ng-container *ngIf="col.key=='GoodsDescription'">
-                  
+
               </ng-container>
               <ng-container *ngIf="col.key!='Premium' && col.key!='GoodsDescription'">
                 {{ element[col.key] }}
@@ -32,7 +36,7 @@
               {{ element[col.key] | commaseparator }}
             </ng-container>
             <ng-container *ngIf="col.key=='GoodsDescription'">
-                  <div style="min-width: 120px !important;max-height: 60px !important;"> {{ element[col.key] }}</div>
+              <div style="min-width: 120px !important;max-height: 60px !important;"> {{ element[col.key] }}</div>
             </ng-container>
             <ng-container *ngIf="col.key!='Premium' && col.key!='GoodsDescription'">
               {{ element[col.key] }}
@@ -47,20 +51,23 @@
               </div>
               <div class="col-6">
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example" [checked]="onCheckCustomerId(element)"
-                    [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
-                  <label class="custom-control-label" style="margin-left:10px !important;" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
+                  <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
+                    [checked]="onCheckCustomerId(element)" [value]="element[col.key]"
+                    (change)="onSelectCustomer.emit(element)">&nbsp;
+                  <label class="custom-control-label" style="margin-left:10px !important;"
+                    for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
                 </div>
               </div>
             </div>
             <div class="display2">
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example" [checked]="onCheckCustomerId(element)"
-                  [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
+                <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example"
+                  [checked]="onCheckCustomerId(element)" [value]="element[col.key]"
+                  (change)="onSelectCustomer.emit(element)">&nbsp;
                 <label class="custom-control-label" for="customRadio{{element[col.key]}}">{{ element[col.key] }}</label>
               </div>
             </div>
-          
+
           </ng-container>
           <ng-container *ngIf="col.config.isCheck">
             <div class="display1">
@@ -69,16 +76,19 @@
               </div>
               <div class="col-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
-                    [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
-                  <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
+                  <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}"
+                    name="example1" [(ngModel)]="element.isChecked" [value]="element[col.key]"
+                    (change)="onSelectCustomer.emit(element)">&nbsp;
+                  <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key]
+                    }}</label>
                 </div>
               </div>
             </div>
             <div class="display2">
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
-                  [(ngModel)]="element.isChecked" [value]="element[col.key]" (change)="onSelectCustomer.emit(element)">&nbsp;
+                  [(ngModel)]="element.isChecked" [value]="element[col.key]"
+                  (change)="onSelectCustomer.emit(element)">&nbsp;
                 <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
               </div>
             </div>
@@ -86,7 +96,7 @@
           <ng-container *ngIf="col.config.isBsCheckBox">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck{{element[col.key]}}" name="example1"
-              [(ngModel)]="element[col.config.model]"  (change)="onSelectCustomer.emit(element)">&nbsp;
+                [(ngModel)]="element[col.config.model]" (change)="onSelectCustomer.emit(element)">&nbsp;
               <label class="custom-control-label" for="customCheck{{element[col.key]}}">{{ element[col.key] }}</label>
             </div>
           </ng-container>
@@ -124,7 +134,8 @@
             </mat-radio-group>
           </ng-container>
           <ng-container *ngIf="col.config.isdropdownLis">
-            <select class="form-control form-control-sm" style="max-width: 200px !important;" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+            <select class="form-control form-control-sm" style="max-width: 200px !important;"
+              [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
               <option value="">select</option>
               <ng-container *ngFor="let item of element[col.key]">
                 <option [value]="item[col.config.KeyCode]">{{item[col.config.keyName]}}</option>
@@ -135,10 +146,12 @@
             <div class="input-control-container input-edit">
               <div class="input-form-box">
                 <ng-container *ngIf="col.config.isDecimal;else nodecimal">
-                  <input type="text" decimal="true" digitOnly class="input-form-control without-icon" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+                  <input type="text" decimal="true" digitOnly class="input-form-control without-icon"
+                    [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
                 </ng-container>
                 <ng-template #nodecimal>
-                  <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+                  <input type="text" digitOnly class="input-form-control without-icon"
+                    [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
                 </ng-template>
               </div>
             </div>
@@ -146,12 +159,13 @@
           <ng-container *ngIf="col.config.isTextBoxLetter">
             <div class="input-control-container input-edit">
               <div class="input-form-box">
-                <input type="text" class="input-form-control without-icon" [(ngModel)]="element[col.config.model]" [disabled]="col.config.isDisabled">
+                <input type="text" class="input-form-control without-icon" [(ngModel)]="element[col.config.model]"
+                  [disabled]="col.config.isDisabled">
               </div>
             </div>
           </ng-container>
           <ng-container *ngIf="col.config.isActions">
-            <button  nbButton shape="round" size="tiny" (click)="onRemoveDta(element)">
+            <button nbButton shape="round" size="tiny" (click)="onRemoveDta(element)">
               Remove
             </button>
           </ng-container>
@@ -160,46 +174,54 @@
               <div class="col-6">
                 <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
               </div>
-              <div class="col-6"> 
-                <button  nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
+              <div class="col-6">
+                <button nbButton shape="round" size="small"
+                  [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg"
+                  (click)="onAction(element,col?.config?.isActionBtnName)">
                   <i [class]="col.config.isNgxIcon"></i>
                 </button>
               </div>
             </div>
             <div class="display2">
-            <ng-container *ngIf="col.config.isActionBtnName=='Print'">
+              <ng-container *ngIf="col.config.isActionBtnName=='Print'">
                 <ng-container *ngIf="element.QuoteNo!=null && element.QuoteNo!=''">
-                    <button nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
-                      <i [class]="col.config.isNgxIcon"></i>
-                    </button>
+                  <button nbButton shape="round" size="small"
+                    [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg"
+                    (click)="onAction(element,col?.config?.isActionBtnName)">
+                    <i [class]="col.config.isNgxIcon"></i>
+                  </button>
                 </ng-container>
                 <ng-container *ngIf="element.QuoteNo==null || element.QuoteNo==''">
-                        N/A
+                  N/A
                 </ng-container>
-            </ng-container>
-            <ng-container *ngIf="col.config.isActionBtnName!='Print'">
-                <button nbButton shape="round" size="small" [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg" (click)="onAction(element,col?.config?.isActionBtnName)">
+              </ng-container>
+              <ng-container *ngIf="col.config.isActionBtnName!='Print'">
+                <button nbButton shape="round" size="small"
+                  [disabled]="col.config.isActionBtnName | mydisabled :element" [status]="col.config.bg"
+                  (click)="onAction(element,col?.config?.isActionBtnName)">
                   <i [class]="col.config.isNgxIcon"></i>
                 </button>
-            </ng-container>
-            
-          </div>
+              </ng-container>
+
+            </div>
           </ng-container>
           <ng-container *ngIf="col.config.isMenuAction">
             <div class="display1 row"><!--mobilev-->
               <div class="col-6">
                 <span class="mobile-label">{{ columnHeader[i]["display"] }}</span>
               </div>
-              <div class="col-6"> 
+              <div class="col-6">
                 <ng-container *ngIf="element?.Status!='E'">
-                  <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" [disabled]="col.config.isActionBtnName | mydisabled :element" aria-label="Example icon-button with a menu">
+                  <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus"
+                    [disabled]="col.config.isActionBtnName | mydisabled :element"
+                    aria-label="Example icon-button with a menu">
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
                   <mat-menu #menus="matMenu">
                     <ng-container *ngFor="let item of col.config.menuList">
-                    <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
-                      <span>{{item.name}}</span>
-                    </button>
+                      <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
+                        <span>{{item.name}}</span>
+                      </button>
                     </ng-container>
                   </mat-menu>
                 </ng-container>
@@ -208,14 +230,16 @@
             </div>
             <div class="display2">
               <ng-container *ngIf="element?.Status!='E'">
-                <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" [disabled]="col.config.isActionBtnName | mydisabled :element" aria-label="Example icon-button with a menu">
+                <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus"
+                  [disabled]="col.config.isActionBtnName | mydisabled :element"
+                  aria-label="Example icon-button with a menu">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <mat-menu #menus="matMenu">
                   <ng-container *ngFor="let item of col.config.menuList">
-                  <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
-                    <span>{{item.name}}</span>
-                  </button>
+                    <button mat-menu-item (click)="onMenu.emit({data:element,name:item.name})">
+                      <span>{{item.name}}</span>
+                    </button>
                   </ng-container>
                 </mat-menu>
               </ng-container>
@@ -243,6 +267,6 @@
     </div>
   </ng-container>
 </div>
-<mat-paginator class="mat-paginator-sticky"  [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons
+<mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons
   aria-label="Select page of periodic elements">
 </mat-paginator>

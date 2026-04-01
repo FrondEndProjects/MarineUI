@@ -13,19 +13,23 @@
 
       <!-- Channel -->
       <div class="col-12 col-md-4">
-        <div class="pf" [class.pf-invalid]="(brokerF.channel.errors && submitted) || (!brokerF.channel.valid && brokerF.channel.touched)">
+        <div class="pf" [class.pf-invalid]="isInvalid('channel')">
           <label>Channel <span class="req">*</span></label>
+
           <p-dropdown
             [options]="dropChannelList"
             optionLabel="CodeDescription"
-            optionValue="Code" appendTo="body"
+            optionValue="Code"
             formControlName="channel"
             placeholder="Select Channel"
-            [filter]="false"
+            [filter]="true"
+            filterBy="CodeDescription"
+            appendTo="body"
             styleClass="w-100"
             (onChange)="onChangeChannel('change')">
           </p-dropdown>
-          <small class="p-error" *ngIf="(brokerF.channel.errors && submitted) || (!brokerF.channel.valid && brokerF.channel.touched)">
+
+          <small class="p-error" *ngIf="isInvalid('channel')">
             <i class="pi pi-exclamation-circle"></i> This field is required
           </small>
         </div>
@@ -33,21 +37,23 @@
 
       <!-- Broker -->
       <div class="col-12 col-md-4">
-        <div class="pf" [class.pf-invalid]="(brokerF.borker.errors && submitted) || (!brokerF.borker.valid && brokerF.borker.touched)">
+        <div class="pf" [class.pf-invalid]="isInvalid('borker')">
           <label>Broker <span class="req">*</span></label>
+
           <p-dropdown
             [options]="dropBrokerList"
             optionLabel="CodeDescription"
             optionValue="Code"
-            formControlName="borker" appendTo="body"
+            formControlName="borker"
             placeholder="Select Broker"
             [filter]="true"
             filterPlaceholder="Search broker..."
-            [disabled]="checkBrokerDisabel()"
+            appendTo="body"
             styleClass="w-100"
             (onChange)="onChangeBroker()">
           </p-dropdown>
-          <small class="p-error" *ngIf="(brokerF.borker.errors && submitted) || (!brokerF.borker.valid && brokerF.borker.touched)">
+
+          <small class="p-error" *ngIf="isInvalid('borker')">
             <i class="pi pi-exclamation-circle"></i> This field is required
           </small>
         </div>

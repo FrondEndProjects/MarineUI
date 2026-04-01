@@ -87,7 +87,8 @@
 
 $teal: var(--teal);
 $teal-dark: var(--teal-dark);
-$teal-bg:var(--teal-bg);
+$teal-bg: var(--teal-bg);
+
 .imgwidAlt {
   // width: 161px !important;
   width: 102px !important;
@@ -252,6 +253,22 @@ $teal-bg:var(--teal-bg);
     padding: 15px;
     border-bottom: 1px solid #eee;
   }
+
+  /* ✅ Add these two rules */
+  .navmenu.mobile-nav-active .dropdown ul {
+    display: block;
+    position: static;
+    /* removes absolute positioning */
+    box-shadow: none;
+    background: #f9f9f9;
+    /* slight indent to distinguish sub-items */
+    padding-left: 15px;
+  }
+
+  .navmenu.mobile-nav-active .dropdown ul li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+  }
 }
 
 .top-bar {
@@ -261,6 +278,6 @@ $teal-bg:var(--teal-bg);
   background: linear-gradient(135deg,
       var(--teal-dark) 0%,
       var(--teal) 70%,
- var(--teal-bg) 100%) !important;
+      var(--teal-bg) 100%) !important;
   padding: 6px 10px;
 }

@@ -17,7 +17,7 @@
             [class.pf-invalid]="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
             <label>Mode of Transport <span class="req">*</span></label>
             <p-dropdown [options]="dropTransportList" optionLabel="CodeDescription" optionValue="Code" appendTo="body"
-              formControlName="modeOfTransport" placeholder="Select" [filter]="false" styleClass="w-100"
+              formControlName="modeOfTransport" placeholder="Select" [filter]="true" filterBy="CodeDescription" styleClass="w-100"
               (onChange)="onGetCoverDropdownList(1)">
             </p-dropdown>
             <small class="p-error"
@@ -32,7 +32,7 @@
           <div class="pf"
             [class.pf-invalid]="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
             <label>Cover <span class="req">*</span></label>
-            <p-dropdown [options]="dropCoverList" optionLabel="CodeDescription" optionValue="Code"
+            <p-dropdown [options]="dropCoverList" optionLabel="CodeDescription" optionValue="Code" [filter]="true" filterBy="CodeDescription"
               formControlName="cover" appendTo="body" placeholder="Select" [filter]="false" styleClass="w-100"
               (onChange)="onGetCarriageDropdownList(null,null)">
             </p-dropdown>
@@ -48,7 +48,7 @@
           <div class="pf"
             [class.pf-invalid]="(quoteF.modeOfCarriage.errors && submitted) || (!quoteF.modeOfCarriage.valid && quoteF.modeOfCarriage.touched)">
             <label>Mode of Carriage <span class="req">*</span></label>
-            <p-dropdown [options]="dropCarriageList" optionLabel="CodeDescription" optionValue="Code" appendTo="body"
+            <p-dropdown [options]="dropCarriageList" optionLabel="CodeDescription" optionValue="Code" appendTo="body" [filter]="true" filterBy="CodeDescription"
               formControlName="modeOfCarriage" placeholder="Select" [filter]="false" styleClass="w-100">
             </p-dropdown>
             <small class="p-error"
@@ -185,7 +185,7 @@
           <div class="pf"
             [class.pf-invalid]="(quoteF.policyStartDate.errors && submitted) || (!quoteF.policyStartDate.valid && quoteF.policyStartDate.touched)">
             <label>Policy Start Date <span class="req">*</span></label>
-            <p-calendar formControlName="policyStartDate" dateFormat="dd-mm-yy" [showIcon]="true" appendTo="body"
+            <p-calendar formControlName="policyStartDate" dateFormat="dd/mm/yy" [showIcon]="true" appendTo="body"
               placeholder="Select date" [maxDate]="maxDatePrime" styleClass="w-100"
               inputStyleClass="p-inputtext-sm w-100">
             </p-calendar>
@@ -333,7 +333,7 @@
             <label>Currency <span class="req">*</span></label>
             <div class="currency-group">
               <p-dropdown [options]="dropCurrencyList" optionLabel="CodeDescription" appendTo="body" optionValue="Code"
-                formControlName="currency" placeholder="Select" styleClass="currency-drop"
+                formControlName="currency" placeholder="Select" styleClass="currency-drop" [filter]="true" filterBy="CodeDescription"
                 (onChange)="onChangeCurrencyDrop()">
               </p-dropdown>
               <input pInputText formControlName="currencyValue"
@@ -390,7 +390,7 @@
             <label>Incoterms <span class="req">*</span></label>
             <!-- <div class="currency-group"> -->
             <p-dropdown [options]="dropIncotermsList" optionLabel="CodeDescription" appendTo="body"
-              (onChange)="onGetIncotermsPrecentDropdownList(1)" styleClass="w-100" optionValue="Code"
+              (onChange)="onGetIncotermsPrecentDropdownList(1)" styleClass="w-100" optionValue="Code" [filter]="true" filterBy="CodeDescription"
               formControlName="incoterms" placeholder="Select" styleClass="currency-drop">
             </p-dropdown>
             <!-- <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body" optionValue="Code"
@@ -406,7 +406,7 @@
             <!-- <p-dropdown [options]="dropIncotermsList" optionLabel="CodeDescription" appendTo="body" styleClass="w-100" optionValue="Code"
               formControlName="incoterms" placeholder="Select" styleClass="currency-drop">
             </p-dropdown> -->
-            <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body"
+            <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body" [filter]="true" filterBy="CodeDescription"
               (onChange)="onGetToleranceDropdownList(1)" optionValue="Code" formControlName="incotermsPercentage"
               placeholder="%" styleClass="w-100">
             </p-dropdown>
@@ -418,7 +418,7 @@
         <div class="col-12 col-sm-6 col-md-4">
           <div class="pf">
             <label>Tolerance <span class="req">*</span></label>
-            <p-dropdown [options]="dropToleranceList" appendTo="body" optionLabel="CodeDescription" optionValue="Code"
+            <p-dropdown [options]="dropToleranceList" appendTo="body" [filter]="true" filterBy="CodeDescription" optionLabel="CodeDescription" optionValue="Code"
               formControlName="tolerance" placeholder="Select" styleClass="w-100">
             </p-dropdown>
           </div>

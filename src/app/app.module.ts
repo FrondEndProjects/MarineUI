@@ -16,6 +16,12 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 import { OpenCoverDocument } from './modules/Admin/LoginCration/opencover/opencover.component';
 import {
   NbChatModule,
@@ -66,6 +72,8 @@ import { ErrorModalModule } from './shared/error/error-modal.module';
 import { LoginService } from './modules/login/login.service';
 import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRedirect.component';
 import { NonMotorClaimComponent } from './components/non-motor-claim/non-motor-claim.component';
+import { ProductComponent } from './layout/product/product.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 // import { MegaMenuModule } from 'primeng/megamenu';
 
 @NgModule({
@@ -87,7 +95,8 @@ import { NonMotorClaimComponent } from './components/non-motor-claim/non-motor-c
     OpenCoverDocument,
     SessionRedirectComponent,
     CustomerRedirectComponent,
-    NonMotorClaimComponent
+    NonMotorClaimComponent,
+    ProductComponent
   ],
   imports: [
     CommonModule, BrowserModule, BrowserAnimationsModule,
@@ -119,16 +128,23 @@ import { NonMotorClaimComponent } from './components/non-motor-claim/non-motor-c
     NbTabsetModule,
     TablesModule,
     HeaderInformModule,
+    OverlayPanelModule,
     NbMomentDateModule,
     NgbModule,
     NgSelectModule,
     ErrorModalModule,
     NgxMaskModule.forRoot(),
+           InputTextModule,
+        PasswordModule,
+        ButtonModule,
+        CheckboxModule,
+        ToastModule,
+        ErrorModalModule,
     // MegaMenuModule,
 
   ],
   providers: [
-    AuthService,LoginService,
+    AuthService,LoginService,MessageService,
     AuthGuard,
     CustomLoadingService,
     SessionStorageService,

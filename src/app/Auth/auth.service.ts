@@ -49,5 +49,21 @@ export class AuthService {
   logout() {
     this.loggedIn.next(false);
   }
+  getLoginDetails() {
+    try {
+      const userDetails = sessionStorage.getItem('Userdetails');
 
+      // Check if item exists
+      if (!userDetails) {
+        console.warn('User details not found in sessionStorage');
+        return null; // Or you can return an empty object or handle accordingly
+      }
+
+      // Attempt to parse the stored JSON data
+      return JSON.parse(userDetails);
+    } catch (error) {
+      console.error('Error parsing user details from sessionStorage:', error);
+      return null; // Or handle the error as needed
+    }
+  }
 }

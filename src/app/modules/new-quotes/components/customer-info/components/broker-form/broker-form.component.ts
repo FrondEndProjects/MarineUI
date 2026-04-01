@@ -24,16 +24,16 @@ export class BrokerFormComponent implements OnInit {
   public brokerForm!: FormGroup;
   public dropChannelList: any[] = [];
   public dropBrokerList: any[] = [];
-  public OpenCover:any;
+  public OpenCover: any;
   @ViewChild('formDirective') public brokerFormDirective: NgForm;
   headerDetails: any;
   el: boolean;
-  item:any;
+  item: any;
   constructor(
     private _formBuilder: FormBuilder,
     private newQuotesService: NewQuotesService,
     private customerInfoComponent: CustomerInfoComponent,
-    private opencoverComponent:OpenCoverLayoutComponent
+    private opencoverComponent: OpenCoverLayoutComponent
   ) {
     this.userDetails = this.customerInfoComponent?.userDetails;
     this.productId = this.customerInfoComponent?.productId;
@@ -42,20 +42,20 @@ export class BrokerFormComponent implements OnInit {
     this.applicationId = this.customerInfoComponent.applicationId;
     this.OpenCover = this.customerInfoComponent.OpenCover;
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
-    if(this.OpenCover){
-      if(this.OpenCover?.name == 'adminReferral'){
-            this.productId = this.OpenCover?.productId;
-      } 
+    if (this.OpenCover) {
+      if (this.OpenCover?.name == 'adminReferral') {
+        this.productId = this.OpenCover?.productId;
+      }
     }
-    this.dropChannelList=[
-      {name:'Broker',id:'broker'},
-      {name:'Cash',id:'cash'},
+    this.dropChannelList = [
+      { name: 'Broker', id: 'broker' },
+      { name: 'Cash', id: 'cash' },
     ]
     this.droplist();
-    this.item=sessionStorage.getItem('Exist');
-    
+    this.item = sessionStorage.getItem('Exist');
+
   }
-  droplist(){
+  droplist() {
     const urlLink = `${this.ApiUrl1}quote/dropdown/channeltype`;
     this.newQuotesService.onGetMethodSync(urlLink).subscribe((data: any) => {
       console.log(data);
@@ -63,16 +63,17 @@ export class BrokerFormComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    if(this.brokerF.channel.value!=null && this.brokerF.channel.value!='null'){
+    if (this.brokerF.channel.value != null && this.brokerF.channel.value != 'null') {
       this.onChangeChannel('direct');
-      console.log('YYYYYYYYYYYYYYYYYYY',this.brokerF.channel.value);
+      console.log('YYYYYYYYYYYYYYYYYYY', this.brokerF.channel.value);
     }
-    else{
-      this.brokerF.channel.setValue('Broker');this.onChangeChannel('direct');} 
-      const id = this.userDetails?.InsuranceId;
+    else {
+      this.brokerF.channel.setValue('Broker'); this.onChangeChannel('direct');
+    }
+    const id = this.userDetails?.InsuranceId;
 
 
-   if (id !== '100044' && id !== '100053') {
+    if (id !== '100044' && id !== '100053') {
       document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
       document.documentElement.style.setProperty('--teal-dark', '#042181');
       document.documentElement.style.setProperty('--teal-d', '#042181');
@@ -87,24 +88,23 @@ export class BrokerFormComponent implements OnInit {
     return this.brokerForm.controls;
   }
 
-  onChangeChannel(type){
-    if(type=='change') 
-    {
+  onChangeChannel(type) {
+    if (type == 'change') {
       this.brokerForm.controls['borker'].setValue('');
     }
-    var urlLink:any = this.brokerF.channel.value == 'cash'?`${this.ApiUrl1}quote/dropdown/cash`:`${this.ApiUrl1}quote/dropdown/broker`;
+    var urlLink: any = this.brokerF.channel.value == 'cash' ? `${this.ApiUrl1}quote/dropdown/cash` : `${this.ApiUrl1}quote/dropdown/broker`;
     const reqData = {
-      "BranchCode":this.userDetails.BranchCode,
-      "BrokerCode":"",
-      "OriginationCountryCode":"",
-      "DestinationCountryCode":"",
-      "LoginId":this.loginId,
-      "ModeOfTransportCode":"",
-      "OpenCoverNo":this.OpenCover?.value,
-      "ProductId":this.productId,
-      "IncotermCode":"",
-      "IncotermPercent":"",
-      "CoverCode":"",
+      "BranchCode": this.userDetails.BranchCode,
+      "BrokerCode": "",
+      "OriginationCountryCode": "",
+      "DestinationCountryCode": "",
+      "LoginId": this.loginId,
+      "ModeOfTransportCode": "",
+      "OpenCoverNo": this.OpenCover?.value,
+      "ProductId": this.productId,
+      "IncotermCode": "",
+      "IncotermPercent": "",
+      "CoverCode": "",
       "ChannelType": this.brokerF.channel.value
     }
 
@@ -114,43 +114,52 @@ export class BrokerFormComponent implements OnInit {
         if (data?.Message === 'Success') {
           this.dropBrokerList = data?.Result;
           this.newQuotesService.BrokerList = data?.Result;
-          if(this.productId=='11' && type!='change'){
+          if (this.productId == '11' && type != 'change') {
             //alert("Broker Change Function")
-              this.headerDetails = this.opencoverComponent?.headerDetails;
-              console.log("Entry",this.headerDetails);
-              if(this.headerDetails){
-                  let entry = this.dropBrokerList.find(ele=>ele.CodeDescription==this.headerDetails?.BrokerName)
-                  sessionStorage.setItem('dropBrokerList', JSON.stringify(this.dropBrokerList));
-                  if(this.productId=='11'){
-                  this.brokerForm.controls['borker'].setValue(entry.Code);
-                  this.brokerForm.controls['channel'].setValue('broker');
-                  this.brokerForm.controls['channel'].disable();
-                  this.brokerForm.controls['borker'].disable(); 
-                  }
-                  else{
-                    this.brokerForm.controls['borker'].setValue(entry.Code);
-                    //this.brokerForm.controls['channel'].setValue('');
-                    this.brokerForm.controls['channel'].enable();
-                    this.brokerForm.controls['borker'].enable();
-                  }
+            this.headerDetails = this.opencoverComponent?.headerDetails;
+            console.log("Entry", this.headerDetails);
+            if (this.headerDetails) {
+              let entry = this.dropBrokerList.find(ele => ele.CodeDescription == this.headerDetails?.BrokerName)
+              sessionStorage.setItem('dropBrokerList', JSON.stringify(this.dropBrokerList));
+              if (this.productId == '11') {
+                this.brokerForm.controls['borker'].setValue(entry.Code);
+                this.brokerForm.controls['channel'].setValue('broker');
+                this.brokerForm.controls['channel'].disable();
+                this.brokerForm.controls['borker'].disable();
               }
+              else {
+                this.brokerForm.controls['borker'].setValue(entry.Code);
+                //this.brokerForm.controls['channel'].setValue('');
+                this.brokerForm.controls['channel'].enable();
+                this.brokerForm.controls['borker'].enable();
+              }
+            }
           }
         }
       },
       (err) => { },
     );
   }
-  checkBrokerDisabel(){
+  checkBrokerDisabel() {
     let value = this.brokerForm.controls['borker'].value;
-    if(this.productId=='11'){
-      return (value!=null && value !='' && value!=undefined);
+    if (this.productId == '11') {
+      return (value != null && value != '' && value != undefined);
     }
     else return false
   }
-  onChangeBroker(){
+  onChangeBroker() {
     let value = this.brokerForm.controls['borker'].value;
-    if(value!=''){
+    if (value != '') {
       this.customerInfoComponent.checkCustomerList(value);
     }
+  }
+  isInvalid(controlName: string): boolean {
+    const control = this.brokerForm.get(controlName);
+    return !!(
+      control &&
+      !control.disabled &&
+      control.invalid &&
+      (control.touched || this.submitted)
+    );
   }
 }

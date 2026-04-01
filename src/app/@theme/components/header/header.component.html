@@ -97,7 +97,12 @@
   </nav>
 </div> -->
 <div class="menu-wrapper">
-  <nav class="navmenu menu">
+  <nav class="navmenu menu" [class.mobile-nav-active]="isMobileMenuOpen">
+
+    <div class="mobile-nav-toggle d-xl-none" (click)="toggleMobileMenu()">
+      <nb-icon pack="eva" [icon]="isMobileMenuOpen ? 'close-outline' : 'menu-outline'" class="mobile-menu-icon">
+      </nb-icon>
+    </div>
     <ul>
       <ng-container *ngFor="let row of menu">
 

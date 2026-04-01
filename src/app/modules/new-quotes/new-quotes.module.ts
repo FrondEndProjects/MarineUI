@@ -48,6 +48,7 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple'; 
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TabViewModule } from 'primeng/tabview';
+import { AkiDocAdminComponent } from './components/customer-info/components/aki-doc-admin/aki-doc-admin.component';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -56,6 +57,7 @@ import { TabViewModule } from 'primeng/tabview';
   declarations: [
     NewQuotesComponent,
     CustomerInfoComponent,
+    AkiDocAdminComponent,
     QuoteFormComponent,
     CustomerFormComponent,
     BankFormComponent,

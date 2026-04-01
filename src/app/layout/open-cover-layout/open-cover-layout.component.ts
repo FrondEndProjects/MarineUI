@@ -7,7 +7,7 @@ import { borkerNavItems } from '../components/navbar/broker_nav';
 import * as Mydatas from '../../app-config.json';
 import { borkerOpencoverNavItems } from '../components/navbar/broker_opencover_nav';
 import { SessionStorageService } from '../../shared/storage/session-storage.service';
-import { log } from 'node:console';
+
 
 @Component({
   selector: 'app-open-cover-layout',

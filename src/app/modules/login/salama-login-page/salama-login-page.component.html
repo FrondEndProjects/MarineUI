@@ -1,0 +1,213 @@
+<!-- login.component.html -->
+<div class="login-wrapper">
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <div class="brand">
+        <div class="brand-icon">S</div>
+        <div class="brand-text">
+          <span class="brand-name">SALAMA</span>
+          <span class="brand-sub">b.s.c.</span>
+        </div>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-product">
+        <i class="pi pi-anchor"></i>
+        <span>Marine Insurance</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <p-button label="Marine" icon="pi pi-anchor" styleClass="nav-btn-marine"></p-button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero-section">
+
+    <!-- Left Side: Branding Panel -->
+    <div class="hero-left">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-icon">
+          <i class="pi pi-anchor"></i>
+        </div>
+        <h1 class="hero-title">Marine Insurance</h1>
+        <p class="hero-subtitle">Comprehensive cargo & freight protection for your global trade</p>
+        <div class="hero-features">
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Instant Quote Generation</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Global Coverage Network</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>24/7 Claims Support</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Real-time Tracking</span>
+          </div>
+        </div>
+        <div class="hero-badges">
+          <div class="badge">
+            <span class="badge-number">500+</span>
+            <span class="badge-label">Brokers</span>
+          </div>
+          <div class="badge">
+            <span class="badge-number">10K+</span>
+            <span class="badge-label">Policies</span>
+          </div>
+          <div class="badge">
+            <span class="badge-number">50+</span>
+            <span class="badge-label">Countries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side: Login Card -->
+    <div class="hero-right">
+      <div class="login-card">
+
+        <div class="card-header">
+          <div class="card-logo">
+            <i class="pi pi-anchor"></i>
+          </div>
+          <h2 class="card-title">Welcome Back</h2>
+          <p class="card-desc">Sign in to access your marine insurance portal</p>
+        </div>
+
+        <form class="login-form" (ngSubmit)="onLogin()">
+
+          <!-- Login ID Field -->
+          <div class="form-group">
+            <label for="loginId" class="form-label">
+              <i class="pi pi-user"></i>
+              Login ID
+            </label>
+            <span class="p-input-icon-left w-full">
+              <i class="pi pi-user"></i>
+              <input
+                pInputText
+                id="loginId"
+                type="text"
+                [(ngModel)]="loginId"
+                name="loginId"
+                placeholder="Enter your login ID"
+                class="login-input w-full"
+                [ngClass]="{'ng-invalid ng-dirty': submitted && !loginId}"
+              />
+            </span>
+            <small class="error-msg" *ngIf="submitted && !loginId">
+              <i class="pi pi-exclamation-circle"></i> Login ID is required.
+            </small>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="password" class="form-label">
+              <i class="pi pi-lock"></i>
+              Password
+            </label>
+            <p-password
+              id="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Enter your password"
+              [feedback]="false"
+              [toggleMask]="true"
+              styleClass="login-password w-full"
+              inputStyleClass="w-full login-input"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && !password}"
+            ></p-password>
+            <small class="error-msg" *ngIf="submitted && !password">
+              <i class="pi pi-exclamation-circle"></i> Password is required.
+            </small>
+          </div>
+
+          <!-- Options Row -->
+          <div class="form-options">
+            <div class="remember-me">
+              <p-checkbox
+                [(ngModel)]="rememberMe"
+                name="rememberMe"
+                [binary]="true"
+                inputId="remember"
+                styleClass="custom-checkbox"
+              ></p-checkbox>
+              <label for="remember" class="remember-label">Remember me</label>
+            </div>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <p-button
+            type="submit"
+            label="Sign In"
+            icon="pi pi-sign-in"
+            iconPos="right"
+            styleClass="login-submit-btn w-full"
+            [loading]="loading"
+            (onClick)="onLogin()"
+          ></p-button>
+
+          <!-- Divider -->
+          <div class="divider">
+            <span>or continue with</span>
+          </div>
+
+          <!-- SSO Button -->
+          <p-button
+            type="button"
+            label="Single Sign-On (SSO)"
+            icon="pi pi-shield"
+            styleClass="sso-btn w-full"
+          ></p-button>
+
+        </form>
+
+        <div class="card-footer">
+          <p>Don't have an account? <a href="#" class="register-link">Contact your broker</a></p>
+        </div>
+
+      </div>
+
+      <!-- Bottom Info Strip -->
+      <div class="info-strip">
+        <div class="info-item">
+          <i class="pi pi-shield"></i>
+          <span>SSL Secured</span>
+        </div>
+        <div class="info-sep">•</div>
+        <div class="info-item">
+          <i class="pi pi-verified"></i>
+          <span>ISO Certified</span>
+        </div>
+        <div class="info-sep">•</div>
+        <div class="info-item">
+          <i class="pi pi-lock"></i>
+          <span>Data Protected</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="login-footer">
+    <span>© 2025 SALAMA Marine Insurance. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Support</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Toast for notifications -->
+<p-toast position="top-right"></p-toast>

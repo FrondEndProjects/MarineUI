@@ -15,14 +15,17 @@ import { ProductSelectionComponent } from './modules/product-selection/product-s
 import { AuthGuard } from './Auth/auth.guard';
 import { SessionRedirectComponent } from './layout/components/session-redirect/session-redirect.component';
 import { CustomerRedirectComponent } from './layout/customer-Redirect/customerRedirect.component';
+import { ProductComponent } from './layout/product/product.component';
+import { LoginCreationComponent } from './layout/login-creation/login-creation.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'sessionRedirect', 
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'sessionRedirect',
     component: SessionRedirectComponent
   },
   {
-    path: 'login',
+    path: 'home',
     component: LoginLayoutComponent,
     // children: [
     //   {
@@ -40,6 +43,10 @@ export const routes: Routes = [
   {
     path: 'customer-Redirect',
     component: CustomerRedirectComponent,
+  },
+  {
+    path: 'product',
+    component: ProductComponent,
   },
   {
     path: 'product-layout',
@@ -61,8 +68,8 @@ export const routes: Routes = [
     path: 'marine-opencover',
     component: OpenCoverLayoutComponent,
     canActivate: [AuthGuard],
-    data:{
-      title:'marine-opencover'
+    data: {
+      title: 'marine-opencover'
     },
     children: [
       {
@@ -89,19 +96,19 @@ export const routes: Routes = [
 
       {
         path: 'report',
-        component:ReportComponent
+        component: ReportComponent
       },
       {
         path: 'copy-quote',
-        component:CopyQuoteComponent
+        component: CopyQuoteComponent
       },
       {
         path: 'search',
-        component:SearchComponent
+        component: SearchComponent
       },
       {
         path: 'endorsement',
-        component:EndorsementComponent
+        component: EndorsementComponent
       },
     ]
   },
@@ -111,8 +118,8 @@ export const routes: Routes = [
     path: 'Marine',
     component: HomeLayoutComponent,
     canActivate: [AuthGuard],
-    data:{
-      link:'Marine'
+    data: {
+      link: 'Marine'
     },
     children: [
       {
@@ -175,24 +182,24 @@ export const routes: Routes = [
         path: 'new-quotes',
         loadChildren: () => import('./modules/new-quotes/new-quotes.module').then(m => m.NewQuotesModule),
       },
-        //loginCreation
-        {
-          path:'loginCreation/existingBrokers',
-          loadChildren: () => import('./modules/Admin/LoginCration/Broker/existing-broker-list/existing-broker-list.module').then(m => m.ExistingBrokerListModule)
-        },
-        {
-          path:'loginCreation/admin',
+      //loginCreation
+      {
+        path: 'loginCreation/existingBrokers',
+        loadChildren: () => import('./modules/Admin/LoginCration/Broker/existing-broker-list/existing-broker-list.module').then(m => m.ExistingBrokerListModule)
+      },
+      {
+        path: 'loginCreation/admin',
         loadChildren: () => import('./modules/Admin/LoginCration/Admin/admin-list/admin-list.module').then(m => m.adminListModule)
       },
       {
-        path:'loginCreation/issuer',
-      loadChildren: () => import('./modules/Admin/LoginCration/Issuer/issuer-list/issuer-list.module').then(m => m.issuerListModule)
-    },
-        {
-          path:'loginCreation/existingUser',
-          loadChildren: () => import('./modules/Admin/LoginCration/Users/existing-user-list/existing-user-list.module').then(m => m.ExistingUserListModule)
-        },
-       // masters
+        path: 'loginCreation/issuer',
+        loadChildren: () => import('./modules/Admin/LoginCration/Issuer/issuer-list/issuer-list.module').then(m => m.issuerListModule)
+      },
+      {
+        path: 'loginCreation/existingUser',
+        loadChildren: () => import('./modules/Admin/LoginCration/Users/existing-user-list/existing-user-list.module').then(m => m.ExistingUserListModule)
+      },
+      // masters
       {
         path: 'masters/conveyance',
         loadChildren: () => import('./modules/Admin/Masters/conveyance/conveyance.module').then(m => m.ConveyanceModule),
@@ -300,10 +307,21 @@ export const routes: Routes = [
     ],
   },
 
+  {
+    path: 'login-creation',
+    component: LoginCreationComponent,
+    // canActivate: [AuthGuard],
+    data: { title: 'Login Creation' },
+    children: [
+      {
+        path: '', // Change this from 'login-creation' to ''
+        loadChildren: () => import('./layout/login-creation/login-creation.module').then(m => m.LoginCreationModule),
+      }
+    ]
+  },
 
 
-
-
+{ path: '**', redirectTo: '/home' },
   // { path: '**', redirectTo: 'login-layout' },
 ];
 

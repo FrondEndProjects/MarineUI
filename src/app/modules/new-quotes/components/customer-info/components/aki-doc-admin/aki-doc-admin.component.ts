@@ -125,13 +125,13 @@ export class AkiDocAdminComponent {
       county: [''],
       // entryDate: ['']  
     });
-    // this.getList();
+
     const now = new Date();
     now.setMonth(now.getMonth() - 1);
     this.from_date = now.toISOString().substring(0, 10);
     const to_now = new Date();
     this.to_date = to_now.toISOString().substring(0, 10);
-
+    this.getList();
   }
 
   onDownloadAKIDoc(event) {

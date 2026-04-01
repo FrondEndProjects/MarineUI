@@ -1,0 +1,83 @@
+<!-- SALAMA Topbar -->
+<div class="salama-topbar">
+    <div class="topbar-left">
+        <div class="topbar-brand">
+            <a (click)="homeRoute()"><img src="./assets/images/Orientlogo-removebg-preview.png" class="imgwidAlt"></a>
+            <div class="brand-text">
+                <span class="brand-sub">Marine Insurance Portal</span>
+            </div>
+        </div>
+    </div>
+    <div class="topbar-center">
+        <!-- <nav class="topbar-nav">
+            <a class="nav-link active"><i class="pi pi-users"></i> User Creation</a>
+            <a class="nav-link"><i class="pi pi-shield"></i> Roles</a>
+            <a class="nav-link"><i class="pi pi-cog"></i> Settings</a>
+        </nav> -->
+    </div>
+    <div class="topbar-right">
+        <!-- <button class="topbar-icon-btn" title="Notifications">
+            <i class="pi pi-bell"></i>
+        </button>
+        <button class="topbar-icon-btn" title="Home">
+            <i class="pi pi-home"></i>
+        </button> -->
+        <div class="topbar-user" (click)="opUser.toggle($event)">
+            <div class="user-avatar">{{ getUserInitials() }}</div>
+            <div class="user-info">
+                <span class="user-name">{{ user?.Result?.UserName || 'User' }}</span>
+                <!-- <span class="user-type">{{ userType }}</span> -->
+            </div>
+        </div>
+    </div>
+    <p-overlayPanel #opUser appendTo="body" [style]="{ width: '200px' }">
+
+        <div class="user-menu">
+
+            <div class="menu-item" (click)="onLogout()"><i class="pi pi-sign-out"></i> Logout</div>
+
+        </div>
+
+    </p-overlayPanel>
+</div>
+
+<!-- Page Content -->
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">
+                <i class="pi pi-user-plus"></i>
+                Login Creation
+            </h2>
+            <span class="page-subtitle">Manage broker, user and insurance employee accounts</span>
+        </div>
+    </div>
+
+    <div class="main-card">
+        <p-tabView [activeIndex]="tabIndex" (onChange)="onTabClicked($event)" styleClass="salama-tabs">
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="tab-header"><i class="pi pi-briefcase"></i>&nbsp; Broker</span>
+                </ng-template>
+                <app-broker></app-broker>
+            </p-tabPanel>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="tab-header"><i class="pi pi-user"></i>&nbsp; User</span>
+                </ng-template>
+                <app-user></app-user>
+            </p-tabPanel>
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <span class="tab-header"><i class="pi pi-id-card"></i>&nbsp; Insurance Employee</span>
+                </ng-template>
+                <app-insurence-emp></app-insurence-emp>
+            </p-tabPanel>
+            <div class="row text-center mb-2 mt-2">
+                <div class="col-12">
+                    <p-button label="Back" size="small" (click)="back()"></p-button>
+                </div>
+            </div>
+        </p-tabView>
+    </div>
+</div>

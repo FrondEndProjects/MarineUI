@@ -1,0 +1,286 @@
+// ===== SALAMA THEME - BROKER COMPONENT =====
+$salama-primary: #1a7a7a;
+$salama-primary-dark: #155f5f;
+$salama-primary-light: #e8f5f5;
+$salama-accent: #e8a020;
+$salama-white: #ffffff;
+$salama-gray-50: #f8fafb;
+$salama-gray-100: #f0f4f4;
+$salama-gray-200: #e2eaea;
+$salama-gray-400: #94b0b0;
+$salama-gray-600: #4a6b6b;
+$salama-text: #1e3a3a;
+$salama-text-muted: #5a7a7a;
+$salama-border: #c8dada;
+$salama-shadow: rgba(26, 122, 122, 0.12);
+
+// ===== TABLE CELLS =====
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: 1px solid $salama-gray-200;
+  border-width: 0 0 1px 0;
+  padding: 10px 12px;
+      word-wrap: break-word;
+
+  min-width: 110px;
+  font-size: 0.855rem;
+  color: $salama-text;
+}
+
+// ===== BROKER DETAILS DIALOG =====
+::ng-deep .broker-details-dialog .p-dialog-content {
+  background-color: $salama-gray-50;
+  padding: 1.5rem !important;
+}
+
+// ===== SECTION CONTAINER =====
+.section-container {
+  background: $salama-white;
+  border-radius: 10px;
+  padding: 1.25rem;
+  max-height: 420px;
+  overflow: auto;
+  box-shadow: 0 1px 6px $salama-shadow;
+  border: 1px solid $salama-gray-200;
+}
+
+.section-title {
+  font-size: 1rem;
+  color: $salama-text;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 2px solid $salama-primary;
+  width: fit-content;
+  padding-bottom: 4px;
+  font-weight: 700;
+}
+
+// ===== DETAIL ITEMS =====
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  label {
+    font-size: 0.78rem;
+    color: $salama-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 0.9rem;
+    color: $salama-text;
+    font-weight: 500;
+  }
+}
+
+// ===== AVATAR CIRCLE =====
+.avatar-circle {
+  width: 54px;
+  height: 54px;
+  background: $salama-primary;
+  color: $salama-white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  box-shadow: 0 2px 8px $salama-shadow;
+}
+
+// ===== PRODUCT MINI CARD =====
+.product-mini-card {
+  background: $salama-gray-50;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid $salama-gray-200;
+  border-left: 4px solid $salama-primary;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 130px;
+  min-width: 140px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: $salama-white;
+    box-shadow: 0 6px 16px $salama-shadow;
+    transform: translateY(-2px);
+  }
+}
+
+.product-header {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: $salama-text;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-stats {
+  border-top: 1px solid $salama-gray-200;
+  padding-top: 0.6rem;
+  margin-top: auto;
+}
+
+.text-secondary {
+  color: $salama-text-muted;
+  font-weight: 500;
+}
+
+// ===== STAT ROW =====
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed $salama-gray-200;
+  font-size: 0.85rem;
+  color: $salama-text;
+
+  strong {
+    color: $salama-primary;
+    font-weight: 700;
+  }
+}
+
+.stats-bg {
+  background: linear-gradient(to bottom, $salama-white, $salama-primary-light);
+}
+
+// ===== USER LIST ITEM =====
+.user-list-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid $salama-gray-100;
+  font-size: 0.855rem;
+}
+
+// ===== DIVIDER =====
+.divider {
+  height: 1px;
+  background: $salama-gray-200;
+  margin: 1.25rem 0;
+}
+
+// ===== HEADER CARD =====
+.header-card {
+  background: $salama-primary-light;
+  border: 1px solid $salama-gray-200;
+  border-left: 4px solid $salama-primary;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+// ===== RADIO TOOLBAR OVERRIDE =====
+.radio-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  input[type="radio"] {
+    display: none;
+
+    &:checked + label {
+      background: $salama-primary;
+      color: $salama-white;
+      border-color: $salama-primary;
+    }
+  }
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border: 1.5px solid $salama-border;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: $salama-text;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $salama-primary;
+      color: $salama-primary;
+    }
+  }
+}
+
+// ===== FORM FIELD ALIGNMENT =====
+.form-field {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4rem 0.5rem !important;
+
+    > label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #4a6b6b;
+        margin-bottom: 5px;
+        display: block;
+        white-space: nowrap;
+    }
+
+    > input,
+    > textarea {
+        width: 100%;
+    }
+
+    .p-dropdown,
+    .p-calendar {
+        width: 100%;
+    }
+
+    .p-inputgroup {
+        width: 100%;
+    }
+}
+
+// Toolbar filter row alignment
+.grid.justify-content-end {
+    align-items: flex-end;
+}
+
+// Fix product dialog table inputs - prevent overlap
+::ng-deep .p-dialog .p-datatable .p-datatable-tbody > tr > td {
+  overflow: visible;
+  vertical-align: middle;
+
+  input.p-inputtext {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .p-calendar {
+    width: 100%;
+    .p-inputtext { width: 100%; }
+  }
+}
+
+// Overlay menu consistent styling
+.overlay-menu {
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+}
