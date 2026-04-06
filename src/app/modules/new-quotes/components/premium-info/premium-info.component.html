@@ -134,7 +134,7 @@
             <ng-template #tabs>
               <div class="p-2 clauses-list">
                 <ul class="list-group list-group-flush">
-                  <ng-container *ngFor="let item of viewClausesByClick">
+                  <ng-container *ngFor="let item of getSortedClauses()">
                     <li class="list-group-item">{{item?.CodeDesc}}</li>
                   </ng-container>
                 </ul>
@@ -205,22 +205,35 @@
                     class="p-button-text p-button-danger p-button-sm salama-clause-btn" [nbPopover]="tabs"
                     (click)="viewClausesByClick = viewClausesInfo?.Exclusions || [];"></button>
                 </div>
-                <div *ngIf="viewClausesInfo?.Warranties">
+                <!-- <div *ngIf="viewClausesInfo?.Warranties">
                   <button pButton pRipple label="Warranties" icon="pi pi-verified"
                     class="p-button-text p-button-info p-button-sm salama-clause-btn" [nbPopover]="tabs"
                     (click)="viewClausesByClick = viewClausesInfo?.Warranties || [];"></button>
                 </div>
                 <div *ngIf="viewClausesInfo?.Wars!=null && premiumDetails?.QuoteDetails?.WarAndSrccYn=='YES'">
                   <button pButton pRipple label="War" icon="pi pi-shield"
-                    class="p-button-text p-button-warning p-button-sm salama-clause-btn" [nbPopover]="tabs"
+                    class="p-button-text p-button-success p-button-sm salama-clause-btn" [nbPopover]="tabs"
                     (click)="viewClausesByClick = viewClausesInfo?.Wars || [];"></button>
+                </div> -->
+                <div *ngIf="viewClausesInfo?.Warranties?.length > 0">
+                  <button pButton pRipple label="Warranties" icon="pi pi-check-circle"
+                    class="p-button-text p-button-info p-button-sm salama-clause-btn" [nbPopover]="tabs"
+                    (click)="viewClausesByClick = viewClausesInfo?.Warranties || [];">
+                  </button>
+                </div>
+
+                <div *ngIf="viewClausesInfo?.Wars?.length > 0 && premiumDetails?.QuoteDetails?.WarAndSrccYn === 'YES'">
+                  <button pButton pRipple label="War" icon="pi pi-list"
+                    class="p-button-text p-button-success p-button-sm salama-clause-btn" [nbPopover]="tabs"
+                    (click)="viewClausesByClick = viewClausesInfo?.Wars || [];">
+                  </button>
                 </div>
               </div>
             </ng-container>
 
             <!-- Referral Information (non-admin) -->
             <ng-container *ngIf="userDetails?.UserType !='admin'">
-              <div class="left-line">Referral Information</div>
+
               <div class="row my-2">
                 <div class="col-12" *ngIf="userDetails?.UserType != 'Broker'">
                   <div class="input-control-container">
@@ -239,6 +252,7 @@
                 </div>
 
                 <div class="col-12">
+                  <div class="left-line">Referral Information</div>
                   <div class="input-control-container">
                     <label class="input-form-label">Would you like to get in touch with under writer for getting better
                       quote?</label>
@@ -363,8 +377,9 @@
                       </div>
                     </li>
 
-                    <!-- Marine Premium -->
-                    <li class="list-group-item">
+
+                    <li *ngIf="(QuoteStatus =='RP' ||  QuoteStatus =='RA') &&  userDetails?.UserType == 'admin'"
+                      class="list-group-item">
                       <div class="row">
                         <div class="col-4 col-md-4">Marine Premium</div>
                         <div class="col-4 col-md-3">
@@ -378,9 +393,22 @@
                         </div>
                       </div>
                     </li>
+                    <li *ngIf="userDetails?.UserType != 'admin'" class="list-group-item">
+                      <div class="row">
+                        <div class="col-4 col-md-4">Marine Premium</div>
+                        <div class="col-4 col-md-3">
+                          {{ getTotalRate() }}
+
+                        </div>
+                        <div class="col-4 col-md-5">
+                          {{ getTotalPremium() }}
+                        </div>
+                      </div>
+                    </li>
 
                     <!-- War/PVT Premium -->
-                    <li class="list-group-item">
+                    <li *ngIf="(QuoteStatus =='RP' ||  QuoteStatus =='RA') &&  userDetails?.UserType == 'admin'"
+                      class="list-group-item">
                       <div class="row">
                         <div class="col-4 col-md-4">
                           <ng-container *ngIf="userDetails?.RegionCode == '100019'">PVT Premium</ng-container>
@@ -468,7 +496,7 @@
 
                     <!-- VAT -->
                     <li class="list-group-item"
-                      *ngIf="regionCode!='100020' && regionCode!='100049' && regionCode!='100048'">
+                      *ngIf="regionCode!='100020' && regionCode!='100049' && regionCode!='100048' && premiumF.vatTaxAmount.value!=0">
                       <div class="row">
                         <div class="col-4 col-md-4">VAT</div>
                         <div class="col-4 col-md-3 text-right">{{premiumF.vatTaxPrecentage.value}}%</div>

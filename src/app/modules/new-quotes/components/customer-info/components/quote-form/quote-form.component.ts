@@ -768,6 +768,10 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           this.dropTransportList = obj.concat(data?.Result)
           // this.dropTransportList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropTransportList, 'transport');
+          if (data?.Result.length === 1) {
+            this.quoteF.modeOfTransport.setValue(data.Result[0].Code);
+            this.onGetCoverDropdownList(1);
+          }
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadedData();
           }
@@ -811,6 +815,10 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           this.dropCoverList = obj.concat(data?.Result)
           // this.dropCoverList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropCoverList, 'cover');
+          if (data?.Result.length === 1) {
+            this.quoteF.cover.setValue(data.Result[0].Code);
+            this.onGetCarriageDropdownList(null, null);
+          }
           if (this.docUploadedData) {
             this.quoteF.cover.setValue(this.editCover)
 
@@ -855,6 +863,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           ];
           this.dropCarriageList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropCarriageList, 'carriage');
+          if (data?.Result.length === 1) {
+            this.quoteF.modeOfCarriage.setValue(data.Result[0].Code);
+          }
           if (this.docUploadedData && mode != null && cover != null) {
             this.quoteF.modeOfCarriage.setValue(this.editmodeOfCarriage)
 
@@ -882,6 +893,10 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           ];
           this.dropOriginCountryList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropOriginCountryList, 'orgCountry');
+          if (data?.Result.length === 1) {
+            this.quoteF.originatingCountry.setValue(data.Result[0].Code);
+            this.onGetOriginCityDropdownList();
+          }
           if (this.docUploadedData && value != 1) {
             let Orgcountry = this.dropOriginCountryList.filter(e => e.ShortCode === this.docUploadedData.CountryOfSupply);
             this.quoteF.originatingCountry.setValue(Orgcountry[0]?.Code)
@@ -947,6 +962,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
             else {
               this.quoteF.originatingCity.setValue(null);
             }
+            if (data?.Result.length === 1 && !isIncluded) {
+              this.quoteF.originatingCity.setValue(data.Result[0].Code);
+            }
           }
         },
         (err) => { },
@@ -973,6 +991,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           ];
           this.dropDestinaCountryList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropDestinaCountryList, 'destCounty');
+          if (data?.Result.length === 1) {
+            this.quoteF.destinationCountry.setValue(data.Result[0].Code);
+          }
           this.onGetDestinaCityDropdownList();
 
         }
@@ -1040,6 +1061,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
             else {
               this.quoteF.destinationCity.setValue(null);
             }
+            if (data?.Result.length === 1 && !isIncluded) {
+              this.quoteF.destinationCity.setValue(data.Result[0].Code);
+            }
             if (this.docUploadedData && this.setDocvalue != 'edit' && this.setDocvalue != 'back' && this.setDocvalue != 'referral') {
               let destinationcity = this.dropDestinaCityList.filter(e => e.ShortCode == this.docUploadedData.PortOfDischarge);
               this.quoteF.destinationCity.setValue(destinationcity[0]?.CodeValue)
@@ -1095,6 +1119,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           ];
           this.dropPackageDescList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropPackageDescList, 'packageDesc');
+          if (data?.Result.length === 1) {
+            this.quoteF.packageDescription.setValue(data.Result[0].Code);
+          }
           // if(this.docUploadedData && value!= 1){
           //   this.quoteF.packageDescription.setValue(this.dropPackageDescList[0].Code)
           // }
@@ -1111,6 +1138,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
     this.values = 'others';
   }
   onGetVesselDropdownList() {
+    // debugger
     this.newshow = false;
     this.vesselSearchList = [];
     // let vseel:any[]=[];
@@ -1292,6 +1320,10 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           ];
           this.dropIncotermsList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropIncotermsList, 'incoterms');
+          if (data?.Result.length === 1 && !(this.docUploadedData && value != 1)) {
+            this.quoteF.incoterms.setValue(data.Result[0].Code);
+            this.onGetIncotermsPrecentDropdownList(1);
+          }
           if (this.docUploadedData && value != 1) {
             let e = this.dropIncotermsList.filter(e => e.CodeDescription == this.docUploadedData?.Incoterm)
             this.quoteF.incoterms.setValue(e[0].Code);
@@ -1333,9 +1365,10 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           ];
           this.dropIncotermsPrecentList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropIncotermsPrecentList, 'incotermsPrec');
-          // if(this.docUploadedData && value!=1){
-          //   this.quoteF.incotermsPercentage.setValue(this.dropIncotermsPrecentList[0].Code)
-          // }
+          if (data?.Result.length === 1) {
+            this.quoteF.incotermsPercentage.setValue(data.Result[0].Code);
+            this.onGetToleranceDropdownList(1);
+          }
 
         }
       },
@@ -1363,6 +1396,9 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           ];
           this.dropToleranceList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropToleranceList, 'tolerance');
+          if (data?.Result.length === 1) {
+            this.quoteF.tolerance.setValue(data.Result[0].Code);
+          }
           // if(this.docUploadedData && value !=1){
           // this.quoteF.incotermsPercentage.setValue(this.dropToleranceList[0].Code) 
           // }
@@ -1425,6 +1461,11 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
           this.dropCurrencyList = obj.concat(data?.Result)
 
           this.newQuotesService.getDropDownList(this.dropCurrencyList, 'currencyList');
+          if (data?.Result.length === 1 && !(this.docUploadedData && value != 1)) {
+            this.quoteF.currency.setValue(data.Result[0].Code);
+            this.quoteF.currencyValue.setValue(data.Result[0].CodeValue);
+            this.onChangeCurrencyDrop();
+          }
           if (this.docUploadedData && value != 1) {
             let curr = this.dropCurrencyList.filter(e => e.ShortCode == this.docUploadedData?.Currency)
             this.quoteF.currency.setValue(curr[0]?.Code);

@@ -593,3 +593,250 @@ textarea.p-inputtextarea {
   color: #9ca3af;
   font-weight: 400;
 }
+ .salama-modal {
+    --s-teal:        #1A7070;
+    --s-teal-dark:   #155858;
+    --s-teal-light:  #E8F4F4;
+    --s-gold:        #F5A721;
+    --s-gold-dark:   #D4891A;
+    --s-gold-light:  #FEF4E0;
+    --s-bg:          #EEF1F3;
+    --s-surface:     #FFFFFF;
+    --s-border:      #D0D9DE;
+    --s-text:        #1A2B3C;
+    --s-muted:       #5E7280;
+    --s-danger:      #D94040;
+    --s-radius:      6px;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+ 
+  /* ── Modal shell ──────────────────────────────────────────────── */
+  .salama-modal .modal-content {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  }
+ 
+  /* ── Header — dark teal ──────────────────────────────────────── */
+  .salama-modal .modal-header {
+    background: var(--s-teal);
+    border-bottom: none;
+    padding: 13px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+ 
+  .salama-modal .modal-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+ 
+  /* Gold icon circle (like section icons in the form) */
+  .salama-modal .header-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--s-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+ 
+  .salama-modal .header-icon svg {
+    width: 15px;
+    height: 15px;
+    fill: #fff;
+  }
+ 
+  .salama-modal .modal-title {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    margin: 0;
+  }
+ 
+  .salama-modal .modal-header .close {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.15s;
+  }
+ 
+  .salama-modal .modal-header .close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+  }
+ 
+  /* ── Body ────────────────────────────────────────────────────── */
+  .salama-modal .modal-body {
+    background: var(--s-bg);
+    padding: 20px;
+  }
+ 
+  /* ── White section card ──────────────────────────────────────── */
+  .salama-section-card {
+    background: var(--s-surface);
+    border: 1px solid var(--s-border);
+    border-radius: var(--s-radius);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+ 
+  /* ── Labels ──────────────────────────────────────────────────── */
+  .salama-modal .input-form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--s-muted);
+    margin-bottom: 5px;
+  }
+ 
+  .text-required {
+    color: var(--s-danger);
+    margin-left: 2px;
+  }
+ 
+  /* ── Inputs ──────────────────────────────────────────────────── */
+  .salama-input {
+    width: 100%;
+    height: 38px;
+    padding: 0 11px;
+    border: 1px solid var(--s-border);
+    border-radius: var(--s-radius);
+    font-size: 13px;
+    color: var(--s-text);
+    background: var(--s-surface);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+ 
+  .salama-input:focus {
+    outline: none;
+    border-color: var(--s-teal);
+    box-shadow: 0 0 0 3px rgba(26, 112, 112, 0.12);
+  }
+ 
+  .salama-input::placeholder {
+    color: #B5C1CB;
+  }
+ 
+  /* ── Toggle switch override ──────────────────────────────────── */
+  .salama-modal .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--s-teal);
+    border-color: var(--s-teal);
+  }
+ 
+  .salama-modal .custom-control-label {
+    font-size: 13px;
+    color: var(--s-text);
+    font-weight: 500;
+  }
+ 
+  /* ── Error messages ──────────────────────────────────────────── */
+  .salama-error {
+    font-size: 12px;
+    color: var(--s-danger);
+    margin-top: 4px;
+  }
+ 
+  /* ── Section divider (manual entry) ─────────────────────────── */
+  .salama-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0 12px;
+    color: var(--s-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+ 
+  .salama-divider::before,
+  .salama-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--s-border);
+  }
+ 
+  /* ── Grid / results table wrapper ────────────────────────────── */
+  .salama-table-wrap {
+    border: 1px solid var(--s-border);
+    border-radius: var(--s-radius);
+    overflow: hidden;
+    margin-top: 4px;
+  }
+ 
+  /* ── Footer ──────────────────────────────────────────────────── */
+  .salama-modal .modal-footer {
+    background: var(--s-surface);
+    border-top: 1px solid var(--s-border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+ 
+  /* ── Buttons ─────────────────────────────────────────────────── */
+  .salama-btn {
+    height: 36px;
+    padding: 0 18px;
+    border-radius: var(--s-radius);
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+ 
+  /* Close — ghost */
+  .salama-btn-secondary {
+    background: #fff;
+    border: 1px solid var(--s-border);
+    color: var(--s-muted);
+  }
+ 
+  .salama-btn-secondary:hover {
+    background: var(--s-bg);
+  }
+ 
+  /* Clear — gold-tinted */
+  .salama-btn-clear {
+    background: var(--s-gold-light);
+    color: #7A4E00;
+    border: 1px solid #F0C060;
+  }
+ 
+  .salama-btn-clear:hover {
+    background: #FDE8B0;
+  }
+ 
+  /* Submit — solid teal (matches form Submit button) */
+  .salama-btn-primary {
+    background: var(--s-teal);
+    color: #ffffff;
+  }
+ 
+  .salama-btn-primary:hover {
+    background: var(--s-teal-dark);
+  }

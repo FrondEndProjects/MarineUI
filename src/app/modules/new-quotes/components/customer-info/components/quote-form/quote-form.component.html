@@ -17,8 +17,8 @@
             [class.pf-invalid]="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
             <label>Mode of Transport <span class="req">*</span></label>
             <p-dropdown [options]="dropTransportList" optionLabel="CodeDescription" optionValue="Code" appendTo="body"
-              formControlName="modeOfTransport" placeholder="Select" [filter]="true" filterBy="CodeDescription" styleClass="w-100"
-              (onChange)="onGetCoverDropdownList(1)">
+              formControlName="modeOfTransport" placeholder="Select" [filter]="true" filterBy="CodeDescription"
+              styleClass="w-100" (onChange)="onGetCoverDropdownList(1)">
             </p-dropdown>
             <small class="p-error"
               *ngIf="(quoteF.modeOfTransport.errors && submitted) || (!quoteF.modeOfTransport.valid && quoteF.modeOfTransport.touched)">
@@ -32,9 +32,9 @@
           <div class="pf"
             [class.pf-invalid]="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
             <label>Cover <span class="req">*</span></label>
-            <p-dropdown [options]="dropCoverList" optionLabel="CodeDescription" optionValue="Code" [filter]="true" filterBy="CodeDescription"
-              formControlName="cover" appendTo="body" placeholder="Select" [filter]="false" styleClass="w-100"
-              (onChange)="onGetCarriageDropdownList(null,null)">
+            <p-dropdown [options]="dropCoverList" optionLabel="CodeDescription" optionValue="Code" [filter]="true"
+              filterBy="CodeDescription" formControlName="cover" appendTo="body" placeholder="Select" [filter]="false"
+              styleClass="w-100" (onChange)="onGetCarriageDropdownList(null,null)">
             </p-dropdown>
             <small class="p-error"
               *ngIf="(quoteF.cover.errors && submitted) || (!quoteF.cover.valid && quoteF.cover.touched)">
@@ -48,8 +48,9 @@
           <div class="pf"
             [class.pf-invalid]="(quoteF.modeOfCarriage.errors && submitted) || (!quoteF.modeOfCarriage.valid && quoteF.modeOfCarriage.touched)">
             <label>Mode of Carriage <span class="req">*</span></label>
-            <p-dropdown [options]="dropCarriageList" optionLabel="CodeDescription" optionValue="Code" appendTo="body" [filter]="true" filterBy="CodeDescription"
-              formControlName="modeOfCarriage" placeholder="Select" [filter]="false" styleClass="w-100">
+            <p-dropdown [options]="dropCarriageList" optionLabel="CodeDescription" optionValue="Code" appendTo="body"
+              [filter]="true" filterBy="CodeDescription" formControlName="modeOfCarriage" placeholder="Select"
+              [filter]="false" styleClass="w-100">
             </p-dropdown>
             <small class="p-error"
               *ngIf="(quoteF.modeOfCarriage.errors && submitted) || (!quoteF.modeOfCarriage.valid && quoteF.modeOfCarriage.touched)">
@@ -197,7 +198,7 @@
         </div>
 
         <!-- War Cover / PVT Cover -->
-        <div class="col-12 col-sm-6 col-md-4">
+        <div *ngIf="insurenceId !='100053'" class="col-12 col-sm-6 col-md-4">
           <div class="pf">
             <label *ngIf="userDetails?.RegionCode=='100019'">PVT Cover</label>
             <label *ngIf="userDetails?.RegionCode!='100019'">War Cover</label>
@@ -333,8 +334,8 @@
             <label>Currency <span class="req">*</span></label>
             <div class="currency-group">
               <p-dropdown [options]="dropCurrencyList" optionLabel="CodeDescription" appendTo="body" optionValue="Code"
-                formControlName="currency" placeholder="Select" styleClass="currency-drop" [filter]="true" filterBy="CodeDescription"
-                (onChange)="onChangeCurrencyDrop()">
+                formControlName="currency" placeholder="Select" styleClass="currency-drop" [filter]="true"
+                filterBy="CodeDescription" (onChange)="onChangeCurrencyDrop()">
               </p-dropdown>
               <input pInputText formControlName="currencyValue"
                 [value]="quoteF.currency.value | currency: dropCurrencyList" class="currency-val p-inputtext-sm"
@@ -390,8 +391,8 @@
             <label>Incoterms <span class="req">*</span></label>
             <!-- <div class="currency-group"> -->
             <p-dropdown [options]="dropIncotermsList" optionLabel="CodeDescription" appendTo="body"
-              (onChange)="onGetIncotermsPrecentDropdownList(1)" styleClass="w-100" optionValue="Code" [filter]="true" filterBy="CodeDescription"
-              formControlName="incoterms" placeholder="Select" styleClass="currency-drop">
+              (onChange)="onGetIncotermsPrecentDropdownList(1)" styleClass="w-100" optionValue="Code" [filter]="true"
+              filterBy="CodeDescription" formControlName="incoterms" placeholder="Select" styleClass="currency-drop">
             </p-dropdown>
             <!-- <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body" optionValue="Code"
               formControlName="incotermsPercentage" placeholder="%" styleClass="currency-val-sm">
@@ -406,9 +407,9 @@
             <!-- <p-dropdown [options]="dropIncotermsList" optionLabel="CodeDescription" appendTo="body" styleClass="w-100" optionValue="Code"
               formControlName="incoterms" placeholder="Select" styleClass="currency-drop">
             </p-dropdown> -->
-            <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body" [filter]="true" filterBy="CodeDescription"
-              (onChange)="onGetToleranceDropdownList(1)" optionValue="Code" formControlName="incotermsPercentage"
-              placeholder="%" styleClass="w-100">
+            <p-dropdown [options]="dropIncotermsPrecentList" optionLabel="CodeDescription" appendTo="body"
+              [filter]="true" filterBy="CodeDescription" (onChange)="onGetToleranceDropdownList(1)" optionValue="Code"
+              formControlName="incotermsPercentage" placeholder="%" styleClass="w-100">
             </p-dropdown>
             <!-- </div> -->
           </div>
@@ -418,8 +419,9 @@
         <div class="col-12 col-sm-6 col-md-4">
           <div class="pf">
             <label>Tolerance <span class="req">*</span></label>
-            <p-dropdown [options]="dropToleranceList" appendTo="body" [filter]="true" filterBy="CodeDescription" optionLabel="CodeDescription" optionValue="Code"
-              formControlName="tolerance" placeholder="Select" styleClass="w-100">
+            <p-dropdown [options]="dropToleranceList" appendTo="body" [filter]="true" filterBy="CodeDescription"
+              optionLabel="CodeDescription" optionValue="Code" formControlName="tolerance" placeholder="Select"
+              styleClass="w-100">
             </p-dropdown>
           </div>
         </div>
@@ -510,41 +512,238 @@
     </div>
   </div>
 </form>
-
 <ng-template #myModal2 let-modal>
+
+  <!-- Wrapper applies all Salama CSS variables -->
+  <div class="salama-modal">
+
+    <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
+
+      <!-- ════ HEADER ══════════════════════════════════════════════ -->
+      <div class="modal-header">
+
+        <div class="modal-header-left">
+          <!-- Gold circle with ship/vessel SVG icon -->
+          <div class="header-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21H4l2-8h12l2 8zm-8-18a4 4 0 014 4v2H8V7a4
+                       4 0 014-4zm6 6V7A6 6 0 006 7v2H3l-1 2h20l-1-2h-3z" />
+            </svg>
+          </div>
+          <h5 class="modal-title" id="exampleModalLabel">Vessel Search</h5>
+        </div>
+
+        <button type="button" #myModalClose class="close" data-dismiss="modal" aria-label="Close"
+          (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+
+      <!-- ════ BODY ════════════════════════════════════════════════ -->
+      <div class="modal-body">
+        <ng-container>
+
+          <!-- ── Search input row (shown when values != 'None') ── -->
+          <div class="salama-section-card" *ngIf="values != 'None'">
+            <div class="row align-items-end">
+
+              <div class="col-12 col-md-7 col-lg-8">
+                <div class="input-control-container">
+                  <label class="input-form-label">
+                    Vessel Name <span class="text-required">*</span>
+                  </label>
+                  <input type="text" class="salama-input" maxlength="100" [(ngModel)]="VesselName"
+                    (keyup)="onGetVesselDropdownList()" placeholder="Type to search vessel…">
+                  <div class="salama-error" *ngIf="titleError">
+                    This field is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-5 col-lg-4 d-flex align-items-center" style="padding-bottom: 4px;">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch3" [checked]="values == 'None'"
+                    (change)="none($event.target.checked)">
+                  <label class="custom-control-label" for="switch3">
+                    Enter manually
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ── Manual entry block (shown when values == 'None') ── -->
+          <div *ngIf="values == 'None'">
+            <div class="salama-divider">Manual vessel entry</div>
+
+            <div class="salama-section-card">
+              <div class="row">
+
+                <div class="col-12 col-md-7 col-lg-8">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Vessel Name</label>
+                    <input type="text" class="salama-input" placeholder="Enter vessel name" maxlength="100"
+                      [(ngModel)]="VesselNames">
+                    <div class="salama-error" *ngIf="manshow">
+                      Please fill vessel name
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-5 col-lg-4">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Manufacture Year</label>
+                    <input type="text" class="salama-input" placeholder="e.g. 2018" maxlength="10"
+                      [(ngModel)]="ManufactureYear">
+                    <div class="salama-error" *ngIf="manshow">
+                      Please fill manufacture year
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Toggle to switch back to search -->
+                <div class="col-12 mt-3">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch3b" [checked]="values == 'None'"
+                      (change)="none($event.target.checked)">
+                    <label class="custom-control-label" for="switch3b">
+                      Enter manually
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Results grid ─────────────────────────────────── -->
+          <div *ngIf="!newshow">
+            <ng-container *ngIf="vesselSearchList.length != 0">
+              <div class="salama-table-wrap">
+                <app-grid-table [cols]="columnHeader" [data]="vesselSearchList" [filterValue]="filterValue"
+                  (onSelectCustomer)="onSelectCustomer($event, $event.checked, modal)">
+                </app-grid-table>
+              </div>
+            </ng-container>
+
+            <div class="salama-error" style="margin-top: 10px;" *ngIf="manshows">
+              Please select one vessel from the list
+            </div>
+          </div>
+
+        </ng-container>
+      </div><!-- /modal-body -->
+
+      <!-- ════ FOOTER ══════════════════════════════════════════════ -->
+      <div class="modal-footer">
+
+        <button type="button" class="salama-btn salama-btn-secondary" data-dismiss="modal"
+          (click)="modal.dismiss('Cross click')">
+          Close
+        </button>
+
+        <button type="button" class="salama-btn salama-btn-clear" *ngIf="vesselSearchList.length != 0"
+          (click)="clearSearch()">
+          Clear
+        </button>
+
+        <!-- Teal submit — matches form's Submit button style -->
+        <button type="button" class="salama-btn salama-btn-primary" (click)="submits(modal)">
+          <!-- Checkmark icon -->
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          Submit
+        </button>
+
+      </div>
+
+    </div><!-- /modal-content -->
+  </div><!-- /salama-modal -->
+
+</ng-template>
+<!-- <ng-template #myModal2 let-modal>
   <div class="modal-dialog modal-dialog-scrollable modal-content m-0 p-0" role="document">
-    <div class="modal-header" style="background:linear-gradient(90deg,#1B7B8A,#145f6c); color:#fff;">
-      <h5 style="color:#fff;" class="modal-title mb-0"><i class="fas fa-ship me-2"></i>Vessel Search</h5>
-      <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss('Cross click')"></button>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Vessel Search</h5>
+      <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
     </div>
     <div class="modal-body">
-      <div class="row mb-3">
-        <div class="col-12 col-md-8 offset-md-2">
-          <span class="p-input-icon-left w-100 customer-search">
-            <!-- <i class="pi pi-search"></i> -->
-            <input pInputText [(ngModel)]="vesselFilter" placeholder="Search vessel..." class="w-100" />
-          </span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <ng-container *ngIf="dropVesselList?.length > 0">
-            <app-material-table [cols]="vesselColumns" [data]="dropVesselList" [filterValue]="vesselFilter"
-              (onSelectCustomer)="onSelectVessel($event, modal)">
-            </app-material-table>
-          </ng-container>
-          <ng-container *ngIf="!dropVesselList || dropVesselList?.length === 0">
-            <div class="text-center py-4 text-muted">
-              <i class="fas fa-ship fa-2x mb-2 d-block"></i>
-              No vessels found
+      <ng-container>
+        <div class="row">
+          <div class="col-12 col-md-4 col-lg-4" *ngIf="values!='None'">
+            <div class="input-control-container">
+              <label class="input-form-label">Vessel Name<span class="text-required">*</span></label>
+              <input type="text" style="height: 40px !important;
+                  width: 100% !important;" class="input-form-control2 with-icon" maxlength="100"
+                [(ngModel)]="VesselName" (keyup)="onGetVesselDropdownList()" placeholder="Enter Vessel Name">
+              <div class="input-form-error" *ngIf="titleError">
+                <div class="error-text">
+                  This field is required
+                </div>
+              </div>
             </div>
-          </ng-container>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="switch3" [checked]="values=='None'"
+                (change)="none($event.target.checked)">
+              <label class="custom-control-label" for="switch3">&nbsp;Other</label>
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="row" *ngIf="values=='None'">
+          <div class="col-md-5 col-xl-5 col-lg-5 col-12">
+            <div class="input-control-container mt-2">
+              <label class="input-form-label">Vessel Name</label>
+              <div class="input-form-box">
+                <input type="text" style="width:110% !important;" placeholder="Vessel Name"
+                  class="input-form-control without-icon" maxlength="100" [(ngModel)]="VesselNames">
+              </div>
+              <div *ngIf="manshow">
+                <div style="color:red;font-size:14px !important;"> Please Fill Vessel Name</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-12 col-md-2 col-xl-2 col-lg-2">
+            <div class="input-control-container mt-2" *ngIf="values=='None'">
+              <label class="input-form-label">Manufacture Year</label>
+              <div class="input-form-box">
+                <input type="text" placeholder="Manufacture Year" class="input-form-control without-icon" maxlength="10"
+                  [(ngModel)]="ManufactureYear">
+              </div>
+              <div *ngIf="manshow">
+                <div style="color:red;font-size:14px !important;"> Please Fill Manufacute Year</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row" *ngIf="!newshow">
+          <ng-container *ngIf="vesselSearchList.length!=0">
+            <app-grid-table [cols]="columnHeader" [data]="vesselSearchList" [filterValue]="filterValue"
+              (onSelectCustomer)="onSelectCustomer($event,$event.checked,modal)">
+            </app-grid-table>
+          </ng-container>
+          <div *ngIf="manshows">
+            <div style="color:red;font-size:14px !important;"> Please Select One Vessel Name</div>
+          </div>
+        </div>
+      </ng-container>
+
     </div>
     <div class="modal-footer">
-      <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-secondary p-button-sm p-button-outlined"
-        (click)="modal.dismiss('Cross click')"></button>
+
+      <button type="button" class="btn btn-secondary" data-dismiss="modal"
+        (click)="modal.dismiss('Cross click')">Close</button>
+      <button type="button" class="btn btn-warning" *ngIf="vesselSearchList.length!=0"
+        (click)="clearSearch()">Clear</button>
+      <button type="button" class="btn btn-primary" (click)="submits(modal)">Submit</button>
     </div>
   </div>
-</ng-template>
+</ng-template> -->

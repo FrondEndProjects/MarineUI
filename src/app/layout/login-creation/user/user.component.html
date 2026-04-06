@@ -611,6 +611,7 @@
             <tr>
                 <th style="width: 3rem">Select</th>
                 <th>Product Details</th>
+                <th style="width: 12rem">Min Premium</th>
                 <th style="width: 12rem">Sum Insured</th>
                 <th style="width: 8rem">Comm %</th>
                 <th style="width: 12rem">Permissions (Credit/Check)</th>
@@ -627,6 +628,7 @@
                     </mat-checkbox>
                 </td>
                 <td><span class="fw-bold">{{product.ProductName}}</span></td>
+                <td><input pInputText [(ngModel)]="product.minimumPremium" class="w-full" maxlength="16" /></td>
                 <td><input pInputText [(ngModel)]="product.SumInsuredEnd" class="w-full" /></td>
                 <td><input pInputText [(ngModel)]="product.CommissionPercent" class="w-full text-center" /></td>
                 <td>

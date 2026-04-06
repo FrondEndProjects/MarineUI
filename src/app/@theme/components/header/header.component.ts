@@ -248,28 +248,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['product-layout/product']);
 
   }
-  // onRedirectMenu(rowData) {
-  //       this.isMobileMenuOpen = false;
-  //   this.activeDropdown = null;
-  //   if (this.ProductId == '11' && rowData.title == 'New Quote') {
-  //     let value = 'openCover'
-  //     this.router.navigate([`/marine-opencover/new-quotes/customer-info`], { queryParams: { value } });
-  //   }
-  //   else {
-  //     if (rowData.title == "Referral") {
-  //       this.userDetails.UserType = 'Issuer'
-  //     }
-  //     else {
-  //       this.userDetails.UserType = 'admin'
-  //     }
-  //     if ((this.router.url == '/marine-opencover/new-quotes/customer-info' || this.router.url == '/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link == '/marine-opencover/new-quotes') {
-  //       sessionStorage.removeItem('ReferenceNo');
-  //       window.location.reload()
-  //     }
-  //     else this.router.navigate([rowData.link]);
-  //   }
+  onRedirectMenu(rowData) {
+    this.isMobileMenuOpen = false;
+    this.activeDropdown = null;
+    if (this.ProductId == '11' && rowData.title == 'New Quote') {
+      let value = 'openCover'
+      this.router.navigate([`/marine-opencover/new-quotes/customer-info`], { queryParams: { value } });
+    }
+    else {
+      if (rowData.title == "Referral") {
+        this.userDetails.UserType = 'Issuer'
+      }
+      else {
+        this.userDetails.UserType = 'admin'
+      }
+      if ((this.router.url == '/marine-opencover/new-quotes/customer-info' || this.router.url == '/marine-opencover/new-quotes/customer-info?value=edit') && rowData.link == '/marine-opencover/new-quotes') {
+        sessionStorage.removeItem('ReferenceNo');
+        window.location.reload()
+      }
+      else this.router.navigate([rowData.link]);
+    }
 
-  // }
+  }
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
@@ -282,18 +282,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return rowData?.children && rowData.children.length > 0;
   }
 
-  onRedirectMenu(rowData: any) {
-    this.isMobileMenuOpen = false;
+  // onRedirectMenu(rowData: any) {
+  //   this.isMobileMenuOpen = false;
 
-    if (this.ProductId === '11' && rowData.title === 'New Quote') {
-      this.router.navigate(
-        ['/marine-opencover/new-quotes/customer-info'],
-        { queryParams: { value: 'openCover' } }
-      );
-    } else {
-      this.router.navigate([rowData.link]);
-    }
-  }
+  //   if (this.ProductId === '11' && rowData.title === 'New Quote') {
+  //     this.router.navigate(
+  //       ['/marine-opencover/new-quotes/customer-info'],
+  //       { queryParams: { value: 'openCover' } }
+  //     );
+  //   } else {
+  //     this.router.navigate([rowData.link]);
+  //   }
+  // }
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -313,7 +313,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateHome() {
     this.menuService.navigateHome();
+    debugger
     if (this.userDetails?.Result?.InsuranceId == '100053' || '100044') {
+      if (this.userDetails.Result?.UserTypeAlt == 'admin') {
+        this.userDetails.Result['UserType'] = 'Issuer';
+      }
       this.router.navigate([`/product`]);
     }
     else {
@@ -380,6 +384,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   homeRoute() {
     if (this.userDetails?.Result?.InsuranceId == '100053' || '100044') {
+    
+      if (this.userDetails.Result?.UserTypeAlt == 'admin') {
+         const userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+        userDetails.Result['UserType'] = 'Issuer';
+        userDetails.Result['ProductId'] = null;
+        userDetails.Result['ProductName'] = null;
+        userDetails.Result['UserTypeAlt'] = "Issuer";
+        userDetails.LoginResponse['UserType'] = 'Issuer';
+        userDetails.LoginResponse['ProductId'] = null;
+        userDetails.LoginResponse['ProductName'] = null;
+        userDetails.LoginResponse['UserTypeAlt'] = "Issuer";
+         sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
+      }
       this.router.navigate([`/product`]);
     }
     else {

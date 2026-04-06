@@ -185,7 +185,12 @@ export class CustomerInfoComponent implements OnInit {
       this.bankForm.reset();
       this.quoteF.originatingWarehouse.setValue('NO');
       this.quoteF.destinationWarehouse.setValue('NO');
-      this.quoteF.warSrcc.setValue('NO');
+      if (this.userDetails?.InsuranceId == '100044' || this.userDetails?.InsuranceId == '100053') {
+        this.quoteF.warSrcc.setValue('YES');
+      }
+      else {
+        this.quoteF.warSrcc.setValue('NO');
+      }
       this.quoteF.TranshipmentYN.setValue('N');
       this.quoteF.StoragePeriodYn.setValue('N');
       this.quoteF.warOnLand.setValue('NO');
@@ -329,6 +334,13 @@ export class CustomerInfoComponent implements OnInit {
     this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {
+    const isReloaded = sessionStorage.getItem('quoteReloaded');
+
+    if (!isReloaded) {
+      sessionStorage.setItem('quoteReloaded', 'true');
+      window.location.reload();
+      return;
+    }
     // this.onChangeChannel('Direct')
     const urlLink = `${this.ApiUrl1}quote/edit`;
     const reqData = {
@@ -416,7 +428,6 @@ export class CustomerInfoComponent implements OnInit {
           this.activatedRoute.queryParams.subscribe(params => {
             this.referralStatus = params['sts'];
           });
-
           if (this.editQuoteData.EndtTypeId || this.editQuoteData?.FinalizeYn == 'Y' || this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') {
 
             for (var control in this.customerForm.controls) {
@@ -426,6 +437,10 @@ export class CustomerInfoComponent implements OnInit {
             for (var control in this.quoteForm.controls) {
               this.quoteForm.controls[control].disable();
             }
+            for (var control in this.brokerForm.controls) {
+              this.brokerF.controls[control].disable();
+            }
+           
             if (this.sessionStorageService.sessionStorgaeModel.referral != 'Approved') {
               for (var control in this.bankForm.controls) {
                 this.bankForm.controls[control].disable();
@@ -435,7 +450,10 @@ export class CustomerInfoComponent implements OnInit {
             if (this.editQuoteData.EndtTypeId) {
               this.onCheckDisabledFileds(this.editQuoteData.EndtTypeId);
             }
+
+
           } else {
+            
             for (var control in this.customerForm.controls) {
               this.customerForm.controls[control].enable();
 
@@ -452,6 +470,7 @@ export class CustomerInfoComponent implements OnInit {
       },
       (err) => { },
     );
+     sessionStorage.removeItem('quoteReloaded');
   }
   onendorsementSelected() {
     var urlLink: any = `${this.ApiUrl1}api/endorsement/selected`;
@@ -498,7 +517,13 @@ export class CustomerInfoComponent implements OnInit {
     }
   }
   onSaveQuote() {
+    // const isReloaded = sessionStorage.getItem('quoteReloaded');
 
+    // if (!isReloaded) {
+    //   sessionStorage.setItem('quoteReloaded', 'true');
+    //   window.location.reload();
+    //   return;
+    // }
     if ((this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') || this.isOpneCover || this.editQuoteData?.FinalizeYn == 'Y') {
       for (var control in this.customerForm.controls) {
         this.customerForm.controls[control].enable();
@@ -784,6 +809,13 @@ export class CustomerInfoComponent implements OnInit {
                   this.bankForm.controls[control].disable();
                 }
               }
+              // const isReloaded = sessionStorage.getItem('quoteReloaded');
+
+              // if (!isReloaded) {
+              //   sessionStorage.setItem('quoteReloaded', 'true');
+              //   window.location.reload();
+              //   return;
+              // }
             }
           },
           (err) => { },
@@ -1193,7 +1225,12 @@ export class CustomerInfoComponent implements OnInit {
             this.brokerF.borker.setValue(e[0]?.Code);
           }
           else {
-            this.brokerF.borker.setValue('');
+            if (this.brList.length === 1) {
+              this.brokerF.borker.setValue(this.brList[0].Code);
+              this.brokerFormComponent?.onChangeBroker();
+            } else {
+              this.brokerF.borker.setValue('');
+            }
           }
 
           // this.newQuotesService.BrokerList = data?.Result;
@@ -1283,13 +1320,13 @@ export class CustomerInfoComponent implements OnInit {
     return null;
   }
 
-formatDateForApi(date: Date): string | null {
-  if (!date) return null;
+  formatDateForApi(date: Date): string | null {
+    if (!date) return null;
 
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
 
-  return `${day}/${month}/${year}`;
-}
+    return `${day}/${month}/${year}`;
+  }
 }

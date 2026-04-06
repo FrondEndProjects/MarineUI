@@ -41,6 +41,7 @@ import { DARK_THEME } from './styles/theme.dark';
 import { ToolbarColumnsLayoutComponent } from './layouts/toolbar-columns/toolbar-columns.layout';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -75,7 +76,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule,NgSelectModule,FormsModule, ...NB_MODULES],
+  imports: [CommonModule,NgSelectModule,FormsModule, ButtonModule,...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

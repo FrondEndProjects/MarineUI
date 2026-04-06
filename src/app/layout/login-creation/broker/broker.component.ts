@@ -238,8 +238,8 @@ export class BrokerComponent {
     let ReqObj = {
       "UserType": "Broker"
     }
-    // let urlLink = `${this.CommonApiUrl}dropdown/subusertype`;
-    let urlLink = `${this.AdminUrl}dropdown/subusertype`;
+    let urlLink = `${this.CommonApiUrl}dropdown/subusertype`;
+    // let urlLink = `${this.AdminUrl}dropdown/subusertype`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -793,8 +793,8 @@ export class BrokerComponent {
     let ReqObj = {
       "LoginId": this.loginId
     }
-    // let urlLink = `${this.CommonApiUrl}master/dropdown/superadmincompanies`;
-    let urlLink = `${this.AdminUrl}master/dropdown/superadmincompanies`;
+    let urlLink = `${this.CommonApiUrl}master/dropdown/superadmincompanies`;
+    // let urlLink = `${this.AdminUrl}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if (data.Result) {
@@ -1410,6 +1410,7 @@ export class BrokerComponent {
       (data: any) => {
         if (data.Result) {
           let selectedList = data.Result;
+          this.selectedList = data.Result;
           this.newList = [];
           this.newslist = [];
           console.log('KKKKKKKKKK', selectedList);
@@ -1951,15 +1952,16 @@ export class BrokerComponent {
       this.newslist[index].EffectiveDateStart = date;
     }
   }
+  selectedList:any;
   onSaveProductDetails() {
     //let selectedList = this.productData.filter(ele=>ele.SelectedYn=='Y');
     let selectedList = [];
     console.log('KKKKKKKKKKKKK', this.newslist);
     if (this.addProduct) {
-      selectedList = this.newslist.filter(ele => ele.SelectedYn == 'Y');
+      selectedList = this.selectedList.filter(ele => ele.SelectedYn == 'Y');
     }
     else if (this.editProduct) {
-      selectedList = this.newList.filter(ele => ele.SelectedYn == 'N');
+      selectedList = [...this.newList];
     }
     let finalObj = []; let i = 0;
     console.log(selectedList, "sdfdsfsdf");
@@ -1992,6 +1994,9 @@ export class BrokerComponent {
         "LoginId": this.userLoginId,
         "Remarks": "none",
         "CreatedBy": entry.CreatedBy,
+        "MinimumPremium": entry.minimumPremium,
+        "LoadingofPremium": entry.LoadingofPremium,
+        "DiscountofPremium": entry.DiscountofPremium,
         //"SelectedYn":entry.SelectedYn
       }
       finalObj.push(Obj);

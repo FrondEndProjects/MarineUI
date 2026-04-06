@@ -354,7 +354,7 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
       border-radius: 8px 8px 0 0;
     }
 
-    .p-datatable-thead > tr > th {
+    .p-datatable-thead>tr>th {
       background: $salama-primary;
       color: $salama-white;
       font-size: 0.82rem;
@@ -368,7 +368,7 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
       }
     }
 
-    .p-datatable-tbody > tr > td {
+    .p-datatable-tbody>tr>td {
       font-size: 0.855rem;
       color: $salama-text;
       padding: 10px 12px;
@@ -376,7 +376,7 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
       border-width: 0 0 1px 0;
     }
 
-    .p-datatable-tbody > tr:hover > td {
+    .p-datatable-tbody>tr:hover>td {
       background: $salama-primary-light;
     }
 
@@ -530,4 +530,43 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
     padding: 0 1rem;
   }
 }
-.imgwidAlt  { width: 102px !important; margin-left: 0; height: 45px; background: #fff; border-radius: 10px; padding: 10px; }
+
+.imgwidAlt {
+  width: 102px !important;
+  margin-left: 0;
+  height: 45px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+// .control-item {
+//   display: none !important;
+// }
+
+.control-items {
+  margin-right: 5px !important;
+  padding: 8px !important;
+  color: #fff;
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.user-action {
+  border: none;
+  padding: 0;
+}
+
+.brand-sub {
+  color: #fff;
+}
+
+.control-items nb-icon {
+  margin-right: 5px !important;
+  padding: 8px !important;
+  color: #fff;
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+}

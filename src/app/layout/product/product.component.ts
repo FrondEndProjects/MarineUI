@@ -145,8 +145,8 @@ export class ProductComponent {
   }
 
   getTypeList() {
-    // const urlLink = `${this.CommonApiUrl}dropdown/subusertype`;
-    const urlLink = `${this.AdminUrl}dropdown/subusertype`;
+    const urlLink = `${this.CommonApiUrl}dropdown/subusertype`;
+    // const urlLink = `${this.AdminUrl}dropdown/subusertype`;
     const userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if (userDetails) {
       const ReqObj = {

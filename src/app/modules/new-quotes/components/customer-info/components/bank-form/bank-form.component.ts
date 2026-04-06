@@ -23,8 +23,8 @@ export class BankFormComponent implements OnInit {
   setDocvalue: any
   public bankForm!: FormGroup;
   public dropBankList: any[] = [];
-  showBillPanel = true;
-  showBankPanel = true;
+  showBillPanel = false;
+  showBankPanel = false;
   @ViewChild('formDirective') public bankFormDirective: NgForm;
   pattern = {
     0: {
@@ -105,6 +105,9 @@ export class BankFormComponent implements OnInit {
           ];
           this.dropBankList = obj.concat(data?.Result)
           this.newQuotesService.getDropDownList(this.dropBankList, 'bank');
+          if (data?.Result.length === 1) {
+            this.quoteF.lCBank.setValue(data.Result[0].Code);
+          }
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadData();
           }

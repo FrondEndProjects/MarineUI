@@ -8,6 +8,19 @@
     <base href="/">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' data: blob:;
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    connect-src 'self' *;
+    worker-src 'self' blob:;
+    frame-src 'self' blob:;
+    form-action 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'none';" /> -->
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
@@ -30,7 +43,23 @@
             </div>
         </div>
     </app-root>
-
+  <script>
+    document.addEventListener('contextmenu', event=> event.preventDefault());
+    document.onkeydown = function (e) {
+      if (event.keyCode == 123) {
+        return false;
+      }
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+        return false;
+      }
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+        return false;
+      }
+      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+        return false;
+      }
+    }
+  </script>
     <style>
         @-webkit-keyframes spin {
             0% {

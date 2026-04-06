@@ -1,0 +1,1781 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+// themes - our custom or/and out of the box themes
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import 'themes';
+// framework component themes (styles tied to theme variables)
+@import 'node_modules/@nebular/theme/styles/globals';
+@import 'node_modules/@nebular/auth/styles/globals';
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/maps"; // **Newly added!**
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/utilities";
+@import "node_modules/bootstrap/scss/helpers";
+@import "node_modules/bootstrap/scss/utilities/api";
+@import "../styles/variables.scss";
+// loading progress bar theme
+@import './pace.theme';
+@import './layout';
+@import './overrides';
+
+// install the framework and custom global styles
+@include nb-install() {
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+  @include ngx-layout();
+  // loading progress bar
+  @include ngx-pace-theme();
+  @include nb-overrides();
+}
+
+;
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --teal: #1C7988;
+  --teal-dark: #145f6c;
+  // --teal: rgb(30 64 175);
+  // --teal-dark: #042181;
+}
+
+$teal: var(--teal);
+$teal-dark: var(--teal-dark);
+
+.nb-theme-default [nbInput].status-basic {
+  background-color: #fff !important;
+  border-color: #e4e9f2;
+  color: #222b45;
+}
+
+button:focus {
+  outline: none !important;
+  border: 0 !important;
+}
+
+:root {
+  --logo-color-1: #00a9ed;
+  --logo-color-2: #530d58;
+  --font-size-95: 95%;
+
+  --our-font-family: 'Poppins', sans-serif;
+  --doc-height: 100%;
+}
+
+* {
+  font-family: var(--our-font-family);
+
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  /* fallback for Js load */
+  height: var(--doc-height);
+}
+
+.table thead th {
+  font-weight: 500;
+}
+
+.text-required {
+  padding: 3px;
+  color: red !important;
+}
+
+.logo-bg-1 {
+  background-color: var(--logo-color-1) !important;
+}
+
+.logo-bg-2 {
+  background-color: var(--logo-color-2) !important;
+}
+
+body,
+li {
+  font-family: var(--our-font-family) !important;
+  font-size: 80%;
+
+}
+
+.font-size-95 {
+  font-size: 95%;
+}
+
+label {
+  margin: 0;
+}
+
+.vision-card {
+  background-color: white;
+  margin: .5rem 0;
+}
+
+.vision-card-header {
+  background-color: ghostwhite;
+  color: darkblue;
+  padding: .5rem 1rem;
+}
+
+.vision-card-body {
+  background-color: white;
+  padding: 1rem;
+}
+
+/* CSS */
+.button-34 {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: var(--our-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  max-width: 280px !important;
+}
+
+.customPadding {
+  padding-left: 50px !important;
+  padding-right: 50px !important;
+}
+
+/* Custom Formcontrol */
+.input-control-container .input-form-label {
+  font-weight: 400;
+  font-family: var(--our-font-family);
+  font-size: 90%;
+
+}
+
+.input-form-box .input-form-control {
+  min-width: 85%;
+  max-width: 85%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px !important;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all .3s;
+  height: 35px;
+}
+
+.input-form-box .input-form-control3 {
+  min-width: 85%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px !important;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all .3s;
+}
+
+.input-form-box .input-form-control3:hover {
+  border-color: var(--logo-color-1);
+  transition: 1s;
+}
+
+.input-form-box .input-form-control3.without-icon {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box .input-form-control3.with-icon {
+  padding-left: 60px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box .input-form-control2 {
+  min-width: 100%;
+  max-width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all .3s;
+  height: 35px;
+}
+
+.input-form-box .input-form-control:hover {
+  border-color: var(--logo-color-1);
+  transition: 1s;
+}
+
+.input-form-box .input-form-control.without-icon {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box .input-form-control.with-icon {
+  padding-left: 60px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box .input-form-control.with-icon1 {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* border-left: 5px solid dodgerblue */
+}
+
+.input-form-box {
+  position: relative;
+}
+
+.input-form-box .input-form-icon {
+  position: absolute;
+  left: 11px;
+  top: 11px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.input-control-container .input-form-error {
+  font-size: 90%;
+  color: red;
+  font-weight: 100;
+}
+
+.input-control-container2 .input-form-error {
+  font-size: 90%;
+  color: red;
+  font-weight: 100;
+}
+
+.input-control-container .input-form-radio-box {
+  margin: 7px 0;
+}
+
+.input-control-container2 .input-form-radio-box {
+  margin: 7px 0;
+}
+
+ng-select input {
+  border: none !important;
+  width: 85%;
+}
+
+.input-control-container2 .ng-select.ng-select-single .ng-select-container {
+  width: 100% !important;
+  height: 35px;
+  border: 1px solid #d9d9d9 !important;
+  margin: 8px 0;
+  border-radius: 5px !important;
+  padding: 0 15px;
+  transition: all .3s
+}
+
+.input-control-container .ng-select.ng-select-single .ng-select-container {
+  max-width: 85% !important;
+  height: 35px;
+  border: 1px solid #d9d9d9 !important;
+  margin: 8px 0;
+  border-radius: 5px !important;
+  padding: 0 15px;
+  transition: all .3s
+}
+
+.input-control-container .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 0 25px;
+}
+
+.input-control-container2 .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 0 25px;
+}
+
+.input-control-container .ng-select.ng-select-single .ng-select-container:hover {
+  border: 1px solid dodgerBlue !important;
+}
+
+.input-control-container2 .ng-select.ng-select-single .ng-select-container:hover {
+  border: 1px solid dodgerBlue !important;
+}
+
+.input-control-container .ng-select.ng-select-single .ng-select-container:focus-within {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.input-control-container2 .ng-select.ng-select-single .ng-select-container:focus-within {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.input-form-box .input-form-select {
+  max-width: 100% !important;
+  border-radius: .7rem;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.input-control-container .ng-select .ng-clear-wrapper {
+  display: none;
+}
+
+.ng-dropdown-panel.ng-select-top,
+.ng-dropdown-panel.ng-select-bottom {
+  border-radius: 0.7rem !important;
+  padding: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 86%;
+  z-index: 999999 !important;
+
+}
+
+.input-form-box .search-control {
+  border: 0;
+}
+
+.input-control-container .search-input {
+  height: 41px;
+  border: 0;
+  background-color: ghostwhite;
+}
+
+.radio-toolbar input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+.radio-toolbar label {
+  margin-left: 0px;
+  display: inline-block;
+  background-color: white;
+  padding: 2px 10px;
+  border: 1px solid lightgrey;
+  cursor: pointer;
+}
+
+.radio-toolbar input[type="radio"]:checked+label {
+  background-color: var(--logo-color-2);
+  color: white;
+}
+
+.vision-grid {
+  grid-area: main;
+  display: grid;
+  grid-auto-rows: auto;
+}
+
+.vision-grid .vision-grid-item {
+  overflow: hidden;
+}
+
+.product-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  right: 0;
+  opacity: 1;
+  background-color: #05050c59;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+}
+
+.product-container:hover .product-overlay {
+  width: 100%;
+  left: 0;
+}
+
+.product-text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.product-gridBorderStyle {
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px darkorange;
+}
+
+.product-gridBorderStyle:hover {
+  transform: scale(1.0);
+}
+
+.left-line {
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  color: var(--logo-color-2);
+  margin: 1rem 0;
+}
+
+.left-line:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid #ccc;
+  margin: auto 5px;
+}
+
+.middle-line {
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  color: #e6823a;
+  margin: 1rem 0;
+}
+
+.start-line {
+  flex-direction: row;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 1rem 0;
+}
+
+.middle-line:before,
+.middle-line:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 2px solid #eee;
+  margin: auto 5px;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.imag-card {
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  padding: 1rem;
+  background-color: #f1f1f1;
+  position: relative;
+  height: 120px;
+  text-align: center;
+  border: 3px dotted #ccc;
+}
+
+.visionloading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1px);
+  height: 100vh;
+  width: 100%;
+}
+
+.loader-box .spinner-loader-gif img {
+  position: absolute;
+  width: 240px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.loader-box .spinner-loader-img .img-tag {
+  width: 100px;
+  height: 100px;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.opencover-drop {
+  width: calc(100% - 23%);
+}
+
+.opencover-dollar {
+  width: 23%;
+
+}
+
+.currency-flex {
+  display: flex;
+}
+
+.currrency-dollar {
+  width: 30%;
+}
+
+.currrency-drop {
+  width: calc(100% - 30%);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: none;
+
+}
+
+.example-container::-webkit-scrollbar {
+  width: 10px;
+  /* for vertical scrollbars */
+  height: 10px;
+  /* for horizontal scrollbars */
+}
+
+.example-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.example-container::-webkit-scrollbar-thumb {
+  background: rgba(56, 51, 51, 0.5);
+}
+
+.maan-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.6rem;
+}
+
+.maan-card1 {
+  background-color: rgba(255, 255, 255, 0.664);
+  padding: 1rem;
+  border-radius: 0.6rem;
+}
+
+.maan-card-footer {
+  text-align: end;
+}
+
+.maan-card-header {
+  padding: 0.8rem 0;
+  font-weight: 600;
+}
+
+.form-heading {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  text-transform: uppercase;
+}
+
+.form-heading-number {
+  display: flex;
+  background-color: powderblue;
+  color: #000;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  padding: 3px 0px;
+  border-radius: 50% !important;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+// nb-layout-header nav {
+//   align-items: center;
+//   justify-content: flex-start;
+//   display: flex;
+//   overflow-x: scroll;
+//   overflow-y: hidden;
+
+// }
+
+nb-layout.window-mode .layout nb-layout-header nav {
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: auto;
+  display: contents;
+}
+
+.currrency-drop1 {
+  width: 108%;
+}
+
+.currrency-drop2 {
+  width: 281%;
+}
+
+.currrency-drop3 {
+  width: 70%;
+}
+
+.input-form-box .input-form-control4 {
+  /* min-width: 100%; */
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  margin: 8px 0px 0px -48px;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  height: 35px;
+  width: 113px;
+}
+
+.input-form-box .input-form-control5 {
+  min-width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  margin: 8px 0px 0px 121px;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  height: 35px;
+}
+
+nb-layout-column {
+  padding-top: 60px;
+}
+
+nb-layout .layout .layout-container .content .columns nb-layout-column {
+  padding: 10px;
+}
+
+.menu-items {
+  .menu-item.menu-items {
+    overflow-y: auto;
+    list-style-type: none;
+    overflow: hidden;
+    max-height: 200px !important;
+
+  }
+
+}
+
+.top-bar {
+  background: linear-gradient(135deg, #145f6c 0%, #1B7B8A 70%, #23a0b5 100%) !important;
+  // background: #042181 !important;
+  margin-top: 0px !important;
+  height: 60px;
+}
+
+nb-user .user-name {
+  color: #f2f2f2;
+  font-family: var(--user-name-text-font-family);
+  font-weight: var(--user-name-text-font-weight);
+}
+
+.menu-items,
+[_nghost-reh-c79] .menu-item>.menu-items {
+  list-style-type: none;
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 200px;
+}
+
+.currrency-drop-vss {
+  width: 141%;
+}
+
+.dropdown-menu .dropdown-toggle:after {
+  transform: rotate(-90deg);
+}
+
+
+/* Desktop Navigation */
+@media (min-width: 1200px) {
+  .navmenu {
+    padding: 0;
+  }
+
+  .navmenu ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+
+  .navmenu li {
+    position: relative;
+  }
+
+  .navmenu>ul>li {
+    white-space: nowrap;
+    // padding: 15px 15px;
+    padding: 7px 13px;
+    text-decoration: none;
+  }
+
+  .navmenu>ul>li:last-child {
+    padding-right: 0;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: color-mix(in srgb, var(--nav-color), transparent 30%);
+    font-size: 14px;
+    padding: 0 2px;
+    font-family: var(--nav-font);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    transition: 0.3s;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    transition: 0.3s;
+  }
+
+  .navmenu>ul>li>a:before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: -27px;
+    left: 0;
+    background-color: var(--nav-hover-color);
+    visibility: hidden;
+    width: 0px;
+    transition: all 0.3s ease-in-out 0s;
+  }
+
+  .navmenu a:hover:before,
+  .navmenu li:hover>a:before,
+  .navmenu .active:before {
+    visibility: visible;
+    width: 100%;
+  }
+
+  .navmenu li:hover>a,
+  .navmenu .active,
+  .navmenu .active:focus {
+    color: var(--nav-color);
+  }
+
+  .navmenu .dropdown ul {
+    margin: 0;
+    padding: 10px 0;
+    background: #fff;
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    left: 14px;
+    top: 130%;
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 4px;
+    z-index: 99;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    max-height: 250px;
+    overflow-y: auto;
+  }
+
+  .navmenu .dropdown ul li {
+    min-width: 200px;
+    padding-bottom: 0%;
+  }
+
+  .navmenu .dropdown ul a {
+    // padding: 10px 20px;
+    font-size: 14px;
+    text-transform: none;
+    color: var(--nav-dropdown-color);
+  }
+
+  .navmenu .dropdown ul a i {
+    font-size: 12px;
+  }
+
+  .navmenu .dropdown ul a:hover,
+  .navmenu .dropdown ul .active:hover,
+  .navmenu .dropdown ul li:hover>a {
+    color: var(--nav-dropdown-hover-color);
+  }
+
+  .navmenu .dropdown:hover>ul {
+    opacity: 1;
+    top: 100%;
+    visibility: visible;
+  }
+
+  .navmenu .dropdown .dropdown ul {
+    top: 0;
+    left: -90%;
+    visibility: hidden;
+  }
+
+  .navmenu .dropdown .dropdown:hover>ul {
+    opacity: 1;
+    top: 0;
+    left: -100%;
+    visibility: visible;
+  }
+}
+
+/* Mobile Navigation */
+@media (max-width: 1199px) {
+  .mobile-nav-toggle {
+    color: var(--nav-color);
+    font-size: 28px;
+    line-height: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .navmenu {
+    padding: 0;
+    z-index: 9997;
+  }
+
+  .navmenu ul {
+    display: none;
+    list-style: none;
+    position: absolute;
+    inset: 60px 20px 20px 20px;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 6px;
+    background-color: var(--nav-mobile-background-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    box-shadow: none;
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 9998;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: var(--nav-dropdown-color);
+    padding: 10px 20px;
+    font-family: var(--nav-font);
+    font-size: 17px;
+    font-weight: 450;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+  }
+
+  .navmenu a i:hover,
+  .navmenu a:focus i:hover {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+  }
+
+  .navmenu a:hover,
+  .navmenu .active,
+  .navmenu .active:focus {
+    color: var(--nav-dropdown-hover-color);
+  }
+
+  .navmenu .active i,
+  .navmenu .active:focus i {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    transform: rotate(180deg);
+  }
+
+  .navmenu .dropdown ul {
+    position: static;
+    display: none;
+    z-index: 99;
+    padding: 10px 0;
+    margin: 10px 20px;
+    background-color: var(--nav-dropdown-background-color);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .navmenu .dropdown ul ul {
+    background-color: rgba(33, 37, 41, 0.1);
+  }
+
+  .navmenu .dropdown>.dropdown-active {
+    display: block;
+    background-color: rgba(33, 37, 41, 0.03);
+  }
+
+  .mobile-nav-active {
+    overflow: hidden;
+  }
+
+  .mobile-nav-active .mobile-nav-toggle {
+    color: #fff;
+    position: absolute;
+    font-size: 32px;
+    top: 47px;
+    right: 0px;
+    margin-right: 0;
+    z-index: 10002;
+    // background: white;
+    border-radius: 27px;
+  }
+
+  .mobile-nav-active .navmenu {
+    position: fixed;
+    overflow: hidden;
+    inset: 0;
+    background: rgba(33, 37, 41, 0.8);
+    transition: 0.3s;
+  }
+
+  .mobile-nav-active .navmenu>ul {
+    display: block;
+  }
+
+  .navmenu .dropdown ul.dropdown-active {
+    display: block;
+  }
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: var(--bs-modal-padding);
+  height: 339px !important;
+}
+
+.input-form-box .input-form-control-aki1 {
+  min-width: 87%;
+  max-width: 87%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px !important;
+  margin: 9px 0px 0px -28px;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  height: 35px;
+}
+
+.input-form-box .input-form-control-aki2 {
+  /* min-width: 100%; */
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  margin: 9px 0px 0px 1px;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  height: 35px;
+  width: 111px;
+}
+
+.ng-dropdown-panel {
+  max-width: 100% !important;
+  min-width: 250px;
+  /* or whatever suits your layout */
+  word-wrap: break-word !important;
+  white-space: normal !important;
+  z-index: 999999 !important;
+}
+
+.ng-option {
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+.customStyleCard {
+  border: red solid 1px !important;
+  height: fit-content !important;
+  padding: 1rem !important;
+  background-color: #fff !important;
+  color: red !important;
+  font-weight: 600 !important;
+}
+
+.customListStyle {
+  font-size: x-small;
+}
+
+/* Container Spacing */
+.modern-container {
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 17%;
+
+}
+
+// .modern-container {
+//   padding: 10px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1rem;
+//   margin: 0 auto; 
+//   max-width: 1200px;
+//   width: 95%; 
+// }
+/* The Modern Card Style */
+.modern-card-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  padding-left: 4rem;
+  border: 1px solid #1e3a8a;
+  width: 90%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  // transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect for a premium feel */
+.modern-card-wrapper:hover {
+  // transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+/* Specific styling for the footer area */
+.modern-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #edf2f7;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Button Refinement */
+.action-btn {
+  min-width: 100px;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.save-btn {
+  box-shadow: 0 4px 11px rgba(51, 102, 255, 0.3);
+  /* Soft glow on primary button */
+}
+
+@media (min-width: 1200px) {
+  .navmenu ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+
+  .navmenu li {
+    position: relative;
+    padding: 15px;
+  }
+
+  .navmenu a {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .navmenu .dropdown ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .navmenu .dropdown:hover>ul {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 1199px) {
+
+  .mobile-toggle {
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10001;
+  }
+
+  .navmenu ul {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    padding: 70px 20px 20px;
+    overflow-y: auto;
+    z-index: 10000;
+  }
+
+  /* THIS WAS MISSING */
+  .navmenu.mobile-nav-active ul {
+    display: block;
+  }
+
+  .navmenu li {
+    border-bottom: 1px solid #eee;
+  }
+
+  .navmenu a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* DROPDOWN */
+  .navmenu .dropdown ul {
+    display: none;
+    padding-left: 15px;
+    background: #f7f7f7;
+  }
+
+  .navmenu .dropdown ul.show {
+    display: block;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+    transition: 0.3s;
+  }
+
+  .modern-card-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1rem;
+    /* padding-left: 4rem; */
+    border: 1px solid #1e3a8a;
+    /* width: 90%; */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+}
+
+.dropdown-toggle {
+  all: unset;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+}
+
+.dropdown ul {
+  display: none;
+}
+
+.dropdown ul.show {
+  display: block;
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+
+// .top-bar {
+//   display: flex;
+//   justify-content: space-between;
+//   // ---salamaa---
+//   // background: linear-gradient(135deg, #145f6c 0%, #1B7B8A 70%, #23a0b5 100%) !important;
+//   // -------other---------
+//   background: linear-gradient(135deg, #243c97 0%, #2f54c0 70%, #4a6de0 100%) !important;
+//   padding: 6px 10px;
+// }
+
+.logo img {
+  height: 52px;
+}
+
+.navmenu {
+  background: #fff;
+}
+
+.navmenu ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+.navmenu li {
+  position: relative;
+  // padding: 14px 16px;
+  cursor: pointer;
+}
+
+.navmenu a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif !important;
+  text-decoration: none;
+}
+
+/* DESKTOP DROPDOWN */
+.navmenu .dropdown ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  min-width: 200px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+  z-index: 99;
+}
+
+.navmenu .dropdown:hover ul {
+  display: block;
+}
+
+/* MOBILE */
+@media (max-width: 1199px) {
+
+  .navmenu ul {
+    display: none;
+  }
+
+  .navmenu.mobile-nav-active ul {
+    display: block;
+    position: fixed;
+    inset: 60px 10px 10px;
+    background: #fff;
+    border-radius: 6px;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+
+  .navmenu ul li {
+    border-bottom: 1px solid #eee;
+  }
+
+  .mobile-nav-toggle {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .mobile-menu-icon {
+    font-size: 28px;
+    color: #333;
+  }
+
+  /* MOBILE DROPDOWN */
+  .navmenu .dropdown ul {
+    position: static;
+    box-shadow: none;
+  }
+
+  .input-form-box .input-form-control4 {
+    /* min-width: 100%; */
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    margin: -1px 0px 0px -1px;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    height: 35px;
+    width: 113px;
+  }
+}
+
+@media (max-width: 767px) {
+  .input-control-container .ng-select.ng-select-single .ng-select-container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .radio-toolbar label {
+    margin-left: 0px;
+    display: inline-block;
+    background-color: white;
+    padding: 2px 2px;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+  }
+
+  .input-form-box .input-form-control {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .currrency-drop1 {
+    width: 88%;
+  }
+
+  .input-form-box .input-form-control {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .input-form-box .input-form-control2 {
+    width: 88%;
+  }
+}
+
+.modern-card-wrapper:has(.ng-dropdown-panel, .input-form-box .input-form-control) {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Dropdown Container */
+
+::ng-deep .salama-dropdown .p-dropdown {
+
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #d9e3ea;
+  font-size: 14px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Placeholder text */
+
+::ng-deep .salama-dropdown .p-dropdown-label {
+
+  font-size: 14px;
+  color: #6b7280;
+  padding-left: 10px;
+}
+
+/* Dropdown Arrow */
+
+::ng-deep .salama-dropdown .p-dropdown-trigger {
+
+  width: 36px;
+  color: #607d8b;
+}
+
+/* Arrow icon */
+
+::ng-deep .salama-dropdown .p-dropdown-trigger-icon {
+
+  font-size: 13px;
+  color: #607d8b;
+}
+
+/* Hover */
+
+::ng-deep .salama-dropdown .p-dropdown:hover {
+
+  border-color: #1f7a8c;
+}
+
+/* Focus */
+
+::ng-deep .salama-dropdown.p-focus {
+
+  border-color: #1f7a8c;
+  box-shadow: 0 0 0 2px rgba(31, 122, 140, 0.15);
+}
+
+/* Dropdown panel */
+
+::ng-deep .p-dropdown-panel {
+
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* Dropdown items */
+
+::ng-deep .p-dropdown-item {
+
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+/* Hover item */
+
+::ng-deep .p-dropdown-item:hover {
+
+  background: #f3f7f9;
+}
+
+/* Selected item */
+
+::ng-deep .p-dropdown-item.p-highlight {
+
+  background: #1f7a8c;
+  color: white;
+}
+
+/* ─── Global PrimeNG Dropdown Styling ─── */
+.p-dropdown {
+  height: 34px !important;
+  border: 1px solid #d0dce6 !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100%;
+  /* Apply font globally to the dropdown wrapper */
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 13px !important;
+  /* Slightly reduced as requested */
+
+  &:hover {
+    border-color: #1B7B8A !important;
+  }
+
+  &.p-focus {
+    border-color: #1B7B8A !important;
+    box-shadow: 0 0 0 0.2rem rgba(27, 123, 138, 0.25) !important;
+  }
+}
+
+/* Specific styling for the label to override PrimeNG defaults */
+.p-dropdown .p-dropdown-label {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  line-height: 34px !important;
+  padding: 0 14px !important;
+}
+
+/* Placeholder state */
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: #292828 !important;
+  font-weight: 600;
+  // opacity: 0.32 !important;
+}
+
+/* Selected value state */
+.p-dropdown .p-dropdown-label:not(.p-placeholder) {
+  color: #1a2535 !important;
+  opacity: 1 !important;
+}
+
+/* Trigger Icon */
+.p-dropdown .p-dropdown-trigger {
+  width: 32px !important;
+  color: #6b7a8d !important;
+
+  .p-dropdown-trigger-icon {
+    font-size: 11px !important;
+    /* Smaller icon size to fit the smaller button */
+  }
+}
+
+/* Panel styling */
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  padding: 8px 14px !important;
+  color: #1a2535 !important;
+}
+
+/* Invalid State */
+.pf-invalid .p-dropdown {
+  border-color: #e53e3e !important;
+}
+
+/* ─── Global PrimeNG Calendar Styling ─── */
+.p-calendar {
+  display: flex !important;
+  height: 34px !important;
+  width: 100% !important;
+
+  /* Target the input inside the calendar */
+  .p-inputtext {
+    height: 34px !important;
+    border: 1px solid #d0dce6 !important;
+    border-radius: 6px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 11px !important;
+    padding: 0 14px !important;
+    color: #1a2535 !important;
+
+    &:hover {
+      border-color: #1B7B8A !important;
+    }
+
+    &:focus {
+      border-color: #1B7B8A !important;
+      box-shadow: 0 0 0 0.2rem rgba(27, 123, 138, 0.25) !important;
+    }
+  }
+
+  /* Style the calendar trigger button (the clock/calendar icon) */
+  .p-datepicker-trigger {
+    width: 32px !important;
+    background: #ffffff !important;
+    border: 1px solid #d0dce6 !important;
+    border-left: none !important;
+    border-radius: 0 6px 6px 0 !important;
+    color: #6b7a8d !important;
+  }
+}
+
+/* Ensure the calendar popup panel matches the theme */
+.p-datepicker {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+
+  /* Highlight the selected date */
+  .p-datepicker-calendar td .p-state-highlight {
+    background-color: #1B7B8A !important;
+  }
+}
+
+/* Invalid State for Calendar */
+.pf-invalid .p-calendar .p-inputtext {
+  border-color: #e53e3e !important;
+}
+
+/* ─── Global PrimeNG Calendar Panel Styling ─── */
+.p-datepicker {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  /* Reduced from default */
+  padding: 0.5rem !important;
+  /* Tighter padding */
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+
+  /* Header controls (Month/Year) */
+  .p-datepicker-header {
+    padding: 0.5rem !important;
+    font-size: 11px !important;
+  }
+
+  /* Calendar Grid */
+  .p-datepicker-calendar {
+    th {
+      padding: 0.5rem !important;
+      font-size: 11px !important;
+    }
+
+    /* Days of the week */
+    td {
+      padding: 0.1rem !important;
+      font-size: 11px !important;
+    }
+
+    /* Individual date cells */
+
+    .p-datepicker-calendar td>span {
+      width: 2rem !important;
+      height: 2rem !important;
+      font-size: 11px !important;
+    }
+  }
+}
+
+/* Ensure the overlay panel is positioned correctly with appendTo="body" */
+.p-datepicker.p-component {
+  min-width: 250px !important;
+  /* Shrink overall width */
+}
+
+/* ─── Global PrimeNG InputSwitch Styling ─── */
+.p-inputswitch.city-switch {
+  width: 26px !important;
+  /* Width to maintain aspect ratio */
+  height: 14px !important;
+  /* Slightly larger than 11px to ensure visibility */
+
+  .p-inputswitch-slider {
+    border-radius: 7px !important;
+    /* Half of height for pill shape */
+
+    &:before {
+      width: 10px !important;
+      /* The toggle circle */
+      height: 10px !important;
+      left: 2px !important;
+      /* Position for small size */
+      margin-top: -5px !important;
+      /* Center the circle vertically */
+    }
+  }
+
+  &.p-inputswitch-checked {
+    .p-inputswitch-slider {
+      background-color: #23a0b5 !important;
+      /* This is your new Green color */
+    }
+
+    .p-inputswitch-slider:before {
+      transform: translateX(12px) !important;
+    }
+
+  }
+}
+/* Ensure password input fills width */
+.p-password {
+  display: block !important;
+}
+
+.p-password input {
+  width: 100% !important;
+}
+
+/* Toast z-index */
+.p-toast {
+  z-index: 9999 !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f0f4f6; }
+::-webkit-scrollbar-thumb { background: #b0c8cf; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1d7280; }
+/* ===================================================================
+   FIX: PrimeNG 12 Dialog – stable height & always-visible header
+   Root cause:
+     1. PrimeNG 12 centres dialogs with .p-dialog-mask (display:flex,
+        align-items:center). When a radio button triggers *ngIf and
+        content collapses, PrimeNG re-runs its center() method and
+        repositions the dialog – the header scrolls above the viewport.
+     2. [contentStyle]="{ 'max-height': '80vh' }" with no min-height
+        allows the dialog to freely shrink to near-zero.
+   Fix strategy:
+     - Force .p-dialog-mask to align dialogs from the TOP (flex-start)
+       so the header is always anchored at a visible position.
+     - Give .stable-dialog (our two Add dialogs) a hard min-height so
+       they never collapse when *ngIf removes DOM nodes.
+     - Make the header flex-shrink:0 so it can never be squeezed out.
+     - Let .p-dialog-content scroll internally.
+   =================================================================== */
+
+/* The mask is the full-screen overlay PrimeNG puts dialogs inside.
+   Changing align-items to flex-start + a top margin keeps the dialog
+   anchored at the top of the screen so the header is always visible. */
+::ng-deep .p-dialog-mask.p-component-overlay {
+  align-items: flex-start !important;
+  padding-top: 3vh !important;
+}
+
+/* Apply only to our two Add dialogs via the styleClass="stable-dialog" */
+::ng-deep .p-dialog.stable-dialog {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 540px !important;
+  max-height: 92vh !important;
+}
+
+/* Header must never shrink or scroll away */
+::ng-deep .p-dialog.stable-dialog .p-dialog-header {
+  flex-shrink: 0 !important;
+  background: #ffffff !important;
+  z-index: 1 !important;
+}
+
+/* Content fills remaining space and scrolls internally */
+::ng-deep .p-dialog.stable-dialog .p-dialog-content {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  min-height: 420px !important;
+}
+
+/* Footer stays at bottom */
+::ng-deep .p-dialog.stable-dialog .p-dialog-footer {
+  flex-shrink: 0 !important;
+}
+
+/* General safety net for all other dialogs */
+::ng-deep .p-dialog {
+  max-height: 95vh;
+}
+::ng-deep .p-dialog-content {
+  overflow-y: auto;
+}
+::ng-deep.p-dialog {
+    /* display: flex; */
+    flex-direction: column;
+    max-height: 80%;
+    transform: scale(1);
+    position: relative;
+}
+.p-datepicker {
+  z-index: 12000 !important;
+}

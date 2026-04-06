@@ -72,6 +72,13 @@ export class HttpInterceptorService implements HttpInterceptor {
   openResponse(res: any) {
     if (res?.ErrorMessage && res?.ErrorMessage.length > 0 || res?.Result?.ErrorMessage && res?.Result?.ErrorMessage.length > 0) {
       const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
+
+      // ✅ Skip popup if ANY error is a SessionError — handled by login component
+      const hasSessionError = errorList.some((ele: any) => ele.Field === 'SessionError');
+      if (hasSessionError) {
+        return;
+      }
+
       let ulList:any='';
       for (let index = 0; index < errorList.length; index++) {
         const element = errorList[index];

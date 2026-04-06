@@ -39,6 +39,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 // import { MaterialModule } from '@app/shared/material/material.module';
 import { PickListModule } from 'primeng/picklist';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NbActionsModule } from '@nebular/theme';
+import { NbTooltipModule } from '@nebular/theme';
+import { NbIconModule } from '@nebular/theme';
 @NgModule({
   declarations: [
     LoginCreationComponent,
@@ -83,7 +86,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ToggleButtonModule,
     MultiSelectModule,
     // MaterialModule,
-    PickListModule
+    PickListModule,
+       NbActionsModule,
+    NbTooltipModule,
+    NbIconModule
   ],
   bootstrap: [],
   providers: [

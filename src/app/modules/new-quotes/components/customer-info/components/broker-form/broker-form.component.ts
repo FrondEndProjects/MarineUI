@@ -47,10 +47,10 @@ export class BrokerFormComponent implements OnInit {
         this.productId = this.OpenCover?.productId;
       }
     }
-    this.dropChannelList = [
-      { name: 'Broker', id: 'broker' },
-      { name: 'Cash', id: 'cash' },
-    ]
+    // this.dropChannelList = [
+    //   { name: 'Broker', id: 'broker' },
+    //   { name: 'Cash', id: 'cash' },
+    // ]
     this.droplist();
     this.item = sessionStorage.getItem('Exist');
 
@@ -60,6 +60,10 @@ export class BrokerFormComponent implements OnInit {
     this.newQuotesService.onGetMethodSync(urlLink).subscribe((data: any) => {
       console.log(data);
       this.dropChannelList = data?.Result;
+      if (this.dropChannelList.length === 1) {
+        this.brokerF.channel.setValue(this.dropChannelList[0].Code);
+        this.onChangeChannel('direct');
+      }
     });
   }
   ngOnInit(): void {
@@ -114,6 +118,10 @@ export class BrokerFormComponent implements OnInit {
         if (data?.Message === 'Success') {
           this.dropBrokerList = data?.Result;
           this.newQuotesService.BrokerList = data?.Result;
+          if (this.dropBrokerList.length === 1 && type != 'change') {
+            this.brokerForm.controls['borker'].setValue(this.dropBrokerList[0].Code);
+            this.onChangeBroker();
+          }
           if (this.productId == '11' && type != 'change') {
             //alert("Broker Change Function")
             this.headerDetails = this.opencoverComponent?.headerDetails;
@@ -123,7 +131,7 @@ export class BrokerFormComponent implements OnInit {
               sessionStorage.setItem('dropBrokerList', JSON.stringify(this.dropBrokerList));
               if (this.productId == '11') {
                 this.brokerForm.controls['borker'].setValue(entry.Code);
-                this.brokerForm.controls['channel'].setValue('broker');
+                this.brokerForm.controls['channel'].setValue('Broker');
                 this.brokerForm.controls['channel'].disable();
                 this.brokerForm.controls['borker'].disable();
               }

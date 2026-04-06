@@ -582,7 +582,7 @@
                         maxlength="16" /></td>
                 <td><input pInputText id="sumInsuredEnd" class="w-full" [(ngModel)]="data.SumInsuredEnd"
                         maxlength="16" /></td>
-                <td><p-button icon="pi pi-book" *ngIf="data.IsOptedYn=='Y'" styleClass="p-button-outlined"
+                <td><p-button icon="pi pi-file" *ngIf="data.IsOptedYn=='Y'" styleClass="p-button-outlined"
                         (click)="showEndorsement(data,'endrose')" /></td>
                 <td>
                     <p-dropdown *ngIf="data.IsOptedYn=='Y' && data.WorkflowYN=='Y'" placeholder="--Select--"

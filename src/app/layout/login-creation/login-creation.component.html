@@ -16,17 +16,27 @@
         </nav> -->
     </div>
     <div class="topbar-right">
-        <!-- <button class="topbar-icon-btn" title="Notifications">
-            <i class="pi pi-bell"></i>
-        </button>
-        <button class="topbar-icon-btn" title="Home">
-            <i class="pi pi-home"></i>
-        </button> -->
-        <div class="topbar-user" (click)="opUser.toggle($event)">
-            <div class="user-avatar">{{ getUserInitials() }}</div>
-            <div class="user-info">
-                <span class="user-name">{{ user?.Result?.UserName || 'User' }}</span>
-                <!-- <span class="user-type">{{ userType }}</span> -->
+        <!-- <nb-action class="control-items" nbTooltip="Dashboard" style="color: #fff !important" icon="pie-chart-outline"
+        (click)="DashbordRoute()">
+      </nb-action>
+      <nb-action class="control-items" style="color: #fff !important" icon="home-outline"
+        (click)="homeRoute()"></nb-action> -->
+        <div class="topbar-right">
+            <button class="topbar-icon-btn" pTooltip="Dashboard" tooltipPosition="bottom" (click)="DashbordRoute()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                    <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                </svg>
+            </button>
+            <button class="topbar-icon-btn" pTooltip="Home" tooltipPosition="bottom" (click)="homeRoute()">
+                <i class="pi pi-home"></i>
+            </button>
+            <div class="topbar-user" (click)="opUser.toggle($event)">
+                <div class="user-avatar">{{ getUserInitials() }}</div>
+                <div class="user-info">
+                    <span class="user-name">{{ user?.Result?.UserName || 'User' }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -53,31 +63,39 @@
         </div>
     </div>
 
-    <div class="main-card">
-        <p-tabView [activeIndex]="tabIndex" (onChange)="onTabClicked($event)" styleClass="salama-tabs">
-            <p-tabPanel>
-                <ng-template pTemplate="header">
-                    <span class="tab-header"><i class="pi pi-briefcase"></i>&nbsp; Broker</span>
-                </ng-template>
-                <app-broker></app-broker>
-            </p-tabPanel>
-            <p-tabPanel>
-                <ng-template pTemplate="header">
-                    <span class="tab-header"><i class="pi pi-user"></i>&nbsp; User</span>
-                </ng-template>
-                <app-user></app-user>
-            </p-tabPanel>
-            <p-tabPanel>
-                <ng-template pTemplate="header">
-                    <span class="tab-header"><i class="pi pi-id-card"></i>&nbsp; Insurance Employee</span>
-                </ng-template>
-                <app-insurence-emp></app-insurence-emp>
-            </p-tabPanel>
-            <div class="row text-center mb-2 mt-2">
-                <div class="col-12">
-                    <p-button label="Back" size="small" (click)="back()"></p-button>
-                </div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="main-card">
+                <p-tabView [activeIndex]="tabIndex" (onChange)="onTabClicked($event)" styleClass="salama-tabs">
+                    <p-tabPanel>
+                        <ng-template pTemplate="header">
+                            <span class="tab-header"><i class="pi pi-briefcase"></i>&nbsp; Broker</span>
+                        </ng-template>
+                        <app-broker></app-broker>
+                    </p-tabPanel>
+                    <p-tabPanel>
+                        <ng-template pTemplate="header">
+                            <span class="tab-header"><i class="pi pi-user"></i>&nbsp; User</span>
+                        </ng-template>
+                        <app-user></app-user>
+                    </p-tabPanel>
+                    <p-tabPanel>
+                        <ng-template pTemplate="header">
+                            <span class="tab-header"><i class="pi pi-id-card"></i>&nbsp; Insurance Employee</span>
+                        </ng-template>
+                        <app-insurence-emp></app-insurence-emp>
+                    </p-tabPanel>
+                    <div class="row text-center mb-2 mt-2">
+                        <div class="col-12">
+                            <p-button label="Back" size="small" (click)="back()"></p-button>
+                        </div>
+                    </div>
+                </p-tabView>
             </div>
-        </p-tabView>
+            <div class="col-1"></div>
+        </div>
+
     </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4 form-field">
         <label for="Company">Company *</label>
-        <p-dropdown class="w-full" styleClass="w-full" [(ngModel)]="insuranceId"
+        <p-dropdown class="w-full" styleClass="w-full" [(ngModel)]="insuranceId" appendTo="body"
             (onChange)="changebroker();getMobileCodeList();getCountryList();getApproverList()" [options]="companyList"
             optionLabel="CodeDesc" optionValue="Code">
         </p-dropdown>
@@ -9,7 +9,7 @@
     <div class="col-12 col-md-4 col-lg-4 form-field">
         <label for="Channel">Channel *</label>
         <p-dropdown class="w-full" styleClass="w-full" [options]="channelList" (onChange)="getBrokerList()"
-            [(ngModel)]="channelId" optionLabel="CodeDesc" optionValue="Code">
+            [(ngModel)]="channelId" optionLabel="CodeDesc" appendTo="body" optionValue="Code">
         </p-dropdown>
     </div>
 </div>
@@ -76,12 +76,12 @@
                     </span>
                 </td>
             </tr>
-            <p-overlayPanel #op [style]="{ width: 'auto'}"  appendTo="body">
+            <p-overlayPanel #op [style]="{ width: 'auto'}" appendTo="body">
                 <div class="input-control-container">
                     <div class="input-form-radio-box mt-2">
                         <div class="radio-toolbar1 radio-toolbar overlay-menu">
-                            <input id="Branch" type="radio" name="rentOwnHome" (click)="branchDataList(data.LoginId); op.hide()"
-                                value="Branch">
+                            <input id="Branch" type="radio" name="rentOwnHome"
+                                (click)="branchDataList(data.LoginId); op.hide()" value="Branch">
                             <label for="Branch">Branch</label>
                             <input id="Product" type="radio" name="rentOwnHome" value="Product"
                                 (click)="ProductDataList(data); op.hide()">
@@ -372,10 +372,11 @@
 </p-dialog>
 
 <p-dialog header="Broker Details" [modal]="true" [(visible)]="visibleBrokerDetails" styleClass="broker-details-dialog"
-   [breakpoints]="{ '1199px': '85vw', '575px': '95vw' }" [maximizable]="true">
+    [breakpoints]="{ '1199px': '85vw', '575px': '95vw' }" [maximizable]="true">
 
     <div class="broker-container">
-        <div class="header-card d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+        <div
+            class="header-card d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
             <div class="d-flex align-items-center gap-3">
                 <div class="avatar-circle">{{userName?.charAt(0) || 'B'}}</div>
                 <div>
@@ -680,6 +681,9 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Product Name</th>
+                <th>Min Premium</th>
+                <th>Loading</th>
+                <th>Discount</th>
                 <th>Max SumInsured</th>
                 <th>Commission (%)</th>
                 <th>Backdays</th>
@@ -698,6 +702,9 @@
                         {{product.ProductName}}&nbsp;-&nbsp;{{product.PolicyTypeDesc}}
                     </ng-container>
                 </td>
+                 <td>{{product.minimumPremium}}</td>
+                 <td>{{product.LoadingofPremium}}</td>
+                 <td>{{product.DiscountofPremium}}</td>
                 <td>{{product.SumInsuredEnd}}</td>
                 <td>{{product.CommissionPercent}}</td>
                 <td>{{product.BackDays}}</td>
@@ -790,6 +797,9 @@
             <tr class="hidden-mobile">
                 <th>Select</th>
                 <th>Product Name</th>
+                <th>Min Premium</th>
+                <th>Loading</th>
+                <th>Discount</th>
                 <th>Max SumInsured</th>
                 <th>Commission (%)</th>
                 <th>Backdays</th>
@@ -810,6 +820,15 @@
                     <ng-container *ngIf="product.ProductId!='5'">{{product.ProductName}}</ng-container>
                     <ng-container *ngIf="product.ProductId=='5'">{{product.ProductName}} -
                         {{product.PolicyTypeDesc}}</ng-container>
+                </td>
+                <td data-label="Min SumInsured">
+                    <input pInputText class="w-full" [(ngModel)]="product.minimumPremium" maxlength="16" />
+                </td>
+                <td data-label="Loading">
+                    <input pInputText class="w-full" [(ngModel)]="product.LoadingofPremium" maxlength="16" />
+                </td>
+                <td data-label="Discount">
+                    <input pInputText class="w-full" [(ngModel)]="product.DiscountofPremium" maxlength="16" />
                 </td>
                 <td data-label="Max SumInsured">
                     <input pInputText class="w-full" [(ngModel)]="product.SumInsuredEnd" maxlength="16" />
@@ -889,6 +908,9 @@
             <tr>
                 <th>Select</th>
                 <th>Product Name</th>
+                <th>Min Premium</th>
+                 <th>Loading</th>
+                <th>Discount</th>
                 <th>Max SumInsured</th>
                 <th>Commission (%)</th>
                 <th>Backdays</th>
@@ -912,6 +934,16 @@
                     <ng-container *ngIf="product.ProductId=='5'">
                         {{product.ProductName}}&nbsp;-&nbsp;{{product.PolicyTypeDesc}}
                     </ng-container>
+                </td>
+                <td>
+                    <input pInputText id="minimumPremium" class="w-full" [(ngModel)]="product.minimumPremium"
+                        maxlength="16" />
+                </td>
+                <td data-label="Loading">
+                    <input pInputText class="w-full" [(ngModel)]="product.LoadingofPremium" maxlength="16" />
+                </td>
+                <td data-label="Discount">
+                    <input pInputText class="w-full" [(ngModel)]="product.DiscountofPremium" maxlength="16" />
                 </td>
                 <td>
                     <input pInputText id="sumInsured" class="w-full" [(ngModel)]="product.SumInsuredEnd"
@@ -956,8 +988,8 @@
                                 <input [id]="'EditStatusYes'+i" type="radio" [name]="'Editstatus'+i"
                                     [(ngModel)]="product.Status" value="Y">
                                 <label [for]="'EditStatusYes'+i">Active</label>
-                                <input [id]="'EditStatusNo'+i" type="radio" [name]="'Editstatus'+i" [(ngModel)]="product.Status"
-                                    value="N">
+                                <input [id]="'EditStatusNo'+i" type="radio" [name]="'Editstatus'+i"
+                                    [(ngModel)]="product.Status" value="N">
                                 <label [for]="'EditStatusNo'+i">DeActive</label>
                             </div>
                         </div>
@@ -1137,13 +1169,11 @@
             <label for="Cash" class="fw-semibold w-6rem">Deposit Type *</label>
             <div class="d-flex flex-wrap">
                 <div class="d-flex align-items-center me-1">
-                    <p-radioButton name="Deposit" value="C" [(ngModel)]="deposiType"
-                        inputId="Deposit"></p-radioButton>
+                    <p-radioButton name="Deposit" value="C" [(ngModel)]="deposiType" inputId="Deposit"></p-radioButton>
                     <span for="Deposit" class="ms-1">Deposit</span>
                 </div>
                 <div class="d-flex align-items-center me-1">
-                    <p-radioButton name="Refund" value="R" [(ngModel)]="deposiType"
-                        inputId="Refund"></p-radioButton>
+                    <p-radioButton name="Refund" value="R" [(ngModel)]="deposiType" inputId="Refund"></p-radioButton>
                     <span for="Refund" class="ms-1">Refund</span>
                 </div>
             </div>

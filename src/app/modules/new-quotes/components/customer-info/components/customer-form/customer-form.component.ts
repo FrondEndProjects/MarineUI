@@ -151,6 +151,9 @@ export class CustomerFormComponent implements OnInit {
           // this.dropTitleList = obj.concat(data?.Result)
           this.dropTitleList = data?.Result;
           this.newQuotesService.getDropDownList(this.dropTitleList, 'title');
+          if (this.dropTitleList.length === 1) {
+            this.customerF.title.setValue(this.dropTitleList[0].Code);
+          }
 
         }
       },
@@ -190,6 +193,9 @@ export class CustomerFormComponent implements OnInit {
           this.dropCityList = obj.concat(data?.Result)
 
           this.newQuotesService.getDropDownList(this.dropCityList, 'city');
+          if (data?.Result.length === 1) {
+            this.customerF.city.setValue(data.Result[0].Code);
+          }
           if (this.docUploadedData && this.setDocvalue != 'back' && this.setDocvalue != 'edit') {
             this.setDocUploadData();
           }

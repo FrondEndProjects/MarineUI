@@ -281,3 +281,25 @@ $teal-bg: var(--teal-bg);
       var(--teal-bg) 100%) !important;
   padding: 6px 10px;
 }
+
+.topbar-icon-btn {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+
+  i {
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+}

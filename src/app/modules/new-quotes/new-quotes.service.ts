@@ -233,7 +233,7 @@ export class NewQuotesService {
       destinationCityOther: [''],
       destinationWarehouse: ['NO'],
       policyStartDate: [null, Validators.required],
-      warSrcc: ['NO'],
+      warSrcc: ['YES'],
       StoragePeriodYn: ['N'],
       TranshipmentYN: ['N'],
       warOnLand: ['NO'],

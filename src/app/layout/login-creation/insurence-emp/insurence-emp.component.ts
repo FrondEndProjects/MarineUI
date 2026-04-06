@@ -228,8 +228,8 @@ claimCustomerCreationYN: string = 'N';   // Default No
       );
     }
    getCompanyList(){
-    // let urlLink = `${this.CommonApiUrl}master/dropdown/superadmincompanies`;
-    let urlLink = `${this.AdminUrl}master/dropdown/superadmincompanies`;
+    let urlLink = `${this.CommonApiUrl}master/dropdown/superadmincompanies`;
+    // let urlLink = `${this.AdminUrl}master/dropdown/superadmincompanies`;
     let ReqObj ={
       "BrokerCompanyYn": "N",
       "LoginId": this.loginId
@@ -304,7 +304,8 @@ claimCustomerCreationYN: string = 'N';   // Default No
     }
     else if(this.insuranceId!='' && this.insuranceId!= undefined){
      if(this.insuranceId=='100046' || this.insuranceId=='100047' || this.insuranceId=='100048' || this.insuranceId=='100049' || this.insuranceId=='100050'){ this.getModuleList();}
-      let urlLink = `${this.ApiUrl1}master/dropdown/companyproducts`;
+      let urlLink = `${this.CommonApiUrl}master/dropdown/companyproducts`;
+      // let urlLink = `${this.AdminUrl}master/dropdown/companyproducts`;
       let ReqObj ={
         "InsuranceId": this.insuranceId
       }
@@ -1180,7 +1181,8 @@ getIssuerLevel(rowData){
 onTableChange(rowData){
   if(rowData!= null && rowData!= ''){
     let ReqObj = {"TableName": rowData}
-    let urlLink = `${this.ApiUrl1}dropdown/gettabledetails`;
+    let urlLink = `${this.CommonApiUrl}dropdown/gettabledetails`;
+    // let urlLink = `${this.ApiUrl1}dropdown/gettabledetails`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);

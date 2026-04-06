@@ -59,7 +59,7 @@ export class LoginLayoutComponent implements OnInit {
     private authService: AuthService,
     private loginService: LoginService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Inject Font Awesome if not already present
@@ -83,7 +83,7 @@ export class LoginLayoutComponent implements OnInit {
   // SIGN IN
   // ─────────────────────────────────────────────────────────────────────────
 
-  homeRoute(): void {}
+  homeRoute(): void { }
 
   onLogin(): void {
     this.submitted = true;
@@ -176,18 +176,20 @@ export class LoginLayoutComponent implements OnInit {
         },
         (err: any) => {
           this.loading = false;
-          Swal.fire({
-            title: '<strong>Session Error</strong>',
-            icon: 'info',
-            html: `<ul class="list-group errorlist">
+          if (!this.errorSection) {
+            Swal.fire({
+              title: '<strong>Session Error</strong>',
+              icon: 'info',
+              html: `<ul class="list-group errorlist">
                       <li class="list-group-item">
                           <div style="color: red;">Message<span class="mx-2">:</span>Connection Not Available</div>
                       </li>
                   </ul>`,
-            showCancelButton: false,
-          }).then((result) => {
-            if (result.isConfirmed) { sessionStorage.clear(); }
-          });
+              showCancelButton: false,
+            }).then((result) => {
+              if (result.isConfirmed) { sessionStorage.clear(); }
+            });
+          }
         }
       );
     } else {

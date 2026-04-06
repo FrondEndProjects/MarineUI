@@ -20,17 +20,28 @@
           class="imgwid"></a>
       <a (click)="homeRoute()" *ngIf="regionCode=='100020'"><img src="./assets/images/FirstAssurance.png"
           class="imgwid"></a>
-      <a (click)="homeRoute()" *ngIf="regionCode=='100044'"><img src="./assets/images/Orientlogo-removebg-preview.png"
-          class="imgwidAlt"></a>
+      <a (click)="homeRoute()" *ngIf="regionCode=='100044' || regionCode=='100053'"><img
+          src="./assets/images/Orientlogo-removebg-preview.png" class="imgwidAlt"></a>
     </div>
   </div>
   <div class="header-container">
+         <button class="topbar-icon-btn" pTooltip="Dashboard" tooltipPosition="bottom" (click)="DashbordRoute()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+          <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+        </svg>
+      </button>&nbsp;
+      <button class="topbar-icon-btn" pTooltip="Home" tooltipPosition="bottom" (click)="homeRoute()">
+        <i class="pi pi-home"></i>
+      </button>
     <nb-actions size="small">
-      <nb-action class="control-items" nbTooltip="Dashboard" style="color: #fff !important" icon="pie-chart-outline"
+      <!-- <nb-action class="control-items" nbTooltip="Dashboard" style="color: #fff !important" icon="pie-chart-outline"
         (click)="DashbordRoute()">
       </nb-action>
       <nb-action class="control-items" style="color: #fff !important" icon="home-outline"
-        (click)="homeRoute()"></nb-action>
+        (click)="homeRoute()"></nb-action> -->
+ 
       <nb-action class="control-items broker-dropdown" *ngIf="ProductId =='11' && userType=='admin'">
         <nb-select [(selected)]="selectedBranch" (selectedChange)="onBranchChange($event)" placeholder="Select Branch">
           <nb-option *ngFor="let branch of branchList" [value]="branch.BranchCode">{{ branch.BranchName }}</nb-option>
