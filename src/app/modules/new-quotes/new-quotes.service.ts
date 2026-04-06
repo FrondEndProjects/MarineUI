@@ -210,7 +210,7 @@ export class NewQuotesService {
       coreAppcode: [''],
       city: [null, Validators.required],
       poBox: ['', Validators.required],
-      mobileNo: ['', Validators.required],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
       email: ['', Validators.required],
       customerVat: ['', Validators.required],
       Address1: ['', Validators.required],

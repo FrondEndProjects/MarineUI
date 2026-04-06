@@ -442,6 +442,7 @@ export class CustomerFormComponent implements OnInit {
     if (this.cityValue == null || this.cityValue == '' || this.cityValue == undefined) { i += 1; this.cityNameError = true; }
     if (this.poBox == null || this.poBox == '' || this.poBox == undefined) { i += 1; this.poBoxError = true; }
     if (this.mobileNo == null || this.mobileNo == '' || this.mobileNo == undefined) { i += 1; this.mobileNoError = true; }
+    else if (/^0/.test(String(this.mobileNo))) { i += 1; this.mobileNoError = true; }
     if (this.emailId == null || this.emailId == '' || this.emailId == undefined) { i += 1; this.emailIdError = true; }
     return i == 0;
   }

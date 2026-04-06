@@ -111,12 +111,15 @@
             <label>Originating Warehouse</label>
             <div class="yn-group">
               <input id="ow-yes" type="radio" name="originatingWarehouse" value="YES"
-                formControlName="originatingWarehouse">
+                formControlName="originatingWarehouse" [attr.disabled]="isWarehouseLockedForLand ? true : null">
               <label for="ow-yes">Yes</label>
               <input id="ow-no" type="radio" name="originatingWarehouse" value="NO"
-                formControlName="originatingWarehouse">
+                formControlName="originatingWarehouse" [attr.disabled]="isWarehouseLockedForLand ? true : null">
               <label for="ow-no">No</label>
             </div>
+            <small *ngIf="isWarehouseLockedForLand" style="color: var(--muted); font-size: 11px;">
+              <i class="pi pi-lock"></i> Fixed to YES for land transport
+            </small>
           </div>
         </div>
 
@@ -172,12 +175,15 @@
             <label>Destination Warehouse</label>
             <div class="yn-group">
               <input id="dw-yes" type="radio" name="destinationWarehouse" value="YES"
-                formControlName="destinationWarehouse">
+                formControlName="destinationWarehouse" [attr.disabled]="isWarehouseLockedForLand ? true : null">
               <label for="dw-yes">Yes</label>
               <input id="dw-no" type="radio" name="destinationWarehouse" value="NO"
-                formControlName="destinationWarehouse">
+                formControlName="destinationWarehouse" [attr.disabled]="isWarehouseLockedForLand ? true : null">
               <label for="dw-no">No</label>
             </div>
+            <small *ngIf="isWarehouseLockedForLand" style="color: var(--muted); font-size: 11px;">
+              <i class="pi pi-lock"></i> Fixed to YES for land transport
+            </small>
           </div>
         </div>
 

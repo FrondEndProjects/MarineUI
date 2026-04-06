@@ -454,7 +454,7 @@ export class PremiumInfoComponent implements OnInit {
 
       // if (this.premiumF?.warPremium?.value?.includes(',')) { warpremium = this.premiumF?.warPremium?.value?.replace(/,/g, '') }
       // else {
-        // warpremium = this.premiumF?.warPremium?.value;
+      // warpremium = this.premiumF?.warPremium?.value;
       // }
 
       let warpremium = this.premiumF?.warPremium?.value;
@@ -588,14 +588,14 @@ export class PremiumInfoComponent implements OnInit {
       if (this.premiumF?.warPremium.value != null && this.premiumF?.warPremium.value != 0) {
         // if (this.premiumF?.warPremium.value.includes(',')) { warpremium = this.premiumF?.warPremium.value.replace(/,/g, '') }
         // else { warpremium = this.premiumF?.warPremium.value; }
-        
-      let warpremium = this.premiumF?.warPremium?.value;
 
-      warpremium = warpremium != null
-        ? warpremium.toString().replace(/,/g, '')
-        : 0;
+        let warpremium = this.premiumF?.warPremium?.value;
 
-      warpremium = Number(warpremium);
+        warpremium = warpremium != null
+          ? warpremium.toString().replace(/,/g, '')
+          : 0;
+
+        warpremium = Number(warpremium);
       }
       else {
         warpremium = this.premiumF?.warPremium.value;
@@ -957,15 +957,30 @@ export class PremiumInfoComponent implements OnInit {
       return Number(a.DisplayOrder) - Number(b.DisplayOrder);
     });
   }
+  // getTotalRate() {
+  //   console.log(this.premiumF?.warRate?.value,"war")
+  //   console.log(this.premiumF?.marineRate?.value,"marine")
+
+  //   return (Number(this.premiumF?.warRate?.value) || 0) +
+  //     (Number(this.premiumF?.marineRate?.value) || 0);
+  // }
+  // getTotalPremium() {
+  //   console.log(this.premiumF?.warPremium?.value,"fsdfsdfsdf"),
+  //   console.log(this.premiumF?.marinePremium?.value,"llllllll");
+
+  //  return (Number((this.premiumF?.warPremium?.value || '0').toString().replace(/,/g, '')) || 0) +
+  //      (Number((this.premiumF?.marinePremium?.value || '0').toString().replace(/,/g, '')) || 0);
+  // }
   getTotalRate() {
-    return (Number(this.premiumF?.warRate?.value) || 0) +
+    const total = (Number(this.premiumF?.warRate?.value) || 0) +
       (Number(this.premiumF?.marineRate?.value) || 0);
+    return Math.round(total * 1000) / 1000;  // Fix floating point
   }
+
   getTotalPremium() {
-    console.log(this.premiumF?.warPremium?.value),"fsdfsdfsdf";
-    console.log(this.premiumF?.marinePremium?.value),"llllllll";
-    
-   return (Number((this.premiumF?.warPremium?.value || '0').toString().replace(/,/g, '')) || 0) +
-       (Number((this.premiumF?.marinePremium?.value || '0').toString().replace(/,/g, '')) || 0);
+    const war = Number((this.premiumF?.warPremium?.value || '0').toString().replace(/,/g, '')) || 0;
+    const marine = Number((this.premiumF?.marinePremium?.value || '0').toString().replace(/,/g, '')) || 0;
+    const total = war + marine;
+    return Math.round(total * 100) / 100;  // Fix floating point
   }
 }

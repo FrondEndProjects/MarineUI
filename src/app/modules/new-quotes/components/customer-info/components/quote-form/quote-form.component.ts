@@ -84,6 +84,7 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
   newVesselName: any = '';
   vesselid: any;
   insurenceId: any
+  isWarehouseLockedForLand: boolean = false;
   manyr: any;
   vesselId: any;
   viaSearch: any
@@ -513,6 +514,13 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
     this.quoteF.originatingWarehouse.setValue(transportDetails?.OriginWarehouseYn);
 
+    // For insurenceId 100053: lock warehouse to YES if BY LAND (Code '3')
+    if (this.insurenceId == '100053' && transportDetails?.ModeOfTansportCode == '3') {
+      this.isWarehouseLockedForLand = true;
+      this.quoteF.originatingWarehouse.setValue('YES');
+      this.quoteF.originatingWarehouse.disable();
+    }
+
     // Patch destination country
     if (this.userDetails?.RegionCode == '100020') {
       this.quoteF.destinationCountry.setValue(desinationCountry?.Code);
@@ -527,6 +535,12 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
     this.quoteF.destinationCity.setValue(isDestCityIncluded ? transportDetails?.DestinationCityCode : null);
 
     this.quoteF.destinationWarehouse.setValue(transportDetails?.DestinationWarehouseYn);
+
+    // For insurenceId 100053: lock destination warehouse to YES if BY LAND (Code '3')
+    if (this.insurenceId == '100053' && transportDetails?.ModeOfTansportCode == '3') {
+      this.quoteF.destinationWarehouse.setValue('YES');
+      this.quoteF.destinationWarehouse.disable();
+    }
     this.quoteF.policyStartDate.setValue(this.convertDate(quoteDetails?.InceptionDate));
     this.quoteF.warSrcc.setValue(quoteDetails?.WarAndSrccYn);
     this.quoteF.warOnLand.setValue(quoteDetails?.WarOnLandYn);
@@ -796,6 +810,21 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
     }
     else {
       modeOfTransport = this.quoteF.modeOfTransport.value
+    }
+
+    // For insurenceId 100053: lock warehouse fields to YES when mode is BY LAND (Code = '3')
+    if (this.insurenceId == '100053') {
+      if (modeOfTransport == '3') {
+        this.isWarehouseLockedForLand = true;
+        this.quoteF.originatingWarehouse.setValue('YES');
+        this.quoteF.destinationWarehouse.setValue('YES');
+        this.quoteF.originatingWarehouse.disable();
+        this.quoteF.destinationWarehouse.disable();
+      } else {
+        this.isWarehouseLockedForLand = false;
+        this.quoteF.originatingWarehouse.enable();
+        this.quoteF.destinationWarehouse.enable();
+      }
     }
     const urlLink = `${this.ApiUrl1}quote/dropdown/cover`;
     const reqData = {

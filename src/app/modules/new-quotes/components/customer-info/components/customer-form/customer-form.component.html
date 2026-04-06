@@ -128,7 +128,9 @@
             class="w-100 p-inputtext-sm" />
           <small class="p-error"
             *ngIf="(customerF.mobileNo.errors && submitted) || (!customerF.mobileNo.valid && customerF.mobileNo.touched)">
-            <i class="pi pi-exclamation-circle"></i> This field is required
+            <i class="pi pi-exclamation-circle"></i>
+            <span *ngIf="customerF.mobileNo.errors?.required">This field is required</span>
+            <span *ngIf="customerF.mobileNo.errors?.pattern">Mobile number must not start with 0</span>
           </small>
         </div>
       </div>
@@ -302,7 +304,10 @@
               <label>Mobile Number <span class="req">*</span></label>
               <input pInputText maxlength="10" [(ngModel)]="mobileNo" placeholder="Mobile Number"
                 class="w-100 p-inputtext-sm" />
-              <small class="p-error" *ngIf="mobileNoError"><i class="pi pi-exclamation-circle"></i> Required</small>
+              <small class="p-error" *ngIf="mobileNoError"><i class="pi pi-exclamation-circle"></i>
+                <span *ngIf="!mobileNo">Required</span>
+                <span *ngIf="mobileNo && mobileNo.toString().startsWith('0')">Mobile number must not start with 0</span>
+              </small>
             </div>
           </div>
           <!-- Email -->
