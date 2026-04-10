@@ -1,0 +1,241 @@
+// ============================================================
+// Frozen Column Table – matching Portfolio grid style
+// ============================================================
+$teal:       #1C7988;
+$teal-dark:  #145f6c;
+$teal-light: #e8f5f4;
+$border:     #d4e8e6;
+$text-main:  #2c3e50;
+$text-muted: #6c757d;
+$white:      #ffffff;
+$alt-row:    #f0f8f7;
+
+// ── Wrapper ────────────────────────────────────────────────
+.custom-table-wrapper {
+  margin-top: 16px;
+  border: 1px solid $border;
+  border-radius: 6px;
+  overflow: hidden;
+  background: $white;
+}
+
+// ── Toolbar (search row) ───────────────────────────────────
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: $white;
+  border-bottom: 1px solid $border;
+
+  .toolbar-left { flex: 1; }
+
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.global-search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid $border;
+  border-radius: 4px;
+  padding: 4px 10px;
+  height: 35px;
+  background: $white;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: $teal;
+    box-shadow: 0 0 0 2px rgba($teal, 0.15);
+  }
+
+  .search-icon {
+    color: $text-muted;
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+  }
+
+  .global-search-input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    width: 200px;
+    color: $text-main;
+    background: transparent;
+
+    &::placeholder { color: $text-muted; }
+  }
+}
+
+// ── Scrollable table container ─────────────────────────────
+.frozen-table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 420px;
+  position: relative;
+
+  &::-webkit-scrollbar        { height: 8px; width: 8px; }
+  &::-webkit-scrollbar-track  { background: #f1f1f1; border-radius: 10px; }
+  &::-webkit-scrollbar-thumb  {
+    background: $border;
+    border-radius: 10px;
+    border: 2px solid #f1f1f1;
+    &:hover { background: $teal; }
+  }
+  scrollbar-width: thin;
+  scrollbar-color: $border #f1f1f1;
+}
+
+// ── Table ─────────────────────────────────────────────────
+.frozen-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  color: $text-main;
+
+  // ── Header ──────────────────────────────────────────────
+  thead tr th {
+    background: $teal;
+    color: $white;
+    font-weight: 600;
+    font-size: 12.5px;
+    padding: 11px 14px;
+    white-space: nowrap;
+    text-align: left;
+    border-right: 1px solid rgba($white, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 2;            // scrolling header above body
+
+    &:last-child { border-right: none; }
+
+    // FIX: each frozen header gets its own z-index (descending left→right)
+    // so col-0 always renders above col-1, col-1 above col-2
+    &.frozen-col-0 { z-index: 14; }
+    &.frozen-col-1 { z-index: 13; }
+    &.frozen-col-2 {
+      z-index: 12;
+      // FIX: strong right shadow ONLY on the last frozen header
+      // blocks scrolling content from bleeding through
+      box-shadow: 4px 0 8px rgba(0, 0, 0, 0.18);
+      border-right: 2px solid rgba($white, 0.4);
+    }
+  }
+
+  // ── Body ────────────────────────────────────────────────
+  tbody tr {
+    transition: background 0.15s;
+
+    // Normal rows
+    td {
+      padding: 10px 14px;
+      white-space: nowrap;
+      background: $white;           // ← always explicit opaque bg
+      border-bottom: 1px solid $border;
+      border-right: 1px solid $border;
+
+      &:last-child { border-right: none; }
+    }
+
+    // Alternating rows
+    &.alt-row td { background: $alt-row; }
+
+    // Hover
+    &:hover td { background: $teal-light !important; }
+
+    // ── FIX: frozen cells per-column z-index + matching opaque bg ──
+    td.frozen-col-0 {
+      position: sticky;
+      z-index: 3;           // highest – always on top
+      background: $white;
+    }
+    td.frozen-col-1 {
+      position: sticky;
+      z-index: 2;
+      background: $white;
+    }
+    td.frozen-col-2 {
+      position: sticky;
+      z-index: 1;
+      background: $white;
+      // FIX: shadow + solid border on the right edge of the freeze line
+      box-shadow: 4px 0 8px rgba(0, 0, 0, 0.10);
+      border-right: 2px solid $border;
+    }
+
+    // Alt-row overrides for frozen cells
+    &.alt-row td.frozen-col-0,
+    &.alt-row td.frozen-col-1,
+    &.alt-row td.frozen-col-2 { background: $alt-row; }
+
+    // Hover overrides handled by !important on the parent hover rule
+  }
+
+  .no-data-cell {
+    text-align: center;
+    color: $text-muted;
+    padding: 28px;
+    font-style: italic;
+  }
+}
+
+// ── Paginator ─────────────────────────────────────────────
+.paginator-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: $white;
+  border-top: 1px solid $border;
+  font-size: 13px;
+  color: $text-muted;
+
+  .paginator-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .page-size-select {
+      border: 1px solid $border;
+      border-radius: 4px;
+      padding: 4px 28px 4px 8px;
+      font-size: 13px;
+      color: $text-main;
+      background: $white;
+      cursor: pointer;
+      appearance: auto;
+      &:focus { outline: none; border-color: $teal; }
+    }
+  }
+
+  .paginator-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .page-range { margin-right: 8px; font-size: 13px; }
+  }
+}
+
+.pag-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid $border;
+  border-radius: 4px;
+  background: $white;
+  color: $text-main;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover:not(:disabled) { background: $teal; color: $white; border-color: $teal; }
+  &:disabled             { opacity: 0.35; cursor: not-allowed; }
+}

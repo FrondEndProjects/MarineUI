@@ -139,7 +139,7 @@ export const borkerNavItems: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Referral Certificate',
+    title: 'Referral Quote',
     icon: 'award-outline', // Matches the "Certificate" badge vibe
     expanded: false,
     children: [

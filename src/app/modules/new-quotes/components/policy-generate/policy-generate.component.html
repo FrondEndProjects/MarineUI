@@ -147,7 +147,7 @@
           </div>
           <div class="print-check">
             <label class="custom-checkbox-container">
-              <input type="checkbox" [(ngModel)]="premium">
+              <input type="checkbox" [(ngModel)]="premium" (change)="premium ? onSelectPremium() : null">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
                 <span><i class="fas fa-minus-circle"></i></span>
@@ -156,9 +156,19 @@
                 <div class="description-name"><span>Premium</span></div>
               </div>
             </label>
+            <label class="custom-checkbox-container">
+              <input type="checkbox" [(ngModel)]="premiumPaid" (change)="premiumPaid ? onSelectPremiumPaid() : null">
+              <span class="checkmark">
+                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                <span><i class="fas fa-minus-circle"></i></span>
+              </span>
+              <div class="description">
+                <div class="description-name"><span>Premium Paid</span></div>
+              </div>
+            </label>
 
             <label class="custom-checkbox-container" *ngIf="bankName != null && bankName != undefined && bankName != ''">
-              <input type="checkbox" [(ngModel)]="nameOfBroker">
+              <input type="checkbox" [(ngModel)]="nameOfBroker" (change)="nameOfBroker ? onSelectNameOfBroker() : null">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
                 <span><i class="fas fa-minus-circle"></i></span>
@@ -168,7 +178,7 @@
               </div>
             </label>
 
-            <label class="custom-checkbox-container">
+            <!-- <label class="custom-checkbox-container">
               <input type="checkbox" [(ngModel)]="darft">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
@@ -177,10 +187,20 @@
               <div class="description">
                 <div class="description-name"><span>DRAFT</span></div>
               </div>
+            </label> -->
+            <label class="custom-checkbox-container">
+              <input type="checkbox" [(ngModel)]="foreignCurrency">
+              <span class="checkmark">
+                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                <span><i class="fas fa-minus-circle"></i></span>
+              </span>
+              <div class="description">
+                <div class="description-name"><span>Foreign Currency</span></div>
+              </div>
             </label>
 
             <label class="custom-checkbox-container" *ngIf="bankName != null && bankName != undefined && bankName != ''">
-              <input type="checkbox" [(ngModel)]="bankerAssured">
+              <input type="checkbox" [(ngModel)]="bankerAssured" (change)="bankerAssured ? onSelectBankerAssured() : null">
               <span class="checkmark">
                 <span class="text-light"><i class="fas fa-check-circle"></i></span>
                 <span><i class="fas fa-minus-circle"></i></span>

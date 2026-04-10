@@ -501,8 +501,19 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
 
     // Patch origin city — city lists already loaded
     this.editOrginCity = transportDetails?.OriginCityCode;
-    const isOriginCityIncluded = this.dropOriginCityList.some(item => item.Code == transportDetails?.OriginCityCode);
-    this.quoteF.originatingCity.setValue(isOriginCityIncluded ? transportDetails?.OriginCityCode : null);
+    if (transportDetails?.OriginCityCode === '99999') {
+      // Other City selected: toggle switch on, show textbox with city name
+      this.quoteF.orginatingCityOtherYN.setValue(true);
+      this.quoteF.orginatingCityOther.setValue(transportDetails?.OriginCityName || '');
+      this.quoteF.orginatingCityOther.setValidators(Validators.required);
+      this.quoteF.orginatingCityOther.updateValueAndValidity();
+      this.quoteF.originatingCity.clearValidators();
+      this.quoteF.originatingCity.updateValueAndValidity();
+    } else {
+      this.quoteF.orginatingCityOtherYN.setValue(false);
+      const isOriginCityIncluded = this.dropOriginCityList.some(item => item.Code == transportDetails?.OriginCityCode);
+      this.quoteF.originatingCity.setValue(isOriginCityIncluded ? transportDetails?.OriginCityCode : null);
+    }
 
     if (this.userDetails?.RegionCode == '100020') {
       this.quoteF.TranshipmentYN.setValue(transportDetails?.TranshipmentYn);
@@ -531,8 +542,19 @@ export class QuoteFormComponent implements OnInit, OnChanges, AfterViewInit, OnD
     // Patch destination city — city list already loaded
     this.TranshippingCountryEdit = transportDetails?.TranshipmentCountry;
     this.editDesinationCity = transportDetails?.DestinationCityCode;
-    const isDestCityIncluded = this.dropDestinaCityList.some(item => item.Code == transportDetails?.DestinationCityCode);
-    this.quoteF.destinationCity.setValue(isDestCityIncluded ? transportDetails?.DestinationCityCode : null);
+    if (transportDetails?.DestinationCityCode === '99999') {
+      // Other City selected: toggle switch on, show textbox with city name
+      this.quoteF.destinationOtherYN.setValue(true);
+      this.quoteF.destinationCityOther.setValue(transportDetails?.DestinationCityName || '');
+      this.quoteF.destinationCityOther.setValidators(Validators.required);
+      this.quoteF.destinationCityOther.updateValueAndValidity();
+      this.quoteF.destinationCity.clearValidators();
+      this.quoteF.destinationCity.updateValueAndValidity();
+    } else {
+      this.quoteF.destinationOtherYN.setValue(false);
+      const isDestCityIncluded = this.dropDestinaCityList.some(item => item.Code == transportDetails?.DestinationCityCode);
+      this.quoteF.destinationCity.setValue(isDestCityIncluded ? transportDetails?.DestinationCityCode : null);
+    }
 
     this.quoteF.destinationWarehouse.setValue(transportDetails?.DestinationWarehouseYn);
 
@@ -1824,4 +1846,11 @@ convertDate(value: any): Date | null {
 
   return null;
 }
+
+  // Prevent typing 0 as the first character in any number field
+  preventLeadingZero(event: KeyboardEvent, currentValue: string): void {
+    if (event.key === '0' && (!currentValue || currentValue.toString().length === 0)) {
+      event.preventDefault();
+    }
+  }
 }

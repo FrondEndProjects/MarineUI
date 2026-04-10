@@ -8,10 +8,14 @@ import { Component } from '@angular/core';
   <!-- First Assurance   -->
     </span>
     <div class="socials">
-      <a href="#" target="_blank" class="ion ion-social-github"></a>
+      <a  class="ion ion-social-github"></a>
+      <a  class="ion ion-social-facebook"></a>
+      <a  class="ion ion-social-twitter"></a>
+      <a  class="ion ion-social-linkedin"></a>
+      <!-- <a href="#" target="_blank" class="ion ion-social-github"></a>
       <a href="#" target="_blank" class="ion ion-social-facebook"></a>
       <a href="#" target="_blank" class="ion ion-social-twitter"></a>
-      <a href="#" target="_blank" class="ion ion-social-linkedin"></a>
+      <a href="#" target="_blank" class="ion ion-social-linkedin"></a> -->
     </div>
   `,
 })

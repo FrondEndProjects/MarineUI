@@ -69,7 +69,7 @@
     </div>
 
     <!-- ── Inner Content ── -->
-    <div class="content-wrap">
+    <div class="content-wrap" *ngIf="sectionResolved; else loadingSection">
 
         <!-- ── SECTION TOOLBAR ── -->
         <ng-container *ngIf="selectedBranch || approverSection">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    <div class="toggle-group admin-toggle" *ngIf="userType=='Issuer'">
+                    <div class="toggle-group admin-toggle" *ngIf="showAdminToggle">
                         <span class="toggle-label" [class.active]="!isAdminView">Product</span>
                         <label class="switch admin-switch">
                             <input type="checkbox" [(ngModel)]="isAdminView" (change)="onAdminToggle()">
@@ -206,6 +206,16 @@
         </ng-container>
 
     </div><!-- /content-wrap -->
+
+    <!-- Shown while waiting for subuser-type API to resolve (prevents flicker) -->
+    <ng-template #loadingSection>
+        <div class="content-wrap">
+            <div class="loading-state" style="display:flex;align-items:center;justify-content:center;min-height:300px;">
+                <i class="pi pi-spin pi-spinner" style="font-size:2rem;color:#1a5f68;"></i>
+            </div>
+        </div>
+    </ng-template>
+
 </main>
 
 <!-- ══════════════════════════════════════════════════════

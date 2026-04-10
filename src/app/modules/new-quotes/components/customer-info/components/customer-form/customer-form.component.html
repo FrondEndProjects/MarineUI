@@ -96,7 +96,8 @@
         <div class="pf"
           [class.pf-invalid]="(customerF.poBox.errors && submitted) || (!customerF.poBox.valid && customerF.poBox.touched)">
           <label>P.O Box <span class="req">*</span></label>
-          <input pInputText formControlName="poBox" placeholder="Enter P.O Box" class="w-100 p-inputtext-sm" />
+          <input pInputText formControlName="poBox" placeholder="Enter P.O Box" class="w-100 p-inputtext-sm"
+            (keydown)="preventLeadingZero($event, customerF.poBox.value)" />
           <small class="p-error"
             *ngIf="(customerF.poBox.errors && submitted) || (!customerF.poBox.valid && customerF.poBox.touched)">
             <i class="pi pi-exclamation-circle"></i> This field is required
@@ -125,7 +126,8 @@
           [class.pf-invalid]="(customerF.mobileNo.errors && submitted) || (!customerF.mobileNo.valid && customerF.mobileNo.touched)">
           <label>Mobile Number <span class="req">*</span></label>
           <input pInputText formControlName="mobileNo" maxlength="10" placeholder="Enter mobile number"
-            class="w-100 p-inputtext-sm" />
+            class="w-100 p-inputtext-sm"
+            (keydown)="preventMobileZero($event, customerF.mobileNo.value)" />
           <small class="p-error"
             *ngIf="(customerF.mobileNo.errors && submitted) || (!customerF.mobileNo.valid && customerF.mobileNo.touched)">
             <i class="pi pi-exclamation-circle"></i>
@@ -144,7 +146,7 @@
             <span *ngIf="userDetails.InsuranceId !='100020'">VAT Registration No</span>
             <span class="req"> *</span>
           </label>
-          <input pInputText formControlName="customerVat" placeholder="Enter VAT / KRA PIN"
+          <input pInputText formControlName="customerVat" placeholder="Enter VAT / KRA PIN" (keydown)="preventMobileZero($event, customerF.customerVat.value)"
             class="w-100 p-inputtext-sm" />
           <small class="p-error"
             *ngIf="(customerF.customerVat.errors && submitted) || (!customerF.customerVat.valid && customerF.customerVat.touched)">
@@ -184,22 +186,10 @@
     </div>
     <div class="modal-body">
       <ng-container *ngIf="!editSection">
-        <!-- <div class="row mb-3">
-          <div class="col-md-6 offset-md-3">
-            <span class="p-input-icon-left w-100">
-              <i class="pi pi-search"></i>
-              <input pInputText [(ngModel)]="filterValue" placeholder="Search customers..." class="w-100" />
-            </span>
-          </div>
-          <div class="col-md-3 d-flex align-items-end" *ngIf="productId!='11' && productId!=11">
-            <button pButton pRipple icon="pi pi-plus" label="Create Customer"
-              class="p-button-sm p-button-outlined" (click)="editSection=!editSection"></button>
-          </div>
-        </div> -->
+  
         <div class="row mb-3 align-items-end">
           <div class="col-md-6 offset-md-3">
             <span class="p-input-icon-left w-100 customer-search">
-              <!-- <i class="pi pi-search"></i> -->
               <input pInputText [(ngModel)]="filterValue" placeholder="Search customers..." class="w-100" />
             </span>
           </div>
@@ -228,7 +218,6 @@
       </ng-container>
 
       <ng-container *ngIf="editSection">
-        <!-- Customer Type Radio -->
         <div class="row mb-3">
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf">
@@ -244,7 +233,7 @@
         </div>
 
         <div class="row g-3">
-          <!-- Title -->
+
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="titleError">
               <label>Title <span class="req">*</span></label>
@@ -253,7 +242,6 @@
               <small class="p-error" *ngIf="titleError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <!-- Name -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="customerNameError">
               <label>
@@ -264,24 +252,24 @@
               <div *ngIf="customerType!='Corporate'" class="p-inputgroup">
                 <input pInputText maxlength="100" [(ngModel)]="customerName" placeholder="Enter Name"
                   class="p-inputtext-sm" />
-                <button pButton pRipple type="button" icon="pi pi-search" class="p-button-teal p-button-sm"
+                <button *ngIf="userDetails.InsuranceId !='100053' && userDetails.InsuranceId !='100044'" pButton pRipple type="button" icon="pi pi-search" class="p-button-teal p-button-sm"
                   (click)="onSearchCustomer()"></button>
+                <button *ngIf="userDetails.InsuranceId =='100053' || userDetails.InsuranceId =='100044'" pButton pRipple type="button" icon="pi pi-search" class="p-button-teal p-button-sm"
+                  ></button>
               </div>
               <input *ngIf="customerType=='Corporate'" pInputText [(ngModel)]="filterValue" placeholder="Company Name"
                 class="w-100 p-inputtext-sm" />
               <small class="p-error" *ngIf="customerNameError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <!-- Core App Code -->
-          <div class="col-12 col-sm-6 col-md-4">
+          <div *ngIf="userDetails.InsuranceId !='100053' && userDetails.InsuranceId !='100044'" class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="coreAppcodeError">
-              <label>Core App Code <span class="req">*</span></label>
+              <label>Core App Code </label>
               <input pInputText maxlength="100" [(ngModel)]="coreAppcode" placeholder="Enter Core App Code"
                 class="w-100 p-inputtext-sm" />
               <small class="p-error" *ngIf="coreAppcodeError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <!-- City -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="cityNameError">
               <label>City <span class="req">*</span></label>
@@ -290,27 +278,26 @@
               <small class="p-error" *ngIf="cityNameError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <!-- P.O Box -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="poBoxError">
               <label>P.O Box <span class="req">*</span></label>
-              <input pInputText maxlength="6" [(ngModel)]="poBox" placeholder="P.O Box" class="w-100 p-inputtext-sm" />
+              <input pInputText maxlength="6" [(ngModel)]="poBox" placeholder="P.O Box" class="w-100 p-inputtext-sm"
+                (keydown)="preventLeadingZero($event, poBox)" />
               <small class="p-error" *ngIf="poBoxError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <!-- Mobile -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="mobileNoError">
               <label>Mobile Number <span class="req">*</span></label>
               <input pInputText maxlength="10" [(ngModel)]="mobileNo" placeholder="Mobile Number"
-                class="w-100 p-inputtext-sm" />
+                class="w-100 p-inputtext-sm"
+                (keydown)="preventMobileZero($event, mobileNo)" />
               <small class="p-error" *ngIf="mobileNoError"><i class="pi pi-exclamation-circle"></i>
                 <span *ngIf="!mobileNo">Required</span>
                 <span *ngIf="mobileNo && mobileNo.toString().startsWith('0')">Mobile number must not start with 0</span>
               </small>
             </div>
           </div>
-          <!-- Email -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf" [class.pf-invalid]="emailIdError">
               <label>Email ID <span class="req">*</span></label>
@@ -319,21 +306,18 @@
               <small class="p-error" *ngIf="emailIdError"><i class="pi pi-exclamation-circle"></i> Required</small>
             </div>
           </div>
-          <!-- VAT -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf">
               <label>Customer VAT <em>(Reg No)</em></label>
-              <input pInputText [(ngModel)]="customerVat" placeholder="VAT Number" class="w-100 p-inputtext-sm" />
+              <input pInputText [(ngModel)]="customerVat" maxlength="15" placeholder="VAT Number" class="w-100 p-inputtext-sm" />
             </div>
           </div>
-          <!-- Address 1 -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf">
               <label>Address 1</label>
               <textarea pInputTextarea [(ngModel)]="Address1" rows="2" class="w-100" autoResize="true"></textarea>
             </div>
           </div>
-          <!-- Address 2 -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="pf">
               <label>Address 2</label>

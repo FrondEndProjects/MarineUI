@@ -325,6 +325,7 @@
             [class.pf-invalid]="(quoteF.insuredValue.errors && submitted) || (!quoteF.insuredValue.valid && quoteF.insuredValue.touched)">
             <label>Insured Value <span class="req">*</span></label>
             <input pInputText formControlName="insuredValue" (keyup)="CommaFormatteds()"
+              (keydown)="preventLeadingZero($event, quoteF.insuredValue.value)"
               [value]="quoteF.insuredValue.value | commaseparator" placeholder="0.00" class="w-100 p-inputtext-sm" />
             <small class="p-error"
               *ngIf="(quoteF.insuredValue.errors && submitted) || (!quoteF.insuredValue.valid && quoteF.insuredValue.touched)">
@@ -436,7 +437,7 @@
         <div class="col-12 col-sm-6 col-md-4">
           <div class="pf">
             <label>Voyage Number</label>
-            <input pInputText formControlName="voyageNumber" placeholder="Enter voyage number"
+            <input pInputText formControlName="voyageNumber" (keydown)="preventLeadingZero($event, quoteF.voyageNumber.value)" placeholder="Enter voyage number"
               class="w-100 p-inputtext-sm" />
           </div>
         </div>
@@ -480,7 +481,8 @@
           <div class="pf">
             <label>Exposure of Shipment</label>
             <input pInputText formControlName="exposureOfShipment" placeholder="Enter exposure value"
-              class="w-100 p-inputtext-sm" />
+              class="w-100 p-inputtext-sm"
+              (keydown)="preventLeadingZero($event, quoteF.exposureOfShipment.value)" />
           </div>
         </div>
 
@@ -602,7 +604,8 @@
                   <div class="input-control-container">
                     <label class="input-form-label">Manufacture Year</label>
                     <input type="text" class="salama-input" placeholder="e.g. 2018" maxlength="10"
-                      [(ngModel)]="ManufactureYear">
+                      [(ngModel)]="ManufactureYear"
+                      (keydown)="preventLeadingZero($event, ManufactureYear)">
                     <div class="salama-error" *ngIf="manshow">
                       Please fill manufacture year
                     </div>
@@ -720,8 +723,9 @@
             <div class="input-control-container mt-2" *ngIf="values=='None'">
               <label class="input-form-label">Manufacture Year</label>
               <div class="input-form-box">
-                <input type="text" placeholder="Manufacture Year" class="input-form-control without-icon" maxlength="10"
-                  [(ngModel)]="ManufactureYear">
+              <input type="text" placeholder="Manufacture Year" class="input-form-control without-icon" maxlength="10"
+                [(ngModel)]="ManufactureYear"
+                (keydown)="preventLeadingZero($event, ManufactureYear)">
               </div>
               <div *ngIf="manshow">
                 <div style="color:red;font-size:14px !important;"> Please Fill Manufacute Year</div>

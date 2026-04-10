@@ -15,7 +15,7 @@ import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { BrokerDashboradComponent } from './broker-dashborad/broker-dashborad.component';
-
+import { DropdownModule } from 'primeng/dropdown';
 
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
 
@@ -31,6 +31,7 @@ import { BrokerDashboradComponent } from './broker-dashborad/broker-dashborad.co
     ReactiveFormsModule,
     DirectivesModule,
     NgSelectModule,
+    DropdownModule,
     ThemeModule,
     NbTabsetModule,
     NbRouteTabsetModule,
@@ -53,7 +54,7 @@ import { BrokerDashboradComponent } from './broker-dashborad/broker-dashborad.co
     DigitOnlyModule,
     BackBtnModule
   ],
-  bootstrap: [DashboardComponent],
+  exports: [DashboardComponent],
   providers: [
     CurrencyPipe,
   ],

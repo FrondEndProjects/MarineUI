@@ -577,7 +577,7 @@ input[type=number] {
 .example-container::-webkit-scrollbar {
   width: 10px;
   /* for vertical scrollbars */
-  height: 10px;
+  height: 5px !important;
   /* for horizontal scrollbars */
 }
 

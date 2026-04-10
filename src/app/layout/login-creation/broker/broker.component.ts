@@ -1528,21 +1528,21 @@ export class BrokerComponent {
         "SourceType": this.channelId
       }
       let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
-      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-        (data: any) => {
-          console.log("Searched Data", data);
-          if (data.Result.length != 0) {
-            if (data.Result.length == 1) {
-              if (data.Result[0].CustomerCode != null) {
-                this.searchList = data.Result;
-              }
-            }
-            else this.searchList = data.Result;
-          }
+      // this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      //   (data: any) => {
+      //     console.log("Searched Data", data);
+      //     if (data.Result.length != 0) {
+      //       if (data.Result.length == 1) {
+      //         if (data.Result[0].CustomerCode != null) {
+      //           this.searchList = data.Result;
+      //         }
+      //       }
+      //       else this.searchList = data.Result;
+      //     }
 
-        },
-        (err) => { },
-      );
+      //   },
+      //   (err) => { },
+      // );
     }
   }
   selectBranch(value) {
@@ -1570,39 +1570,39 @@ export class BrokerComponent {
       "SourceType": this.channelId
     }
     let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log("Searched Data", data);
-        if (data.Result.length != 0) {
-          if (data.Result.length == 1) {
-            if (data.Result[0].CustomerCode != null) {
-              this.searchList = data.Result;
-            }
-          }
-          else this.searchList = data.Result;
-        }
-        if (this.searchList.length != 0) {
-          if (this.insuranceId == '100002') {
-            if (this.searchList.length != 0) {
-              const matchedCustomer = this.searchList.find(
-                item => item.CustomerCode == this.customerCode.trim()
-              );
-              if (matchedCustomer) {
-                this.isValidCustomer = false;
-              }
-              else {
-                this.isValidCustomer = true;
-              }
-            }
-          }
-          else {
-            this.isValidCustomer = false;
-          }
-        }
+    // this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    //   (data: any) => {
+    //     console.log("Searched Data", data);
+    //     if (data.Result.length != 0) {
+    //       if (data.Result.length == 1) {
+    //         if (data.Result[0].CustomerCode != null) {
+    //           this.searchList = data.Result;
+    //         }
+    //       }
+    //       else this.searchList = data.Result;
+    //     }
+    //     if (this.searchList.length != 0) {
+    //       if (this.insuranceId == '100002') {
+    //         if (this.searchList.length != 0) {
+    //           const matchedCustomer = this.searchList.find(
+    //             item => item.CustomerCode == this.customerCode.trim()
+    //           );
+    //           if (matchedCustomer) {
+    //             this.isValidCustomer = false;
+    //           }
+    //           else {
+    //             this.isValidCustomer = true;
+    //           }
+    //         }
+    //       }
+    //       else {
+    //         this.isValidCustomer = false;
+    //       }
+    //     }
 
-      },
-      (err) => { },
-    );
+    //   },
+    //   (err) => { },
+    // );
 
   }
   getTiraNo() {

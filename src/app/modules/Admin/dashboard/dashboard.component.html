@@ -4,7 +4,7 @@
 <div class="dash-page">
 
   <!-- ── Page Header ─────────────────────────────────────────── -->
-  <div class="dash-header">
+  <!-- <div class="dash-header">
     <div class="dash-header-left">
       <div class="dash-header-icon"><i class="fa fa-chart-line"></i></div>
       <div>
@@ -15,8 +15,42 @@
     <div class="dash-header-badge">
       <i class="fa fa-circle dash-live-dot"></i> Live Data
     </div>
-  </div>
+  </div> -->
+  <div class="dash-header">
 
+    <!-- LEFT -->
+    <div class="dash-header-left">
+      <div class="dash-header-icon">
+        <i class="fa fa-chart-line"></i>
+      </div>
+      <div>
+        <div class="dash-header-title">Dashboard Overview</div>
+        <div class="dash-header-sub">Marine Insurance Analytics</div>
+      </div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="dash-header-center">
+      <div class="dash-toggle" *ngIf="userDetails?.Result?.UserType == 'admin'">
+        <span [class.active]="!isOneOff">Opencover policy</span>
+
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="isOneOff" (change)="onToggleChange()" />
+          <span class="slider"></span>
+        </label>
+
+        <span [class.active]="isOneOff">One off policy</span>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="dash-header-right">
+      <div class="dash-header-badge">
+        <i class="fa fa-circle dash-live-dot"></i> Live Data
+      </div>
+    </div>
+
+  </div>
   <ng-container>
 
     <!-- ══════════════════════════════════════════════════════════
@@ -28,14 +62,17 @@
       <div class="col-12 col-md-4">
         <div class="sa-card kpi-card d-flex flex-column h-100">
 
+          <!-- <ng-container *ngIf="brokerProductPolicyListData?.length == 1"> -->
+
           <!-- Production Section -->
+
           <div class="kpi-section">
             <div class="kpi-section-header">
               <div class="kpi-icon kpi-icon-teal"><i class="fa fa-file-contract"></i></div>
               <span class="kpi-section-title">Production</span>
             </div>
-            <h6 *ngIf="brokerProductPolicyListData?.length > 0"
-                class="kpi-product-name">{{ brokerProductPolicyListData[0]?.Name }}</h6>
+            <h6 *ngIf="brokerProductPolicyListData?.length > 0" class="kpi-product-name">{{
+              brokerProductPolicyListData[0]?.Name }}</h6>
             <div class="kpi-stats-row">
               <div class="kpi-stat">
                 <span class="kpi-stat-label">Count</span>
@@ -61,8 +98,8 @@
               <div class="kpi-icon kpi-icon-gold"><i class="fa fa-file-alt"></i></div>
               <span class="kpi-section-title">Quotation</span>
             </div>
-            <h6 *ngIf="brokerProductQuoteListData?.length > 0"
-                class="kpi-product-name">{{ brokerProductQuoteListData[0]?.Name }}</h6>
+            <h6 *ngIf="brokerProductQuoteListData?.length > 0" class="kpi-product-name">{{
+              brokerProductQuoteListData[0]?.Name }}</h6>
             <div class="kpi-stats-row">
               <div class="kpi-stat">
                 <span class="kpi-stat-label">Count</span>
@@ -77,7 +114,56 @@
               </div>
             </div>
           </div>
-
+          <!-- </ng-container> -->
+          <!-- <ng-container *ngIf="brokerProductPolicyListData?.length == 2">
+            <div class="kpi-section">
+              <div class="kpi-section-header">
+                <div class="kpi-icon kpi-icon-teal"><i class="fa fa-file-contract"></i></div> <span
+                  class="kpi-section-title">Production</span>
+              </div>
+              <div class="kpi-stats-row">
+                <div class="kpi-stat">
+                  <h6 *ngIf="brokerProductPolicyListData?.length > 0" class="kpi-product-name">{{
+                    brokerProductPolicyListData[0]?.Name }}</h6> <span class="kpi-stat-label">Count</span> <span
+                    class="kpi-stat-value">{{ brokerProductPolicyListData[0]?.Count || 0 }}</span> <span
+                    class="kpi-stat-label">Premium</span> <span class="kpi-stat-value premium-val"> {{
+                    formatNumberWithCommas(brokerProductPolicyListData[0]?.Premium) }} </span>
+                </div>
+                <div class="kpi-stat-divider"></div>
+                <div class="kpi-stat">
+                  <h6 *ngIf="brokerProductPolicyListData?.length > 0" class="kpi-product-name">{{
+                    brokerProductPolicyListData[1]?.Name }}</h6> <span class="kpi-stat-label">Count</span> <span
+                    class="kpi-stat-value">{{ brokerProductPolicyListData[1]?.Count || 0 }}</span> <span
+                    class="kpi-stat-label">Premium</span> <span class="kpi-stat-value premium-val"> {{
+                    formatNumberWithCommas(brokerProductPolicyListData[1]?.Premium) }} </span>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-divider"> <span class="kpi-divider-line"></span> </div> 
+            <div class="kpi-section">
+              <div class="kpi-section-header">
+                <div class="kpi-icon kpi-icon-gold"><i class="fa fa-file-alt"></i></div> <span
+                  class="kpi-section-title">Quotation</span>
+              </div>
+              <div class="kpi-stats-row">
+                <div class="kpi-stat">
+                  <h6 *ngIf="brokerProductQuoteListData?.length > 0" class="kpi-product-name">{{
+                    brokerProductQuoteListData[0]?.Name }}</h6> <span class="kpi-stat-label">Count</span> <span
+                    class="kpi-stat-value">{{ brokerProductQuoteListData[0]?.Count || 0 }}</span> <span
+                    class="kpi-stat-label">Premium</span> <span class="kpi-stat-value premium-val"> {{
+                    formatNumberWithCommas(brokerProductQuoteListData[0]?.Premium) }} </span>
+                </div>
+                <div class="kpi-stat-divider"></div>
+                <div class="kpi-stat">
+                  <h6 *ngIf="brokerProductQuoteListData?.length > 0" class="kpi-product-name">{{
+                    brokerProductQuoteListData[1]?.Name }}</h6> <span class="kpi-stat-label">Count</span> <span
+                    class="kpi-stat-value">{{ brokerProductQuoteListData[1]?.Count || 0 }}</span> <span
+                    class="kpi-stat-label">Premium</span> <span class="kpi-stat-value premium-val"> {{
+                    formatNumberWithCommas(brokerProductQuoteListData[1]?.Premium) }} </span>
+                </div>
+              </div>
+            </div>
+          </ng-container> -->
         </div>
       </div>
 
@@ -117,7 +203,19 @@
             <span class="sa-title">Referral Approved</span>
             <span class="sa-badge sa-badge-approved">Approved</span>
           </div>
-          <div id="approvedChart" class="chart-body" style="height:240px;width:100%;"></div>
+          <div class="referral-card-body">
+            <div class="referral-legend">
+              <div *ngFor="let item of brokerReferralApprovedListData; let i = index" class="legend-item">
+                <span class="legend-dot" [style.background]="colorPalette[i % colorPalette.length]"></span>
+                <span class="legend-name">{{ item.Name }}</span>
+              </div>
+              <div *ngIf="!brokerReferralApprovedListData?.length" class="legend-item">
+                <span class="legend-dot" style="background:#e0eef0"></span>
+                <span class="legend-name legend-muted">No Data</span>
+              </div>
+            </div>
+            <div id="approvedChart" class="chart-body referral-chart" style="height:240px;"></div>
+          </div>
         </div>
       </div>
 
@@ -128,7 +226,19 @@
             <span class="sa-title">Referral Pending</span>
             <span class="sa-badge sa-badge-pending">Pending</span>
           </div>
-          <div id="pendingChart" class="chart-body" style="height:240px;width:100%;"></div>
+          <div class="referral-card-body">
+            <div class="referral-legend">
+              <div *ngFor="let item of brokerReferralPenidngListData; let i = index" class="legend-item">
+                <span class="legend-dot" [style.background]="colorPalette[i % colorPalette.length]"></span>
+                <span class="legend-name">{{ item.Name }}</span>
+              </div>
+              <div *ngIf="!brokerReferralPenidngListData?.length" class="legend-item">
+                <span class="legend-dot" style="background:#e0eef0"></span>
+                <span class="legend-name legend-muted">No Data</span>
+              </div>
+            </div>
+            <div id="pendingChart" class="chart-body referral-chart" style="height:240px;"></div>
+          </div>
         </div>
       </div>
 
@@ -139,7 +249,19 @@
             <span class="sa-title">Referral Rejected</span>
             <span class="sa-badge sa-badge-rejected">Rejected</span>
           </div>
-          <div id="rejectedChart" class="chart-body" style="height:240px;width:100%;"></div>
+          <div class="referral-card-body">
+            <div class="referral-legend">
+              <div *ngFor="let item of brokerReferralRejectedListData; let i = index" class="legend-item">
+                <span class="legend-dot" [style.background]="colorPalette[i % colorPalette.length]"></span>
+                <span class="legend-name">{{ item.Name }}</span>
+              </div>
+              <div *ngIf="!brokerReferralRejectedListData?.length" class="legend-item">
+                <span class="legend-dot" style="background:#e0eef0"></span>
+                <span class="legend-name legend-muted">No Data</span>
+              </div>
+            </div>
+            <div id="rejectedChart" class="chart-body referral-chart" style="height:240px;"></div>
+          </div>
         </div>
       </div>
 
@@ -193,6 +315,24 @@
             <span class="sa-title">Top Referral</span>
           </div>
           <div class="sa-card-body">
+            <div class="row mb-2">
+              <div class="col-12 col-sm-6 col-md-4"></div>
+              <div class="col-12 col-sm-6 col-md-4"></div>
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="pf">
+                  <label>Status </label>
+                  <p-dropdown *ngIf="userDetails?.Result?.UserType =='admin'" [options]="dropStatusList" optionLabel="CodeDescription" (onChange)="onchangeTopReferralAdmin()"
+                    optionValue="Code" [(ngModel)]="referralfilterValue" placeholder="Select Status" styleClass="w-100">
+                  </p-dropdown>
+                  <p-dropdown *ngIf="userDetails?.Result?.UserType =='Issuer'" [options]="dropStatusList" optionLabel="CodeDescription" (onChange)="onchangeTopReferralIssuer()"
+                    optionValue="Code" [(ngModel)]="referralfilterValue" placeholder="Select Status" styleClass="w-100">
+                  </p-dropdown>
+                  <p-dropdown *ngIf="userDetails?.Result?.UserType =='Broker'" [options]="dropStatusList" optionLabel="CodeDescription" (onChange)="onchangeTopReferralBroker()"
+                    optionValue="Code" [(ngModel)]="referralfilterValue" placeholder="Select Status" styleClass="w-100">
+                  </p-dropdown>
+                </div>
+              </div>
+            </div>
             <ng-container *ngIf="topReferralList">
               <app-material-table [cols]="columnHeader2" [data]="topReferralList">
               </app-material-table>

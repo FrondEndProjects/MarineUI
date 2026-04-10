@@ -75,7 +75,8 @@ import { NonMotorClaimComponent } from './components/non-motor-claim/non-motor-c
 import { ProductComponent } from './layout/product/product.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 // import { MegaMenuModule } from 'primeng/megamenu';
-
+import { TableModule } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,7 +100,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ProductComponent
   ],
   imports: [
-    CommonModule, BrowserModule, BrowserAnimationsModule,
+    CommonModule, BrowserModule, BrowserAnimationsModule,TableModule,FormsModule,
     HttpClientModule, AppRoutingModule,
     ReactiveFormsModule, NbDatepickerModule.forRoot(),
     NbSidebarModule.forRoot(), NbMenuModule.forRoot(),

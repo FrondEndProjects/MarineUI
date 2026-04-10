@@ -157,8 +157,9 @@ export class BrokerFormComponent implements OnInit {
   }
   onChangeBroker() {
     let value = this.brokerForm.controls['borker'].value;
+    let e = this.dropBrokerList.filter(e => e.Code == this.brokerForm.controls['borker'].value)
     if (value != '') {
-      this.customerInfoComponent.checkCustomerList(value);
+      this.customerInfoComponent.checkCustomerList(value,e[0]?.CodeValue);
     }
   }
   isInvalid(controlName: string): boolean {

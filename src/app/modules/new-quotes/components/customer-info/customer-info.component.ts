@@ -327,10 +327,17 @@ export class CustomerInfoComponent implements OnInit {
     return this.brokerForm.controls;
   }
 
-
-  checkCustomerList(brokerCode) {
+brokerCodeValue:any
+  checkCustomerList(brokerCode, CodeValue) {
     this.loginId = brokerCode;
-    this.brokercallcode = brokerCode;
+    if (this.userDetails.UserType == 'Issuer') {
+      this.brokerCodeValue = CodeValue;
+
+    }
+    else {
+      this.brokercallcode = brokerCode;
+
+    }
     this.customerFormComponent.onGetCustomerList(brokerCode);
   }
   onEditQuoteDetails() {
@@ -440,7 +447,7 @@ export class CustomerInfoComponent implements OnInit {
             for (var control in this.brokerForm.controls) {
               this.brokerF.controls[control].disable();
             }
-           
+
             if (this.sessionStorageService.sessionStorgaeModel.referral != 'Approved') {
               for (var control in this.bankForm.controls) {
                 this.bankForm.controls[control].disable();
@@ -453,7 +460,7 @@ export class CustomerInfoComponent implements OnInit {
 
 
           } else {
-            
+
             for (var control in this.customerForm.controls) {
               this.customerForm.controls[control].enable();
 
@@ -470,7 +477,7 @@ export class CustomerInfoComponent implements OnInit {
       },
       (err) => { },
     );
-     sessionStorage.removeItem('quoteReloaded');
+    sessionStorage.removeItem('quoteReloaded');
   }
   onendorsementSelected() {
     var urlLink: any = `${this.ApiUrl1}api/endorsement/selected`;
@@ -732,7 +739,7 @@ export class CustomerInfoComponent implements OnInit {
             'TransportDetails': {
               'CoverCode': this.quoteF.cover.value,
               'CoverName': this.getCodeDescription(this.dropCoverList, this.quoteF.cover.value),
-              'DestinationCityCode': this.quoteF.destinationOtherYN.value ? '9999' : this.quoteF.destinationCity.value,
+              'DestinationCityCode': this.quoteF.destinationOtherYN.value ? '99999' : this.quoteF.destinationCity.value,
               // tslint:disable-next-line: max-line-length
               'DestinationCityName': this.quoteF.destinationOtherYN.value ? this.quoteF.destinationCityOther.value : this.getCodeDescription(this.dropDestinaCityList, this.quoteF.destinationCity.value),
               'DestinationCountryCode': this.quoteF.destinationCountry.value,
@@ -745,7 +752,7 @@ export class CustomerInfoComponent implements OnInit {
               'ModeOfCarriageName': this.getCodeDescription(this.dropCarriageList, this.quoteF.modeOfCarriage.value),
               'ModeOfTansportCode': this.quoteF.modeOfTransport.value,
               'ModeOfTransportName': this.getCodeDescription(this.dropTransportList, this.quoteF.modeOfTransport.value),
-              'OriginCityCode': this.quoteF.orginatingCityOtherYN.value ? '9999' : this.quoteF.originatingCity.value,
+              'OriginCityCode': this.quoteF.orginatingCityOtherYN.value ? '99999' : this.quoteF.originatingCity.value,
               // tslint:disable-next-line: max-line-length
               'OriginCityName': this.quoteF.orginatingCityOtherYN.value ? this.quoteF.orginatingCityOther.value : this.getCodeDescription(this.dropOriginCityList, this.quoteF.originatingCity.value),
               'OriginCountryCode': this.quoteF.originatingCountry.value,
@@ -978,7 +985,7 @@ export class CustomerInfoComponent implements OnInit {
           'TransportDetails': {
             'CoverCode': this.quoteF.cover.value,
             'CoverName': this.getCodeDescription(this.dropCoverList, this.quoteF.cover.value),
-            'DestinationCityCode': this.quoteF.destinationOtherYN.value ? '9999' : this.quoteF.destinationCity.value,
+            'DestinationCityCode': this.quoteF.destinationOtherYN.value ? '99999' : this.quoteF.destinationCity.value,
             // tslint:disable-next-line: max-line-length
             'DestinationCityName': this.quoteF.destinationOtherYN.value ? this.quoteF.destinationCityOther.value : this.getCodeDescription(this.dropDestinaCityList, this.quoteF.destinationCity.value),
             // 'DestinationCountryCode': this.quoteF.destinationCountry.value,
@@ -990,7 +997,7 @@ export class CustomerInfoComponent implements OnInit {
             'ModeOfCarriageName': this.getCodeDescription(this.dropCarriageList, this.quoteF.modeOfCarriage.value),
             'ModeOfTansportCode': this.quoteF.modeOfTransport.value,
             'ModeOfTransportName': this.getCodeDescription(this.dropTransportList, this.quoteF.modeOfTransport.value),
-            'OriginCityCode': this.quoteF.orginatingCityOtherYN.value ? '9999' : this.quoteF.originatingCity.value,
+            'OriginCityCode': this.quoteF.orginatingCityOtherYN.value ? '99999' : this.quoteF.originatingCity.value,
             // tslint:disable-next-line: max-line-length
             'OriginCityName': this.quoteF.orginatingCityOtherYN.value ? this.quoteF.orginatingCityOther.value : this.getCodeDescription(this.dropOriginCityList, this.quoteF.originatingCity.value),
             // 'OriginCountryCode': this.quoteF.originatingCountry.value,

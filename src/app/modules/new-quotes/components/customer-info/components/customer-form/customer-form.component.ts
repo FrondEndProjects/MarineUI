@@ -7,6 +7,7 @@ import { NewQuotesService } from '../../../../new-quotes.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { BrokerFormComponent } from '../broker-form/broker-form.component';
 @Component({
   selector: 'app-customer-form',
   templateUrl: './customer-form.component.html',
@@ -23,6 +24,7 @@ export class CustomerFormComponent implements OnInit {
   public filterValue: any;
   customerType: any = 'Individual'
   columnHeader1: any[] = [];
+   public brokerForm: FormGroup;
   searchList: any[] = [];
   public loginId: any;
   public applicationId: any; brokerCode: any = null;
@@ -32,6 +34,7 @@ export class CustomerFormComponent implements OnInit {
   public submitted: boolean;
   public customerForm: FormGroup;
   @ViewChild('formDirective') public customerFormDirective: NgForm;
+   @ViewChild(BrokerFormComponent) brokerFormComponent!: BrokerFormComponent;
   public dropTitleList: any[] = [];
   public dropCityList: any[] = [];
 
@@ -59,6 +62,7 @@ export class CustomerFormComponent implements OnInit {
     this.openCoverNo = this.customerInfoComponent.OpenCover?.value;
     this.customerForm = this.customerInfoComponent.customerForm;
     this.loginId = this.customerInfoComponent?.loginId;
+    this.brokerForm = this.newQuotesService.brokerForm;
     this.endorsement = JSON.parse(sessionStorage.getItem('endorsement'));
     this.OpenCover = JSON.parse(sessionStorage.getItem('OpenCover'));
     if (this.OpenCover) {
@@ -210,7 +214,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onGetCustomerList(code) {
-    console.log('Codes', this.customerInfoComponent.brokercallcode);
+    console.log('Codes', this.customerInfoComponent);
     this.tableData = [];
     const urlLink = `${this.ApiUrl1}api/customer/information`;
     if (this.productId == '3') this.openCoverNo = null;
@@ -257,10 +261,10 @@ export class CustomerFormComponent implements OnInit {
     let loginId = this.loginId;
     if (loginId == undefined || loginId == null || loginId == '') { loginId = code; }
     const reqData = {
-      "BrokerCode": code,
+      "BrokerCode": code ?code :this.brokerForm.controls['borker'].value,
       //this.brokerCode,
       'ApplicationId': this.applicationId,
-      'LoginId': loginId,
+      'LoginId': loginId?loginId:this.brokerForm.controls['borker'].value,
       'OpenCoverNo': this.openCoverNo,
     };
     // this.newQuotesService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -285,10 +289,10 @@ export class CustomerFormComponent implements OnInit {
             const customer = this.tableData[0];
 
             this.setCustomerFormValues(customer);
-            if (modal) {
-              modal.close();
-            }
-
+            // if (modal) {
+            //   modal.close();
+            // }
+if (modal) this.open(modal);
             return;
           }
 
@@ -362,6 +366,8 @@ export class CustomerFormComponent implements OnInit {
   close() {
   }
   onsubmit() {
+    console.log(this.customerInfoComponent,"sdfsdfsdfsdf");
+    
     let valid = this.checkMandatories();
     let LoginId: any
     if (valid) {
@@ -377,7 +383,8 @@ export class CustomerFormComponent implements OnInit {
       if (this.userDetails?.UserType == "Issuer") {
         this.loginId = this.endorsement?.LoginId || '';
         //this.loginId = this.customerInfoComponent.brokercallcode;
-        LoginId = this.customerInfoComponent.brokercallcode;
+        LoginId = this.customerInfoComponent.brokerCodeValue;
+  
         this.applicationId = this.userDetails.LoginId;
         this.isIssuer = true;
       }
@@ -438,7 +445,13 @@ export class CustomerFormComponent implements OnInit {
     this.mobileNoError = false; this.emailIdError = false;
     if (this.title == null || this.title == '' || this.title == undefined) { i += 1; this.titleError = true; }
     if (this.customerName == null || this.customerName == '' || this.customerName == undefined) { i += 1; this.customerNameError = true; }
+    if(this.userDetails?.InsuranceId !='100053'){
     if (this.coreAppcode == null || this.coreAppcode == '' || this.coreAppcode == undefined) { i += 1; this.coreAppcodeError = true; }
+
+    }
+    else{
+      this.coreAppcodeError = false;
+    }
     if (this.cityValue == null || this.cityValue == '' || this.cityValue == undefined) { i += 1; this.cityNameError = true; }
     if (this.poBox == null || this.poBox == '' || this.poBox == undefined) { i += 1; this.poBoxError = true; }
     if (this.mobileNo == null || this.mobileNo == '' || this.mobileNo == undefined) { i += 1; this.mobileNoError = true; }
@@ -552,4 +565,27 @@ convertDate(value: any): Date | null {
 
   return null;
 }
+
+  // Prevent typing 0 as the first character in any number field
+  preventLeadingZero(event: KeyboardEvent, currentValue: string): void {
+    if (event.key === '0' && (!currentValue || currentValue.toString().length === 0)) {
+      event.preventDefault();
+    }
+  }
+
+  // Mobile: prevent leading zero AND block more than 5 consecutive zeros anywhere
+  preventMobileZero(event: KeyboardEvent, currentValue: string): void {
+    const val = currentValue ? currentValue.toString() : '';
+    // Block leading zero
+    if (event.key === '0' && val.length === 0) {
+      event.preventDefault();
+      return;
+    }
+    // Block run of more than 5 consecutive zeros
+    const consecutiveZeroMatch = val.match(/0+$/);
+    const trailingZeros = consecutiveZeroMatch ? consecutiveZeroMatch[0].length : 0;
+    if (event.key === '0' && trailingZeros >= 5) {
+      event.preventDefault();
+    }
+  }
 }

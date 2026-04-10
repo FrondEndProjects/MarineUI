@@ -50,9 +50,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   topBrokerList: any[] = [];
   topReferralList: any[] = [];
   topCustomerList: any[] = [];
+  referralfilterValue: any = 'RP';
+  dropStatusList: any[] = [
+    { Code: 'RP', CodeDescription: 'Pending' },
+    { Code: 'RA', CodeDescription: 'Approved' }
+  ];
   OpenCoverNo: any;
   columnHeader1: { key: string; display: string; }[];
   columnHeader2: { key: string; display: string; }[];
+  isOneOff: boolean = false;
+  public colorPalette: string[] = [
+    '#1C7988', '#E8A020', '#2e7d32', '#145f6c',
+    '#c8881a', '#4db6c4', '#7fb3bb', '#f0c05a'
+  ];
+  private barChartDataReady = { policy: false, quote: false };
   constructor(private adminReferralService: AdminReferralService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     let open = JSON.parse(sessionStorage.getItem('OpenCover'));
@@ -66,9 +77,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
-      this.brokerPolicyAndQuodation();
-
-    }, 1000);
+    }, 1500);
   }
 
   ngOnInit(): void {
@@ -136,15 +145,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.adminReferralService.onPostMethodSync(urlLink2, reqData).subscribe(
       (data: any) => {
         this.brokerQuoteListData = data?.Result;
+        this.barChartDataReady.quote = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.quote = true; this.tryRenderBarCharts(); },
     );
     const urlLink3 = `${this.ApiUrl1}menu/dashbord/policy/brokerlist`;
     this.adminReferralService.onPostMethodSync(urlLink3, reqData).subscribe(
       (data: any) => {
         this.brokerPlocyListData = data?.Result;
+        this.barChartDataReady.policy = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.policy = true; this.tryRenderBarCharts(); },
     );
     const urlLink4 = `${this.ApiUrl1}menu/dashbord/referralpending/brokerlist`;
     this.adminReferralService.onPostMethodSync(urlLink4, reqData).subscribe(
@@ -181,8 +194,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       (err) => { },
     );
+    const reqData1 = {
+      "ProductId": this.ProductId,
+      "ApplicationId": ApplicationId,
+      "BranchCode": this.userDetails?.Result?.BranchCode,
+      "LoginId": this.userDetails?.Result?.LoginId,
+      "OpenCoverNo": this.ProductId == '11' ? this.OpenCoverNo : '',
+      "RefStatus": this.referralfilterValue
+    };
     const urlLink8 = `${this.ApiUrl1}menu/dashbord/topreferral/brokerlist`;
-    this.adminReferralService.onPostMethodSync(urlLink8, reqData).subscribe(
+    this.adminReferralService.onPostMethodSync(urlLink8, reqData1).subscribe(
       (data: any) => {
         this.columnHeader2 = [
           { key: 'Name', display: 'Name' },
@@ -197,6 +218,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       (err) => { },
     );
+    // const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/userlist`;
     const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/brokerlist`;
     this.adminReferralService.onPostMethodSync(urlLink9, reqData).subscribe(
       (data: any) => {
@@ -214,8 +236,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
-      this.brokerPolicyAndQuodation();
-
     }, 1000);
   }
   getIssuerList() {
@@ -253,15 +273,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.adminReferralService.onPostMethodSync(urlLink2, reqData).subscribe(
       (data: any) => {
         this.brokerQuoteListData = data?.Result;
+        this.barChartDataReady.quote = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.quote = true; this.tryRenderBarCharts(); },
     );
     const urlLink3 = `${this.ApiUrl1}menu/dashbord/policy/issuerlist`;
     this.adminReferralService.onPostMethodSync(urlLink3, reqData).subscribe(
       (data: any) => {
         this.brokerPlocyListData = data?.Result;
+        this.barChartDataReady.policy = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.policy = true; this.tryRenderBarCharts(); },
     );
     const urlLink4 = `${this.ApiUrl1}menu/dashbord/referralpending/issuerlist`;
     this.adminReferralService.onPostMethodSync(urlLink4, reqData).subscribe(
@@ -299,8 +323,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       (err) => { },
     );
+    const reqData1 = {
+      "ProductId": this.ProductId,
+      "ApplicationId": ApplicationId,
+      "BranchCode": this.userDetails?.Result?.BranchCode,
+      "LoginId": this.userDetails?.Result?.LoginId,
+      "OpenCoverNo": this.ProductId == '11' ? this.OpenCoverNo : '',
+      "RefStatus": this.referralfilterValue
+    };
     const urlLink8 = `${this.ApiUrl1}menu/dashbord/topreferral/issuerlist`;
-    this.adminReferralService.onPostMethodSync(urlLink8, reqData).subscribe(
+    this.adminReferralService.onPostMethodSync(urlLink8, reqData1).subscribe(
       (data: any) => {
         this.columnHeader2 = [
           { key: 'Name', display: 'Name' },
@@ -315,7 +347,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       (err) => { },
     );
-    const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/brokerlist`;
+    // const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/brokerlist`;
+    const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/userlist`;
     this.adminReferralService.onPostMethodSync(urlLink9, reqData).subscribe(
       (data: any) => {
         this.columnHeader1 = [
@@ -332,8 +365,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
-      this.brokerPolicyAndQuodation();
-
     }, 1000);
   }
   getUserList() {
@@ -373,15 +404,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.adminReferralService.onPostMethodSync(urlLink2, reqData).subscribe(
       (data: any) => {
         this.brokerQuoteListData = data?.Result;
+        this.barChartDataReady.quote = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.quote = true; this.tryRenderBarCharts(); },
     );
     const urlLink3 = `${this.ApiUrl1}menu/dashbord/policy/userlist`;
     this.adminReferralService.onPostMethodSync(urlLink3, reqData).subscribe(
       (data: any) => {
         this.brokerPlocyListData = data?.Result;
+        this.barChartDataReady.policy = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.policy = true; this.tryRenderBarCharts(); },
     );
     const urlLink4 = `${this.ApiUrl1}menu/dashbord/referralpending/userlist`;
     this.adminReferralService.onPostMethodSync(urlLink4, reqData).subscribe(
@@ -419,8 +454,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //   },
     //   (err) => { },
     // );
+    const reqData1 = {
+      "ProductId": this.ProductId,
+      "ApplicationId": ApplicationId,
+      "BranchCode": this.userDetails?.Result?.BranchCode,
+      "LoginId": this.userDetails?.Result?.LoginId,
+      "OpenCoverNo": this.ProductId == '11' ? this.OpenCoverNo : '',
+      "RefStatus": this.referralfilterValue
+    };
     const urlLink8 = `${this.ApiUrl1}menu/dashbord/topreferral/userlist`;
-    this.adminReferralService.onPostMethodSync(urlLink8, reqData).subscribe(
+    this.adminReferralService.onPostMethodSync(urlLink8, reqData1).subscribe(
       (data: any) => {
         this.columnHeader2 = [
           { key: 'Name', display: 'Name' },
@@ -452,8 +495,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
-      this.brokerPolicyAndQuodation();
-
     }, 1000);
   }
   getAdminList() {
@@ -491,15 +532,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.adminReferralService.onPostMethodSync(urlLink2, reqData).subscribe(
       (data: any) => {
         this.brokerQuoteListData = data?.Result;
+        this.barChartDataReady.quote = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.quote = true; this.tryRenderBarCharts(); },
     );
     const urlLink3 = `${this.ApiUrl1}menu/dashbord/policy/adminlist`;
     this.adminReferralService.onPostMethodSync(urlLink3, reqData).subscribe(
       (data: any) => {
         this.brokerPlocyListData = data?.Result;
+        this.barChartDataReady.policy = true;
+        this.tryRenderBarCharts();
       },
-      (err) => { },
+      (err) => { this.barChartDataReady.policy = true; this.tryRenderBarCharts(); },
     );
     const urlLink4 = `${this.ApiUrl1}menu/dashbord/referralpending/adminlist`;
     this.adminReferralService.onPostMethodSync(urlLink4, reqData).subscribe(
@@ -537,8 +582,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       (err) => { },
     );
+    const reqData1 = {
+      "ProductId": this.ProductId,
+      "ApplicationId": ApplicationId,
+      "BranchCode": this.userDetails?.Result?.BranchCode,
+      "LoginId": this.userDetails?.Result?.LoginId,
+      "OpenCoverNo": this.ProductId == '11' ? this.OpenCoverNo : '',
+      "RefStatus": this.referralfilterValue
+    };
     const urlLink8 = `${this.ApiUrl1}menu/dashbord/topreferral/adminlist`;
-    this.adminReferralService.onPostMethodSync(urlLink8, reqData).subscribe(
+    this.adminReferralService.onPostMethodSync(urlLink8, reqData1).subscribe(
       (data: any) => {
         this.columnHeader2 = [
           { key: 'Name', display: 'Name' },
@@ -553,7 +606,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       (err) => { },
     );
-    const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/brokerlist`;
+    const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/adminuserlist`;
+    // const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/userlist`;
+    // const urlLink9 = `${this.ApiUrl1}menu/dashbord/topcustomer/brokerlist`;
     this.adminReferralService.onPostMethodSync(urlLink9, reqData).subscribe(
       (data: any) => {
         this.columnHeader1 = [
@@ -570,8 +625,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.initPieChart('rejectedChart', this.brokerReferralRejectedListData, 'Rejected');
       this.initPieChart('pendingChart', this.brokerReferralPenidngListData, 'Pending');
       this.initPieChart('approvedChart', this.brokerReferralApprovedListData, 'Approved');
-      this.brokerPolicyAndQuodation();
-
     }, 1000);
   }
 
@@ -1054,12 +1107,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     const chart = echarts.init(chartDom);
 
-    const colorPalette = [
-      '#1C7988', '#E8A020', '#2e7d32', '#145f6c',
-      '#c8881a', '#4db6c4', '#7fb3bb', '#f0c05a'
-    ];
-
-    // Guard: handle null/undefined dataList gracefully
     const safeList = Array.isArray(dataList) ? dataList : [];
 
     const data = safeList.map((item, index) => ({
@@ -1074,7 +1121,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         shadowOffsetY: 0,
         borderColor: '#fff',
         borderWidth: 2,
-        color: colorPalette[index % colorPalette.length]
+        color: this.colorPalette[index % this.colorPalette.length]
       }
     }));
 
@@ -1120,23 +1167,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               shadowColor: 'rgba(0, 0, 0, 0.30)',
               borderColor: '#fff',
               borderWidth: 2
+            },
+            label: {
+              show: true,
+              fontFamily: 'Segoe UI',
+              fontSize: 11,
+              fontWeight: 'bold',
+              color: '#1a2e35',
+              formatter: (params: any) => {
+                return `${params.name || ''}\nCount: ${params.data?.count ?? 0}`;
+              }
+            },
+            labelLine: {
+              show: true
             }
           },
           label: {
-            show: hasData,
-            fontFamily: 'Segoe UI',
-            fontSize: 10,
-            color: '#444',
-            formatter: (params: any) => {
-              return `${params.name || ''}\nCount: ${params.data?.count ?? 0}`;
-            }
+            show: false
           },
           labelLine: {
-            show: hasData,
-            smooth: true,
-            length: 8,
-            length2: 12,
-            lineStyle: { color: '#999' }
+            show: false
           }
         }
       ]
@@ -1146,7 +1196,122 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   formatNumberWithCommas(value: any): string {
     const num = Number(value || 0);
-    return num.toLocaleString('en-IN'); // For Indian-style commas like 1,00,000
-    // return num.toLocaleString('en-US'); // For Western-style like 100,000
+    return num.toLocaleString('en-IN');
+  }
+
+  tryRenderBarCharts(): void {
+    if (this.barChartDataReady.policy && this.barChartDataReady.quote) {
+      this.barChartDataReady = { policy: false, quote: false };
+      setTimeout(() => this.brokerPolicyAndQuodation(), 0);
+    }
+  }
+
+  onToggleChange() {
+    if (this.isOneOff) {
+      this.ProductId = '3';
+      this.ngOnInit();
+    } else {
+      this.ProductId = '11';
+      this.ngOnInit();
+    }
+  }
+  onchangeTopReferralAdmin() {
+    let ApplicationId = null;
+    if (this.userDetails?.Result?.UserType != 'admin') {
+      ApplicationId = '1';
+    }
+    else {
+      ApplicationId = this.userDetails?.Result?.LoginId;
+    }
+    const reqData1 = {
+      "ProductId": this.ProductId,
+      "ApplicationId": ApplicationId,
+      "BranchCode": this.userDetails?.Result?.BranchCode,
+      "LoginId": this.userDetails?.Result?.LoginId,
+      "OpenCoverNo": this.ProductId == '11' ? this.OpenCoverNo : '',
+      "RefStatus": this.referralfilterValue
+    };
+    const urlLink8 = `${this.ApiUrl1}menu/dashbord/topreferral/adminlist`;
+    this.adminReferralService.onPostMethodSync(urlLink8, reqData1).subscribe(
+      (data: any) => {
+        this.columnHeader2 = [
+          { key: 'Name', display: 'Name' },
+          { key: 'QuoteNo', display: 'QuoteNo' },
+          { key: 'CustomerName', display: 'Customer Name' },
+          { key: 'ProductName', display: 'Product Name' },
+          { key: 'ReferralUpdate', display: 'Referral Update' },
+          { key: 'ReferralStatus', display: 'Status' },
+          { key: 'TimeDifference', display: 'Time Difference' },
+        ];
+        this.topReferralList = data?.Result;
+      },
+      (err) => { },
+    );
+  }
+  onchangeTopReferralIssuer() {
+    let ApplicationId = null;
+    if (this.userDetails?.Result?.UserType != 'admin') {
+      ApplicationId = '1';
+    }
+    else {
+      ApplicationId = this.userDetails?.Result?.LoginId;
+    }
+    const reqData1 = {
+      "ProductId": this.ProductId,
+      "ApplicationId": ApplicationId,
+      "BranchCode": this.userDetails?.Result?.BranchCode,
+      "LoginId": this.userDetails?.Result?.LoginId,
+      "OpenCoverNo": this.ProductId == '11' ? this.OpenCoverNo : '',
+      "RefStatus": this.referralfilterValue
+    };
+     const urlLink8 = `${this.ApiUrl1}menu/dashbord/topreferral/issuerlist`;
+    this.adminReferralService.onPostMethodSync(urlLink8, reqData1).subscribe(
+      (data: any) => {
+        this.columnHeader2 = [
+          { key: 'Name', display: 'Name' },
+          { key: 'QuoteNo', display: 'QuoteNo' },
+          { key: 'CustomerName', display: 'Customer Name' },
+          { key: 'ProductName', display: 'Product Name' },
+          { key: 'ReferralUpdate', display: 'Referral Update' },
+          { key: 'ReferralStatus', display: 'Status' },
+          { key: 'TimeDifference', display: 'Time Difference' },
+        ];
+        this.topReferralList = data?.Result;
+      },
+      (err) => { },
+    );
+  }
+  onchangeTopReferralBroker() {
+    let ApplicationId = null;
+    if (this.userDetails?.Result?.UserType != 'admin') {
+      ApplicationId = '1';
+    }
+    else {
+      ApplicationId = this.userDetails?.Result?.LoginId;
+    }
+    const reqData1 = {
+      "ProductId": this.ProductId,
+      "ApplicationId": ApplicationId,
+      "BranchCode": this.userDetails?.Result?.BranchCode,
+      "LoginId": this.userDetails?.Result?.LoginId,
+      "OpenCoverNo": this.ProductId == '11' ? this.OpenCoverNo : '',
+      "RefStatus": this.referralfilterValue
+    };
+   const urlLink8 = `${this.ApiUrl1}menu/dashbord/topreferral/brokerlist`;
+    this.adminReferralService.onPostMethodSync(urlLink8, reqData1).subscribe(
+      (data: any) => {
+        this.columnHeader2 = [
+          { key: 'Name', display: 'Name' },
+          { key: 'QuoteNo', display: 'QuoteNo' },
+          { key: 'CustomerName', display: 'Customer Name' },
+          { key: 'ProductName', display: 'Product Name' },
+          { key: 'ReferralUpdate', display: 'Referral Update' },
+          { key: 'ReferralStatus', display: 'Status' },
+          { key: 'TimeDifference', display: 'Time Difference' },
+        ];
+        this.topReferralList = data?.Result;
+      },
+      (err) => { },
+    );
   }
 } 

@@ -37,6 +37,7 @@ export class PolicyGenerateComponent implements OnInit {
   public foreignCurrency: any = false;
   public darft: any = false;
   public bankerAssured: any = false;
+  public premiumPaid: any = false;
   public excess: any = false;
   integrationErrorList: any[] = [];
   bank_list: any[] = [];
@@ -154,6 +155,7 @@ export class PolicyGenerateComponent implements OnInit {
       premium: ['N'],
       nameOfBroker: ['N'],
       foreignCurrency: ['N'],
+      premiumPaid: ['N'],
       darft: ['N'],
       bankerAssured: ['N'],
       excess: ['N'],
@@ -492,6 +494,26 @@ export class PolicyGenerateComponent implements OnInit {
     // }
   }
 
+  onSelectPremium() {
+    this.premium = true;
+    this.premiumPaid = false;
+  }
+
+  onSelectPremiumPaid() {
+    this.premiumPaid = true;
+    this.premium = false;
+  }
+
+  onSelectNameOfBroker() {
+    this.nameOfBroker = true;
+    this.bankerAssured = false;
+  }
+
+  onSelectBankerAssured() {
+    this.bankerAssured = true;
+    this.nameOfBroker = false;
+  }
+
   onFinalProceed(type) {
     // this.pay_amount = null;
     const urlLink = `${this.ApiUrl1}quote/policy/generate`;
@@ -511,7 +533,7 @@ export class PolicyGenerateComponent implements OnInit {
       "NoteType": "",
       "OpenCoverNo": this.OpenCover?.value,
       "PolicyExcess": this.excess ? 'Y' : 'N',
-      "PremiumYN": this.premium ? 'Y' : 'N',
+      "PremiumYN": this.premium ? 'Y' : this.premiumPaid ? 'PAID' : 'N',
       "PrerecieptNo": "",
       "PrintClausesYn": "N",
       "ProductId": this.productId,
@@ -999,7 +1021,7 @@ export class PolicyGenerateComponent implements OnInit {
     // console.log(event, "event");
     // if (event.Code == '1') {
     this.onFinalProceed('payment');
-    this.getbankList();
+    // this.getbankList();
     console.log(event, "event");
 
     // if(event =='')

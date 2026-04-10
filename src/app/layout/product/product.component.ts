@@ -44,11 +44,24 @@ export class ProductComponent {
 
   // ── Section flags ────────────────────────────────────────────────────────
   /** Default: show product section */
-  quoteSection: boolean = true;
+  quoteSection: boolean = false;
   /** Default: hide admin/approver section */
   approverSection: boolean = false;
   /** Drives the Admin toggle in the template */
   isAdminView: boolean = false;
+  /**
+   * Controls visibility of the Admin/Product toggle button.
+   * true  → subuser level is 'high' AND typeList includes BOTH 'Quotation' (low) and 'Approver' (high)
+   * false → subuser level is 'low' OR typeList includes only 'Quotation'
+   */
+  showAdminToggle: boolean = false;
+  /**
+   * Prevents any section from rendering until the subuser-type API has resolved.
+   * Set to true after getTypeList() callback fires (or immediately for non-Issuer users).
+   * This eliminates the flicker where Product section briefly appears before
+   * Condition 4 (Approver-only) switches it to Admin.
+   */
+  sectionResolved: boolean = false;
 
   UserTypeList: any[] = [];
   insuranceId: any = null;
@@ -86,10 +99,11 @@ export class ProductComponent {
     if (this.userType == 'Issuer') {
       this.getTypeList();
     } else {
-      // Non-Issuer: always start on product section
-      this.quoteSection = true;
+      // Non-Issuer: always start on product section — resolve immediately, no API wait
+      this.quoteSection    = true;
       this.approverSection = false;
-      this.isAdminView = false;
+      this.isAdminView     = false;
+      this.sectionResolved = true;
     }
 
     this.http.get<{ [key: string]: string }>('./assets/json/product-url.json')
@@ -162,14 +176,40 @@ export class ProductComponent {
           if (data.Result) {
             this.typeList = data?.Result;
             if (this.typeList.length != 0) {
-              const entry = this.typeList.some((ele) => ele.Code == 'high');
-              if (entry) {
-                this.getMenuList(userDetails);
-              } else {
-                // Default: show product section
-                this.quoteSection = true;
+              const hasLow  = this.typeList.some((ele) => ele.Code === 'low');
+              const hasHigh = this.typeList.some((ele) => ele.Code === 'high');
+
+              if (hasLow && !hasHigh) {
+                // Condition 1: subuser level is 'low' — show Product only, hide Admin toggle
+                this.quoteSection    = true;
                 this.approverSection = false;
-                this.isAdminView = false;
+                this.isAdminView     = false;
+                this.showAdminToggle = false;
+                this.sectionResolved = true;
+              } else if (hasHigh && hasLow) {
+                // Condition 2: level is 'high' AND list includes both Quotation (low) and Approver (high)
+                // → show both sections via toggle
+                this.quoteSection    = true;
+                this.approverSection = false;
+                this.isAdminView     = false;
+                this.showAdminToggle = true;
+                this.sectionResolved = true;
+                this.getMenuList(userDetails, 'condition2');
+              } else if (hasHigh && !hasLow) {
+                // Condition 4: level is 'high' AND only Approver (no Quotation) — show Admin only, hide Product
+                this.quoteSection    = false;
+                this.approverSection = true;
+                this.isAdminView     = true;
+                this.showAdminToggle = false;
+                this.sectionResolved = true;
+                this.getMenuList(userDetails, 'condition4');
+              } else {
+                // Fallback: default to product section, no toggle
+                this.quoteSection    = true;
+                this.approverSection = false;
+                this.isAdminView     = false;
+                this.showAdminToggle = false;
+                this.sectionResolved = true;
               }
             }
           }
@@ -304,10 +344,28 @@ export class ProductComponent {
       }
     }
   }
-  getMenuList(userDetails) {
+  getMenuList(userDetails, callerCondition: 'condition2' | 'condition4' = 'condition2') {
     const urlLink = `${this.CommonApiUrl}admin/getmenulist`;
     let insuranceId = userDetails?.Result?.LoginBranchDetails[0]?.InsuranceId;
     let productId = userDetails?.Result?.BrokerCompanyProducts[0]?.ProductId;
+
+    // Apply the correct section state after menu data loads — respects which condition called us
+    const applySectionState = () => {
+      if (callerCondition === 'condition4') {
+        // Condition 4: Approver-only — keep Admin section visible, never switch to Product
+        this.quoteSection    = false;
+        this.approverSection = true;
+        this.isAdminView     = true;
+        this.showAdminToggle = false;
+      } else {
+        // Condition 2: both Quotation + Approver — default to Product, toggle available
+        this.quoteSection    = true;
+        this.approverSection = false;
+        this.isAdminView     = false;
+        this.showAdminToggle = true;
+      }
+    };
+
     if (productId && insuranceId) {
       const ReqObj = {
         LoginId: this.loginId,
@@ -321,19 +379,12 @@ export class ProductComponent {
           console.log(data);
           if (data.Result) {
             this.menuList = data.Result;
-            // getMenuList is only called internally — don't auto-switch to admin;
-            // the user drives that via the Admin toggle.
-            // Keep product section as default.
-            this.quoteSection = true;
-            this.approverSection = false;
-            this.isAdminView = false;
           }
+          // Always restore correct section state after API completes
+          applySectionState();
         });
     } else {
-      // Same: stay on product section
-      this.quoteSection = true;
-      this.approverSection = false;
-      this.isAdminView = false;
+      applySectionState();
     }
   }
 

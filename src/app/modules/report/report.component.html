@@ -1,54 +1,147 @@
-
-
 <div class="maan-card">
   <form [formGroup]="searchForm">
     <div class="row">
       <div class="col-12">
-        <div class="middle-line">
-         Reports
+        <div class="middle-line">Reports</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-3 col-lg-3">
+        <div class="input-control-container">
+          <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
+          <ng-select placeholder="Select" class="input-form-select" formControlName="userId"
+            [items]="brokerList" bindValue="LoginId" bindLabel="UserName"></ng-select>
         </div>
       </div>
-    </div>
-  <div class="row">
-    <div class="col-12 col-md-3 col-lg-3">
-      <div class="input-control-container">
-        <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
-        <ng-select placeholder="Select" class="input-form-select" formControlName="userId" [items]="brokerList" bindValue="LoginId"
-          bindLabel="UserName">
-        </ng-select>
-      </div>
-    </div>
-    <div class="col-12 col-md-3 col-lg-3">
-      <div class="input-control-container">
-        <label class="input-form-label">Start Date<span class="text-required">*</span></label>
-        <div class="input-form-box">
+      <div class="col-12 col-md-3 col-lg-3">
+        <div class="input-control-container">
+          <label class="input-form-label">Start Date<span class="text-required">*</span></label>
+          <div class="input-form-box">
             <input type="text" ngbDatepicker #d="ngbDatepicker" class="input-form-control2 without-icon"
-            formControlName="startDate" (click)="d.toggle()" readonly>
+              formControlName="startDate" (click)="d.toggle()" readonly>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-12 col-md-3 col-lg-3">
-      <div class="input-control-container">
-        <label class="input-form-label">End Date<span class="text-required">*</span></label>
-        <div class="input-form-box">
-          <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control2 without-icon"
-            formControlName="endDate" (click)="d1.toggle()" readonly>
+      <div class="col-12 col-md-3 col-lg-3">
+        <div class="input-control-container">
+          <label class="input-form-label">End Date<span class="text-required">*</span></label>
+          <div class="input-form-box">
+            <input type="text" ngbDatepicker #d1="ngbDatepicker" class="input-form-control2 without-icon"
+              formControlName="endDate" (click)="d1.toggle()" readonly>
+          </div>
         </div>
       </div>
+      <div class="col-12 col-md-3 col-lg-3 d-sm-flex flex-sm-row align-items-sm-center mt-3">
+        <button nbButton size="small" status="primary" class="mx-1" (click)="onLoadGrid()">Submit</button>
+        <ng-container *ngIf="tableData.length != 0">
+          <button nbButton size="small" status="success" class="mx-1" (click)="onDocument('pdf')">PDF</button>
+          <button nbButton size="small" status="info" class="mx-1" (click)="onDocument('excel')">EXCEL</button>
+        </ng-container>
+      </div>
     </div>
-    <div class="col-12 col-md-3 col-lg-3 d-sm-flex flex-sm-row align-items-sm-center">
-      <button nbButton size="small" status="primary" class="mx-1" (click)="onLoadGrid()">Submit</button>
-      <ng-container *ngIf="tableData.length !=0">
-         <button nbButton size="small" status="success" class="mx-1" (click)="onDocument('pdf')">PDF</button>
-         <button nbButton size="small" status="info" class="mx-1" (click)="onDocument('excel')">EXCEL</button>
-      </ng-container>
-    </div>
-  </div>
-
   </form>
-  <ng-container *ngIf="tableData.length !=0">
-    <app-material-table [cols]="columnHeader" [data]="tableData" [filterValue]="FilterValue">
-    </app-material-table>
-  </ng-container>
 
+  <!-- Custom Frozen Column Table -->
+  <ng-container *ngIf="tableData.length != 0">
+    <div class="custom-table-wrapper">
+
+      <!-- Toolbar: Global Search on right -->
+      <div class="table-toolbar">
+        <div class="toolbar-left"></div>
+        <div class="toolbar-right">
+          <div class="global-search-box">
+            <span class="search-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="text" placeholder="Search..." class="global-search-input"
+              [(ngModel)]="globalSearchText" (input)="onGlobalSearch()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable Table Container -->
+      <div class="frozen-table-container">
+        <table class="frozen-table">
+          <thead>
+            <tr>
+              <!--
+                FIX 1 & 2: Use frozen-col-{i} class (not generic frozen-col) so each
+                frozen header gets its own z-index. min-width must match frozenWidths[].
+              -->
+              <th *ngFor="let col of columnHeader; let i = index"
+                [class.frozen-col-0]="i === 0"
+                [class.frozen-col-1]="i === 1"
+                [class.frozen-col-2]="i === 2"
+                [style.position]="i < 3 ? 'sticky' : null"
+                [style.left]="getFrozenLeft(i)"
+                [style.minWidth]="getFrozenWidth(i)">
+                {{ col.display }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of pagedData; let ri = index" [class.alt-row]="ri % 2 !== 0">
+              <!--
+                FIX 1: Each frozen td has its own class → SCSS sets opaque background
+                       per class, blocking scrolling columns from bleeding through.
+                FIX 2: Descending z-index per column ensures col-0 stays above col-1,
+                       col-1 stays above col-2, preventing the hide-behind issue.
+              -->
+              <td *ngFor="let col of columnHeader; let i = index"
+                [class.frozen-col-0]="i === 0"
+                [class.frozen-col-1]="i === 1"
+                [class.frozen-col-2]="i === 2"
+                [style.position]="i < 3 ? 'sticky' : null"
+                [style.left]="getFrozenLeft(i)"
+                [style.minWidth]="getFrozenWidth(i)">
+                {{ row[col.key] || '—' }}
+              </td>
+            </tr>
+            <tr *ngIf="pagedData.length === 0">
+              <td [attr.colspan]="columnHeader.length" class="no-data-cell">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Paginator Bar -->
+      <div class="paginator-bar">
+        <div class="paginator-left">
+          <span class="page-info">Items per page:</span>
+          <select class="page-size-select" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+            <option *ngFor="let s of pageSizeOptions" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+        <div class="paginator-right">
+          <span class="page-range">
+            {{ (currentPage - 1) * pageSize + 1 }} – {{ getPageEnd() }} of {{ filteredData.length }}
+          </span>
+          <button class="pag-btn" (click)="goToFirst()" [disabled]="currentPage === 1" title="First">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline>
+            </svg>
+          </button>
+          <button class="pag-btn" (click)="prevPage()" [disabled]="currentPage === 1" title="Previous">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button class="pag-btn" (click)="nextPage()" [disabled]="currentPage === totalPages" title="Next">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <button class="pag-btn" (click)="goToLast()" [disabled]="currentPage === totalPages" title="Last">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
 </div>
