@@ -5,26 +5,50 @@
 @include nb-install-component() {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
-  .socials {
-    font-size: 2rem;
+  .footer-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .created-by {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
     a {
-      padding: 0.4rem;
-      color: nb-theme(text-hint-color);
-      transition: color ease-out 0.1s;
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
 
       &:hover {
-        color: nb-theme(text-basic-color);
+        color: #F7C513;
       }
+    }
+
+    .sep {
+      color: rgba(255,255,255,0.25);
+      font-size: 12px;
     }
   }
 
   @include media-breakpoint-down(is) {
-    .socials {
-      font-size: 1.5rem;
+    .footer-container {
+      flex-direction: column;
+      text-align: center;
+      gap: 4px;
     }
   }
 }

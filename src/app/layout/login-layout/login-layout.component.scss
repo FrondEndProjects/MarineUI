@@ -11,7 +11,7 @@ html, body {
   --teal-dark:    #1a5f68;
   --teal-primary: #1d7280;
   --teal-light:   #238fa0;
-  --gold:         #f5a623;
+  --gold:         #F7C513;
   --gold-dark:    #d4891a;
   --bg:           #edf1f4;
   --white:        #ffffff;
@@ -62,7 +62,7 @@ html, body {
     .brand-icon {
       width: 32px;
       height: 32px;
-      background: #f5a623;
+      background: #F7C513;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -108,7 +108,7 @@ html, body {
   }
 
   .nav-btn-marine.p-button {
-    background: #f5a623 !important;
+    background: #F7C513 !important;
     border: none !important;
     color: #fff !important;
     font-size: 12px !important;
@@ -137,7 +137,7 @@ html, body {
 /* ─── LEFT PANEL ──────────────────────────────────────────── */
 .hero-left {
   flex: 1;
-  background: linear-gradient(145deg, #1a5f68 0%, #1d7280 50%, #238fa0 100%);
+  background: linear-gradient(145deg, #0f3b3d 0%, #164d50 50%, #1a5f68 100%);
   position: relative;
   display: flex;
   align-items: center;
@@ -184,7 +184,7 @@ html, body {
     margin-bottom: 18px;
     border: 1px solid rgba(255,255,255,0.2);
 
-    i { font-size: 24px; color: #f5a623; }
+    i { font-size: 24px; color: #F7C513; }
   }
 
   .hero-title {
@@ -217,7 +217,7 @@ html, body {
       font-size: 14px;
       color: rgba(255,255,255,0.88);
 
-      i { font-size: 14px; color: #f5a623; flex-shrink: 0; }
+      i { font-size: 14px; color: #F7C513; flex-shrink: 0; }
     }
   }
 
@@ -241,7 +241,7 @@ html, body {
       .badge-number {
         font-size: 20px;
         font-weight: 800;
-        color: #f5a623;
+        color: #F7C513;
         line-height: 1;
       }
 
@@ -298,7 +298,7 @@ html, body {
   .card-logo {
     width: 48px;
     height: 48px;
-    background: #f5a623;
+    background: #F7C513;
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -519,7 +519,7 @@ html, body {
 }
 .p-toast .p-toast-message.p-toast-message-warn {
   border: none !important;
-  border-left: 4px solid #f5a623 !important;
+  border-left: 4px solid #F7C513 !important;
 }
 .p-toast .p-toast-message.p-toast-message-error {
   border: none !important;
@@ -530,7 +530,7 @@ html, body {
 .form-options {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 16px;
 
   .remember-me {
@@ -553,7 +553,7 @@ html, body {
     font-weight: 500;
     transition: color 0.2s;
 
-    &:hover { color: #f5a623; text-decoration: underline; }
+    &:hover { color: #F7C513; text-decoration: underline; }
   }
 }
 
@@ -591,7 +591,7 @@ html, body {
   }
 
   .register-link {
-    color: #f5a623;
+    color: #F7C513;
     font-weight: 600;
     text-decoration: none;
     transition: color 0.2s;
@@ -655,7 +655,7 @@ html, body {
       text-decoration: none;
       transition: color 0.2s;
 
-      &:hover { color: #f5a623; }
+      &:hover { color: #F7C513; }
     }
   }
 }
@@ -703,15 +703,14 @@ html, body {
   justify-content: center;
 }
 .imgwidAlt {
-  // width: 161px !important;
-  width: 102px !important;
-  margin-left: 0px;
-  height: 45px;
-  // height: 56px;
-  margin-top: 0px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
+      width: 143px !important;
+    margin-left: 0px;
+    /* height: 45px; */
+    margin-top: 0px;
+    /* background: #fff; */
+    border-radius: 10px;
+    padding: 10px;
+
 }
 /* ─── AUTH LINKS (Forgot / Change Password) ───────────────── */
 .auth-links {
@@ -795,23 +794,23 @@ html, body {
 
 /* ─── ALTERNATE CARD HEADERS ──────────────────────────────── */
 .card-header--alt {
-  background: linear-gradient(135deg, #2d6a4f 0%, #40916c 100%) !important;
+  background: linear-gradient(135deg, #1a5f68 0%, #1d7280 100%) !important;
 }
 
 .card-logo--alt {
-  background: #f5a623 !important;
+  background: #F7C513 !important;
 }
 
 .card-header--change {
-  background: linear-gradient(135deg, #1d4e89 0%, #2d6fa4 100%) !important;
+  background: linear-gradient(135deg, #1a5f68 0%, #1d7280 100%) !important;
 }
 
 .card-logo--change {
-  background: #f5a623 !important;
+  background: #F7C513 !important;
 }
 
 .card-logo--warn {
-  background: #e53e3e !important;
+  background: #F7C513 !important;
 }
 
 /* ─── PASSWORD EXPIRED BADGE ──────────────────────────────── */

@@ -7,7 +7,7 @@ $teal: var(--teal);
 $teal-dark: var(--teal-dark);
 $teal-light:  #e8f4f6;
 $teal-xl:     #f0f9fa;
-$gold:        #E8A020;
+$gold:        #F7C513;
 $gold-dark:   #c8881a;
 $white:       #ffffff;
 $border:      #c9dde2;
@@ -405,11 +405,11 @@ mat-paginator {
     font-size: 0.75rem !important;
     font-weight: 600 !important;
     border-radius: 4px !important;
-    background: $error !important;
+    background: $gold !important;
     color: $white !important;
     border: none !important;
     cursor: pointer !important;
-    &:hover { background: darken($error, 8%) !important; }
+    &:hover { background: darken($gold-dark, 8%) !important; }
   }
 }
 
@@ -580,4 +580,71 @@ button.text-warning[mat-icon-button] {
   .mobile-label { min-width: 42%; max-width: 42%; font-size: 0.73rem; }
   td.mat-cell,
   ::ng-deep .mdc-data-table__cell { font-size: 0.78rem !important; }
+}
+::ng-deep {
+
+  // ── Sort header container: text + arrow side by side ─────────
+  .mat-sort-header-container {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+  }
+
+  // ── HIDE the broken div-based arrow entirely ──────────────────
+  .mat-sort-header-arrow {
+    display: none !important;   // Kill the broken box
+  }
+
+  // ── Inject a Unicode ↕ arrow via pseudo-element ───────────────
+  .mat-sort-header-container::after {
+    content: '↕';
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);   // Dim when unsorted
+    line-height: 1;
+    display: inline-block;
+    transition: color 0.2s, content 0.2s;
+  }
+
+  // Active sorted ASC → show ↑
+  [aria-sort="ascending"] .mat-sort-header-container::after {
+    content: '↑' !important;
+    color: #F7C513 !important;  // Gold when active
+  }
+
+  // Active sorted DESC → show ↓
+  [aria-sort="descending"] .mat-sort-header-container::after {
+    content: '↓' !important;
+    color: #F7C513 !important;  // Gold when active
+  }
+
+  // ── Same fix for MDC (Angular Material v15+) ─────────────────
+  .mat-mdc-sort-header-arrow {
+    display: none !important;
+  }
+
+  .mat-mdc-sort-header-container {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .mat-mdc-sort-header-container::after {
+    content: '↕';
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1;
+    display: inline-block;
+  }
+
+  [aria-sort="ascending"] .mat-mdc-sort-header-container::after {
+    content: '↑' !important;
+    color: #F7C513 !important;
+  }
+
+  [aria-sort="descending"] .mat-mdc-sort-header-container::after {
+    content: '↓' !important;
+    color: #F7C513 !important;
+  }
+
 }

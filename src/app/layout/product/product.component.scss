@@ -3,8 +3,8 @@ $teal-dark:    #1a5f68;
 $teal-primary: #1d7280;
 $teal-light:   #238fa0;
 $teal-muted:   #e8f4f6;
-$gold:         #f5a623;
-$gold-dark:    #d4891a;
+$gold:         #F7C513;
+$gold-dark:    #c8881a;
 $bg:           #edf1f4;
 $white:        #fff;
 $text-dark:    #1e2d35;
@@ -14,12 +14,12 @@ $border:       #d0dfe4;
 $radius:       12px;
 
 // Card accent palette — cycles by index via CSS custom property
-$accent-1: #1d7280;   // teal
-$accent-2: #2a6fad;   // ocean blue
-$accent-3: #0f6e56;   // deep green
-$accent-4: #7b4fa6;   // violet
-$accent-5: #d4891a;   // gold
-$accent-6: #c0392b;   // coral red
+$accent-1: #1a5f68;   // dark teal
+$accent-2: #1d7280;   // teal
+$accent-3: #1a5f68;   // dark teal (was deep green)
+$accent-4: #1a5f68;   // dark teal (was violet)
+$accent-5: #F7C513;   // golden yellow
+$accent-6: #F7C513;   // golden yellow (was coral red)
 
 // ── Host ──────────────────────────────────────────────────────────────────────
 :host {
@@ -74,7 +74,14 @@ $accent-6: #c0392b;   // coral red
 .user-info { display: flex; flex-direction: column; line-height: 1.2; }
 .user-name  { font-size: 13px; font-weight: 600; color: $white; }
 .user-type  { font-size: 10px; color: rgba(255,255,255,.6); }
-.imgwidAlt  { width: 102px !important; margin-left: 0; height: 45px; background: #fff; border-radius: 10px; padding: 10px; }
+.imgwidAlt  {     width: 143px !important;
+    margin-left: 0px;
+    /* height: 45px; */
+    margin-top: 0px;
+    /* background: #fff; */
+    border-radius: 10px;
+    padding: 10px;
+} 
 
 // ════════════════════════════════════════════════════════════════════════════
 // QUOTES TICKER
@@ -281,7 +288,7 @@ $accents: ($accent-1, $accent-2, $accent-3, $accent-4, $accent-5, $accent-6);
   line-height: 1.3;
 }
 
-// Product-specific quote line
+// Product-specific description line
 .prod-quote {
   margin: 0;
   font-size: 11.5px;
@@ -293,6 +300,15 @@ $accents: ($accent-1, $accent-2, $accent-3, $accent-4, $accent-5, $accent-6);
   // Left accent rule
   border-left: 2px solid var(--accent, $teal-primary);
   padding-left: 8px;
+}
+
+// Product description (non-italic, no quote styling)
+.prod-desc {
+  margin: 0;
+  font-size: 12px;
+  color: $text-mid;
+  line-height: 1.5;
+  letter-spacing: .1px;
 }
 
 // Card bottom row

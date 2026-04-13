@@ -1142,7 +1142,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         borderColor: '#d1e8ec',
         borderWidth: 1,
         textStyle: {
-          color: '#1a2e35',
+          color: '#145f6c',
           fontSize: 12,
           fontFamily: 'Segoe UI'
         },
@@ -1173,7 +1173,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               fontFamily: 'Segoe UI',
               fontSize: 11,
               fontWeight: 'bold',
-              color: '#1a2e35',
+              color: '#145f6c',
               formatter: (params: any) => {
                 return `${params.name || ''}\nCount: ${params.data?.count ?? 0}`;
               }

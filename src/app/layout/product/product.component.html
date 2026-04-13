@@ -3,7 +3,7 @@
 ══════════════════════════════════════════════════════ -->
 <header class="app-navbar">
     <div class="navbar-brand">
-        <a (click)="homeRoute()"><img src="./assets/images/Orientlogo-removebg-preview.png" class="imgwidAlt"></a>
+        <a (click)="homeRoute()"><img src="./assets/images/Salama logo-YW.png" class="imgwidAlt"></a>
         <div class="brand-text">
             <span class="brand-sub">Marine Insurance Portal</span>
         </div>
@@ -16,7 +16,7 @@
 
             <div class="user-info">
                 <span class="user-name">{{ user?.Result?.UserName || 'User' }}</span>
-                <span class="user-type">{{ userType }}</span>
+                <!-- <span class="user-type">{{ userType }}</span>s -->
             </div>
 
         </div>
@@ -39,34 +39,7 @@
 ══════════════════════════════════════════════════════ -->
 <main class="page-body">
 
-    <!-- ── Marine Quotes Banner ── -->
-    <div class="quotes-banner">
-        <div class="quotes-track">
-            <span class="quote-item"><i class="pi pi-compass"></i>&nbsp;"The sea, once it casts its spell, holds one in
-                its net of wonder forever." — Jacques Cousteau</span>
-            <span class="quote-sep">⚓</span>
-            <span class="quote-item"><i class="pi pi-shield"></i>&nbsp;"Comprehensive cargo &amp; freight protection for
-                your global trade operations."</span>
-            <span class="quote-sep">⚓</span>
-            <span class="quote-item"><i class="pi pi-globe"></i>&nbsp;"A smooth sea never made a skilled sailor — but we
-                ensure you're covered either way."</span>
-            <span class="quote-sep">⚓</span>
-            <span class="quote-item"><i class="pi pi-star"></i>&nbsp;"Protecting every voyage, every cargo, every dream
-                — since day one."</span>
-            <span class="quote-sep">⚓</span>
-            <span class="quote-item"><i class="pi pi-compass"></i>&nbsp;"The sea, once it casts its spell, holds one in
-                its net of wonder forever." — Jacques Cousteau</span>
-            <span class="quote-sep">⚓</span>
-            <span class="quote-item"><i class="pi pi-shield"></i>&nbsp;"Comprehensive cargo &amp; freight protection for
-                your global trade operations."</span>
-            <span class="quote-sep">⚓</span>
-            <span class="quote-item"><i class="pi pi-globe"></i>&nbsp;"A smooth sea never made a skilled sailor — but we
-                ensure you're covered either way."</span>
-            <span class="quote-sep">⚓</span>
-            <span class="quote-item"><i class="pi pi-star"></i>&nbsp;"Protecting every voyage, every cargo, every dream
-                — since day one."</span>
-        </div>
-    </div>
+    <!-- ── Marine Quotes Banner removed per client request ── -->
 
     <!-- ── Inner Content ── -->
     <div class="content-wrap" *ngIf="sectionResolved; else loadingSection">
@@ -78,7 +51,7 @@
                     <div class="title-block">
                         <h3 class="page-title" *ngIf="quoteSection">
                             <i class="pi pi-th-large title-icon"></i>
-                            Product You Wish to Buy
+                            {{ userType === 'admin' ? 'Select the Product You would Like to Purchase' : 'Explore Products' }}
                         </h3>
                         <h3 class="page-title" *ngIf="approverSection">
                             <i class="pi pi-search title-icon"></i>
@@ -127,7 +100,7 @@
                             <!-- Card body -->
                             <div class="card-body">
                                 <p class="prod-name">{{ product.ProductName }}</p>
-                                <p class="prod-quote">{{ getProductQuote(product.ProductId, product.ProductName) }}</p>
+                                <p class="prod-desc">{{ getProductDescription(product.ProductId, product.ProductName) }}</p>
                             </div>
 
                             <!-- Card footer -->
@@ -165,7 +138,7 @@
 
                                 <div class="prod-img-wrap">
                                     <img [src]="getUserTypeImage(product?.code)" alt="Card" />
-                                    <span class="prod-badge admin-badge">
+                                    <span class="prod-badge">
                                         <i class="pi pi-user"></i> Access
                                     </span>
                                 </div>
@@ -173,7 +146,7 @@
                                 <div class="card-body">
                                     <ng-container *ngIf="product.code=='1' || product.code=='3' || product.code=='4'">
                                         <p class="prod-name">
-                                            {{ product.description === 'Transaction' ? 'Quotation & Policy Information' : product.description }}</p>
+                                            {{ product.code=='1' ? 'Quotation & Policy Information' : (product.code=='4' ? 'Marine Setup / Open Cover' : product.description) }}</p>
                                     </ng-container>
                                     <ng-container *ngIf="product.code=='2'">
                                         <p class="prod-name">
@@ -181,12 +154,12 @@
                                                 Creation</ng-container>
                                             <ng-container
                                                 *ngIf="checkUserTypeLabel(product,'Login') && checkUserTypeLabel(product,'Masters')">
-                                                &amp; </ng-container>
+                                                & </ng-container>
                                             <ng-container
                                                 *ngIf="checkUserTypeLabel(product,'Masters')">Masters</ng-container>
                                         </p>
                                     </ng-container>
-                                    <p class="prod-quote">{{ getAdminQuote(product.code) }}</p>
+                                    <p class="prod-desc">{{ getAdminDescription(product.code) }}</p>
                                 </div>
 
                                 <div class="card-footer-row">
@@ -228,14 +201,15 @@
             <span class="footer-brand-name">SALAMA Marine Insurance</span>
         </div>
         <div class="footer-links">
-            <a class="footer-link">Privacy Policy</a>
+           
+            <a href="https://salama.ae/terms-of-use/" class="footer-link">Terms of Service</a>
             <span class="footer-sep">·</span>
-            <a class="footer-link">Terms of Service</a>
+             <a href="https://salama.ae/privacy-policy/" class="footer-link">Privacy Policy</a>
             <span class="footer-sep">·</span>
-            <a class="footer-link">Support</a>
+             <a href="https://salama.ae/refund-policy/" class="footer-link">Refund policy</a>
             <span class="footer-sep">·</span>
-            <a class="footer-link">Contact</a>
+          
         </div>
-        <span class="footer-copy">© 2026 SALAMA b.s.c. All rights reserved.</span>
+        <span class="footer-copy">Copyright © 2026 Salama Islamic Arab Insurance Company, all rights reserved.</span>
     </div>
 </footer>

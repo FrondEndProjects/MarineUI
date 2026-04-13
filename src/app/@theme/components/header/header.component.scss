@@ -80,9 +80,9 @@
 }
 
 :root {
-  --teal: rgb(30 64 175);
-  --teal-dark: #042181;
-  --teal-bg: #4a6de0;
+  --teal: #1a5f68;
+  --teal-dark: #0f3b3d;
+  --teal-bg: #1d7280;
 }
 
 $teal: var(--teal);
@@ -90,15 +90,14 @@ $teal-dark: var(--teal-dark);
 $teal-bg: var(--teal-bg);
 
 .imgwidAlt {
-  // width: 161px !important;
-  width: 102px !important;
-  margin-left: 0px;
-  height: 51px;
-  // height: 56px;
-  margin-top: 0px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
+    width: 143px !important;
+    margin-left: 0px;
+    /* height: 45px; */
+    margin-top: 0px;
+    /* background: #fff; */
+    border-radius: 10px;
+    padding: 10px;
+
 }
 
 
@@ -199,17 +198,18 @@ $teal-bg: var(--teal-bg);
 .navmenu li.active>a,
 .navmenu li.active>a span,
 .navmenu li.active>a nb-icon {
-  // salama
-  // color: #23a0b5 !important;
-  // others
-  color: $teal !important;
-  // color: rgb(30 64 175)!important;
+  color: #1a5f68 !important;
+}
 
+.navmenu>ul>li:hover>a,
+.navmenu>ul>li:hover>a span,
+.navmenu>ul>li:hover>a nb-icon {
+  color: #1a5f68 !important;
 }
 
 
 .navmenu>ul>li.active {
-  border-bottom: 2px solid #f5a623;
+  border-bottom: 2px solid #F7C513;
 }
 
 /* Dropdown styling */

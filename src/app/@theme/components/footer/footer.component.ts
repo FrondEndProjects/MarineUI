@@ -4,18 +4,17 @@ import { Component } from '@angular/core';
   selector: 'ngx-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
-    <span class="created-by">
-  <!-- First Assurance   -->
-    </span>
-    <div class="socials">
-      <a  class="ion ion-social-github"></a>
-      <a  class="ion ion-social-facebook"></a>
-      <a  class="ion ion-social-twitter"></a>
-      <a  class="ion ion-social-linkedin"></a>
-      <!-- <a href="#" target="_blank" class="ion ion-social-github"></a>
-      <a href="#" target="_blank" class="ion ion-social-facebook"></a>
-      <a href="#" target="_blank" class="ion ion-social-twitter"></a>
-      <a href="#" target="_blank" class="ion ion-social-linkedin"></a> -->
+    <div class="footer-container">
+      <span class="created-by">
+        Copyright © 2026 Salama Islamic Arab Insurance Company, all rights reserved.
+      </span>
+      <div class="footer-links">
+        <a href="https://salama.ae/privacy-policy/" target="_blank">Privacy Policy</a>
+        <span class="sep">·</span>
+        <a href="https://salama.ae/terms-of-use/" target="_blank">Terms of Service</a>
+        <span class="sep">·</span>
+        <a href="https://salama.ae/contact-us/" target="_blank">Contact Us</a>
+      </div>
     </div>
   `,
 })

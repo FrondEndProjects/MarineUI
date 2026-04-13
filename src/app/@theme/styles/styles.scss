@@ -34,8 +34,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --teal: #1C7988;
-  --teal-dark: #145f6c;
+  --teal: #1a5f68;
+  --teal-dark: #0f3b3d;
   // --teal: rgb(30 64 175);
   // --teal-dark: #042181;
 }
@@ -432,7 +432,7 @@ ng-select input {
 }
 
 .product-gridBorderStyle {
-  box-shadow: -5px -5px 20px #fff, 5px 5px 20px darkorange;
+  box-shadow: -5px -5px 20px #fff, 5px 5px 20px #F7C513;
 }
 
 .product-gridBorderStyle:hover {
@@ -458,7 +458,7 @@ ng-select input {
   display: flex;
   flex-direction: row;
   font-weight: 600;
-  color: #e6823a;
+  color: #F7C513 !important;
   margin: 1rem 0;
 }
 
@@ -712,7 +712,7 @@ nb-layout .layout .layout-container .content .columns nb-layout-column {
 }
 
 .top-bar {
-  background: linear-gradient(135deg, #145f6c 0%, #1B7B8A 70%, #23a0b5 100%) !important;
+  background: linear-gradient(135deg, #145f6c 0%, #1a5f68 70%, #23a0b5 100%) !important;
   // background: #042181 !important;
   margin-top: 0px !important;
   height: 60px;
@@ -1262,7 +1262,7 @@ nb-user .user-name {
 //   display: flex;
 //   justify-content: space-between;
 //   // ---salamaa---
-//   // background: linear-gradient(135deg, #145f6c 0%, #1B7B8A 70%, #23a0b5 100%) !important;
+//   // background: linear-gradient(135deg, #145f6c 0%, #1a5f68 70%, #23a0b5 100%) !important;
 //   // -------other---------
 //   background: linear-gradient(135deg, #243c97 0%, #2f54c0 70%, #4a6de0 100%) !important;
 //   padding: 6px 10px;
@@ -1504,11 +1504,11 @@ nb-user .user-name {
   /* Slightly reduced as requested */
 
   &:hover {
-    border-color: #1B7B8A !important;
+    border-color: #1a5f68 !important;
   }
 
   &.p-focus {
-    border-color: #1B7B8A !important;
+    border-color: #1a5f68 !important;
     box-shadow: 0 0 0 0.2rem rgba(27, 123, 138, 0.25) !important;
   }
 }
@@ -1575,11 +1575,11 @@ nb-user .user-name {
     color: #1a2535 !important;
 
     &:hover {
-      border-color: #1B7B8A !important;
+      border-color: #1a5f68 !important;
     }
 
     &:focus {
-      border-color: #1B7B8A !important;
+      border-color: #1a5f68 !important;
       box-shadow: 0 0 0 0.2rem rgba(27, 123, 138, 0.25) !important;
     }
   }
@@ -1604,7 +1604,7 @@ nb-user .user-name {
 
   /* Highlight the selected date */
   .p-datepicker-calendar td .p-state-highlight {
-    background-color: #1B7B8A !important;
+    background-color: #1a5f68 !important;
   }
 }
 
@@ -1780,4 +1780,16 @@ nb-user .user-name {
 }
 .p-datepicker {
   z-index: 12000 !important;
+}
+.swal-confirm-white-text {
+    color: white !important;
+
+    i, span {
+        color: white !important;
+    }
+}
+
+// Optional: also force icon color within confirm button
+.swal2-confirm.swal-confirm-white-text {
+    color: white !important;
 }

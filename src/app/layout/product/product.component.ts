@@ -332,7 +332,7 @@ export class ProductComponent {
         userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
         userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
         userDetails.Result['ProductId'] = "11";
-        userDetails.Result['ProductName'] = "Marine Opencover Policy";
+        userDetails.Result['ProductName'] = "Marine Open Cover Policy";
         userDetails.Result['UserTypeAlt'] = "admin";
 
         let encryptInfo = encodeURIComponent(
@@ -569,6 +569,29 @@ export class ProductComponent {
       '4': '"Full marine admin at your fingertips — oversee every voyage."',
     };
     return map[code] || '"Powerful tools for seamless insurance management."';
+  }
+
+  getProductDescription(productId: string | number, productName: string): string {
+    const name = (productName || '').toLowerCase();
+
+    if (name.includes('one') && name.includes('off') || name.includes('one-off'))
+      return 'Provides coverage for a single shipment against loss or damage during transit.';
+    if (name.includes('open') && name.includes('cover'))
+      return 'Offers ongoing coverage for multiple shipments over a set period, ideal for frequent shipping.';
+    if (name.includes('property') || name.includes('fire'))
+      return 'Protects your property against risks such as fire, theft, and accidental damage.';
+
+    return 'Comprehensive insurance coverage tailored to your needs.';
+  }
+
+  getAdminDescription(code: string): string {
+    const map: { [key: string]: string } = {
+      '1': 'Create and manage quotes and policies in one place.',
+      '2': 'Set up users and control access.',
+      '3': 'Grow your network and manage referrals.',
+      '4': 'Manage marine policies and ongoing shipments.',
+    };
+    return map[code] || 'Powerful tools for seamless insurance management.';
   }
 
   getUserInitials(): string {

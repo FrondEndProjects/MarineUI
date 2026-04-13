@@ -5,7 +5,7 @@
   <header class="top-nav">
     <div class="nav-left">
       <div class="brand">
-        <a (click)="homeRoute()"><img src="./assets/images/Orientlogo-removebg-preview.png" class="imgwidAlt"></a>
+        <a href="https://salama.ae" target="_blank"><img src="./assets/images/Salama logo-YW.png" class="imgwidAlt"></a>
       </div>
       <div class="nav-divider"></div>
       <div class="nav-product">
@@ -14,7 +14,9 @@
       </div>
     </div>
     <div class="nav-right">
-      <p-button label="Marine" icon="pi pi-anchor" styleClass="nav-btn-marine"></p-button>
+      <a href="https://salama.ae/corporate/marine/" target="_blank">
+        <p-button label="Marine" icon="pi pi-anchor" styleClass="nav-btn-marine"></p-button>
+      </a>
     </div>
   </header>
 
@@ -141,7 +143,7 @@
           <div class="section-body">
             <div class="alert-text">
               <i class="fas fa-info-circle"></i>
-              <span>{{ messageText }}</span>
+              <span> You already have an active logged in session on another device or window. Do you want to start a new session and terminate the existing session?</span>
             </div>
             <div class="section-actions">
               <p-button styleClass="btn-secondary" label="Cancel" (click)="onCancelLogin()"></p-button>
@@ -156,7 +158,7 @@
         ══════════════════════════════════════════ -->
         <ng-container *ngIf="forget">
 
-          <div class="card-header card-header--alt">
+          <div class="card-header">
             <div class="card-logo card-logo--alt">
               <i class="fas fa-key"></i>
             </div>
@@ -198,8 +200,8 @@
           </div>
 
           <div class="card-footer">
-            <p>Remembered your password?
-              <a class="register-link" (click)="cancel()">Back to Sign In</a>
+            <p>Remember your password?
+              <a class="register-link" (click)="cancel()">Sign in</a>
             </p>
           </div>
 
@@ -210,7 +212,7 @@
         ══════════════════════════════════════════ -->
         <ng-container *ngIf="changePasswordSection">
 
-          <div class="card-header card-header--change">
+          <div class="card-header">
             <div class="card-logo card-logo--change">
               <i class="fas fa-lock"></i>
             </div>
@@ -297,11 +299,11 @@
 
   <!-- Footer -->
   <footer class="login-footer">
-    <span>© 2026 SALAMA Marine Insurance. All rights reserved.</span>
+    <span>Copyright © 2026 Salama Islamic Arab Insurance Company, all rights reserved.</span>
     <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Support</a>
+      <a href="https://salama.ae/terms-of-use/">Terms of Service</a>
+      <a href="https://salama.ae/privacy-policy/">Privacy Policy</a>
+      <a href="https://salama.ae/refund-policy/">Refund policy</a>
     </div>
   </footer>
 

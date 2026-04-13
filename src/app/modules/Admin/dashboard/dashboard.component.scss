@@ -7,7 +7,7 @@ $teal: var(--teal);
 $teal-dark: var(--teal-dark);
 $teal-light:   #e8f4f6;
 $teal-xlight:  #f0f9fa;
-$gold:         #E8A020;
+$gold:         #F7C513;
 $gold-dark:    #c8881a;
 $gold-light:   #fef3e0;
 $white:        #ffffff;
@@ -158,14 +158,14 @@ $font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   flex-shrink: 0;
 
   // Status variant headers
-  &.sa-header-approved { background: $success; }
-  &.sa-header-pending  { background: $warning; }
+  &.sa-header-approved { background: $teal; }
+  &.sa-header-pending  { background: $gold; }
   &.sa-header-rejected { background: $error;   }
 }
 
 .sa-icon {
   font-size: 0.88rem;
-  color: $gold;
+  color: $white;
   flex-shrink: 0;
   width: 18px;
   text-align: center;

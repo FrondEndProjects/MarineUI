@@ -48,9 +48,9 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>User Name</th>
-                <th>Login Id </th>
+                <th>Login ID </th>
                 <th>Sub UserType</th>
-                <th>MailID </th>
+                <th>Mail ID </th>
                 <th>Created Date</th>
                 <th>Mobile No</th>
                 <th>Status </th>
@@ -205,7 +205,7 @@
             <input pInputText id="Email" class="w-full" [(ngModel)]="userMail" />
         </div>
         <div class="col-12 col-md-4 form-field">
-            <label for="ContactPerson" class="fw-semibold">ContactPerson Name&nbsp;<span
+            <label for="ContactPerson" class="fw-semibold">Contact Person Name&nbsp;<span
                     class="text-danger">*</span></label>
             <input pInputText id="ContactPerson" class="w-full" [(ngModel)]="contactPersonName" />
         </div>
@@ -219,7 +219,7 @@
     <span class="p-text-dark d-block mb-4 fw-bold">Login Information</span>
     <div class="row">
         <div class="col-12 col-md-4 form-field">
-            <label for="LogInId" class="fw-semibold">LogIn Id &nbsp;<span class="text-danger">*</span></label>
+            <label for="LogInId" class="fw-semibold">LogIn ID &nbsp;<span class="text-danger">*</span></label>
             <input pInputText id="LogInId" class="w-full" [disabled]="editSection" [(ngModel)]="userLoginId" />
         </div>
         <div class="col-12 col-md-4 form-field">
@@ -268,7 +268,7 @@
                 <div class="d-flex align-items-center me-1">
                     <p-radioButton name="DeActive" value="N" [(ngModel)]="statusValue"
                         inputId="statusDeactive"></p-radioButton>
-                    <span for="statusDeactive" class="ms-1">DeActive</span>
+                    <span for="statusDeactive" class="ms-1">Deactive</span>
                 </div>
             </div>
         </div>

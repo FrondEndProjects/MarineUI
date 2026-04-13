@@ -194,7 +194,7 @@ export class LoginLayoutComponent implements OnInit {
       );
     } else {
       this.messages = [
-        { severity: 'error', summary: 'Error', detail: 'Incorrect Credentials' }
+        { severity: 'error', summary: 'We couldn\'t sign you in.', detail: 'Please check your login ID and try again.' }
       ];
     }
   }

@@ -1,8 +1,8 @@
 // ===== SALAMA THEME VARIABLES =====
-$salama-primary: #1a7a7a;
-$salama-primary-dark: #155f5f;
+$salama-primary: #1a5f68;
+$salama-primary-dark: #0f3b3d;
 $salama-primary-light: #e8f5f5;
-$salama-accent: #e8a020;
+$salama-accent: #F7C513;
 $salama-accent-dark: #c8880e;
 $salama-white: #ffffff;
 $salama-gray-50: #f8fafb;
@@ -22,7 +22,8 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
   align-items: center;
   justify-content: space-between;
   height: 58px;
-  background: $salama-primary;
+  // background: $salama-primary;
+  background: linear-gradient(135deg, #1a5f68 0%, #1d7280 100%);
   padding: 0 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   position: sticky;
@@ -407,8 +408,8 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
     transition: all 0.2s;
 
     &:hover {
-      background: $salama-primary-dark;
-      border-color: $salama-primary-dark;
+      background: $salama-primary-dark !important;
+      border-color: $salama-primary-dark !important;
     }
 
     &.p-button-outlined {
@@ -417,7 +418,8 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
       border-color: $salama-primary;
 
       &:hover {
-        background: $salama-primary-light;
+        background: $salama-primary-light !important;
+         color: $salama-accent-dark !important;
       }
     }
 
@@ -531,14 +533,14 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
   }
 }
 
-.imgwidAlt {
-  width: 102px !important;
-  margin-left: 0;
-  height: 45px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
-}
+.imgwidAlt  {     width: 143px !important;
+    margin-left: 0px;
+    /* height: 45px; */
+    margin-top: 0px;
+    /* background: #fff; */
+    border-radius: 10px;
+    padding: 10px;
+} 
 
 // .control-item {
 //   display: none !important;
@@ -570,3 +572,4 @@ $salama-shadow: rgba(26, 122, 122, 0.12);
   width: 16px !important;
   height: 16px !important;
 }
+.user-name  { font-size: 13px; font-weight: 600; color: #fff; }

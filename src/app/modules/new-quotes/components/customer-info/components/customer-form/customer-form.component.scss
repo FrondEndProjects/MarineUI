@@ -1,12 +1,12 @@
 
 :root {
-  --teal: #1B7B8A;
-  --teal-d: #145f6c;
+  --teal: #1a5f68;
+  --teal-d: #0f3b3d;
   // other
   // --teal: rgb(30 64 175);
   // --teal-d: #042181;
   --teal-l: #e8f4f6;
-  --gold: #E8A020;
+  --gold: #F7C513;
   --gold-l: #fff8ec;
   --bg: #eef2f5;
   --white: #fff;
@@ -24,7 +24,7 @@ $teal: var(--teal);
 $teal-dark: var(--teal-dark);
 $teal-light:  #eef0ff;
 $teal-xlight: #f5f6ff;
-$gold: #E8A020;
+$gold: #F7C513;
 $gold-dark: #c8881a;
 $white: #ffffff;
 $border: #c9dde2;
@@ -477,7 +477,7 @@ textarea.p-inputtextarea {
   }
 
   .modal-header {
-    background: linear-gradient(90deg, #1B7B8A, #145f6c) !important;
+    background: linear-gradient(90deg, #1a5f68, #145f6c) !important;
     color: #fff !important;
     padding: 14px 20px;
     border-bottom: none;
@@ -510,12 +510,12 @@ textarea.p-inputtextarea {
       font-weight: 500;
       color: #6b7a8d;
       transition: all 0.18s ease;
-      &:hover { border-color: #1B7B8A; color: #1B7B8A; }
+      &:hover { border-color: #1a5f68; color: #1a5f68; }
     }
 
     input:checked + label {
-      background: #1B7B8A;
-      border-color: #1B7B8A;
+      background: #1a5f68;
+      border-color: #1a5f68;
       color: #fff;
     }
   }
@@ -533,9 +533,9 @@ textarea.p-inputtextarea {
   background: #fff !important;
   transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
 
-  &:hover  { border-color: #1B7B8A !important; }
+  &:hover  { border-color: #1a5f68 !important; }
   &:focus  {
-    border-color: #1B7B8A !important;
+    border-color: #1a5f68 !important;
     box-shadow: 0 0 0 3px rgba(27,123,138,0.12) !important;
     outline: none !important;
   }
@@ -554,8 +554,8 @@ textarea.p-inputtextarea {
 
     .p-button.p-button-teal,
     .p-button-teal {
-      background: #1B7B8A !important;
-      border: 1.5px solid #1B7B8A !important;
+      background: #1a5f68 !important;
+      border: 1.5px solid #1a5f68 !important;
       border-radius: 0 6px 6px 0 !important;
       color: #fff !important;
       padding: 0 14px !important;
@@ -579,7 +579,7 @@ textarea.p-inputtextarea {
     transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
 
     &:focus {
-      border-color: #1B7B8A !important;
+      border-color: #1a5f68 !important;
       box-shadow: 0 0 0 3px rgba(27,123,138,0.12) !important;
       outline: none !important;
     }
@@ -628,7 +628,7 @@ textarea.p-inputtextarea {
     padding: 7px 18px !important;
 
     &.p-button-primary {
-      background: linear-gradient(135deg, #1B7B8A, #145f6c) !important;
+      background: linear-gradient(135deg, #1a5f68, #145f6c) !important;
       border-color: transparent !important;
       color: #fff !important;
       box-shadow: 0 3px 8px rgba(27,123,138,0.28) !important;
@@ -640,14 +640,14 @@ textarea.p-inputtextarea {
       border: 1.5px solid #d0dce6 !important;
       color: #6b7a8d !important;
       background: transparent !important;
-      &:hover { border-color: #1B7B8A !important; color: #1B7B8A !important; }
+      &:hover { border-color: #1a5f68 !important; color: #1a5f68 !important; }
     }
   }
 
   /* ── Create Customer outlined btn (modal body) ───────── */
   .modal-body .p-button.p-button-outlined {
-    border: 1.5px solid #1B7B8A !important;
-    color: #1B7B8A !important;
+    border: 1.5px solid #1a5f68 !important;
+    color: #1a5f68 !important;
     background: transparent !important;
     border-radius: 20px !important;
     font-size: 13px !important;
@@ -664,7 +664,7 @@ textarea.p-inputtextarea {
     //   border: 1.5px solid #d0dce6 !important;
     //   box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
     //   &:focus {
-    //     border-color: #1B7B8A !important;
+    //     border-color: #1a5f68 !important;
     //     box-shadow: 0 4px 12px rgba(27,123,138,0.18) !important;
     //   }
     // }

@@ -24,14 +24,14 @@
   </div>
   <div class="open-cover-grid-card-body">
     <nb-tabset fullWidth>
-      <nb-tab tabTitle="Marine Open Cover(MOC)">
+      <nb-tab tabTitle="Marine Open Cover (MOC)">
         <ng-container *ngIf="openCoverMocData">
           <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMocData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
             (onOpenCoverAction)="onOpenCoverActions($event,'MOC')">
           </app-grid-table>
         </ng-container>
       </nb-tab>
-      <nb-tab tabTitle="Marine Open Cover(MOP)">
+      <nb-tab tabTitle="Marine Open Cover (MOP)">
         <ng-container *ngIf="openCoverMopData">
           <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMopData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
           (onOpenCoverAction)="onOpenCoverActions($event,'MOP')">

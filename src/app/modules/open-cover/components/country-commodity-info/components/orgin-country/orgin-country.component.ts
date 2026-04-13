@@ -77,8 +77,8 @@ export class OrginCountryComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.africanCode = data?.Result[0].CodeValue.split('~');
-        this.gccCode = data?.Result[1].CodeValue.split('~');
-        this.cisCode = data?.Result[2].CodeValue.split('~');
+        this.gccCode = data?.Result[2].CodeValue.split('~');
+        this.cisCode = data?.Result[1].CodeValue.split('~');
       },
       (err) => { },
     );
