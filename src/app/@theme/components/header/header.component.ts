@@ -313,7 +313,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateHome() {
     this.menuService.navigateHome();
-    debugger
     if (this.userDetails?.Result?.InsuranceId == '100053' || '100044') {
       if (this.userDetails.Result?.UserTypeAlt == 'admin') {
         this.userDetails.Result['UserType'] = 'Issuer';

@@ -48,6 +48,10 @@ export class SaleTermAppEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    // if (this.Userdetails?.Result?.InsuranceId != '100053') {
+    //   this.saleTermForm.controls['product'].setValue('');
+
+    // }
   }
 
   getSaleTermDetails() {

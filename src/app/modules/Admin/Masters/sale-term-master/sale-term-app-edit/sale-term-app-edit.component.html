@@ -15,6 +15,17 @@
         *ngIf="saleTermForm.controls['product'].errors?.['required'] && (saleTermForm.controls['product'].dirty || saleTermForm.controls['product'].touched)">
         Please Select Product</mat-error>
     </div>
+    <!-- <div *ngIf="this.Userdetails?.Result?.InsuranceId =='100053'" class="col-12 col-md-6 col-lg-6">
+      <div class="input-control-container">
+        <mat-label>Product<span class="text-required">*</span></mat-label>
+        <ng-select class="input-form-select" appendTo="body" (change)="onProductChange()" [items]="ProductList"
+          onchange="" formControlName="product" bindValue="Code" placeholder="SearchBy" bindLabel="CodeDesc">
+        </ng-select>
+      </div>
+      <mat-error
+        *ngIf="saleTermForm.controls['product'].errors?.['required'] && (saleTermForm.controls['product'].dirty || saleTermForm.controls['product'].touched)">
+        Please Select Product</mat-error>
+    </div> -->
     <!-- Sale Term Name -->
     <div class="col-12 col-md-6 col-lg-6">
       <div class="customer-search-container">

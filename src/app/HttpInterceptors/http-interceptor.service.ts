@@ -25,7 +25,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   service_count = 0;
   totalRequests = 0;
   completedRequests = 0;
-
+private readonly BRAND_COLOR = '#1d7280';
   constructor(
     public router: Router,
     private loader: CustomLoadingService,
@@ -69,68 +69,112 @@ export class HttpInterceptorService implements HttpInterceptor {
     );
   }
 
+  // openResponse(res: any) {
+  //   if (res?.ErrorMessage && res?.ErrorMessage.length > 0 || res?.Result?.ErrorMessage && res?.Result?.ErrorMessage.length > 0) {
+  //     const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
+
+  //     // ✅ Skip popup if ANY error is a SessionError — handled by login component
+  //     const hasSessionError = errorList.some((ele: any) => ele.Field === 'SessionError');
+  //     if (hasSessionError) {
+  //       return;
+  //     }
+
+  //     let ulList:any='';
+  //     for (let index = 0; index < errorList.length; index++) {
+  //       const element = errorList[index];
+  //        ulList +=`<li class="list-group-item">
+  //        <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+  //        <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+  //      </li>`
+
+  //     }
+  //     Swal.fire({
+  //       title: '<strong>Form Validation</strong>',
+  //       icon: 'info',
+  //       html:
+  //         `<ul class="list-group errorlist">
+  //          ${ulList}
+  //       </ul>`,
+  //       showCloseButton: true,
+  //       focusConfirm: false,
+  //       confirmButtonText:
+  //         '<i class="fa fa-thumbs-down"></i> Errors!',
+  //       confirmButtonAriaLabel: 'Thumbs down, Errors!',
+  //     })
+  //   }
+  // }
+
+  // openError(res: any) {
+  //   const errorList: any[] = res || [];
+  //   if (errorList.length > 0) {
+  //     console.log(errorList)
+  //     let ulList:any='';
+  //     for (let index = 0; index < errorList.length; index++) {
+  //       const element = errorList[index];
+  //        ulList +=`<li class="list-group-item">
+  //        <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+  //        <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+  //      </li>`
+
+  //     }
+  //     Swal.fire({
+  //       title: '<strong>Form Validation</strong>',
+  //       icon: 'info',
+  //       html:
+  //         `<ul class="list-group errorlist">
+  //          ${ulList}
+  //       </ul>`,
+  //       showCloseButton: true,
+  //       focusConfirm: false,
+  //       confirmButtonText:
+  //         '<i class="fa fa-thumbs-down"></i> Errors!',
+  //       confirmButtonAriaLabel: 'Thumbs down, Errors!',
+  //     })
+
+  //   }
+  // }
   openResponse(res: any) {
-    if (res?.ErrorMessage && res?.ErrorMessage.length > 0 || res?.Result?.ErrorMessage && res?.Result?.ErrorMessage.length > 0) {
+    if (res?.ErrorMessage?.length > 0 || res?.Result?.ErrorMessage?.length > 0) {
       const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
 
-      // ✅ Skip popup if ANY error is a SessionError — handled by login component
       const hasSessionError = errorList.some((ele: any) => ele.Field === 'SessionError');
-      if (hasSessionError) {
-        return;
-      }
+      if (hasSessionError) return;
 
-      let ulList:any='';
-      for (let index = 0; index < errorList.length; index++) {
-        const element = errorList[index];
-         ulList +=`<li class="list-group-item">
-         <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
-         <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
-       </li>`
-
-      }
-      Swal.fire({
-        title: '<strong>Form Validation</strong>',
-        icon: 'info',
-        html:
-          `<ul class="list-group errorlist">
-           ${ulList}
-        </ul>`,
-        showCloseButton: true,
-        focusConfirm: false,
-        confirmButtonText:
-          '<i class="fa fa-thumbs-down"></i> Errors!',
-        confirmButtonAriaLabel: 'Thumbs down, Errors!',
-      })
+      this.showSwalPopup(errorList);
     }
   }
 
   openError(res: any) {
     const errorList: any[] = res || [];
     if (errorList.length > 0) {
-      console.log(errorList)
-      let ulList:any='';
-      for (let index = 0; index < errorList.length; index++) {
-        const element = errorList[index];
-         ulList +=`<li class="list-group-item">
-         <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
-         <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
-       </li>`
-
-      }
-      Swal.fire({
-        title: '<strong>Form Validation</strong>',
-        icon: 'info',
-        html:
-          `<ul class="list-group errorlist">
-           ${ulList}
-        </ul>`,
-        showCloseButton: true,
-        focusConfirm: false,
-        confirmButtonText:
-          '<i class="fa fa-thumbs-down"></i> Errors!',
-        confirmButtonAriaLabel: 'Thumbs down, Errors!',
-      })
-
+      this.showSwalPopup(errorList);
     }
+  }
+
+  // Refactored helper method to avoid code duplication
+  private showSwalPopup(errorList: any[]) {
+    let ulList = '';
+    errorList.forEach(element => {
+      ulList += `
+        <li class="list-group-item" style="border-left: 5px solid ${this.BRAND_COLOR}">
+          <div style="color: ${this.BRAND_COLOR}; font-weight: bold;">Field: ${element?.Field}</div>
+          <div style="color: #666;">Message: ${element?.Message}</div>
+        </li>`;
+    });
+
+    Swal.fire({
+      title: '<strong style="color: #1d7280">Form Validation</strong>',
+      icon: 'info',
+      iconColor: this.BRAND_COLOR, // Sets the info icon color
+      html: `<ul class="list-group errorlist" style="text-align: left;">${ulList}</ul>`,
+      showCloseButton: true,
+      focusConfirm: false,
+      confirmButtonText: 'OK',
+      confirmButtonColor: this.BRAND_COLOR, // Sets the button background color
+      buttonsStyling: true,
+      customClass: {
+        confirmButton: 'custom-swal-button'
+      }
+    });
   }
 }

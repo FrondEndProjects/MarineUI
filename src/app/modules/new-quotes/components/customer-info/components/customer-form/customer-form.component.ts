@@ -222,7 +222,8 @@ export class CustomerFormComponent implements OnInit {
     if (loginId == undefined || loginId == null || loginId == '') { loginId = code; }
     const reqData = {
       "BrokerCode": code,
-      'ApplicationId': this.applicationId,
+      'ApplicationId': '1',
+      // 'ApplicationId': this.applicationId,
       'LoginId': loginId,
       'OpenCoverNo': this.openCoverNo,
     };
@@ -263,7 +264,8 @@ export class CustomerFormComponent implements OnInit {
     const reqData = {
       "BrokerCode": code ?code :this.brokerForm.controls['borker'].value,
       //this.brokerCode,
-      'ApplicationId': this.applicationId,
+      // 'ApplicationId': this.applicationId,
+      'ApplicationId': '1',
       'LoginId': loginId?loginId:this.brokerForm.controls['borker'].value,
       'OpenCoverNo': this.openCoverNo,
     };

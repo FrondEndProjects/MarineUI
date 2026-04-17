@@ -8,14 +8,14 @@
         <a href="https://salama.ae" target="_blank"><img src="./assets/images/Salama logo-YW.png" class="imgwidAlt"></a>
       </div>
       <div class="nav-divider"></div>
-      <div class="nav-product">
+      <!-- <div class="nav-product">
         <i class="fas fa-anchor"></i>
         <span>Marine Insurance</span>
-      </div>
+      </div> -->
     </div>
     <div class="nav-right">
       <a href="https://salama.ae/corporate/marine/" target="_blank">
-        <p-button label="Marine" icon="pi pi-anchor" styleClass="nav-btn-marine"></p-button>
+        <p-button label="Explore Marine" icon="pi pi-anchor" styleClass="nav-btn-marine"></p-button>
       </a>
     </div>
   </header>
@@ -25,11 +25,15 @@
 
     <!-- Left Side: Branding Panel -->
     <div class="hero-left">
+      <div class="hero-image-top">
+        <img src="./assets/images/Marine takaful.jpg">
+      </div>
       <div class="hero-content">
-        <div class="hero-icon">
+        <!-- <div class="hero-icon">
           <i class="fas fa-anchor"></i>
-        </div>
-        <h1 class="hero-title">Marine<br>Insurance</h1>
+        </div> -->
+        <div class="flex justify content center">
+        <h1 class="hero-title">Marine Insurance</h1>
         <p class="hero-subtitle">
           Comprehensive cargo &amp; freight protection for your global trade operations.
         </p>
@@ -47,6 +51,7 @@
             <span>Real-time Shipment Tracking</span>
           </div>
         </div>
+        </div>
       </div>
     </div>
 
@@ -62,10 +67,11 @@
           <!-- Card Header -->
           <div class="card-header">
             <div class="card-logo">
-              <i class="fas fa-anchor"></i>
+              <!-- <i class="fas fa-anchor"></i> -->
+             <i class="fas fa-user"></i>
             </div>
-            <h2 class="card-title">Welcome Back</h2>
-            <p class="card-desc">Sign in to access your marine insurance portal</p>
+            <h2 class="card-title">Welcome</h2>
+            <!-- <p class="card-desc">Sign in to access your marine insurance portal</p> -->
           </div>
 
           <!-- Login Form -->
@@ -114,7 +120,7 @@
             </div>
 
             <div class="row container">
-              <p-button type="submit" label="Sign In" icon="pi pi-sign-in" iconPos="right"
+              <p-button type="submit" label="Sign In"  iconPos="right"
                 styleClass="login-submit-btn" [loading]="loading"></p-button>
             </div>
 
@@ -147,7 +153,7 @@
             </div>
             <div class="section-actions">
               <p-button styleClass="btn-secondary" label="Cancel" (click)="onCancelLogin()"></p-button>
-              <p-button label="Proceed Login" (click)="submit('Y')"></p-button>
+              <p-button label="Proceed Login" styleClass="btn-primary" (click)="submit('Y')"></p-button>
             </div>
           </div>
 
@@ -163,19 +169,19 @@
               <i class="fas fa-key"></i>
             </div>
             <h2 class="card-title">Forgot Password</h2>
-            <p class="card-desc">Enter your username and registered email to reset your password</p>
+            <p class="card-desc">Enter your user Name and registered email to reset your password</p>
           </div>
 
           <div class="section-body">
 
             <div class="form-group">
               <label class="form-label">
-                <i class="fas fa-user"></i> Username
+                <i class="fas fa-user"></i> User Name
               </label>
               <div class="input-icon-wrap">
                 <!-- <i class="fas fa-user input-icon"></i> -->
                 <input pInputText type="text" [(ngModel)]="username2"
-                  placeholder="Enter your username" class="login-input" />
+                  placeholder="Enter your user Name" class="login-input" />
               </div>
             </div>
 
@@ -193,7 +199,7 @@
             <div class="section-actions">
               <p-button styleClass="btn-secondary" label="Cancel" icon="pi pi-times"
                 (click)="cancel()"></p-button>
-              <p-button label="Submit" icon="pi pi-send"
+              <p-button label="Submit" icon="pi pi-send" styleClass="btn-primary"
                 (click)="forgetSubmit()"></p-button>
             </div>
 
@@ -229,12 +235,12 @@
 
             <div class="form-group">
               <label class="form-label">
-                <i class="fas fa-user"></i> Username
+                <i class="fas fa-user"></i> User Name
               </label>
               <div class="input-icon-wrap">
 
                 <input pInputText type="text" [(ngModel)]="username1"
-                  placeholder="Enter your username" class="login-input" />
+                  placeholder="Enter your user Name" class="login-input" />
               </div>
             </div>
 
@@ -262,7 +268,7 @@
                 (click)="resetForm()"></p-button>
               <p-button styleClass="btn-secondary btn-sm" label="Login" icon="pi pi-arrow-left"
                 (click)="cancel()"></p-button>
-              <p-button styleClass="btn-sm" label="Submit" icon="pi pi-check"
+              <p-button styleClass="btn-primary btn-sm" label="Submit" icon="pi pi-check"
                 (click)="onsubmit()"></p-button>
             </div>
 
@@ -297,15 +303,41 @@
 
   </main>
 
-  <!-- Footer -->
-  <footer class="login-footer">
+  <!-- <footer class="login-footer">
     <span>Copyright © 2026 Salama Islamic Arab Insurance Company, all rights reserved.</span>
     <div class="footer-links">
       <a href="https://salama.ae/terms-of-use/">Terms of Service</a>
       <a href="https://salama.ae/privacy-policy/">Privacy Policy</a>
       <a href="https://salama.ae/refund-policy/">Refund policy</a>
     </div>
-  </footer>
+  </footer> -->
+  <!-- Footer -->
+<footer class="login-footer">
+  <span class="footer-copyright">Copyright © 2026 Salama Islamic Arab Insurance Company, all rights reserved.</span>
+  <div class="footer-links">
+    <a href="https://salama.ae/terms-of-use/">Terms of use</a>
+    <span class="footer-link-sep">|</span>
+    <a href="https://salama.ae/privacy-policy/">Privacy policy</a>
+    <span class="footer-link-sep">|</span>
+    <a href="https://salama.ae/refund-policy/">Refund policy</a>
+    <span class="footer-link-sep">|</span>
+    <a href="https://salama.ae/">Website information</a>
+  </div>
+  <div class="footer-social">
+    <a href="https://www.facebook.com/salamauae" target="_blank" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://x.com/salamauae" target="_blank" aria-label="X">
+      <i class="fab fa-x-twitter"></i>
+    </a>
+    <a href="https://www.linkedin.com/company/salama" target="_blank" aria-label="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a href="https://www.instagram.com/salamauae" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
+</footer>
 
 </div>
 

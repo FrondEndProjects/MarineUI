@@ -174,7 +174,8 @@ $accent-6: #F7C513;   // golden yellow (was coral red)
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  // grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 
@@ -239,10 +240,11 @@ $accents: ($accent-1, $accent-2, $accent-3, $accent-4, $accent-5, $accent-6);
   overflow: hidden;
 
   img {
-    width: 100%;
+    width: 80%;
     height: 100%;
-    object-fit: contain;
-    padding: 12px;
+    // object-fit: contain;
+    padding: 10px;
+    // padding: 20px;
     transition: transform .3s ease;
   }
 }
@@ -370,27 +372,92 @@ $accents: ($accent-1, $accent-2, $accent-3, $accent-4, $accent-5, $accent-6);
 // ════════════════════════════════════════════════════════════════════════════
 // FOOTER
 // ════════════════════════════════════════════════════════════════════════════
-.app-footer { background: $teal-dark; padding: 0; }
+// .app-footer { background: $teal-dark; padding: 0; }
+// .footer-inner {
+//   max-width: 1400px; margin: 0 auto; padding: 14px 36px;
+//   display: flex; align-items: center; justify-content: space-between;
+//   gap: 16px; flex-wrap: wrap;
+// }
+// .footer-brand { display: flex; align-items: center; gap: 10px; }
+// .footer-logo {
+//   width: 30px; height: 30px; background: $gold; border-radius: 8px;
+//   display: flex; align-items: center; justify-content: center;
+//   i { font-size: 14px; color: $white; }
+// }
+// .footer-brand-name { font-size: 13px; font-weight: 700; color: $white; letter-spacing: .5px; }
+// .footer-links { display: flex; align-items: center; gap: 8px; }
+// .footer-link {
+//   font-size: 12px; color: rgba(255,255,255,.6); text-decoration: none; cursor: pointer; transition: color .2s;
+//   &:hover { color: $gold; }
+// }
+// .footer-sep  { color: rgba(255,255,255,.25); font-size: 12px; }
+// .footer-copy { font-size: 11px; color: rgba(255,255,255,.45); }
+// ════════════════════════════════════════════════════════════════════════════
+// FOOTER — Salama website style
+// Layout: [Copyright] ---- [Terms | Privacy | Refund | Website] [Social Icons]
+// ════════════════════════════════════════════════════════════════════════════
+.app-footer { background: #17525a; padding: 0; }
 .footer-inner {
   max-width: 1400px; margin: 0 auto; padding: 14px 36px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap;
+  display: flex; align-items: center;
+  gap: 24px;
 }
-.footer-brand { display: flex; align-items: center; gap: 10px; }
-.footer-logo {
-  width: 30px; height: 30px; background: $gold; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  i { font-size: 14px; color: $white; }
-}
-.footer-brand-name { font-size: 13px; font-weight: 700; color: $white; letter-spacing: .5px; }
-.footer-links { display: flex; align-items: center; gap: 8px; }
-.footer-link {
-  font-size: 12px; color: rgba(255,255,255,.6); text-decoration: none; cursor: pointer; transition: color .2s;
-  &:hover { color: $gold; }
-}
-.footer-sep  { color: rgba(255,255,255,.25); font-size: 12px; }
-.footer-copy { font-size: 11px; color: rgba(255,255,255,.45); }
 
+// Copyright — left side
+.footer-copy {
+  font-size: 12px;
+  color: rgba(255,255,255,.7);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+// Links with pipe separators — pushed to the right
+.footer-links {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.footer-link {
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  padding: 0 12px;
+  white-space: nowrap;
+  transition: color .2s;
+  &:hover { color: #fff; }
+}
+.footer-link-sep {
+  color: rgba(255,255,255,.3);
+  font-size: 13px;
+  user-select: none;
+}
+
+// Social media icons — far right
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(255,255,255,.15);
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+    font-size: 15px;
+    transition: color .2s, transform .2s;
+
+    &:hover {
+      color: #fff;
+      transform: translateY(-1px);
+    }
+  }
+}
 // ════════════════════════════════════════════════════════════════════════════
 // RESPONSIVE
 // ════════════════════════════════════════════════════════════════════════════
@@ -412,4 +479,71 @@ $accents: ($accent-1, $accent-2, $accent-3, $accent-4, $accent-5, $accent-6);
 @media (max-width: 400px)  { .product-grid { grid-template-columns: 1fr; } }
 .menu-item{
   cursor: pointer;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// FOOTER — Salama website style
+// Layout: [Copyright] ---- [Terms | Privacy | Refund | Website] [Social Icons]
+// ════════════════════════════════════════════════════════════════════════════
+.app-footer { background: #17525a; padding: 0; }
+.footer-inner {
+  max-width: 100%; margin: 0 auto; padding: 14px 20px;
+  display: flex; align-items: center;
+  gap: 24px;
+}
+
+// Copyright — left side
+.footer-copy {
+  font-size: 12px;
+  color: rgba(255,255,255,.7);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+// Links with pipe separators — pushed to the right
+.footer-links {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.footer-link {
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  padding: 0 12px;
+  white-space: nowrap;
+  transition: color .2s;
+  &:hover { color: #fff; }
+}
+.footer-link-sep {
+  color: rgba(255,255,255,.3);
+  font-size: 13px;
+  user-select: none;
+}
+
+// Social media icons — far right
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(255,255,255,.15);
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+    font-size: 15px;
+    transition: color .2s, transform .2s;
+
+    &:hover {
+      color: #fff;
+      transform: translateY(-1px);
+    }
+  }
 }

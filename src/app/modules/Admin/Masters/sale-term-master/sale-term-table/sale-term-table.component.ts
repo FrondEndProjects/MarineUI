@@ -57,6 +57,14 @@ export class SaleTermTableComponent implements OnInit {
 
   // life cycle hooks
   ngOnInit(): void {
+    if (this.userDetails?.Result?.InsuranceId == '100053') {
+      this.selectedProduct ='3'
+
+    }
+    else{
+      this.selectedProduct =''
+
+    }
     this.getSaleTermList();
   }
 
@@ -85,7 +93,7 @@ export class SaleTermTableComponent implements OnInit {
           let e = data.Result.filter(e => e.ProductId == this.selectedProduct)
           this.tableData = e;
           console.log(this.tableData.length);
-          
+
         }
       }, (err) => { }
     )

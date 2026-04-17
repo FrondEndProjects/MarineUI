@@ -5,7 +5,7 @@
     <div class="navbar-brand">
         <a (click)="homeRoute()"><img src="./assets/images/Salama logo-YW.png" class="imgwidAlt"></a>
         <div class="brand-text">
-            <span class="brand-sub">Marine Insurance Portal</span>
+            <!-- <span class="brand-sub">Marine Insurance Portal</span> -->
         </div>
     </div>
     <div class="navbar-center"></div>
@@ -54,7 +54,7 @@
                             {{ userType === 'admin' ? 'Select the Product You would Like to Purchase' : 'Explore Products' }}
                         </h3>
                         <h3 class="page-title" *ngIf="approverSection">
-                            <i class="pi pi-search title-icon"></i>
+                            <i class="pi pi-list title-icon"></i>
                             Looking For
                         </h3>
                         <span class="page-subtitle" *ngIf="quoteSection">Select a product to get started</span>
@@ -194,7 +194,7 @@
 <!-- ══════════════════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════════════════ -->
-<footer class="app-footer">
+<!-- <footer class="app-footer">
     <div class="footer-inner">
         <div class="footer-brand">
             <div class="footer-logo"><i class="pi pi-compass"></i></div>
@@ -212,4 +212,24 @@
         </div>
         <span class="footer-copy">Copyright © 2026 Salama Islamic Arab Insurance Company, all rights reserved.</span>
     </div>
+</footer> -->
+<footer class="app-footer">
+  <div class="footer-inner">
+    <span class="footer-copy">Copyright © 2026 Salama Islamic Arab Insurance Company, all rights reserved.</span>
+    <div class="footer-links">
+      <a href="https://salama.ae/terms-of-use/" class="footer-link">Terms of use</a>
+      <span class="footer-link-sep">|</span>
+      <a href="https://salama.ae/privacy-policy/" class="footer-link">Privacy policy</a>
+      <span class="footer-link-sep">|</span>
+      <a href="https://salama.ae/refund-policy/" class="footer-link">Refund policy</a>
+      <span class="footer-link-sep">|</span>
+      <a href="https://salama.ae/" class="footer-link">Website information</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/salamauae" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://x.com/salamauae" target="_blank" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.linkedin.com/company/salama" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/salamauae" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
 </footer>

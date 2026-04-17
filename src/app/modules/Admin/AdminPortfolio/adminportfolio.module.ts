@@ -15,6 +15,7 @@ import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { AdminPortfolioComponent } from './adminportfolio.component';
 import { AdminPortfolioRoutingModule } from './adminportfolio-routing.module';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { ButtonModule } from 'primeng/button';
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
 //import { RenewalPendingComponent } from './renewalpending.component';
 //import { RenewalPendingRoutingModule } from './renewalpending-routing.module';
@@ -54,6 +55,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     PipesModule,
     DigitOnlyModule,
     BackBtnModule,
+     ButtonModule,
     AdminPortfolioRoutingModule 
   ],
   bootstrap: [

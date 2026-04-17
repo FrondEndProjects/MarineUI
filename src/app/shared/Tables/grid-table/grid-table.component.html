@@ -46,17 +46,13 @@
               
             <!--newlyAdded-->
             <ng-container *ngIf="col.config.isEdits">
-              
               <button class="btn btn-primary btn-sm" *ngIf="element.EndtStatus !='N' && element.Status != 'Y'" (click)="onEdit.emit(element)">
                 <i class="fas fa-marker" >&nbsp;Endorse </i>
                 
               </button>
-              <button class="btn btn-primary btn-sm" *ngIf="element.Status == 'Y'"  (click)="onEdit.emit(element)">
+              <button  class="btn btn-primary btn-sm" *ngIf="element.Status == 'Y'"  (click)="onEdit.emit(element)">
                 <i class="fa-solid fa-pen-to-square">&nbsp;Edit</i>
               </button>
-              <!--<button class="circle btn btn-warning btn-sm" *ngIf="element.Status == 'Y'" (click)="onView.emit(element)">
-                <i class="fa-solid fa-pen-to-square" style="color:blue"></i>
-                </button>-->
             </ng-container>
 
         

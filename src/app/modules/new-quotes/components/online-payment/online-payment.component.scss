@@ -1,0 +1,201 @@
+$white:       #ffffff;
+$bg:          #f4f6f8;
+$border:      #e0e0e0;
+$text:        #333333;
+$muted:       #666666;
+$light-muted: #999999;
+$teal:        #1C7988;
+$teal-dark:   #145f6c;
+$teal-light:  #e8f4f6;
+$error:       #e53935;
+
+:host {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: $text;
+  background: $bg;
+  min-height: 100vh;
+}
+
+* { box-sizing: border-box; }
+
+.payfort-page {
+  max-width: 680px;
+  margin: 3rem auto;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  overflow: hidden;
+
+  @media (max-width: 720px) {
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
+  }
+}
+
+.payfort-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.15rem 2rem;
+  background: linear-gradient(135deg, $teal 0%, $teal-dark 100%);
+  color: $white;
+}
+
+.payfort-page-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.payfort-page-header-right {
+  display: flex;
+  align-items: center;
+}
+
+.payfort-logo-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: $white;
+  text-align: right;
+  line-height: 1.2;
+
+  small {
+    font-size: 0.65rem;
+    font-weight: 400;
+    opacity: 0.8;
+    letter-spacing: 1.5px;
+  }
+}
+
+.payfort-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 2rem;
+  min-height: 300px;
+  text-align: center;
+}
+
+.payfort-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid $border;
+  border-top-color: $teal;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.payfort-status-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text;
+  margin-bottom: 0.4rem;
+}
+
+.payfort-status-sub {
+  font-size: 0.88rem;
+  color: $muted;
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.payfort-status-hint {
+  font-size: 0.82rem;
+  color: $light-muted;
+  margin-top: 1.5rem;
+}
+
+.payfort-manual-link {
+  color: $teal;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover { color: $teal-dark; }
+}
+
+.payfort-redirect-card,
+.payfort-error-card {
+  width: 100%;
+  max-width: 460px;
+}
+
+.payfort-summary {
+  background: $teal-light;
+  border: 1px solid darken($teal-light, 8%);
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem auto 0;
+  max-width: 320px;
+}
+
+.payfort-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  font-size: 0.88rem;
+  color: $muted;
+
+  b { color: $text; }
+
+  & + & { border-top: 1px solid darken($teal-light, 6%); }
+}
+
+.payfort-error-icon {
+  font-size: 2.5rem;
+  color: $error;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.payfort-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-top: 1px solid $border;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.payfort-back-btn {
+  background: none;
+  border: 1.5px solid $border;
+  border-radius: 6px;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $muted;
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  &:hover {
+    border-color: $teal;
+    color: $teal;
+    background: $teal-light;
+  }
+}
+
+.payfort-secured {
+  font-size: 0.78rem;
+  color: $light-muted;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  i { color: $teal; font-size: 0.7rem; }
+}
