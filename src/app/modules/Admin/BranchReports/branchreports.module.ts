@@ -15,6 +15,7 @@ import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { BranchCoverComponent } from './branchreports.component';
 import { BranchCoverRoutingModule } from './branchreports-routing.module';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { ButtonModule } from 'primeng/button';
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
 
 
@@ -49,6 +50,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     PipesModule,
     DigitOnlyModule,
     BackBtnModule,
+     ButtonModule,
     NgbDatepickerModule,
     NbDatepickerModule.forRoot(),
   ],

@@ -132,6 +132,7 @@ import { FormsModule } from '@angular/forms';
     OverlayPanelModule,
     NbMomentDateModule,
     NgbModule,
+    ButtonModule,
     NgSelectModule,
     ErrorModalModule,
     NgxMaskModule.forRoot(),

@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="col-12 col-md-3 col-lg-3 d-sm-flex flex-sm-row align-items-sm-center mt-3">
-        <button nbButton size="small" status="primary" class="mx-1" (click)="onLoadGrid()">Submit</button>
+        <button pButton class="btn-primary btn-sm" (click)="onLoadGrid()">Submit</button>
         <ng-container *ngIf="tableData.length != 0">
           <button nbButton size="small" status="success" class="mx-1" (click)="onDocument('pdf')">PDF</button>
           <button nbButton size="small" status="info" class="mx-1" (click)="onDocument('excel')">EXCEL</button>

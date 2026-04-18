@@ -15,12 +15,13 @@ import { BackBtnModule } from '../../../shared/back-btn/back-btn.module';
 import { CopyQuoteAdminRoutingModule } from './copyquoteadmin-routing.module';
 import { CopyQuoteComponent } from '../../copy-quote/copy-quote.component';
 import { CopyQuoteAdminComponent } from './copyquoteadmin.component';
+import { ButtonModule } from 'primeng/button';
 //import { AdminReferralRoutingModule } from './pending.component-routing.module';
 ;
 
 @NgModule({
   declarations: [
- CopyQuoteAdminComponent
+    CopyQuoteAdminComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +49,8 @@ import { CopyQuoteAdminComponent } from './copyquoteadmin.component';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
-    BackBtnModule
+    BackBtnModule,
+    ButtonModule,
   ],
   bootstrap: [CopyQuoteAdminComponent],
   providers: [

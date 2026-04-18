@@ -1,0 +1,107 @@
+<!-- ═══════════════════════════════════════════════════════════
+     Amazon Payment Services (PayFort) — Hosted Checkout
+     NO card form. Calls insertPayment → redirects to PayFort.
+     PayFort renders their native payment page.
+═══════════════════════════════════════════════════════════ -->
+
+<!-- Hidden Form POST (used only if backend returns form params) -->
+<form #payfortForm
+  method="post"
+  [action]="payfort_url"
+  id="payfort_payment_form"
+  style="display:none;">
+
+  <input type="hidden" name="command" [value]="command">
+  <input type="hidden" name="access_code" [value]="access_code">
+  <input type="hidden" name="merchant_identifier" [value]="merchant_identifier">
+  <input type="hidden" name="merchant_reference" [value]="merchant_reference">
+  <input type="hidden" name="amount" [value]="amount">
+  <input type="hidden" name="currency" [value]="currency">
+  <input type="hidden" name="language" [value]="language">
+  <input type="hidden" name="customer_email" [value]="customer_email">
+  <input type="hidden" name="signature" [value]="signature">
+  <input type="hidden" name="return_url" [value]="return_url" *ngIf="return_url">
+  <input type="hidden" name="order_description" [value]="order_description" *ngIf="order_description">
+  <input type="hidden" name="customer_name" [value]="customer_name" *ngIf="customer_name">
+  <input type="hidden" name="customer_ip" [value]="customer_ip" *ngIf="customer_ip">
+  <input type="hidden" name="phone_number" [value]="phone_number" *ngIf="phone_number">
+  <input type="hidden" name="token_name" [value]="token_name" *ngIf="token_name">
+  <input type="hidden" name="payment_option" [value]="payment_option" *ngIf="payment_option">
+  <input type="hidden" name="eci" [value]="eci" *ngIf="eci">
+  <input type="hidden" name="remember_me" [value]="remember_me" *ngIf="remember_me && remember_me !== 'NO'">
+  <input type="hidden" name="merchant_extra" [value]="merchant_extra" *ngIf="merchant_extra">
+  <input type="hidden" name="merchant_extra1" [value]="merchant_extra1" *ngIf="merchant_extra1">
+  <input type="hidden" name="merchant_extra2" [value]="merchant_extra2" *ngIf="merchant_extra2">
+  <input type="hidden" name="merchant_extra3" [value]="merchant_extra3" *ngIf="merchant_extra3">
+  <input type="hidden" name="merchant_extra4" [value]="merchant_extra4" *ngIf="merchant_extra4">
+  <input type="hidden" name="merchant_extra5" [value]="merchant_extra5" *ngIf="merchant_extra5">
+
+</form>
+
+
+<!-- Visible UI -->
+<div class="payfort-page">
+
+  <!-- Header -->
+  <div class="payfort-page-header">
+    <span class="payfort-page-title">Online Payment</span>
+    <div class="payfort-page-header-right">
+      <span class="payfort-logo-text">سلامة<br><small>SALAMA</small></span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="payfort-center" *ngIf="isLoading">
+    <div class="payfort-spinner"></div>
+    <p class="payfort-status-title">Preparing your payment...</p>
+    <p class="payfort-status-sub">Connecting to payment gateway. Please wait.</p>
+  </div>
+
+  <!-- Redirecting (form post mode) -->
+  <div class="payfort-center" *ngIf="!isLoading && !isError">
+    <div class="payfort-redirect-card">
+      <div class="payfort-spinner"></div>
+      <p class="payfort-status-title">Redirecting to secure payment page...</p>
+      <p class="payfort-status-sub">
+        You are being redirected to Amazon Payment Services to complete your payment.
+      </p>
+      <div class="payfort-summary">
+        <div class="payfort-summary-row">
+          <span>Quote No</span>
+          <span><b>{{merchant_reference || quoteNo}}</b></span>
+        </div>
+        <div class="payfort-summary-row">
+          <span>Amount</span>
+          <span><b>{{payAmount}} {{currency}}</b></span>
+        </div>
+      </div>
+      <p class="payfort-status-hint">
+        If you are not redirected,
+        <a class="payfort-manual-link" (click)="submitPayfortForm()">click here</a>.
+      </p>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div class="payfort-center" *ngIf="!isLoading && isError">
+    <div class="payfort-error-card">
+      <i class="fa fa-exclamation-triangle payfort-error-icon"></i>
+      <p class="payfort-status-title">Payment Initialization Failed</p>
+      <p class="payfort-status-sub">{{errorMessage}}</p>
+      <button class="payfort-back-btn" (click)="goBack()">
+        <i class="fa fa-arrow-left"></i> Back to Policy
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="payfort-footer" *ngIf="!isLoading">
+    <button class="payfort-back-btn" (click)="goBack()">
+      <i class="fa fa-arrow-left"></i> Back to Policy
+    </button>
+    <span class="payfort-secured">
+      <i class="fa fa-lock"></i> Secured by Amazon Payment Services
+    </span>
+  </div>
+
+</div>

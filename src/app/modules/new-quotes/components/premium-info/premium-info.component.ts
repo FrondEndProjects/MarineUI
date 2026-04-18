@@ -621,12 +621,23 @@ export class PremiumInfoComponent implements OnInit {
       }
       console.log(this.premiumDetails?.Referral, "this.premiumDetails?.Referralthis.premiumDetails?.Referralthis.premiumDetails?.Referral");
       let referralStatus = null
-      if (this.userDetails?.UserType != 'admin' && (this.premiumDetails?.Referral?.length != 0 || this.premiumDetails?.Referral == null)) {
-        referralStatus = 'Y'
+      if (this.userDetails?.UserType != 'admin') {
+        if (this.premiumDetails?.Referral?.length != 0 && this.premiumDetails?.Referral !=null) {
+          referralStatus = 'Y'
+        }
+        else {
+          referralStatus = this.premiumF.ReferralUpdateYn.value
+        }
       }
       else {
         referralStatus = this.premiumF.referralStatus.value
       }
+      // if (this.userDetails?.UserType != 'admin' && (this.premiumDetails?.Referral?.length != 0 || this.premiumDetails?.Referral == null)) {
+      //   referralStatus = 'Y'
+      // }
+      // else {
+      //   referralStatus = this.premiumF.referralStatus.value
+      // }
       // console.log('TTTTTTTT',this.premiumF?.totalPremium.value)
       // console.log('ppppppppp',this.premiumF?.warRate.value)
 

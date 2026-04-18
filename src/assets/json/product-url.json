@@ -5,7 +5,7 @@
     "4": "./assets/layout/images/travel1.png",
     "5": "./assets/layout/images/motor.png",
     "6": "./assets/layout/images/fireAllied.png",
-    "11": "./assets/images/marineOpenCover.png",
+    "11": "./assets/images/Salamamarineopencoverpolicy.jpg",
     "13": "./assets/layout/images/personalacc.png",
     "14": "./assets/layout/images/dashboard/employers_liability.png",
     "15": "./assets/layout/images/workmens.png",
@@ -25,7 +25,7 @@
     "57": "./assets/layout/images/group_pa.svg",
     "56": "./assets/layout/images/health.png",
     "86": "./assets/layout/images/farmCare.jpg",
-    "59b": "./assets/images/marineOneOff.webp",
+    "59b": "./assets/images/SalamaMarineoneofpolicy.jpg",
     "60": "./assets/layout/images/ProIndeminity.png",
     "66": "./assets/layout/images/dashboard/fire_accidant.png",
     "67": "./assets/layout/images/dashboard/building_combined.png",
@@ -46,7 +46,7 @@
     "100": "./assets/layout/images/Fuel.png",
     "101": "./assets/layout/images/Guarantee.webp",
     "90": "./assets/layout/images/Kidnap.png",
-    "3": "./assets/images/marineOneOff.webp",
+    "3": "./assets/images/SalamaMarineoneofpolicy.jpg",
     "102": "./assets/layout/images/Niche.png",
     "89": "./assets/layout/images/Pension.jpg",
     "98": "./assets/layout/images/Performance.png",
@@ -59,18 +59,19 @@
     "75": "./assets/layout/images/DeteriorationStock.png",
     "84": "./assets/layout/images/EAR.png",
     "111": "./assets/images/marine_hull.png",
+    "117": "./assets/images/06.jpg",
     "default": "./assets/layout/images/motor.png"
   },
   "userTypes": [
     {
       "code": "1",
       "description": "Transaction",
-      "url": "./assets/images/allQuotations.webp"
+      "url": "./assets/images/Quotationandpolicyinformation.jpg"
     },
     {
       "code": "2",
       "description": "LoginCreation",
-      "url": "./assets/images/UserCreation.jpg"
+      "url": "./assets/images/SalamaLoginCreation.jpg"
     },
     {
       "code": "3",
@@ -80,7 +81,7 @@
     {
       "code": "4",
       "description": "MarineSetup/OpenCover",
-      "url": "./assets/images/Marine_issuer.jpeg"
+      "url": "./assets/images/Salamamarinesetupopencover.jpg"
     }
   ]
 }

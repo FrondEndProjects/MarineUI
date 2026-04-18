@@ -18,6 +18,7 @@ import { PendingQuotesComponent } from './components/pending-quotes/pending-quot
 import { ApprovedQuotesComponent } from './components/approved-quotes/approved-quotes.component';
 import { RejectedQuotesComponent } from './components/rejected-quotes/rejected-quotes.component';
 import { AdminReferralService } from './admin-referral.service';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AdminReferralService } from './admin-referral.service';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
-    BackBtnModule
+    BackBtnModule,
+    ButtonModule,
   ],
   bootstrap: [AdminReferralComponent],
   providers: [

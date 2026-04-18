@@ -54,8 +54,9 @@
                 <td>{{data.UserMobile}}</td>
                 <td>
                     <ng-container *ngIf="data.Status=='Y'">Active</ng-container>
-                    <ng-container *ngIf="data.Status=='N'">DeActive</ng-container>
+                    <ng-container *ngIf="data.Status=='N'">Deactive</ng-container>
                     <ng-container *ngIf="data.Status=='P'">Pending</ng-container>
+                    <ng-container *ngIf="data.Status=='T'">Locked</ng-container>
                 </td>
                 <td>
                     <span class="p-buttonset">
@@ -335,9 +336,14 @@
                     <span for="Pending" class="ml-1">Pending</span>
                 </div>
                 <div class="d-flex align-items-center mr-1">
-                    <p-radioButton name="DeActive" value="N" [(ngModel)]="statusValue"
+                    <p-radioButton name="Deactive" value="N" [(ngModel)]="statusValue"
                         inputId="ingredient4"></p-radioButton>
-                    <span for="DeActive" class="ml-1">DeActive</span>
+                    <span for="Deactive" class="ml-1">Deactive</span>
+                </div>
+                <div class="d-flex align-items-center mr-1">
+                    <p-radioButton name="Locked" value="T" [(ngModel)]="statusValue"
+                        inputId="ingredient4"></p-radioButton>
+                    <span for="Locked" class="ml-1">Locked</span>
                 </div>
             </div>
         </div>
@@ -669,7 +675,7 @@
                 <td>{{branch.EffectiveDateStart}}</td>
                 <td>{{branch.Mobile}}</td>
                 <td *ngIf="branch.Status=='Y'">Active</td>
-                <td *ngIf="branch.Status=='N'">DeActive</td>
+                <td *ngIf="branch.Status=='N'">Deactive</td>
                 <td><p-button icon="pi pi-pencil" styleClass="p-button-outlined" (click)="editBranch(branch)" /></td>
             </tr>
         </ng-template>
@@ -749,7 +755,7 @@
                 </div>
                 <div class="d-flex align-items-center mr-1">
                     <p-radioButton name="No" value="N" inputId="DeActive" [(ngModel)]="statusValue"></p-radioButton>
-                    <span for="DeActive" class="ml-1">DeActive</span>
+                    <span for="DeActive" class="ml-1">Deactive</span>
                 </div>
             </div>
         </div>

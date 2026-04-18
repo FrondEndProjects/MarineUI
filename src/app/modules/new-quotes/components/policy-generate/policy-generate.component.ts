@@ -104,15 +104,51 @@ export class PolicyGenerateComponent implements OnInit {
     this.onGetPremiumInformation();
     this.getpaymentType();
     this.route.queryParamMap.subscribe((params: any) => {
-      console.log("Params", params.params)
+      console.log("Params", params.params);
       let quoteNo = params?.params?.QuoteNo;
       let type = params?.params?.type;
+
+      // Amazon Payment Services (APS/PayFort) hosted checkout return params
+      const responseCode = params?.params?.response_code;
+      const status = params?.params?.status;
+      const fortId = params?.params?.fort_id;
+      const merchantReference = params?.params?.merchant_reference;
+
       if (quoteNo) {
         this.quoteNo = quoteNo;
         this.QuoteNo = quoteNo;
-        this.checkStatus();
-        // this.paramSection = true;
-        // if(type!='cancel') this.successSection = true;
+
+        // If APS response params are present, validate before proceeding
+        if (responseCode || status) {
+          // APS success: status='14' (captured) or status='02' (authorized), response_code starts with '000'
+          const isSuccess =
+            (status === '14' || status === '02' || status === '04') &&
+            responseCode && responseCode.startsWith('000');
+
+          if (isSuccess) {
+            console.log('APS payment success. fort_id:', fortId, 'merchant_reference:', merchantReference);
+            this.checkStatus();
+          } else if (type === 'cancel' || status === '17') {
+            // Cancelled by user
+            Swal.fire({
+              icon: 'warning',
+              title: 'Payment Cancelled',
+              html: 'Your payment was cancelled. Please try again.'
+            });
+          } else {
+            // Declined or error
+            Swal.fire({
+              icon: 'error',
+              title: 'Payment Failed',
+              html: `Payment was not successful. Response code: ${responseCode || 'N/A'}. Please try again.`
+            });
+          }
+        } else {
+          // No APS params — returning via internal redirect (e.g. Selcom)
+          if (type !== 'cancel') {
+            this.checkStatus();
+          }
+        }
       }
     })
     if (this.generateCerti === 'Y') {
@@ -135,7 +171,7 @@ export class PolicyGenerateComponent implements OnInit {
     }
     const id = this.userDetails?.InsuranceId;
 
-  if (id !== '100044' && id !== '100053') {
+    if (id !== '100044' && id !== '100053') {
       document.documentElement.style.setProperty('--teal', 'rgb(30,64,175)');
       document.documentElement.style.setProperty('--teal-dark', '#042181');
       document.documentElement.style.setProperty('--teal-d', '#042181');
@@ -533,7 +569,14 @@ export class PolicyGenerateComponent implements OnInit {
       "NoteType": "",
       "OpenCoverNo": this.OpenCover?.value,
       "PolicyExcess": this.excess ? 'Y' : 'N',
-      "PremiumYN": this.premium ? 'Y' : this.premiumPaid ? 'PAID' : 'N',
+      "PremiumYN": this.userDetails?.InsuranceId === '100053'
+        ? (this.premium ? 'N' : 'Y')
+        : this.premium
+          ? 'Y'
+          : this.premiumPaid
+            ? 'PAID'
+            : 'N',
+      // "PremiumYN": this.premium ? 'Y' : this.premiumPaid ? 'PAID' : 'N',
       "PrerecieptNo": "",
       "PrintClausesYn": "N",
       "ProductId": this.productId,
@@ -632,7 +675,12 @@ export class PolicyGenerateComponent implements OnInit {
       }
     }
     if (this.payment_type == '4' || this.payment_type == '3') {
-      this.inserPyment()
+      // For InsuranceId 100053, navigate to the separate online payment page
+      if (this.userDetails?.InsuranceId == '100053' && this.payment_type == '4') {
+        this.navigateToOnlinePayment();
+      } else {
+        this.inserPyment()
+      }
     }
     if (this.payment_type == '5') {
       if (this.pay_mobile_code != '' && this.pay_mobile_number != '' && this.pay_mobile_code != null && this.pay_mobile_number != null) {
@@ -894,27 +942,43 @@ export class PolicyGenerateComponent implements OnInit {
 
 
       if (data.Message == 'Success') {
-        // if (data.Result != null) {
         if (data.Result != null && data.Result.paymentUrl != null && data.Result.paymentUrl != '') {
-          // alert(1)
+          // Redirect to Amazon Payment Services hosted checkout
           this.redirectUrl = data.Result.paymentUrl;
-          const absoluteURL =
-            new URL(this.redirectUrl, window.location.href);
 
+          // Build absolute URL: return_url must point back to this page with QuoteNo
+          let quoteNo = this.QuoteNo || this.quoteNo;
+          const returnUrl = `${window.location.origin}${window.location.pathname}?QuoteNo=${quoteNo}`;
+          this.merchantReference = data.Result.merchantReference;
+          let separator = this.redirectUrl.includes('?') ? '&' : '?';
+          const redirectWithReturn = `${this.redirectUrl}${separator}return_url=${encodeURIComponent(returnUrl)}`;
+
+          const absoluteURL = new URL(redirectWithReturn, window.location.href);
           window.location.href = absoluteURL.href;
 
         }
-        else if (this.payment_type == '1' || this.payment_type == '2' || this.payment_type == '3' && data.IsError == false && data.Result.paymentStatus == 'COMPLETED') {
-          // alert(2)
+        // Fix: operator precedence — wrap each condition in parentheses
+        else if (
+          this.payment_type == '1' ||
+          this.payment_type == '2' ||
+          (this.payment_type == '3' && data.IsError == false && data.Result.paymentStatus == 'COMPLETED')
+        ) {
           this.schedule = true;
-          this.onPolicyIntegrate()
+          // if (this.userDetails?.InsuranceId != '100053') {
+          this.onPolicyIntegrate();
+          // }
+          // else {
+          //   this.policySection = true;
+          //   this.draftSection = false;
+          //   // this.policyNo = data?.Result?.policyNo
+          //   this.policyNo = data?.Result?.policyNo;
+          // }
         }
         else {
-          // alert(3)
           Swal.fire({
             icon: 'error',
-            title: 'Validation Errors',
-            html: 'Error'
+            title: 'Payment Error',
+            html: data.Message || 'An error occurred during payment. Please try again.'
           });
         }
         // }
@@ -1035,20 +1099,29 @@ export class PolicyGenerateComponent implements OnInit {
 
     // }
   }
-
+  merchantReference: any;
   checkStatus() {
+    const merchantReference = sessionStorage.getItem('merchantReference');
 
     let ReqObj = {
       "InsuranceId": this.userDetails?.InsuranceId
     }
-    let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${this.QuoteNo}`;
+    let urlLink = '';
+    if (this.userDetails?.InsuranceId == '100053') {
+      urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${merchantReference}`;
+    }
+    else {
+      urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${this.QuoteNo}`;
+
+    }
 
     this.newQuotesService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data, "dataaaaaaaaaaaaaaaaaaaaaa");
 
         if (data.result == 'FAIL') {
-
+          this.policySection = false; this.draftSection = false;
+          this.schedule = false;
           Swal.fire({
             icon: 'error',
             title: 'Payment',
@@ -1058,7 +1131,27 @@ export class PolicyGenerateComponent implements OnInit {
         }
         else {
           this.schedule = true;
-          this.onPolicyIntegrate()
+          if (this.userDetails?.InsuranceId != '100053') {
+            this.onPolicyIntegrate()
+
+          }
+          else {
+
+            this.policyNo = data?.PolicyNo
+            if (this.policyNo) {
+              this.policySection = true;
+              this.draftSection = false;
+            }
+            else {
+              this.policySection = false; this.draftSection = false;
+              this.schedule = false;
+              Swal.fire({
+                icon: 'error',
+                title: 'Payment',
+                html: 'FAIL'
+              });
+            }
+          }
         }
       });
   }
@@ -1090,5 +1183,28 @@ export class PolicyGenerateComponent implements OnInit {
       this.termsSection = false;
     }
   }
-}
 
+  // Navigate to separate online payment page for InsuranceId 100053
+  navigateToOnlinePayment() {
+    let quoteNo = this.QuoteNo || this.quoteNo;
+    sessionStorage.setItem('onlinePaymentData', JSON.stringify({
+      quoteNo: quoteNo,
+      payAmount: this.pay_amount,
+      merchantName: this.premiumDetails?.CustomerDetails?.Name || 'MOTOR B2C and B2B Portal',
+      customerEmail: this.premiumDetails?.CustomerDetails?.Email || '',
+      customerName: this.premiumDetails?.CustomerDetails?.Name || '',
+      paymentId: this.PaymentId || sessionStorage.getItem('quotePaymentId'),
+      insuranceId: this.userDetails?.InsuranceId,
+      loginId: this.userDetails?.LoginId,
+      subUserType: this.userDetails?.SubUserType,
+      userType: this.userDetails?.UserType,
+      branchCode: this.userDetails?.BranchCode,
+      referenceNo: this.ReferenceNo,
+      productId: this.productId,
+      currencyName: this.premiumDetails?.PremiumDetails?.PremiumCurrency || this.currencyName
+    }));
+    this.router.navigate([`${this.routerBaseLink}/new-quotes/online-payment`], {
+      queryParams: { QuoteNo: quoteNo }
+    });
+  }
+}

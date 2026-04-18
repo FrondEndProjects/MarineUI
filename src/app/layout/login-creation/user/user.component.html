@@ -67,8 +67,9 @@
                 <td>{{data.UserMobile}}</td>
                 <td>
                     <ng-container *ngIf="data.Status=='Y'">Active</ng-container>
-                    <ng-container *ngIf="data.Status=='N'">DeActive</ng-container>
+                    <ng-container *ngIf="data.Status=='N'">Deactive</ng-container>
                     <ng-container *ngIf="data.Status=='P'">Pending</ng-container>
+                    <ng-container *ngIf="data.Status=='T'">Locked</ng-container>
                 </td>
                 <td>
                     <span class="p-buttonset">
@@ -256,12 +257,12 @@
             <label for="ExcemptedYN" class="fw-semibold w-6rem">Status *</label>
             <div class="d-flex flex-warp">
                 <div class="d-flex align-items-center me-1">
-                    <p-radioButton name="Active" value="Y"  [(ngModel)]="statusValue"
+                    <p-radioButton name="Active" value="Y" [(ngModel)]="statusValue"
                         inputId="statusActive"></p-radioButton>
                     <span for="statusActive" class="ms-1">Active</span>
                 </div>
                 <div class="d-flex align-items-center me-1">
-                    <p-radioButton name="Pending" value="P"  [(ngModel)]="statusValue"
+                    <p-radioButton name="Pending" value="P" [(ngModel)]="statusValue"
                         inputId="statusPending"></p-radioButton>
                     <span for="statusPending" class="ms-1">Pending</span>
                 </div>
@@ -269,6 +270,11 @@
                     <p-radioButton name="DeActive" value="N" [(ngModel)]="statusValue"
                         inputId="statusDeactive"></p-radioButton>
                     <span for="statusDeactive" class="ms-1">Deactive</span>
+                </div>
+                <div class="d-flex align-items-center me-1">
+                    <p-radioButton name="Locked" value="N" [(ngModel)]="statusValue"
+                        inputId="statusLocked"></p-radioButton>
+                    <span for="statusLocked" class="ms-1">Locked</span>
                 </div>
             </div>
         </div>
@@ -822,7 +828,7 @@
                     <div class="form-check">
                         <p-radioButton name="Statusn" value="N" [(ngModel)]="Status"
                             inputId="statDeactive"></p-radioButton>
-                        <label for="statDeactive" class="ms-2">De-Active</label>
+                        <label for="statDeactive" class="ms-2">Deactive</label>
                     </div>
                 </div>
             </div>

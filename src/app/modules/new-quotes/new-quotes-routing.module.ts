@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NewQuotesComponent } from './new-quotes.component';
 import { PremiumInfoComponent } from './components/premium-info/premium-info.component';
 import { EndorsementTypeComponent } from './components/endorsement-type/endorsement-type.component';
+import { OnlinePaymentComponent } from './components/online-payment/online-payment.component';
 
 const routes: Routes = [
 
@@ -22,39 +23,40 @@ const routes: Routes = [
       {
         path: 'endorsement-grid',
         component: EndorsementGridComponent,
-        data:{
-          title:'endorsementgrid'
+        data: {
+          title: 'endorsementgrid'
         }
       },
       {
         path: 'endorsement-type',
         component: EndorsementTypeComponent,
-        data:{
-          title:'endorsementtype'
+        data: {
+          title: 'endorsementtype'
         }
       },
       {
         path: 'customer-info',
         component: CustomerInfoComponent,
-        data:{
-          title:'customerinfo'
+        data: {
+          title: 'customerinfo'
         }
       },
       {
         path: 'premium-info',
         component: PremiumInfoComponent,
-        data:{
-          title:'premiuminfo'
+        data: {
+          title: 'premiuminfo'
         }
       },
       {
         path: 'policy-generate',
         component: PolicyGenerateComponent,
-        data:{
-          title:'policygenerate'
+        data: {
+          title: 'policygenerate'
         }
       },
-  
+      { path: 'online-payment', component: OnlinePaymentComponent }
+
     ]
   },
 ];

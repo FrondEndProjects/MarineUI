@@ -1,8 +1,8 @@
 <div class="open-cover-grid-card">
   <div class="open-cover-grid-card-header p-2">
 
-      <div class="row">
-        <ng-container *ngIf="isIssuer">
+    <div class="row">
+      <ng-container *ngIf="isIssuer">
         <div class="col-12 col-md-6 col-lg-6">
           <div class="input-control-container">
             <label class="input-form-label">Select Broker<span class="text-required">*</span></label>
@@ -11,18 +11,18 @@
             </ng-select>
           </div>
         </div>
-    </ng-container>
-        <div class="col-12 col-md-6 col-lg-6">
-          <div class="input-control-container">
-            <label class="input-form-label">Search</label>
-            <div class="input-form-box">
-              <input type="text" class="input-form-control without-icon" [(ngModel)]="filterValue">
-            </div>
+      </ng-container>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="input-control-container">
+          <label class="input-form-label">Search</label>
+          <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" [(ngModel)]="filterValue">
           </div>
         </div>
       </div>
+    </div>
   </div>
-  <div class="open-cover-grid-card-body">
+  <!-- <div class="open-cover-grid-card-body">
     <nb-tabset fullWidth>
       <nb-tab tabTitle="Marine Open Cover (MOC)">
         <ng-container *ngIf="openCoverMocData">
@@ -38,15 +38,32 @@
           </app-grid-table>
         </ng-container>
       </nb-tab>
-      <!-- <nb-tab tabTitle="Marine Risk Land">
-        <ng-container *ngIf="marineLandCoverData">
-          <app-grid-table [cols]="openCoverMocHeader" [data]="marineLandCoverData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
-          (onOpenCoverAction)="onOpenCoverActions($event)">
+    </nb-tabset>
+  </div> -->
+
+  <div class="open-cover-grid-card-body">
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="Marine Open Cover (MOC)">
+        <ng-container *ngIf="openCoverMocData">
+          <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMocData" (onMenu)="onmenu($event,$event.name)"
+            [filterValue]="filterValue" (onOpenCoverAction)="onOpenCoverActions($event,'MOC')">
           </app-grid-table>
         </ng-container>
-      </nb-tab> -->
+      </nb-tab>
+      <nb-tab tabTitle="Marine Open Cover (MOP)">
+        <ng-container *ngIf="openCoverMopData">
+          <app-grid-table [cols]="openCoverMocHeader" [data]="openCoverMopData" (onMenu)="onmenu($event,$event.name)"
+            [filterValue]="filterValue" (onOpenCoverAction)="onOpenCoverActions($event,'MOP')">
+          </app-grid-table>
+        </ng-container>
+      </nb-tab>
+      <!-- <nb-tab tabTitle="Marine Risk Land">
+      <ng-container *ngIf="marineLandCoverData">
+        <app-grid-table [cols]="openCoverMocHeader" [data]="marineLandCoverData" (onMenu)="onmenu($event,$event.name)" [filterValue]="filterValue"
+        (onOpenCoverAction)="onOpenCoverActions($event)">
+        </app-grid-table>
+      </ng-container>
+    </nb-tab> -->
     </nb-tabset>
   </div>
-
-
 </div>

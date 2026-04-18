@@ -62,8 +62,9 @@
                 <td>{{data.UserMobile}}</td>
                 <td>
                     <ng-container *ngIf="data.Status=='Y'">Active</ng-container>
-                    <ng-container *ngIf="data.Status=='N'">DeActive</ng-container>
+                    <ng-container *ngIf="data.Status=='N'">Deactive</ng-container>
                     <ng-container *ngIf="data.Status=='P'">Pending</ng-container>
+                    <ng-container *ngIf="data.Status=='T'">Locked</ng-container>
                 </td>
                 <td>
                     <span class="p-buttonset">
@@ -266,7 +267,12 @@
                 <div class="d-flex align-items-center me-1">
                     <p-radioButton name="DeActive" value="N" [disabled]="isValidCustomer" [(ngModel)]="statusValue"
                         inputId="statusDeactive"></p-radioButton>
-                    <span for="statusDeactive" class="ms-1">DeActive</span>
+                    <span for="statusDeactive" class="ms-1">Deactive</span>
+                </div>
+                <div class="d-flex align-items-center me-1">
+                    <p-radioButton name="Locked" value="T" [disabled]="isValidCustomer" [(ngModel)]="statusValue"
+                        inputId="statusLocked"></p-radioButton>
+                    <span for="statusLocked" class="ms-1">Locked</span>
                 </div>
             </div>
         </div>
@@ -519,7 +525,7 @@
                 <td>{{branch.EffectiveDateStart}}</td>
                 <td>{{branch.Mobile}}</td>
                 <td *ngIf="branch.Status=='Y'">Active</td>
-                <td *ngIf="branch.Status=='N'">DeActive</td>
+                <td *ngIf="branch.Status=='N'">Deactive</td>
                 <td><p-button icon="pi pi-pencil" styleClass="p-button-outlined" (click)="editBranch(branch)" /></td>
             </tr>
         </ng-template>
@@ -598,7 +604,7 @@
                 </div>
                 <div class="d-flex align-items-center me-1">
                     <p-radioButton name="No" value="N" inputId="DeActive" [(ngModel)]="statusValue"></p-radioButton>
-                    <span for="DeActive" class="ms-1">DeActive</span>
+                    <span for="DeActive" class="ms-1">Deactive</span>
                 </div>
             </div>
         </div>
@@ -709,7 +715,7 @@
                 <td>{{product.CommissionPercent}}</td>
                 <td>{{product.BackDays}}</td>
                 <td *ngIf="product.Status=='Y'">Active</td>
-                <td *ngIf="product.Status=='N'">DeActive</td>
+                <td *ngIf="product.Status=='N'">Deactive</td>
                 <td>{{product.EffectiveDateStart}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-cog" title="Configure" (click)="onGetEndorsement(product)"
@@ -866,7 +872,7 @@
                         <label [for]="'StatusYes'+i">Active</label>
                         <input [id]="'StatusNo'+i" type="radio" [name]="'status'+i" [(ngModel)]="product.Status"
                             value="N">
-                        <label [for]="'StatusNo'+i">DeActive</label>
+                        <label [for]="'StatusNo'+i">Deactive</label>
                     </div>
                 </td>
                 <td data-label="Effective Date">
@@ -990,7 +996,7 @@
                                 <label [for]="'EditStatusYes'+i">Active</label>
                                 <input [id]="'EditStatusNo'+i" type="radio" [name]="'Editstatus'+i"
                                     [(ngModel)]="product.Status" value="N">
-                                <label [for]="'EditStatusNo'+i">DeActive</label>
+                                <label [for]="'EditStatusNo'+i">Deactive</label>
                             </div>
                         </div>
                     </div>
@@ -1077,7 +1083,7 @@
                 <td>{{cover.EffectiveDateEnd}}</td>
                 <td>
                     <ng-container *ngIf="cover.Status=='Y'">Active</ng-container>
-                    <ng-container *ngIf="cover.Status=='N'">DeActive</ng-container>
+                    <ng-container *ngIf="cover.Status=='N'">Deactive</ng-container>
                     <ng-container *ngIf="cover.Status=='P'">Pending</ng-container>
                 </td>
             </tr>
@@ -1119,7 +1125,7 @@
                 <td>{{data.DepositUtilised}}</td>
                 <td>{{data.PolicyRefundAmt}}</td>
                 <td *ngIf="data.Status=='Y'">Active</td>
-                <td *ngIf="data.Status=='N'">DeActive</td>
+                <td *ngIf="data.Status=='N'">Deactive</td>
                 <td> <p-button icon="pi pi-pencil" (click)="showDialogBrokerDetails1('DepositAdd',data)" /></td>
             </tr>
         </ng-template>
@@ -1272,7 +1278,7 @@
                 <td>{{pay.SubUserType}}</td>
                 <td>{{pay.EffectiveDateStart}}</td>
                 <td *ngIf="pay.Status=='Y'">Active</td>
-                <td *ngIf="pay.Status=='N'">DeActive</td>
+                <td *ngIf="pay.Status=='N'">Deactive</td>
                 <td><p-button icon="pi pi-pencil" styleClass="p-button-outlined" (click)="paymentEdit(pay)" /></td>
             </tr>
         </ng-template>

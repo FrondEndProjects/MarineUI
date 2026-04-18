@@ -531,6 +531,8 @@ brokerCodeValue:any
     //   window.location.reload();
     //   return;
     // }
+
+        
     if ((this.sessionStorageService.sessionStorgaeModel.referral == 'Approved' || this.referralStatus == 'Approved') || this.isOpneCover || this.editQuoteData?.FinalizeYn == 'Y') {
       for (var control in this.customerForm.controls) {
         this.customerForm.controls[control].enable();
@@ -640,7 +642,10 @@ brokerCodeValue:any
         if (this.quoteF.exposureOfShipment.value != null && this.quoteF.exposureOfShipment.value != '') {
           exposureValue = this.quoteF.exposureOfShipment.value.replace(',', '');
         }
-
+   
+ let ExposureCode = this.dropCurrencyList.find(ele => ele.Code == this.quoteF.currency.value)
+ console.log(ExposureCode,"111111111111111");
+ 
         const urlLink = `${this.ApiUrl1}quote/save`;
         const reqData = {
           'BranchCode': branchCode,
@@ -718,8 +723,10 @@ brokerCodeValue:any
             // 'PremiumCurrencyCode': '1',
             // 'PremiumCurrencyName': 'KES',
             'CurrencyValue': this.quoteF.currencyValue.value,
-            'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
-            'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
+                'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : ExposureCode?.Code,
+          'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : ExposureCode?.CodeDescription,
+            // 'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
+            // 'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
             'CurrencyOfExposureValue': this.quoteF.partialShipment.value === 'N' ? '' : this.currencyPipe.transform(this.quoteF.currency.value, this.dropCurrencyList),
             'ExpiryDate': '',
             'ExposureOfShipment': exposureValue,
@@ -894,7 +901,10 @@ brokerCodeValue:any
       if (this.quoteF.exposureOfShipment.value != null && this.quoteF.exposureOfShipment.value != '') {
         exposureValue = this.quoteF.exposureOfShipment.value.replace(',', '');
       }
-
+ 
+        
+ let ExposureCode = this.dropCurrencyList.find(ele => ele.Code == this.quoteF.currency.value)
+  console.log(ExposureCode,"222222222222");
       const urlLink = `${this.ApiUrl1}quote/save`;
       const reqData = {
         'BranchCode': branchCode,
@@ -964,8 +974,10 @@ brokerCodeValue:any
           'PremiumCurrencyCode': this.dropPremiumCurrencyList[0]?.Code,
           'PremiumCurrencyName': this.dropPremiumCurrencyList[0]?.CodeDescription,
           'CurrencyValue': this.quoteF.currencyValue.value,
-          'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
-          'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
+          'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : ExposureCode?.Code,
+          'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : ExposureCode?.CodeDescription,
+          // 'CurrencyOfExposureCode': this.quoteF.partialShipment.value === 'N' ? '' : this.quoteF.currencyOfExposure.value,
+          // 'CurrencyOfExposureName': this.quoteF.partialShipment.value === 'N' ? '' : this.getCodeDescription(this.dropCurrencyList, this.quoteF.currencyOfExposure.value),
           'CurrencyOfExposureValue': this.quoteF.partialShipment.value === 'N' ? '' : this.currencyPipe.transform(this.quoteF.currency.value, this.dropCurrencyList),
           'ExpiryDate': '',
           'ExposureOfShipment': exposureValue,

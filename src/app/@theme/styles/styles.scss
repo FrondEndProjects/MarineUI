@@ -1793,3 +1793,58 @@ nb-user .user-name {
 .swal2-confirm.swal-confirm-white-text {
     color: white !important;
 }
+.btn-primary.p-button {
+  background: linear-gradient(135deg, #1d7280 0%, #1a5f68 100%) !important;
+  border: 1.5px solid var(--border) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  padding: 9px 18px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
+  transition: all 0.2s !important;
+
+  &:hover {
+    background: #1d7280 !important;
+    border-color: var(--teal-primary) !important;
+    color: #fff !important;
+  }
+}
+nb-layout .layout .layout-container .content nb-layout-footer nav
+ {
+    background-color:  #1d7280 !important;
+    color: #fff;
+    padding: 0
+}
+nb-layout .layout .layout-container .content nb-layout-footer nav a {
+    color: #fff !important;
+}
+/* Active tab */
+nb-tabset .tab.active .tab-link {
+  color: #1d7280 !important;
+}
+
+nb-tabset .tab.active .tab-link::before {
+  background-color: #1d7280 !important;
+}
+
+/* Hover tab */
+nb-tabset .tab .tab-link:hover {
+  color: #1d7280 !important;
+}
+
+nb-tabset .tab .tab-link:hover::before {
+  background-color: #1d7280 !important;
+}
+/* Target the Swal2 confirm button globally */
+.swal2-styled.swal2-confirm {
+  background-color: #1d7280 !important;
+  box-shadow: none !important;
+}
+
+/* Target the info icon color globally */
+.swal2-icon.swal2-info {
+  border-color: #1d7280 !important;
+  color: #1d7280 !important;
+}
