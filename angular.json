@@ -98,20 +98,19 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "buildTarget": "ngx-admin-demo:build"
           },
           "configurations": {
             "directories": { "output": "release/" },
             "production": {
-              
-              "browserTarget": "your-project-name:build:production"
+              "buildTarget": "your-project-name:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "buildTarget": "ngx-admin-demo:build"
           }
         },
         "test": {
